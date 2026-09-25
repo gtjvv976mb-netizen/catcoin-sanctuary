@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Cat Sanctuary: a warm 3D garden where every cat is a token launched on StonkFun. Cats move in once their launch is confirmed on Solana.">
+<meta name="theme-color" content="#1e1726">
+<link rel="canonical" href="https://catcoinsanctuary.com/">
+<meta property="og:title" content="Cat Sanctuary">
+<meta property="og:description" content="A warm 3D garden where every cat is a token.">
+<meta property="og:image" content="https://catcoinsanctuary.com/assets/sanctuary-poster.jpg">
+<meta property="og:url" content="https://catcoinsanctuary.com/">
+<meta name="twitter:card" content="summary_large_image">
+<style>*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Cat Sanctuary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gluten:wght@500;700&family=Figtree:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  /* One evening look, on purpose: the sanctuary after sunset, lit by its own windows. */
+  :root {
+    color-scheme: dark;
+    --night: #1e1726;      /* plum night: the page */
+    --dusk: #2a2033;       /* raised surfaces */
+    --dusk-line: #3d3047;  /* hairlines */
+    --lantern: #f2a65a;    /* window and lantern glow: the one accent */
+    --honey: #ffd39a;      /* glow highlights */
+    --moss: #8fae84;       /* the garden */
+    --cream: #f6ebdd;      /* text */
+    --mauve: #bcaebd;      /* quiet text */
+    --display: "Gluten", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  html { background: var(--night); }
+  body { background: var(--night); color: var(--cream); font: 400 16px/1.6 var(--body); padding-inline: 16px; }
+  .wrap { max-width: 1080px; margin-inline: auto; }
+  a { color: var(--honey); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible, canvas:focus-visible { outline: 2px solid var(--lantern); outline-offset: 3px; border-radius: 6px; }
+
+  .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-block: 18px 14px; flex-wrap: wrap; }
+  .mark { font: 700 21px/1 var(--display); color: var(--cream); letter-spacing: .01em; text-decoration: none; }
+  .mark span { color: var(--lantern); }
+  .top nav { display: flex; gap: 18px; font-size: 14px; }
+  .top nav a { color: var(--mauve); text-decoration: none; }
+  .top nav a:hover { color: var(--cream); }
+
+  /* The garden: the page's one bold element. */
+  .garden { position: relative; height: clamp(380px, 64vh, 640px); border-radius: 22px; overflow: hidden;
+    background: radial-gradient(120% 90% at 50% 18%, #3b2b44 0%, #241b2c 55%, #1a1320 100%); }
+  .garden .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 40%; opacity: .55; }
+  .garden canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+  .garden canvas:active { cursor: grabbing; }
+  .garden[data-ready="true"] .poster { display: none; }
+  .intro { position: absolute; left: 0; right: 0; bottom: 0; padding: 70px 24px 22px; pointer-events: none;
+    background: linear-gradient(0deg, rgba(26,19,32,.9) 0%, rgba(26,19,32,.62) 55%, rgba(26,19,32,0) 100%); }
+  .intro > * { max-width: 34rem; }
+  .eyebrow { font: 500 12px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--moss); margin: 0 0 10px; }
+  h1 { font: 700 clamp(30px, 5.2vw, 50px)/1.02 var(--display); margin: 0; text-wrap: balance; color: var(--cream); }
+  h1 em { font-style: normal; color: var(--lantern); }
+  .intro p.lede { margin: 10px 0 0; color: var(--cream); opacity: .9; max-width: 32rem; }
+  .status { position: absolute; top: 14px; left: 14px; display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px;
+    background: rgba(30,23,38,.78); color: var(--honey); font-size: 13px; }
+  .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--lantern); box-shadow: 0 0 10px var(--lantern); }
+  .hint { position: absolute; right: 16px; bottom: 14px; margin: 0; font-size: 12.5px; color: var(--mauve); pointer-events: none; }
+  .tag { position: absolute; transform: translate(-50%, calc(-100% - 14px)); padding: 9px 12px; border-radius: 12px; background: var(--dusk);
+    border: 1px solid var(--dusk-line); box-shadow: 0 8px 24px rgba(0,0,0,.35); font-size: 13px; line-height: 1.35; white-space: nowrap; pointer-events: none; }
+  .tag b { display: block; font: 700 16px/1.1 var(--display); color: var(--cream); }
+  .tag span { color: var(--mauve); }
+  .loading { position: absolute; inset: auto 0 45% 0; text-align: center; color: var(--mauve); font-size: 14px; }
+
+  section.block { padding-block: 56px 8px; }
+  h2 { font: 700 clamp(26px, 3.6vw, 34px)/1.1 var(--display); margin: 0 0 8px; text-wrap: balance; }
+  .sub { color: var(--mauve); margin: 0 0 26px; max-width: 62ch; }
+
+  .residents { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .resident { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: center; padding: 14px; border-radius: 16px;
+    background: var(--dusk); border: 1px solid var(--dusk-line); cursor: pointer; text-align: left; color: inherit; font: inherit; width: 100%; }
+  .resident:hover { border-color: #5a4865; }
+  .resident[aria-pressed="true"] { border-color: var(--lantern); }
+  .face { position: relative; width: 56px; height: 50px; margin-top: 6px; border-radius: 48% 48% 44% 44%; background: var(--coat); }
+  .face::before, .face::after { content: ""; position: absolute; top: -9px; width: 20px; height: 22px; background: var(--coat); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .face::before { left: 4px; transform: rotate(-12deg); }
+  .face::after { right: 4px; transform: rotate(12deg); }
+  .face i { position: absolute; top: 20px; width: 7px; height: 9px; border-radius: 50%; background: #241b2c; }
+  .face i:first-child { left: 16px; } .face i:last-child { right: 16px; }
+  .resident h3 { margin: 0; font: 700 18px/1.15 var(--display); }
+  .resident dl { margin: 6px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 1px 10px; font-size: 13px; }
+  .resident dt { color: var(--mauve); }
+  .resident dd { margin: 0; font-family: var(--mono); font-size: 12.5px; color: var(--cream); font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; margin: 4px 0 0; padding: 1px 7px; border-radius: 999px; font: 500 11px/1.6 var(--body); letter-spacing: .06em;
+    text-transform: uppercase; color: var(--night); background: var(--moss); vertical-align: 3px; }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); counter-reset: step; }
+  .steps li { counter-increment: step; padding: 18px 18px 20px; border-top: 2px solid var(--dusk-line); }
+  .steps li::before { content: counter(step); display: inline-grid; place-items: center; width: 30px; height: 30px; margin-bottom: 10px; border-radius: 50%;
+    font: 700 16px/1 var(--display); color: var(--night); background: var(--lantern); }
+  .steps h3 { margin: 0 0 6px; font: 700 20px/1.15 var(--display); }
+  .steps p { margin: 0; color: var(--mauve); }
+  .stocks { margin-top: 10px; font: 400 12.5px/1.7 var(--mono); color: var(--honey); word-spacing: 4px; }
+
+  .looks { margin-top: 30px; padding: 18px 20px; border-radius: 16px; background: var(--dusk); max-width: 70ch; }
+  .looks p { margin: 0; }
+  .looks p + p { margin-top: 8px; color: var(--mauve); }
+
+  footer { margin-top: 64px; padding-block: 26px 40px; border-top: 1px solid var(--dusk-line); color: var(--mauve); font-size: 13px; }
+  footer p { margin: 0; max-width: 78ch; }
+  footer p + p { margin-top: 8px; }
+  @media (max-width: 560px) {
+    .intro { padding: 60px 16px 16px; }
+    .hint { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#garden">Cat <span>Sanctuary</span></a>
+    <nav aria-label="Sections"><a href="#residents">Residents</a><a href="#home">How a cat comes home</a></nav>
+  </header>
+
+  <main>
+    <section class="garden" id="garden" aria-label="The sanctuary garden, in 3D">
+      <img class="poster" src="assets/sanctuary-poster.jpg" alt="A timber-and-stone cottage with cat-ear gables, a cat's-eye attic window, glowing windows, a porch full of cat beds and a cat tree.">
+      <canvas id="world" tabindex="0" aria-label="The sanctuary in 3D. Drag to look around; tap a cat to see which it is."></canvas>
+      <p class="loading" id="loading">The cats are waking up…</p>
+      <p class="status" id="status">No tokens yet · example cats</p>
+      <div class="intro">
+        <p class="eyebrow">A home for token cats on Solana</p>
+        <h1>Every cat here is <em>a token.</em></h1>
+        <p class="lede">Each resident is a cat coin the sanctuary launched on StonkFun. Once its launch is confirmed on Solana, it moves in and lives here like a real cat: it naps, stretches, sits a while, then wanders off.</p>
+      </div>
+      <p class="hint">Drag to look around · tap a cat</p>
+      <div class="tag" id="tag" hidden></div>
+    </section>
+
+    <section class="block" id="residents" aria-labelledby="residents-h">
+      <h2 id="residents-h">Residents</h2>
+      <p class="sub" id="residents-note">No tokens have launched yet. Until the first one does, the garden shows example cats so you can see how it works. They are marked as examples and are not tokens.</p>
+      <ul class="residents" id="list"></ul>
+    </section>
+
+    <section class="block" id="home" aria-labelledby="home-h">
+      <h2 id="home-h">How a cat comes home</h2>
+      <p class="sub">Cats arrive one at a time, and nobody adds one by hand.</p>
+      <ol class="steps">
+        <li>
+          <h3>Launched on StonkFun</h3>
+          <p>The sanctuary's launcher creates a cat coin priced in one tokenised stock. Each stock gets one cat.</p>
+          <p class="stocks">SPYx QQQx GLDx TSLAx NVDAx AAPLx MSFTx GOOGLx AMZNx METAx COINx HOODx MSTRx CRCLx SPCXx PLTRx GMEx STRCx MCDx BRK.Bx KOx INTCx VIDAx DFDVx</p>
+        </li>
+        <li>
+          <h3>Checked on Solana</h3>
+          <p>A scheduled check reads the launch transaction and confirms the sanctuary's own launcher wallet paid for it. Anything else is left out.</p>
+        </li>
+        <li>
+          <h3>Moves in</h3>
+          <p>The cat joins the garden with its name, its ticker, the stock it's paired with and the day it arrived.</p>
+        </li>
+      </ol>
+      <div class="looks">
+        <p>Each cat looks like the real cat linked to its stock, when there is one: the same coat and markings, and whatever that cat wears.</p>
+        <p>Company logos and mascots never go on a cat. A coin paired with a company's stock is not that company's coin.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Every resident is a memecoin with no intrinsic value and no expectation of profit. Nothing here is financial advice.</p>
+    <p>Cat Sanctuary is not an animal charity. No real cats live here, and it does not take donations.</p>
+    <p>The sanctuary is not affiliated with StonkFun, with the issuers of the tokenised stocks, or with any company whose stock a cat is paired with.</p>
+  </footer>
+</div>
+
+<script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  } }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+/* ── Residents ─────────────────────────────────────────────────────────────
+   No token has launched, so these are examples, and every one says so. When the
+   collection exists, each entry carries its name, ticker, paired stock, mint and the
+   day it moved in, and its coat follows the real cat linked to that stock. */
+const RESIDENTS = [
+  { name: "Ginger tabby", model: "ginger", tint: "#ffffff", swatch: "#e98a2e" },
+  { name: "Cream point",  model: "cat", tint: "#ffffff", swatch: "#ecd2b0" },
+  { name: "Smoke",        model: "cat", tint: "#9c9aa8", swatch: "#8f8c99" },
+  { name: "Midnight",     model: "cat", tint: "#403845", swatch: "#3a3240" },
+  { name: "Honey",        model: "cat", tint: "#e8b670", swatch: "#d9a35d" },
+  { name: "Ash",          model: "cat", tint: "#c2bcb4", swatch: "#b3ada5" },
+  { name: "Cinnamon",     model: "cat", tint: "#c98a5e", swatch: "#b97a4f" },
+  { name: "Snow",         model: "cat", tint: "#fff6ee", swatch: "#f3ece4" },
+].map((r, i) => ({ ...r, example: true, ticker: "—", pair: "—", arrived: "—", id: `cat-${i}` }));
+
+const list = document.getElementById("list");
+for (const r of RESIDENTS) {
+  const li = document.createElement("li");
+  const b = document.createElement("button");
+  b.className = "resident"; b.type = "button"; b.dataset.id = r.id; b.setAttribute("aria-pressed", "false");
+  b.style.setProperty("--coat", r.swatch);
+  b.innerHTML = `<div class="face" aria-hidden="true"><i></i><i></i></div><div><h3></h3><dl><dt>Token</dt><dd></dd><dt>Paired with</dt><dd></dd><dt>Moved in</dt><dd></dd></dl></div>`;
+  const h = b.querySelector("h3"); h.textContent = r.name;
+  if (r.example) { const s = document.createElement("span"); s.className = "badge"; s.textContent = "Example"; h.after(s); }
+  const dds = b.querySelectorAll("dd"); dds[0].textContent = r.ticker; dds[1].textContent = r.pair; dds[2].textContent = r.arrived;
+  b.addEventListener("click", () => focusCat(r.id, true));
+  li.append(b); list.append(li);
+}
+
+/* ── The garden in 3D ───────────────────────────────────────────────────── */
+const garden = document.getElementById("garden");
+const canvas = document.getElementById("world");
+const tag = document.getElementById("tag");
+const loading = document.getElementById("loading");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+let focusCat = () => {};
+
+try { await start(); }
+catch (e) { loading.textContent = "The 3D garden could not load here. The residents are listed below."; console.warn(e); }
+
+async function start() {
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x2a2033, 17, 36);
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 120);
+  camera.position.set(8.6, 5.6, 10.6);
+  const controls = new OrbitControls(camera, canvas);
+  controls.target.set(0.6, 1.3, 1.2); controls.enableDamping = true; controls.enablePan = false;
+  controls.minDistance = 7; controls.maxDistance = 20; controls.minPolarAngle = 0.55; controls.maxPolarAngle = 1.36;
+  controls.autoRotate = !reduce.matches; controls.autoRotateSpeed = 0.35;
+  canvas.addEventListener("pointerdown", () => { controls.autoRotate = false; }, { once: true });
+
+  /* Evening light: a low amber sun, a mauve sky, and the house's own windows. */
+  scene.add(new THREE.HemisphereLight(0xffe0c2, 0x3b2f3d, 1.05));
+  const sun = new THREE.DirectionalLight(0xffc387, 2.0);
+  sun.position.set(-9, 12, 8); sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024);
+  Object.assign(sun.shadow.camera, { left: -16, right: 16, top: 16, bottom: -16, near: 1, far: 50 });
+  scene.add(sun);
+
+  /* The garden: a round meadow, a trodden clearing, stepping stones to the porch. */
+  const meadow = new THREE.Mesh(new THREE.CircleGeometry(60, 96), new THREE.MeshStandardMaterial({ color: 0x506a4a, roughness: 1 }));
+  meadow.rotation.x = -Math.PI / 2; meadow.receiveShadow = true; scene.add(meadow);
+  const clearing = new THREE.Mesh(new THREE.CircleGeometry(7.6, 64), new THREE.MeshStandardMaterial({ color: 0x5e4a3a, roughness: 1 }));
+  clearing.rotation.x = -Math.PI / 2; clearing.position.y = 0.01; clearing.receiveShadow = true; scene.add(clearing);
+  const stoneMat = new THREE.MeshStandardMaterial({ color: 0x9a8f86, roughness: .95 });
+  for (let i = 0; i < 6; i++) {
+    const s = new THREE.Mesh(new THREE.CylinderGeometry(.42 - i * .015, .46, .08, 9), stoneMat);
+    s.position.set(1.1 + i * 0.95, .04, 4.4 + i * 1.05); s.rotation.y = i * .7; s.receiveShadow = true; scene.add(s);
+  }
+
+  const loader = new GLTFLoader();
+  const load = (u) => loader.loadAsync(u).then((g) => g.scene);
+  const POSES = ["sit", "walk", "loaf", "stretch", "sleep"];
+  const [house, ...poseScenes] = await Promise.all([
+    load("assets/sanctuary.gltf.json"),
+    ...POSES.map((p) => load(`assets/cat-${p}.gltf.json`)),
+    ...POSES.map((p) => load(`assets/ginger-${p}.gltf.json`)),
+  ]);
+
+  /* The house: about 5.8 units tall, centred, standing on the ground. */
+  const HOUSE_H = 5.2;
+  { const b = new THREE.Box3().setFromObject(house); const s = HOUSE_H / (b.max.y - b.min.y);
+    house.scale.setScalar(s); const b2 = new THREE.Box3().setFromObject(house); const c = b2.getCenter(new THREE.Vector3());
+    house.position.set(-c.x, -b2.min.y, -c.z);
+    house.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } }); scene.add(house); }
+  const hb = new THREE.Box3().setFromObject(house);
+  const KEEP = { x: Math.max(Math.abs(hb.min.x), hb.max.x) + 0.8, z: Math.max(Math.abs(hb.min.z), hb.max.z) + 0.8 };
+  const inHouse = (x, z, pad = 0) => Math.abs(x) < KEEP.x + pad && Math.abs(z) < KEEP.z + pad;
+
+  /* Lanterns by the porch and a warm spill from the windows. */
+  for (const [x, z] of [[KEEP.x * .85, KEEP.z + .2], [-KEEP.x * .85, KEEP.z + .2], [0, KEEP.z + .6]]) {
+    const l = new THREE.PointLight(0xffa24d, 4, 6, 2); l.position.set(x, 1.8, z); scene.add(l);
+  }
+
+  /* Each pose model is unit-sized on its longest side, so each gets its own scale to one
+     cat size: a sitting cat about 0.95 units tall, the others in proportion. All face +X. */
+  const CAT = 1.5;
+  const FIT = { sit: (b) => CAT / b.y, walk: (b) => CAT * 0.95 / b.y, loaf: (b) => CAT * 1.05 / b.x, stretch: (b) => CAT * 1.2 / b.x, sleep: (b) => CAT * 0.8 / Math.max(b.x, b.z) };
+  function prepare(root, pose) {
+    const size = new THREE.Box3().setFromObject(root).getSize(new THREE.Vector3());
+    const holder = new THREE.Group(); const inner = root.clone(true);
+    inner.scale.setScalar(FIT[pose](size));
+    const b = new THREE.Box3().setFromObject(inner); const c = b.getCenter(new THREE.Vector3());
+    inner.position.set(-c.x, -b.min.y, -c.z); holder.add(inner); return holder;
+  }
+  const bases = { cat: {}, ginger: {} };
+  POSES.forEach((p, i) => { bases.cat[p] = poseScenes[i]; bases.ginger[p] = poseScenes[i + 5]; });
+
+  /* ── A cat, and how it spends its time ─────────────────────────────────
+     Real cats wander somewhere, stop, sit and look about, loaf, sometimes stretch before
+     setting off again, and nap for long stretches in a cosy spot near the house. */
+  const NEXT = {
+    walk:    [["sit", .34], ["loaf", .22], ["walk", .2], ["stretch", .1], ["sleep", .14]],
+    sit:     [["walk", .5], ["loaf", .3], ["sit", .1], ["sleep", .1]],
+    loaf:    [["sleep", .35], ["walk", .45], ["sit", .2]],
+    sleep:   [["stretch", .65], ["walk", .25], ["loaf", .1]],
+    stretch: [["walk", .8], ["sit", .2]],
+  };
+  const LAST = { sit: [3, 8], loaf: [6, 14], sleep: [14, 32], stretch: [1.6, 2.4], walk: [0, 14] };
+  const pick = (opts) => { let r = Math.random(); for (const [k, p] of opts) { if ((r -= p) <= 0) return k; } return opts[0][0]; };
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const cats = [];
+  const clickables = [];
+
+  function spot(cosy = false) {
+    for (let t = 0; t < 40; t++) {
+      const a = Math.random() < 0.75 ? rand(-0.35, 1.95) : Math.random() * Math.PI * 2;   // mostly the front, towards the camera
+      const r = cosy ? rand(0.3, 1.3) : rand(0.9, 5.6);
+      const x = Math.cos(a) * (KEEP.x + r), z = Math.sin(a) * (KEEP.z + r);   // a from +x round to +z: the side the camera sees
+      if (!inHouse(x, z) && cats.every((c) => (c.g.position.x - x) ** 2 + (c.g.position.z - z) ** 2 > 3.2)) return new THREE.Vector3(x, 0, z);
+    }
+    return new THREE.Vector3(KEEP.x + 2, 0, KEEP.z + 2);
+  }
+
+  RESIDENTS.forEach((r) => {
+    const g = new THREE.Group(); g.userData.id = r.id;
+    const tint = new THREE.Color(r.tint);
+    const meshes = {};
+    for (const p of POSES) {
+      const m = prepare(bases[r.model][p], p);
+      m.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.material = o.material.clone(); o.material.color.multiply(tint); o.userData.catId = r.id; clickables.push(o); } });
+      m.visible = false; g.add(m); meshes[p] = m;
+    }
+    const start = spot();
+    g.position.copy(start); g.rotation.y = Math.random() * Math.PI * 2;
+    scene.add(g);
+    const cat = { r, g, meshes, state: "sit", until: 0, target: null, yaw: g.rotation.y, lookTo: g.rotation.y, t0: Math.random() * 10 };
+    setState(cat, reduce.matches ? pick([["sit", .4], ["loaf", .35], ["sleep", .25]]) : pick(NEXT.walk), 0);
+    cats.push(cat);
+  });
+
+  function setState(cat, s, now) {
+    cat.state = s;
+    for (const p of POSES) cat.meshes[p].visible = p === s;
+    if (s === "walk") { cat.target = spot(Math.random() < .25); cat.until = now + LAST.walk[1]; }
+    else if (s === "sleep" && !reduce.matches && Math.random() < .6) { cat.target = spot(true); cat.state = "walk"; cat.after = "sleep"; cat.meshes.sleep.visible = false; cat.meshes.walk.visible = true; cat.until = now + LAST.walk[1]; }
+    else { cat.until = now + rand(...LAST[s]); cat.lookTo = cat.yaw + rand(-1.1, 1.1); cat.after = null; }
+  }
+
+  const turnTo = (from, to, maxStep) => { let d = ((to - from + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI; return from + Math.max(-maxStep, Math.min(maxStep, d)); };
+
+  function step(cat, now, dt) {
+    const { g } = cat;
+    const inner = cat.meshes[cat.state];
+    inner.position.y = 0; inner.scale.set(1, 1, 1);
+    if (cat.state === "walk") {
+      const to = new THREE.Vector3().subVectors(cat.target, g.position); to.y = 0;
+      const dist = to.length();
+      if (dist < 0.25 || now > cat.until) { const nxt = cat.after || pick(NEXT.walk); cat.after = null; setState(cat, nxt === "walk" ? "sit" : nxt, now); return; }
+      let dir = to.normalize();
+      for (const o of cats) { if (o === cat) continue; const d = new THREE.Vector3().subVectors(g.position, o.g.position); d.y = 0; const l = d.length(); if (l < 1.9 && l > 0.001) dir.addScaledVector(d.normalize(), (1.9 - l) * 1.4); }
+      const ahead = g.position.clone().addScaledVector(dir, 0.6);
+      if (inHouse(ahead.x, ahead.z)) { const side = new THREE.Vector3(-dir.z, 0, dir.x); if (side.dot(g.position) < 0) side.negate(); dir = side.add(dir.multiplyScalar(.3)); }
+      dir.normalize();
+      cat.yaw = turnTo(cat.yaw, Math.atan2(-dir.z, dir.x), 2.6 * dt);
+      const fwd = new THREE.Vector3(Math.cos(cat.yaw), 0, -Math.sin(cat.yaw));
+      g.position.addScaledVector(fwd, 1.05 * dt);
+      if (inHouse(g.position.x, g.position.z)) g.position.addScaledVector(fwd, -1.05 * dt);
+      inner.position.y = Math.abs(Math.sin((now + cat.t0) * 7)) * 0.05;
+    } else {
+      if (cat.state === "sit") cat.yaw = turnTo(cat.yaw, cat.lookTo, 0.8 * dt);
+      if (cat.state === "sleep" || cat.state === "loaf") inner.scale.y = 1 + Math.sin((now + cat.t0) * 1.7) * 0.018;
+      if (cat.state === "stretch") { const k = Math.sin(Math.min(1, (now - (cat.until - 2)) / 2) * Math.PI) * 0.06; inner.scale.set(1 + k, 1 - k * .5, 1); }
+      if (now > cat.until && !reduce.matches) setState(cat, pick(NEXT[cat.state]), now);
+    }
+    g.rotation.y = cat.yaw;
+  }
+
+  /* Picking: a tap on a cat, or its card, shows who it is. */
+  const ray = new THREE.Raycaster(); const ndc = new THREE.Vector2();
+  let chosen = null, down = null;
+  canvas.addEventListener("pointerdown", (e) => { down = [e.clientX, e.clientY]; });
+  canvas.addEventListener("pointerup", (e) => {
+    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
+    const rc = canvas.getBoundingClientRect();
+    ndc.set(((e.clientX - rc.left) / rc.width) * 2 - 1, -((e.clientY - rc.top) / rc.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const hit = ray.intersectObjects(clickables.filter((m) => m.parent && isShown(m)), false)[0];
+    focusCat(hit ? hit.object.userData.catId : null, false);
+  });
+  const isShown = (o) => { for (let p = o; p; p = p.parent) if (!p.visible) return false; return true; };
+  focusCat = (id, fromCard) => {
+    chosen = cats.find((c) => c.r.id === id) || null;
+    document.querySelectorAll(".resident").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
+    if (!chosen) { tag.hidden = true; return; }
+    tag.innerHTML = ""; const b = document.createElement("b"); b.textContent = chosen.r.name; const s = document.createElement("span");
+    s.textContent = chosen.r.example ? "Example cat · not a token" : `${chosen.r.ticker} · paired with ${chosen.r.pair}`; tag.append(b, s); tag.hidden = false;
+    if (fromCard) garden.scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "center" });
+  };
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    camera.fov = w < 560 ? 48 : 36; camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(canvas); resize();
+
+  const clock = new THREE.Clock(); const tmp = new THREE.Vector3();
+  garden.dataset.ready = "true"; loading.hidden = true;
+  renderer.setAnimationLoop(() => {
+    const dt = Math.min(clock.getDelta(), 0.05), now = clock.elapsedTime;
+    for (const c of cats) step(c, now, dt);
+    controls.update(); renderer.render(scene, camera);
+    if (chosen && !tag.hidden) {
+      tmp.copy(chosen.g.position); tmp.y += 1.75; tmp.project(camera);
+      const rc = canvas.getBoundingClientRect();
+      tag.style.left = `${(tmp.x * .5 + .5) * rc.width}px`; tag.style.top = `${(-tmp.y * .5 + .5) * rc.height}px`;
+    }
+  });
+}
+</script>
+
+</body>
+</html>
