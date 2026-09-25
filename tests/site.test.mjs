@@ -302,11 +302,18 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
   assert.match(root.querySelector("p.finder-intro").textContent, /so far, each paired with one stock/);
 });
 
-test("a company's cat is never a coin's picture: no planned cat's whyLook says it follows or copies a cat, and held cats ship no portrait", () => {
+test("a cat drawn like a company's cat says so: its whyLook's company cat comes with the fan-tribute line on its card, and held cats ship no portrait", async () => {
   const held = JSON.parse(read("data/held.json")).held.map((h) => h.ticker);
+  const list = await residents();
   for (const c of PLANNED.cats) {
-    assert.ok(!/\b(follows|copies|copied|reproduces|traced from)\b|\b(she|he|it)\s+is\s+the\b/i.test(c.whyLook), `${c.ticker}: ${c.whyLook}`);
+    const follows = /\b(follows|copies|copied|reproduces|traced from)\b|\b(she|he|it)\s+is\s+the\b/i.test(c.whyLook);
+    if (follows) assert.match(c.tribute ?? "", /^Fan tribute to (.+)'s cat\. Not affiliated with or endorsed by \1\.$/, `${c.ticker}: ${c.whyLook}`);
     assert.ok(!held.includes(c.ticker), `${c.ticker} is held back but planned`);
+    const r = list.find((x) => x.id === c.ticker);
+    const c2 = renderCard(r);
+    const shown = c2.root.querySelector("p.card-tribute");
+    if (c.tribute) assert.equal(shown?.textContent, c.tribute, `${c.ticker}: the card shows its tribute line`);
+    else assert.ok(!shown, `${c.ticker}: a tribute line on a cat that follows no company's cat`);
   }
   for (const t of held) assert.ok(!exists(`assets/portraits/${t}.jpg`), `${t}'s portrait is published`);
 });

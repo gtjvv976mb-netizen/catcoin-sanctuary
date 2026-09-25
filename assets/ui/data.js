@@ -3,7 +3,7 @@
    exports and checks every field before it reaches the page:
 
      { id, name, ticker, plannedName, stock, company, pair: { symbol, mint },
-       description (the cat's story), look, whyLook, portrait, coat: { base, second, pattern, eyes },
+       description (the cat's story), look, whyLook, tribute, portrait, coat: { base, second, pattern, eyes },
        realCatName, who, basis, linkType, strength, realCatLink, checked, disclaimer,
        virality: [{ label, value, source, date, dateType, method }], links: [{ label, url, date, dateType }],
        token: { status: "planned" } | { status: "launched", mint, launchedAt, tx },
@@ -121,6 +121,7 @@ function normalizeNew(e) {
     description: para(e.description, 900),
     look: para(e.look, 600),
     whyLook: para(e.whyLook, 600),
+    tribute: str(e.tribute, 200),
     portrait: localPicture(e.portrait),
     coat: { base: str(coatIn.base, 40), second: str(coatIn.second, 40), pattern: str(coatIn.pattern, 40), eyes: str(coatIn.eyes, 40) },
     who, virality, links, token, buy,

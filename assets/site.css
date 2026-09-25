@@ -266,6 +266,7 @@ body.no-webgl .hint { display: none; }
 
 /* ── Card: who the cat is (its story, then the stock's real cat) ─────────── */
 .card-story { font-size: 15px; }
+.card-tribute { margin: 6px 0 0; font-size: 13px; font-weight: 600; color: var(--ink-soft); }
 .card-real { margin: 10px 0 8px; padding: 10px 12px; border-radius: 14px; background: #fff3e4; border: 1px solid var(--line); }
 .card-real p { font-size: 14.5px; }
 .card-real-head { display: grid; gap: 1px; margin-bottom: 6px !important; }

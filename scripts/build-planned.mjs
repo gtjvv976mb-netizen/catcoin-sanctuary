@@ -13,7 +13,7 @@
  * the garden by accident.
  *
  * A launch sheet is a JSON list of entries: { stonkfunSymbol, name, ticker, description, look,
- * story?, whyLook?, coat?: { base, second, pattern, eyes }, image?, imageJpg512?, quoteMint? |
+ * story?, whyLook?, tribute?, coat?: { base, second, pattern, eyes }, image?, imageJpg512?, quoteMint? |
  * pairMint? }. The pair is the sheet's mint when it names one (it must be one of the stock pairs
  * in assets/collection.js, for that StonkFun symbol), else the stock pair with that StonkFun
  * symbol (for a symbol StonkFun lists twice, OPENAI and KALSHI, the category the research names).
@@ -30,16 +30,18 @@
  * words (scripts/lib/coat.mjs). Resizing a portrait that is not already a 512 px JPEG needs
  * python3 with Pillow; a sheet's ready-made 512 px JPEG is copied as it is.
  *
- * A COMPANY'S CAT IS NEVER A COIN'S PICTURE. A cat listed in data/held.json is left out (with its
- * portrait) until its picture is redrawn. Any other cat whose whyLook says its picture follows,
- * copies or "is the" cat of a company or a post stops the run: hold it, or redraw it and say so.
- * A portrait file whose cat is no longer planned is removed.
+ * A CAT DRAWN LIKE A COMPANY'S CAT SAYS SO. A cat whose whyLook says its picture follows, copies or
+ * "is the" cat of a company or a post (or whose sheet entry has a `tribute`) must carry the line
+ * "Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>." in its
+ * description; it is published as the cat's `tribute` and shown on its card. Without it the run
+ * stops. A cat listed in data/held.json is still left out (with its portrait). A portrait file
+ * whose cat is no longer planned is removed.
  */
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { STOCK_PAIRS, pairByMint, validatePlanned, TICKER } from "../assets/collection.js";
+import { STOCK_PAIRS, pairByMint, validatePlanned, TICKER, TRIBUTE } from "../assets/collection.js";
 import { coatFromLook, coatFromSheet } from "./lib/coat.mjs";
 
 export class PlannedError extends Error { constructor(message) { super(message); this.name = "PlannedError"; } }
@@ -112,6 +114,13 @@ const COPIES = /\b(follows|copies|copied|reproduces|traced from)\b|\b(she|he|it)
 
 /** Whether a cat's whyLook says its picture reproduces a particular existing cat. */
 export const copiesACat = (whyLook) => COPIES.test(String(whyLook ?? ""));
+
+/** The fan-tribute line in a sheet entry (its `tribute`, or the one in its description), or null. */
+export function tributeOf(entry) {
+  if (typeof entry.tribute === "string" && entry.tribute.trim()) return entry.tribute.trim();
+  const m = /Fan tribute to (.{2,80}?)'s cat\. Not affiliated with or endorsed by \1\./.exec(String(entry.description ?? ""));
+  return m ? m[0] : null;
+}
 
 /** data/held.json: { note?, held: [{ ticker, since, reason }] } → Map ticker → reason. A missing file holds nothing. */
 export function readHeld(root) {
@@ -207,8 +216,12 @@ export function buildPlanned({ root, sheets, allowDrop = false, nowMs = Date.now
     if (typeof e.ticker !== "string" || !TICKER.test(e.ticker)) throw new PlannedError(`a sheet entry has the ticker ${JSON.stringify(e.ticker)}, not 2 to 10 capital letters or digits`);
     if (cats.some((c) => c.ticker === e.ticker) || heldBack.includes(e.ticker)) throw new PlannedError(`${e.ticker} is in the sheets twice`);
     if (held.has(e.ticker)) { heldBack.push(e.ticker); log(`${e.ticker}: held back (data/held.json): ${held.get(e.ticker)}`); continue; }
-    if (copiesACat(e.whyLook)) {
-      throw new PlannedError(`${e.ticker}: its whyLook says its picture follows or copies a particular cat ("${String(e.whyLook).slice(0, 90)}…"); a company's cat is never a coin's picture. Redraw it, or hold it in data/held.json; nothing was written`);
+    const tribute = tributeOf(e);
+    if (tribute !== null && (!TRIBUTE.test(tribute) || !String(e.description ?? "").includes(tribute))) {
+      throw new PlannedError(`${e.ticker}: its tribute must read "Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>." and appear in its description; nothing was written`);
+    }
+    if (copiesACat(e.whyLook) && tribute === null) {
+      throw new PlannedError(`${e.ticker}: its whyLook says its picture follows or copies a particular cat ("${String(e.whyLook).slice(0, 90)}…"), so its description must say "Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>."; nothing was written`);
     }
     const pair = pairFor(e, research);
     const fromSheet = coatFromSheet(e.coat);
@@ -223,6 +236,7 @@ export function buildPlanned({ root, sheets, allowDrop = false, nowMs = Date.now
       description: String(e.description ?? "").trim(),
       look: String(e.look ?? "").trim(),
       whyLook: String(e.whyLook ?? "").trim(),
+      tribute,
       portrait: bytes ? `assets/portraits/${e.ticker}.jpg` : null,
       coat: fromSheet ?? coatFromLook(e.look),
       coatFrom: fromSheet ? "sheet" : "look",

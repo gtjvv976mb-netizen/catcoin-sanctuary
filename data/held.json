@@ -1,4 +1,4 @@
 {
-  "note": "Planned cats held back from the garden. A company's own cat or mascot may be described on a card, with its source, but never be a coin's picture or name. Each of these cats' portraits (and its launch-sheet picture) follows a specific cat that a company owns or publishes, so the cat stays out of data/planned.json until its picture is redrawn as a cat of its own. To bring one back: redraw its launch-sheet picture, rewrite its whyLook so it no longer says it follows or copies that cat, delete its row here, and run scripts/build-planned.mjs with every sheet.",
+  "note": "Planned cats held back from the garden (none now). A cat whose look follows a company's cat is planned as a fan tribute: its description and card carry \"Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>.\" (scripts/build-planned.mjs requires it). A cat listed here is left out of data/planned.json with its portrait. To bring one back, delete its row and run scripts/build-planned.mjs with every sheet.",
   "held": []
 }

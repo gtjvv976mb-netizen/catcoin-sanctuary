@@ -551,7 +551,11 @@ function stockProblem(s, nowMs) {
   return null;
 }
 
-const CAT_FIELDS = ["ticker", "name", "pair", "story", "description", "look", "whyLook", "portrait", "coat", "coatFrom"];
+const CAT_FIELDS = ["ticker", "name", "pair", "story", "description", "look", "whyLook", "tribute", "portrait", "coat", "coatFrom"];
+
+/** The line a cat drawn to look like a company's cat must carry, word for word. */
+export const TRIBUTE = /^Fan tribute to (.{2,80})'s cat\. Not affiliated with or endorsed by \1\.$/;
+export const tributeLine = (company) => `Fan tribute to ${company}'s cat. Not affiliated with or endorsed by ${company}.`;
 
 /** Why one planned cat may not be shown, or null. */
 function plannedCatProblem(c) {
@@ -566,6 +570,10 @@ function plannedCatProblem(c) {
   for (const [k, max] of [["story", 600], ["description", 600], ["look", 1200]]) { const p = proseProblem(c[k], { maxChars: max }); if (p) return `${k}: ${p}`; }
   const why = proseProblem(c.whyLook, { maxChars: 800, empty: true });
   if (why) return `whyLook: ${why}`;
+  if (c.tribute !== undefined && c.tribute !== null) {
+    if (typeof c.tribute !== "string" || !TRIBUTE.test(c.tribute)) return "tribute must read \"Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>.\"";
+    if (!String(c.description).includes(c.tribute)) return "description must carry the tribute line";
+  }
   if (c.portrait !== null && c.portrait !== `assets/portraits/${c.ticker}.jpg`) return "portrait must be assets/portraits/<TICKER>.jpg or null";
   const coat = coatProblem(c.coat);
   if (coat) return `coat: ${coat}`;
@@ -580,7 +588,7 @@ function plannedCatProblem(c) {
  *                  links: [{ label, url, date, dateType, opened }],
  *                  virality: [{ label, value, source, date, dateType, method }],
  *                  checked, disclaimer }                      one per pair mint: sourced research
- *   planned cat  { ticker, name, pair: { symbol, mint }, story, description, look, whyLook,
+ *   planned cat  { ticker, name, pair: { symbol, mint }, story, description, look, whyLook, tribute: string | null,
  *                  portrait: "assets/portraits/<TICKER>.jpg" | null, coat, coatFrom: "sheet" | "look" }
  * Returns { stocks, cats, refused: [{ list, index, clause, detail }] }: clean copies of what
  * passed. A cat whose pair has no research row is refused (its card could not say who it is or
@@ -613,7 +621,7 @@ export function validatePlanned(data, { nowMs = Date.now() } = {}) {
     if (cats.some((x) => x.pair.mint === c.pair.mint)) return refused.push({ list: "cats", index, clause: "duplicate", detail: "this pair already has a planned cat" });
     cats.push({
       ticker: c.ticker, name: c.name, pair: { symbol: c.pair.symbol, mint: c.pair.mint }, story: c.story, description: c.description,
-      look: c.look, whyLook: c.whyLook, portrait: c.portrait, coat: { base: c.coat.base, second: c.coat.second, pattern: c.coat.pattern, eyes: c.coat.eyes },
+      look: c.look, whyLook: c.whyLook, tribute: c.tribute ?? null, portrait: c.portrait, coat: { base: c.coat.base, second: c.coat.second, pattern: c.coat.pattern, eyes: c.coat.eyes },
       coatFrom: c.coatFrom,
     });
   });

@@ -115,15 +115,14 @@ fails the run (anyone could send one, and a failed run publishes nothing). If th
 a launch of yours, open it on Solscan to confirm it, then either teach `scripts/lib/chain.mjs` the
 new version (record the transaction as a fixture first) or launch again in the usual way.
 
-## Held cats
+## Fan-tribute cats and held cats
 
-A company's own cat is never a coin's picture. `data/held.json` lists planned cats whose launch-
-sheet picture follows a particular cat that a company owns or published; they stay out of the
-garden (and their portraits out of the site) until the picture is redrawn. The builder also stops
-on any other cat whose `whyLook` says its picture follows, copies or "is the" company's cat. To
-bring one back: redraw its launch-sheet picture, rewrite its `whyLook`, delete its row in
-`data/held.json`, and run the planned-cats builder again. Launch a held cat only after that: its
-sheet picture is the coin's picture.
+A cat whose look follows a company's cat (its `whyLook` says it follows, copies or "is the"
+company's cat) is planned as a fan tribute: its description must carry, and its card shows,
+"Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>." The planned-cats
+builder stops on such a cat without that line (a sheet entry may also name it in `tribute`).
+`data/held.json` can still hold a planned cat back from the garden (with its portrait); it is
+empty now. To bring a held cat back, delete its row and run the planned-cats builder again.
 
 ## When a launch sheet or the research changes
 

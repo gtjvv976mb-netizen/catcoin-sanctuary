@@ -169,6 +169,8 @@ export function createCard({ root, onClose, onInset }) {
     /* 1. Who the cat is: its own story, then the stock's real cat as the research found it. */
     const who = section("Who the cat is", "card-who");
     if (r.description) who.append(el("p", "card-story", r.description));
+    // A cat drawn to look like a company's cat says so plainly, right under its story.
+    if (r.tribute) who.append(el("p", "card-tribute", r.tribute));
     const real = el("div", "card-real");
     const realHead = el("p", "card-real-head");
     realHead.append(el("span", "card-real-kicker", `The real cat behind ${r.pair.symbol || "its stock"}`));

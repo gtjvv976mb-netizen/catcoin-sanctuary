@@ -6,9 +6,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { buildPlanned, PlannedError, jpegInfo, serialize, stockRow, copiesACat, readHeld } from "../scripts/build-planned.mjs";
+import { buildPlanned, PlannedError, jpegInfo, serialize, stockRow, copiesACat, readHeld, tributeOf } from "../scripts/build-planned.mjs";
 import { coatFromLook, coatFromSheet } from "../scripts/lib/coat.mjs";
-import { validatePlanned, STOCK_PAIRS, coatProblem, pairByMint, tradeLinkProblem } from "../assets/collection.js";
+import { validatePlanned, STOCK_PAIRS, coatProblem, pairByMint, tradeLinkProblem, TRIBUTE, tributeLine } from "../assets/collection.js";
 import { ROOT, DATA_NOW } from "./helpers.mjs";
 
 /* These tests read the shipped data: the real clock (tests/helpers.mjs DATA_NOW), not a frozen one. */
@@ -209,20 +209,54 @@ test("coats from a look's words", () => {
   assert.equal(coatFromSheet({ base: "plaid" }), null);
 });
 
-/* ── A company's cat is never a coin's picture ─────────────────────────────────────────── */
+/* ── A cat drawn like a company's cat says so: a fan tribute, not affiliated ─────────────── */
 
 const COPYING = "She is the grey tabby pixel cat that a company posted: dark bars on the cheeks, white chin.";
+const TRIBUTE_LINE = tributeLine("Acme");
 
-test("build: a cat whose whyLook says its picture follows or copies a particular cat stops the run, unless it is held back", () => {
+test("build: a cat whose whyLook says its picture follows or copies a company's cat must carry the fan-tribute line, or the run stops", () => {
   for (const why of [COPYING, "He copies the real cat in a company's blog post.", "She follows the white cat avatar in a car's update.", "The coin copies that cat."]) {
     const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", { whyLook: why })]]);
     const before = snapshot(root);
-    assert.throws(() => buildPlanned({ root, sheets: paths, nowMs: NOW }), (e) => e instanceof PlannedError && /never a coin's picture/.test(e.message), why);
+    assert.throws(() => buildPlanned({ root, sheets: paths, nowMs: NOW }), (e) => e instanceof PlannedError && /Fan tribute to <Company>'s cat\. Not affiliated with or endorsed by <Company>\./.test(e.message), why);
     assert.deepEqual(snapshot(root), before);
+  }
+  // With the line in its description, the same cat is planned and carries the line as its tribute.
+  const base = sheetEntry("PATCHPAW");
+  const description = `${base.story} ${TRIBUTE_LINE} A cat coin priced in SPYx. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.`;
+  for (const extra of [{ whyLook: COPYING, description }, { whyLook: COPYING, description, tribute: TRIBUTE_LINE }]) {
+    const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", extra)]]);
+    buildPlanned({ root, sheets: paths, nowMs: NOW });
+    const cat = readPlanned(root).cats[0];
+    assert.equal(cat.tribute, TRIBUTE_LINE);
+    assert.ok(cat.description.includes(TRIBUTE_LINE));
+  }
+  // A tribute that is worded differently, names two companies, or is missing from the description stops the run.
+  for (const extra of [
+    { whyLook: COPYING, tribute: "A tribute to Acme's cat.", description },
+    { whyLook: COPYING, tribute: "Fan tribute to Acme's cat. Not affiliated with or endorsed by Other.", description },
+    { whyLook: COPYING, tribute: TRIBUTE_LINE },
+  ]) {
+    const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", extra)]]);
+    assert.throws(() => buildPlanned({ root, sheets: paths, nowMs: NOW }), PlannedError, JSON.stringify(extra));
   }
   assert.equal(copiesACat("No cat link was found. She is a honey-golden cat in the 'loaf' pose."), false);
   assert.equal(copiesACat("Only the coat and eye colour are used."), false);
-  for (const c of PLANNED.cats) assert.equal(copiesACat(c.whyLook), false, c.ticker);
+  assert.equal(tributeOf({ description: "No tribute here." }), null);
+  // Every shipped cat whose look follows a company's cat carries the line, in its description and as its tribute.
+  for (const c of PLANNED.cats) {
+    if (copiesACat(c.whyLook)) assert.match(c.tribute ?? "", TRIBUTE, c.ticker);
+    if (c.tribute) assert.ok(c.description.includes(c.tribute), c.ticker);
+  }
+});
+
+test("rules: a planned cat's tribute is the exact line, and its description carries it", () => {
+  const c = structuredClone(PLANNED.cats[0]);
+  const plan = (cat) => validatePlanned({ stocks: PLANNED.stocks, cats: [cat] }, { nowMs: NOW }).refused;
+  assert.deepEqual(plan({ ...c, tribute: null }), []);
+  assert.deepEqual(plan({ ...c, tribute: TRIBUTE_LINE, description: `${c.description} ${TRIBUTE_LINE}` }), []);
+  assert.match(plan({ ...c, tribute: TRIBUTE_LINE })[0].detail, /description must carry/);
+  assert.match(plan({ ...c, tribute: "Inspired by Acme.", description: `${c.description} Inspired by Acme.` })[0].detail, /tribute must read/);
 });
 
 test("build: a cat held in data/held.json is left out with its portrait, and is not counted as dropped", () => {
@@ -240,14 +274,16 @@ test("build: a cat held in data/held.json is left out with its portrait, and is 
     fs.writeFileSync(path.join(root, "data/held.json"), JSON.stringify(bad));
     assert.throws(() => readHeld(root), PlannedError);
   }
-  // The owner ruled "Redraw as original cats": the eight once-held cats were redrawn and are planned again.
+  // The owner ruled that the eight xStock cats look exactly like their companies' cats, as fan tributes.
   const shipped = readHeld(ROOT);
-  for (const t of ["HARRUMPH", "PEWTER", "SNOWCURL", "MOATCAT", "COUCHCAP", "WARMSPOT", "SOCKFOOT", "HALFSMILE"]) {
-    assert.ok(!shipped.has(t), t);
+  assert.equal(shipped.size, 0);
+  const companies = { HARRUMPH: "Coinbase", PEWTER: "Robinhood", SNOWCURL: "Tesla", MOATCAT: "Berkshire Hathaway", COUCHCAP: "Meta", WARMSPOT: "SpaceX", SOCKFOOT: "NVIDIA", HALFSMILE: "Microsoft" };
+  for (const [t, company] of Object.entries(companies)) {
     const cat = PLANNED.cats.find((c) => c.ticker === t);
     assert.ok(cat, `${t} is planned`);
-    assert.ok(!copiesACat(cat.whyLook), t);
-    assert.match(cat.whyLook, /^An original cat/, t);
+    assert.ok(copiesACat(cat.whyLook), t);
+    assert.equal(cat.tribute, tributeLine(company), t);
+    assert.ok(cat.description.length <= 280 && cat.description.includes(cat.tribute), t);
   }
 });
 
