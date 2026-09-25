@@ -240,9 +240,15 @@ test("build: a cat held in data/held.json is left out with its portrait, and is 
     fs.writeFileSync(path.join(root, "data/held.json"), JSON.stringify(bad));
     assert.throws(() => readHeld(root), PlannedError);
   }
+  // The owner ruled "Redraw as original cats": the eight once-held cats were redrawn and are planned again.
   const shipped = readHeld(ROOT);
-  assert.ok(shipped.size >= 5);
-  for (const t of ["HARRUMPH", "PEWTER", "SNOWCURL", "MOATCAT", "COUCHCAP"]) assert.ok(shipped.has(t), t);
+  for (const t of ["HARRUMPH", "PEWTER", "SNOWCURL", "MOATCAT", "COUCHCAP", "WARMSPOT", "SOCKFOOT", "HALFSMILE"]) {
+    assert.ok(!shipped.has(t), t);
+    const cat = PLANNED.cats.find((c) => c.ticker === t);
+    assert.ok(cat, `${t} is planned`);
+    assert.ok(!copiesACat(cat.whyLook), t);
+    assert.match(cat.whyLook, /^An original cat/, t);
+  }
 });
 
 test("rules: research links are never trading pages; virality dates say what they are; an unconfirmed link is not the company's own", () => {
