@@ -72,6 +72,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const [houseGltf, models] = await Promise.all([loader.loadAsync("assets/models/sanctuary.glb"), loadCatModels(loader, "assets/models/", { cell: mobile ? 0.085 : 0.06 })]);
   const house = houseGltf.scene;
   {
+    house.rotation.y = -Math.PI / 2; // the mesh's door faces +x in model space; turn it to face the porch side (+z)
     const b = new THREE.Box3().setFromObject(house);
     house.scale.setScalar(HOUSE.height / (b.max.y - b.min.y));
     const b2 = new THREE.Box3().setFromObject(house), c = b2.getCenter(new THREE.Vector3());

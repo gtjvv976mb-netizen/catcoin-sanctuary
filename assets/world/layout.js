@@ -13,7 +13,7 @@ export const CAT = { size: 1.2, bodyR: 0.3, clearR: 0.42, personal: 1.0 };
 
 /** The cottage, scaled to `height` and centred. Its footprint (with the porch stairs) was
     measured by casting rays down onto sanctuary.glb at that scale. */
-export const HOUSE = { height: 5.2, minX: -2.5, maxX: 2.55, minZ: -2.55, maxZ: 2.5 };
+export const HOUSE = { height: 5.2, minX: -2.8, maxX: 2.8, minZ: -2.6, maxZ: 2.6 };
 
 /** Cats keep inside walkR; the fence runs all the way round at fenceR, with a gate where each
     path leaves (angles in degrees, measured from +x towards +z). */
@@ -22,7 +22,7 @@ export const GARDEN = { walkR: 17, fenceR: 18.6, gates: [[85, 95], [265, 275], [
 const HALF_PI = Math.PI / 2;
 
 /** The bottom step of the porch stairs: a perch a cat hops up to. Heights are the step tops. */
-export const STEP = { id: "step", kind: "step", x: -0.5, z: 2.5, y: 0.23, sitYaw: -HALF_PI, ground: { x: -0.5, z: 3.32 } };
+export const STEP = { id: "step", kind: "step", x: 0.4, z: 2.6, y: 0.23, sitYaw: -HALF_PI, ground: { x: -0.5, z: 3.32 } };
 
 /** Round cat beds: r is the outer rim, y the cushion a cat lies on. */
 const BED_COLORS = [0xe98a6b, 0x7fb3d5, 0xf2c14e, 0xa98bd4, 0x8cc084, 0xf29bb2];

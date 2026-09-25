@@ -6,7 +6,8 @@ KHR_mesh_quantization + KHR_texture_transform; three.js GLTFLoader reads both wi
 
 | File | Source image job | 3D job | Model |
 |---|---|---|---|
-| sanctuary.glb | 81a64983-3976-42f4-b2d3-fdf80921bead (gpt_image_2_5) | 61087add-04d4-4d74-a7e0-4593552ed7a7 | hunyuan3d_v3 LowPoly, texture 4096 -> 1024 |
+| sanctuary.glb (bright cream/coral cottage, cat-ear gable, cat's-eye window, porch cat tree) | 570d22ce-bf01-414c-bcf0-0dab4b56fe49 (gpt_image_2_5) | 3a66f6fe-ba98-4e4c-bec3-58b80cb1563a | tripo_h3_1, 5000 faces, texture 2048 -> 1024 JPEG, ORM/normal maps dropped, metallic 0 / roughness 0.85; door faces +x in model space (world.js turns it -90 deg) |
+| sanctuary-old.glb (previous dark timber cottage, unused) | 81a64983-3976-42f4-b2d3-fdf80921bead (gpt_image_2_5) | 61087add-04d4-4d74-a7e0-4593552ed7a7 | hunyuan3d_v3 LowPoly, texture 4096 -> 1024 |
 | cat-sit.glb | c0dc6227-9a1e-4375-9933-5cb61d2a5aec | b1f8f4f7-d91a-4aa1-a4f8-64e4b28b4a3a | tripo_h3_1, 3000 faces, texture 2048 -> 512 |
 | cat-walk.glb | da0a3575-a115-44ce-9476-4b79afd50854 | b2c45447-146f-4291-abb4-82075c2185c3 | tripo_h3_1 |
 | cat-loaf.glb | bd9c5917-492b-43cd-9030-1f30fb0eff73 | 3ffaf187-904a-4f61-8ea3-56960b0051de | tripo_h3_1 |
