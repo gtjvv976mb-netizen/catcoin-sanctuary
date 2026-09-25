@@ -1,0 +1,17 @@
+{
+  "name": "cat-sanctuary",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Catcoin Sanctuary (catcoinsanctuary.com): a 3D garden of cats, each paired with a stock on StonkFun; a cat becomes a token when its owner launches it and the hourly check proves it on Solana. A static site with no build step.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"tests/*.test.mjs\"",
+    "test:builder": "node --test tests/chain.test.mjs tests/build.test.mjs tests/collection.test.mjs tests/workflows.test.mjs",
+    "collect": "node scripts/build-collection.mjs",
+    "planned": "node scripts/build-planned.mjs"
+  },
+  "license": "UNLICENSED"
+}

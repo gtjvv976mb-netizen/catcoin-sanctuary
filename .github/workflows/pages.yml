@@ -1,30 +1,113 @@
-# Deploys the site to GitHub Pages on every push to main.
-# Settings -> Pages -> Source must be "GitHub Actions".
-name: pages
+# Publishes the site to GitHub Pages (catcoinsanctuary.com, from CNAME). No build: the folder is
+# the site (the page reads data/planned.json, data/collection.json and data/wallets.json, and the
+# portraits in assets/portraits, all prepared ahead). Everything a visitor loads is copied into _site; what only builds or tests it
+# (scripts/, tests/, .github/, the package files, Markdown notes, the builder's state file) is
+# left out. The tests run first, in a job of their own that can only read the repository (they
+# never see the Pages or OIDC tokens), and a failing test stops the deploy, so the live site stays
+# as it was.
+#
+# When it runs: on a push to main, by hand, and when the hourly Collection workflow has finished.
+# That last one is needed because a commit pushed with the workflow token does not start other
+# workflows. A "check" job looks at whether that Collection run committed anything (main's newest
+# commit is newer than the run's start); if not, nothing is deployed, so there is no deploy
+# every hour for nothing.
+#
+# One-time setup: Settings > Pages > Source: "GitHub Actions".
+name: Pages
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: false
+  workflow_run:
+    workflows: [Collection]
+    types: [completed]
+    branches: [main]
+
+permissions: {}
+
 jobs:
-  deploy:
+  check:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      deploy: ${{ steps.fresh.outputs.deploy }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Anything new to publish?
+        id: fresh
+        env:
+          EVENT: ${{ github.event_name }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          STARTED: ${{ github.event.workflow_run.run_started_at }}
+        run: |
+          if [ "$EVENT" != "workflow_run" ]; then echo "deploy=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ "$CONCLUSION" != "success" ]; then echo "The collection run did not succeed; nothing to publish."; echo "deploy=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          head=$(git log -1 --format=%ct HEAD)
+          started=$(date -d "$STARTED" +%s)
+          if [ "$head" -ge "$started" ]; then echo "deploy=true" >> "$GITHUB_OUTPUT"; else echo "The collection run committed nothing."; echo "deploy=false" >> "$GITHUB_OUTPUT"; fi
+
+  test:
+    needs: check
+    if: needs.check.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.head.outputs.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - id: head
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+
+  deploy:
+    needs: [check, test]
+    if: needs.check.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # The commit the tests passed on, not whatever main is by now.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ needs.test.outputs.sha }}
           persist-credentials: false
+      - name: Gather the site
+        run: |
+          mkdir _site
+          rsync -a \
+            --exclude '.git' --exclude '/.github' --exclude '/_site' --exclude '/node_modules' \
+            --exclude '/scripts' --exclude '/tests' --exclude '/package.json' --exclude '/package-lock.json' \
+            --exclude '*.prototype.html' --exclude '/data/collection-state.json' --exclude '/data/held.json' --exclude '/data/launches.json' --exclude '*.md' \
+            ./ _site/
+          test -f _site/index.html && test -f _site/CNAME && test -f _site/data/collection.json && test -f _site/data/planned.json && test -f _site/data/wallets.json
+          test -f _site/favicon.ico && test -f _site/assets/og-image.jpg && test -f _site/assets/models/sanctuary.glb
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

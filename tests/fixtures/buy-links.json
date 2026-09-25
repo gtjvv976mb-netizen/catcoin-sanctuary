@@ -1,0 +1,85 @@
+{
+  "checked": "2026-09-25",
+  "note": "How the two buy-link formats in assets/collection.js BUY_SITES were checked. Pages were opened in headless Chromium (Playwright) through the session's proxy; nothing here is fetched by the site at run time.",
+  "sites": [
+    {
+      "label": "GMGN",
+      "format": "https://gmgn.ai/sol/token/<mint>",
+      "official": "https://gmgn.ai",
+      "checks": [
+        {
+          "url": "https://gmgn.ai/sol/token/7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "what": "POPCAT's mint",
+          "status": 200,
+          "title": "POPCAT $56.94M | GMGN.AI | The Fastest Multi-Chain Meme Trading Terminal",
+          "at": "2026-09-25T17:17Z"
+        },
+        {
+          "url": "https://gmgn.ai/sol/token/EcB7LMNFXdSbzY4DQ6Uc9AKXmb9DCKqAeoNmLvNp3HvL",
+          "what": "a real StonkFun LaunchLab token priced in GMEx (the recorded launch 2VJ6Eqt9…)",
+          "status": 200,
+          "title": "1GME $3.25K | GMGN.AI | The Fastest Multi-Chain Meme Trading Terminal",
+          "at": "2026-09-25T17:19Z"
+        },
+        {
+          "url": "https://gmgn.ai/sol/token/So11111111111111111111111111111111111111112",
+          "what": "wrapped SOL",
+          "status": 200,
+          "title": "WSOL $69.53B | GMGN.AI | The Fastest Multi-Chain Meme Trading Terminal",
+          "at": "2026-09-25T17:19Z"
+        }
+      ],
+      "caveat": "Plain HTTP clients get Cloudflare's 403 block page; a browser gets the token page."
+    },
+    {
+      "label": "FOMO",
+      "format": "https://fomo.family/tokens/solana/<mint>",
+      "official": "https://fomo.family",
+      "identity": "fomo, the social crypto trading app by FOMO Labs, Inc. Its Google Play listing (id family.fomo.app, https://play.google.com/store/apps/details?id=family.fomo.app) names https://fomo.family as the developer's website; the site's footer reads \"© 2026 FOMO Labs Inc.\"",
+      "checks": [
+        {
+          "url": "https://fomo.family/assets/manifest-67b646cf.js",
+          "what": "the web app's route table",
+          "found": "route \"routes/token\": path \"tokens/:chain/:tokenAddress\", parent \"layouts/authenticated\""
+        },
+        {
+          "url": "https://fomo.family/assets/token-redirect-v2-BP821WLd.js",
+          "what": "how the app builds a token page's path",
+          "found": "function k(s){return`/tokens/${_[s.token.networkId]??\"solana\"}/${s.token.address}`}, and the fallback \"/tokens/solana/2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv\""
+        },
+        {
+          "url": "https://fomo.family/assets/chains-v2-C5KHMG0V.js",
+          "what": "the chain slugs",
+          "found": "{[Ct]:\"solana\",[le.id]:\"base\",[_e.id]:\"monad\",[ce.id]:\"bnb\",[de.id]:\"ethereum\",…}"
+        },
+        {
+          "url": "https://fomo.family/tokens/solana/7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "what": "POPCAT's token page",
+          "status": 200,
+          "found": "the server page's og:image is https://image-renderer.fomo.cloud/og/token/solana/7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr/card.png, a card reading POPCAT, Popcat, $57M MC; signed out, the browser is sent on to https://fomo.family/",
+          "at": "2026-09-25T17:18Z"
+        },
+        {
+          "url": "https://image-renderer.fomo.cloud/og/token/solana/EcB7LMNFXdSbzY4DQ6Uc9AKXmb9DCKqAeoNmLvNp3HvL/card.png",
+          "what": "the card for the GMEx StonkFun token's page",
+          "status": 200,
+          "found": "a card reading 1GME, 1 GME can change your life, $3K MC",
+          "at": "2026-09-25T17:19Z"
+        }
+      ],
+      "caveat": "The token page sits behind fomo's login: a signed-out visitor lands on fomo.family's front page, where they can sign in or get the app."
+    }
+  ],
+  "explorer": {
+    "label": "StonkFun",
+    "format": "https://www.stonkfun.xyz/token/<mint>",
+    "checks": [
+      {
+        "url": "https://www.stonkfun.xyz/token/EcB7LMNFXdSbzY4DQ6Uc9AKXmb9DCKqAeoNmLvNp3HvL",
+        "status": 200,
+        "title": "1GME / GMEX · StonkFun",
+        "at": "2026-09-25T17:33Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "note": "Planned cats held back from the garden. A company's own cat or mascot may be described on a card, with its source, but never be a coin's picture or name. Each of these cats' portraits (and its launch-sheet picture) follows a specific cat that a company owns or publishes, so the cat stays out of data/planned.json until its picture is redrawn as a cat of its own. To bring one back: redraw its launch-sheet picture, rewrite its whyLook so it no longer says it follows or copies that cat, delete its row here, and run scripts/build-planned.mjs with every sheet.",
+  "held": [
+    { "ticker": "HARRUMPH", "since": "2026-09-25", "reason": "The portrait is Coinbase's Mister Miggles (its 2024 brand-campaign cat): the same grey-taupe, flat-faced, long-haired cat with a pout." },
+    { "ticker": "PEWTER", "since": "2026-09-25", "reason": "The portrait is the grey tabby pixel cat that @RobinhoodApp posted, without its cap." },
+    { "ticker": "SNOWCURL", "since": "2026-09-25", "reason": "The portrait follows the white cat avatar of Tesla's 2026 Pet Mode." },
+    { "ticker": "MOATCAT", "since": "2026-09-25", "reason": "The portrait follows Cam the Cat, a Squishmallows plush made by Jazwares (a Berkshire Hathaway company)." },
+    { "ticker": "COUCHCAP", "since": "2026-09-25", "reason": "The portrait copies the cat in Meta AI's official Make-A-Video demo." },
+    { "ticker": "WARMSPOT", "since": "2026-09-25", "reason": "The portrait is the tuxedo cat from the photo that Starlink made its official 'Cat 5' sticker. Held until the owner rules on it." },
+    { "ticker": "SOCKFOOT", "since": "2026-09-25", "reason": "The portrait copies the cat in Figure 1 of NVIDIA's 2016 developer-blog post. Held until the owner rules on it." },
+    { "ticker": "HALFSMILE", "since": "2026-09-25", "reason": "The portrait follows Jellie, the real cat who became a Minecraft cat skin (Microsoft owns Mojang). Held until the owner rules on it." }
+  ]
+}

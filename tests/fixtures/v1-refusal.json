@@ -1,0 +1,20 @@
+{
+ "captured": "2026-09-25",
+ "note": "Recorded 2026-09-25 from https://api.mainnet-beta.solana.com by the sanctuary's data build. Each answer is kept as the RPC gave it, with its method, params and readAt (UTC). What the RPC answers when getTransaction asks for a version-1 transaction with maxSupportedTransactionVersion 0 (the transaction was a real one seen in StonkFun's platform config history that day).",
+ "answer": {
+  "method": "getTransaction",
+  "params": [
+   "5K87ydqUtSuYAm7RoopjM3Wy5Zydm7VoT7HtXaKqDcnTzgZN64bpxD34bBvjWNbih1h9JcyJyk2AEbmVPTPwcttv",
+   {
+    "encoding": "json",
+    "maxSupportedTransactionVersion": 0,
+    "commitment": "finalized"
+   }
+  ],
+  "readAt": "2026-09-25T16:05:22.226Z",
+  "error": {
+   "code": -32015,
+   "message": "Transaction version (1) is not supported by the requesting client. Please try the request again with the following configuration parameter: \"maxSupportedTransactionVersion\": 1"
+  }
+ }
+}
