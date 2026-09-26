@@ -4,10 +4,13 @@
 import fs from "node:fs";
 import { credsFromEnv, createPost, whoAmI, getLatestOwnPostId } from "./lib/x-api.mjs";
 
-const file = new URL("../data/intro-thread.json", import.meta.url);
-const t = JSON.parse(fs.readFileSync(file, "utf8"));
 const creds = credsFromEnv(process.env);
-if (t.ids || !creds) { console.log(t.ids ? "Intro thread already posted." : "No X secrets; intro thread not posted."); process.exit(0); }
+if (!creds) { console.log("No X secrets; threads not posted."); process.exit(0); }
+for (const name of ["intro-thread.json", "thread-glowup.json", "thread-mechanics.json"]) {
+const file = new URL(`../data/${name}`, import.meta.url);
+if (!fs.existsSync(file)) continue;
+const t = JSON.parse(fs.readFileSync(file, "utf8"));
+if (t.ids || t.hold) continue;
 const save = () => fs.writeFileSync(file, JSON.stringify(t, null, 2) + "\n");
 let prev = null;
 if (t.replyToLatestOwn) prev = await getLatestOwnPostId((await whoAmI(creds)).data.id, creds);
@@ -18,4 +21,5 @@ for (const text of t.posts.slice(t.partial.length)) {
   t.partial.push(id); save();
 }
 t.ids = t.partial; delete t.partial; save();
-console.log(`Intro thread posted: ${t.ids.join(", ")}`);
+console.log(`${name} posted: ${t.ids.join(", ")}`);
+}
