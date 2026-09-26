@@ -55,7 +55,7 @@ export function ordered(queue, { keys = [], priority = null, only = null, state 
     .filter((q) => priority === null || q.priority <= priority)
     .filter((q) => !only || q.action === only)
     .filter((q) => state[q.key]?.status !== "done")
-    .sort((a, b) => a.priority - b.priority || (a.action === b.action ? 0 : a.action === "retexture" ? -1 : 1) || a.key.localeCompare(b.key));
+    .sort((a, b) => a.priority - b.priority || (a.action === b.action ? 0 : a.action === "retexture" ? -1 : 1) || (a.order ?? 1e9) - (b.order ?? 1e9) || a.key.localeCompare(b.key));
 }
 
 /** A reference picture as Meshy takes it: an https URL as is; a repo JPG/PNG as a data URI; a
@@ -136,7 +136,15 @@ async function fix(q, { useImage, log }) {
   const jobs = readJson(FILES.jobs, {});
   const job = jobs[q.key];
   if (q.action === "retexture") {
-    const t = await task("retexture", retextureBody(q, job, { useImage }), log);
+    // The raw source first (full detail); if Meshy cannot take it (some Hunyuan sources are ~500k
+    // faces), the site's own packed copy.
+    let t;
+    try { t = await task("retexture", retextureBody(q, job, { useImage }), log); }
+    catch (e) {
+      if (!job?.url) throw e;
+      log(`  raw source refused (${e.message.slice(0, 120)}); retrying with the site model`);
+      t = await task("retexture", retextureBody(q, null, { useImage }), log);
+    }
     const keep = Object.fromEntries(Object.entries(job ?? {}).filter(([k]) => ["hd", "si", "si_lo", "sa", "sa_lo", "tex", "tex_lo", "q", "yaw", "pose", "image_job", "clean_job"].includes(k)));
     recordModel(jobs, q.key, { ...keep, image_job: job?.image_job ?? "-", model_job: t.id, model: `meshy retexture (${job?.model ?? "site model"})`, url: t.model_urls.glb, status: "done" });
     writeJson(FILES.jobs, jobs);

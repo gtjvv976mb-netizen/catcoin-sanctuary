@@ -20,6 +20,19 @@ test("the queue runs worst first, retextures before rebuilds, skips done and ok 
   assert.deepEqual(ordered(QUEUE, { priority: 1 }).map((q) => q.key), ["A", "B"]);
   assert.deepEqual(ordered(QUEUE, { only: "rebuild" }).map((q) => q.key), ["B"]);
   assert.deepEqual(ordered(QUEUE, { keys: ["C"] }).map((q) => q.key), ["C"]);
+  // Within one priority and action, the queue's order (cats about to be posted first) wins over the key.
+  const byOrder = { cats: { X: { action: "rebuild", priority: 1, order: 2 }, Y: { action: "rebuild", priority: 1, order: 1 }, Z: { action: "rebuild", priority: 1 } } };
+  assert.deepEqual(ordered(byOrder).map((q) => q.key), ["Y", "X", "Z"]);
+});
+
+test("the shipped queue: every cat has an action, a priority and a way to style it", () => {
+  const q = JSON.parse(fs.readFileSync(new URL("../scripts/meshy.queue.json", import.meta.url), "utf8"));
+  for (const [k, c] of Object.entries(q.cats)) {
+    assert.ok(["retexture", "rebuild", "ok"].includes(c.action), k);
+    assert.ok([1, 2, 3].includes(c.priority), k);
+    if (c.action === "retexture") assert.ok(c.retexturePrompt?.length > 20 && c.retexturePrompt.length <= 800, `${k}: retexturePrompt`);
+    if (c.action === "rebuild") assert.ok(c.referencePrompt?.length > 20, `${k}: referencePrompt`);
+  }
 });
 
 test("reference pictures: https as is, repo JPG/PNG as data URIs, 'generate' and missing files as none", () => {
