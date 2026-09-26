@@ -66,6 +66,31 @@ export function validateLore(data) {
   return out;
 }
 
+/** One real photo ({ url, handle, post, alt }) as a card may use it, or null: the image must be an
+    https pbs.twimg.com address (hotlinked, never hosted here), the post an https X link. */
+export function realPhotoOf(p) {
+  if (!isObj(p)) return null;
+  const url = typeof p.url === "string" ? p.url : "";
+  const post = typeof p.post === "string" ? p.post : "";
+  const handle = typeof p.handle === "string" ? p.handle.replace(/^@/, "") : "";
+  if (!/^https:\/\/pbs\.twimg\.com\/[^\s"'<>]+$/.test(url)) return null;
+  if (!/^https:\/\/(?:www\.)?(?:x|twitter)\.com\/[A-Za-z0-9_]{1,15}\/status\/\d+/.test(post)) return null;
+  if (!/^[A-Za-z0-9_]{1,15}$/.test(handle)) return null;
+  const alt = typeof p.alt === "string" && p.alt.trim() ? p.alt.trim().slice(0, 300) : `A photo from @${handle}'s post`;
+  return { url, handle, post, alt };
+}
+
+/** data/real-photos.json ({ note, cats: { KEY: { realPhoto, source } } }) as { KEY: { ...realPhoto, source } }. */
+export function validateRealPhotos(data) {
+  const out = {};
+  if (!isObj(data) || !isObj(data.cats)) return out;
+  for (const [k, v] of Object.entries(data.cats)) {
+    const ph = isObj(v) ? realPhotoOf(v.realPhoto) : null;
+    if (ph) out[k] = { ...ph, source: v.source === "search" ? "search" : "proof" };
+  }
+  return out;
+}
+
 /** What is wrong with one adoptable cat, or null. */
 export function adoptableProblem(c) {
   if (!isObj(c)) return "not an object";

@@ -15,8 +15,8 @@ is on the site (assets/portraits/<T>.jpg), this writes:
 
 and assets/kits/kits.json: { built, cats: { <T>: { token, banner, bannerPlain, tokenSha256, photo } } },
 which the Adopt panel reads to know which kits exist. tokenSha256 lets a later check match a launch's
-image to this kit. photo is { url, handle, post } for the first photo in the cat's X proof post
-(read from api.fxtwitter.com), or null: only its pbs.twimg.com address and credit are kept, the
+image to this kit. photo is { url, handle, post }: the reviewed real photo in data/real-photos.json, else the first
+photo in the cat's X proof post (read from api.fxtwitter.com), or null: only its pbs.twimg.com address and credit are kept, the
 photo itself is never copied here. The portraits and lore pictures are generated pictures.
 
 Run: python3 scripts/build-kits.py [--offline] [TICKER ...]   (no tickers: every cat). Needs Pillow.
@@ -59,6 +59,29 @@ def cats():
     for c in [*planned, *adopt]:
         out.setdefault(c["ticker"], {"ticker": c["ticker"], "name": c["name"], "proof": c.get("proof") or None})
     return out
+
+
+def real_photos():
+    """data/real-photos.json: the reviewed real photo per cat (cats), and the cats checked and left
+    without one (none: a face, not this cat, or no photo). Missing file: nothing reviewed."""
+    try:
+        d = json.loads((ROOT / "data" / "real-photos.json").read_text())
+        return d.get("cats") or {}, d.get("none") or {}
+    except (OSError, ValueError):
+        return {}, {}
+
+
+def reviewed_photo(ticker, proof, reviewed, none):
+    """The kit's photo: the reviewed real photo from data/real-photos.json; None for a cat that was
+    reviewed and left without one; else the first photo in its X proof post."""
+    if ticker in reviewed:
+        p = reviewed[ticker].get("realPhoto") or {}
+        if str(p.get("url", "")).startswith("https://pbs.twimg.com/"):
+            return {"url": p["url"], "handle": p.get("handle", ""), "post": p.get("post", "")}
+        return None
+    if ticker in none:
+        return None
+    return proof_photo(proof)
 
 
 def proof_photo(proof):
@@ -231,6 +254,7 @@ def png_bytes(img):
 
 def main(argv):
     all_cats = cats()
+    reviewed, none = real_photos()
     offline = "--offline" in argv  # keep the proof photos already in kits.json; call nothing
     only = {a for a in argv if not a.startswith("--")} or None
     index_path = KITS / "kits.json"
@@ -253,7 +277,7 @@ def main(argv):
         (out / "banner.png").write_bytes(png_bytes(banner_branded(t, c["name"], portrait)))
         (out / "banner-plain.png").write_bytes(png_bytes(banner_plain(t, c["name"], portrait)))
         old = index["cats"].get(t) or {}
-        photo = old.get("photo") if offline else proof_photo(c["proof"])
+        photo = old.get("photo") if offline else reviewed_photo(t, c["proof"], reviewed, none)
         index["cats"][t] = {
             "token": f"assets/kits/{t}/token.png",
             "banner": f"assets/kits/{t}/banner.png",

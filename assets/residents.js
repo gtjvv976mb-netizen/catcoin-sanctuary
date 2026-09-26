@@ -49,7 +49,7 @@
    not launched. Every text reaches the page as data; the page sets it with textContent. */
 
 import { validateCollection, validateWallets, validatePlanned, validateFamous, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
-import { validateAdoptables, adoptableCard, validateLore, lorePath } from "./ui/adoptables.js";
+import { validateAdoptables, adoptableCard, validateLore, lorePath, validateRealPhotos } from "./ui/adoptables.js";
 
 const NO_RESEARCH = Object.freeze({
   company: "", realCat: { name: null, who: "", basis: "", linkType: "none", strength: "none", linked: false }, links: [], virality: [], checked: null, disclaimer: "",
@@ -188,6 +188,15 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
     if (a.refused.length && typeof console !== "undefined") console.warn(`${a.refused.length} adoptable cats were left out`, a.refused);
     adoptable = a.cats.map(adoptableCard);
   } catch (e) { if (typeof console !== "undefined") console.warn("The adoptable cats could not be read", e); }
+  // The real photos (data/real-photos.json): optional. A cat listed there shows its real photo,
+  // hotlinked from pbs.twimg.com with credit, at the top of its card.
+  try {
+    const photos = validateRealPhotos(await getJson(fetchImpl, new URL("data/real-photos.json", base)));
+    for (const r of [...stock, ...adoptable, ...famous]) {
+      const ph = photos[r.id] || photos[r.ticker];
+      if (ph && !r.realPhoto) r.realPhoto = ph;
+    }
+  } catch (e) { if (typeof console !== "undefined") console.warn("The real photos could not be read", e); }
   // The release queue (data/release-queue.json): a queued cat is hidden until the announcer has
   // posted it on X and marked it released. Optional: a missing file hides nothing.
   let hidden = new Set();

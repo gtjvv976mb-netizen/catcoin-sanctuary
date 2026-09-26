@@ -19,6 +19,7 @@
      page for its own mint (or, for the launch, its transaction) on the one host each label names;
      the page never builds a buy link;
    - the portrait must be a picture on this site (a relative path under assets/). */
+import { realPhotoOf } from "./adoptables.js";
 
 const B58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 const TX = /^[1-9A-HJ-NP-Za-km-z]{64,90}$/;
@@ -99,6 +100,12 @@ export function normalizeProof(p) {
   return { kind, url, author: str(p.author, 60) || hostOf(url), handle, date: str(p.date, 40), dateType: str(p.dateType, 20).toLowerCase(), text, note: para(p.note, 400), image };
 }
 
+/** The real photo a card shows at its top (data/real-photos.json), checked again: or null. */
+function photoOf(p) {
+  const ph = realPhotoOf(p);
+  return ph ? { ...ph, source: p.source === "search" ? "search" : "proof" } : null;
+}
+
 function normalizeNew(e) {
   const id = str(e.id, 120);
   if (!id) return null;
@@ -128,6 +135,7 @@ function normalizeNew(e) {
   const strength = str(e.strength, 12).toLowerCase();
   return {
     id,
+    realPhoto: photoOf(e.realPhoto),
     name: str(e.name, 60) || "A cat",
     ticker: str(e.ticker, 20).replace(/^\$+/, ""),
     stock: str(e.stock, 120),
@@ -220,6 +228,7 @@ function normalizeFamous(e) {
     plannedName: "", pair: { symbol: "", mint: "" }, look: "", whyLook: "", tribute: "", proof: null, realCatName: "", realCatLink: false,
     linkType: "", strength: "", basis: "", checked: "", virality: [], links: [], token: { status: "famous" }, buy: [], explorer: null, stonkfun: null,
     example: false,
+    realPhoto: photoOf(e.realPhoto),
   };
 }
 

@@ -245,8 +245,9 @@ test("page weight: the first view stays within budget", () => {
   // (Raised from 480 KB for the big HD garden: terrain, grass, trees, water and the finishing pass are all made in code;
   // then to 652 KB for the "New cat just moved in!" highlight, assets/ui/newcat.js; then to 655 KB for
   // "Who's that cat?", assets/ui/teaser.js and world/easel.js, after trimming ~2 KB elsewhere: sign.js
-  // now uses three's mergeGeometries instead of its own copy.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 655 * 1024, "the page's own scripts over 655 KB");
+  // now uses three's mergeGeometries instead of its own copy; then to 661 KB for the real photo at the
+  // top of each card, data/real-photos.json checked in assets/ui/adoptables.js and drawn by card.js.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 661 * 1024, "the page's own scripts over 661 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");

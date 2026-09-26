@@ -62,8 +62,8 @@ test("no call to another host at run time: fetches and imports are relative, and
   }
 });
 
-test("the residents module fetches only the seven data files, relative to the site", () => {
+test("the residents module fetches only the eight data files, relative to the site", () => {
   const text = read("assets/residents.js");
   const fetched = [...text.matchAll(/new URL\("([^"]+)", base\)/g)].map((m) => m[1]).sort();
-  assert.deepEqual(fetched, ["data/adoptables.json", "data/collection.json", "data/famous.json", "data/lore.json", "data/planned.json", "data/release-queue.json", "data/wallets.json"]);
+  assert.deepEqual(fetched, ["data/adoptables.json", "data/collection.json", "data/famous.json", "data/lore.json", "data/planned.json", "data/real-photos.json", "data/release-queue.json", "data/wallets.json"]);
 });

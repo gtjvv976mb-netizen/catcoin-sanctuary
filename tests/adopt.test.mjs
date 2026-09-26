@@ -50,7 +50,7 @@ test("every kit in assets/kits/kits.json: a square token PNG <= 2 MB, banners ex
       assert.deepEqual([bi.w, bi.h], [1500, 500], `${b} is 1500 x 500`);
     }
     if (k.photo) {
-      assert.match(k.photo.url, /^https:\/\/pbs\.twimg\.com\/media\//, `${t}: photo is hotlinked from X, not copied`);
+      assert.match(k.photo.url, /^https:\/\/pbs\.twimg\.com\/(media|amplify_video_thumb|ext_tw_video_thumb|tweet_video_thumb)\//, `${t}: photo is hotlinked from X, not copied`);
       assert.match(k.photo.post, /^https:\/\/(x|twitter)\.com\/[A-Za-z0-9_]+\/status\/\d+/);
       assert.ok(k.photo.handle, `${t}: photo credit`);
     }

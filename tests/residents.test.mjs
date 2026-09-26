@@ -78,7 +78,7 @@ test("no token yet: every planned cat, not launched, with no mint, no buy link a
     assert.equal(c.portrait, `assets/portraits/${c.id}.jpg`);
     assert.ok(c.stock && c.who && c.pair.mint, c.id);
   }
-  assert.deepEqual(asked.map((a) => a.url).sort(), [`${BASE}data/adoptables.json`, `${BASE}data/collection.json`, `${BASE}data/famous.json`, `${BASE}data/lore.json`, `${BASE}data/planned.json`, `${BASE}data/release-queue.json`, `${BASE}data/wallets.json`]);
+  assert.deepEqual(asked.map((a) => a.url).sort(), [`${BASE}data/adoptables.json`, `${BASE}data/collection.json`, `${BASE}data/famous.json`, `${BASE}data/lore.json`, `${BASE}data/planned.json`, `${BASE}data/real-photos.json`, `${BASE}data/release-queue.json`, `${BASE}data/wallets.json`]);
   assert.ok(asked.every((a) => a.init.credentials === "same-origin"));
 });
 

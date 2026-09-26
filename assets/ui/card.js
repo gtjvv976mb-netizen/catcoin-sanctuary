@@ -63,6 +63,51 @@ export function loreFigure(r) {
   return fig;
 }
 
+/** Our generated picture, lower on the card, labelled as the in-game look. */
+export function inGameFigure(src, alt) {
+  const fig = el("figure", "card-ingame");
+  const img = el("img", "card-ingame-img");
+  img.src = src; img.alt = alt; img.width = 112; img.height = 112; img.loading = "lazy"; img.decoding = "async";
+  img.addEventListener("error", () => fig.remove(), { once: true });
+  fig.append(img, el("figcaption", "card-ingame-caption", "🎮 In-game look"));
+  return fig;
+}
+
+/**
+ * The real photo from the cat's X post, at the top of its card: hotlinked from pbs.twimg.com
+ * (never hosted here), captioned "📸 Real photo · @handle" with a link to the post. If the image
+ * cannot load, our own picture (`fallback`, the in-game look) takes its place.
+ */
+export function realPhotoFigure(ph, fallback = null) {
+  const fig = el("figure", "card-real-photo");
+  const img = el("img", "card-real-photo-img");
+  img.src = ph.url; img.alt = ph.alt; img.decoding = "async";
+  img.referrerPolicy = "no-referrer";
+  img.addEventListener("error", () => { if (fallback) fig.replaceWith(fallback); else fig.remove(); }, { once: true });
+  const cap = el("figcaption", "card-real-photo-caption", "📸 Real photo · ");
+  const a = link(ph.post, `@${ph.handle}`, "card-real-photo-link");
+  a.setAttribute("aria-label", `Real photo by @${ph.handle}: view the post on X (opens in a new tab)`);
+  cap.append(a);
+  fig.append(img, cap);
+  return fig;
+}
+
+/** Puts the real photo at the top of a card body, with our picture just under it as the in-game look. */
+function addTopPhoto(r, body, ours) {
+  if (!r.realPhoto) return;
+  const game = ours ? inGameFigure(ours.src, ours.alt) : null;
+  const top = realPhotoFigure(r.realPhoto, game);
+  body.prepend(...[top, game].filter(Boolean));
+}
+
+/** A note, under the proof, naming the post the real photo comes from when it is not the proof itself. */
+function photoSourceNote(r) {
+  if (r.realPhoto?.source !== "search") return null;
+  const p = el("p", "card-note card-photo-source", "Photo source: ");
+  p.append(link(r.realPhoto.post, `@${r.realPhoto.handle}'s post ↗`));
+  return p;
+}
+
 /** A little drawn cat face in the cat's coat colour (used when there is no portrait). */
 export function faceFor(r, cls = "face") {
   const f = el("span", cls);
@@ -290,7 +335,7 @@ export function createCard({ root, onClose, onInset }) {
       if (r.who || !researched) who.append(el("h4", "card-sub", researched ? "Lore" : "In its own words"));
       who.append(el("p", r.who ? "card-lore" : "card-story", r.description));
     }
-    if (r.lorePic) who.append(loreFigure({ lore: r.lorePic }));
+    if (r.lorePic && !r.realPhoto) who.append(loreFigure({ lore: r.lorePic }));
     if (r.loreSource?.label) {
       const src = el("p", "card-note");
       src.append("From: ");
@@ -355,12 +400,16 @@ export function createCard({ root, onClose, onInset }) {
       buy.append(el("p", "card-note", "Check the contract address above before you trade. The sanctuary did not make this coin and gets nothing from this link."));
     } else buy.append(el("p", "card-none", "No buy link."));
     body.append(buy);
+    const photoSrc = photoSourceNote(r);
+    if (photoSrc) who.append(photoSrc);
+    addTopPhoto(r, body, r.lorePic ? { src: r.lorePic.image, alt: r.lorePic.caption } : null);
   }
 
   /* An adoptable cat: a fan tribute to a famous cat, with its X proof and sources, not launched yet. */
   function adoptableBody(r, head, body) {
     let pic;
-    if (r.portrait) {
+    if (r.realPhoto) pic = null;
+    else if (r.portrait) {
       pic = el("img", "card-portrait");
       pic.src = r.portrait; pic.alt = `Portrait of ${r.name}`; pic.width = 112; pic.height = 112; pic.decoding = "async";
       pic.addEventListener("error", () => pic.replaceWith(silhouetteFor(r)), { once: true });
@@ -381,7 +430,7 @@ export function createCard({ root, onClose, onInset }) {
     titles.append(doingEl);
     lastDoing = "";
     titles.append(adoptButton(r, true));
-    head.append(pic, titles);
+    head.append(...[pic, titles].filter(Boolean));
 
     const who = section("Who the cat is", "card-who");
     if (r.memorial) who.append(el("p", "adopt-memorial", r.sensitivity || `In loving memory of ${r.name}.`));
@@ -411,6 +460,9 @@ export function createCard({ root, onClose, onInset }) {
     const coin = existingCoinLine(r.existingCoin);
     if (coin) st.append(el("p", "adopt-coin", coin));
     body.append(st);
+    const src = photoSourceNote(r);
+    if (src) pf.append(src);
+    addTopPhoto(r, body, r.portrait ? { src: r.portrait, alt: `${r.name}: the in-game look` } : null);
   }
 
   function render(r) {
@@ -453,7 +505,8 @@ export function createCard({ root, onClose, onInset }) {
       return;
     }
     let pic;
-    if (r.portrait) {
+    if (r.realPhoto) pic = null;
+    else if (r.portrait) {
       pic = el("img", "card-portrait");
       pic.src = r.portrait;
       pic.alt = `Portrait of ${r.name}`;
@@ -478,7 +531,7 @@ export function createCard({ root, onClose, onInset }) {
     titles.append(doingEl);
     lastDoing = "";
     if (!isLaunched(r) && !r.example && canAdopt(r)) titles.append(adoptButton(r, true));
-    head.append(pic, titles);
+    head.append(...[pic, titles].filter(Boolean));
 
     const body = el("div", "card-body");
     body.addEventListener("scroll", () => { if (body.scrollTop > 24 && isSheet() && !root.classList.contains("card-tall")) setTall(true); }, { passive: true });
@@ -506,6 +559,8 @@ export function createCard({ root, onClose, onInset }) {
     const pf = section("Proof", "card-proof");
     if (r.proof) pf.append(proofBlock(r.proof));
     else pf.append(el("p", "card-none", "No proof post recorded yet."));
+    const photoSrc = photoSourceNote(r);
+    if (photoSrc) pf.append(photoSrc);
     body.append(pf);
 
     /* 2. Virality: each figure with its source and date. */
@@ -611,6 +666,8 @@ export function createCard({ root, onClose, onInset }) {
     // Always in view at the foot of the card, whatever is scrolled.
     const company = r.company || r.stock || (r.pair.symbol ? `the company behind ${r.pair.symbol}` : "any company");
     const foot = el("p", "card-disclaimer", r.disclaimer || `Not affiliated with ${company} or with StonkFun. A memecoin with no intrinsic value; not financial advice.`);
+
+    addTopPhoto(r, body, r.portrait ? { src: r.portrait, alt: `${r.name}: the in-game look` } : null);
 
     root.append(grip, close, head, body, foot);
     setTall(false);

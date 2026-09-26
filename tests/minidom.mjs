@@ -57,10 +57,18 @@ export class Element extends Node {
       this.childNodes.push(node);
     }
   }
+  prepend(...nodes) {
+    const keep = this.childNodes;
+    this.childNodes = [];
+    this.append(...nodes);
+    this.childNodes.push(...keep.filter((n) => !this.childNodes.includes(n)));
+  }
+  remove() { const p = this.parentNode; if (p) { p.childNodes = p.childNodes.filter((x) => x !== this); this.parentNode = null; } }
   replaceChildren(...nodes) { for (const n of this.childNodes) n.parentNode = null; this.childNodes = []; this.append(...nodes.filter((n) => n !== "")); }
   replaceWith(n) {
     const p = this.parentNode;
     if (!p) return;
+    if (n.parentNode) n.parentNode.childNodes = n.parentNode.childNodes.filter((x) => x !== n);
     const i = p.childNodes.indexOf(this);
     n.parentNode = p;
     p.childNodes[i] = n;
