@@ -31,6 +31,63 @@ export function faceFor(r, cls = "face") {
   return f;
 }
 
+/* The proof block's own styles live in assets/ui/proof.css, linked once from here. */
+function linkProofStyles() {
+  try {
+    const head = document.head;
+    if (!head || document.getElementById("proof-css")) return;
+    const l = document.createElement("link");
+    l.id = "proof-css";
+    l.rel = "stylesheet";
+    l.href = new URL("./proof.css", import.meta.url).href;
+    head.append(l);
+  } catch { /* no document head (tests): the block still renders, unstyled */ }
+}
+
+const PROOF_WHEN = { posted: "", published: "Published ", updated: "Updated ", opened: "Read " };
+
+/**
+ * The proof: the one X post or page that best links the cat to its company, drawn statically
+ * like a post (no widget script, nothing loaded from X): a lettered circle, the author and
+ * @handle, the date, the post's own words, the captured picture if there is one, and a link out.
+ */
+export function proofBlock(p) {
+  const fig = el("figure", `proof proof-${p.kind}`);
+  const top = el("div", "proof-top");
+  const av = el("span", "proof-avatar", ([...(p.author || "?").replace(/^[^\p{L}\p{N}]+/u, "")][0] || "?").toUpperCase());
+  av.setAttribute("aria-hidden", "true");
+  const who = el("div", "proof-who");
+  who.append(el("b", "proof-author", p.author));
+  who.append(el("span", "proof-handle", p.kind === "x" && p.handle ? `@${p.handle}` : hostOf(p.url)));
+  top.append(av, who);
+  top.append(el("span", "proof-kind", p.kind === "x" ? "X post" : "Web page"));
+  fig.append(top);
+  if (p.text) {
+    const q = el("blockquote", "proof-text", p.text);
+    q.cite = p.url;
+    fig.append(q);
+  }
+  if (p.image) {
+    const img = el("img", "proof-img");
+    img.src = p.image;
+    img.alt = p.kind === "x" ? `The picture in ${p.author}'s post` : `A picture from ${p.author}'s page`;
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.addEventListener("error", () => img.remove(), { once: true });
+    fig.append(img);
+  }
+  const foot = el("figcaption", "proof-foot");
+  if (p.date) {
+    const t = el("time", "proof-date", `${PROOF_WHEN[p.dateType] ?? ""}${dateText(p.date)}`);
+    t.dateTime = p.date;
+    foot.append(t);
+  }
+  foot.append(link(p.url, p.kind === "x" ? "View on X ↗" : `View source ↗`, "proof-link"));
+  fig.append(foot);
+  if (p.note) fig.append(el("p", "proof-note", p.note));
+  return fig;
+}
+
 const LINK_TYPES = {
   official_character: "The company's own cat",
   official_post: "In the company's own post",
@@ -76,6 +133,7 @@ export function badgeFor(r) {
  * @param {(right: number, bottom: number) => void} [o.onInset]  how much of the view the card covers
  */
 export function createCard({ root, onClose, onInset }) {
+  linkProofStyles();
   let current = null;
   let doingEl = null;
   let lastDoing = "";
@@ -183,6 +241,12 @@ export function createCard({ root, onClose, onInset }) {
     else real.append(el("p", "card-none", "Nothing sourced yet."));
     who.append(real);
     body.append(who);
+
+    /* Proof: the X post (or, when there is none, the page) that links the cat to its company. */
+    const pf = section("Proof", "card-proof");
+    if (r.proof) pf.append(proofBlock(r.proof));
+    else pf.append(el("p", "card-none", "No proof post recorded yet."));
+    body.append(pf);
 
     /* 2. Virality: each figure with its source and date. */
     const vir = section("Virality", "card-vir");

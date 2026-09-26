@@ -43,11 +43,21 @@
 
 <header class="bar">
   <a class="mark" href="./">Catcoin <span>Sanctuary</span></a>
+  <nav class="bar-right" aria-label="Site">
+  <button class="pill" id="about-open" type="button" aria-haspopup="dialog" aria-label="About the sanctuary">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.4" fill="currentColor"/></svg>
+    <span class="pill-label">About</span>
+  </button>
+  <button class="pill" id="socials-open" type="button" aria-haspopup="dialog" aria-label="Socials">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>
+    <span class="pill-label">Socials</span>
+  </button>
   <button class="find" id="find" type="button" aria-haspopup="dialog">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
     <span class="find-label">Find a cat</span>
     <span class="find-count" id="count"></span>
   </button>
+  </nav>
 </header>
 
 <aside class="legend" aria-label="What the badges mean">
@@ -61,6 +71,8 @@
 
 <aside class="card" id="card" hidden></aside>
 <dialog class="finder" id="finder" aria-labelledby="finder-title"></dialog>
+<dialog class="finder panel" id="about" aria-labelledby="about-title"></dialog>
+<dialog class="finder panel" id="socials" aria-labelledby="socials-title"></dialog>
 <main class="fallback" id="fallback" hidden></main>
 
 <footer class="foot">

@@ -53,7 +53,7 @@ export function buildSky(scene, { sunDir, mobile = false }) {
           float s = max(dot(d, uSunDir), 0.0);
           // A warm wash on the sun's side of the sky, a glow, and the disc itself.
           col = mix(col, uGlow, pow(s, 6.0) * 0.35 * (1.0 - smoothstep(0.1, 0.6, h)));
-          col += uGlow * (pow(s, 40.0) * 0.36 + pow(s, 320.0) * 0.4);
+          col += uGlow * (pow(s, 12.0) * 0.12 + pow(s, 40.0) * 0.4 + pow(s, 320.0) * 0.55 + pow(s, 2400.0) * 0.5); // a soft bloom round the sun
           col = mix(col, uDisc * 1.55, smoothstep(0.9993, 0.99946, s));
           gl_FragColor = vec4(col, 1.0);
           #include <tonemapping_fragment>

@@ -20,6 +20,13 @@
 import * as THREE from "three";
 import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
+import { AMBIENT } from "./ambient.js";
+
+/** Pose ids for the shader's procedural animation. */
+const POSE_ID = { walk: 0, sit: 1, loaf: 2, stretch: 3, sleep: 4 };
+/** Per pose: where the tail starts (x, in fitted units, and which heights belong to it), and how the head is found. */
+const TAIL = { walk: [-0.36, 0.3, 9], sit: [-0.2, -1, 0.36], loaf: [-0.42, -1, 0.34], stretch: [-0.46, 0.5, 9], sleep: [9, 0, 0] };
+const HEAD = { walk: (x, y, L, H) => x > 0.3 && y > 0.55, sit: (x, y, L, H) => y > 0.8 * H, loaf: (x, y, L, H) => x > 0.15 && y > 0.6 * H, stretch: () => false, sleep: () => false };
 
 /** Each pose's scale to one cat size (the prototype's FIT table): a sitting cat is CAT.size tall. */
 const FIT = {
@@ -174,10 +181,14 @@ export async function loadCatModels(loader, base = "assets/models/", { cell = 0.
       if (k >= 3) eye.copy(sum.divideScalar(k));
     }
     geometry.boundingBox.getSize(v);
+    // The head: the middle of the points the pose's rule picks out (for looking about and the bigger, cuter head).
+    const head = new THREE.Vector3(); let nh = 0;
+    for (let i = 0; i < P.count; i++) if (HEAD[pose](pos[i * 3], pos[i * 3 + 1], v.x, v.y)) { head.x += pos[i * 3]; head.y += pos[i * 3 + 1]; head.z += pos[i * 3 + 2]; nh++; }
+    if (nh > 20) head.divideScalar(nh); else head.set(0, -9, 0);
     if (map) map.updateMatrix();
     // The cats are drawn from a lighter copy (about half the triangles; a little fewer again on phones).
     const lite = cell > 0 ? decimate(geometry, cell, map ? map.matrix : null) : geometry;
-    out[coat][pose] = { geometry, lite, material, len: v.x, height: v.y, width: v.z, eye, ref, ginger: coat === "ginger" };
+    out[coat][pose] = { geometry, lite, material, len: v.x, height: v.y, width: v.z, eye, head, pose, ref, ginger: coat === "ginger" };
   })));
   return out;
 }
@@ -188,6 +199,12 @@ const VERT_HEAD = /* glsl */`
 attribute vec4 aCoatA; // base colour (linear rgb), pattern id
 attribute vec4 aCoatB; // second colour, seed
 attribute vec4 aCoatC; // eye colour, highlight
+attribute vec4 aAnim;  // stride, walking (0..1), phase, awake (0 asleep)
+uniform float uTime;
+uniform int uPose;
+uniform vec3 uHead;
+uniform vec3 uTail;
+varying vec4 vAnim;
 varying vec3 vCatPos;
 varying vec3 vCatNrm;
 varying vec4 vCoatA;
@@ -201,6 +218,8 @@ uniform vec3 uRefColor;
 uniform vec3 uEye;
 uniform float uHeight;
 uniform float uGinger;
+uniform float uTime;
+varying vec4 vAnim;
 varying vec3 vCatPos;
 varying vec3 vCatNrm;
 varying vec4 vCoatA;
@@ -278,13 +297,57 @@ function coatShader(material, md) {
       uEye: { value: md.eye },
       uHeight: { value: md.height / CAT.size },
       uGinger: { value: md.ginger ? 1 : 0 },
+      uTime: AMBIENT.uTime,
+      uPose: { value: POSE_ID[md.pose] },
+      uHead: { value: md.head },
+      uTail: { value: new THREE.Vector3(...TAIL[md.pose]) },
     });
     shader.vertexShader = VERT_HEAD + shader.vertexShader.replace("#include <begin_vertex>", `#include <begin_vertex>
       vCatPos = position / ${CAT.size.toFixed(3)};
       vCatNrm = normal;
-      vCoatA = aCoatA; vCoatB = aCoatB; vCoatC = aCoatC;`);
+      vCoatA = aCoatA; vCoatB = aCoatB; vCoatC = aCoatC; vAnim = aAnim;
+      {
+        // Procedural life on top of the posed model: legs that swing, a tail that sways, a head
+        // that bobs, looks about and is drawn a touch bigger (cuter), ears that twitch now and then.
+        float T = uTime + aAnim.z;
+        vec3 p0 = position;
+        // Head: a little bigger, turning to look about when still, nodding with each step when walking.
+        if (uHead.y > -1.0) {
+          float hw = 1.0 - smoothstep(0.14, 0.34, distance(p0, uHead));
+          float look = (sin(T * 0.37) * 0.32 + sin(T * 0.93 + 1.7) * 0.12) * (1.0 - aAnim.y) * aAnim.w;
+          float nod = sin(aAnim.x * 2.0 + 0.6) * 0.016 * aAnim.y + sin(T * 0.8) * 0.006;
+          vec3 q = transformed - uHead;
+          q *= 1.0 + 0.1 * hw;
+          float c = cos(look * hw), s = sin(look * hw);
+          q = vec3(c * q.x + s * q.z, q.y, -s * q.x + c * q.z);
+          // A tilt of curiosity now and then.
+          float tilt = sin(T * 0.23 + 2.0) ; tilt = smoothstep(0.7, 1.0, tilt) * 0.22 * hw * aAnim.w;
+          q = vec3(q.x, cos(tilt) * q.y - sin(tilt) * q.z, sin(tilt) * q.y + cos(tilt) * q.z);
+          transformed = uHead + q + vec3(0.0, nod * hw, 0.0);
+          // Ears: the top of the head flicks back for an instant every few seconds.
+          float ear = step(uHead.y + 0.1, p0.y) * hw * pow(max(0.0, sin(T * 0.61 + aAnim.z)), 60.0) * aAnim.w;
+          transformed.x -= ear * 0.05; transformed.z += sign(p0.z - uHead.z) * ear * 0.03;
+        }
+        // Legs (walking): diagonal pairs swing fore and aft, the paws lifting on the way forward.
+        if (uPose == 0) {
+          float w = (1.0 - smoothstep(0.04, 0.34, p0.y)) * aAnim.y;
+          float ph = aAnim.x + (p0.x > 0.0 ? 0.0 : 3.1416) + (p0.z > 0.0 ? 3.1416 : 0.0);
+          transformed.x += sin(ph) * 0.13 * w;
+          transformed.y += max(0.0, cos(ph)) * 0.07 * w;
+        }
+        // Tail: a wave travelling from the root to the tip; a lazy swish when still, a jaunty flick when walking.
+        if (p0.x < uTail.x && p0.y > uTail.y && p0.y < uTail.z) {
+          float d = uTail.x - p0.x;
+          float sp = mix(1.6, 3.2, aAnim.y), amp = mix(0.55, 0.35, aAnim.y) * (0.35 + 0.65 * aAnim.w);
+          float a = (sin(T * sp - d * 5.0) + 0.35 * sin(T * sp * 2.3 - d * 9.0)) * amp;
+          transformed.z += sin(a) * d;
+          transformed.x += (cos(a) - 1.0) * d * 0.5;
+          if (uPose == 0 || uPose == 3) transformed.y += sin(T * 1.3) * 0.05 * d;
+        }
+      }`);
     shader.fragmentShader = FRAG_HEAD + shader.fragmentShader
       .replace("#include <map_fragment>", `#include <map_fragment>
+      float catEye = 0.0;
       {
         vec3 tex = diffuseColor.rgb;
         float lum = dot(tex, vec3(0.2126, 0.7152, 0.0722));
@@ -302,7 +365,19 @@ function coatShader(material, md) {
           float shade = clamp(rel / mix(1.0, 0.5, pm), 0.62, 1.18);
           coat = c * mix(1.0, shade, 0.75);
         }
-        diffuseColor.rgb = mix(coat, vCoatC.rgb * 0.5 * (0.35 + lum * 6.0), eye);
+        // Richer fur: a little more saturation, a darker back and paler underside, fine fur grain.
+        vec3 n = normalize(vCatNrm);
+        float cl = dot(coat, vec3(0.2126, 0.7152, 0.0722));
+        coat = max(mix(vec3(cl), coat, 1.18), 0.0);
+        coat *= mix(1.1, 0.88, smoothstep(-0.2, 0.9, n.y) * smoothstep(0.3, 0.9, vCatPos.y / max(uHeight, 0.3)));
+        coat *= 0.94 + 0.12 * cNoise(vCatPos * vec3(14.0, 60.0, 60.0) + vCoatB.a);
+        // Eyes: the model's own, made glossy below, and a blink every few seconds (asleep: shut).
+        float blinkT = fract(uTime * 0.23 + vAnim.z * 0.37);
+        float shut = max(step(blinkT, 0.03), 1.0 - vAnim.w);
+        vec3 eyeCol = vCoatC.rgb * 0.5 * (0.35 + lum * 6.0);
+        eyeCol = mix(eyeCol, coat * 0.72, shut);
+        catEye = eye * (1.0 - shut);
+        diffuseColor.rgb = mix(coat, eyeCol, eye);
       }`)
       .replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
       {
@@ -310,6 +385,11 @@ function coatShader(material, md) {
         // (a wide glow washed dark coats to tan). The ring on the grass and its tag mark it too.
         float rim = pow(1.0 - clamp(dot(normalize(normal), normalize(vViewPosition)), 0.0, 1.0), 4.0);
         totalEmissiveRadiance += vCoatC.a * rim * 0.55 * vec3(1.0, 0.72, 0.38);
+        // A soft warm rim for every cat, so each one stands out against the grass.
+        float rim2 = pow(1.0 - clamp(dot(normalize(normal), normalize(vViewPosition)), 0.0, 1.0), 2.5);
+        // A catchlight: a bright glint where the eye faces up towards the light.
+        totalEmissiveRadiance += catEye * vec3(1.0) * 1.6 * pow(max(0.0, dot(normalize(normal), normalize(vec3(-0.25, 0.7, 0.65)))), 18.0);
+        totalEmissiveRadiance += rim2 * 0.32 * (diffuseColor.rgb * 0.6 + vec3(0.35, 0.3, 0.22));
       }`);
   };
   material.customProgramCacheKey = () => `cat-coat-${md.ginger ? "g" : "c"}`;
@@ -392,6 +472,7 @@ export class CatHerd {
         geo.setAttribute("aCoatA", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         geo.setAttribute("aCoatB", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         geo.setAttribute("aCoatC", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
+        geo.setAttribute("aAnim", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         coatShader(md.material, md);
         const im = new THREE.InstancedMesh(geo, md.material, n);
         im.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
@@ -445,6 +526,7 @@ export class CatHerd {
         im.userData.coatDirty = true;
       }
       this.lookup.get(im)[i] = cat;
+      im.geometry.attributes.aAnim.setXYZW(i, cat.stride || 0, cat.pose === "walk" && !this.still ? Math.min(1, (cat.speed || 0) / 1.2) : 0, (cat.phase || 0) % 50, cat.pose === "sleep" ? 0 : 1);
       if (this.blobs) {
         const k = cat.pose === "sit" ? [0.62, 0.5] : cat.pose === "sleep" ? [0.85, 0.8] : [md.len * 0.95, md.width * 0.8];
         _t.makeRotationY(cat.yaw).setPosition(cat.x, cat.y + 0.02, cat.z).multiply(_r.makeScale(k[0], 1, k[1]));
@@ -455,6 +537,7 @@ export class CatHerd {
     for (const im of this.meshes) {
       im.visible = im.count > 0;
       im.instanceMatrix.needsUpdate = true;
+      im.geometry.attributes.aAnim.needsUpdate = true;
       if (im.userData.coatDirty) for (const k of ["aCoatA", "aCoatB", "aCoatC"]) im.geometry.attributes[k].needsUpdate = true;
       im.boundingSphere = null; // recomputed on demand when picking
     }

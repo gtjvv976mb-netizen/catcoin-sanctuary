@@ -1,0 +1,52 @@
+/* The "Proof" block on a cat's card, drawn like an X post (assets/ui/card.js proofBlock).
+   Only card-specific rules; colours come from the site's tokens when they exist. */
+.proof {
+  --proof-bg: #ffffff;
+  --proof-ink: #0f1419;
+  --proof-soft: #536471;
+  --proof-line: #cfd9de;
+  --proof-accent: #1d9bf0;
+  margin: 8px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--proof-line);
+  border-radius: 16px;
+  background: var(--proof-bg);
+  color: var(--proof-ink);
+  font-size: 0.94rem;
+  line-height: 1.4;
+  overflow: hidden;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .proof { --proof-bg: #16181c; --proof-ink: #e7e9ea; --proof-soft: #8b98a5; --proof-line: #2f3336; }
+}
+:root[data-theme="dark"] .proof { --proof-bg: #16181c; --proof-ink: #e7e9ea; --proof-soft: #8b98a5; --proof-line: #2f3336; }
+.proof-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.proof-avatar {
+  flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--proof-soft); color: var(--proof-bg);
+  font-weight: 700; font-size: 1.1rem;
+}
+.proof-x .proof-avatar { background: var(--proof-ink); }
+.proof-who { display: flex; flex-direction: column; min-width: 0; flex: 1 1 auto; }
+.proof-author { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.proof-handle { color: var(--proof-soft); font-size: 0.86rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.proof-kind {
+  flex: 0 0 auto; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em;
+  color: var(--proof-soft); border: 1px solid var(--proof-line); border-radius: 999px; padding: 2px 8px;
+}
+.proof-text { margin: 10px 0 0; padding: 0; border: 0; white-space: pre-line; overflow-wrap: anywhere; }
+.proof-web .proof-text::before { content: "\201C"; }
+.proof-web .proof-text::after { content: "\201D"; }
+.proof-img {
+  display: block; width: 100%; height: auto; max-height: 260px; object-fit: cover;
+  margin-top: 10px; border-radius: 12px; border: 1px solid var(--proof-line);
+}
+.proof-foot {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--proof-line);
+  color: var(--proof-soft); font-size: 0.86rem;
+}
+.proof-link { color: var(--proof-accent); font-weight: 600; text-decoration: none; }
+.proof-link:hover, .proof-link:focus-visible { text-decoration: underline; }
+.proof-note { margin: 8px 0 0; color: var(--proof-soft); font-size: 0.84rem; }

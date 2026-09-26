@@ -17,6 +17,7 @@
      pair: { symbol, name, mint, category, stonkfun },   the stock pair it is priced in
      description,          the cat's story ("" for a token with no planned cat)
      look, whyLook,        the words its portrait was drawn from, and why it looks that way
+     proof,                the one X post or page that best links the cat to its company (or null)
      tribute,              "Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>."
                            when the cat is drawn to look like a company's cat, else null
      portrait,             "assets/portraits/<TICKER>.jpg", or null
@@ -104,6 +105,7 @@ export function mergeResidents({ planned, cats }) {
       look: c.look,
       whyLook: c.whyLook,
       tribute: c.tribute ?? null,
+      proof: c.proof ? { ...c.proof } : null,
       portrait: c.portrait,
       coat: { ...c.coat },
       coatFrom: c.coatFrom,
@@ -121,6 +123,7 @@ export function mergeResidents({ planned, cats }) {
     look: "",
     whyLook: "",
     tribute: null,
+    proof: null,
     portrait: null,
     coat: coatFromMint(e.mint),
     coatFrom: "mint",

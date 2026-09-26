@@ -551,7 +551,57 @@ function stockProblem(s, nowMs) {
   return null;
 }
 
-const CAT_FIELDS = ["ticker", "name", "pair", "story", "description", "look", "whyLook", "tribute", "portrait", "coat", "coatFrom"];
+const CAT_FIELDS = ["ticker", "name", "pair", "story", "description", "look", "whyLook", "tribute", "portrait", "coat", "coatFrom", "proof"];
+
+/* ── a planned cat's proof: the one post or page that best shows its link to the company ──
+
+   { kind: "x" | "web", url, author, handle, date, dateType, text, note, image }
+   An X proof is an https://x.com (or twitter.com) /<handle>/status/<id> post by `handle`, dated
+   the day it was posted. A web proof is a page on a host the stock's research already records.
+   `text` is quoted word for word from the post or page (it may be empty only for a picture-only
+   post that has an image); `note` says plainly what the proof does and does not show. */
+export const PROOF_FIELDS = Object.freeze(["kind", "url", "author", "handle", "date", "dateType", "text", "note", "image"]);
+export const X_HOSTS = Object.freeze(["x.com", "twitter.com"]);
+const HANDLE = /^[A-Za-z0-9_]{1,15}$/;
+const X_STATUS = /^\/([A-Za-z0-9_]{1,15})\/status\/(\d{5,25})$/;
+const PROOF_DATE_TYPES = Object.freeze(["posted", "published", "updated", "opened"]);
+
+/** Why a proof may not be shown, or null. `hosts` are the hosts the stock's research links to (for a web proof). */
+export function proofProblem(p, { ticker, hosts = [], nowMs = Date.now() } = {}) {
+  if (!isObject(p)) return "not an object";
+  const extra = extraKeys(p, PROOF_FIELDS);
+  if (extra.length) return `unknown field ${extra[0]}`;
+  if (!["x", "web"].includes(p.kind)) return "kind must be x or web";
+  const bad = httpsProblem(p.url);
+  if (bad) return `url: ${bad}`;
+  const u = new URL(p.url);
+  if (u.search || u.hash) return "url must have no query or fragment";
+  if (p.kind === "x") {
+    if (!X_HOSTS.includes(u.hostname)) return "an X proof must be on x.com or twitter.com";
+    const m = X_STATUS.exec(u.pathname);
+    if (!m) return "an X proof must be a /<handle>/status/<id> post";
+    if (typeof p.handle !== "string" || !HANDLE.test(p.handle)) return "handle must be an X handle without @";
+    if (m[1].toLowerCase() !== p.handle.toLowerCase()) return "the post's URL is not by its handle";
+    if (p.dateType !== "posted") return "an X proof's dateType must be posted";
+  } else {
+    if (X_HOSTS.includes(u.hostname)) return "a proof on X must have kind x";
+    if (p.handle !== null) return "a web proof has no handle (null)";
+    if (!hosts.includes(u.hostname)) return `a web proof must be on a host the research records (${u.hostname} is not)`;
+    if (!PROOF_DATE_TYPES.includes(p.dateType) || p.dateType === "posted") return "a web proof's dateType must be published, updated or opened";
+  }
+  const name = textProblem(p.author, { maxChars: 60 });
+  if (name) return `author: ${name}`;
+  if (typeof p.date !== "string" || !DAY.test(p.date)) return "date must be YYYY-MM-DD";
+  const d = sourceDateProblem(p.date, nowMs);
+  if (d) return `date: ${d}`;
+  if (p.image !== null && p.image !== `assets/proof/${ticker}.webp`) return "image must be assets/proof/<TICKER>.webp or null";
+  const text = proseProblem(p.text, { maxChars: 400, empty: true });
+  if (text) return `text: ${text}`;
+  if (!p.text && p.image === null) return "text may be empty only when the proof has an image";
+  const note = proseProblem(p.note, { maxChars: 300, empty: true });
+  if (note) return `note: ${note}`;
+  return null;
+}
 
 /** The line a cat drawn to look like a company's cat must carry, word for word. */
 export const TRIBUTE = /^Fan tribute to (.{2,80})'s cat\. Not affiliated with or endorsed by \1\.$/;
@@ -578,6 +628,7 @@ function plannedCatProblem(c) {
   const coat = coatProblem(c.coat);
   if (coat) return `coat: ${coat}`;
   if (!["sheet", "look"].includes(c.coatFrom)) return "coatFrom must be sheet or look";
+  if (c.proof !== undefined && c.proof !== null && !isObject(c.proof)) return "proof must be an object or null";
   return null;
 }
 
@@ -589,7 +640,8 @@ function plannedCatProblem(c) {
  *                  virality: [{ label, value, source, date, dateType, method }],
  *                  checked, disclaimer }                      one per pair mint: sourced research
  *   planned cat  { ticker, name, pair: { symbol, mint }, story, description, look, whyLook, tribute: string | null,
- *                  portrait: "assets/portraits/<TICKER>.jpg" | null, coat, coatFrom: "sheet" | "look" }
+ *                  portrait: "assets/portraits/<TICKER>.jpg" | null, coat, coatFrom: "sheet" | "look",
+                  proof?: { kind, url, author, handle, date, dateType, text, note, image } | null (see proofProblem) }
  * Returns { stocks, cats, refused: [{ list, index, clause, detail }] }: clean copies of what
  * passed. A cat whose pair has no research row is refused (its card could not say who it is or
  * carry its disclaimer), and so is a second cat with the same ticker or the same pair.
@@ -619,10 +671,17 @@ export function validatePlanned(data, { nowMs = Date.now() } = {}) {
     if (!stocks.some((s) => s.pair.mint === c.pair.mint)) return refused.push({ list: "cats", index, clause: "no_research", detail: "its stock has no research row" });
     if (cats.some((x) => x.ticker === c.ticker)) return refused.push({ list: "cats", index, clause: "duplicate", detail: "this ticker is planned twice" });
     if (cats.some((x) => x.pair.mint === c.pair.mint)) return refused.push({ list: "cats", index, clause: "duplicate", detail: "this pair already has a planned cat" });
+    if (c.proof != null) {
+      const stock = stocks.find((s) => s.pair.mint === c.pair.mint);
+      const hosts = stock.links.map((l) => new URL(l.url).hostname);
+      const pp = proofProblem(c.proof, { ticker: c.ticker, hosts, nowMs });
+      if (pp) return refused.push({ list: "cats", index, clause: "proof", detail: `proof: ${pp}` });
+    }
     cats.push({
       ticker: c.ticker, name: c.name, pair: { symbol: c.pair.symbol, mint: c.pair.mint }, story: c.story, description: c.description,
       look: c.look, whyLook: c.whyLook, tribute: c.tribute ?? null, portrait: c.portrait, coat: { base: c.coat.base, second: c.coat.second, pattern: c.coat.pattern, eyes: c.coat.eyes },
       coatFrom: c.coatFrom,
+      proof: c.proof == null ? null : Object.fromEntries(PROOF_FIELDS.map((k) => [k, c.proof[k]])),
     });
   });
   return { stocks, cats, refused };

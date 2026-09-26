@@ -4,6 +4,7 @@
 
      { id, name, ticker, plannedName, stock, company, pair: { symbol, mint },
        description (the cat's story), look, whyLook, tribute, portrait, coat: { base, second, pattern, eyes },
+       proof: { kind: "x" | "web", url, author, handle, date, dateType, text, note, image } | null,
        realCatName, who, basis, linkType, strength, realCatLink, checked, disclaimer,
        virality: [{ label, value, source, date, dateType, method }], links: [{ label, url, date, dateType }],
        token: { status: "planned" } | { status: "launched", mint, launchedAt, tx },
@@ -74,6 +75,23 @@ function tokenPage(v, kind, needle) {
   return url.host === page[0] && url.pathname === `${page[1]}${needle}` && !url.search && !url.hash ? u : null;
 }
 
+const PROOF_X_HOSTS = new Set(["x.com", "twitter.com"]);
+/** A cat's proof post or page, cleaned: an https URL (an X proof only on x.com/twitter.com), its words, and a local picture. */
+export function normalizeProof(p) {
+  if (!p || typeof p !== "object") return null;
+  const url = httpsUrl(p.url);
+  const kind = p.kind === "x" ? "x" : p.kind === "web" ? "web" : "";
+  if (!url || !kind) return null;
+  const onX = PROOF_X_HOSTS.has(new URL(url).hostname);
+  if ((kind === "x") !== onX) return null;
+  const handle = kind === "x" ? str(p.handle, 20).replace(/^@/, "") : "";
+  if (kind === "x" && !/^[A-Za-z0-9_]{1,15}$/.test(handle)) return null;
+  const text = para(p.text, 500);
+  const image = localPicture(p.image);
+  if (!text && !image) return null;
+  return { kind, url, author: str(p.author, 60) || hostOf(url), handle, date: str(p.date, 40), dateType: str(p.dateType, 20).toLowerCase(), text, note: para(p.note, 400), image };
+}
+
 function normalizeNew(e) {
   const id = str(e.id, 120);
   if (!id) return null;
@@ -122,6 +140,7 @@ function normalizeNew(e) {
     look: para(e.look, 600),
     whyLook: para(e.whyLook, 600),
     tribute: str(e.tribute, 200),
+    proof: normalizeProof(e.proof),
     portrait: localPicture(e.portrait),
     coat: { base: str(coatIn.base, 40), second: str(coatIn.second, 40), pattern: str(coatIn.pattern, 40), eyes: str(coatIn.eyes, 40) },
     who, virality, links, token, buy,

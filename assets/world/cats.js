@@ -231,13 +231,13 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     const add = (kind, score) => {
       if (score > 0 && !(cat.cool[kind] > time)) opts.push([kind, score + rnd.range(0, 0.28) - (cat.last === kind ? 0.35 : 0)]);
     };
-    add("nap", n.sleep * 1.25 * t.sleepy);
-    if (PILE_SLOTS.some((s) => free(s.id))) add("pile", n.sleep * (0.75 + t.social * 0.5) * t.sleepy);
+    add("nap", n.sleep * 1.0 * t.sleepy);
+    if (PILE_SLOTS.some((s) => free(s.id))) add("pile", n.sleep * (0.6 + t.social * 0.4) * t.sleepy);
     if (L.SUN_PATCHES.some((s) => s.slots.some((_, k) => free(`${s.id}#${k}`)))) add("sunroll", 0.12 + (n.play * 0.45 + n.sleep * 0.4) * t.playful);
     if (L.BOWLS.some((b) => free(b.id) && clearOfCats(b.stand, cat))) add("eat", n.hunger * 1.15 * t.hungry);
     if (WATERS.some((w) => free(w.id) && clearOfCats(w.stand, cat))) add("drink", n.thirst * 1.05);
-    if (yarns.some((y) => !y.player)) add("play", n.play * 0.95 * t.playful);
-    if (n.play > 0.3 && playmates(cat).length) add("chase", n.play * 1.2 * t.playful * (0.6 + t.social * 0.5));
+    if (yarns.some((y) => !y.player)) add("play", n.play * 1.15 * t.playful);
+    if (n.play > 0.3 && playmates(cat).length) add("chase", n.play * 1.45 * t.playful * (0.6 + t.social * 0.5));
     if (n.sleep < 0.75 && lowButterflies(cat).length) add("butterfly", 0.15 + n.play * 1.1 * t.hunter);
     if (n.sleep < 0.85 && landedBirds(cat).length) add("bird", 0.45 + n.play * 0.9 * t.hunter);
     if (L.POND_SPOTS.some((p) => free(p.id))) add("pond", n.explore * 0.62);
@@ -245,7 +245,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     if (free(L.STEP.id) && clearOfCats(L.STEP.ground, cat)) add("porch", n.explore * 0.5);
     add("groom", n.groom * 0.95 * t.tidy);
     if (leaders(cat).length) add("follow", n.social * 0.9 * t.social);
-    add("wander", 0.3 + n.explore * 0.45);
+    add("wander", 0.42 + n.explore * 0.5);
     add("rest", 0.16 + n.sleep * 0.35);
     if (t.playful > 1.0 && time - cat.lastZoom > 120 && n.sleep < 0.5 && rnd.chance(0.04)) opts.push(["zoomies", 3]);
     opts.sort((a, b) => b[1] - a[1]);
@@ -302,7 +302,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         }
         act.reason = SAY.bed;
         cat.dest = { x: p.x, z: p.z };
-        steps.push({ type: "go", x: p.x, z: p.z, speed: SPEED.purpose, arrive: 0.12, doing: SAY.bed }, ...sleepSteps(cat, say, dur(cat, 26, 58) * cat.traits.sleepy));
+        steps.push({ type: "go", x: p.x, z: p.z, speed: SPEED.purpose, arrive: 0.12, doing: SAY.bed }, ...sleepSteps(cat, say, dur(cat, 16, 38) * cat.traits.sleepy));
         break;
       }
       case "pile": {
@@ -315,7 +315,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         cat.dest = { x: s.x, z: s.z };
         act.reason = SAY.pileGo;
         const say = s.pile.kind === "blanket" ? SAY.blanket : SAY.pile;
-        steps.push({ type: "go", x: s.x, z: s.z, speed: SPEED.purpose, arrive: 0.12, doing: SAY.pileGo }, ...sleepSteps(cat, say, dur(cat, 30, 70) * cat.traits.sleepy));
+        steps.push({ type: "go", x: s.x, z: s.z, speed: SPEED.purpose, arrive: 0.12, doing: SAY.pileGo }, ...sleepSteps(cat, say, dur(cat, 20, 45) * cat.traits.sleepy));
         break;
       }
       case "sunroll": {
@@ -900,6 +900,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       a.bob = Math.abs(Math.sin(cat.stride)) * (0.035 + 0.03 * k);
       a.pitch = Math.sin(cat.stride * 2) * 0.018 * k;
       a.roll = Math.sin(cat.stride) * 0.025 * k;
+      // A springy gait: a little squash as the paws land, a stretch at the top of each step.
+      a.sy = 1 + (Math.abs(Math.sin(cat.stride)) - 0.5) * 0.035 * k; a.sx = 1 - (a.sy - 1) * 0.5;
     } else if (cat.pose === "sleep") {
       const s = Math.sin(t * Math.PI * 2 * 0.2 * breath);
       a.sy = 1 + s * 0.028; a.sx = a.sz = 1 + s * 0.012;
@@ -946,6 +948,12 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     // A small give as a cat lands in a new resting pose.
     const since = time - cat.poseSince;
     if (since < 0.3 && cat.prevPose === "walk" && cat.pose !== "walk" && cat.pose !== "stretch") a.sy *= 1 - 0.05 * (1 - since / 0.3);
+    // Squash and stretch through every change of pose, so one pose melts into the next instead of popping:
+    // a quick squash, a small springy overshoot, settled within half a second.
+    if (since < 0.5 && cat.prevPose && cat.prevPose !== cat.pose) {
+      const u = since / 0.5, w = Math.sin(u * Math.PI * 2.2) * (1 - u) * (1 - u);
+      a.sy *= 1 - 0.09 * w; a.sx *= 1 + 0.045 * w; a.sz *= 1 + 0.045 * w;
+    }
   }
 
   /* ── Yarn ──────────────────────────────────────────────────────────── */

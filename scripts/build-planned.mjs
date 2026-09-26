@@ -34,7 +34,16 @@
  * "is the" cat of a company or a post (or whose sheet entry has a `tribute`) must carry the line
  * "Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>." in its
  * description; it is published as the cat's `tribute` and shown on its card. Without it the run
- * stops. A cat listed in data/held.json is still left out (with its portrait). A portrait file
+ * stops.
+ *
+ * PROOF. A sheet entry may carry `proof`: the one post or page that best shows the cat's link to
+ * its company, { kind: "x" | "web", url, author, handle?, date, dateType?, text, note?, image? }.
+ * An X proof is an x.com/twitter.com status post by `handle`; a web proof must be on a host the
+ * stock's research links to. `text` is the post's or page's own words. `image` is a local WebP
+ * (a small capture of the post's picture), copied to assets/proof/<TICKER>.webp. Everything is
+ * checked by proofProblem in assets/collection.js; a bad proof stops the run.
+ *
+ * A cat listed in data/held.json is still left out (with its portrait). A portrait file
  * whose cat is no longer planned is removed.
  */
 import fs from "node:fs";
@@ -49,6 +58,42 @@ export class PlannedError extends Error { constructor(message) { super(message);
 export const serialize = (value) => `${JSON.stringify(value, null, 2)}\n`;
 export const PORTRAIT_SIZE = 512;
 export const PORTRAIT_MAX_BYTES = 400_000;
+export const PROOF_IMAGE_MAX_BYTES = 80_000;
+
+/** Whether `buf` is a WebP file (RIFF….WEBP). */
+export const isWebp = (buf) => buf.length > 12 && buf.toString("latin1", 0, 4) === "RIFF" && buf.toString("latin1", 8, 12) === "WEBP";
+
+/** A sheet entry's proof as data/planned.json publishes it, and its image bytes (or null). */
+export function proofOf(entry) {
+  const p = entry.proof;
+  if (p === undefined || p === null) return { proof: null, image: null };
+  if (typeof p !== "object" || Array.isArray(p)) throw new PlannedError(`${entry.ticker}: its proof is not an object`);
+  const known = ["kind", "url", "author", "handle", "date", "dateType", "text", "note", "image"];
+  const extra = Object.keys(p).filter((k) => !known.includes(k));
+  if (extra.length) throw new PlannedError(`${entry.ticker}: its proof has an unknown field ${extra[0]}`);
+  let image = null;
+  if (p.image !== undefined && p.image !== null) {
+    if (typeof p.image !== "string" || !fs.existsSync(p.image)) throw new PlannedError(`${entry.ticker}: its proof image ${JSON.stringify(p.image)} does not exist`);
+    image = fs.readFileSync(p.image);
+    if (!isWebp(image)) throw new PlannedError(`${entry.ticker}: its proof image is not a WebP file`);
+    if (image.length > PROOF_IMAGE_MAX_BYTES) throw new PlannedError(`${entry.ticker}: its proof image is ${image.length} bytes, more than ${PROOF_IMAGE_MAX_BYTES}`);
+  }
+  const s = (v) => (typeof v === "string" ? v.replace(/\s+/g, " ").trim() : v);
+  return {
+    proof: {
+      kind: p.kind,
+      url: p.url,
+      author: s(p.author),
+      handle: p.kind === "x" ? (typeof p.handle === "string" ? p.handle.replace(/^@/, "") : p.handle) : null,
+      date: p.date,
+      dateType: p.dateType ?? (p.kind === "x" ? "posted" : undefined),
+      text: s(p.text ?? ""),
+      note: s(p.note ?? ""),
+      image: image ? `assets/proof/${entry.ticker}.webp` : null,
+    },
+    image,
+  };
+}
 
 function writeIfChanged(file, bytes) {
   let old = null;
@@ -210,7 +255,7 @@ export function buildPlanned({ root, sheets, allowDrop = false, nowMs = Date.now
 
   const stocks = STOCK_PAIRS.filter((p) => research[p.stonkfun]).map((p) => stockRow(p, research[p.stonkfun]));
   const held = readHeld(root);
-  const cats = [], portraits = new Map(), heldBack = [];
+  const cats = [], portraits = new Map(), proofImages = new Map(), heldBack = [];
   for (const e of entries) {
     if (!e || typeof e !== "object") throw new PlannedError("a sheet entry is not an object");
     if (typeof e.ticker !== "string" || !TICKER.test(e.ticker)) throw new PlannedError(`a sheet entry has the ticker ${JSON.stringify(e.ticker)}, not 2 to 10 capital letters or digits`);
@@ -228,6 +273,9 @@ export function buildPlanned({ root, sheets, allowDrop = false, nowMs = Date.now
     const bytes = portraitBytes(e);
     if (bytes) portraits.set(e.ticker, bytes);
     else log(`${e.ticker}: no portrait yet.`);
+    const { proof, image: proofImage } = proofOf(e);
+    if (proofImage) proofImages.set(e.ticker, proofImage);
+    if (!proof) log(`${e.ticker}: no proof yet.`);
     cats.push({
       ticker: e.ticker,
       name: String(e.name ?? "").trim(),
@@ -240,6 +288,7 @@ export function buildPlanned({ root, sheets, allowDrop = false, nowMs = Date.now
       portrait: bytes ? `assets/portraits/${e.ticker}.jpg` : null,
       coat: fromSheet ?? coatFromLook(e.look),
       coatFrom: fromSheet ? "sheet" : "look",
+      proof,
     });
   }
 
@@ -259,7 +308,17 @@ export function buildPlanned({ root, sheets, allowDrop = false, nowMs = Date.now
     throw new PlannedError(`this run would drop ${dropped.length} planned ${dropped.length === 1 ? "cat" : "cats"} (${dropped.slice(0, 5).join(", ")}${dropped.length > 5 ? ", …" : ""}); give every sheet, or --allow-drop; nothing was written`);
   }
 
-  const written = { planned: false, portraits: [], removed: [] };
+  const written = { planned: false, portraits: [], removed: [], proofImages: [], proofRemoved: [] };
+  for (const [ticker, bytes] of proofImages) {
+    if (writeIfChanged(path.join(root, "assets/proof", `${ticker}.webp`), bytes)) written.proofImages.push(ticker);
+  }
+  const proofDir = path.join(root, "assets/proof");
+  if (fs.existsSync(proofDir)) {
+    for (const f of fs.readdirSync(proofDir)) {
+      const m = /^([A-Z0-9]{2,10})\.webp$/.exec(f);
+      if (m && !cats.some((c) => c.ticker === m[1] && c.proof?.image)) { fs.rmSync(path.join(proofDir, f)); written.proofRemoved.push(m[1]); }
+    }
+  }
   for (const [ticker, bytes] of portraits) {
     if (writeIfChanged(path.join(root, "assets/portraits", `${ticker}.jpg`), bytes)) written.portraits.push(ticker);
   }
@@ -288,6 +347,9 @@ function main() {
     if (r.dropped.length) console.log(`Dropped (--allow-drop): ${r.dropped.join(", ")}.`);
     console.log(r.written.planned ? "Wrote data/planned.json." : "data/planned.json is unchanged.");
     console.log(r.written.portraits.length ? `Wrote ${r.written.portraits.length} portraits.` : "No portrait changed.");
+    console.log(r.written.proofImages.length ? `Wrote ${r.written.proofImages.length} proof images.` : "No proof image changed.");
+    const noProof = r.planned.cats.filter((c) => !c.proof).map((c) => c.ticker);
+    if (noProof.length) console.log(`No proof yet: ${noProof.join(", ")}.`);
     if (r.held.length) console.log(`Held back (data/held.json): ${r.held.join(", ")}.`);
     if (r.written.removed.length) console.log(`Removed the portraits of cats that are not planned: ${r.written.removed.join(", ")}.`);
   } catch (e) {

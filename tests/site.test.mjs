@@ -403,3 +403,31 @@ test("virality dates say what they are, and year-month dates read as words", asy
   assert.match(v, /published 15 Oct 2014/);
   assert.ok(!v.includes("2013-08"));
 });
+
+test("every planned cat's card shows its proof: the post's author, handle, words and date, a picture on this site, and a link to the post", async () => {
+  const list = await residents();
+  const planned = list.filter((r) => PLANNED.cats.some((c) => c.ticker === r.id));
+  assert.equal(planned.length, PLANNED.cats.length);
+  for (const r of planned) {
+    const c = PLANNED.cats.find((x) => x.ticker === r.id);
+    const card = renderCard(r);
+    const fig = card.root.querySelector("figure.proof");
+    assert.ok(fig, `${r.id} shows a proof`);
+    const text = fig.textContent;
+    assert.ok(text.includes(c.proof.author), r.id);
+    if (c.proof.kind === "x") assert.ok(text.includes(`@${c.proof.handle}`), r.id);
+    if (c.proof.text) assert.ok(text.includes(c.proof.text), r.id);
+    const a = fig.querySelectorAll("a").find((x) => x.className === "proof-link");
+    assert.equal(a.href, c.proof.url);
+    assert.equal(a.textContent, c.proof.kind === "x" ? "View on X ↗" : "View source ↗");
+    assert.equal(a.rel, "noopener noreferrer");
+    const img = fig.querySelector("img");
+    if (c.proof.image) assert.equal(img.src, c.proof.image); else assert.equal(img, null);
+    assert.ok(card.section("card-proof").length > 0);
+  }
+  // No proof, or one that is not https, or an X proof off X: the card says so instead.
+  const bare = { ...planned[0], proof: normalize({ ...planned[0], id: "t", proof: { kind: "x", url: "https://evil.example/Google/status/1", handle: "Google", author: "G", text: "hi" } }).proof };
+  assert.equal(bare.proof, null);
+  assert.match(renderCard(bare).section("card-proof"), /No proof post recorded yet/);
+  assert.equal(normalize({ ...planned[0], id: "t", proof: { kind: "web", url: "http://example.com/", author: "G", text: "hi" } }).proof, null);
+});

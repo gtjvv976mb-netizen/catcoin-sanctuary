@@ -6,9 +6,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { buildPlanned, PlannedError, jpegInfo, serialize, stockRow, copiesACat, readHeld, tributeOf } from "../scripts/build-planned.mjs";
+import { buildPlanned, proofOf, isWebp, PlannedError, jpegInfo, serialize, stockRow, copiesACat, readHeld, tributeOf } from "../scripts/build-planned.mjs";
 import { coatFromLook, coatFromSheet } from "../scripts/lib/coat.mjs";
-import { validatePlanned, STOCK_PAIRS, coatProblem, pairByMint, tradeLinkProblem, TRIBUTE, tributeLine } from "../assets/collection.js";
+import { validatePlanned, proofProblem, STOCK_PAIRS, coatProblem, pairByMint, tradeLinkProblem, TRIBUTE, tributeLine } from "../assets/collection.js";
 import { ROOT, DATA_NOW } from "./helpers.mjs";
 
 /* These tests read the shipped data: the real clock (tests/helpers.mjs DATA_NOW), not a frozen one. */
@@ -25,7 +25,9 @@ function sheetEntry(ticker, extra = {}) {
     name: c.name, ticker: c.ticker, description: c.description, story: c.story, disclosure: "internal disclosure", look: c.look, whyLook: c.whyLook,
     basis: "INTERNAL NOTE: editor's reasoning", checks: "INTERNAL CHECKS", form: { website: "internal" }, notes: ["internal"],
     imageUrl: "https://d8j0ntlcm91z4.cloudfront.net/internal.png", imageJobId: "internal-job",
-    imageJpg512: path.join(ROOT, c.portrait), ...extra,
+    imageJpg512: path.join(ROOT, c.portrait),
+    ...(c.proof ? { proof: { ...c.proof, image: c.proof.image ? path.join(ROOT, c.proof.image) : null } } : {}),
+    ...extra,
   };
 }
 
@@ -55,7 +57,7 @@ test("build: sheets + research make data/planned.json and the portraits; the she
   const r = buildPlanned({ root, sheets: paths, nowMs: NOW });
   assert.equal(r.cats, 2);
   assert.equal(r.stocks, 93);
-  assert.deepEqual(r.written, { planned: true, portraits: ["PATCHPAW", "SAVEPAWS"], removed: [] });
+  assert.deepEqual(r.written, { planned: true, portraits: ["PATCHPAW", "SAVEPAWS"], removed: [], proofImages: ["SAVEPAWS"], proofRemoved: [] });
   const out = readPlanned(root);
   assert.deepEqual(validatePlanned(out, { nowMs: NOW }).refused, []);
   assert.deepEqual(out.cats, PLANNED.cats.filter((c) => ["PATCHPAW", "SAVEPAWS"].includes(c.ticker)));
@@ -73,7 +75,7 @@ test("build: a re-run writes nothing; a sheet that is not there yet is skipped",
   buildPlanned({ root, sheets: paths, nowMs: NOW });
   const before = snapshot(root);
   const r = buildPlanned({ root, sheets: [...paths, path.join(root, "not-yet.json")], nowMs: NOW });
-  assert.deepEqual(r.written, { planned: false, portraits: [], removed: [] });
+  assert.deepEqual(r.written, { planned: false, portraits: [], removed: [], proofImages: [], proofRemoved: [] });
   assert.deepEqual(r.skipped, [path.join(root, "not-yet.json")]);
   assert.deepEqual(snapshot(root), before);
 });
@@ -91,7 +93,7 @@ test("build: it never drops a planned cat unless told to", () => {
 });
 
 test("build: the pair is the sheet's mint (checked against the symbol), else the symbol's pair; OPENAI and KALSHI by the research's category", () => {
-  const base = { ...sheetEntry("PATCHPAW"), ticker: "OAITEST", name: "Test Cat", imageJpg512: undefined, quoteMint: undefined };
+  const base = { ...sheetEntry("PATCHPAW"), ticker: "OAITEST", name: "Test Cat", imageJpg512: undefined, quoteMint: undefined, proof: undefined };
   const { root, paths } = tempRoot([[{ ...base, stonkfunSymbol: "OPENAI" }], [{ ...base, stonkfunSymbol: "OPENAI", pairMint: "oPAiAikWTaFj9RYoRFD35ccfwhnMcB3ThgBZRHSkjTZ" }],
     [{ ...base, stonkfunSymbol: "OPENAI", pairMint: "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc" }], [{ ...base, stonkfunSymbol: "DOGE" }], [{ ...base, stonkfunSymbol: "MU" }]]);
   buildPlanned({ root, sheets: [paths[0]], nowMs: NOW });
@@ -277,7 +279,7 @@ test("build: a cat held in data/held.json is left out with its portrait, and is 
   // The owner ruled that the eight xStock cats look exactly like their companies' cats, as fan tributes.
   const shipped = readHeld(ROOT);
   assert.equal(shipped.size, 0);
-  const companies = { HARRUMPH: "Coinbase", PEWTER: "Robinhood", SNOWCURL: "Tesla", MOATCAT: "Berkshire Hathaway", COUCHCAP: "Meta", WARMSPOT: "SpaceX", SOCKFOOT: "NVIDIA", HALFSMILE: "Microsoft" };
+  const companies = { MIGGLES: "Coinbase", PEWTER: "Robinhood", SNOWCURL: "Tesla", CAMTHECAT: "Berkshire Hathaway", COUCHCAP: "Meta", WARMSPOT: "SpaceX", SOCKFOOT: "NVIDIA", JELLIECAT: "Microsoft" };
   for (const [t, company] of Object.entries(companies)) {
     const cat = PLANNED.cats.find((c) => c.ticker === t);
     assert.ok(cat, `${t} is planned`);
@@ -304,4 +306,73 @@ test("rules: research links are never trading pages; virality dates say what the
   const crcl = PLANNED.stocks.find((s) => s.stonkfun === "CRCLX");
   assert.equal(crcl.realCat.linkType, "reported");
   for (const s of PLANNED.stocks) for (const v of s.virality) assert.ok(["measured", "as_of", "published", "undated"].includes(v.dateType), `${s.stonkfun}: ${v.label}`);
+});
+
+/* ── proof: the X post or page on each planned cat's card ───────────────────────────── */
+
+const X_PROOF = { kind: "x", url: "https://x.com/Google/status/793168672571416576", author: "Google", handle: "Google", date: "2016-10-31", dateType: "posted", text: "Hi! I'm Momo.", note: "", image: null };
+const WEB_PROOF = { kind: "web", url: "https://www.spdrgoldshares.com/", author: "World Gold Trust Services", handle: null, date: "2026-09-25", dateType: "opened", text: "Gold.", note: "", image: null };
+const HOSTS = ["www.spdrgoldshares.com"];
+
+test("proof: every shipped planned cat has a valid proof, X proofs are status posts by their handle, pictures exist and are small WebP", () => {
+  assert.equal(PLANNED.cats.length, 24);
+  for (const c of PLANNED.cats) {
+    assert.ok(c.proof, `${c.ticker} has a proof`);
+    const stock = PLANNED.stocks.find((s) => s.pair.mint === c.pair.mint);
+    const hosts = stock.links.map((l) => new URL(l.url).hostname);
+    assert.equal(proofProblem(c.proof, { ticker: c.ticker, hosts, nowMs: NOW }), null, c.ticker);
+    if (c.proof.kind === "web") assert.ok(c.proof.note, `${c.ticker}: a web proof says why it is not an X post`);
+    if (c.proof.image) {
+      const b = fs.readFileSync(path.join(ROOT, c.proof.image));
+      assert.ok(isWebp(b) && b.length <= 80_000, c.ticker);
+    }
+  }
+  const files = fs.readdirSync(path.join(ROOT, "assets/proof"));
+  assert.deepEqual(files.sort(), PLANNED.cats.filter((c) => c.proof.image).map((c) => `${c.ticker}.webp`).sort());
+});
+
+test("proof: the rules refuse what is not a real post or a recorded source", () => {
+  const ok = (p, o = {}) => proofProblem(p, { ticker: "MOMOTHECAT", hosts: HOSTS, nowMs: NOW, ...o });
+  assert.equal(ok(X_PROOF), null);
+  assert.equal(ok({ ...X_PROOF, url: "https://twitter.com/Google/status/793168672571416576" }), null);
+  assert.equal(ok(WEB_PROOF), null);
+  assert.match(ok({ ...X_PROOF, url: "http://x.com/Google/status/793168672571416576" }), /https/);
+  assert.match(ok({ ...X_PROOF, url: "https://x.com.evil.io/Google/status/793168672571416576" }), /x\.com or twitter\.com/);
+  assert.match(ok({ ...X_PROOF, url: "https://x.com/Google" }), /status/);
+  assert.match(ok({ ...X_PROOF, url: "https://x.com/Google/status/793168672571416576?s=20" }), /query/);
+  assert.match(ok({ ...X_PROOF, handle: "NotGoogle" }), /not by its handle/);
+  assert.match(ok({ ...X_PROOF, dateType: "opened" }), /posted/);
+  assert.match(ok({ ...WEB_PROOF, url: "https://example.com/page" }), /host the research records/);
+  assert.match(ok({ ...WEB_PROOF, url: "https://x.com/Google/status/1" }), /kind x/);
+  assert.match(ok({ ...WEB_PROOF, kind: "blog" }), /kind/);
+  assert.match(ok({ ...X_PROOF, date: "2099-01-01" }), /future/);
+  assert.match(ok({ ...X_PROOF, date: "2016" }), /YYYY-MM-DD/);
+  assert.match(ok({ ...X_PROOF, text: "" }), /empty only when/);
+  assert.equal(ok({ ...X_PROOF, text: "", image: "assets/proof/MOMOTHECAT.webp" }), null);
+  assert.match(ok({ ...X_PROOF, image: "https://pbs.twimg.com/a.jpg" }), /assets\/proof/);
+  assert.match(ok({ ...X_PROOF, text: "<script>x</script>" }), /markup/);
+  assert.match(ok({ ...X_PROOF, extra: 1 }), /unknown field/);
+});
+
+test("proof: a bad proof in a sheet stops the build and writes nothing", () => {
+  const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", { proof: { ...WEB_PROOF, url: "https://example.com/" } })]]);
+  assert.throws(() => buildPlanned({ root, sheets: paths, nowMs: NOW }), (e) => e instanceof PlannedError && /host the research records/.test(e.message));
+  assert.ok(!fs.existsSync(path.join(root, "data/planned.json")));
+  const png = path.join(root, "x.png");
+  fs.writeFileSync(png, Buffer.from("89504e470d0a1a0a", "hex"));
+  assert.throws(() => proofOf({ ticker: "MOMOTHECAT", proof: { ...X_PROOF, image: png } }), /not a WebP/);
+  assert.throws(() => proofOf({ ticker: "MOMOTHECAT", proof: { ...X_PROOF, image: "/nope.webp" } }), /does not exist/);
+  assert.throws(() => proofOf({ ticker: "MOMOTHECAT", proof: { ...X_PROOF, secret: 1 } }), /unknown field/);
+  assert.deepEqual(proofOf({ ticker: "A1", proof: { ...X_PROOF, handle: "@Google", text: "  a\n b " } }).proof.handle, "Google");
+  assert.equal(proofOf({ ticker: "A1" }).proof, null);
+});
+
+test("proof: a proof picture whose cat has no proof picture any more is removed", () => {
+  const { root, paths } = tempRoot([[sheetEntry("SAVEPAWS")]]);
+  buildPlanned({ root, sheets: paths, nowMs: NOW });
+  assert.ok(fs.existsSync(path.join(root, "assets/proof/SAVEPAWS.webp")));
+  fs.writeFileSync(paths[0], JSON.stringify([sheetEntry("SAVEPAWS", { proof: { ...PLANNED.cats.find((c) => c.ticker === "SAVEPAWS").proof, image: null, text: "A picture." } })]));
+  const r = buildPlanned({ root, sheets: paths, nowMs: NOW });
+  assert.deepEqual(r.written.proofRemoved, ["SAVEPAWS"]);
+  assert.ok(!fs.existsSync(path.join(root, "assets/proof/SAVEPAWS.webp")));
 });

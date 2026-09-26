@@ -111,7 +111,7 @@ test("the match is by pair mint AND ticker: the same ticker on another pair, or 
   assert.equal(r[0].planned, false);
   assert.equal(r.find((c) => c.id === "SAVEPAWS").token.status, "planned");
   const r2 = await load(files([GOOGL]));
-  assert.equal(r2.find((c) => c.id === "PORCHLIGHT").token.status, "planned");   // the GOOGLx cat: MEDPAD is not its ticker
+  assert.equal(r2.find((c) => c.id === "MOMOTHECAT").token.status, "planned");   // the GOOGLx cat: MEDPAD is not its ticker
   const medpad = r2[0];
   assert.equal(medpad.id, GOOGL.mint);
   assert.equal(medpad.planned, false);

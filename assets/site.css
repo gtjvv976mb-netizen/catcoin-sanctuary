@@ -274,3 +274,45 @@ body.no-webgl .hint { display: none; }
 .card-real-name { font-size: 16px; }
 .card-real-kind { color: var(--leaf); font-size: 12.5px; font-weight: 700; }
 .card-links a { overflow-wrap: anywhere; }
+
+/* ── About and Socials: pills beside Find a cat, and their panels ──────── */
+.bar-right { display: flex; align-items: center; gap: 8px; }
+.pill { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; min-width: 44px; padding: 8px 14px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--paper-glass); color: var(--ink); font: 700 15px/1 var(--body); box-shadow: var(--shadow); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.pill:hover { background: var(--paper); }
+.pill svg { color: var(--accent-deep); flex: none; }
+.pill:focus-visible, .find:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.panel { width: min(480px, calc(100vw - 32px)); }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 16px 0 22px; }
+.panel-title { margin: 0; font: 700 26px/1.1 var(--display); }
+.panel-body { padding: 4px 22px 22px; overflow-y: auto; overscroll-behavior: contain; }
+.panel-body p { margin: 10px 0; line-height: 1.5; }
+.panel-lead { font: 700 20px/1.25 var(--display); color: var(--accent-deep); }
+.panel-ticker { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; border-radius: 16px; background: #fbf0e3; }
+.panel-ticker-label { color: var(--ink-soft); font-size: 14px; }
+.panel-ticker-name { font: 500 18px/1 var(--mono); color: var(--ink); }
+.panel-contract code { font: 500 12.5px var(--mono); word-break: break-all; }
+.panel-note, .panel-small { color: var(--ink-soft); font-size: 13.5px; }
+.panel-link { min-height: 44px; padding: 8px 16px; border: 2px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: 700 14px var(--body); cursor: pointer; }
+.panel-link:hover { border-color: var(--accent); }
+.social-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.social-item { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 14px; border-radius: 16px; background: #fbf0e3; color: var(--ink); text-decoration: none; }
+.social-item:hover { background: #f6e3cd; }
+.social-item:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.social-icon { width: 36px; height: 36px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--ink); color: var(--paper); }
+.social-text { display: grid; }
+.social-label { font-weight: 700; }
+.social-host { color: var(--ink-soft); font: 500 12.5px var(--mono); }
+@media (max-width: 720px) {
+  .pill { padding: 8px 12px; }
+  .pill-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .bar-right { gap: 6px; }
+}
+@media (max-width: 460px) {
+  .bar .mark { font-size: 17px; padding: 9px 11px 8px; }
+  .bar .find { padding: 8px 12px; min-width: 44px; justify-content: center; }
+  .bar .find-count { display: none; }
+  .bar-right { gap: 5px; }
+  .bar .find-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+@media (max-width: 380px) { .bar .mark { font-size: 15px; padding: 9px 9px 8px; } }

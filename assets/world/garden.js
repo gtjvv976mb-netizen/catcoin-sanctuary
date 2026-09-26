@@ -11,6 +11,7 @@ import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import * as L from "./layout.js";
 import { makeRandom } from "./rng.js";
+import { windify, shimmer } from "./ambient.js";
 
 const _c = new THREE.Color();
 const _c2 = new THREE.Color();
@@ -35,6 +36,9 @@ function paint(geo, hex, rnd = null, jitter = 0) {
   g.setAttribute("color", new THREE.BufferAttribute(col, 3));
   return g;
 }
+
+/** Marks a geometry to sway in the wind: the push grows by k per unit of height above y0. */
+function sway(g, y0, k) { g.userData.wind = [y0, k]; return g; }
 
 /** Places a geometry: position, rotation (Euler, radians), scale. */
 function place(geo, x, y, z, rx = 0, ry = 0, rz = 0, sx = 1, sy = sx, sz = sx) {
@@ -233,10 +237,10 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
   // Sunflowers along the back of the patch, and a watering can.
   for (let k = 0; k < 6; k++) {
     const x = 5.6 + k * 0.95, z = -13.1 + rnd.range(-0.1, 0.1), h = rnd.range(1.9, 2.5);
-    statics.push(paint(place(new THREE.CylinderGeometry(0.04, 0.05, h, 5), x, h / 2, z), 0x5d9e45));
-    for (const s of [-1, 1]) statics.push(paint(place(new THREE.CircleGeometry(0.2, 5), x + s * 0.14, h * 0.55, z, 0, 0, s * 0.8), 0x6aa84f));
-    statics.push(paint(place(new THREE.CircleGeometry(0.36, 12), x, h, z + 0.04, -0.25, 0, 0), 0xf6c33a));
-    statics.push(paint(place(new THREE.CylinderGeometry(0.16, 0.16, 0.06, 10), x, h, z + 0.07, Math.PI / 2 - 0.25, 0, 0), 0x7a4a24));
+    statics.push(sway(paint(place(new THREE.CylinderGeometry(0.04, 0.05, h, 5), x, h / 2, z), 0x5d9e45), 0, 0.03));
+    for (const s of [-1, 1]) statics.push(sway(paint(place(new THREE.CircleGeometry(0.2, 5), x + s * 0.14, h * 0.55, z, 0, 0, s * 0.8), 0x6aa84f), 0, 0.03));
+    statics.push(sway(paint(place(new THREE.CircleGeometry(0.36, 12), x, h, z + 0.04, -0.25, 0, 0), 0xf6c33a), 0, 0.03));
+    statics.push(sway(paint(place(new THREE.CylinderGeometry(0.16, 0.16, 0.06, 10), x, h, z + 0.07, Math.PI / 2 - 0.25, 0, 0), 0x7a4a24), 0, 0.03));
   }
   {
     const x = 11.4, z = -8.6;
@@ -372,7 +376,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
       d.setAttribute("color", new THREE.BufferAttribute(col, 3));
       cols.push(d);
     }
-    const water = new THREE.Mesh(mergeGeometries([...pondGroup, ...cols]), new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.12, metalness: 0.0 }));
+    const water = new THREE.Mesh(mergeGeometries([...pondGroup, ...cols]), shimmer(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.12, metalness: 0.0 })));
     water.name = "water";
     water.receiveShadow = true;
     group.add(water);
@@ -384,10 +388,10 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     for (let k = 0; k < n; k++) {
       const a = rnd.range(0, 6.28), d = rnd.range(0, r * 0.45), s = r * rnd.range(0.5, 0.75);
       const bx = x + Math.cos(a) * d, bz = z + Math.sin(a) * d;
-      statics.push(paint(place(new THREE.IcosahedronGeometry(1, 0), bx, y0 + s * 0.7, bz, rnd.range(0, 3), rnd.range(0, 3), 0, s, s * 0.85, s), rnd.pick(COLORS.bush), rnd, 0.05));
+      statics.push(sway(paint(place(new THREE.IcosahedronGeometry(1, 0), bx, y0 + s * 0.7, bz, rnd.range(0, 3), rnd.range(0, 3), 0, s, s * 0.85, s), rnd.pick(COLORS.bush), rnd, 0.05), y0, 0.05));
       if (flowers) for (let f = 0; f < 4; f++) {
         const fa = rnd.range(0, 6.28), fy = rnd.range(0.2, 1);
-        statics.push(paint(place(new THREE.IcosahedronGeometry(0.08, 0), bx + Math.cos(fa) * s * 0.85, y0 + s * 0.7 + fy * s * 0.6, bz + Math.sin(fa) * s * 0.85), flowers, rnd, 0.03));
+        statics.push(sway(paint(place(new THREE.IcosahedronGeometry(0.08, 0), bx + Math.cos(fa) * s * 0.85, y0 + s * 0.7 + fy * s * 0.6, bz + Math.sin(fa) * s * 0.85), flowers, rnd, 0.03), y0, 0.05));
       }
     }
   };
@@ -399,15 +403,17 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     const rad = (a * Math.PI) / 180, r = L.GARDEN.fenceR + rnd.range(1.2, 2.2);
     bushAt(Math.cos(rad) * r, Math.sin(rad) * r, rnd.range(0.7, 1.15), rnd.chance(0.3) ? rnd.pick([0xf29bb2, 0xfbe3ea]) : false);
   }
+  const blossoms = []; // pink crowns near the garden, for the falling petals
   const occluders = []; // rough spheres round the trees near the garden, so the camera can avoid looking through one
   const roundTree = (x, z, s, blossom = false) => {
     const y0 = groundHeight(x, z) - 0.1;
     if (Math.hypot(x, z) < 40) occluders.push({ x, y: y0 + 3.2 * s, z, r: 1.6 * s }, { x, y: y0 + 1.0 * s, z, r: 0.5 * s });
-    statics.push(paint(place(new THREE.CylinderGeometry(0.14 * s, 0.22 * s, 2.0 * s, 6), x, y0 + 1.0 * s, z), COLORS.trunk, rnd, 0.05));
+    statics.push(sway(paint(place(new THREE.CylinderGeometry(0.14 * s, 0.22 * s, 2.0 * s, 6), x, y0 + 1.0 * s, z), COLORS.trunk, rnd, 0.05), y0, 0.02 / s));
+    if (blossom && Math.hypot(x, z) < 60) blossoms.push({ x, y: y0 + 3.0 * s, z, r: 1.3 * s, ground: groundHeight(x, z) });
     const tone = blossom ? rnd.pick(COLORS.blossom) : rnd.pick(COLORS.leaves);
     for (let k = 0; k < 4; k++) {
       const r = (1.25 - k * 0.18) * s;
-      statics.push(paint(place(new THREE.IcosahedronGeometry(r, 0), x + rnd.range(-0.45, 0.45) * s, y0 + (2.4 + k * 0.62) * s, z + rnd.range(-0.45, 0.45) * s, rnd.range(0, 3), rnd.range(0, 3), 0), tone, rnd, 0.05));
+      statics.push(sway(paint(place(new THREE.IcosahedronGeometry(r, 0), x + rnd.range(-0.45, 0.45) * s, y0 + (2.4 + k * 0.62) * s, z + rnd.range(-0.45, 0.45) * s, rnd.range(0, 3), rnd.range(0, 3), 0), tone, rnd, 0.05), y0, 0.02 / s));
     }
   };
   const pineTree = (x, z, s) => {
@@ -415,7 +421,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     if (Math.hypot(x, z) < 40) occluders.push({ x, y: y0 + 2.2 * s, z, r: 1.1 * s });
     statics.push(paint(place(new THREE.CylinderGeometry(0.1 * s, 0.16 * s, 1.0 * s, 5), x, y0 + 0.5 * s, z), COLORS.trunk));
     const tone = rnd.pick(COLORS.pine);
-    for (let k = 0; k < 3; k++) statics.push(paint(place(new THREE.ConeGeometry((1.1 - k * 0.28) * s, 1.5 * s, 7), x, y0 + (1.4 + k * 0.85) * s, z, 0, rnd.range(0, 3), 0), tone, rnd, 0.04));
+    for (let k = 0; k < 3; k++) statics.push(sway(paint(place(new THREE.ConeGeometry((1.1 - k * 0.28) * s, 1.5 * s, 7), x, y0 + (1.4 + k * 0.85) * s, z, 0, rnd.range(0, 3), 0), tone, rnd, 0.04), y0, 0.012 / s));
   };
   for (const t of L.GARDEN_TREES) roundTree(t.x, t.z, t.s, t.id === "gtree-3" || t.id === "gtree-1");
   // Out in the meadow: groves and single trees, thinning with distance; pines on the hills.
@@ -444,11 +450,14 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
   // Two meshes: what is near enough to cast a shadow in the sunlight's reach, and everything further out.
   const near = [], far = [];
   for (const g of statics) {
+    const p = g.attributes.position, w = new Float32Array(p.count);
+    if (g.userData.wind) { const [y0, k] = g.userData.wind; for (let i = 0; i < p.count; i++) w[i] = Math.max(0, p.getY(i) - y0) * k; }
+    g.setAttribute("aWind", new THREE.BufferAttribute(w, 1));
     g.computeBoundingSphere();
     const c = g.boundingSphere.center;
     (Math.hypot(c.x, c.z) < 27 ? near : far).push(g);
   }
-  const propsMat = new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true });
+  const propsMat = windify(new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true }), "attr");
   const propsMesh = new THREE.Mesh(mergeGeometries(near), propsMat);
   propsMesh.castShadow = true;
   propsMesh.receiveShadow = true;
@@ -491,7 +500,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     const tuft = mergeGeometries(blades);
     tuft.computeVertexNormals();
     const N = mobile ? 2200 : 5200;
-    const grass = new THREE.InstancedMesh(tuft, new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide }), N);
+    const grass = new THREE.InstancedMesh(tuft, windify(new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide }), "instance", 0.32), N);
     let n = 0;
     for (let t = 0; t < N * 6 && n < N; t++) {
       const r = Math.pow(rnd.next(), 0.8) * 46, a = rnd.range(0, Math.PI * 2);
@@ -558,8 +567,9 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
       }
       flowerSpots.push({ x: f.x, z: f.z, r: Math.min(f.rx, f.rz), y: groundHeight(f.x, f.z) });
     }
-    const heads = new THREE.InstancedMesh(head, new THREE.MeshLambertMaterial({ side: THREE.DoubleSide, emissive: 0x2a1a20 }), spots.length);
-    const stems = new THREE.InstancedMesh(stem, new THREE.MeshLambertMaterial({ color: 0x5fa844, side: THREE.DoubleSide }), spots.length);
+    head.setAttribute("aH", new THREE.InstancedBufferAttribute(new Float32Array(spots.length), 1));
+    const heads = new THREE.InstancedMesh(head, windify(new THREE.MeshLambertMaterial({ side: THREE.DoubleSide, emissive: 0x2a1a20 }), "head", 0.32), spots.length);
+    const stems = new THREE.InstancedMesh(stem, windify(new THREE.MeshLambertMaterial({ color: 0x5fa844, side: THREE.DoubleSide }), "instance", 0.32), spots.length);
     spots.forEach(([x, z, y, h, col, sc], i) => {
       const ry = rnd.range(0, 6.28);
       _m.compose(_v.set(x, y, z), _q.setFromEuler(_e.set(0, ry, 0)), _s.set(1, h, 1));
@@ -567,6 +577,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
       _m.compose(_v.set(x, y + h, z), _q.setFromEuler(_e.set(rnd.range(-0.35, 0.35), ry, rnd.range(-0.35, 0.35))), _s.setScalar(rnd.range(0.85, 1.3) * sc));
       heads.setMatrixAt(i, _m);
       heads.setColorAt(i, _c.setHex(col));
+      head.attributes.aH.setX(i, h);
     });
     heads.name = "flower heads"; stems.name = "flower stems";
     group.add(stems, heads);
@@ -590,6 +601,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     group,
     fencePosts,
     occluders,
+    blossoms,
     flowerFields: flowerSpots,
     /** Moves the balls of yarn to where the simulation has them. */
     syncYarn(yarns) {

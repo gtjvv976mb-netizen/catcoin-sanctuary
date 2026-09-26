@@ -8,6 +8,8 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { buildGarden } from "./garden.js";
 import { buildSky, SKY } from "./sky.js";
 import { buildCritters } from "./critters.js";
+import { buildAmbient } from "./ambient.js";
+import { buildSign } from "./sign.js";
 import { createSanctuary } from "./cats.js";
 import { loadCatModels, CatHerd, coatFor } from "./catviews.js";
 import { HOUSE, GARDEN } from "./layout.js";
@@ -66,10 +68,14 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 2000);
   const sky = buildSky(scene, { sunDir: SUN_DISC, mobile });
   const garden = buildGarden(scene, { mobile, sunDir: SUN_LIGHT });
+  // Petals, motes, chimney smoke, the vignette, and the clock for the wind and the water.
+  // (The chimney's top, measured on sanctuary.glb at HOUSE.height.)
+  const ambient = buildAmbient(scene, { mobile, blossoms: garden.blossoms, chimney: { x: 2.25, y: HOUSE.height + 0.1, z: -0.05 } });
+  let ambientTime = 14; // frozen here with reduced motion: petals and motes hang mid-air
 
   /* The cottage and the cats (these load in parallel). */
   const loader = new GLTFLoader();
-  const [houseGltf, models] = await Promise.all([loader.loadAsync("assets/models/sanctuary.glb"), loadCatModels(loader, "assets/models/", { cell: mobile ? 0.085 : 0.06 })]);
+  const [houseGltf, models, sign] = await Promise.all([loader.loadAsync("assets/models/sanctuary.glb"), loadCatModels(loader, "assets/models/", { cell: mobile ? 0.07 : 0.045 }), buildSign(scene, { roof: HOUSE.height - 0.75, yaw: 0.3, width: 5.4 }).catch(() => null)]);
   const house = houseGltf.scene;
   {
     house.rotation.y = -Math.PI / 2; // the mesh's door faces +x in model space; turn it to face the porch side (+z)
@@ -105,6 +111,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   sim = createSanctuary({ residents: simResidents, reduced: still, critters });
   // On phones the cats don't cast into the shadow map (the most costly pass there); each gets a soft blob shadow instead.
   const herd = new CatHerd(scene, models, sim, coats, { blobShadows: mobile });
+  herd.still = still;
   const byId = new Map(residents.map((r) => [r.id, r]));
 
   /* Launched cats wear a little gold coin that turns above their heads (one instanced mesh). */
@@ -367,6 +374,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   reduce.addEventListener?.("change", () => {
     still = reduce.matches;
     sim.setReduced(still);
+    herd.still = still;
     controls.enableDamping = !still;
     if (still) controls.autoRotate = false;
     startLoop();
@@ -399,17 +407,22 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const _m = new THREE.Matrix4(), _q = new THREE.Quaternion(), _s = new THREE.Vector3(1, 1, 1), _y = new THREE.Vector3(0, 1, 0);
   function frame() {
     const t0 = performance.now();
-    const dt = Math.min(clock.getDelta(), 0.05);
-    if (!still && !controls.autoRotate && !chosenId && performance.now() - lastInput > 25000) controls.autoRotate = true;
-    critters.update(dt, still);
+    // Slow devices still get the whole of the garden's time (in steps of at most 1/20 s), so cats
+    // keep their pace instead of creeping about like statues when frames take long.
+    const real = Math.min(clock.getDelta(), 0.25);
+    const steps = Math.max(1, Math.ceil(real / 0.05)), dt = real / steps;
+    if (!still && !controls.autoRotate && !chosenId && performance.now() - lastInput > 20000) controls.autoRotate = true;
+    if (!still) ambientTime += real;
+    ambient.update(ambientTime, canvas.clientHeight, camera.aspect, renderer.getPixelRatio());
     sim.setViewer(camera.position.x, camera.position.z);
-    if (!still) sim.update(dt);
+    for (let k = 0; k < steps; k++) { critters.update(dt, still); if (!still) sim.update(dt); }
     herd.update();
     garden.syncYarn(sim.yarns);
-    advanceFocus(dt);
+    advanceFocus(real);
     easeInset(dt);
-    controls.update(still ? undefined : dt);
-    sky.update(dt, camera, still);
+    controls.update(still ? undefined : real);
+    sky.update(real, camera, still);
+    sign?.update(still);
     // Launched cats' coins, and the ring under the chosen cat.
     const tt = clock.elapsedTime;
     launched.forEach((c, i) => {
@@ -480,7 +493,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     // For screenshots and checks: step the garden forward without waiting, and read the draw stats.
     Object.assign(api, {
       sim, renderer, scene, camera, controls, critters, herd,
-      advance(seconds, dt = 1 / 30) { for (let t = 0; t < seconds; t += dt) { critters.update(dt, still); sim.update(dt); } sky.update(seconds, camera, still); frame(); },
+      advance(seconds, dt = 1 / 30) { for (let t = 0; t < seconds; t += dt) { critters.update(dt, still); sim.update(dt); } sky.update(seconds, camera, still); ambientTime += seconds; frame(); },
       stats() {
         // three counts only the main pass unless the counters are reset by hand before the shadow pass.
         renderer.info.autoReset = false; renderer.info.reset();

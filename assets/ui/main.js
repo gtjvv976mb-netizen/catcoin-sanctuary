@@ -6,6 +6,7 @@
 import { getResidents, isLaunched } from "./data.js";
 import { createCard, badgeFor, tickerLabel } from "./card.js";
 import { createFinder } from "./finder.js";
+import { createPanels } from "./panels.js";
 
 const $ = (id) => document.getElementById(id);
 const canvas = $("world");
@@ -73,8 +74,17 @@ function hideCard() {
 const finder = createFinder({ root: $("finder"), residents, onChoose: (id) => show(id, { from: $("find") }) });
 $("find").addEventListener("click", () => finder.open());
 
+/* ── About and Socials (links from data/socials.json) ─────────────────── */
+const panels = createPanels({
+  about: $("about"), socials: $("socials"),
+  onDisclaimers: () => { if (footToggle.getAttribute("aria-expanded") !== "true") footToggle.click(); footToggle.focus(); },
+});
+$("about-open").addEventListener("click", () => panels.openAbout());
+$("socials-open").addEventListener("click", () => panels.openSocials());
+fetch("data/socials.json").then((r) => (r.ok ? r.json() : null)).then((j) => j && panels.setConfig(j)).catch(() => {});
+
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && card.isOpen && !$("finder").open) { e.preventDefault(); hideCard(); }
+  if (e.key === "Escape" && card.isOpen && !document.querySelector("dialog[open]")) { e.preventDefault(); hideCard(); }
   else if ((e.key === "/" || (e.key === "f" && !e.metaKey && !e.ctrlKey)) && document.activeElement === canvas) { e.preventDefault(); finder.open(); }
 });
 
