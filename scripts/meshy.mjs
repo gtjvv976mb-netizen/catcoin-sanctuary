@@ -81,7 +81,10 @@ export function imageRef(ref, root = ROOT) {
 
 /** The request bodies for one queued cat (pure, so tests can check them without the network). */
 export function retextureBody(q, job, { useImage = false, root = ROOT, originalUv = true } = {}) {
-  const model_url = job?.url || `https://catcoinsanctuary.com/assets/models/cats/${q.modelKey ?? q.key}.glb`;
+  // No source job: the packed model in the repo, sent as a data URI (Meshy cannot always fetch the
+  // live site's copy), else the site's URL.
+  const local = path.join(root, "assets/models/cats", `${q.modelKey ?? q.key}.glb`);
+  const model_url = job?.url || (fs.existsSync(local) ? `data:application/octet-stream;base64,${fs.readFileSync(local).toString("base64")}` : `https://catcoinsanctuary.com/assets/models/cats/${q.modelKey ?? q.key}.glb`);
   const img = useImage ? imageRef(q.styleImage, root) : null;
   const style = img ? { image_style_url: img } : { text_style_prompt: String(q.retexturePrompt || "").slice(0, 800) };
   if (!img && !style.text_style_prompt) throw new Error(`${q.key}: no retexturePrompt and no usable style image`);
