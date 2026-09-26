@@ -75,9 +75,11 @@ test("backlog: the seeded record marks every existing cat backlog, and a run tak
   for (const c of PLANNED.cats) assert.ok(["backlog", "posted", "queued", "failed", "held"].includes(seeded.cats[c.ticker]?.status), c.ticker);
   const cfg = read("data/announce-config.json");
   assert.equal(typeof cfg.dryRun, "boolean");
-  assert.equal(pick(CATS, seeded, { ...cfg, perRun: 3, announceBacklog: true, backlogPerRun: 2 }).length, 2);
-  assert.equal(pick(CATS, seeded, { ...cfg, announceBacklog: false }).length, 0);
-  const oneNew = structuredClone(seeded); delete oneNew.cats[CATS[5].key];
+  // The live record drains as cats post, so the picking rules run on a fixed state: three in the backlog, the rest posted.
+  const state = { cats: Object.fromEntries(CATS.map((c, i) => [c.key, { status: i < 3 ? "backlog" : "posted" }])) };
+  assert.equal(pick(CATS, state, { ...cfg, perRun: 3, announceBacklog: true, backlogPerRun: 2 }).length, 2);
+  assert.equal(pick(CATS, state, { ...cfg, announceBacklog: false }).length, 0);
+  const oneNew = structuredClone(state); delete oneNew.cats[CATS[5].key];
   const p = pick(CATS, oneNew, { perRun: 3, announceBacklog: true, backlogPerRun: 1 });
   const firstBacklog = CATS.find((c) => oneNew.cats[c.key]?.status === "backlog");
   assert.deepEqual(p.map((c) => c.key), [CATS[5].key, firstBacklog.key]);
