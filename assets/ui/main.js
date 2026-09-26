@@ -129,6 +129,7 @@ function hideCard() {
 const finder = createFinder({ root: $("finder"), residents, onChoose: (id) => show(id, { from: $("find") }) });
 $("find").addEventListener("click", () => finder.open());
 $("hall-open").addEventListener("click", () => finder.open({ filter: "hall" }));
+$("adopt-open").addEventListener("click", () => finder.open({ filter: "adoptable" }));
 
 /* ── About and Socials (links from data/socials.json) ─────────────────── */
 const panels = createPanels({

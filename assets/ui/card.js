@@ -228,8 +228,8 @@ export function createCard({ root, onClose, onInset }) {
 
   /* "Adopt this cat": swaps the card's body for the Adopt panel (assets/ui/adopt.js); its Back
      button brings the cat's card back. */
-  function adoptButton(r) {
-    const b = el("button", "btn btn-buy btn-adopt", "Adopt this cat");
+  function adoptButton(r, top = false) {
+    const b = el("button", `btn btn-buy btn-adopt${top ? " btn-adopt-top" : ""}`, top ? "🐾 Adopt this cat" : "Adopt this cat");
     b.type = "button";
     b.addEventListener("click", () => api.adopt());
     return b;
@@ -380,6 +380,7 @@ export function createCard({ root, onClose, onInset }) {
     doingEl.setAttribute("aria-hidden", "true");
     titles.append(doingEl);
     lastDoing = "";
+    titles.append(adoptButton(r, true));
     head.append(pic, titles);
 
     const who = section("Who the cat is", "card-who");
@@ -476,6 +477,7 @@ export function createCard({ root, onClose, onInset }) {
     doingEl.setAttribute("aria-hidden", "true");
     titles.append(doingEl);
     lastDoing = "";
+    if (!isLaunched(r) && !r.example && canAdopt(r)) titles.append(adoptButton(r, true));
     head.append(pic, titles);
 
     const body = el("div", "card-body");

@@ -443,3 +443,8 @@ body.no-webgl .hint { display: none; }
 .adopt-quote { overflow-wrap: anywhere; }
 .adopt-mint { font-size: 12px; }
 .adopt-pad .btn { margin-top: 6px; }
+
+/* Adopt a Cat: the top-bar pill and the button at the top of each unlaunched cat's card. */
+.pill.pill-adopt { background: linear-gradient(135deg, #ff9f43, #ff6fa8); color: #fff; font-weight: 800; box-shadow: 0 3px 10px rgba(255, 111, 168, .35); }
+.pill.pill-adopt:hover, .pill.pill-adopt:focus-visible { filter: brightness(1.06); }
+.btn-adopt-top { display: inline-flex; align-self: flex-start; margin-top: 8px; padding: 9px 16px; border-radius: 999px; font-size: 1rem; background: linear-gradient(135deg, #ff9f43, #ff6fa8); color: #fff; box-shadow: 0 3px 10px rgba(255, 111, 168, .35); }
