@@ -33,7 +33,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { checkFields } from "./lib/content-rules/content-rules.mjs";
-import { credsFromEnv, uploadImage, createPost, XError } from "./lib/x-api.mjs";
+import { credsFromEnv, uploadImage, createPost, whoAmI, XError } from "./lib/x-api.mjs";
 
 export const SITE = "https://catcoinsanctuary.com/";
 export const HASHTAGS = ["#catcoin", "#CatsOfX"];
@@ -198,6 +198,14 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const stamp = () => now().toISOString();
   const saveState = () => writeJson(data("announced.json"), state);
   const summary = { mode, drafts: [], posted: [], queued: [], held: [], failed: [] };
+
+  // Which account do the keys belong to? Logs a handle (never a secret) so a 401 can be traced.
+  if (mode === "post" && env.GITHUB_ACTIONS) {
+    try {
+      const me = await whoAmI(creds);
+      log(`Announce: the X keys are for @${me?.data?.username ?? "?"}.`);
+    } catch (e) { log(`::warning::Announce: X refused the keys when asked who they belong to (${e.message}). Check that all four secrets come from the same app and were regenerated consumer keys first, then access token.`); }
+  }
 
   const chosen = pick(cats, state, config);
   log(`Announce: ${mode} mode; ${cats.filter((c) => !state.cats[c.key]).length} new, ${cats.filter((c) => state.cats[c.key]?.status === "backlog").length} in the backlog; taking ${chosen.length}.`);

@@ -74,3 +74,8 @@ export async function createPost({ text, mediaIds = [], replyTo = null, quote = 
   if (!id) throw new XError("X returned no post id", 200, b);
   return String(id);
 }
+
+/** The account the keys act for (GET /2/users/me). */
+export async function whoAmI(creds, fetchImpl = fetch) {
+  return call(fetchImpl, "GET", "https://api.x.com/2/users/me", creds);
+}
