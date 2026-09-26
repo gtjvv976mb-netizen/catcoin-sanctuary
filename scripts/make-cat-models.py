@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 JOBS = ROOT / "scripts/cat-models.jobs.json"
 CACHE = ROOT / "scripts/.cat-models-cache"
 OUT = ROOT / "assets/models/cats"
-BUDGET_HI, BUDGET_LO = 600_000, 150_000
+BUDGET_HI, BUDGET_LO, BUDGET_HD, BUDGET_HD_LO = 600_000, 150_000, 800_000, 300_000
 COMP = {5120: np.int8, 5121: np.uint8, 5122: np.int16, 5123: np.uint16, 5125: np.uint32, 5126: np.float32}
 NCOMP = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4, "MAT4": 16}
 
@@ -196,9 +196,14 @@ def build(ticker, job, exe, yaw):
         raw.write_bytes(urllib.request.urlopen(req, timeout=120).read())
         raw.with_suffix(".job").write_text(job.get("model_job", ""))
     info = {}
-    for tag, tex, extra, budget in (("", 1024, [], BUDGET_HI), ("-lo", 512, ["-si", "0.25"], BUDGET_LO)):
+    # Per-job overrides for dense sources (Hunyuan3D v3 gives ~500k faces): "si"/"si_lo" simplify
+    # ratios, "tex"/"tex_lo" texture sizes; HD models get the larger full-size budget.
+    si_hi = [] if not job.get("si") else ["-si", str(job["si"])]
+    si_lo = ["-si", str(job.get("si_lo", 0.25))]
+    hi_budget = BUDGET_HD if job.get("hd") else BUDGET_HI
+    for tag, tex, extra, budget in (("", job.get("tex", 1024), si_hi, hi_budget), ("-lo", job.get("tex_lo", 512), si_lo, BUDGET_HD_LO if job.get("hd") else BUDGET_LO)):
         js, binc = read_glb(raw.read_bytes())
-        js, binc = retexture(js, binc, tex)
+        js, binc = retexture(js, binc, tex, job.get("q", 86))
         js, dims = normalize(js, binc, yaw if yaw is not None else job.get("yaw", 0))
         tmp = CACHE / f"{ticker}{tag}.fit.glb"; tmp.write_bytes(write_glb(js, binc))
         dst = OUT / f"{ticker}{tag}.glb"
@@ -226,7 +231,7 @@ def main():
         if a.yaw is not None: j["yaw"] = a.yaw
         print(f"  {info['hi']/1024:.0f} KB full, {info['lo']/1024:.0f} KB far; len {info['len']} x width {info['width']}")
     JOBS.write_text(json.dumps(jobs, indent=1) + "\n")
-    ready = {t: j["dims"] for t, j in jobs.items() if j.get("status") == "done" and (OUT / f"{t}.glb").exists() and (OUT / f"{t}-lo.glb").exists()}
+    ready = {t: {**j["dims"], **({"hd": True} if j.get("hd") else {})} for t, j in jobs.items() if j.get("status") == "done" and (OUT / f"{t}.glb").exists() and (OUT / f"{t}-lo.glb").exists()}
     (OUT / "index.json").write_text(json.dumps({"version": 1, "cats": ready}, indent=1) + "\n")
     write_provenance(jobs)
 

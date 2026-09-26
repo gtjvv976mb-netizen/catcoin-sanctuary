@@ -1,0 +1,2252 @@
+{
+ "updated": "2026-09-26",
+ "pipeline": "gpt_image_2_5 standing 3/4 reference (from the cat picture / coin logo) -> 4 gpt_image_2_5 views from that reference (front, left = head pointing left, back, right) -> hunyuan3d_v3_image_to_3d with the 4 views in order front,left,back,right, default face count (15 credits; custom face_count costs 19) -> make-cat-models.py with hd:true, si 0.04, si_lo 0.01, tex 2048 q78, tex_lo 256.",
+ "credits_per_cat": 16.25,
+ "remaining": [
+  {
+   "id": "PRISMPAW",
+   "kind": "stock",
+   "ref_job": "1489364b-ec66-4338-9676-1df76a6308cd"
+  },
+  {
+   "id": "TARTANPAW",
+   "kind": "stock",
+   "ref_job": "9d6790af-d311-481a-a1f4-c2c8d7fcee8c"
+  },
+  {
+   "id": "BURLYPAW",
+   "kind": "stock",
+   "ref_job": "55cc8741-12e7-4c0b-9681-df355ac44be1"
+  },
+  {
+   "id": "SUNSTRETCH",
+   "kind": "stock",
+   "ref_job": "5c24102a-24fa-452c-ab02-0681279a381e"
+  },
+  {
+   "id": "AMRCAT",
+   "kind": "stock",
+   "ref_job": "17594d10-8cf4-458d-b522-f005281e7fa0"
+  },
+  {
+   "id": "PEPPERCAT",
+   "kind": "stock",
+   "ref_job": "d4fd1091-aec6-4d83-8e7f-a0f5f66c4abb"
+  },
+  {
+   "id": "KIOSKPAW",
+   "kind": "stock",
+   "ref_job": "43379376-30a5-4ae3-8de1-17fb12c8897d"
+  },
+  {
+   "id": "SANDSTEP",
+   "kind": "stock",
+   "ref_job": "468f120a-89c8-4ece-aa94-bac86c901b88"
+  },
+  {
+   "id": "WAYBILL",
+   "kind": "stock",
+   "ref_job": "d3435283-f7fe-4427-ab1b-25faf54dc1e0"
+  },
+  {
+   "id": "WHIRRPAW",
+   "kind": "stock",
+   "ref_job": "85d8805f-5f61-4c8a-9291-6a4e10071cae"
+  },
+  {
+   "id": "WINDSOCK",
+   "kind": "stock",
+   "ref_job": "46f655f1-33fd-47fc-9913-273f7e129add"
+  },
+  {
+   "id": "VIGNETPAW",
+   "kind": "stock",
+   "ref_job": "11305baf-dd5c-4cb8-8d5d-c790c036e3c6"
+  },
+  {
+   "id": "CANDLEWICK",
+   "kind": "stock",
+   "ref_job": "c9fcad6f-55fc-4de9-8319-5b07c1ce1b3e"
+  },
+  {
+   "id": "TOMRUTGERS",
+   "kind": "stock",
+   "ref_job": "bcd56df9-a194-49c4-b5f8-e21e4c2a10ee"
+  },
+  {
+   "id": "LACQUER",
+   "kind": "stock",
+   "ref_job": "476e6f0d-482f-415c-8550-1573c3d4c4e9"
+  },
+  {
+   "id": "RUBYCAT",
+   "kind": "stock",
+   "ref_job": "d9580b28-7552-488c-86ce-ad0ec3915d3b"
+  },
+  {
+   "id": "SORRELPAW",
+   "kind": "stock",
+   "ref_job": "4f2a561f-eac6-4702-be17-d9e61ef8c939"
+  },
+  {
+   "id": "SUGARSOOT",
+   "kind": "stock",
+   "ref_job": "78580f18-701b-4b36-804e-9619e841a4f8"
+  },
+  {
+   "id": "GRIDDLE",
+   "kind": "stock",
+   "ref_job": "982f0116-3ebe-4212-a874-409feffb7e34"
+  },
+  {
+   "id": "ROOKIEPAW",
+   "kind": "stock",
+   "ref_job": "4af6c6fc-8157-4e82-86a2-bf1ad1be063a"
+  },
+  {
+   "id": "CORSAGE",
+   "kind": "stock",
+   "ref_job": "ab6d8ce8-28f8-477b-8797-23945d9f5038"
+  },
+  {
+   "id": "RAFTERPAW",
+   "kind": "stock",
+   "ref_job": "b701eb33-a69f-47d3-ad11-d13cb88c93ed"
+  },
+  {
+   "id": "UMBERPAW",
+   "kind": "stock",
+   "ref_job": "96b46850-51ac-4b6c-bca3-d8690ee5b142"
+  },
+  {
+   "id": "PUMICE",
+   "kind": "stock",
+   "ref_job": "1e589533-2800-4d4c-a305-66868b7a6d90"
+  },
+  {
+   "id": "JITTERPAW",
+   "kind": "stock",
+   "ref_job": "be14ccf7-df51-4f20-a350-6af738cf4db6"
+  },
+  {
+   "id": "STUBTAIL",
+   "kind": "stock",
+   "ref_job": "a6b66ddd-2212-4c19-af76-cf31b09a34f0"
+  },
+  {
+   "id": "CASENAP",
+   "kind": "stock",
+   "ref_job": "e4d916ed-5412-4578-a492-634505f0f2db"
+  },
+  {
+   "id": "PAPRIKA",
+   "kind": "stock",
+   "ref_job": "19b48dc0-1772-4619-8c3c-348add780ed9"
+  },
+  {
+   "id": "SNUGPAW",
+   "kind": "stock",
+   "ref_job": "c9c9dece-1d76-4882-b862-5560c64c67e6"
+  },
+  {
+   "id": "MITTENSCAT",
+   "kind": "stock",
+   "ref_job": "efc71c9c-9785-49a3-ab2b-b30f4f2f59d7"
+  },
+  {
+   "id": "AMBERDROP",
+   "kind": "stock",
+   "ref_job": "92ce6778-7ac7-4a86-bd23-6ceeea4d9293"
+  },
+  {
+   "id": "DROWSEPAW",
+   "kind": "stock",
+   "ref_job": "9011cdaa-2031-435f-882d-db5195819027"
+  },
+  {
+   "id": "CURFEWPAW",
+   "kind": "stock",
+   "ref_job": "9bf6a2b0-959d-46fb-b3ac-ea851d8fcc2a"
+  },
+  {
+   "id": "LICHENPAW",
+   "kind": "stock",
+   "ref_job": "c3c2ca88-9148-4a4f-89e6-c0c4fb4dc90e"
+  },
+  {
+   "id": "RUSTLEPAW",
+   "kind": "stock",
+   "ref_job": "2c88d715-47fd-49fc-a22a-ba6c9d95a8e7"
+  },
+  {
+   "id": "ICICLEPAW",
+   "kind": "stock",
+   "ref_job": "af2f1cb2-64d7-4843-bd14-cef151b9f18c"
+  },
+  {
+   "id": "RIMESTRIPE",
+   "kind": "stock",
+   "ref_job": "674e377e-a610-4527-9d4e-ef1e5d1b8d66"
+  },
+  {
+   "id": "CABLETAIL",
+   "kind": "stock",
+   "ref_job": "e259b95c-f7f1-4241-aec6-08bc861a0863"
+  },
+  {
+   "id": "MILLRACE",
+   "kind": "stock",
+   "ref_job": "8258acdb-f022-4f5f-bdcf-23b6fe358179"
+  },
+  {
+   "id": "PARLORPUFF",
+   "kind": "stock",
+   "ref_job": "1aa2e59a-4405-45b1-9c3d-ace7a6f7dd96"
+  },
+  {
+   "id": "SQUINTPAW",
+   "kind": "stock",
+   "ref_job": "64bde4cf-dc49-4eb9-bd54-29a1b2544075"
+  },
+  {
+   "id": "COTTAPAW",
+   "kind": "stock",
+   "ref_job": "76f749f4-d820-4eb7-bba5-593b553f9032"
+  },
+  {
+   "id": "HOVERPAW",
+   "kind": "stock",
+   "ref_job": "ceb97270-db75-40b8-b4a1-afdc4fa681b6"
+  },
+  {
+   "id": "HUNCHPAW",
+   "kind": "stock",
+   "ref_job": "609a95ea-89c2-4cac-9576-559d7839ec8e"
+  },
+  {
+   "id": "SILKSTRIPE",
+   "kind": "stock",
+   "ref_job": "473a6dab-49fa-45ce-919b-3ca63a074d73"
+  },
+  {
+   "id": "KNITPAW",
+   "kind": "stock",
+   "ref_job": "19fab6f6-8a34-4864-a0b5-038b229ffb12"
+  },
+  {
+   "id": "solana-Ai66LHZG9MCzg1WKdawwqduVAXpNDUuV8M3uyq5ppump",
+   "symbol": "CATE",
+   "name": "CATECOIN (cate.meme)",
+   "kind": "famous-61",
+   "marketCapUsd": 101556191,
+   "imageUrl": null,
+   "coingeckoId": null,
+   "profile": "cate-meme",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+   "symbol": "ZCAT",
+   "name": "Anonymous Cat",
+   "kind": "famous-61",
+   "marketCapUsd": 64132674,
+   "imageUrl": null,
+   "coingeckoId": "anonymous-cat",
+   "profile": "anonymous-cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+   "symbol": "POPCAT",
+   "name": "Popcat",
+   "kind": "famous-61",
+   "marketCapUsd": 57292295,
+   "imageUrl": null,
+   "coingeckoId": "popcat",
+   "profile": "popcat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+   "symbol": "MEW",
+   "name": "cat in a dogs world",
+   "kind": "famous-61",
+   "marketCapUsd": 45260883,
+   "imageUrl": null,
+   "coingeckoId": "cat-in-a-dogs-world",
+   "profile": "cat-in-a-dogs-world",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7atgF8KQo4wJrD5ATGX7t1V2zVvykPJbFfNeVf1icFv1",
+   "symbol": "CWIF",
+   "name": "catwifhat",
+   "kind": "famous-61",
+   "marketCapUsd": 29941895,
+   "imageUrl": null,
+   "coingeckoId": "catwifhat-2",
+   "profile": "catwifhat-2",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-CRAMvzDsSpXYsFpcoDr6vFLJMBeftez1E7277xwPpump",
+   "symbol": "PEPECAT",
+   "name": "PEPECAT",
+   "kind": "famous-61",
+   "marketCapUsd": 7365555,
+   "imageUrl": null,
+   "coingeckoId": "pepecat-2",
+   "profile": "pepecat-2",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk",
+   "symbol": "WEN",
+   "name": "Wen",
+   "kind": "famous-61",
+   "marketCapUsd": 5486780,
+   "imageUrl": null,
+   "coingeckoId": "wen-4",
+   "profile": "wen-4",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-463SK47VkB7uE7XenTHKiVcMtxRsfNE2X4Q9wByaURVA",
+   "symbol": "TSUKI",
+   "name": "Tsuki",
+   "kind": "famous-61",
+   "marketCapUsd": 5340372,
+   "imageUrl": null,
+   "coingeckoId": "tsuki",
+   "profile": "tsuki",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+   "symbol": "KITTY",
+   "name": "Hello Kitty",
+   "kind": "famous-61",
+   "marketCapUsd": 4271778,
+   "imageUrl": null,
+   "coingeckoId": null,
+   "profile": "hello-kitty-sol",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-4QsNTBKwHgyYUUHq9tDzk1CCVu7y5hK7z3GE9R36pump",
+   "symbol": "NUB",
+   "name": "nubcat",
+   "kind": "famous-61",
+   "marketCapUsd": 3841326,
+   "imageUrl": null,
+   "coingeckoId": "sillynubcat",
+   "profile": "sillynubcat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AywAYdNJnSLSXwKWYxDciPjqGRnwp4iZdQptuuQTpump",
+   "symbol": "MICHI",
+   "name": "michi",
+   "kind": "famous-61",
+   "marketCapUsd": 3640306,
+   "imageUrl": null,
+   "coingeckoId": "michi",
+   "profile": "michi",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
+   "symbol": "VIBECOIN",
+   "name": "Vibing Cat Coin",
+   "kind": "famous-61",
+   "marketCapUsd": 3472840,
+   "imageUrl": null,
+   "coingeckoId": "vibing-cat-coin",
+   "profile": "vibing-cat-coin",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9i3NFMa9pqR3suCUhyX3nQE1dy6i5wXafDtppUxYpump",
+   "symbol": "CAT",
+   "name": "Catcoin (Solana)",
+   "kind": "famous-61",
+   "marketCapUsd": 3415310,
+   "imageUrl": null,
+   "coingeckoId": "catcoin-6",
+   "profile": "catcoin-6",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-CFNRDaxFcvRwRSNnA5cHrCCr6AHhk9dNkHWpRUjNupFL",
+   "symbol": "RAYCAT",
+   "name": "Raydium Cat",
+   "kind": "famous-61",
+   "marketCapUsd": 2983990,
+   "imageUrl": null,
+   "coingeckoId": "raydium-cat",
+   "profile": "raydium-cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9Pfync3ejPC9eHqVzq3nYQJAhyhjqpnB9UsaSfLxpump",
+   "symbol": "KET",
+   "name": "KET (Solana)",
+   "kind": "famous-61",
+   "marketCapUsd": 2969052,
+   "imageUrl": null,
+   "coingeckoId": "ket-3",
+   "profile": "ket-3",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ",
+   "symbol": "MANEKI",
+   "name": "MANEKI",
+   "kind": "famous-61",
+   "marketCapUsd": 2941228,
+   "imageUrl": null,
+   "coingeckoId": "maneki",
+   "profile": "maneki",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
+   "symbol": "GATO",
+   "name": "GTA6CAT (Gato)",
+   "kind": "famous-61",
+   "marketCapUsd": 2149255,
+   "imageUrl": null,
+   "coingeckoId": null,
+   "profile": "gta6cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9h5AzEQzYu9CV5K6uLtFRMD1KcbxZSFNxZEgBTNfw5Na",
+   "symbol": "STONKCATS",
+   "name": "Stonk Cats",
+   "kind": "famous-61",
+   "marketCapUsd": 2039089,
+   "imageUrl": null,
+   "coingeckoId": "stonk-cats",
+   "profile": "stonk-cats",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-Dx2bQe2UPv4k3BmcW8G2KhaL5oKsxduM5XxLSV3Sbonk",
+   "symbol": "HOSICO",
+   "name": "Hosico",
+   "kind": "famous-61",
+   "marketCapUsd": 1898529,
+   "imageUrl": null,
+   "coingeckoId": "hosico-cat",
+   "profile": "hosico-cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7HgfXftRBBqsYtAEYcqjGLQrNJLL6Tww9ek4rE3Apump",
+   "symbol": "RKC",
+   "name": "Red Kitten Crew",
+   "kind": "famous-61",
+   "marketCapUsd": 1887903,
+   "imageUrl": null,
+   "coingeckoId": "red-kitten-crew",
+   "profile": "red-kitten-crew",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
+   "symbol": "LEVERCAT",
+   "name": "Leveraged Cat",
+   "kind": "famous-61",
+   "marketCapUsd": 1669154,
+   "imageUrl": null,
+   "coingeckoId": "leveraged-cat",
+   "profile": "leveraged-cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6kNNgyrdvjkRC8eRGQqx5sLfZG2jTmg3NCFmkX2hYP4j",
+   "symbol": "SOMETHING",
+   "name": "SOMETHING THE CAT",
+   "kind": "famous-61",
+   "marketCapUsd": 1488014,
+   "imageUrl": null,
+   "coingeckoId": "something-the-cat",
+   "profile": "something-the-cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6D7NaB2xsLd7cauWu1wKk6KBsJohJmP2qZH9GEfVi5Ui",
+   "symbol": "SC",
+   "name": "Shark Cat",
+   "kind": "famous-61",
+   "marketCapUsd": 1192831,
+   "imageUrl": null,
+   "coingeckoId": "shark-cat",
+   "profile": "shark-cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6MQpbiTC2YcogidTmKqMLK82qvE9z5QEm7EP3AEDpump",
+   "symbol": "MASK",
+   "name": "catwifmask",
+   "kind": "famous-61",
+   "marketCapUsd": 1126477,
+   "imageUrl": null,
+   "coingeckoId": "catwifmask",
+   "profile": "catwifmask",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-E4Ap4icMLwKot8rkkTbq5JkS5kZxt5XCE3yfxbzYBjHx",
+   "symbol": "BTC",
+   "name": "Buy The Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 1897299,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/ZSuYkfUn9aQ0Io9K?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": true
+  },
+  {
+   "id": "solana-ATqKVVa4h5WqjAMqJdG3mjtWXsW5SshyyUY7dXdvSvRs",
+   "symbol": "BackCat",
+   "name": "Backpack Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 25992,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/sPdJLXVkO9El606C?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": true
+  },
+  {
+   "id": "solana-8RNUw4N655VSrZKuhGdywhbSMDTrheguFPfxbpE2NZHQ",
+   "symbol": "PURR",
+   "name": "Hypurr",
+   "kind": "famous-20k",
+   "marketCapUsd": 5124634,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/pO59cJMJmerhBPg2?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": true
+  },
+  {
+   "id": "solana-6UtY9iTZMQQ5QZVrbzFnNaJntV7oySm9k97mvwnuZcxr",
+   "symbol": "NEARKAT",
+   "name": "NearKat",
+   "kind": "famous-20k",
+   "marketCapUsd": 5491762,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/ZKZE0YtJ-RM8WOws?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": true
+  },
+  {
+   "id": "solana-BreuhVohXX5fv6q41uyb3sojtAuGoGaiAhKBMtcrpump",
+   "symbol": "hehe",
+   "name": "hehe",
+   "kind": "famous-20k",
+   "marketCapUsd": 910742,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/480c061a9f99598e9dacaa96d1585bdcaeacc0eb9684b7cde4b55e966ce1cfbd?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-BdGuUUxfp74PnyEYAFnEBFrsHVdDh5PTRHgqqbHKmoon",
+   "symbol": "CATDOGE",
+   "name": "TrollCatDoge",
+   "kind": "famous-20k",
+   "marketCapUsd": 773000,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/6d363853162f9279122d0d4daa4cf00c148f0a447970833b76edeb5d9616a756?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AyYNfPtftg2zDP4ZbgcoQMggQtwLh4zpfVVmUJs2thto",
+   "symbol": "Tilcayo",
+   "name": "Leopardus tilcayo",
+   "kind": "famous-20k",
+   "marketCapUsd": 724834,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/IWEYf7wsi23lYWKo?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HPJALtLtydXym5Tbv6udQCKcXSihnz3B7aD3PNMNbonk",
+   "symbol": "BONGO",
+   "name": "Bongo Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 641024,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/56d515606dd2a33e314684d1943f596ad22eb5212056f462d3c3c6da9287b91e?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-63EM76z3TqZt92DhzhmmaAgcjSkX7Eg1X65jWiocpump",
+   "symbol": "FatCat",
+   "name": "FatCat",
+   "kind": "famous-20k",
+   "marketCapUsd": 616816,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/nOL2D1H_dy5Bhigi?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-527PdUTGwcFxVEMXt8tyRJA1nYbVedgSiSfh4s2LWTWz",
+   "symbol": "BOP",
+   "name": "Bop",
+   "kind": "famous-20k",
+   "marketCapUsd": 584010,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/tlvy6LbOcGreChCu?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-2CsJHNyj74zK6Jaiq2UayPAXFEjmL5UKhpeLNaH45Fud",
+   "symbol": "GIZMO",
+   "name": "GIZMO IMAGINARY KITTEN",
+   "kind": "famous-20k",
+   "marketCapUsd": 564011,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/2a4971e719da1f17e54d35f42edf74a3d6c78c2b8975504f7b6f5d3172920d6f?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FpECzw6x8RG4VBXfnVg3UJd8pq9CCxJUSWCKb4gebq8B",
+   "symbol": "NYAN",
+   "name": "NYANMARU COIN",
+   "kind": "famous-20k",
+   "marketCapUsd": 538375,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/d6444b1f02f15a5384464f583dcb75c669c4322de3fc70da414be2a2ac156b4e?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-54g2GnhV2mcheYD7Rvdt6MWniLdUsXQKeVNz5KZhdoge",
+   "symbol": "BABYVIBE",
+   "name": "Baby Vibing Cat Coin 🍼🐈✨",
+   "kind": "famous-20k",
+   "marketCapUsd": 519029,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/IfLIOl5tg8tel58D?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AaEhFTX4naHSWSXz9TVe5QgLbtSLT8ZqYJGZzDDcoroh",
+   "symbol": "JUPCAT",
+   "name": "Jupiter Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 517749,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/O_MRRkcmcPLzYWgE?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HAPPYwgFcjEJDzRtfWE6tiHE9zGdzpNky2FvjPHsvvGZ",
+   "symbol": "HAPPY",
+   "name": "Happy Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 462037,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/5c5cd2ef298608a6fff9015aeeb7aa0078f8dfd096ef3d4a948cb12aa5a9b2bd?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-3nqHijNUExsnjNBb15WJsJ2xisyMVGN6FK4aUgZk1Rwj",
+   "symbol": "TACZ",
+   "name": "TACZ",
+   "kind": "famous-20k",
+   "marketCapUsd": 461590,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/c--QBgDkz61Vywfx?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7XomEJBtb1EiF4Z8ZVzspCKFW2UuaRkaiq3AJJCFpump",
+   "symbol": "e/cat",
+   "name": "Effective Cat Accelerationism",
+   "kind": "famous-20k",
+   "marketCapUsd": 450171,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/HZjxeHKnu-oRtkQr?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-4ZnJ72JoEVazMe7nvbek7CfSKh7eTtR3nikyAua6EkiE",
+   "symbol": "MINECAT",
+   "name": "minecat",
+   "kind": "famous-20k",
+   "marketCapUsd": 435721,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/iO_1VH8emdCzP6-2?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-5YX4DjUf4y2q1SpHsKvwWZ8Bfyka2DXzVerWYiJxW6UE",
+   "symbol": "STONKITTY",
+   "name": "Stonkitten",
+   "kind": "famous-20k",
+   "marketCapUsd": 434931,
+   "imageUrl": null,
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-3WPep4ufaToK1aS5s8BL9inzeUrt4DYaQCiic6ZkkC1U",
+   "symbol": "GIKO",
+   "name": "Giko Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 432452,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/24c55931003f9ba0809052d9d2da26b6018200ec5efc576a6d16eef68646e43c?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8t5C4AWDg4CroMChxdo7rG2e8nJM31QG2GG7Czx9X7x2",
+   "symbol": "SNDK",
+   "name": "Sand Kitten",
+   "kind": "famous-20k",
+   "marketCapUsd": 427312,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/iVlid0zCW6mVbnS8?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7XiFJgX4nkER8gTH1LXUX1VEBJrLRSZfFXuzDy8ccWGT",
+   "symbol": "APECAT",
+   "name": "Ape Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 418830,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/j9Up-ATCCEtBQUif?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9BVn3Y8tPghbnGuuuxoj2mGekqgSQV1M7nALF7brpump",
+   "symbol": "NYAN",
+   "name": "Nyan Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 415987,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/653a4e7c8e1b54e8ee9918178888fcc797a37ed3209617d9bdbf3a22f5207542?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9U1f18idDeySFnYrurxqT1f5n5nE4g4Uk5LLzP69bh1",
+   "symbol": "SOLCAT",
+   "name": "Solana Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 408180,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/MYSeOyZbyga491v0?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-G4vqe8KAcRGTb7Kc55n9sz43aR4ugTPdSeUnAXZhpump",
+   "symbol": "PUMPCAT",
+   "name": "pumpcat",
+   "kind": "famous-20k",
+   "marketCapUsd": 398543,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/2cqCjH0tgiPPAf5B?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-VaxZxmFXV8tmsd72hUn22ex6GFzZ5uq9DVJ5wA5pump",
+   "symbol": "OIIAOIIA",
+   "name": "spinning cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 388015,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/241a49c5bb709450c8ca13fe3be9d9302089dace73a583867ea1eb3f4b0dcc9b?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-3HRZjzdZTfS6HEG5ECcewXvXjpzSf9i7VkczpHJtpump",
+   "symbol": "MIAU",
+   "name": "MIAU",
+   "kind": "famous-20k",
+   "marketCapUsd": 386233,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/LMeun_KDFGRpC0Ou?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8ryRQD6jWfxnSdvvVbQ8Tzwo1NgGP7w1X1nQPpb4pump",
+   "symbol": "meowl",
+   "name": "meowl the owl cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 368147,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/JMgQi97kDy1Zdufd?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-27XVtvjVVwBgZKDfBQfQ3L8TvWvBWCDYL7vBnFtjbdLc",
+   "symbol": "PURRP",
+   "name": "purrpetual",
+   "kind": "famous-20k",
+   "marketCapUsd": 368137,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/aSzo82Wcacv4-WFs?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7mmXL6Et4SbpDs2iXoZQ3oPEeXeAiyETxh1QjDNi5qnV",
+   "symbol": "OMNI",
+   "name": "OmniCat (Wormhole)",
+   "kind": "famous-20k",
+   "marketCapUsd": 363124,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/0c4c810adb2bd474c85797bcccc04f8a733935a05d842e28c86d6d8b1c7df60e?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AYABiqKuTh9Va5Aqc6AujFevHwDGmECGQiFmKW5g3K4Z",
+   "symbol": "LONG",
+   "name": "Nobiko Coin",
+   "kind": "famous-20k",
+   "marketCapUsd": 357519,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/9666cb132056d69df35c7e41fcfc06e9c7a7d1dd182b0fd7ada30b25b615a1f1?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HKv9jA7VREs68BA3PZMREiwuQKzfLUjr9azgrzbNpump",
+   "symbol": "LQC",
+   "name": "Low Quality Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 357263,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/xggs3woYfyElwZvj?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DyidQqHQvWv9r76bWY7H11uB5qnDE7GyDT7Hq1QCpump",
+   "symbol": "CATS",
+   "name": "Cats",
+   "kind": "famous-20k",
+   "marketCapUsd": 351794,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/ANHg5pm59ak6yKYu?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9CPfv7rc6vxBd3jtovmZtf5Zy8bdvssv8c4BwzbGk147",
+   "symbol": "NINJACAT",
+   "name": "ninjacat",
+   "kind": "famous-20k",
+   "marketCapUsd": 347772,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/V6qSNnx0H3Pjy9Ai?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-BEgBsVSKJSxreiCE1XmWWq8arnwit7xDqQXSWYgay9xP",
+   "symbol": "WYAC",
+   "name": "WOMAN YELLING AT CAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 302909,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/3d314195c7699da40e0fd144f4725368abd675273f2591e70b7c65ed885446f3?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-ERpXkEafaKuKEARBCFsVnLZA1GARWUjBBbQCukXpbonk",
+   "symbol": "REST",
+   "name": "REST",
+   "kind": "famous-20k",
+   "marketCapUsd": 293098,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/998c4539358c9afc9c05a5b9f8d9bbb9ae28c9175a22e011b41203846ba84416?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+   "symbol": "KWIF",
+   "name": "Kitten Wif Hat",
+   "kind": "famous-20k",
+   "marketCapUsd": 276341,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/d6e5313ddfa6992fb5d8314a8e3388b0ea50681d86e26284f430cf8407de28f6?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-24EX9CQqEpR9mNUDTjkooKqRTf2pkY2mgbDqwNDwpump",
+   "symbol": "PATE",
+   "name": "Pepe Cate Coin",
+   "kind": "famous-20k",
+   "marketCapUsd": 255743,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/wLV7pLtEEIsFtuXZ?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DShht9B8wCRe5t3oqdPB77PnjJbKxbYaZyuWpZQjbonk",
+   "symbol": "CONK",
+   "name": "CONK",
+   "kind": "famous-20k",
+   "marketCapUsd": 247640,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/KgKty0ufHp41mDhY?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6cvrZWgEUkr82yKAmxp5cQu7wgYYBPULf16EUBp4pump",
+   "symbol": "MANIFEST",
+   "name": "Manifest",
+   "kind": "famous-20k",
+   "marketCapUsd": 246917,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/2ce9bb5fe0b7d3b803c16147cbf46b55f762fcaf35694ecd594f4d4f723456ba?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+   "symbol": "GRUMPY",
+   "name": "Grumpy Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 240648,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/822a1083111b6cbaf23912ba6d58eae3325fd16cc07a6bb35c256845feb5183b?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DUhWgHD3KgHHmsYdQdJHDv359bySNzigYcqJ45Gcpump",
+   "symbol": "Grrr",
+   "name": "StaringAtYou",
+   "kind": "famous-20k",
+   "marketCapUsd": 234577,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/Kp94qS5MYm59QCl9?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FkBF9u1upwEMUPxnXjcydxxVSxgr8f3k1YXbz7G7bmtA",
+   "symbol": "glorp",
+   "name": "glorp",
+   "kind": "famous-20k",
+   "marketCapUsd": 211151,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/4b14af344d9a85ffbf632b9ed65815b60b169315af3612dbe07b73cc5f8819db?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FHZjVnetL5QyenPh8x9Z8k8zik1BinnbuYhpu2s7vDJD",
+   "symbol": "E/CAT",
+   "name": "e/cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 207536,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/hmgXkOsngsMAc3cp?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AQuuQ4xktyzGBFnbKHnYsXHxsKVQetAoiPeCEG97NUJw",
+   "symbol": "BINGUS",
+   "name": "Bingus The Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 207240,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/829068cfc3b0f15a14ad3676be819ac3b81541c9e3d5170e36d3b81ca8de3c2d?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-Atf7KaBLF257KQosBM2rCxhhdRfDtRNnpwmUH4bkrMMV",
+   "symbol": "BOB",
+   "name": "Bob the Jagex Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 193861,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/a28FSOmJrkkszJKe?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DRtvTCzfiKGhCVREmBbZdN9sB8PHeq9KdRZ3VmFhpump",
+   "symbol": "ChiefPussy",
+   "name": "Tibanne Thecat ",
+   "kind": "famous-20k",
+   "marketCapUsd": 180736,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/d22545876f56822b8586ad67f4cc5fff1bd421b36dcae2a9d28249182f7d079e?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7bQsj9DciGXs6cTkhB3D1WbcEjuMpmD7amQRWjEVBpu",
+   "symbol": "BCAT",
+   "name": "Bodega Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 168921,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/rfAlgGGEvXwqqQXt?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HrZh7koZFedTSHng4bVmhULwejpmVdSKUYxaf2N5im1b",
+   "symbol": "CATOSHI",
+   "name": "Catoshi Rush",
+   "kind": "famous-20k",
+   "marketCapUsd": 166204,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/-7D7yqouSJdPVeFr?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-C2WtD354XEvS9gzpJDLqzqkADq7wUtmJg1UzUdmL5a21",
+   "symbol": "MCCAT",
+   "name": "McCat",
+   "kind": "famous-20k",
+   "marketCapUsd": 163036,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/o9vAqdBJIh8SWNvo?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HmJDgky11u77hpBss6D8sjNpYPD5B6fWgSVDj58jpump",
+   "symbol": "SOLCAT",
+   "name": "Solcat",
+   "kind": "famous-20k",
+   "marketCapUsd": 147872,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/XDQjcA_KB_j8OumV?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump",
+   "symbol": "drooling",
+   "name": "drooling cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 147741,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/lrwVr-kOmaGXHcjX?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DycqsssTijnk7AzAyPj5nJuLHW42PXd2NDEJGW77pump",
+   "symbol": "MOMO",
+   "name": "momo the cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 144350,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/b1264f15951cb5ebd954016d7d9ddc4f014977ce1afb92e0e91529f8fdcd330e?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DMNtou2ANqxevM4UngRzTdxVrRgfR1ZLzJyCT5sCpump",
+   "symbol": "PCAT",
+   "name": "Paid Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 142067,
+   "imageUrl": null,
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-LoafdJ3WSAvsrx3zppSGKA6sRvL9GrRrU1iRV7HkLkm",
+   "symbol": "LOAFCAT",
+   "name": "LOAFCAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 141217,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/4c9e7ab3dc746ee2ad2dc6431a62086bb710e529c157843f4d4a1feb2cf6886e?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9shb4VuR85tKziVn7sxScS8AXEFA4smM8NL4Z6utBAGS",
+   "symbol": "TRK",
+   "name": "The Roaring Kitty",
+   "kind": "famous-20k",
+   "marketCapUsd": 139970,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/1kK2TfyaXsQG72ub?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FvER7SsvY5GqAMawf7Qfb5MnUUmDdbPNPg4nCa4zHoLw",
+   "symbol": "PAJAMAS",
+   "name": "The First Youtube Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 137920,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/74d3a5389c65ad7bd8ab852697171ab33552351926d71ad6cca0813cd9873946?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-Dnb9dLSXxAarXVexehzeH8W8nFmLMNJSuGoaddZSwtog",
+   "symbol": "COK",
+   "name": "cok the cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 137101,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/8b85ca1afdc39044ac2011d50cd81562e940c2ef862e2f871253c8ed05d6ed4f?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-H9pPKejchJ9LCWpb1P8p4BmrjzCFARUmA7XtJK4pVhCZ",
+   "symbol": "MCAT",
+   "name": "Addicted Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 134005,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/fM0HA4MnjM5xKDS5?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8StnEDgfxfvxpCUUMH9ChXaqAkGGtxvnfxCAYHYnPXja",
+   "symbol": "FLOPPY",
+   "name": "Memory Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 133040,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/yq1DSvcRMtjMoHVv?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HrLx8MLKegpbmbmWePZiuvf3AbJNx1CJyjBwUHwicEgW",
+   "symbol": "NYXC",
+   "name": "Nyxia AI Music (Nyxia Coin)",
+   "kind": "famous-20k",
+   "marketCapUsd": 130981,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/wgDQJhAHVEHhU5c_?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-5EaYZcaKfTVdpQ2avVtJ7BNWJ1Rnj86F1dWxppawpump",
+   "symbol": "dollo",
+   "name": "DOLLO ALL IN",
+   "kind": "famous-20k",
+   "marketCapUsd": 123482,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/5b15224b40622e47ebdd51ddc6a2adc6d84eefdc1631ac8010839ec4e1471e56?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6iFUKWGDksVvmnSYJUGYnsu168xstni8xJkTF7QrpPAu",
+   "symbol": "CANDLE",
+   "name": "Candle Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 121676,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/d24704c042b999d7c84057080e248810bf816656763c0613e6f3ef9fa23fc6a5?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-A8vJzs6ygbZQyYLf9FKund8j3pDfUzxBeje8rJiypump",
+   "symbol": "omni",
+   "name": "omni",
+   "kind": "famous-20k",
+   "marketCapUsd": 118870,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/849047d20e1d258094b9fc740193e6bb6ad26e1b7e252817f6a767406617a987?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-D8r8XTuCrUhLheWeGXSwC3G92RhASficV3YA7B2XWcLv",
+   "symbol": "BAG",
+   "name": "catwifbag",
+   "kind": "famous-20k",
+   "marketCapUsd": 118107,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/235620f2b8eccbee012692d51c20645fe22acd0da26dc7cc5a3ec7fc14e3ca96?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6n7Janary9fqzxKaJVrhL9TG2F61VbAtwUMu1YZscaQS",
+   "symbol": "Hobbes",
+   "name": "Ansem's Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 110419,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/f951332428de5943d912c74a703f16172d10a9a9ae73a197c471c28c80b84acd?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-GmbC2HgWpHpq9SHnmEXZNT5e1zgcU9oASDqbAkGTpump",
+   "symbol": "CATANA",
+   "name": "Catana",
+   "kind": "famous-20k",
+   "marketCapUsd": 110386,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/056a9989b5d8163da103629fbfbcbe63579c3071ad1080431c6b63ed9359fb9c?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-GinNabffZL4fUj9Vactxha74GDAW8kDPGaHqMtMzps2f",
+   "symbol": "GINNAN",
+   "name": "Ginnan the Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 110143,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/4ed14770835dd89f8694186472bbddad083b5290482f51a6f97f8d4a3330c465?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7ZqzGzTNg5tjK1CHTBdGFHyKjBtXdfvAobuGgdt4pump",
+   "symbol": "BARSIK",
+   "name": "Hasbulla's Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 109197,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/976e7fe8e369e2401b827fb486b6f9469f5983a4449e958a77a69673c051c5e3?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-F47vvwFYuLioQsqEVAjqdY6Yihc8wVRiUcfHGcBR9XUs",
+   "symbol": "ELGATO",
+   "name": "el gato",
+   "kind": "famous-20k",
+   "marketCapUsd": 106081,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/6bf11654bdcde4b8478373cb665f1da5e348d0df46a569fc651db1460701ae4c?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-F5hqdbykXuksp8P78CAZenSvpPShAYKrP2U2MiZMdgFN",
+   "symbol": "bop",
+   "name": "bop cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 106034,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/eca067910bf2fb4bbf01b9ebacd3a0d163edc5ae1918575b245b3430025b8039?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7Lbe787dJ4bxpPiEWLb9R9VnQsMiET6Gbacxedm3pump",
+   "symbol": "MEOW",
+   "name": "meowtakeover",
+   "kind": "famous-20k",
+   "marketCapUsd": 104294,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/KWtJe8hqcQrRH2d1?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-EjzzyCSiLqjFDprpZj8e1zjXmcTG5HPGFRSEoWcJWHh9",
+   "symbol": "INBRED",
+   "name": "INBRED CAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 102082,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/dc70e1fb608827749c6f6375ce05d05f1ff3b49b9f19b59c8c5616668cfe7bd4?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7rSpKgASuXN5hfw3jsKNZN6ysNCR1Eixb2PD2Nd9pump",
+   "symbol": "Cog",
+   "name": "Cog",
+   "kind": "famous-20k",
+   "marketCapUsd": 100998,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/pfH_iBUnrHk7KnDn?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-oWeyEsRQa7SWRbEiW1QNxZJhwmjnefD6HGtXqKqfv3r",
+   "symbol": "CONST",
+   "name": "TaoCats",
+   "kind": "famous-20k",
+   "marketCapUsd": 100600,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/VVL8UYALW5UMYaZA?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9YJN9DVpujzEA2smVVLeS5PA7Kkz67yA3JAHwFuNX91K",
+   "symbol": "CLOKI",
+   "name": "CATLOKI",
+   "kind": "famous-20k",
+   "marketCapUsd": 99775,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/43a82401c16046777baf380fc60211ec11af43adb914ea0a41020b520f9eebe5?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8NfK7b9u1RvMpHJnAnZki4mNQwjhvzrVZs7bRQatpump",
+   "symbol": "LION",
+   "name": "The Lion",
+   "kind": "famous-20k",
+   "marketCapUsd": 99402,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/4e5cba16da41737e4965e66cd6ccd6734388a1e8aa44f8c56e1a2aec5beb1518?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+   "symbol": "KHAI",
+   "name": "Kitten Haimer",
+   "kind": "famous-20k",
+   "marketCapUsd": 99107,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/70dfe3d665fb6d3dbde8e0dfd6f21ced0933cba1414833456e7fa58d12880352?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-51zudBR4NmATG35goida4dLQH5YPn9k8hVkLcizNpump",
+   "symbol": "jam",
+   "name": "jam cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 95729,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/4513855d15ba39d1b08822461966fdef4ec68db40844b9d7892ecd5bdedda171?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-77xuWiXF7PKZRW2jDD4Tkyw3M3qQkZADYNnG7h3xrndj",
+   "symbol": "XCAT",
+   "name": "XRP Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 94722,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/nASyVy2Dv6SIiT6a?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7UN8WkBumTUCofVPXCPjNWQ6msQhzrg9tFQRP48Nmw5V",
+   "symbol": "xencat",
+   "name": "SolXenCat",
+   "kind": "famous-20k",
+   "marketCapUsd": 94206,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/d6030a3e46432851f5193f014b060fb079e515fd304ebe82a00f8881f0a64228?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8tSeXYSXzFvaDX1nbWrEFFaFuPHuWqpzksKYxQPvpump",
+   "symbol": "VIBE",
+   "name": "Vibe Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 92261,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/c7ce8f251dcacbcaf1b72e444bc503301d59f6415e57dcccece70ee8c1c828e1?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AMKKkovbUqr5cxmsg22KxTgaRXq6z4f8umrze4JKpump",
+   "symbol": "RUECAT",
+   "name": "Rue Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 92164,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/94a4a21c43a06a784a6d463cadcc79b286a1f4e325cf7d3411c0538fe0a95656?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-Dt6vESocrRixuFz2taZunygpKcNQwxAjUMgYUxvNpump",
+   "symbol": "lolcat",
+   "name": "Lolcat",
+   "kind": "famous-20k",
+   "marketCapUsd": 82479,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/7b67d18b8e0c22df8a6f4e812e2840555b3487ea3c17f99ba578849946001df8?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-4j9bDg7iWNah1Qa61rrqwWZMtEdqV3fV56SzyhfNpump",
+   "symbol": "BITCAT",
+   "name": "Bitcat",
+   "kind": "famous-20k",
+   "marketCapUsd": 80685,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/b4d3ca7092332c40c9eeed4b0f5d927406a336c487bb3b35b6cefbd808d8afe3?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7uvLyn87LSxW2GdwdEeiwmSJwQLVrcVyo7SRVcLbbtGc",
+   "symbol": "ACAT",
+   "name": "Avax Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 80471,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/bEc2FnupC48grBWl?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-GJLiErro8cbWeDngDMWJug9dkwwckYZg4Lvb79F3pump",
+   "symbol": "ily",
+   "name": "iiii lovvv yuuuu",
+   "kind": "famous-20k",
+   "marketCapUsd": 79143,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/5828761beb7f47260f1e335082637149c5c8b40e40ec3da0e967f487dbbfc2a5?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-CATTzAwLyADd2ekzVjTjX8tVUBYfrozdkJBkutJggdB7",
+   "symbol": "CATDOG",
+   "name": "CatDog",
+   "kind": "famous-20k",
+   "marketCapUsd": 77435,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/b7f7662c932b77b1fd364526ed2d38d595929a2776e289071bf87829257b0674?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-864YJRb3JAVARC4FNuDtPKFxdEsYRbB39Nwxkzudxy46",
+   "symbol": "HABIBI",
+   "name": "HABIBI",
+   "kind": "famous-20k",
+   "marketCapUsd": 72602,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/ec2c63158fc8a5297bafec3593cc70b90930408a387339bab57fa77ad16b9c7b?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-EVDoPXkWNRMc7fQirg7emNdc17KNqsCyzVi4mWPmDvni",
+   "symbol": "CATVAX",
+   "name": "CATVAX",
+   "kind": "famous-20k",
+   "marketCapUsd": 71317,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/ee95194a1bf4a8ba2ec396836a4b8ee55c701f02490098c92e4faa4f6a679e07?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FW1r2jQtFjc1dFUUYYZDkeQ62R6fWo4ucty8vpP7bonk",
+   "symbol": "Funless",
+   "name": "Funless",
+   "kind": "famous-20k",
+   "marketCapUsd": 70914,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/1e455eecd2c7f72dbe12e3512cecd3f0f84d7a82fc8b021bfef3cd1a8f1b7d80?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HhCLbkW6FwhriTkk81W8tYstsRCLUu6Y7Je1SQjVpump",
+   "symbol": "KIKI",
+   "name": "KIKICat",
+   "kind": "famous-20k",
+   "marketCapUsd": 70709,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/827ff685988a7c3f50eeda591b9ee79f93206865156ca1d595dd300e80687b3f?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-BVdbH7PLTSQxBssqvWTxVDoA8qfsztdVtMsZQSS9CScZ",
+   "symbol": "GHOSTCAT",
+   "name": "Aave Ghost Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 70157,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/6XY5BcgMDG0sRC9B?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-ZEtX7MPVZSKjBq6pD72tjb89KGJxSZNWjRqZEdASrXE",
+   "symbol": "ORCAT",
+   "name": "Orca cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 68479,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/QjcOPLWBwr5ayG8C?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HAgX1HSfok8DohiNCS54FnC2UJkDSrRVnT38W3iWFwc8",
+   "symbol": "MEOW",
+   "name": "SOL-CATS",
+   "kind": "famous-20k",
+   "marketCapUsd": 68188,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/7a36cbdd82bbb1bc1e199f09295f81b0122def62a65d89b3beba51d9c970ce72?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-GvcNXdSehfNSNyhDVDj27kc459LzFqWozt9CSJywMy6r",
+   "symbol": "CRODIE",
+   "name": "Crodie",
+   "kind": "famous-20k",
+   "marketCapUsd": 65172,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/e310a51ad3641b344b74f4391dc2e31f8395c33df15e3577081ae47a18de66ff?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7Y2TPeq3hqw21LRTCi4wBWoivDngCpNNJsN1hzhZpump",
+   "symbol": "SACHI",
+   "name": "Sachicoin",
+   "kind": "famous-20k",
+   "marketCapUsd": 63806,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/a79d876e7508cf44bf624d3fb7077dfea3fdbd1b6fa2063a6fe8ea57a6c7f809?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-mo7mapMrCsyci5w1td1wgrKPtNeCfjfkKi96DknWi5N",
+   "symbol": "CATBAT",
+   "name": "CATBAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 63480,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/9BN-HgAc-MTSAkm_?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-CMMtMtYqsELs4PNvGRM76eVuKFEsDCXzUNQuLEH97ebL",
+   "symbol": "wCat",
+   "name": "wrappedcat",
+   "kind": "famous-20k",
+   "marketCapUsd": 62070,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/JlqkrL7gFCdN4HFS?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-34is6Gnr47FjLFRTpouTE3TSZHzMXddCeX1VMHp3wSER",
+   "symbol": "MEOW",
+   "name": "MeowIstanbul",
+   "kind": "famous-20k",
+   "marketCapUsd": 58963,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/54fd05a5bc23f37884e9b9f499651e27a9a7e266d821caffdfd31c0e4a6105d5?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9gCK5CkHJC5i6cMTif7W3NxRQaxJ4kZG6MVYaLSeXchF",
+   "symbol": "CATBERRY",
+   "name": "CATBERRY TOKEN",
+   "kind": "famous-20k",
+   "marketCapUsd": 58319,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/309a9e4be310806d01680f52e6591a7cb79308719bfbd80991a0c40071a066c2?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8iYPW781jBDu8zkC6PFY8WpvtbHxSVMgBX8aPnNmRY3z",
+   "symbol": "EMBERCAT",
+   "name": "Ember Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 57785,
+   "imageUrl": null,
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-H7ed7UgcLp3ax4X1CQ5WuWDn6d1pprfMMYiv5ejwLWWU",
+   "symbol": "CHONKY",
+   "name": "CHONKY",
+   "kind": "famous-20k",
+   "marketCapUsd": 57755,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/f20831bf594db6ea11bd2232d3eee93c2bd6dee1d98429c3e6540d9ecabd8557?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-BifUDWQFpbTrSxYXBnqCpAVYgcyQGzHzJk2MDmeM2Gyv",
+   "symbol": "TCAT",
+   "name": "Artificial Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 57661,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/dXqca-XDLn9qH8Tr?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-Ep5tnKTSkLDeQ12ctS3RhQNcbcApkcyJcGPgHh4dpump",
+   "symbol": "CRYING",
+   "name": "Crying Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 57251,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/08bc716d7cd3eeeb24a2651bd1962b10e1b5d90aa72cc45e151d14cb2e9165f1?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8x382FRw85zkkA8ZDvky8HkKWPpJugi2ujoZeyHmpump",
+   "symbol": "$SNEKO",
+   "name": "Solana Neko",
+   "kind": "famous-20k",
+   "marketCapUsd": 52945,
+   "imageUrl": null,
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-EtUUCeNTxXZZEQMbwVJCh55aL48MovCkRdpXcbUxw6US",
+   "symbol": "PANTH",
+   "name": "Black Panther",
+   "kind": "famous-20k",
+   "marketCapUsd": 49995,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/1fff5708378329c76b9378c7a5f5bfe33b5b9fc685031ef91eec9ac9857f0def?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9XgfFWPxPU6hyDyGtfhC9D6eyRE3RUSgAYKHRznWpump",
+   "symbol": "kitkat",
+   "name": "Remember KitKat",
+   "kind": "famous-20k",
+   "marketCapUsd": 49549,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/a61b7a8a95f41092c34825b80d4eea4fc990f0416d835d635ecee734d17e5b90?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8Sk2EJ9oo25b7Mmf4qd5gJw6z3738AXvAbkuSSpQpump",
+   "symbol": "WAWA",
+   "name": "WAWA CAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 48521,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/79a87b3bc3b29d854bca9e795e3cea1fdb0b0f6d15fdd546cd9adf564d6bc7d8?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-MboMMGXjGDi45hfjCVzYru32kEM5nw7VzCqCofZpump",
+   "symbol": "KCAT",
+   "name": "Karate Cat ",
+   "kind": "famous-20k",
+   "marketCapUsd": 46160,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/bbZlM1WXVq4E3UDS?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-5p2zjqCd1WJzAVgcEnjhb9zWDU7b9XVhFhx4usiyN7jB",
+   "symbol": "CATO",
+   "name": "CATO",
+   "kind": "famous-20k",
+   "marketCapUsd": 45829,
+   "imageUrl": null,
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8yuRcb64o2PLQo31bcJa7b1mSES3AUU5ZXB9MoYPsQuG",
+   "symbol": "SOLKAT",
+   "name": "SolaCat Coin",
+   "kind": "famous-20k",
+   "marketCapUsd": 45471,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/e24dd52e672fef99cad39426a9affab9964241a1365726085cd94f6579cc516f?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DiiTPZdpd9t3XorHiuZUu4E1FoSaQ7uGN4q9YkQupump",
+   "symbol": "ELIZABETH",
+   "name": "Just Elizabeth Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 44638,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/9602d0cdbdd348972b3a7ba43d0aa568a51b132c8c0aea52d07b7cd38a1c6798?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-41fZewbrb8x24yE9KeMJExoVXCDggebPMEwRVvX8pump",
+   "symbol": "KMC",
+   "name": "KittyMineCoin",
+   "kind": "famous-20k",
+   "marketCapUsd": 43959,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/e376feccc5263dae84b0920392ff36adcbb962184c57e3695158237cad038237?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-HL8LrvYgmmHoLH9TvqqSv8Sy6yBGjXjZmpv2RpitpvUX",
+   "symbol": "YAPCAT",
+   "name": "YAP CAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 43490,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/KCbWCcLLgafbUCC1?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7rCrPCf5qTcEAvDC3mH89rjZMetpRDLXZBvqLoPPpump",
+   "symbol": "MEOW",
+   "name": "KittehCoin",
+   "kind": "famous-20k",
+   "marketCapUsd": 41596,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/3635af3cd0b4ea8043f8e329a74bff38a076b7792ae4e4bf2eef8a28e7054f89?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DNyxufTEwqNCgGruJ4W2ue6u1RTFcH61H4sa42LGpump",
+   "symbol": "bullish",
+   "name": "bullish",
+   "kind": "famous-20k",
+   "marketCapUsd": 40898,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/692aac0653916bd980bbec4553ac23fe0810b73f5a0fa44aefbbc33bbf27e25e?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-EBLUKPgx5FvTUBU6bTJi3aR8XVELSBdC5FiodSWQpump",
+   "symbol": "BITCAT",
+   "name": "The First Crypto Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 38269,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/q7b1NW1tUtiC5WNR?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7Mk7UhiXXjWBt9LuMntbtWLHMXmFAmSSYg1eb4baSTNK",
+   "symbol": "JCAT",
+   "name": "Liquid Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 38103,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/ApyAHXd1it58vS7U?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-CPjDhhBpwEsLygNuczKcNwBPgMeni1xLomD48x51MyYU",
+   "symbol": "BENJI",
+   "name": "Taylor Swift's Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 37759,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/9bbebd3a0ee3c33f7bc27a6a66ce6a4041e5f01b894638bbb5876e7c47503b64?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FP7NvFXQXoZL1nQC5QZtE1bzwgALdxj1TeA9J25epump",
+   "symbol": "CatFu",
+   "name": "CatFu",
+   "kind": "famous-20k",
+   "marketCapUsd": 37140,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/_ameDvi2wQUflYBu?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-E99fN4tCRb1tQphXK1DU7prXji6hMzxETyPNJro19Fwz",
+   "symbol": "SOLCAT",
+   "name": "CatSolHat",
+   "kind": "famous-20k",
+   "marketCapUsd": 36226,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/223d8486003a94f1c575126c9d85758ee28d0647fb4446007d65bf8f63de72d6?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-82Rc22mnyHrmBGwj15rhYhFzVrU3bgFkjNtV3iHjpump",
+   "symbol": "NCAT",
+   "name": "Neuracat",
+   "kind": "famous-20k",
+   "marketCapUsd": 35677,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/b54ac06f80b8377ff91441a00d38069ea5c6cbebfb1ee0a630da6c531bf53303?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-ExbN9KVhLMZT1Pt6uEQ5eMyWdfbTAvdLP9cBTwaK8EHL",
+   "symbol": "$SORANA",
+   "name": "SkywalkerTrumpSOLMeowCat69Saga",
+   "kind": "famous-20k",
+   "marketCapUsd": 35070,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/a016dacfb9e9c555198dfc65ba2c64ae44a9c0c8da5b388a0945c1bbea4f1a6b?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-9n3wWPvb5n2MMsBmALrWaK7iSFALKiTZ5DTRMEJRpump",
+   "symbol": "TCAT",
+   "name": "Tabby Cat ",
+   "kind": "famous-20k",
+   "marketCapUsd": 33983,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/_re1D4kaK4Vi70am?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-33rVymHHPxfMvg4EHKBRF3h8a37cG7Et3eQWZzAkpump",
+   "symbol": "bro",
+   "name": "bro the cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 33277,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/2b9601a6eba0b4811ead2a421952b37a09c162e204a1f3af8388cc0fb1ca314e?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-ABn6xHxz3PeLTYP8eVG6LcBQt6NWPkVmDRHD1BRYDrK2",
+   "symbol": "CATHAT",
+   "name": "Cat Hat",
+   "kind": "famous-20k",
+   "marketCapUsd": 32997,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/LutWE3zuEmQKn-8v?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-chiPiQTvkQ7oPtAD7YLQaEeHmPqXCa2wcRQdwFNneTe",
+   "symbol": "CHIPI",
+   "name": "chipi",
+   "kind": "famous-20k",
+   "marketCapUsd": 32797,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/30011b790bf9e7a200973e3054761a312136d0907c0525115a203f9ac5faf8ad?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-2YPWT4QK1Why57mxBZGwBAFckBC4nLwEAL2t6CcCQtvw",
+   "symbol": "FCAT",
+   "name": "Fedora Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 31555,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/HmdqIVwNl_t2sN9G?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-BeqAgjEajRgfh1FXggjX3p9iWhNsnrhKR5VjLj1Zmoon",
+   "symbol": "Qkitty",
+   "name": "QueenKitty",
+   "kind": "famous-20k",
+   "marketCapUsd": 30878,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/xcXzQfn-bjEPWp09?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-3R51JJP2TZosMTHszJxbB4KCshVL67LU4Q8cynVMpump",
+   "symbol": "CITH",
+   "name": "cat in the hat",
+   "kind": "famous-20k",
+   "marketCapUsd": 30774,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/8Y-O-dNlno1R5c2W?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-F23fFqpRNsmWjuUrFpfM1pvoVvMSpLuN6hY978Y1JXLt",
+   "symbol": "USDCAT",
+   "name": "upsidedowncat",
+   "kind": "famous-20k",
+   "marketCapUsd": 29363,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/008636d5dcd645a377c35ddb82a200a129f9093e62c0d9dcd1541cef3abcce63?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AbNNre5ac5QbKDeNgSArBEdATgCZz6pu17jiRSxrxDDU",
+   "symbol": "ELOTÉ",
+   "name": "Zcat",
+   "kind": "famous-20k",
+   "marketCapUsd": 28987,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/oJc0Y-4LU2FVXW9I?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-26Kg27kpPHBN2MHqgrsJh3LzMZboxZyUpbeVonmpZwVm",
+   "symbol": "UCAT",
+   "name": "UselessCat",
+   "kind": "famous-20k",
+   "marketCapUsd": 28961,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/BoCD6pZg0ifnt0K9?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-5V9qpFo8NMFyhYHbrqY2c1TJrvzZSnRJAdj4ryPVB18n",
+   "symbol": "croc",
+   "name": "croc cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 28742,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/30417811f212658767dd7f2b7a2b8fa23626a874c09fe0236de31dcb403ddb11?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-5nu8tJjrBzY1JbTAZ2DK8mipj1Xsujzes6UMjEXHq9TP",
+   "symbol": "BABYZCAT",
+   "name": "Baby Anonymous Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 28179,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/mnbgoC6CdhBHFVR7?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-A8WGag2MmbFjHsmuo41WJkQaUogrZspLK2hvFCbDW61g",
+   "symbol": "CATTAX",
+   "name": "CATTAX",
+   "kind": "famous-20k",
+   "marketCapUsd": 27118,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/jLS_HV-RRo4zmT06?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8gk7wFYeNeh8U4chbgS9cetyy4kP5Pa5C9RUryrpsw3x",
+   "symbol": "TANO",
+   "name": "TANOSHI NEKO",
+   "kind": "famous-20k",
+   "marketCapUsd": 27104,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/c690672b1a74c3d89117ee5f990cf396a3b5e8d3ba4144f796dc2e95f9d26fdd?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FZnSMd1hPu5MVgttmtfDZUPN5gcuexvrh3CB67UuQshb",
+   "symbol": "HELIA",
+   "name": "StareCat",
+   "kind": "famous-20k",
+   "marketCapUsd": 27021,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/3071711e688caf4aea34fe2af8cf5d755eb3ce9b0b03f59e5a57ec299bc3c810?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-BFpchrNVhyTRzMNAg9QkiZfRN2vqRBwcYoTX8qgkbDvm",
+   "symbol": "arab",
+   "name": "arab cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 26949,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/a0b941938fb9748c7ae5107053dfa93934828d11bfc0c0cc4071134be9ed1f94?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DtUntDyWcRpzTVt8JiW8fXvUt3WDGGw6kdiD7fjNMFzJ",
+   "symbol": "STONKAT",
+   "name": "Stonk Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 26848,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/OH7CqtCK6mVLl1ut?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-AKtixLfY2z51yT7G4yxYDrdjL786dz4zXynUGJUbpump",
+   "symbol": "SULLY",
+   "name": "SULLY",
+   "kind": "famous-20k",
+   "marketCapUsd": 26691,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/71907cd6a55ac4bee97950507aac54a0567acf16e33ee456f8adee62513e4f89?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-44JcD4XMTxo6jy9yczrRkFQv91yzrvNAKG8XpnaL2tLF",
+   "symbol": "NEKO",
+   "name": "NEARCAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 26634,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/p4Wbrw5h2jmlQva3?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-4oWhtcmBBsMG1bLZCLKusmq4t9fxdVVfbyJLevsYg5Ct",
+   "symbol": "CRIMECAT",
+   "name": "Crime Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 26377,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/ovkg84a2PwLtSI4b?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-G9j8WWDeJXZdvwQgP82ooDuHmpc3Gy8NCSins71Lpump",
+   "symbol": "BULLCAT",
+   "name": "The Bull Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 25953,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/dHOiK80MmMJQOx5v?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-kMKX8hBaj3BTRBbeYix9c16EieBP5dih8DTSSwCpump",
+   "symbol": "afk",
+   "name": "afk",
+   "kind": "famous-20k",
+   "marketCapUsd": 25729,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/da65c708271daaaa683eaa5e0589d306960159bc7093b898674984345845a059?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-3taE4SdY29sa3fnwyWqfshudJ95gMb9LoFTy5Uuppump",
+   "symbol": "CATJAK",
+   "name": "Catjak",
+   "kind": "famous-20k",
+   "marketCapUsd": 25585,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/xjW8Q6zwm5FS40iR?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-E63CDwLy9Dwr3EptAzopV9RuWoQnn5ZVYEjLWnJX8dCw",
+   "symbol": "BELUGA",
+   "name": "Beluga Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 24913,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/7228b74148e0bf09a9ad38a161c71b9a019f17677b080d95f87560f02cd9c411?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-3oX9emrqYRGzFEDPP3jA6tYnUBML4QSr3DfgD2r5pump",
+   "symbol": "滑る猫",
+   "name": "Sliding Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 23510,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/C9CAsmudZERqea2C?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FLGf6NvZ5trS2eebzwhYyatHZxat4XKwBaFdXiT7pump",
+   "symbol": "BLACKCAT",
+   "name": "The Black Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 23068,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/oMfEimtTLgfm05-o?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-7pL98QbnrMZCe5FEKajSdTTgLn6Thf5CFaozLkayBAGS",
+   "symbol": "ELLIE",
+   "name": "ELLIE",
+   "kind": "famous-20k",
+   "marketCapUsd": 22275,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/c8be709589514f84e52735fda2a755f5d0f82eb183ab848022929e8c170f6522?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-8jvtfeVTJQsrQ3L4kjQmRcXJ1iSFQMmkjkCqPUe3pump",
+   "symbol": "MEEP",
+   "name": "MEEP CAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 21678,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/coaIPPVME2pkD5Cv?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-qikeUfbJaWPHy7sTTYfQuBuafzmUBZAH7SjCbjZCyFA",
+   "symbol": "LITECAT",
+   "name": "Litecat",
+   "kind": "famous-20k",
+   "marketCapUsd": 20838,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/obRYmUFC9HxQQL8C?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6oeiky8G8ZnuvadARQPRMkV6FRz8ALKd579ZuXhKSTNK",
+   "symbol": "MCAT",
+   "name": "Stealth Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 20797,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/5GssD3UPby7lVoIw?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DXLzxcDbEwmVhoK5m8UcJM44TRcE9TCBPxNr4FkLEC2a",
+   "symbol": "WCAT",
+   "name": "WALKING CAT",
+   "kind": "famous-20k",
+   "marketCapUsd": 20757,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/vT5_IUa81-MNp-Sj?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-DuhSwRVN7z8bWjYzwtRv2uDfpAsbTPxDnDezzi9Nsf1y",
+   "symbol": "POCAT",
+   "name": "Polite Cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 20737,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/f36f4ae25e68005866ab7fb9a517fb8b6debeb0b83638187a21eebb4ee265645?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-FdwpkZZs78rUJPRMavGqfFDujYmCbxQFLWqupY5Hbonk",
+   "symbol": "ANDREA",
+   "name": "Andrea Von Speed",
+   "kind": "famous-20k",
+   "marketCapUsd": 20503,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/s2p7ga6lAw65E2qN?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  },
+  {
+   "id": "solana-ECZxKmKGEkyKhYUau7WkUE1L9Jp2yLebwX4SnKc1pump",
+   "symbol": "hop",
+   "name": "hop cat",
+   "kind": "famous-20k",
+   "marketCapUsd": 20350,
+   "imageUrl": "https://cdn.dexscreener.com/cms/images/d07cac5dab29d1d7f82589bebb00f9efc1ff3ae5438d43d3e393f397b30e6303?width=800&height=800&quality=95&format=auto",
+   "coingeckoId": null,
+   "profile": null,
+   "ownerPick": false
+  }
+ ],
+ "redo_tripo_at_end": [
+  "MEMOPAW",
+  "GIMBALPAW",
+  "CHIK",
+  "KEEPSAKE",
+  "PINROW",
+  "COOPERCAT",
+  "SAFFWHISK",
+  "NOTEPAW",
+  "APOTHECAT",
+  "COBBLEPAW"
+ ],
+ "note": "Owner 2026-09-26: famous coins Solana only"
+}

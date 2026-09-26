@@ -1,7 +1,8 @@
 /* THE CATS THE PAGE SHOWS: the planned cats (data/planned.json) and the tokens the builder proved
    on Solana (data/collection.json), checked with the same rules the builders use
-   (assets/collection.js) and merged. The three data files are fetched from this site by
-   relative URL; nothing else is called.
+   (assets/collection.js) and merged; then the famous cat coins (data/famous.json), coins that
+   already exist, made by others. The data files are fetched from this site by relative URL;
+   nothing else is called. If data/famous.json cannot be read, the stock cats still show.
 
    loadResidents() resolves to a list of cards, launched tokens first (newest first), then the
    planned cats in the sheets' order:
@@ -36,13 +37,18 @@
      explorer:             null | { token, tx, stonkfun }   Solscan and StonkFun pages of a launched token
    }
 
+   A famous coin's card (after the stock cats) is its data/famous.json row with kind: "famous":
+   { id, kind: "famous", name, ticker (its symbol), chain, contract, pair: { quote, address, dex, url },
+     company, tier, logo, market, coingeckoId, catName, who, lore, loreSource, viral, links: { x, website },
+     buy: { label, url }, warnings, coat, ownerPick, disclaimer }.
+
    A launched token matches its planned cat when its pair mint is the cat's and its symbol is the
    cat's ticker (letter case aside); if one planned cat has several such launches, the first one
    takes it and the others show as tokens of their own. If a file cannot be fetched at all, it
    rejects, so the page can say the list could not be loaded rather than show a launched cat as
    not launched. Every text reaches the page as data; the page sets it with textContent. */
 
-import { validateCollection, validateWallets, validatePlanned, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
+import { validateCollection, validateWallets, validatePlanned, validateFamous, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
 
 const NO_RESEARCH = Object.freeze({
   company: "", realCat: { name: null, who: "", basis: "", linkType: "none", strength: "none", linked: false }, links: [], virality: [], checked: null, disclaimer: "",
@@ -158,5 +164,18 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
   const collection = validateCollection(collectionFile, { wallets: validateWallets(walletsFile), nowMs });
   const left = planned.refused.length + collection.refused.length;
   if (left && typeof console !== "undefined") console.warn(`${left} ${left === 1 ? "entry was" : "entries were"} left out`, planned.refused, collection.refused);
-  return mergeResidents({ planned, cats: collection.cats });
+  const stock = mergeResidents({ planned, cats: collection.cats });
+  // The famous cat coins: optional. A missing or unreadable file leaves the stock cats as they are.
+  let famous = [];
+  try {
+    const f = validateFamous(await getJson(fetchImpl, new URL("data/famous.json", base)), { nowMs });
+    if (f.refused.length && typeof console !== "undefined") console.warn(`${f.refused.length} famous coins were left out`, f.refused);
+    famous = f.coins.map(famousCard);
+  } catch (e) { if (typeof console !== "undefined") console.warn("The famous cat coins could not be read", e); }
+  return [...stock, ...famous];
+}
+
+/** A famous coin's card: its data/famous.json row, marked as famous. */
+export function famousCard(c) {
+  return { ...c, kind: "famous", ticker: c.symbol, planned: false, token: { status: "famous" } };
 }

@@ -1,0 +1,60 @@
+# Every day (and by hand), refreshes the market cap, liquidity and 24 h volume of the famous cat
+# coins in data/famous.json from DexScreener's and CoinGecko's free public endpoints
+# (scripts/refresh-famous.mjs), and commits the file when, and only when, it changed. Nothing
+# else about a coin changes here: not where it lives in the garden, its lore, links or warnings.
+# The builder's own tests run first (`npm run test:builder`, which checks data/famous.json's
+# rules); a failing test, or a refresh that would not validate, commits nothing. The Pages
+# workflow publishes a commit made here.
+#
+# Secrets: none. The endpoints are public and keyless.
+#
+# The checkout keeps no credentials; the push hands the workflow token to git for that one
+# command. The job may write repository contents and nothing else.
+name: Famous coins
+
+on:
+  schedule:
+    - cron: "41 5 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: famous
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run test:builder
+      - name: Refresh the famous coins' market figures
+        run: node scripts/refresh-famous.mjs
+      - name: Commit the data if it changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/famous.json
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git diff --cached --stat
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Famous coins: refresh market figures"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            # main moved while this ran: replay the data commit on top of it, once.
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi

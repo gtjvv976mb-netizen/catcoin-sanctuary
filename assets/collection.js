@@ -22,7 +22,14 @@
                             exclusive and optional. To retire a wallet, give it an until date:
                             removing it would make its cats fail this check, and the builder
                             never drops a cat, so it stops instead.
-   data/planned.json      { "stocks": [ stock, … ], "cats": [ planned cat, … ] } (see validatePlanned) */
+   data/planned.json      { "stocks": [ stock, … ], "cats": [ planned cat, … ] } (see validatePlanned)
+
+   A third kind lives round them:
+   - a FAMOUS cat coin (data/famous.json, see validateFamous): a cat coin that already exists on
+     some chain, made by others, shown with its real token, its pair, its market figures (with the
+     time they were read) and honest warnings. The sanctuary is not affiliated with any of them.
+     Famous coins are Solana coins only (the owner's decision). Its only buy link is its GMGN
+     page for its own contract. */
 
 /* ── the stock pairs a cat may be priced in ─────────────────────────────────────────────
 
@@ -685,4 +692,148 @@ export function validatePlanned(data, { nowMs = Date.now() } = {}) {
     });
   });
   return { stocks, cats, refused };
+}
+
+/* ── data/famous.json: the famous cat coins ─────────────────────────────────────────── */
+
+/** The chains a famous coin may be on (DexScreener's chain ids): Solana only, by the owner's
+    decision of 2026-09-26. (The rules below still know other chains' address forms and GMGN's
+    names for Ethereum, Base and BNB Chain, should that change.) */
+export const FAMOUS_CHAINS = Object.freeze(["solana"]);
+export const GMGN_CHAINS = Object.freeze({ solana: "sol", ethereum: "eth", base: "base", bsc: "bsc" });
+export const FAMOUS_TIERS = Object.freeze(["main", "ring1", "ring2"]);
+/** Where a coin lives, from its market cap when it was placed and whether a company or project stands behind its cat. */
+export const TIER_RULE = Object.freeze({ mainMcap: 1_000_000, ring1Mcap: 100_000, minMcap: 20_000 });
+export const tierFor = (mcap, company) => (company || mcap >= TIER_RULE.mainMcap ? "main" : mcap >= TIER_RULE.ring1Mcap ? "ring1" : "ring2");
+
+const EVM = /^0x[0-9a-fA-F]{40}$/;
+const FAMOUS_ID = /^[a-z0-9][a-z0-9-]{1,63}$/;
+const HEX = /^#[0-9a-f]{6}$/;
+const FAMOUS_FIELDS = ["id", "name", "symbol", "chain", "contract", "pair", "company", "tier", "logo", "market", "coingeckoId", "catName", "who", "lore", "loreSource", "viral", "links", "buy", "warnings", "coat", "ownerPick", "disclaimer"];
+const EVM_CHAINS = new Set(["ethereum", "base", "bsc", "robinhood", "hyperevm", "arc", "ink", "avalanche", "arbitrum", "cronos", "beam", "polygon", "worldchain", "unichain", "abstract", "zksync"]);
+
+/** Why `contract` is not a plausible token address on `chain`, or null. */
+export function contractProblem(chain, contract) {
+  if (typeof contract !== "string" || contract.length < 3 || contract.length > 140 || /\s/.test(contract)) return "not an address";
+  if (chain === "solana") return isAddress(contract) ? null : "not a Solana mint";
+  if (EVM_CHAINS.has(chain)) return EVM.test(contract) ? null : "not a 0x address";
+  if (chain === "hyperliquid") return /^0x[0-9a-fA-F]{32}$/.test(contract) ? null : "not a Hyperliquid token id";
+  return /^[A-Za-z0-9:._-]+$/.test(contract) ? null : "not an address";
+}
+
+/** The one page a famous coin may be bought from: GMGN for its contract, or its DexScreener page. */
+export function famousBuyLink(chain, contract, pairUrl = null) {
+  if (GMGN_CHAINS[chain]) return { label: "GMGN", url: `https://gmgn.ai/${GMGN_CHAINS[chain]}/token/${contract}` };
+  if (typeof pairUrl === "string" && pairUrl.startsWith(`https://dexscreener.com/${chain}/`)) return { label: "DexScreener", url: pairUrl };
+  return { label: "DexScreener", url: `https://dexscreener.com/${chain}/${encodeURIComponent(contract)}` };
+}
+
+/** Why a famous coin's buy link is not the one famousBuyLink allows, or null. */
+function famousBuyProblem(c) {
+  if (!isObject(c.buy) || extraKeys(c.buy, ["label", "url"]).length) return "buy must be { label, url }";
+  if (GMGN_CHAINS[c.chain]) return c.buy.label === "GMGN" && c.buy.url === `https://gmgn.ai/${GMGN_CHAINS[c.chain]}/token/${c.contract}` ? null : "buy must be the GMGN page for its contract";
+  if (c.buy.label !== "DexScreener") return "buy must be its DexScreener page";
+  const h = httpsProblem(c.buy.url);
+  if (h) return `buy: ${h}`;
+  const u = new URL(c.buy.url);
+  if (u.hostname !== "dexscreener.com" || !u.pathname.startsWith(`/${c.chain}/`) || u.search || u.hash) return "buy must be a dexscreener.com page on its chain";
+  return null;
+}
+
+/** Why a famous coin's colour ("#rrggbb" or a coat word) may not be used, or null. */
+const famousColourOk = (v, empty) => (empty && v === "") || HEX.test(v) || COAT_COLOURS.includes(v);
+
+/** Why one famous coin may not be shown, or null. */
+export function famousProblem(c, { nowMs = Date.now() } = {}) {
+  if (!isObject(c)) return "not an object";
+  const extra = extraKeys(c, FAMOUS_FIELDS);
+  if (extra.length) return `unknown field ${extra[0]}`;
+  if (typeof c.id !== "string" || !FAMOUS_ID.test(c.id)) return "id must be lowercase letters, digits and dashes";
+  const name = textProblem(c.name, { maxChars: 48 });
+  if (name) return `name: ${name}`;
+  const sym = textProblem(c.symbol, { maxChars: 24 });
+  if (sym) return `symbol: ${sym}`;
+  if (!FAMOUS_CHAINS.includes(c.chain)) return "chain is not one the sanctuary knows";
+  const ca = contractProblem(c.chain, c.contract);
+  if (ca) return `contract: ${ca}`;
+  if (!isObject(c.pair) || extraKeys(c.pair, ["quote", "address", "dex", "url"]).length) return "pair must be { quote, address, dex, url }";
+  if (c.pair.quote !== null && textProblem(c.pair.quote, { maxChars: 24 })) return "pair quote is not a plain symbol";
+  if (c.pair.dex !== null && !/^[a-z0-9-]{2,40}$/.test(c.pair.dex)) return "pair dex is not a DEX id";
+  if (c.pair.url !== null && (httpsProblem(c.pair.url) || new URL(c.pair.url).hostname !== "dexscreener.com")) return "pair url must be a dexscreener.com page";
+  if (c.pair.address !== null && (typeof c.pair.address !== "string" || !/^[A-Za-z0-9:._-]{3,140}$/.test(c.pair.address))) return "pair address is not an address";
+  if (c.company !== null && proseProblem(c.company, { maxChars: 80 })) return "company must be a short name or null";
+  if (!FAMOUS_TIERS.includes(c.tier)) return "tier must be main, ring1 or ring2";
+  if (c.logo !== null && c.logo !== `assets/coins/${c.id}.webp`) return "logo must be assets/coins/<id>.webp or null";
+  const m = c.market;
+  if (!isObject(m) || extraKeys(m, ["marketCapUsd", "liquidityUsd", "volume24hUsd", "measuredAt", "source"]).length) return "market must be { marketCapUsd, liquidityUsd, volume24hUsd, measuredAt, source }";
+  for (const k of ["marketCapUsd", "liquidityUsd", "volume24hUsd"]) if (typeof m[k] !== "number" || !Number.isFinite(m[k]) || m[k] < 0 || m[k] > 1e13) return `market.${k} must be a number of dollars`;
+  const at = parseTime(m.measuredAt, { dayAllowed: false });
+  if (at === null) return "market.measuredAt must be YYYY-MM-DDTHH:MM:SSZ";
+  if (at > nowMs + 3_600_000) return "market.measuredAt is in the future";
+  if (!["coingecko", "dexscreener", "research"].includes(m.source)) return "market.source must be coingecko, dexscreener or research";
+  if (c.coingeckoId !== null && (typeof c.coingeckoId !== "string" || !/^[a-z0-9-]{2,80}$/.test(c.coingeckoId))) return "coingeckoId must be a CoinGecko id or null";
+  if (c.catName !== null && proseProblem(c.catName, { maxChars: 120 })) return "catName must be short prose or null";
+  for (const [k, max, empty] of [["who", 900, true], ["lore", 1200, false]]) { const p = proseProblem(c[k], { maxChars: max, empty }); if (p) return `${k}: ${p}`; }
+  const ls = c.loreSource;
+  if (!isObject(ls) || extraKeys(ls, ["kind", "label", "url"]).length || !["profile", "coin", "listing"].includes(ls.kind)) return "loreSource must be { kind: profile | coin | listing, label, url }";
+  if (proseProblem(ls.label, { maxChars: 80 })) return "loreSource.label must be short prose";
+  if (ls.url !== null && httpsProblem(ls.url)) return "loreSource.url must be https or null";
+  if (c.viral !== null) {
+    if (!isObject(c.viral) || extraKeys(c.viral, ["summary", "url"]).length) return "viral must be { summary, url } or null";
+    const v = proseProblem(c.viral.summary, { maxChars: 900 });
+    if (v) return `viral.summary: ${v}`;
+    if (c.viral.url !== null && httpsProblem(c.viral.url)) return "viral.url must be https or null";
+  }
+  if (!isObject(c.links) || extraKeys(c.links, ["x", "website"]).length) return "links must be { x, website }";
+  if (c.links.x !== null && (httpsProblem(c.links.x) || !X_HOSTS.includes(new URL(c.links.x).hostname))) return "links.x must be an x.com or twitter.com page";
+  if (c.links.website !== null && (httpsProblem(c.links.website) || tradeLinkProblem(c.links.website))) return "links.website must be an https site that is not a trading page";
+  const buy = famousBuyProblem(c);
+  if (buy) return buy;
+  if (!Array.isArray(c.warnings) || c.warnings.length > 8) return "warnings must be a list of up to 8";
+  for (const w of c.warnings) { const p = proseProblem(w, { maxChars: 220 }); if (p) return `warning: ${p}`; }
+  const coat = c.coat;
+  if (!isObject(coat) || extraKeys(coat, ["base", "second", "pattern", "eyes"]).length) return "coat must be { base, second, pattern, eyes }";
+  if (!famousColourOk(coat.base, false) || !famousColourOk(coat.second, true) || !famousColourOk(coat.eyes, true)) return "coat colours must be #rrggbb or coat words";
+  if (!COAT_PATTERNS.includes(coat.pattern)) return "coat pattern is not a known pattern";
+  if (typeof c.ownerPick !== "boolean") return "ownerPick must be true or false";
+  const d = proseProblem(c.disclaimer, { maxChars: 400 });
+  if (d) return `disclaimer: ${d}`;
+  if (!/not affiliated/i.test(c.disclaimer) || !/not financial advice/i.test(c.disclaimer)) return "disclaimer must say not affiliated and not financial advice";
+  return null;
+}
+
+/**
+ * data/famous.json: { note, refreshedAt, coins: [coin] } (see famousProblem for a coin's fields).
+ * Returns { coins, refused: [{ index, clause, detail }] }: clean copies of what passed. A second
+ * coin with the same id, or the same chain and contract, is refused.
+ */
+export function validateFamous(data, { nowMs = Date.now() } = {}) {
+  if (!isObject(data) || !Array.isArray(data.coins) || extraKeys(data, ["note", "refreshedAt", "coins"]).length) {
+    return { coins: [], refused: [{ index: null, clause: "shape", detail: "famous must be { note, refreshedAt, coins: [...] }" }] };
+  }
+  const refused = [], coins = [], ids = new Set(), keys = new Set();
+  data.coins.forEach((c, index) => {
+    const p = famousProblem(c, { nowMs });
+    if (p) return refused.push({ index, clause: "coin", detail: `${isObject(c) ? c.id : index}: ${p}` });
+    const key = `${c.chain}:${c.contract.toLowerCase()}`;
+    if (ids.has(c.id) || keys.has(key)) return refused.push({ index, clause: "duplicate", detail: `${c.id}: listed twice` });
+    ids.add(c.id); keys.add(key);
+    coins.push(JSON.parse(JSON.stringify(c)));
+  });
+  return { coins, refused };
+}
+
+/** Warnings a famous coin's card shows from its market figures as last read (they change with
+    every refresh, so they are worked out here, not stored). */
+export function marketWarnings(market, { nowMs = Date.now() } = {}) {
+  if (!isObject(market)) return [];
+  const usd = (v) => `$${Math.round(v).toLocaleString("en-US")}`;
+  const out = [];
+  if (market.volume24hUsd < 1000) out.push(`Almost no trading: ${usd(market.volume24hUsd)} traded in 24 hours.`);
+  else if (market.volume24hUsd < 10000) out.push(`Thin trading: ${usd(market.volume24hUsd)} traded in 24 hours.`);
+  if (market.liquidityUsd < 10000) out.push(`Very little liquidity: ${usd(market.liquidityUsd)} in its pool, so even a small trade moves the price a lot.`);
+  if (market.marketCapUsd < TIER_RULE.minMcap) out.push(`Its market cap (${usd(market.marketCapUsd)}) is below the sanctuary's ${usd(TIER_RULE.minMcap)} floor.`);
+  const at = parseTime(market.measuredAt, { dayAllowed: false });
+  if (at !== null && nowMs - at > 3 * 86_400_000) out.push(`These figures are ${Math.floor((nowMs - at) / 86_400_000)} days old.`);
+  return out;
 }

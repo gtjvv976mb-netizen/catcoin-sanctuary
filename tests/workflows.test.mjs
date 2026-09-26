@@ -1,4 +1,4 @@
-/* The two workflows, read as text: pinned actions, least permissions, one optional secret. */
+/* The three workflows, read as text: pinned actions, least permissions, one optional secret. */
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -8,6 +8,7 @@ import { ROOT } from "./helpers.mjs";
 const read = (name) => fs.readFileSync(path.join(ROOT, ".github/workflows", name), "utf8");
 const PAGES = read("pages.yml");
 const COLLECTION = read("collection.yml");
+const FAMOUS = read("famous.yml");
 
 /* Each action at the commit its release tag points to (git ls-remote github.com/actions/<name>, 2026-09-25). */
 const PINNED = {
@@ -19,7 +20,7 @@ const PINNED = {
 };
 
 test("every action is pinned to the full commit SHA of its release", () => {
-  for (const [name, text] of [["pages.yml", PAGES], ["collection.yml", COLLECTION]]) {
+  for (const [name, text] of [["pages.yml", PAGES], ["collection.yml", COLLECTION], ["famous.yml", FAMOUS]]) {
     const uses = [...text.matchAll(/uses:\s*(\S+)(?:\s*#\s*(\S+))?/g)];
     assert.ok(uses.length > 0, name);
     for (const [, u, comment] of uses) {
@@ -45,11 +46,12 @@ test("pages: deploys on a push to main; nothing by default; the deploy job may w
   assert.match(deploy, /needs: \[check, test\]/);
   assert.match(deploy, /ref: \$\{\{ needs\.test\.outputs\.sha \}\}/);
   assert.match(PAGES, /push:\n\s+branches: \[main\]/);
-  assert.match(PAGES, /workflow_run:\n\s+workflows: \[Collection\]/);
+  assert.match(PAGES, /workflow_run:\n\s+workflows: \[Collection, Famous coins\]/);
   assert.ok(!/secrets\./.test(PAGES));
   assert.match(PAGES, /npm ci[\s\S]*npm test[\s\S]*configure-pages[\s\S]*upload-pages-artifact[\s\S]*deploy-pages/);
   for (const excluded of ["/scripts", "/tests", "/.github", "*.prototype.html", "/data/collection-state.json", "/data/held.json", "/data/launches.json"]) assert.ok(PAGES.includes(`--exclude '${excluded}'`), excluded);
   assert.match(PAGES, /test -f _site\/data\/planned\.json/);
+  assert.match(PAGES, /test -f _site\/data\/famous\.json/);
 });
 
 test("collection: hourly and by hand, contents: write only, no stored credentials, one optional secret, commits data only when it changed", () => {
@@ -68,4 +70,19 @@ test("collection: hourly and by hand, contents: write only, no stored credential
   assert.match(COLLECTION, /git add -- 'data\/\*\.json'/);
   assert.match(COLLECTION, /git diff --cached --quiet/);
   assert.match(COLLECTION, /concurrency:\n\s+group: collection/);
+});
+
+test("famous coins: daily and by hand, contents: write only, no secrets, builder tests first, commits data/famous.json only when it changed", () => {
+  assert.match(FAMOUS, /^name: Famous coins$/m);
+  assert.match(FAMOUS, /cron: "\d{1,2} \d{1,2} \* \* \*"/);
+  assert.match(FAMOUS, /workflow_dispatch:/);
+  assert.match(FAMOUS, /^permissions: \{\}$/m);
+  const perms = [...FAMOUS.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim());
+  assert.deepEqual(perms, ["contents: write"]);
+  assert.match(FAMOUS, /persist-credentials: false/);
+  assert.ok(!/secrets\./.test(FAMOUS), "no secrets");
+  assert.match(FAMOUS, /npm ci[\s\S]*npm run test:builder[\s\S]*node scripts\/refresh-famous\.mjs/);
+  assert.match(FAMOUS, /git add -- data\/famous\.json/);
+  assert.match(FAMOUS, /git diff --cached --quiet/);
+  assert.match(FAMOUS, /concurrency:\n\s+group: famous/);
 });

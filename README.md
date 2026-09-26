@@ -150,6 +150,32 @@ research could not confirm is `linkType: "reported"`, never `official_*`.
 The 3D world places however many cats there are. Nothing in the page needs changing when cats
 are added.
 
+## The famous cat coins and the meadows
+
+`data/famous.json` lists Solana cat coins that already exist, made by others (one coin per line;
+Solana only, by the owner's decision, and `validateFamous` refuses any other chain): each
+with its chain, contract, pair, logo (`assets/coins/<id>.webp`), market figures and when they
+were read, who the cat is and its lore (the research's profile, else the coin's own description,
+else a plain line from its listing; such a card says "Lore not researched yet"), its X and
+website, one buy link (its GMGN page), honest warnings, and a "not affiliated" line.
+`assets/collection.js` (`validateFamous`) checks every row, in the page and in the tests; a coin
+that fails is left out, and a missing file leaves the stock cats as they are. Trading and
+liquidity warnings are worked out on the card from the latest figures (`marketWarnings`).
+
+Where a coin lives (`tier`, set when it was placed, never moved by a refresh): the main garden for
+coins of $1M and up and for company or project cats; meadow ring 1 ($100k to $1M) and ring 2
+(below $100k) round the fence. The meadow cats are streamed (`assets/world/meadow.js`): only those
+near the view are simulated at full rate, far ones rest, and the farthest are not drawn until the
+camera comes near.
+
+The **Famous coins** workflow (`.github/workflows/famous.yml`) runs `node scripts/refresh-famous.mjs`
+daily: market cap, liquidity and 24 h volume from DexScreener's and CoinGecko's free endpoints,
+committed only when the file changed and still validates.
+
+A per-coin model goes in `assets/models/cats/` like a stock cat's; its key in `index.json` may be
+the coin's id, contract (or `<chain>:<contract>`) or a symbol only one coin has
+(`assets/ui/models.js`). Until then a coin uses the shared model, tinted from its look or logo.
+
 ## Running it locally
 
 The page uses ES modules, so serve the folder over HTTP rather than opening the file:

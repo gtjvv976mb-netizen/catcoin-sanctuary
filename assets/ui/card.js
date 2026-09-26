@@ -4,7 +4,26 @@
    assets/residents.js through assets/ui/data.js; nothing is made up here. When there is
    nothing to show, the card says so ("Not measured", "Not launched yet"). */
 
-import { isLaunched, shortMint, hostOf, dateText, swatchOf } from "./data.js";
+import { isLaunched, isFamous, shortMint, hostOf, dateText, swatchOf } from "./data.js";
+import { marketWarnings } from "../collection.js";
+
+/** Chains as a card names them. */
+export const CHAIN_NAMES = {
+  solana: "Solana", ethereum: "Ethereum", base: "Base", bsc: "BNB Chain", robinhood: "Robinhood Chain", ton: "TON", hyperevm: "HyperEVM",
+  hyperliquid: "Hyperliquid", arc: "Arc", ink: "Ink", sui: "Sui", avalanche: "Avalanche", arbitrum: "Arbitrum", xrpl: "XRP Ledger",
+  cronos: "Cronos", stacks: "Stacks", near: "NEAR", tron: "Tron", beam: "Beam", polygon: "Polygon", worldchain: "World Chain",
+  unichain: "Unichain", abstract: "Abstract", zksync: "zkSync",
+};
+export const chainName = (c) => CHAIN_NAMES[c] || c;
+export const TIER_NAMES = { main: "Main garden", ring1: "Meadow ring 1", ring2: "Meadow ring 2" };
+/** $57.3M, $812K, $4,210. */
+export function usdShort(v) {
+  if (typeof v !== "number" || !Number.isFinite(v)) return "Not measured";
+  if (v >= 1e9) return `$${(v / 1e9).toFixed(2)}B`;
+  if (v >= 1e6) return `$${(v / 1e6).toFixed(v >= 1e8 ? 0 : 1)}M`;
+  if (v >= 1e4) return `$${(v / 1e3).toFixed(0)}K`;
+  return `$${Math.round(v).toLocaleString("en-US")}`;
+}
 
 const el = (tag, cls, text) => {
   const e = document.createElement(tag);
@@ -125,11 +144,13 @@ function viralityWhen(v) {
     only a plan, and a token found under it elsewhere is not this cat. */
 export function tickerLabel(r) {
   if (!r.ticker) return "";
+  if (isFamous(r)) return `$${r.ticker}`;
   return isLaunched(r) ? `$${r.ticker}` : r.ticker;
 }
 
 export function badgeFor(r) {
   if (r.example) return el("span", "badge badge-example", "Example, not a token");
+  if (isFamous(r)) return el("span", "badge badge-famous", "Famous coin");
   return isLaunched(r) ? el("span", "badge badge-launched", "Launched") : el("span", "badge badge-planned", "Not launched yet");
 }
 
@@ -180,6 +201,121 @@ export function createCard({ root, onClose, onInset }) {
     grip?.setAttribute("aria-label", on ? "Show less of this card" : "Show more of this card");
   }
 
+  /** The copy button for an address. */
+  function copyButton(value, what) {
+    const copy = el("button", "card-copy", "Copy");
+    copy.type = "button";
+    copy.setAttribute("aria-label", `Copy the ${what} ${value}`);
+    copy.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(value); copy.textContent = "Copied"; } catch { copy.textContent = "Select it"; }
+      setTimeout(() => { copy.textContent = "Copy"; }, 1600);
+    });
+    return copy;
+  }
+
+  /* A famous cat coin's card: its logo, who the cat is and its lore, its warnings, the coin (market
+     figures with when they were read, chain, contract, pair), its X and website, its one buy link,
+     and the "not affiliated" line. */
+  function famousBody(r, head, body) {
+    let pic;
+    if (r.logo) {
+      pic = el("img", "card-portrait card-logo");
+      pic.src = r.logo;
+      pic.alt = `${r.name} logo`;
+      pic.width = 112; pic.height = 112;
+      pic.decoding = "async";
+      pic.addEventListener("error", () => pic.replaceWith(faceFor(r, "face card-face")), { once: true });
+    } else pic = faceFor(r, "face card-face");
+    const titles = el("div", "card-titles");
+    titles.append(el("p", "card-kicker", `Famous cat coin · ${chainName(r.chain)} · ${TIER_NAMES[r.tier] || ""}`));
+    const h2 = el("h2", "card-name", r.name);
+    h2.id = "card-name";
+    titles.append(h2);
+    const tick = el("p", "card-ticker");
+    tick.append(el("span", "mono", `$${r.ticker}`), badgeFor(r));
+    if (r.ownerPick) tick.append(el("span", "badge badge-pick", "Owner's pick"));
+    titles.append(tick);
+    doingEl = el("p", "card-doing");
+    doingEl.setAttribute("aria-hidden", "true");
+    titles.append(doingEl);
+    lastDoing = "";
+    head.append(pic, titles);
+
+    const who = section("Who the cat is", "card-who");
+    if (r.catName) who.append(el("p", "card-real-name card-cat-name", r.catName));
+    if (r.who) who.append(el("p", "card-story", r.who));
+    const researched = r.loreSource?.kind === "profile";
+    if (!researched) who.append(el("p", "card-note card-unresearched", "Lore not researched yet. Below is only what the coin's own listing says about itself."));
+    if (r.description) {
+      if (r.who || !researched) who.append(el("h4", "card-sub", researched ? "Lore" : "In its own words"));
+      who.append(el("p", r.who ? "card-lore" : "card-story", r.description));
+    }
+    if (r.loreSource?.label) {
+      const src = el("p", "card-note");
+      src.append("From: ");
+      if (r.loreSource.url) src.append(link(r.loreSource.url, r.loreSource.label)); else src.append(r.loreSource.label);
+      who.append(src);
+    }
+    if (r.company) who.append(el("p", "card-company", `Company or project: ${r.company}`));
+    else who.append(el("p", "card-note card-stonk", "No company stands behind this cat, so in the sanctuary's lore it is paired with STONK on StonkFun. The coin itself already exists: its real token and pair are shown below."));
+    body.append(who);
+
+    const warns = [...r.warnings, ...marketWarnings(r.market)];
+    const wn = section("Warnings", "card-warnings");
+    if (warns.length) {
+      const ul = el("ul", "card-list card-warn-list");
+      for (const w of warns) ul.append(el("li", "card-warn", w));
+      wn.append(ul);
+    } else wn.append(el("p", "card-none", "No warnings recorded. Memecoins are still risky."));
+    body.append(wn);
+
+    if (r.viral) {
+      const v = section("Virality", "card-vir");
+      v.append(el("p", null, r.viral.summary));
+      if (r.viral.url) v.append(link(r.viral.url, "The original post ↗", "card-link"));
+      body.append(v);
+    }
+
+    const coin = section("The coin", "card-coin");
+    const dl = el("dl", "card-dl");
+    const row = (k, v) => { const dt = el("dt", null, k); const dd = el("dd"); if (v instanceof Node) dd.append(v); else dd.textContent = v; dl.append(dt, dd); };
+    row("Market cap", usdShort(r.market.marketCapUsd));
+    row("Liquidity", usdShort(r.market.liquidityUsd));
+    row("24 h volume", usdShort(r.market.volume24hUsd));
+    if (r.market.measuredAt) row("Measured", `${dateText(r.market.measuredAt)} (${r.market.source === "coingecko" ? "CoinGecko" : r.market.source === "dexscreener" ? "DexScreener" : "the sanctuary's research"})`);
+    row("Chain", chainName(r.chain));
+    const ca = el("span", "card-ca");
+    ca.append(el("span", "mono", shortMint(r.contract)), " ", copyButton(r.contract, "contract address"));
+    ca.title = r.contract;
+    row("Contract", ca);
+    if (r.pairQuote || r.pairUrl) {
+      const pw = el("span");
+      const label = `${r.ticker}/${r.pairQuote || "?"}${r.pairDex ? ` on ${r.pairDex}` : ""}`;
+      if (r.pairUrl) pw.append(link(r.pairUrl, label)); else pw.append(label);
+      row("Pair", pw);
+    }
+    coin.append(dl);
+    body.append(coin);
+
+    const lk = section("Links", "card-links");
+    if (r.x || r.website) {
+      const ul = el("ul", "card-list card-links");
+      if (r.x) { const li = el("li"); li.append(link(r.x, `On X: ${hostOf(r.x) === "x.com" ? `@${new URL(r.x).pathname.split("/")[1]}` : r.x}`)); ul.append(li); }
+      if (r.website) { const li = el("li"); li.append(link(r.website, `Website: ${hostOf(r.website)}`)); ul.append(li); }
+      lk.append(ul);
+    } else lk.append(el("p", "card-none", "No X account or website found."));
+    body.append(lk);
+
+    const buy = section("Buy", "card-buy-h");
+    if (r.buyLink) {
+      const wrap = el("div", "card-buy");
+      wrap.append(link(r.buyLink.url, r.buyLink.label === "GMGN" ? "Buy on GMGN" : "View on DexScreener", "btn btn-buy"));
+      buy.append(wrap);
+      buy.append(el("p", "card-note", "Check the contract address above before you trade. The sanctuary did not make this coin and gets nothing from this link."));
+    } else buy.append(el("p", "card-none", "No buy link."));
+    body.append(buy);
+  }
+
   function render(r) {
     root.replaceChildren();
     grip = el("button", "card-grip");
@@ -201,6 +337,15 @@ export function createCard({ root, onClose, onInset }) {
 
     /* Head: portrait, name, ticker, status, what it is doing right now. */
     const head = el("header", "card-head");
+    if (isFamous(r)) {
+      const body = el("div", "card-body");
+      body.addEventListener("scroll", () => { if (body.scrollTop > 24 && isSheet() && !root.classList.contains("card-tall")) setTall(true); }, { passive: true });
+      famousBody(r, head, body);
+      const foot = el("p", "card-disclaimer", r.disclaimer || `Not affiliated with ${r.name} or its team. Not financial advice.`);
+      root.append(grip, close, head, body, foot);
+      setTall(false);
+      return;
+    }
     let pic;
     if (r.portrait) {
       pic = el("img", "card-portrait");

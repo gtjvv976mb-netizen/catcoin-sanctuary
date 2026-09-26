@@ -163,8 +163,62 @@ function normalizeOld(e) {
   return r && { ...r, example: !!e.example };
 }
 
+/* A famous cat coin: a coin that already exists, made by others. Its buy link is kept only when it
+   is its GMGN page (Solana, Ethereum, Base, BNB Chain) or a DexScreener page on its chain, for
+   its own contract; its logo only when it is a picture on this site. */
+const GMGN_CHAIN = { solana: "sol", ethereum: "eth", base: "base", bsc: "bsc" };
+const TIERS = new Set(["main", "ring1", "ring2"]);
+const num = (v) => (typeof v === "number" && Number.isFinite(v) && v >= 0 ? v : null);
+function famousBuy(b, chain, contract) {
+  const url = httpsUrl(b?.url);
+  if (!url) return null;
+  const u = new URL(url);
+  if (GMGN_CHAIN[chain]) return b.label === "GMGN" && u.host === "gmgn.ai" && u.pathname === `/${GMGN_CHAIN[chain]}/token/${contract}` && !u.search ? { label: "GMGN", url } : null;
+  return b.label === "DexScreener" && u.host === "dexscreener.com" && u.pathname.startsWith(`/${chain}/`) && !u.search ? { label: "DexScreener", url } : null;
+}
+function normalizeFamous(e) {
+  const id = str(e.id, 80);
+  if (!/^[a-z0-9][a-z0-9-]{1,79}$/.test(id)) return null;
+  const chain = str(e.chain, 24).toLowerCase(), contract = str(e.contract, 140);
+  if (!chain || !contract || /\s/.test(contract)) return null;
+  const pairIn = e.pair && typeof e.pair === "object" ? e.pair : {};
+  const pairUrl = httpsUrl(pairIn.url);
+  const m = e.market && typeof e.market === "object" ? e.market : {};
+  const coatIn = e.coat && typeof e.coat === "object" ? e.coat : {};
+  const linksIn = e.links && typeof e.links === "object" ? e.links : {};
+  const x = httpsUrl(linksIn.x);
+  const viral = e.viral && typeof e.viral === "object" && para(e.viral.summary, 900) ? { summary: para(e.viral.summary, 900), url: httpsUrl(e.viral.url) } : null;
+  const ls = e.loreSource && typeof e.loreSource === "object" ? e.loreSource : {};
+  return {
+    id, kind: "famous",
+    name: str(e.name, 60) || "A cat", ticker: str(e.ticker ?? e.symbol, 24).replace(/^\$+/, ""),
+    chain, contract,
+    pairQuote: str(pairIn.quote, 24), pairDex: str(pairIn.dex, 40), pairUrl: pairUrl && new URL(pairUrl).host === "dexscreener.com" ? pairUrl : null,
+    company: str(e.company, 120), stock: "", tier: TIERS.has(e.tier) ? e.tier : "ring2",
+    logo: localPicture(e.logo), portrait: localPicture(e.logo),
+    market: { marketCapUsd: num(m.marketCapUsd), liquidityUsd: num(m.liquidityUsd), volume24hUsd: num(m.volume24hUsd), measuredAt: str(m.measuredAt, 40), source: str(m.source, 20) },
+    catName: str(e.catName, 120), who: para(e.who, 900), description: para(e.lore, 1200),
+    loreSource: { kind: str(ls.kind, 20), label: str(ls.label, 80), url: httpsUrl(ls.url) },
+    viral,
+    x: x && ["x.com", "twitter.com"].includes(new URL(x).hostname) ? x : null,
+    website: httpsUrl(linksIn.website),
+    buyLink: famousBuy(e.buy, chain, contract),
+    warnings: (Array.isArray(e.warnings) ? e.warnings : []).slice(0, 8).map((w) => para(w, 220)).filter(Boolean),
+    coat: { base: str(coatIn.base, 40), second: str(coatIn.second, 40), pattern: str(coatIn.pattern, 40), eyes: str(coatIn.eyes, 40) },
+    ownerPick: e.ownerPick === true,
+    disclaimer: para(e.disclaimer, 400),
+    // The fields every card has, empty for a famous coin.
+    plannedName: "", pair: { symbol: "", mint: "" }, look: "", whyLook: "", tribute: "", proof: null, realCatName: "", realCatLink: false,
+    linkType: "", strength: "", basis: "", checked: "", virality: [], links: [], token: { status: "famous" }, buy: [], explorer: null, stonkfun: null,
+    example: false,
+  };
+}
+
+export const isFamous = (r) => r?.kind === "famous";
+
 export function normalize(e) {
   if (!e || typeof e !== "object") return null;
+  if (e.kind === "famous") return normalizeFamous(e);
   const old = !("token" in e) && ("example" in e || "look" in e || "arrived" in e);
   return old ? normalizeOld(e) : normalizeNew(e);
 }

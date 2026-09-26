@@ -1,9 +1,10 @@
-/* "Find a cat": a searchable list of every cat in the garden. It is the keyboard way to the
-   cats (and, without WebGL, the whole page): type to narrow the list by name, ticker or stock,
-   choose one, and its card opens (and the camera goes to it). */
+/* "Find a cat": a searchable list of every cat in the garden and its meadows, the stock cats and
+   the famous cat coins. It is the keyboard way to the cats (and, without WebGL, the whole page):
+   type to narrow the list by name, ticker, stock, chain or contract, filter by kind (stock cats,
+   famous coins, launched) and by chain, choose one, and its card opens (and the camera goes to it). */
 
-import { isLaunched } from "./data.js";
-import { faceFor, badgeFor, tickerLabel } from "./card.js";
+import { isLaunched, isFamous } from "./data.js";
+import { faceFor, badgeFor, tickerLabel, chainName, usdShort, TIER_NAMES } from "./card.js";
 
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
@@ -16,8 +17,12 @@ const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls)
  */
 export function createFinder({ root, residents, onChoose, inline = false }) {
   const launchedCount = residents.filter(isLaunched).length;
-  const sorted = residents.slice().sort((a, b) => (isLaunched(b) - isLaunched(a)) || a.name.localeCompare(b.name));
-  let filter = "all";
+  const famousCount = residents.filter(isFamous).length;
+  const stockCount = residents.length - famousCount;
+  // Launched cats first, then the stock cats by name, then the famous coins, biggest first.
+  const sorted = residents.slice().sort((a, b) => (isLaunched(b) - isLaunched(a)) || (isFamous(a) - isFamous(b))
+    || (isFamous(a) ? (b.market?.marketCapUsd || 0) - (a.market?.marketCapUsd || 0) : 0) || a.name.localeCompare(b.name));
+  let filter = "all", chain = "";
 
   root.replaceChildren();
   const head = el("div", "finder-head");
@@ -32,15 +37,17 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     close.addEventListener("click", () => root.close?.());
     head.append(close);
   }
-  const intro = el("p", "finder-intro", `${residents.length} ${residents.length === 1 ? "cat" : "cats"} so far, each paired with one stock. ${launchedCount ? `${launchedCount} launched as ${launchedCount === 1 ? "a token" : "tokens"}; the rest are` : "None has launched yet: every cat is"} planned and not a token until it launches.`);
+  const stockLine = `${stockCount} stock ${stockCount === 1 ? "cat" : "cats"} so far, each paired with one stock. ${launchedCount ? `${launchedCount} launched as ${launchedCount === 1 ? "a token" : "tokens"}; the rest are` : "None has launched yet: every stock cat is"} planned and not a token until it launches.`;
+  const famousLine = famousCount ? ` And ${famousCount} famous cat ${famousCount === 1 ? "coin" : "coins"}: coins that already exist, made by others, not affiliated with the sanctuary.` : "";
+  const intro = el("p", "finder-intro", stockLine + famousLine);
 
   const search = el("div", "finder-search");
-  const label = el("label", "sr-only", "Search by name, ticker or stock");
+  const label = el("label", "sr-only", "Search by name, ticker, stock, chain or contract");
   label.htmlFor = "finder-q";
   const input = el("input");
   input.id = "finder-q";
   input.type = "search";
-  input.placeholder = "Search by name, ticker or stock";
+  input.placeholder = famousCount ? "Search by name, ticker, chain or contract" : "Search by name, ticker or stock";
   input.autocomplete = "off";
   input.spellcheck = false;
   search.append(label, input);
@@ -56,7 +63,26 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     b.addEventListener("click", () => { filter = key; for (const c of chips.children) c.setAttribute("aria-pressed", String(c.dataset.key === key)); draw(); });
     return b;
   };
-  chips.append(chipFor("all", "All"), chipFor("launched", "Launched"), chipFor("planned", "Not launched yet"));
+  chips.append(chipFor("all", "All"));
+  if (famousCount) chips.append(chipFor("stock", "Stock cats"), chipFor("famous", "Famous coins"));
+  if (launchedCount) chips.append(chipFor("launched", "Launched"));
+  chips.append(chipFor("planned", "Not launched yet"));
+  // Chains: the famous coins' chains, most coins first (the stock cats are all on Solana).
+  let chainSel = null;
+  if (famousCount) {
+    const counts = new Map();
+    for (const r of residents) { const c = isFamous(r) ? r.chain : "solana"; counts.set(c, (counts.get(c) || 0) + 1); }
+    const wrap = el("label", "finder-chain");
+    wrap.append(el("span", "finder-chain-label", "Chain"));
+    chainSel = el("select", "finder-chain-select");
+    chainSel.setAttribute("aria-label", "Show cats on one chain");
+    const opt = (v, t) => { const o = el("option", null, t); o.value = v; return o; };
+    chainSel.append(opt("", `All chains`));
+    for (const [c, n] of [...counts].sort((a, b) => b[1] - a[1])) chainSel.append(opt(c, `${chainName(c)} (${n})`));
+    chainSel.addEventListener("change", () => { chain = chainSel.value; draw(); });
+    wrap.append(chainSel);
+    chips.append(wrap);
+  }
 
   const count = el("p", "finder-count");
   count.setAttribute("aria-live", "polite");
@@ -69,7 +95,11 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     b.type = "button";
     b.dataset.id = r.id;
     let thumb;
-    if (r.portrait) {
+    if (isFamous(r) && r.logo) {
+      thumb = el("img", "find-thumb find-logo");
+      thumb.src = r.logo; thumb.alt = ""; thumb.width = 44; thumb.height = 44; thumb.loading = "lazy"; thumb.decoding = "async";
+      thumb.addEventListener("error", () => thumb.replaceWith(faceFor(r, "face find-face")), { once: true });
+    } else if (r.portrait) {
       thumb = el("img", "find-thumb");
       thumb.src = r.portrait; thumb.alt = ""; thumb.width = 44; thumb.height = 44; thumb.loading = "lazy"; thumb.decoding = "async";
       thumb.addEventListener("error", () => thumb.replaceWith(faceFor(r, "face find-face")), { once: true });
@@ -77,21 +107,25 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     const text = el("span", "find-text");
     text.append(el("span", "find-name", r.name));
     const who = r.company || r.stock;
-    const meta = [tickerLabel(r), r.pair.symbol, who && who !== r.pair.symbol ? who : ""].filter(Boolean).join(" · ");
+    const meta = isFamous(r)
+      ? [tickerLabel(r), chainName(r.chain), usdShort(r.market?.marketCapUsd), TIER_NAMES[r.tier]].filter(Boolean).join(" · ")
+      : [tickerLabel(r), r.pair.symbol, who && who !== r.pair.symbol ? who : ""].filter(Boolean).join(" · ");
     if (meta) text.append(el("span", "find-meta", meta));
     b.append(thumb, text, badgeFor(r));
     b.addEventListener("click", () => { if (!inline) root.close?.(); onChoose(r.id); });
     li.append(b);
     list.append(li);
-    return { r, li, hay: [r.name, r.ticker, r.stock, r.company, r.realCatName, r.pair.symbol].join(" ").toLowerCase() };
+    return { r, li, hay: [r.name, r.ticker, r.stock, r.company, r.realCatName, r.pair.symbol, r.catName, isFamous(r) ? `${r.chain} ${chainName(r.chain)} ${r.contract}` : "solana"].join(" ").toLowerCase() };
   });
 
   function draw() {
     const q = input.value.trim().toLowerCase().replace(/^\$/, "");
     let n = 0;
     for (const it of items) {
-      const okF = filter === "all" || (filter === "launched" ? isLaunched(it.r) : !isLaunched(it.r));
-      const ok = okF && (!q || it.hay.includes(q));
+      const r = it.r;
+      const okF = filter === "all" || (filter === "launched" ? isLaunched(r) : filter === "famous" ? isFamous(r) : filter === "stock" ? !isFamous(r) : !isLaunched(r) && !isFamous(r));
+      const okC = !chain || (isFamous(r) ? r.chain === chain : chain === "solana");
+      const ok = okF && okC && (!q || it.hay.includes(q));
       it.li.hidden = !ok;
       if (ok) n++;
     }

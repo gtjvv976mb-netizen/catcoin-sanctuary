@@ -1,8 +1,9 @@
 /* The garden round the cottage, built in code in the same flat-shaded low-poly style as the
-   models, bright and warm by day: a wide lawn inside a cream picket fence, meadows and flower
-   fields rolling away to hazy hills, trees and bushes, winding stepping-stone paths, a pond
-   with lily pads, a vegetable and herb patch, a bird bath, and the cats' own things (beds,
-   bowls, water dishes, three cat trees, a picnic blanket, a big cushion, balls of yarn).
+   models, bright and warm by day: a wide lawn inside a cream picket fence, then two meadow rings
+   (with ring paths, benches, trees, flower fields and a second pond) rolling away to hazy hills,
+   winding stepping-stone paths, a pond with lily pads, a vegetable and herb patch, a bird bath,
+   and the cats' own things (beds, bowls, water dishes, five cat trees, picnic blankets, big
+   cushions, balls of yarn).
 
    Draw calls stay low on purpose: the ground is one mesh, every static prop is merged into one
    mesh with vertex colours, grass and flowers are instanced, the yarn is one instanced mesh. */
@@ -58,16 +59,9 @@ const COLORS = {
   trunk: 0x8f6442, pine: [0x4f9a58, 0x5aa662, 0x468d50], cushion: 0xfff3e2, iron: 0x5b4a4f,
 };
 
-/** The ground's height at (x, z): flat in the garden, then meadows rolling up to hills and a far ridge. */
-export function groundHeight(x, z) {
-  const r = Math.hypot(x, z);
-  if (r < 21) return 0;
-  const a = Math.atan2(z, x);
-  const near = smooth(21, 60, r) * (0.9 + 0.9 * Math.sin(x * 0.11 + 1.3) * Math.cos(z * 0.09 - 0.4) + 0.5 * Math.sin(x * 0.05 - z * 0.07));
-  const hills = smooth(55, 170, r) * (3.5 + 4.5 * Math.sin(a * 3 + 0.7) + 3 * Math.sin(a * 7 - 1.1) + 2 * Math.sin(r * 0.04 + a * 2));
-  const ridge = smooth(230, 360, r) * (13 + 8 * Math.sin(a * 5 + 0.3) + 5 * Math.sin(a * 11 + 2.1) + 3 * Math.sin(a * 17));
-  return Math.max(0, near) + Math.max(0, hills) + Math.max(0, ridge);
-}
+/** The ground's height at (x, z) (layout.js keeps it, so the meadow cats can stand on it too). */
+const groundHeight = L.groundHeight;
+export { groundHeight };
 
 export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(-0.6, 0.7, -0.3) } = {}) {
   const rnd = makeRandom("garden-layout-v2");
@@ -75,13 +69,13 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
   const group = new THREE.Group();
   group.name = "garden";
   scene.add(group);
-  const stones = L.PATHS.flatMap((p, i) => L.pathSamples(p, i === 0 ? 0.8 : 0.85));
+  const stones = L.pathStones();
 
   /* ── The ground: a round world of lawn, meadow, hills and a far ridge, one mesh ── */
   {
     const rings = [];
-    for (let r = 0; r <= 460;) { rings.push(r); r += r < 24 ? 1.6 : r < 60 ? 3.2 : r < 160 ? 8 : 18; }
-    const seg = mobile ? 96 : 128;
+    for (let r = 0; r <= 460;) { rings.push(r); r += r < 32 ? 1.6 : r < 90 ? 2.6 : r < 180 ? 8 : 18; }
+    const seg = mobile ? 112 : 160;
     const pos = [], col = [];
     const vert = (r, k) => {
       // The jitter repeats with k, so the last column (k = seg) meets the first with no crack.
@@ -97,17 +91,19 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
         // A trodden, earthy apron at the foot of the stairs and round the feeding corners.
         const worn = Math.max(
           1 - smooth(0.2, 1.4, Math.hypot(cx - L.STEP.ground.x, cz - L.STEP.ground.z)),
-          1 - smooth(0.4, 1.8, Math.hypot(cx + 4.2, cz - 3.0)),
-          1 - smooth(0.4, 1.9, Math.hypot(cx - 10.4, cz + 4.2)),
+          ...L.FEEDING_CORNERS.map(([fx, fz]) => 1 - smooth(0.4, 1.9, Math.hypot(cx - fx, cz - fz))),
           1 - smooth(0.2, 1.1, rectDist(cx, cz, L.HOUSE, 0)),
         );
         if (worn > 0) _c.lerp(_c2.setHex(COLORS.dirt), Math.min(0.8, worn * 0.8));
-      } else if (r < 80) {
+      } else if (r < 100) {
         _c.setHex(COLORS.meadow[0]).lerp(_c2.setHex(COLORS.meadow[2]), n);
-        _c.lerp(_c2.setHex(COLORS.lawn[1]), 1 - smooth(L.GARDEN.fenceR, 26, r));
+        _c.lerp(_c2.setHex(COLORS.lawn[1]), 1 - smooth(L.GARDEN.fenceR, L.GARDEN.fenceR + 8, r));
+        // The two rings read as mown meadow, a touch greener, either side of their paths.
+        const ring = Math.max(1 - smooth(4, 9, Math.abs(r - L.MEADOW.ring1.path)), 1 - smooth(5, 11, Math.abs(r - L.MEADOW.ring2.path)));
+        if (ring > 0) _c.lerp(_c2.setHex(COLORS.lawn[2]), ring * 0.35);
       } else if (r < 220) {
         _c.setHex(COLORS.hill[0]).lerp(_c2.setHex(COLORS.hill[2]), n);
-        _c.lerp(_c2.setHex(COLORS.meadow[1]), 1 - smooth(80, 120, r));
+        _c.lerp(_c2.setHex(COLORS.meadow[1]), 1 - smooth(100, 140, r));
       } else {
         _c.setHex(COLORS.far[0]).lerp(_c2.setHex(COLORS.far[2]), n);
         _c.lerp(_c2.setHex(COLORS.hill[1]), 1 - smooth(220, 280, r));
@@ -140,7 +136,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
 
   /* ── Stepping stones along every path ── */
   for (const s of stones) {
-    if (Math.hypot(s.x, s.z) > L.GARDEN.fenceR + 3.5) continue;
+    if (Math.hypot(s.x - L.POND2.x, s.z - L.POND2.z) < L.POND2.r + 0.3) continue;
     if (rectDist(s.x, s.z, L.HOUSE, 0) < 0.2) continue;
     const r = rnd.range(0.3, 0.4);
     const g = new THREE.CylinderGeometry(r * 0.92, r, 0.07, rnd.int(7, 9));
@@ -365,6 +361,65 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     g.translate(P.x, 0.035, P.z);
     pondGroup.push(g);
   }
+
+  /* ── The second pond, out in the first meadow ring: stones, lily pads, reeds, a little jetty ── */
+  {
+    const P = L.POND2;
+    const n = 38;
+    for (let k = 0; k < n; k++) {
+      const a = (k / n) * Math.PI * 2 + rnd.range(-0.05, 0.05), d = P.r + rnd.range(0.05, 0.25);
+      const s2 = rnd.range(0.22, 0.38);
+      statics.push(paint(place(new THREE.DodecahedronGeometry(s2, 0), P.x + Math.cos(a) * d, s2 * 0.25, P.z + Math.sin(a) * d, rnd.range(0, 3), rnd.range(0, 3), 0, 1, 0.55, 1), rnd.pick(COLORS.stone), rnd, 0.05));
+    }
+    for (let k = 0; k < 14; k++) {
+      const a = rnd.range(0, Math.PI * 2), d = Math.sqrt(rnd.next()) * (P.r - 0.7);
+      const r = rnd.range(0.28, 0.46), x = P.x + Math.cos(a) * d, z = P.z + Math.sin(a) * d;
+      statics.push(paint(place(new THREE.CircleGeometry(r, 9, 0.35, Math.PI * 2 - 0.5), x, 0.05, z, -Math.PI / 2, 0, rnd.range(0, 6.28)), rnd.pick([0x5fae4f, 0x6fbf5a, 0x58a54a]), rnd, 0.04));
+      if (k % 3 === 1) {
+        for (let q = 0; q < 6; q++) statics.push(paint(place(new THREE.ConeGeometry(0.06, 0.16, 3), x + Math.cos(q) * 0.06, 0.12, z + Math.sin(q) * 0.06, Math.cos(q) * 0.6, 0, -Math.sin(q) * 0.6), q % 2 ? 0xfff4dc : 0xf7b8cf));
+        statics.push(paint(place(new THREE.IcosahedronGeometry(0.04, 0), x, 0.14, z), 0xf6d04d));
+      }
+    }
+    for (let k = 0; k < 22; k++) {
+      const a = rnd.range(-0.9, 1.3), d = P.r + rnd.range(0.1, 0.55);
+      const x = P.x + Math.cos(a) * d, z = P.z + Math.sin(a) * d, h = rnd.range(0.7, 1.4);
+      statics.push(sway(paint(place(new THREE.BoxGeometry(0.035, h, 0.035), x, h / 2, z, rnd.range(-0.1, 0.1), 0, rnd.range(-0.1, 0.1)), 0x6a9e48), 0, 0.04));
+      if (k % 2 === 0) statics.push(sway(paint(place(new THREE.CylinderGeometry(0.05, 0.05, 0.22, 5), x, h - 0.05, z), 0x8a5a34), 0, 0.04));
+    }
+    // A little wooden jetty out over the water from the path's end.
+    const jx = P.x - P.r - 0.2, jz = P.z - 0.5;
+    for (let k = 0; k < 6; k++) statics.push(paint(place(new THREE.BoxGeometry(0.34, 0.06, 1.2), jx + 0.1 + k * 0.36, 0.2, jz), COLORS.wood, rnd, 0.06));
+    for (const [dx, dz] of [[0, -0.55], [0, 0.55], [1.8, -0.55], [1.8, 0.55]]) statics.push(paint(place(new THREE.CylinderGeometry(0.06, 0.06, 0.5, 5), jx + dx + 0.1, 0.1, jz + dz), COLORS.woodDark));
+    const g = new THREE.RingGeometry(0.001, P.r, 44, 4);
+    g.rotateX(-Math.PI / 2);
+    const cols = [], pp = g.attributes.position;
+    for (let i = 0; i < pp.count; i++) {
+      const d = Math.hypot(pp.getX(i), pp.getZ(i)) / P.r;
+      _c.setHex(0x3c9bd0).lerp(_c2.setHex(0x8fd8ea), smooth(0.35, 1, d));
+      cols.push(_c.r, _c.g, _c.b);
+    }
+    g.setAttribute("color", new THREE.Float32BufferAttribute(cols, 3));
+    g.deleteAttribute("uv");
+    g.translate(P.x, 0.035, P.z);
+    pondGroup.push(g);
+  }
+
+  /* ── Benches along the ring paths ── */
+  for (const b of L.BENCHES) {
+    const y0 = groundHeight(b.x, b.z), ry = b.yaw;
+    statics.push(paint(place(new THREE.BoxGeometry(1.8, 0.08, 0.5), b.x, y0 + 0.5, b.z, 0, ry, 0), COLORS.wood, rnd, 0.04));
+    statics.push(paint(place(new THREE.BoxGeometry(1.8, 0.4, 0.07), b.x - b.faceX * 0.24, y0 + 0.78, b.z - b.faceZ * 0.24, 0, ry, 0), COLORS.wood, rnd, 0.04));
+    for (const s2 of [-0.75, 0.75]) statics.push(paint(place(new THREE.BoxGeometry(0.08, 0.5, 0.46), b.x + Math.cos(ry) * s2, y0 + 0.25, b.z - Math.sin(ry) * s2, 0, ry, 0), COLORS.woodDark));
+    // A lamp post beside each bench, and a pot of flowers.
+    const lx = b.x + Math.cos(ry) * 1.35, lz = b.z - Math.sin(ry) * 1.35;
+    statics.push(paint(place(new THREE.BoxGeometry(0.08, 1.8, 0.08), lx, y0 + 0.9, lz), COLORS.iron));
+    statics.push(paint(place(new THREE.BoxGeometry(0.2, 0.26, 0.2), lx, y0 + 1.9, lz), 0xfff1cf));
+    statics.push(paint(place(new THREE.ConeGeometry(0.2, 0.16, 4), lx, y0 + 2.1, lz, 0, Math.PI / 4, 0), COLORS.iron));
+    const px = b.x - Math.cos(ry) * 1.3, pz = b.z + Math.sin(ry) * 1.3;
+    statics.push(paint(place(new THREE.CylinderGeometry(0.26, 0.2, 0.36, 8), px, y0 + 0.18, pz), 0xc9704a, rnd, 0.04));
+    for (let k = 0; k < 7; k++) statics.push(paint(place(new THREE.IcosahedronGeometry(0.09, 0), px + rnd.range(-0.16, 0.16), y0 + 0.42 + rnd.range(0, 0.12), pz + rnd.range(-0.16, 0.16)), rnd.pick([0xf07aa0, 0xfff4dc, 0xf8cf4a, 0xc9a6f0])));
+  }
+
   {
     const cols = [];
     for (const d of waterDiscs) {
@@ -407,9 +462,9 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
   const occluders = []; // rough spheres round the trees near the garden, so the camera can avoid looking through one
   const roundTree = (x, z, s, blossom = false) => {
     const y0 = groundHeight(x, z) - 0.1;
-    if (Math.hypot(x, z) < 40) occluders.push({ x, y: y0 + 3.2 * s, z, r: 1.6 * s }, { x, y: y0 + 1.0 * s, z, r: 0.5 * s });
+    if (Math.hypot(x, z) < 95) occluders.push({ x, y: y0 + 3.2 * s, z, r: 1.6 * s }, { x, y: y0 + 1.0 * s, z, r: 0.5 * s });
     statics.push(sway(paint(place(new THREE.CylinderGeometry(0.14 * s, 0.22 * s, 2.0 * s, 6), x, y0 + 1.0 * s, z), COLORS.trunk, rnd, 0.05), y0, 0.02 / s));
-    if (blossom && Math.hypot(x, z) < 60) blossoms.push({ x, y: y0 + 3.0 * s, z, r: 1.3 * s, ground: groundHeight(x, z) });
+    if (blossom && Math.hypot(x, z) < 70) blossoms.push({ x, y: y0 + 3.0 * s, z, r: 1.3 * s, ground: groundHeight(x, z) });
     const tone = blossom ? rnd.pick(COLORS.blossom) : rnd.pick(COLORS.leaves);
     for (let k = 0; k < 4; k++) {
       const r = (1.25 - k * 0.18) * s;
@@ -418,7 +473,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
   };
   const pineTree = (x, z, s) => {
     const y0 = groundHeight(x, z) - 0.1;
-    if (Math.hypot(x, z) < 40) occluders.push({ x, y: y0 + 2.2 * s, z, r: 1.1 * s });
+    if (Math.hypot(x, z) < 95) occluders.push({ x, y: y0 + 2.2 * s, z, r: 1.1 * s });
     statics.push(paint(place(new THREE.CylinderGeometry(0.1 * s, 0.16 * s, 1.0 * s, 5), x, y0 + 0.5 * s, z), COLORS.trunk));
     const tone = rnd.pick(COLORS.pine);
     for (let k = 0; k < 3; k++) statics.push(sway(paint(place(new THREE.ConeGeometry((1.1 - k * 0.28) * s, 1.5 * s, 7), x, y0 + (1.4 + k * 0.85) * s, z, 0, rnd.range(0, 3), 0), tone, rnd, 0.04), y0, 0.012 / s));
@@ -429,14 +484,16 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     for (const s of stones) if (Math.hypot(x - s.x, z - s.z) < 2.2) return true;
     return false;
   };
-  const treeCount = mobile ? 70 : 110;
+  // The meadow rings' own trees (layout.js places them clear of paths, benches and the pond; the meadow cats walk round them).
+  for (const t of L.MEADOW_TREES) roundTree(t.x, t.z, t.s, t.blossom);
+  for (const b of L.MEADOW_BUSHES) bushAt(b.x, b.z, b.r, b.flowers ?? false);
+  const treeCount = mobile ? 60 : 95;
   for (let k = 0, made = 0; k < treeCount * 4 && made < treeCount; k++) {
-    const r = 24 + Math.pow(rnd.next(), 1.6) * 150, a = rnd.range(0, Math.PI * 2);
+    const r = 90 + Math.pow(rnd.next(), 1.4) * 110, a = rnd.range(0, Math.PI * 2);
     const x = Math.cos(a) * r, z = Math.sin(a) * r;
     if (occupied(x, z)) continue;
     // Keep a clear view over the front meadow towards the gate.
-    if (z > 0 && Math.abs(x) < 10 + r * 0.25 && r < 70) continue;
-    if (r > 90 && rnd.chance(0.55)) pineTree(x, z, rnd.range(1.8, 3.2));
+    if (rnd.chance(0.55)) pineTree(x, z, rnd.range(1.8, 3.2));
     else roundTree(x, z, rnd.range(1.1, 1.9) * (r > 90 ? 1.5 : 1), rnd.chance(0.12));
     made++;
   }
@@ -447,15 +504,20 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
   }
 
   /* ── One mesh for everything above ── */
-  // Two meshes: what is near enough to cast a shadow in the sunlight's reach, and everything further out.
-  const near = [], far = [];
+  // Near the garden, cut into sectors so the sun's shadow pass (which follows the view) and the
+  // camera can skip what is out of reach; everything further out is one mesh with no shadow.
+  const SECTORS = 12;
+  const near = [], mid = Array.from({ length: SECTORS }, () => []), far = [];
   for (const g of statics) {
     const p = g.attributes.position, w = new Float32Array(p.count);
     if (g.userData.wind) { const [y0, k] = g.userData.wind; for (let i = 0; i < p.count; i++) w[i] = Math.max(0, p.getY(i) - y0) * k; }
     g.setAttribute("aWind", new THREE.BufferAttribute(w, 1));
     g.computeBoundingSphere();
     const c = g.boundingSphere.center;
-    (Math.hypot(c.x, c.z) < 27 ? near : far).push(g);
+    const rc = Math.hypot(c.x, c.z);
+    if (rc < L.GARDEN.fenceR + 3) near.push(g);
+    else if (rc < 92) mid[Math.floor(((Math.atan2(c.z, c.x) + Math.PI) / (Math.PI * 2)) * SECTORS) % SECTORS].push(g);
+    else far.push(g);
   }
   const propsMat = windify(new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true }), "attr");
   const propsMesh = new THREE.Mesh(mergeGeometries(near), propsMat);
@@ -463,6 +525,14 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
   propsMesh.receiveShadow = true;
   propsMesh.name = "props";
   group.add(propsMesh);
+  mid.forEach((list, i) => {
+    if (!list.length) return;
+    const m = new THREE.Mesh(mergeGeometries(list), propsMat);
+    m.castShadow = true;
+    m.receiveShadow = true;
+    m.name = `meadow props ${i + 1}`;
+    group.add(m);
+  });
   if (far.length) {
     const farMesh = new THREE.Mesh(mergeGeometries(far), propsMat);
     farMesh.name = "far props";
@@ -475,7 +545,11 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     const r = Math.hypot(x, z);
     if (Math.abs(r - L.GARDEN.fenceR) < 0.25) return true;
     if (rectDist(x, z, L.HOUSE, 0) < pad + 0.15) return true;
-    if (r > 26) return false;
+    if (Math.hypot(x - L.POND2.x, z - L.POND2.z) < L.POND2.r + 0.35) return true;
+    if (r > L.GARDEN.fenceR + 1) {
+      for (const s of stones) if (Math.abs(x - s.x) < 0.6 && Math.abs(z - s.z) < 0.6 && Math.hypot(x - s.x, z - s.z) < 0.44 + pad) return true;
+      return false;
+    }
     for (const T of L.TREES) if (rectDist(x, z, T.base, 0) < pad) return true;
     for (const f of [...L.FLOWER_BEDS, ...L.VEG_BEDS]) if (rectDist(x, z, f, 0) < pad) return true;
     for (const b of L.BEDS) if (Math.hypot(x - b.x, z - b.z) < b.r + pad) return true;
@@ -499,11 +573,11 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     }
     const tuft = mergeGeometries(blades);
     tuft.computeVertexNormals();
-    const N = mobile ? 2200 : 5200;
+    const N = mobile ? 4200 : 11000;
     const grass = new THREE.InstancedMesh(tuft, windify(new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide }), "instance", 0.32), N);
     let n = 0;
     for (let t = 0; t < N * 6 && n < N; t++) {
-      const r = Math.pow(rnd.next(), 0.8) * 46, a = rnd.range(0, Math.PI * 2);
+      const r = Math.pow(rnd.next(), 0.75) * 88, a = rnd.range(0, Math.PI * 2);
       const x = Math.cos(a) * r, z = Math.sin(a) * r;
       if (blocked(x, z, 0.12)) continue;
       const inGarden = r < L.GARDEN.walkR + 0.4;
@@ -549,20 +623,26 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
       const col = rnd.pick(mixed);
       for (let c = 0; c < rnd.int(2, 5); c++) spots.push([x + rnd.range(-0.3, 0.3), z + rnd.range(-0.3, 0.3), 0, rnd.range(0.14, 0.26), col, 0.85]);
     }
-    // Flower fields in the meadow: lavender, poppies, buttercups, a mixed one.
-    const fields = [
-      { x: -27, z: 12, rx: 9, rz: 6, cols: [0x9a7fd6, 0xb096e0, 0x8a6cc8], n: 1100 },
-      { x: 24, z: 16, rx: 10, rz: 6, cols: [0xe8503f, 0xf06a4d, 0xd94436, 0xfff0d8], n: 900 },
-      { x: 30, z: -14, rx: 9, rz: 7, cols: [0xf8d34a, 0xfbe07a, 0xfff4dc], n: 900 },
-      { x: -22, z: -22, rx: 10, rz: 7, cols: mixed, n: 1000 },
-      { x: 6, z: 32, rx: 12, rz: 5, cols: [0xf7b3c9, 0xfff4dc, 0xf8cf4a, 0xc9a6f0], n: 900 },
-    ];
+    // Wildflowers dotted through the meadow rings.
+    for (let k = 0; k < (mobile ? 160 : 360); k++) {
+      const r = rnd.range(L.MEADOW.ring1.inner - 2, L.MEADOW.ring2.outer + 3), a = rnd.range(0, Math.PI * 2);
+      const x = Math.cos(a) * r, z = Math.sin(a) * r;
+      if (blocked(x, z, 0.3) || occupied(x, z)) continue;
+      const col = rnd.pick(mixed), y = groundHeight(x, z);
+      for (let c = 0; c < rnd.int(3, 6); c++) { const fx = x + rnd.range(-0.4, 0.4), fz = z + rnd.range(-0.4, 0.4); spots.push([fx, fz, groundHeight(fx, fz), rnd.range(0.2, 0.34), col, 1]); }
+    }
+    // Flower fields in the meadow rings: lavender, poppies, buttercups, pinks and mixed ones.
+    const PALETTES = {
+      lavender: [0x9a7fd6, 0xb096e0, 0x8a6cc8], poppy: [0xe8503f, 0xf06a4d, 0xd94436, 0xfff0d8],
+      buttercup: [0xf8d34a, 0xfbe07a, 0xfff4dc], pink: [0xf7b3c9, 0xfff4dc, 0xf8cf4a, 0xc9a6f0], mixed,
+    };
+    const fields = L.FLOWER_FIELDS.map((f) => ({ ...f, cols: PALETTES[f.cols] || mixed }));
     for (const f of fields) {
       const n = Math.round(f.n * (mobile ? 0.4 : 1));
       for (let k = 0; k < n; k++) {
         const a = rnd.range(0, Math.PI * 2), d = Math.sqrt(rnd.next());
         const x = f.x + Math.cos(a) * d * f.rx, z = f.z + Math.sin(a) * d * f.rz;
-        if (Math.hypot(x, z) < L.GARDEN.fenceR + 2.5 || occupied(x, z)) continue;
+        if (Math.hypot(x, z) < L.GARDEN.fenceR + 2.5 || occupied(x, z) || blocked(x, z, 0.1)) continue;
         spots.push([x, z, groundHeight(x, z), rnd.range(0.3, 0.55), rnd.pick(f.cols), 1.25]);
       }
       flowerSpots.push({ x: f.x, z: f.z, r: Math.min(f.rx, f.rz), y: groundHeight(f.x, f.z) });
@@ -616,7 +696,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
 
 /* ── Helpers ─────────────────────────────────────────────────────────────── */
 
-function smooth(a, b, x) { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+const smooth = L.smooth;
 function rectDist(x, z, r, pad) {
   const dx = Math.max(r.minX - pad - x, 0, x - r.maxX - pad), dz = Math.max(r.minZ - pad - z, 0, z - r.maxZ - pad);
   return Math.hypot(dx, dz);

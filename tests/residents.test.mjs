@@ -1,5 +1,6 @@
 /* What the page receives from assets/residents.js: the planned cats and the launched tokens,
-   merged; buy links only for a launched token; nothing fetched but the three data files. */
+   merged; buy links only for a launched token; the famous cat coins after them (optional: a missing
+   data/famous.json leaves the stock cats as they are); nothing fetched but the four data files. */
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -51,7 +52,7 @@ function site(files) {
   return { fetchImpl, asked };
 }
 const files = (cats = [], wallets = WALLETS, plannedFile = PLANNED) => ({ "data/planned.json": plannedFile, "data/collection.json": { cats }, "data/wallets.json": wallets });
-const load = (f) => loadResidents({ fetchImpl: site(f).fetchImpl, base: BASE, nowMs: NOW });
+const load = (f) => quiet(() => loadResidents({ fetchImpl: site(f).fetchImpl, base: BASE, nowMs: NOW }));
 const quiet = async (fn) => { const w = console.warn; console.warn = () => {}; try { return await fn(); } finally { console.warn = w; } };
 
 test("the launches used here are the real ones (mint, pool, signature, time, pair)", () => {
@@ -63,7 +64,7 @@ test("the launches used here are the real ones (mint, pool, signature, time, pai
 
 test("no token yet: every planned cat, not launched, with no mint, no buy link and no explorer link", async () => {
   const { fetchImpl, asked } = site(files());
-  const r = await loadResidents({ fetchImpl, base: BASE, nowMs: NOW });
+  const r = await quiet(() => loadResidents({ fetchImpl, base: BASE, nowMs: NOW }));
   assert.equal(r.length, PLANNED.cats.length);
   assert.deepEqual(r.map((c) => c.id), PLANNED.cats.map((c) => c.ticker));
   for (const c of r) {
@@ -77,7 +78,7 @@ test("no token yet: every planned cat, not launched, with no mint, no buy link a
     assert.equal(c.portrait, `assets/portraits/${c.id}.jpg`);
     assert.ok(c.stock && c.who && c.pair.mint, c.id);
   }
-  assert.deepEqual(asked.map((a) => a.url).sort(), [`${BASE}data/collection.json`, `${BASE}data/planned.json`, `${BASE}data/wallets.json`]);
+  assert.deepEqual(asked.map((a) => a.url).sort(), [`${BASE}data/collection.json`, `${BASE}data/famous.json`, `${BASE}data/planned.json`, `${BASE}data/wallets.json`]);
   assert.ok(asked.every((a) => a.init.credentials === "same-origin"));
 });
 
@@ -205,4 +206,33 @@ test("mergeResidents works on validated data alone, and changing a card never ch
   assert.notEqual(again[0].coat.base, "odd");
   assert.ok(again[0].links.length > 0);
   assert.equal(again[0].virality.length, p.stocks.find((s) => s.stonkfun === "GMEX").virality.length);
+});
+
+/* ── The famous cat coins ─────────────────────────────────────────────────────────── */
+
+const FAMOUS = JSON.parse(fs.readFileSync(path.join(ROOT, "data/famous.json"), "utf8"));
+
+test("famous cat coins follow the stock cats, each marked famous, with its own buy link and no stock pair", async () => {
+  const r = await load({ ...files(), "data/famous.json": FAMOUS });
+  const stock = r.filter((c) => c.kind !== "famous"), famous = r.filter((c) => c.kind === "famous");
+  assert.equal(stock.length, PLANNED.cats.length);
+  assert.deepEqual(r.slice(0, stock.length), stock, "the stock cats come first");
+  assert.equal(famous.length, FAMOUS.coins.length);
+  for (const c of famous) {
+    assert.deepEqual(c.token, { status: "famous" });
+    assert.equal(c.ticker, c.symbol);
+    assert.equal(c.planned, false);
+    assert.match(c.buy.url, /^https:\/\/(gmgn\.ai\/(sol|eth|base|bsc)\/token\/|dexscreener\.com\/)/, c.id);
+    assert.ok(!stock.some((s) => s.id === c.id), `${c.id} is also a stock cat's id`);
+  }
+});
+
+test("a famous coin file that is missing or broken leaves the stock cats as they are", async () => {
+  for (const broken of [undefined, { coins: "no" }, { note: "", refreshedAt: "", coins: [{ id: "BAD ID" }] }]) {
+    const f = files();
+    if (broken !== undefined) f["data/famous.json"] = broken;
+    const r = await load(f);
+    assert.equal(r.length, PLANNED.cats.length);
+    assert.ok(r.every((c) => c.kind !== "famous"));
+  }
 });

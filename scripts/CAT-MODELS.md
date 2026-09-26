@@ -65,3 +65,14 @@ wrong.
 - LOD: the nearest 10 cats within 16 units get the full model; the rest use the far copy on the
   same skeleton, and their animation updates at up to 20 Hz.
 - `?still`: no motion. Each cat holds a sit, loaf or sleep pose.
+
+## HD pipeline (Hunyuan3D v3, multi-view), from 2026-09-26
+
+For every new cat: (1) the standing 3/4 reference as in section 1; (2) four gpt_image_2_5 views made from that
+reference ("orthographic turnaround view of the exact same animal…"): front, left (head pointing to the left edge),
+back, right; (3) `generate_3d` with `hunyuan3d_v3_image_to_3d` and the four view job ids in the order
+front, left, back, right, default face count (~500k faces; 15 credits, a custom `face_count` costs 19). About
+16.25 credits per cat. The job entry carries `hd: true, si: 0.04, si_lo: 0.01, tex: 2048, q: 78, tex_lo: 256`,
+which make-cat-models.py uses to simplify to ~20k faces with a 2K texture (budget 800 KB) and a far copy
+(budget 300 KB; gltfpack stops at ~6k triangles on Hunyuan's fragmented UV atlas, so most land at 140-200 KB).
+index.json marks these cats `hd: true`. What is left is in `scripts/cat-models.queue.json`.

@@ -3,7 +3,7 @@
    cat, in the world or from the list, opens its card and eases the camera over to it.
    Without WebGL (or if the world fails to start) the list becomes the page, and cards still open. */
 
-import { getResidents, isLaunched } from "./data.js";
+import { getResidents, isLaunched, isFamous } from "./data.js";
 import { createCard, badgeFor, tickerLabel } from "./card.js";
 import { createFinder } from "./finder.js";
 import { createPanels } from "./panels.js";
@@ -26,7 +26,9 @@ try { residents = await getResidents(); } catch (e) { loadError = e; console.war
 const byId = new Map(residents.map((r) => [r.id, r]));
 const launched = residents.filter(isLaunched).length;
 $("count").textContent = residents.length ? String(residents.length) : "";
-$("find").setAttribute("aria-label", `Find a cat: ${residents.length} cats, ${launched} launched`);
+const famousN = residents.filter(isFamous).length;
+$("find").setAttribute("aria-label", `Find a cat: ${residents.length} cats, ${launched} launched${famousN ? `, ${famousN} famous cat coins` : ""}`);
+$("legend-famous").hidden = famousN === 0;
 // The legend explains the gold coin only once there is one to see.
 $("legend-launched").hidden = launched === 0;
 
@@ -61,7 +63,7 @@ function show(id, { from = null } = {}) {
   card.open(r);
   world?.choose(id);
   tag.hidden = true;
-  say(`${r.name}${r.ticker ? (isLaunched(r) ? `, $${r.ticker}` : `, planned ticker ${r.ticker}`) : ""}. ${r.example ? "An example cat, not a token." : isLaunched(r) ? "Launched." : "Not launched yet."}`);
+  say(isFamous(r) ? `${r.name}, $${r.ticker}. A famous cat coin, not made by the sanctuary.` : `${r.name}${r.ticker ? (isLaunched(r) ? `, $${r.ticker}` : `, planned ticker ${r.ticker}`) : ""}. ${r.example ? "An example cat, not a token." : isLaunched(r) ? "Launched." : "Not launched yet."}`);
   history.replaceState(null, "", `#cat=${encodeURIComponent(id)}`);
 }
 function hideCard() {

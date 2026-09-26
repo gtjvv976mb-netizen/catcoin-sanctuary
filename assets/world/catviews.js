@@ -189,7 +189,9 @@ export async function loadCatModels(loader, base = "assets/models/", { cell = 0.
     if (map) map.updateMatrix();
     // The cats are drawn from a lighter copy (about half the triangles; a little fewer again on phones).
     const lite = cell > 0 ? decimate(geometry, cell, map ? map.matrix : null) : geometry;
-    out[coat][pose] = { geometry, lite, material, len: v.x, height: v.y, width: v.z, eye, head, pose, ref, ginger: coat === "ginger" };
+    // …and a much lighter one again for cats far across the meadows (a few hundred triangles).
+    const far = decimate(geometry, Math.max(cell, 0.045) * 2.6, map ? map.matrix : null);
+    out[coat][pose] = { geometry, lite, far, material, len: v.x, height: v.y, width: v.z, eye, head, pose, ref, ginger: coat === "ginger" };
   })));
   return out;
 }
@@ -409,7 +411,11 @@ function coatShader(material, md) {
    skeleton; only the nearest OWN.maxHi at a time get the full one, and far cats' animation is
    updated less often. */
 
-export const OWN = { maxHi: 10, hiDist: 16, index: "assets/models/cats/index.json", fade: 0.3 };
+export const OWN = { maxHi: 10, hiDist: 16, index: "assets/models/cats/index.json", fade: 0.3, drawDist: 58 };
+
+/** Level of detail for the shared, tinted cats: beyond `far` units from the camera a cat is drawn
+    from the lightest copy; beyond `cullNear` a cat outside the view is not drawn at all. */
+export const LOD = { far: 26, cullNear: 14 };
 /** How tall a cat stands in each pose, as a share of its standing height (for its tag and the camera). */
 const OWN_HEIGHT = { walk: 1, sit: 1.05, stretch: 0.8, loaf: 0.62, sleep: 0.45 };
 
@@ -481,6 +487,7 @@ export function flatMesh(root) {
 /* ── The herd ─────────────────────────────────────────────────────────── */
 
 const _m = new THREE.Matrix4(), _t = new THREE.Matrix4(), _r = new THREE.Matrix4(), _c = new THREE.Color();
+const _pv = new THREE.Matrix4(), _fr = new THREE.Frustum(), _sp = new THREE.Sphere();
 
 const NAMED = {
   black: "#1d1a1c", white: "#f7f3ec", cream: "#f1dcc0", ginger: "#e0823a", orange: "#e0823a", red: "#c8642c", grey: "#9a9aa2", gray: "#9a9aa2",
@@ -552,10 +559,10 @@ export class CatHerd {
     this.byKey = {};
     for (const model of ["cat", "ginger"]) {
       if (!perModel[model]) continue;
-      for (const pose of POSES) {
+      for (const pose of POSES) for (const lod of ["", "-far"]) {
         const md = models[model][pose];
         const n = perModel[model];
-        const geo = (md.lite || md.geometry).clone();
+        const geo = (lod ? md.far || md.lite || md.geometry : md.lite || md.geometry).clone();
         geo.setAttribute("aCoatA", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         geo.setAttribute("aCoatB", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         geo.setAttribute("aCoatC", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
@@ -563,7 +570,7 @@ export class CatHerd {
         coatShader(md.material, md);
         const im = new THREE.InstancedMesh(geo, md.material, n);
         im.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
-        im.name = `${model}-${pose}`;
+        im.name = `${model}-${pose}${lod}`;
         im.castShadow = !blobShadows;
         im.receiveShadow = true;
         im.frustumCulled = false; // the cats move about the whole garden
@@ -571,7 +578,7 @@ export class CatHerd {
         im.userData.owner = new Array(n).fill(null);
         scene.add(im);
         this.meshes.push(im);
-        this.byKey[`${model}-${pose}`] = im;
+        this.byKey[`${model}-${pose}${lod}`] = im;
         this.lookup.set(im, []);
       }
     }
@@ -662,6 +669,11 @@ export class CatHerd {
   /** Writes every cat's matrix (and, when a slot changes hands, its coat) into the mesh for its pose. */
   update() {
     for (const im of this.meshes) { im.count = 0; this.lookup.get(im).length = 0; im.userData.coatDirty = false; }
+    // What the camera can see: cats outside it (and not close by) are skipped, far ones drawn light.
+    const cam = this.camera;
+    if (cam) { cam.updateMatrixWorld(); _pv.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse); _fr.setFromProjectionMatrix(_pv); }
+    const cx = cam ? cam.position.x : 0, cz = cam ? cam.position.z : 0;
+    let drawn = 0;
     // Which own-model cats get the full model: the nearest few within reach of the camera.
     let near = null;
     if (this.own.size) {
@@ -674,7 +686,20 @@ export class CatHerd {
     const T = AMBIENT.uTime.value;
     for (const cat of this.sim.cats) {
       const o = this.own.get(cat.id);
-      if (o && (o.hi || o.lo)) {
+      const hl0 = this.highlight.get(cat.id) || 0;
+      const dist = Math.hypot(cat.x - cx, cat.z - cz);
+      let skip = !!cat.hidden && !hl0;
+      if (!skip && cam && dist > LOD.cullNear && !hl0) { _sp.center.set(cat.x, cat.y + 0.5, cat.z); _sp.radius = 1.3; skip = !_fr.intersectsSphere(_sp); }
+      if (skip) {
+        if (o) o.group.visible = false;
+        if (this.blobs) { _t.makeScale(0, 0, 0); this.blobs.setMatrixAt(cat.index, _t); }
+        continue;
+      }
+      drawn++;
+      const ownNear = o && (o.hi || o.lo) && (dist < OWN.drawDist || hl0);
+      if (o && !ownNear) o.group.visible = false;
+      if (ownNear) {
+        o.group.visible = true;
         const md = this.dimsOf(cat);
         // Place it: position and heading, the hop's pitch, the sun-roll's roll. The clips do the rest.
         const a = cat.anim;
@@ -709,7 +734,7 @@ export class CatHerd {
         }
         continue;
       }
-      const im = this.byKey[`${cat.model}-${cat.pose}`];
+      const im = this.byKey[`${cat.model}-${cat.pose}${dist > LOD.far && !hl0 ? "-far" : ""}`];
       const md = this.models[cat.model][cat.pose];
       this.matrixFor(cat, md, _m);
       const i = im.count++;
@@ -734,6 +759,7 @@ export class CatHerd {
         this.blobs.setMatrixAt(cat.index, _t);
       }
     }
+    this.drawn = drawn;
     if (this.blobs) this.blobs.instanceMatrix.needsUpdate = true;
     for (const im of this.meshes) {
       im.visible = im.count > 0;
@@ -766,7 +792,7 @@ export class CatHerd {
 
   /** The cat under a ray, if any. */
   pick(raycaster) {
-    const own = this.ownMeshes.filter(([m]) => m.visible).map(([m]) => m);
+    const own = this.ownMeshes.filter(([m]) => m.visible && m.parent?.visible !== false).map(([m]) => m);
     const hits = raycaster.intersectObjects([...this.meshes.filter((m) => m.visible), ...own], false);
     for (const h of hits) {
       const cat = h.instanceId !== undefined ? this.lookup.get(h.object)?.[h.instanceId] : this.ownMeshes.find(([m]) => m === h.object)?.[1];
@@ -798,7 +824,8 @@ export class CatHerd {
   /** How many cats are drawn from their own model, and how many of those at full detail. */
   ownCounts() {
     let full = 0;
-    for (const o of this.own.values()) if (o.hi?.visible) full++;
-    return { own: this.own.size, full };
+    let shown = 0;
+    for (const o of this.own.values()) { if (o.group.visible) shown++; if (o.group.visible && o.hi?.visible) full++; }
+    return { own: this.own.size, shown, full };
   }
 }

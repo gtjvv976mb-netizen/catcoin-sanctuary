@@ -316,3 +316,23 @@ body.no-webgl .hint { display: none; }
   .bar .find-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 @media (max-width: 380px) { .bar .mark { font-size: 15px; padding: 9px 9px 8px; } }
+
+/* ── Famous cat coins: badge, logo, warnings, and the finder's kind and chain filters ── */
+.badge-famous { background: #fdeccb; color: #7a4f06; }
+.badge-famous::before { background: linear-gradient(135deg, #ffd766, #d99a1a); box-shadow: 0 0 0 1.5px #b87c0c inset; }
+.badge-pick { background: #e5eefc; color: #2c4f8a; margin-left: 4px; }
+.badge-pick::before { background: #5b8be0; }
+.card-logo { border-radius: 50%; background: #fff; }
+.find-logo { border-radius: 50%; background: #fff; }
+.card-cat-name { font-weight: 700; margin-bottom: 4px !important; }
+.card-sub { margin: 12px 0 2px; font: 700 13px/1.3 var(--body); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.card-lore { font-size: 14.5px; }
+.card-company { font-size: 14px; font-weight: 600; margin-top: 8px !important; }
+.card-warn-list { padding-left: 0; list-style: none; }
+.card-warn-list li { position: relative; padding: 7px 10px 7px 30px; margin: 0 0 6px; border-radius: 10px; background: #fff3e2; border: 1px solid #f4d3a8; font-size: 14px; }
+.card-warn-list li::before { content: "!"; position: absolute; left: 9px; top: 8px; width: 15px; height: 15px; border-radius: 50%; background: #d9731a; color: #fff; font: 700 11px/15px var(--body); text-align: center; }
+.card-ca { white-space: nowrap; }
+.card-link { display: inline-block; margin-top: 6px; }
+.finder-chain { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 4px 0 10px; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; font-size: 13.5px; font-weight: 600; }
+.finder-chain-select { border: 0; background: transparent; font: inherit; color: var(--ink); padding: 6px 4px; max-width: 170px; }
+.card-unresearched { font-style: italic; margin-top: 0 !important; }

@@ -248,3 +248,169 @@ test("the shipped wallets.json lists the owner's wallet, from 2026-09-25", () =>
   assert.deepEqual(w.refused, []);
   assert.deepEqual(w.launchers.map((l) => [l.address, l.since, l.label]), [[OWNER, "2026-09-25T00:00:00Z", "Owner"]]);
 });
+
+/* ── data/famous.json: the famous cat coins ─────────────────────────────────────────── */
+
+import { validateFamous, famousProblem, famousBuyLink, marketWarnings, tierFor, contractProblem, TIER_RULE, GMGN_CHAINS } from "../assets/collection.js";
+import { refreshFamous, fromPairs, serialize as serializeFamous } from "../scripts/refresh-famous.mjs";
+import { modelIdFor } from "../assets/ui/models.js";
+import { DATA_NOW } from "./helpers.mjs";
+
+const FAMOUS = JSON.parse(fs.readFileSync(path.join(ROOT, "data/famous.json"), "utf8"));
+const coinBy = (sym, chain) => FAMOUS.coins.find((c) => c.symbol === sym && (!chain || c.chain === chain));
+
+test("famous coins: the shipped file validates, Solana coins only, every coin once, ids and contracts unique", () => {
+  const r = validateFamous(FAMOUS, { nowMs: DATA_NOW });
+  assert.deepEqual(r.refused, []);
+  assert.equal(r.coins.length, FAMOUS.coins.length);
+  assert.ok(r.coins.length >= 180, `${r.coins.length} coins`);
+  assert.ok(r.coins.every((c) => c.chain === "solana"), "the owner's rule: Solana coins only");
+  assert.equal(new Set(r.coins.map((c) => c.id)).size, r.coins.length);
+  assert.equal(new Set(r.coins.map((c) => `${c.chain}:${c.contract.toLowerCase()}`)).size, r.coins.length);
+  const stock = new Set(JSON.parse(fs.readFileSync(path.join(ROOT, "data/planned.json"), "utf8")).cats.map((c) => c.ticker));
+  for (const c of r.coins) assert.ok(!stock.has(c.id), `${c.id} is a stock cat's ticker`);
+});
+
+test("famous coins: tiers follow the rule (main for $1M and up or a company or project cat, ring 1 from $100k, ring 2 below), set when placed", () => {
+  assert.equal(tierFor(5e6, null), "main");
+  assert.equal(tierFor(30_000, "Backpack (exchange/wallet) mascot"), "main");
+  assert.equal(tierFor(250_000, null), "ring1");
+  assert.equal(tierFor(40_000, null), "ring2");
+  const counts = { main: 0, ring1: 0, ring2: 0 };
+  for (const c of FAMOUS.coins) {
+    counts[c.tier]++;
+    // Placed from the research's figures; the daily refresh never moves a coin, so only the shape is checked here.
+    assert.ok(["main", "ring1", "ring2"].includes(c.tier), c.id);
+    if (c.company) assert.equal(c.tier, "main", `${c.id}: a company or project cat lives in the main garden`);
+  }
+  assert.ok(counts.main > 0 && counts.ring1 > 0 && counts.ring2 > 0, JSON.stringify(counts));
+});
+
+test("famous coins: every buy link is the GMGN page for its own contract", () => {
+  for (const c of FAMOUS.coins) {
+    if (GMGN_CHAINS[c.chain]) assert.deepEqual(c.buy, { label: "GMGN", url: `https://gmgn.ai/${GMGN_CHAINS[c.chain]}/token/${c.contract}` }, c.id);
+    else { assert.equal(c.buy.label, "DexScreener", c.id); assert.ok(c.buy.url.startsWith(`https://dexscreener.com/${c.chain}/`), c.id); }
+  }
+  assert.deepEqual(famousBuyLink("solana", "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr"), { label: "GMGN", url: "https://gmgn.ai/sol/token/7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr" });
+  assert.equal(famousBuyLink("robinhood", "0x020bfc650a365f8bb26819deaabf3e21291018b4").label, "DexScreener");
+  assert.match(famousProblem({ ...coinBy("POPCAT", "solana"), chain: "base", contract: "0x9a26f5433671751c3276a065f57e5a02d2817973", buy: { label: "GMGN", url: "https://gmgn.ai/base/token/0x9a26f5433671751c3276a065f57e5a02d2817973" } }), /chain/, "a Base coin is refused");
+  const popcat = coinBy("POPCAT", "solana");
+  assert.match(famousProblem({ ...popcat, buy: { label: "GMGN", url: "https://gmgn.ai/sol/token/So11111111111111111111111111111111111111112" } }), /GMGN page for its contract/);
+  assert.match(famousProblem({ ...popcat, buy: { label: "Pump", url: `https://pump.fun/${popcat.contract}` } }), /GMGN/);
+});
+
+test("famous coins: the rules refuse what is unsafe or unsourced", () => {
+  const ok = coinBy("POPCAT", "solana");
+  assert.equal(famousProblem(ok, { nowMs: DATA_NOW }), null);
+  const bad = (patch) => famousProblem({ ...ok, ...patch }, { nowMs: DATA_NOW });
+  assert.match(bad({ id: "Popcat!" }), /id/);
+  assert.match(bad({ name: "<b>Popcat</b>" }), /name/);
+  assert.match(bad({ chain: "moon" }), /chain/);
+  assert.match(bad({ chain: "bsc" }), /chain/);
+  assert.match(bad({ contract: "0x1234" }), /Solana mint/);
+  assert.match(bad({ tier: "vip" }), /tier/);
+  assert.match(bad({ logo: "https://example.com/logo.png" }), /logo/);
+  assert.match(bad({ market: { ...ok.market, marketCapUsd: -1 } }), /marketCapUsd/);
+  assert.match(bad({ market: { ...ok.market, measuredAt: "2099-01-01T00:00:00Z" } }), /future/);
+  assert.match(bad({ links: { x: "https://evil.example/popcat", website: null } }), /links\.x/);
+  assert.match(bad({ links: { x: null, website: "https://pump.fun/coin/x" } }), /trading/);
+  assert.match(bad({ lore: "<script>alert(1)</script>" }), /lore/);
+  assert.match(bad({ disclaimer: "Have fun." }), /not affiliated/);
+  assert.match(bad({ extra: 1 }), /unknown field/);
+  assert.equal(contractProblem("ethereum", "0xaaee1a9723aadb7afa2810263653a34ba2c21c7a"), null);
+  assert.match(contractProblem("base", "0x12"), /0x/);
+  const twice = validateFamous({ ...FAMOUS, coins: [ok, { ...ok, id: "popcat-again", logo: null }] }, { nowMs: DATA_NOW });
+  assert.equal(twice.coins.length, 1);
+  assert.equal(twice.refused[0].clause, "duplicate");
+  assert.equal(validateFamous({ coins: "no" }).refused[0].clause, "shape");
+  assert.equal(validateFamous({ coins: [], extra: 1 }).refused[0].clause, "shape");
+});
+
+test("famous coins: the flagged Solana coins are in, each with an honest warning; unresearched lore says where it comes from", () => {
+  const warns = (c) => c.warnings.join(" ");
+  assert.ok(FAMOUS.coins.some((c) => /panther/i.test(c.name) && /panther, not a house cat/i.test(warns(c))), "the Solana panther coin");
+  assert.ok(FAMOUS.coins.filter((c) => /cat-themed by CoinGecko/.test(warns(c))).length >= 25, "the CoinGecko cat-themed coins");
+  for (const c of FAMOUS.coins) {
+    if (c.loreSource.kind === "profile") continue;
+    assert.equal(c.catName, null, `${c.id}: no researched cat name`);
+    assert.equal(c.who, "", `${c.id}: no researched story`);
+    assert.ok(c.loreSource.url, `${c.id}: its lore names its source`);
+  }
+  assert.match(warns(coinBy("PURR", "solana")), /not Hyperliquid's official PURR/);
+  assert.match(warns(coinBy("NEARKAT", "solana")), /meerkat/);
+  for (const c of FAMOUS.coins) assert.match(c.disclaimer, /not affiliated/i, c.id);
+});
+
+test("famous coins: market warnings come from the latest figures", () => {
+  const at = "2026-09-26T00:00:00Z", now = Date.parse(at);
+  assert.deepEqual(marketWarnings({ marketCapUsd: 5e6, liquidityUsd: 5e5, volume24hUsd: 2e5, measuredAt: at, source: "coingecko" }, { nowMs: now }), []);
+  const w = marketWarnings({ marketCapUsd: 15_000, liquidityUsd: 2_000, volume24hUsd: 30, measuredAt: at, source: "dexscreener" }, { nowMs: now + 5 * 86_400_000 });
+  assert.equal(w.length, 4);
+  assert.match(w[0], /Almost no trading: \$30/);
+  assert.match(w[1], /Very little liquidity: \$2,000/);
+  assert.match(w[2], new RegExp(`below the sanctuary's \\$${TIER_RULE.minMcap.toLocaleString("en-US")} floor`));
+  assert.match(w[3], /5 days old/);
+});
+
+test("famous coins: every logo is a small WebP on this site, and no logo file is left without its coin", () => {
+  const dir = path.join(ROOT, "assets/coins");
+  for (const c of FAMOUS.coins) {
+    if (!c.logo) continue;
+    const b = fs.readFileSync(path.join(ROOT, c.logo));
+    assert.ok(b.toString("latin1", 0, 4) === "RIFF" && b.toString("latin1", 8, 12) === "WEBP", c.logo);
+    assert.ok(b.length <= 30_000, `${c.logo} is ${b.length} bytes`);
+  }
+  const named = new Set(FAMOUS.coins.map((c) => c.logo).filter(Boolean));
+  for (const f of fs.readdirSync(dir)) assert.ok(named.has(`assets/coins/${f}`), `assets/coins/${f} belongs to no coin`);
+  assert.ok(named.size >= FAMOUS.coins.length * 0.85, `${named.size} logos`);
+});
+
+test("famous coins: the daily refresh takes DexScreener's pair figures and CoinGecko's circulating market cap, keeps the rest, and still validates", async () => {
+  const popcat = coinBy("POPCAT", "solana"), cash = coinBy("MEW", "solana");
+  const data = { ...FAMOUS, coins: [popcat, cash, { ...coinBy("BTC", "solana") }] };
+  const asked = [];
+  const fetchImpl = async (url) => {
+    asked.push(String(url));
+    const u = new URL(url);
+    if (u.hostname === "api.dexscreener.com" && u.pathname.startsWith("/tokens/v1/solana/")) {
+      return new Response(JSON.stringify([
+        { pairAddress: popcat.pair.address || "P1", baseToken: { address: popcat.contract }, marketCap: 60_000_000, fdv: 61_000_000, liquidity: { usd: 5_000_000 }, volume: { h24: 900_000 } },
+        { pairAddress: "OTHER", baseToken: { address: popcat.contract }, marketCap: 60_000_000, liquidity: { usd: 10 }, volume: { h24: 100 } },
+      ]), { status: 200 });
+    }
+    if (u.hostname === "api.coingecko.com") return new Response(JSON.stringify([{ id: popcat.coingeckoId, market_cap: 58_000_000, total_volume: 1e6 }]), { status: 200 });
+    return new Response("[]", { status: 200 });
+  };
+  const now = Date.parse("2026-09-27T05:41:00Z");
+  const r = await refreshFamous({ data, fetchImpl, nowMs: now, pause: 0 });
+  const p = r.data.coins.find((c) => c.id === popcat.id);
+  assert.equal(p.market.marketCapUsd, 58_000_000, "CoinGecko's circulating market cap");
+  assert.equal(p.market.volume24hUsd, 900_100, "volume summed over its pairs");
+  assert.equal(p.market.source, "coingecko");
+  assert.equal(p.market.measuredAt, "2026-09-27T05:41:00Z");
+  assert.equal(p.tier, popcat.tier, "the refresh never moves a coin");
+  assert.ok(r.kept.includes(cash.id), "a coin no source answered for keeps its figures");
+  assert.deepEqual(r.data.coins.find((c) => c.id === cash.id).market, cash.market);
+  assert.deepEqual(validateFamous(r.data, { nowMs: now }).refused, []);
+  assert.ok(asked.every((a) => a.startsWith("https://api.dexscreener.com/tokens/v1/") || a.startsWith("https://api.coingecko.com/api/v3/coins/markets?")), asked.join("\n"));
+  assert.deepEqual(JSON.parse(serializeFamous(r.data)), r.data);
+  assert.equal(fromPairs(popcat, [{ baseToken: { address: "someone else" } }]), null);
+});
+
+test("famous coins: a model in assets/models/cats/index.json finds its coin by id, contract or a unique symbol", () => {
+  const residents = [{ id: "PATCHPAW", kind: "stock" }, ...FAMOUS.coins.map((c) => ({ ...c, kind: "famous", ticker: c.symbol }))];
+  const popcat = coinBy("POPCAT", "solana");
+  assert.equal(modelIdFor("PATCHPAW", residents), "PATCHPAW");
+  assert.equal(modelIdFor(popcat.id, residents), popcat.id);
+  assert.equal(modelIdFor(popcat.contract, residents), popcat.id);
+  assert.equal(modelIdFor(popcat.contract.toLowerCase(), residents), popcat.id);
+  assert.equal(modelIdFor(`solana:${popcat.contract}`, residents), popcat.id);
+  assert.equal(modelIdFor("POPCAT", residents), popcat.id);
+  assert.equal(modelIdFor("$POPCAT", residents), popcat.id);
+  const mew = coinBy("MEW", "solana");
+  assert.equal(modelIdFor("MEW", residents), mew.id);
+  const twin = { ...mew, id: "mew-twin", contract: "So11111111111111111111111111111111111111112", kind: "famous", ticker: "MEW" };
+  assert.equal(modelIdFor("MEW", [...residents, twin]), null, "a symbol several coins share names none");
+  assert.equal(modelIdFor("PATCHPAW", [...residents, { ...twin, id: "patchpaw-coin", ticker: "PATCHPAW" }]), "PATCHPAW", "a stock cat's ticker is the stock cat");
+  assert.equal(modelIdFor("NOT-A-CAT", residents), null);
+});

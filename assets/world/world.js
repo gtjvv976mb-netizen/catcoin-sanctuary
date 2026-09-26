@@ -1,6 +1,12 @@
-/* The world in 3D: renderer, sunlight, sky, the cottage, the garden, the cats, the birds and
-   butterflies, the camera and its controls, picking, and easing the camera to a chosen cat.
-   main.js loads this only when WebGL is available; the page's overlay lives in assets/ui/. */
+/* The world in 3D: renderer, sunlight, sky, the cottage, the garden and its meadow rings, the
+   cats, the birds and butterflies, the camera and its controls, picking, and easing the camera
+   to a chosen cat. main.js loads this only when WebGL is available; the page's overlay lives in
+   assets/ui/.
+
+   Two kinds of cat life share one herd: the main garden's cats (the stock cats and the biggest
+   famous cat coins, cats.js, every cat simulated in full) and the meadow cats in the rings round
+   the fence (meadow.js, streamed by distance: only those near the view are simulated at full
+   rate, far ones rest, and very far ones are not drawn until the camera comes near). */
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -11,8 +17,13 @@ import { buildCritters } from "./critters.js";
 import { buildAmbient } from "./ambient.js";
 import { buildSign } from "./sign.js";
 import { createSanctuary } from "./cats.js";
+import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
-import { HOUSE, GARDEN } from "./layout.js";
+import { HOUSE, GARDEN, MEADOW, groundHeight } from "./layout.js";
+import { modelIdFor } from "../ui/models.js";
+
+/** Where a resident lives: famous coins of the rings in the meadows, everyone else in the garden. */
+export const livesInMeadow = (r) => r.kind === "famous" && (r.tier === "ring1" || r.tier === "ring2");
 
 /** Where the sun sits in the sky (seen from the usual view: up and to the left, behind the cottage)… */
 const SUN_DISC = new THREE.Vector3(-0.6, 0.13, -0.79).normalize();
@@ -47,16 +58,17 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
 
   const scene = new THREE.Scene();
   const haze = new THREE.Color(SKY.horizon).lerp(new THREE.Color(0xcfe3ee), 0.35);
-  scene.fog = new THREE.Fog(haze, 70, 480);
+  scene.fog = new THREE.Fog(haze, 95, 520);
   scene.background = haze;
 
   /* Daylight: a warm sun with soft shadows, a bright sky fill, and a gentle bounce from the front. */
   scene.add(new THREE.HemisphereLight(0xcfe8ff, 0x9bbf6a, 1.55));
   const sun = new THREE.DirectionalLight(0xfff0d6, 2.7);
-  sun.position.copy(SUN_LIGHT).multiplyScalar(40);
+  sun.position.copy(SUN_LIGHT).multiplyScalar(50);
   sun.castShadow = true;
   sun.shadow.mapSize.set(mobile ? 1024 : 2048, mobile ? 1024 : 2048);
-  Object.assign(sun.shadow.camera, { left: -24, right: 24, top: 24, bottom: -24, near: 5, far: 90 });
+  // The sun's shadows cover the main garden, and follow the view out into the meadows.
+  Object.assign(sun.shadow.camera, { left: -31, right: 31, top: 31, bottom: -31, near: 5, far: 110 });
   sun.shadow.bias = -0.0005;
   sun.shadow.normalBias = 0.04;
   sun.shadow.radius = 3;
@@ -99,7 +111,10 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   let saved = null; // the view before the first cat was chosen, to go back to
   let hovered = null, hoverQueued = null;
   const coats = new Map(residents.map((r, i) => [r.id, coatFor(r, i)]));
-  const simResidents = residents.map((r) => ({ id: r.id, name: r.name, model: coats.get(r.id).ginger ? "ginger" : "cat" }));
+  const simOf = (r) => ({ id: r.id, name: r.name, tier: r.tier, model: coats.get(r.id).ginger ? "ginger" : "cat" });
+  const mainResidents = residents.filter((r) => !livesInMeadow(r)).map(simOf);
+  // The meadow cats, biggest first, so the biggest of each ring live nearest the garden.
+  const meadowResidents = residents.filter(livesInMeadow).sort((a, b) => (b.market?.marketCapUsd || 0) - (a.market?.marketCapUsd || 0)).map(simOf);
   let sim = null;
   const critters = buildCritters(scene, {
     mobile,
@@ -108,7 +123,21 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     lawnFree: (x, z) => !sim || sim.nav.pointFree(x, z, 0.35),
     catsNear: (x, z, r) => !!sim && sim.cats.some((c) => Math.abs(c.x - x) < r && Math.abs(c.z - z) < r && Math.hypot(c.x - x, c.z - z) < r),
   });
-  sim = createSanctuary({ residents: simResidents, reduced: still, critters });
+  const garden0 = createSanctuary({ residents: mainResidents, reduced: still, critters });
+  const meadow = createMeadow({ residents: meadowResidents, startIndex: garden0.cats.length, reduced: still });
+  /* One view of every cat for the herd, picking and the camera: the garden's and the meadows'. */
+  sim = {
+    garden: garden0, meadow,
+    cats: [...garden0.cats, ...meadow.cats],
+    yarns: garden0.yarns, nav: garden0.nav,
+    byId: (id) => garden0.byId(id) || meadow.byId(id),
+    update(dt) { garden0.update(dt); meadow.update(dt); },
+    setViewer(x, z) { garden0.setViewer(x, z); },
+    setReduced(on) { garden0.setReduced(on); meadow.setReduced(on); },
+    get time() { return garden0.time; },
+    census() { return { ...garden0.census(), ...meadow.census() }; },
+    force: (...a) => garden0.force(...a),
+  };
   // On phones the cats don't cast into the shadow map (the most costly pass there); each gets a soft blob shadow instead.
   const herd = new CatHerd(scene, models, sim, coats, { blobShadows: mobile });
   herd.still = still;
@@ -140,7 +169,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   controls.enablePan = true;
   controls.screenSpacePanning = false;
   controls.minDistance = 4.5;
-  controls.maxDistance = 75;
+  controls.maxDistance = 150;
   controls.minPolarAngle = 0.3;
   controls.maxPolarAngle = 1.47;
   controls.autoRotateSpeed = 0.28;
@@ -232,6 +261,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     if (!cat && reach) {
       let best = reach;
       for (const c of sim.cats) {
+        if (c.hidden) continue;
         herd.midPoint(c, tmp).project(camera);
         if (tmp.z > 1) continue;
         const d = Math.hypot((tmp.x * 0.5 + 0.5) * rc.width - px, (-tmp.y * 0.5 + 0.5) * rc.height - py);
@@ -332,7 +362,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
       const h = ray.ray.intersectSphere(_sphere, tmp2);
       if (h && h.distanceTo(from) < d - 0.6) return true;
     }
-    return from.y < 0.6;
+    return from.y < groundHeight(from.x, from.z) + 0.6;
   }
   function advanceFocus(dt) {
     if (!focus) return;
@@ -400,6 +430,27 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     }
   }
 
+  /* ── Staying in the world: the view's centre stays over the meadows, the camera above the ground ── */
+  const LIMIT_R = MEADOW.ring2.outer + 6;
+  function keepInWorld() {
+    const t = controls.target, r = Math.hypot(t.x, t.z);
+    if (r > LIMIT_R) { const k = LIMIT_R / r; const dx = t.x * k - t.x, dz = t.z * k - t.z; t.x += dx; t.z += dz; camera.position.x += dx; camera.position.z += dz; }
+    const floor = groundHeight(camera.position.x, camera.position.z) + 1.2;
+    if (camera.position.y < floor) camera.position.y = floor;
+  }
+  /** The sun's shadow box follows what the camera looks at (in steps, so shadows don't shimmer). */
+  const sunAt = new THREE.Vector3();
+  function followSun() {
+    const t = controls.target;
+    const x = Math.round(t.x / 6) * 6, z = Math.round(t.z / 6) * 6;
+    if (Math.hypot(x, z) < 8 && sunAt.lengthSq() === 0) return;
+    if (sunAt.x === x && sunAt.z === z) return;
+    sunAt.set(Math.hypot(x, z) < 8 ? 0 : x, 0, Math.hypot(x, z) < 8 ? 0 : z);
+    sun.target.position.copy(sunAt);
+    sun.position.copy(SUN_LIGHT).multiplyScalar(50).add(sunAt);
+    sun.target.updateMatrixWorld();
+  }
+
   /* ── The loop ── */
   const clock = new THREE.Clock();
   function requestRender() { needsRender = true; if (!running) renderSoon(); }
@@ -416,12 +467,16 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     if (!still) ambientTime += real;
     ambient.update(ambientTime, canvas.clientHeight, camera.aspect, renderer.getPixelRatio());
     sim.setViewer(camera.position.x, camera.position.z);
+    meadow.setFocus(controls.target.x, controls.target.z, camera.position.x, camera.position.z);
     for (let k = 0; k < steps; k++) { critters.update(dt, still); if (!still) sim.update(dt); }
+    if (still) meadow.update(0); // still: nothing moves, but the cats near the view still appear
     herd.update();
     garden.syncYarn(sim.yarns);
     advanceFocus(real);
     easeInset(dt);
     controls.update(still ? undefined : real);
+    keepInWorld();
+    followSun();
     sky.update(real, camera, still);
     sign?.update(still);
     // Launched cats' coins, and the ring under the chosen cat.
@@ -475,30 +530,47 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   frame();
   startLoop();
 
-  /* ── Each cat's own model, after the first picture is up: nearest (and in view) first ── */
+  /* ── Each cat's own model, streamed: the ones near the view first, a few at a time ──
+     assets/models/cats/index.json lists every model; a key is a cat's id (a stock cat's ticker),
+     or a famous coin's contract, symbol or id (ui/models.js matches them). Models are fetched
+     only for cats within OWN.loadDist of the camera; the rest keep the shared, tinted model. */
+  const ownState = { index: null, queue: [], loading: 0, done: new Set() };
   const ownLoad = (async () => {
     await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
     let index;
     try { const res = await fetch(OWN.index); if (!res.ok) return; index = await res.json(); } catch { return; }
-    const want = Object.entries(index?.cats || {}).filter(([id]) => sim.byId(id));
-    const frustum = new THREE.Frustum(), pv = new THREE.Matrix4(), p = new THREE.Vector3();
-    const view = () => frustum.setFromProjectionMatrix(pv.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
-    const score = (id) => { const c = sim.byId(id); herd.midPoint(c, p); return p.distanceTo(camera.position) + (frustum.containsPoint(p) ? 0 : 60); };
-    const load = (f) => loader.loadAsync(`assets/models/cats/${f}.glb`).then((g) => g.scene).catch(() => null);
-    // The far copies first (small), a few at a time, then the full models, re-sorted as the view moves.
-    for (const tag of ["-lo", ""]) {
-      const queue = want.slice();
-      const worker = async () => {
-        while (queue.length) {
-          view(); queue.sort(([a], [b]) => score(a) - score(b));
-          const [id, dims] = queue.shift();
-          const root = await load(id + tag);
-          if (root) { herd.attachOwn(id, tag ? { lo: root, dims } : { hi: root, dims }); requestRender(); }
-        }
-      };
-      await Promise.all([worker(), worker(), worker()]);
+    ownState.index = index;
+    for (const [key, dims] of Object.entries(index?.cats || {})) {
+      const id = modelIdFor(key, residents);
+      if (id && sim.byId(id)) ownState.queue.push({ id, file: typeof dims.file === "string" && /^[A-Za-z0-9_.-]{1,80}$/.test(dims.file) ? dims.file : key, dims, stage: 0 });
     }
+    await pumpOwn(true);
   })();
+  const LOAD_DIST = 70;
+  const ownFrustum = new THREE.Frustum(), ownPv = new THREE.Matrix4(), ownP = new THREE.Vector3();
+  const loadGlb = (f) => loader.loadAsync(`assets/models/cats/${encodeURIComponent(f)}.glb`).then((g) => g.scene).catch(() => null);
+  /** Loads the nearest wanted models (the far copy first, then the full one), up to three at once. */
+  async function pumpOwn(first = false) {
+    if (!ownState.queue.length) return;
+    ownFrustum.setFromProjectionMatrix(ownPv.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+    const score = (q) => { const c = sim.byId(q.id); herd.midPoint(c, ownP); return ownP.distanceTo(camera.position) + (ownFrustum.containsPoint(ownP) ? 0 : 30) + q.stage * 40; };
+    const jobs = [];
+    while (ownState.loading < 3) {
+      const cand = ownState.queue.filter((q) => !q.busy).map((q) => [score(q), q]).filter(([d, q]) => d - q.stage * 40 < LOAD_DIST || q.id === chosenId).sort((a, b) => a[0] - b[0]);
+      if (!cand.length) break;
+      const q = cand[0][1];
+      q.busy = true; ownState.loading++;
+      jobs.push((async () => {
+        const root = await loadGlb(q.file + (q.stage === 0 ? "-lo" : ""));
+        if (root) { herd.attachOwn(q.id, q.stage === 0 ? { lo: root, dims: q.dims } : { hi: root, dims: q.dims }); requestRender(); }
+        ownState.loading--; q.busy = false;
+        if (q.stage === 0) q.stage = 1; else ownState.queue.splice(ownState.queue.indexOf(q), 1);
+      })());
+    }
+    await Promise.all(jobs);
+    if (first && jobs.length) return pumpOwn(true);
+  }
+  setInterval(() => { if (ownState.index && !document.hidden) pumpOwn(); }, 700);
 
   const api = {
     choose(id, opts) { choose(id, opts); if (!running) { requestAnimationFrame(tick); } },
@@ -518,8 +590,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   if (debug) {
     // For screenshots and checks: step the garden forward without waiting, and read the draw stats.
     Object.assign(api, {
-      sim, renderer, scene, camera, controls, critters, herd, ownLoad,
-      advance(seconds, dt = 1 / 30) { for (let t = 0; t < seconds; t += dt) { critters.update(dt, still); sim.update(dt); } sky.update(seconds, camera, still); ambientTime += seconds; frame(); },
+      sim, meadow, renderer, scene, camera, controls, critters, herd, ownLoad,
+      advance(seconds, dt = 1 / 30) { meadow.setFocus(controls.target.x, controls.target.z, camera.position.x, camera.position.z); for (let t = 0; t < seconds; t += dt) { critters.update(dt, still); sim.update(dt); } sky.update(seconds, camera, still); ambientTime += seconds; frame(); },
       stats() {
         // three counts only the main pass unless the counters are reset by hand before the shadow pass.
         renderer.info.autoReset = false; renderer.info.reset();
@@ -530,7 +602,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
         renderer.info.autoReset = true;
         frame();
         const i = renderer.info.render;
-        return { calls: i.calls, triangles: i.triangles, callsWithShadowPass: all.calls, trianglesWithShadowPass: all.triangles, cats: sim.cats.length, catTriangles: herd.triangles(), frameCpuMs: +ms.toFixed(2), programs: renderer.info.programs?.length, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures, pixelRatio: renderer.getPixelRatio(), level: perf.level, census: sim.census(), ownModels: herd.ownCounts() };
+        return { calls: i.calls, triangles: i.triangles, callsWithShadowPass: all.calls, trianglesWithShadowPass: all.triangles, cats: sim.cats.length, gardenCats: garden0.cats.length, meadow: meadow.counts(), catsDrawn: herd.drawn, catTriangles: herd.triangles(), frameCpuMs: +ms.toFixed(2), programs: renderer.info.programs?.length, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures, pixelRatio: renderer.getPixelRatio(), level: perf.level, census: sim.census(), ownModels: herd.ownCounts() };
       },
       catsOnScreen() {
         return sim.cats.map((c) => { herd.midPoint(c, tmp).project(camera); return { id: c.id, x: (tmp.x * 0.5 + 0.5) * canvas.clientWidth, y: (-tmp.y * 0.5 + 0.5) * canvas.clientHeight, z: tmp.z, doing: c.doing, pose: c.pose }; });
