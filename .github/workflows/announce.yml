@@ -48,13 +48,13 @@ jobs:
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
-        run: node scripts/announce.mjs
+        run: node scripts/post-thread.mjs && node scripts/announce.mjs
       - name: Commit the record if it changed
         if: ${{ !cancelled() }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add -- data/announced.json data/announce-queue.json
+          git add -- data/announced.json data/announce-queue.json data/intro-thread.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git diff --cached --stat
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \

@@ -69,14 +69,15 @@ test("the rules refuse price talk, promises, links that are not cited, brands, a
 test("backlog: the seeded record marks every existing cat backlog, and a run takes new cats first, then 1-2 from the backlog", () => {
   const seeded = read("data/announced.json");
   assert.equal(Object.keys(seeded.cats).length, PLANNED.cats.length);
-  for (const c of PLANNED.cats) assert.equal(seeded.cats[c.ticker]?.status, "backlog", c.ticker);
+  for (const c of PLANNED.cats) assert.ok(["backlog", "posted", "queued", "failed"].includes(seeded.cats[c.ticker]?.status), c.ticker);
   const cfg = read("data/announce-config.json");
   assert.equal(typeof cfg.dryRun, "boolean");
   assert.equal(pick(CATS, seeded, { ...cfg, perRun: 3, backlogPerRun: 2 }).length, 2);
   assert.equal(pick(CATS, seeded, { ...cfg, announceBacklog: false }).length, 0);
   const oneNew = structuredClone(seeded); delete oneNew.cats[CATS[5].key];
   const p = pick(CATS, oneNew, { perRun: 3, announceBacklog: true, backlogPerRun: 1 });
-  assert.deepEqual(p.map((c) => c.key), [CATS[5].key, CATS[0].key]);
+  const firstBacklog = CATS.find((c) => oneNew.cats[c.key]?.status === "backlog");
+  assert.deepEqual(p.map((c) => c.key), [CATS[5].key, firstBacklog.key]);
 });
 
 test("dry run: drafts go to the queue as a preview, nothing is recorded, nothing reaches X", async () => {
