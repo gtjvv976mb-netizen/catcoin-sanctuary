@@ -50,7 +50,7 @@ test("every planned cat drafts to <= 280 characters that pass the content rules,
     assert.ok(weightedLength(p1.text) <= LIMIT && p1.text.length <= LIMIT, `${c.key}: ${p1.text.length}`);
     assert.ok(p1.text.includes(c.name) || p1.text.includes("Meet "), c.key);
     assert.ok(p1.text.includes(cardLink(c.id)), c.key);
-    assert.ok(p1.text.includes("Not launched yet, be the first to adopt"), c.key);
+    assert.ok(p1.text.includes("No coin yet: be the first to adopt it"), c.key);
     assert.match(p1.text, /#catcoin/);
     assert.doesNotMatch(p1.text, /\b(price|buy|moon|pump|profit|guarantee)/i, c.key);
     if (c.proof?.kind === "x") assert.ok(p1.text.includes(`As seen in @${c.proof.handle}'s post`), c.key);

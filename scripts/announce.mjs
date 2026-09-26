@@ -37,6 +37,7 @@ import { credsFromEnv, uploadImage, createPost, whoAmI, XError } from "./lib/x-a
 
 export const SITE = "https://catcoinsanctuary.com/";
 export const HASHTAGS = ["#catcoin", "#CatsOfX"];
+const LORE_CAPTIONS = (() => { try { return JSON.parse(fs.readFileSync(new URL("../data/lore.json", import.meta.url), "utf8")).cats || {}; } catch { return {}; } })();
 export const LIMIT = 280;
 export const DEFAULT_CONFIG = Object.freeze({ dryRun: true, perRun: 3, announceBacklog: true, backlogPerRun: 1, spacingMinutes: 15, thread: true });
 const MAX_ATTEMPTS = 3;
@@ -125,16 +126,17 @@ export function draft(cat, { thread = true } = {}) {
   const company = companyShort(cat.company);
   const owner = cat.adoptable ? (company || cat.name) : company ? `${company}'s ${cat.symbol}` : cat.symbol;
   const cited = [cat.adoptable ? cat.name : null, company, cat.company, cat.symbol, cat.proof?.author, cat.proof?.handle && `@${cat.proof.handle}`, cat.proof?.url, link, SITE];
-  const status = cat.launched ? "🎉 Adopted! Its owner has launched it 🚀" : "🔓 Not launched yet, be the first to adopt 👇";
+  const status = cat.launched ? "🎉 Adopted! Its owner has launched it 🚀" : "🔓 No coin yet: be the first to adopt it 👇";
   const credit = proofCredit(cat.proof);
-  const lores = [...sentences(cat.story).slice(0, 1).map((s) => `📜 ${s}`), ""];
+  const caption = LORE_CAPTIONS[cat.key];
+  const lores = [...(caption ? [`📸 ${caption}`] : []), ...sentences(cat.story).slice(0, 1).map((s) => `📜 ${s}`), ""];
   // Rotate hyped openers so the feed doesn't repeat itself (stable per cat).
   const n = [...String(cat.id)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
   const openers = [
-    `🚨 NEW CAT IN THE SANCTUARY 🚨\n🐾 ${cat.name} just moved in, the cat of ${owner}!`,
-    `🐱✨ Say hi to ${cat.name}, ${owner}'s very own cat!`,
-    `🏡😼 A new resident has arrived: ${cat.name}, the cat of ${owner}!`,
-    `🎀 Fresh lore just dropped 🎀\n🐈 Meet ${cat.name}, the cat of ${owner}!`,
+    `🚨 NEW CAT ALERT 🚨\n😻 ${cat.name} just moved into the Sanctuary!\n👑 The cat of ${owner}`,
+    `🐱✨ Say hi to ${cat.name}!\n👑 The famous cat of ${owner}`,
+    `🏡🔥 A legend just moved in: ${cat.name}!\n👑 The cat of ${owner}`,
+    `🎉 Fresh lore just dropped! 🎉\n😺 Meet ${cat.name}, the cat of ${owner}`,
   ];
   const hooks = [openers[n % openers.length], cat.adoptable ? `🐾 Meet ${cat.name}, the newest cat in the sanctuary!` : `🐾 Meet ${shortName(cat.name)}, the cat for ${cat.symbol}!`];
   let first = null, violations = [];
@@ -155,13 +157,13 @@ export function draft(cat, { thread = true } = {}) {
   if (!first) return { ok: false, posts: [], violations };
   const posts = [{ text: first, image: cat.portrait || null, link }];
   if (thread && cat.proof?.url) {
-    const lead = `🧵 Why ${shortName(cat.name)} looks the way it does: `;
-    const tail = `\n🔗 Proof: ${cat.proof.url}`;
+    const lead = `🔎 The real story: `;
+    const tail = `\n🔗 ${cat.proof.url}`;
     const why = clip(sentences(cat.why).find((s) => !/^No (real )?cat link/i.test(s)) || sentences(cat.why)[0] || "", LIMIT - weightedLength(lead + tail));
-    const text = (why ? lead + why : `The proof behind ${shortName(cat.name)}:`) + tail;
+    const text = (why ? lead + why : `🔎 Proof it's real 👇`) + tail;
     const r = checkPost(text, cited);
     if (r.ok) posts.push({ text, link: cat.proof.url, quote: /^https:\/\/(?:x|twitter)\.com\/\w+\/status\/(\d+)/.exec(cat.proof.url)?.[1] ?? null });
-    else if (weightedLength(`The proof behind ${shortName(cat.name)}:${tail}`) <= LIMIT && checkPost(`The proof behind ${shortName(cat.name)}:${tail}`, cited).ok) posts.push({ text: `The proof behind ${shortName(cat.name)}:${tail}`, link: cat.proof.url });
+    else if (weightedLength(`🔎 Proof it's real 👇${tail}`) <= LIMIT && checkPost(`🔎 Proof it's real 👇${tail}`, cited).ok) posts.push({ text: `🔎 Proof it's real 👇${tail}`, link: cat.proof.url });
   }
   return { ok: true, posts, violations: [] };
 }
