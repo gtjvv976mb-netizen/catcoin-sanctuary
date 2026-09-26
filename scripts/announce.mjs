@@ -43,6 +43,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { checkFields } from "./lib/content-rules/content-rules.mjs";
+import { writeNextCat } from "./lib/next-cat.mjs";
 import { credsFromEnv, uploadImage, createPost, whoAmI, XError } from "./lib/x-api.mjs";
 
 export const SITE = "https://catcoinsanctuary.com/";
@@ -367,6 +368,8 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const newNote = mode === "post" ? old.note ?? note : note;
   if (newNote !== old.note || JSON.stringify(drafts) !== JSON.stringify(old.drafts ?? [])) writeJson(qFile, { note: newNote, updated: stamp(), drafts });
   if (mode !== "dryRun") saveState();
+  // "Who's that cat?": the next cat after this run (data/next-cat.json, scripts/lib/next-cat.mjs).
+  if (mode !== "dryRun") try { writeNextCat(root, { now: now(), state }); } catch (e) { log(`::warning::data/next-cat.json not refreshed (${e.message}).`); }
   const rel = releasesFile(queue, stamp());
   const oldRel = readJson(data("releases.json"), {});
   if (JSON.stringify({ ...oldRel, updated: 0 }) !== JSON.stringify({ ...rel, updated: 0 })) writeJson(data("releases.json"), rel);

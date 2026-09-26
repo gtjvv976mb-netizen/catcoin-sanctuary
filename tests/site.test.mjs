@@ -155,8 +155,8 @@ test("nothing the page loads comes from another host", () => {
   // The only absolute URLs in the head are the page's own address, for sharing (never loaded by the page).
   for (const m of INDEX.matchAll(/<(?:meta|link)\b[^>]*\b(?:content|href)="(https?:\/\/[^"]+)"/g)) assert.ok(m[1].startsWith(SITE), `the head names ${m[1]}`);
   // In the page's own scripts, a web address is only ever an outbound link (buy and explorer pages) or a comment.
-  const OUTBOUND = new Set(["gmgn.ai", "fomo.family", "solscan.io", "www.stonkfun.xyz", "dexscreener.com", "pump.fun", "getstonked.xyz",
-    "www.w3.org"]); // www.w3.org: the SVG namespace name, never fetched
+  const OUTBOUND = new Set(["gmgn.ai", "fomo.family", "solscan.io", "www.stonkfun.xyz", "dexscreener.com", "pump.fun", "getstonked.xyz", "x.com",
+    "www.w3.org"]); // www.w3.org: the SVG namespace name, never fetched; x.com: the "Who's that cat?" follow link
   for (const rel of moduleGraph().filter((m) => !m.includes("/vendor/"))) {
     const code = read(rel).replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'`\\])\/\/.*$/gm, "$1");
     for (const m of code.matchAll(/https?:\/\/([^/"'`\s$)]+)/g)) assert.ok(OUTBOUND.has(m[1]), `${rel} names ${m[0]}`);
@@ -243,8 +243,10 @@ test("page weight: the first view stays within budget", () => {
   assert.ok(of(/\.glb$/) <= 2 * MB, "models over 2 MB");
   assert.ok(of(/^assets\/vendor\//) <= 1 * MB, "three.js over 1 MB");
   // (Raised from 480 KB for the big HD garden: terrain, grass, trees, water and the finishing pass are all made in code;
-  // then to 652 KB for the "New cat just moved in!" highlight, assets/ui/newcat.js.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 652 * 1024, "the page's own scripts over 652 KB");
+  // then to 652 KB for the "New cat just moved in!" highlight, assets/ui/newcat.js; then to 655 KB for
+  // "Who's that cat?", assets/ui/teaser.js and world/easel.js, after trimming ~2 KB elsewhere: sign.js
+  // now uses three's mergeGeometries instead of its own copy.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 655 * 1024, "the page's own scripts over 655 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");

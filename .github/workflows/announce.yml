@@ -57,7 +57,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add -- data/announced.json data/announce-queue.json data/release-queue.json data/releases.json data/intro-thread.json data/thread-*.json
+          git add -- data/announced.json data/announce-queue.json data/release-queue.json data/releases.json data/next-cat.json data/intro-thread.json data/thread-*.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git diff --cached --stat
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \

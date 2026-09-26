@@ -95,6 +95,13 @@ footToggle.addEventListener("click", () => {
 /* ── The card, the list, the tags over the cats ────────────────────────── */
 
 let world = null;
+/* "Who's that cat?": the next cat's silhouette, from a tab and the easel by the porch (teaser.js). */
+let teaser = null;
+import("./teaser.js").then(({ createTeaser }) => {
+  teaser = createTeaser({ dialog: $("whos"), tab: $("nextcat-tab"), onChange: (n) => world?.setTeaser?.(n?.silhouette) });
+  teaser.check();
+}).catch(() => {});
+
 let returnFocus = null;
 const card = createCard({
   root: $("card"),
@@ -218,6 +225,7 @@ if (loadError || !residents.length) {
     const { startWorld } = await import("../world/world.js");
     world = await startWorld({
       canvas, residents, reduce, debug, adaptive: !(debug && params.has("noadapt")), quality: params.get("q"),
+      onTeaser: () => teaser?.open(),
       onPick: (id) => {
         if (id) show(id, { from: canvas });
         else if (card.isOpen && !matchMedia("(max-width: 640px)").matches) hideCard();
@@ -244,6 +252,7 @@ if (loadError || !residents.length) {
     });
     mgr.onProgress = undefined;
     document.body.classList.add("ready");
+    if (teaser?.next) world.setTeaser(teaser.next.silhouette);
     loader.done();
     // A lost GPU context: a friendly note, then the page is rebuilt at a lighter tier (world.js
     // lowers it for this session). After three losses, the list of cats instead of the 3D garden.

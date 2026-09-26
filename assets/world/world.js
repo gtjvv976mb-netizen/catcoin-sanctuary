@@ -24,11 +24,12 @@ import { buildWater } from "./water.js";
 import { buildCritters } from "./critters.js";
 import { buildAmbient } from "./ambient.js";
 import { buildSign, buildHallSign } from "./sign.js";
+import { buildEasel } from "./easel.js";
 import { buildResearch } from "./research.js";
 import { createSanctuary } from "./cats.js";
 import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
-import { HOUSE, GARDEN, MEADOW, HALL_OF_FAME, BRIDGES, groundHeight } from "./layout.js";
+import { HOUSE, GARDEN, MEADOW, HALL_OF_FAME, BRIDGES, EASEL, groundHeight } from "./layout.js";
 import { modelIdFor } from "../ui/models.js";
 
 /** Where a resident lives: the Hall of Fame coins (famous cat coins that already exist) on the Hall
@@ -99,7 +100,7 @@ export function tierFor({ mobile, override }) {
  * @param {boolean} [o.debug]
  * @param {boolean} [o.adaptive]   lower the resolution when frames run slow (on by default)
  */
-export async function startWorld({ canvas, residents, reduce, onPick, onHover, onTrack, debug = false, adaptive = true, quality = null }) {
+export async function startWorld({ canvas, residents, reduce, onPick, onHover, onTrack, onTeaser, debug = false, adaptive = true, quality = null }) {
   const small = matchMedia("(max-width: 720px), (max-height: 520px)").matches;
   const coarse = matchMedia("(pointer: coarse)").matches;
   const mobile = small || coarse;
@@ -187,6 +188,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   }
   /* Research HQ: the cottage is where the Research Team works (research.js). */
   const research = buildResearch(scene, { house, requestRender: () => requestRender() });
+  const easel = buildEasel(scene, { ...EASEL, y: groundHeight(EASEL.x, EASEL.z) });
 
   /* ── The finishing pass (post.js): loaded once the first view is up ── */
   let post = null;
@@ -366,6 +368,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     down = null;
     const cat = catAt(e.clientX, e.clientY, e.pointerType === "touch" ? 36 : 20);
     // No cat there, but the cottage (Research HQ): open its panel.
+    if (!cat && easel.hit(ray)) { onTeaser?.(); return; }
     if (!cat && Number.isFinite(research.hit(ray))) { research.open(); return; }
     onPick?.(cat ? cat.id : null);
   });
@@ -796,6 +799,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     },
     doing: (id) => sim.byId(id)?.doing || "",
     get frameMs() { return frameMs; },
+    /** The "Who's that cat?" easel's silhouette (data/next-cat.json). */
+    setTeaser(src) { easel.set(src, () => requestRender()); },
   };
   if (debug) {
     // For screenshots and checks: step the garden forward without waiting, and read the draw stats.

@@ -181,6 +181,8 @@ export const BIRD_BATH = { id: "birdbath", x: 2.6, z: -9.2, r: 0.42, top: 0.98 }
 export const GREENHOUSE = { id: "greenhouse", minX: 17.6, maxX: 23.4, minZ: -29.4, maxZ: -25.0, h: 2.3 };
 /** The potting shed at the back left. Its door faces +x. */
 export const SHED = { id: "shed", minX: -24.2, maxX: -20.2, minZ: -29.0, maxZ: -25.6, h: 2.2 };
+/** The "Who's that cat?" easel by the porch (easel.js), turned to the usual view. */
+export const EASEL = { id: "easel", x: 3.85, z: 2.35, r: 0.55, yaw: 0.42 };
 /** Rose arches over the front path, near the gate: a post each side. */
 export const ROSE_ARCHES = [29.2, 31.8, 34.4].map((z, i) => ({ id: `arch-${i + 1}`, x: 0.15, z, half: 1.05 }));
 /** Benches in the garden, and a planter at each end; `yaw` turns the seat to face the cottage. */
@@ -331,6 +333,7 @@ export function obstacles() {
     // Research HQ by the porch (research.js): the desk and its stool, and the map board.
     { id: "research-desk", type: "circle", x: -3.35, z: 3.45, r: 0.75 },
     { id: "research-board", type: "circle", x: -4.2, z: 2.75, r: 0.65 },
+    { id: EASEL.id, type: "circle", x: EASEL.x, z: EASEL.z, r: EASEL.r },
   ];
 }
 

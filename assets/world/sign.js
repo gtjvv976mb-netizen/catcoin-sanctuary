@@ -3,6 +3,7 @@
    turned towards the usual view. It rocks and bobs gently in the breeze. Two draw calls. */
 
 import * as THREE from "three";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { AMBIENT } from "./ambient.js";
 
 const ASPECT = 1024 / 570; // assets/models/sign.webp
@@ -31,7 +32,7 @@ export async function buildSign(scene, { roof, yaw = 0.3, width = 4.3 }) {
   // The board's thickness: the cut-out shape repeated a little behind, in plum, a touch bigger.
   const layers = [];
   for (let k = 1; k <= 7; k++) layers.push(plane.clone().scale(1 + k * 0.003, 1 + k * 0.003, 1).translate(0, -k * 0.012, -k * 0.024));
-  const edgeGeo = mergePlanes(layers);
+  const edgeGeo = mergeGeometries(layers);
   const edge = new THREE.Mesh(edgeGeo, new THREE.MeshLambertMaterial({ map: tex, color: 0x5a2346, emissive: 0x2a0a20, alphaTest: 0.5, side: THREE.DoubleSide }));
   const depth = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: tex, alphaTest: 0.5 });
   edge.customDepthMaterial = depth;
@@ -114,7 +115,7 @@ export async function buildHallSign(scene, at, y0 = 0) {
   front.position.z = 0.02;
   const layers = [];
   for (let k = 1; k <= 6; k++) layers.push(plane.clone().scale(1 + k * 0.003, 1 + k * 0.003, 1).translate(0, -k * 0.01, -k * 0.022));
-  const edge = new THREE.Mesh(mergePlanes(layers), new THREE.MeshLambertMaterial({ map: tex, color: 0x5a2346, emissive: 0x2a0a20, alphaTest: 0.5, side: THREE.DoubleSide }));
+  const edge = new THREE.Mesh(mergeGeometries(layers), new THREE.MeshLambertMaterial({ map: tex, color: 0x5a2346, emissive: 0x2a0a20, alphaTest: 0.5, side: THREE.DoubleSide }));
   edge.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: tex, alphaTest: 0.5 });
   edge.castShadow = true;
   pivot.add(edge, front);
@@ -126,20 +127,4 @@ export async function buildHallSign(scene, at, y0 = 0) {
     pivot.add(m);
   }
   return { group: pivot };
-}
-
-function mergePlanes(list) {
-  const pos = [], uv = [], nrm = [], idx = [];
-  let base = 0;
-  for (const g of list) {
-    pos.push(...g.attributes.position.array); uv.push(...g.attributes.uv.array); nrm.push(...g.attributes.normal.array);
-    for (const i of g.index.array) idx.push(i + base);
-    base += g.attributes.position.count;
-  }
-  const g = new THREE.BufferGeometry();
-  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
-  g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
-  g.setAttribute("normal", new THREE.Float32BufferAttribute(nrm, 3));
-  g.setIndex(idx);
-  return g;
 }
