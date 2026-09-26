@@ -79,3 +79,9 @@ export async function createPost({ text, mediaIds = [], replyTo = null, quote = 
 export async function whoAmI(creds, fetchImpl = fetch) {
   return call(fetchImpl, "GET", "https://api.x.com/2/users/me", creds);
 }
+
+/** The id of an account's most recent post (GET /2/users/:id/tweets). */
+export async function getLatestOwnPostId(userId, creds, fetchImpl = fetch) {
+  const b = await call(fetchImpl, "GET", `https://api.x.com/2/users/${encodeURIComponent(userId)}/tweets?max_results=5`, creds);
+  return b?.data?.[0]?.id ?? null;
+}
