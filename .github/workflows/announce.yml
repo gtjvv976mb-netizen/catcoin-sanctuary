@@ -18,7 +18,7 @@ on:
     paths:
       - data/planned.json
   schedule:
-    - cron: "41 */2 * * *"
+    - cron: "*/20 * * * *"
   workflow_dispatch:
 
 permissions: {}

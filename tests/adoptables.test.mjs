@@ -53,9 +53,9 @@ test("rules: a lore picture must be the cat's own file with a short caption", ()
   assert.match(adoptableProblem({ ...structuredClone(DATA.cats[0]), lore: { image: "x.webp", caption: "A caption that is long enough." } }), /lore image/);
 });
 
-test("shipped: every adoptable cat is held from announcing (X posting is paused)", () => {
+test("shipped: every adoptable cat has an announce record (held until released, then backlog/posted)", () => {
   const ann = read("data/announced.json").cats;
-  for (const c of DATA.cats) assert.equal(ann[c.ticker]?.status, "held", c.ticker);
+  for (const c of DATA.cats) assert.ok(["held", "backlog", "posted", "queued", "failed"].includes(ann[c.ticker]?.status), c.ticker);
 });
 
 test("rules: a bad cat is refused", () => {

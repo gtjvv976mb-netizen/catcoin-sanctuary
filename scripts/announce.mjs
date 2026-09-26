@@ -83,7 +83,7 @@ const clip = (s, max) => {
 const shortName = (name) => String(name).split(/\s+the\s+/i)[0].trim();
 
 /** Every cat the sanctuary has: planned ones by ticker, adopted-but-unplanned ones by mint. */
-export function listCats(planned, collection = { cats: [] }) {
+export function listCats(planned, collection = { cats: [] }, adoptables = { cats: [] }) {
   const stocks = new Map((planned.stocks || []).map((s) => [s.pair.mint, s]));
   const out = [];
   const tickers = new Set();
@@ -92,6 +92,11 @@ export function listCats(planned, collection = { cats: [] }) {
     const s = stocks.get(c.pair.mint);
     out.push({ key: c.ticker, id: c.ticker, name: c.name, ticker: c.ticker, symbol: c.pair.symbol, company: s?.company ?? null,
       story: c.story, why: c.whyLook, proof: c.proof ?? null, portrait: c.portrait ?? null, launched: false });
+  }
+  // Adoptable cats (verified lore from companies, people, shows); the lore picture is the post image.
+  for (const c of adoptables.cats || []) {
+    out.push({ key: c.ticker, id: c.ticker, name: c.name, ticker: c.ticker, symbol: c.pair?.symbol ?? "STONK", company: c.owner ?? null,
+      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore ?? `assets/lore/${c.ticker}.webp`, launched: false, adoptable: true });
   }
   for (const e of collection.cats || []) {
     const launchedPlanned = tickers.has(`${e.pair?.mint} ${String(e.symbol).toUpperCase()}`);
@@ -118,8 +123,8 @@ export function proofCredit(p) {
 export function draft(cat, { thread = true } = {}) {
   const link = cardLink(cat.id);
   const company = companyShort(cat.company);
-  const owner = company ? `${company}'s ${cat.symbol}` : cat.symbol;
-  const cited = [company, cat.company, cat.symbol, cat.proof?.author, cat.proof?.handle && `@${cat.proof.handle}`, cat.proof?.url, link, SITE];
+  const owner = cat.adoptable ? (company || cat.name) : company ? `${company}'s ${cat.symbol}` : cat.symbol;
+  const cited = [cat.adoptable ? cat.name : null, company, cat.company, cat.symbol, cat.proof?.author, cat.proof?.handle && `@${cat.proof.handle}`, cat.proof?.url, link, SITE];
   const status = cat.launched ? "🎉 Adopted! Its owner has launched it 🚀" : "🔓 Not launched yet, be the first to adopt 👇";
   const credit = proofCredit(cat.proof);
   const lores = [...sentences(cat.story).slice(0, 1).map((s) => `📜 ${s}`), ""];
@@ -131,7 +136,7 @@ export function draft(cat, { thread = true } = {}) {
     `🏡😼 A new resident has arrived: ${cat.name}, the cat of ${owner}!`,
     `🎀 Fresh lore just dropped 🎀\n🐈 Meet ${cat.name}, the cat of ${owner}!`,
   ];
-  const hooks = [openers[n % openers.length], `🐾 Meet ${shortName(cat.name)}, the cat for ${cat.symbol}!`];
+  const hooks = [openers[n % openers.length], cat.adoptable ? `🐾 Meet ${cat.name}, the newest cat in the sanctuary!` : `🐾 Meet ${shortName(cat.name)}, the cat for ${cat.symbol}!`];
   let first = null, violations = [];
   outer:
   for (const hook of hooks) {
@@ -192,7 +197,7 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const config = { ...DEFAULT_CONFIG, ...readJson(data("announce-config.json"), {}), ...force };
   const state = readJson(data("announced.json"), { cats: {} });
   state.cats ||= {};
-  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), readJson(data("collection.json"), { cats: [] }));
+  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), readJson(data("collection.json"), { cats: [] }), readJson(data("adoptables.json"), { cats: [] }));
   const creds = credsFromEnv(env);
   const mode = config.dryRun ? "dryRun" : creds ? "post" : "queue";
   const stamp = () => now().toISOString();
@@ -236,7 +241,8 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
     try {
       const [p1, p2] = d.posts;
       let media = [];
-      const img = p1.image && path.join(root, p1.image);
+      const lore = path.join(root, `assets/lore/${cat.key}.webp`);
+      const img = fs.existsSync(lore) ? lore : p1.image && path.join(root, p1.image);
       if (img && fs.existsSync(img)) {
         try { media = [await uploadImage(fs.readFileSync(img), /\.png$/i.test(img) ? "image/png" : /\.webp$/i.test(img) ? "image/webp" : "image/jpeg", creds, fetchImpl)]; }
         // A media-upload refusal (the free X tier and some app setups reject it) must not stop the text post;
