@@ -47,6 +47,15 @@
   margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--proof-line);
   color: var(--proof-soft); font-size: 0.86rem;
 }
-.proof-link { color: var(--proof-accent); font-weight: 600; text-decoration: none; }
-.proof-link:hover, .proof-link:focus-visible { text-decoration: underline; }
+a.proof-handle { text-decoration: none; }
+a.proof-handle:hover, a.proof-handle:focus-visible { color: var(--proof-accent); text-decoration: underline; }
+.proof-link {
+  display: flex; align-items: center; justify-content: center; min-height: 44px;
+  margin-top: 10px; padding: 10px 16px; border-radius: 999px;
+  background: var(--proof-ink); color: var(--proof-bg);
+  font-weight: 700; font-size: 0.95rem; text-decoration: none; text-align: center;
+}
+.proof-web .proof-link { background: var(--proof-accent); color: #ffffff; }
+.proof-link:hover, .proof-link:focus-visible { opacity: 0.88; text-decoration: underline; }
+.proof-link:focus-visible { outline: 2px solid var(--proof-accent); outline-offset: 2px; }
 .proof-note { margin: 8px 0 0; color: var(--proof-soft); font-size: 0.84rem; }

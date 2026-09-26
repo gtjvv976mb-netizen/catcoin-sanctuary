@@ -419,7 +419,12 @@ test("every planned cat's card shows its proof: the post's author, handle, words
     if (c.proof.text) assert.ok(text.includes(c.proof.text), r.id);
     const a = fig.querySelectorAll("a").find((x) => x.className === "proof-link");
     assert.equal(a.href, c.proof.url);
-    assert.equal(a.textContent, c.proof.kind === "x" ? "View on X ↗" : "View source ↗");
+    assert.equal(a.textContent, c.proof.kind === "x" ? "View post on X ↗" : "Read the story ↗");
+    if (c.proof.kind === "x") {
+      const h = fig.querySelectorAll("a").find((x) => x.className === "proof-handle");
+      assert.equal(h.href, `${new URL(c.proof.url).origin}/${c.proof.handle}`, r.id);
+      assert.equal(h.textContent, `@${c.proof.handle}`, r.id);
+    }
     assert.equal(a.rel, "noopener noreferrer");
     const img = fig.querySelector("img");
     if (c.proof.image) assert.equal(img.src, c.proof.image); else assert.equal(img, null);

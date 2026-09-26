@@ -58,7 +58,11 @@ export function proofBlock(p) {
   av.setAttribute("aria-hidden", "true");
   const who = el("div", "proof-who");
   who.append(el("b", "proof-author", p.author));
-  who.append(el("span", "proof-handle", p.kind === "x" && p.handle ? `@${p.handle}` : hostOf(p.url)));
+  if (p.kind === "x" && p.handle) {
+    const h = link(`${new URL(p.url).origin}/${p.handle}`, `@${p.handle}`, "proof-handle");
+    h.title = `${p.author} on X`;
+    who.append(h);
+  } else who.append(el("span", "proof-handle", hostOf(p.url)));
   top.append(av, who);
   top.append(el("span", "proof-kind", p.kind === "x" ? "X post" : "Web page"));
   fig.append(top);
@@ -82,8 +86,11 @@ export function proofBlock(p) {
     t.dateTime = p.date;
     foot.append(t);
   }
-  foot.append(link(p.url, p.kind === "x" ? "View on X ↗" : `View source ↗`, "proof-link"));
   fig.append(foot);
+  /* The link out, as a clear button: the post on X, or the page that tells the story. */
+  const go = link(p.url, p.kind === "x" ? "View post on X ↗" : "Read the story ↗", "proof-link");
+  go.setAttribute("aria-label", p.kind === "x" ? `View ${p.author}'s post on X (opens in a new tab)` : `Read the story on ${hostOf(p.url)} (opens in a new tab)`);
+  fig.append(go);
   if (p.note) fig.append(el("p", "proof-note", p.note));
   return fig;
 }
