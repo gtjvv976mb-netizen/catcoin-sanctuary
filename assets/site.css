@@ -320,6 +320,9 @@ body.no-webgl .hint { display: none; }
 /* ── Famous cat coins: badge, logo, warnings, and the finder's kind and chain filters ── */
 .badge-famous { background: #fdeccb; color: #7a4f06; }
 .badge-famous::before { background: linear-gradient(135deg, #ffd766, #d99a1a); box-shadow: 0 0 0 1.5px #b87c0c inset; }
+.card-inspiration { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin: 0 0 14px; padding: 10px 12px; border-radius: 12px; background: #fdf3de; border: 1px solid #f0d9a4; }
+.card-inspiration-text { margin: 0; font-weight: 700; color: #6b4506; }
+.card-inspiration-link { font-weight: 700; color: #7a4f06; white-space: nowrap; }
 .badge-pick { background: #e5eefc; color: #2c4f8a; margin-left: 4px; }
 .badge-pick::before { background: #5b8be0; }
 .card-logo { border-radius: 50%; background: #fff; }

@@ -102,9 +102,10 @@ export function createPanels({ about, socials, config = null, onDisclaimers }) {
   {
     const body = shell(about, "About", "about-title");
     body.append(
-      el("p", "panel-lead", "Where all catcoins live."),
-      el("p", null, "Catcoin Sanctuary is a sunny 3D garden where every cat is a cat coin. Walk round the cottage, click a cat, and its card tells you who it is: the stock it is paired with, its lore, and the posts and pages that made it famous."),
-      el("p", null, "Some residents are stock cats, each drawn for a company and its story; others are famous cat coins from around the internet. A cat moves in as planned, and becomes a real token only when it is launched on StonkFun and the hourly check finds that launch on Solana. Then a little gold coin turns over its head."),
+      el("p", "panel-lead", "A home for adoptable cats."),
+      el("p", null, "The sanctuary researches companies, personalities, shows, movies and crypto projects for cats with real, verified lore (X posts and sources) that have no coin yet, or only a tiny one under $50k. Those cats move into the garden, and you can adopt one and launch its coin on StonkFun."),
+      el("p", null, "Walk round the cottage and click a cat: its card tells you who it is, its lore and the posts and pages behind it. An adoptable cat becomes a real token only when it is launched on StonkFun and the hourly check finds that launch on Solana. Then a little gold coin turns over its head."),
+      el("p", null, "Out by the fountain is the Hall of Fame: legendary cat coins that already exist, made by others. They are not adoptable; they are there as inspiration."),
     );
     const t = el("p", "panel-ticker");
     t.append(el("span", "panel-ticker-label", "The sanctuary's own coin"), el("span", "panel-ticker-name", ticker));

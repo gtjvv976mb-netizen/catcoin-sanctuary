@@ -701,8 +701,12 @@ export function validatePlanned(data, { nowMs = Date.now() } = {}) {
     names for Ethereum, Base and BNB Chain, should that change.) */
 export const FAMOUS_CHAINS = Object.freeze(["solana"]);
 export const GMGN_CHAINS = Object.freeze({ solana: "sol", ethereum: "eth", base: "base", bsc: "bsc" });
-export const FAMOUS_TIERS = Object.freeze(["main", "ring1", "ring2"]);
-/** Where a coin lives, from its market cap when it was placed and whether a company or project stands behind its cat. */
+/** data/famous.json is the Hall of Fame only (the owner's decision of 2026-09-26): legendary cat
+    coins that already exist, Solana, tier "main", each with a researched profile. The sanctuary
+    itself is for adoptable cats with no coin yet; the coins taken out then are kept in
+    scripts/archive/famous-removed.json. The meadow tiers (ring1, ring2) are no longer used. */
+export const FAMOUS_TIERS = Object.freeze(["main"]);
+/** Where a coin lived under the old rule (kept for the archive), from its market cap when it was placed and whether a company or project stands behind its cat. */
 export const TIER_RULE = Object.freeze({ mainMcap: 1_000_000, ring1Mcap: 100_000, minMcap: 20_000 });
 export const tierFor = (mcap, company) => (company || mcap >= TIER_RULE.mainMcap ? "main" : mcap >= TIER_RULE.ring1Mcap ? "ring1" : "ring2");
 
@@ -762,7 +766,7 @@ export function famousProblem(c, { nowMs = Date.now() } = {}) {
   if (c.pair.url !== null && (httpsProblem(c.pair.url) || new URL(c.pair.url).hostname !== "dexscreener.com")) return "pair url must be a dexscreener.com page";
   if (c.pair.address !== null && (typeof c.pair.address !== "string" || !/^[A-Za-z0-9:._-]{3,140}$/.test(c.pair.address))) return "pair address is not an address";
   if (c.company !== null && proseProblem(c.company, { maxChars: 80 })) return "company must be a short name or null";
-  if (!FAMOUS_TIERS.includes(c.tier)) return "tier must be main, ring1 or ring2";
+  if (!FAMOUS_TIERS.includes(c.tier)) return "tier must be main (the Hall of Fame)";
   if (c.logo !== null && c.logo !== `assets/coins/${c.id}.webp`) return "logo must be assets/coins/<id>.webp or null";
   const m = c.market;
   if (!isObject(m) || extraKeys(m, ["marketCapUsd", "liquidityUsd", "volume24hUsd", "measuredAt", "source"]).length) return "market must be { marketCapUsd, liquidityUsd, volume24hUsd, measuredAt, source }";
@@ -776,6 +780,7 @@ export function famousProblem(c, { nowMs = Date.now() } = {}) {
   for (const [k, max, empty] of [["who", 900, true], ["lore", 1200, false]]) { const p = proseProblem(c[k], { maxChars: max, empty }); if (p) return `${k}: ${p}`; }
   const ls = c.loreSource;
   if (!isObject(ls) || extraKeys(ls, ["kind", "label", "url"]).length || !["profile", "coin", "listing"].includes(ls.kind)) return "loreSource must be { kind: profile | coin | listing, label, url }";
+  if (ls.kind !== "profile") return "a Hall of Fame coin needs a researched profile (loreSource.kind profile)";
   if (proseProblem(ls.label, { maxChars: 80 })) return "loreSource.label must be short prose";
   if (ls.url !== null && httpsProblem(ls.url)) return "loreSource.url must be https or null";
   if (c.viral !== null) {

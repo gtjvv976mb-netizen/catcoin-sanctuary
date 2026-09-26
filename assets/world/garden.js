@@ -404,6 +404,71 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     pondGroup.push(g);
   }
 
+  /* ── The Hall of Fame plaza: paving, a fountain with a gold coin on a pedestal, lamps, low hedges ── */
+  {
+    const H = L.HALL_OF_FAME, F = H.fountain;
+    // Paving: rings of warm stone slabs round the fountain, and a gold-edged border.
+    for (let rr = F.r + 0.2; rr < H.r; rr += 0.62) {
+      const n = Math.max(8, Math.round((2 * Math.PI * rr) / 0.72));
+      for (let k = 0; k < n; k++) {
+        const a = (k / n) * Math.PI * 2 + rr;
+        statics.push(paint(place(new THREE.BoxGeometry(0.66, 0.08, 0.56), H.x + Math.cos(a) * rr, 0.04, H.z + Math.sin(a) * rr, 0, -a, 0), rnd.pick([0xeadfcb, 0xe2d4bb, 0xf1e7d6]), rnd, 0.03));
+      }
+    }
+    statics.push(paint(place(new THREE.CylinderGeometry(H.r + 0.05, H.r + 0.15, 0.06, 64), H.x, 0.02, H.z), 0xd8c9ae));
+    statics.push(paint(place(new THREE.TorusGeometry(H.r, 0.09, 4, 72), H.x, 0.09, H.z, Math.PI / 2), 0xd9a832));
+    // The fountain: a round basin, its rim, a pedestal and a big gold coin with a cat's face on top.
+    statics.push(paint(place(new THREE.CylinderGeometry(F.r, F.r + 0.1, 0.55, 32, 1, true), F.x, 0.28, F.z), 0xcfc3ae));
+    statics.push(paint(place(new THREE.TorusGeometry(F.r, 0.14, 6, 40), F.x, 0.56, F.z, Math.PI / 2), 0xe8ddc9));
+    statics.push(paint(place(new THREE.CylinderGeometry(0.36, 0.5, 1.5, 12), F.x, 0.75, F.z), 0xe6dccb));
+    statics.push(paint(place(new THREE.CylinderGeometry(0.62, 0.45, 0.22, 16), F.x, 1.55, F.z), 0xd9cbb2));
+    const coinY = 2.45;
+    const faceYaw = Math.atan2(-F.x, -F.z); // the coin faces the cottage
+    {
+      // A coin standing on edge: build it at the origin, turn it, then move it.
+      const parts = [
+        paint(new THREE.CylinderGeometry(0.75, 0.75, 0.16, 32).rotateX(Math.PI / 2), 0xf5c542),
+        paint(new THREE.TorusGeometry(0.66, 0.05, 4, 32).translate(0, 0, 0.09), 0xd49b1f),
+        paint(new THREE.TorusGeometry(0.66, 0.05, 4, 32).translate(0, 0, -0.09), 0xd49b1f),
+        // Two ears and a nose, embossed on both faces.
+        ...[1, -1].flatMap((sd) => [
+          paint(new THREE.ConeGeometry(0.14, 0.24, 3).translate(-0.25, 0.32, 0.1 * sd), 0xe3ad2a),
+          paint(new THREE.ConeGeometry(0.14, 0.24, 3).translate(0.25, 0.32, 0.1 * sd), 0xe3ad2a),
+          paint(new THREE.SphereGeometry(0.07, 8, 6).translate(0, -0.05, 0.1 * sd), 0xe3ad2a),
+          paint(new THREE.SphereGeometry(0.06, 8, 6).translate(-0.2, 0.08, 0.1 * sd), 0x6a4a00),
+          paint(new THREE.SphereGeometry(0.06, 8, 6).translate(0.2, 0.08, 0.1 * sd), 0x6a4a00),
+        ]),
+      ];
+      for (const q of parts) statics.push(q.rotateY(faceYaw).translate(F.x, coinY, F.z));
+    }
+    // Water in the basin.
+    const wg = new THREE.CircleGeometry(F.r - 0.05, 36).rotateX(-Math.PI / 2);
+    const wc = [];
+    for (let i = 0; i < wg.attributes.position.count; i++) { _c.setHex(0x5fb8dc).lerp(_c2.setHex(0x9ee0f0), Math.hypot(wg.attributes.position.getX(i), wg.attributes.position.getZ(i)) / F.r); wc.push(_c.r, _c.g, _c.b); }
+    wg.setAttribute("color", new THREE.Float32BufferAttribute(wc, 3));
+    wg.deleteAttribute("uv");
+    wg.translate(F.x, 0.45, F.z);
+    pondGroup.push(wg);
+    // Lamp posts round the edge, and low flowering hedges between them (open towards the cottage).
+    const toGarden = Math.atan2(-H.z, -H.x);
+    for (let k = 0; k < 8; k++) {
+      const a = toGarden + Math.PI / 8 + (k * Math.PI) / 4;
+      const lx = H.x + Math.cos(a) * (H.r + 0.35), lz = H.z + Math.sin(a) * (H.r + 0.35), y0 = groundHeight(lx, lz);
+      statics.push(paint(place(new THREE.BoxGeometry(0.1, 2.0, 0.1), lx, y0 + 1.0, lz), COLORS.iron));
+      statics.push(paint(place(new THREE.BoxGeometry(0.24, 0.3, 0.24), lx, y0 + 2.1, lz), 0xfff1cf));
+      statics.push(paint(place(new THREE.ConeGeometry(0.24, 0.18, 4), lx, y0 + 2.33, lz, 0, Math.PI / 4, 0), COLORS.iron));
+    }
+    for (let k = 0; k < 64; k++) {
+      const a = toGarden + (k / 64) * Math.PI * 2;
+      const off = Math.abs(Math.atan2(Math.sin(a - toGarden), Math.cos(a - toGarden)));
+      if (off < 0.5 || Math.abs(off - Math.PI) < 0.25) continue; // the entrance by the sign, and one at the back
+      if (k % 8 === 4) continue; // room for the lamps
+      const hx = H.x + Math.cos(a) * (H.r + 0.9), hz = H.z + Math.sin(a) * (H.r + 0.9), y0 = groundHeight(hx, hz);
+      statics.push(sway(paint(place(new THREE.IcosahedronGeometry(0.42, 0), hx, y0 + 0.32, hz, rnd.range(0, 3), rnd.range(0, 3), 0, 1, 0.8, 1), rnd.pick(COLORS.bush), rnd, 0.05), y0, 0.03));
+      if (k % 3 === 0) statics.push(paint(place(new THREE.IcosahedronGeometry(0.08, 0), hx, y0 + 0.66, hz), rnd.pick([0xf29bb2, 0xf6d04d, 0xfff4dc])));
+    }
+  }
+
   /* ── Benches along the ring paths ── */
   for (const b of L.BENCHES) {
     const y0 = groundHeight(b.x, b.z), ry = b.yaw;
@@ -546,6 +611,7 @@ export function buildGarden(scene, { mobile = false, sunDir = new THREE.Vector3(
     if (Math.abs(r - L.GARDEN.fenceR) < 0.25) return true;
     if (rectDist(x, z, L.HOUSE, 0) < pad + 0.15) return true;
     if (Math.hypot(x - L.POND2.x, z - L.POND2.z) < L.POND2.r + 0.35) return true;
+    if (L.inHall(x, z, 1.4)) return true;
     if (r > L.GARDEN.fenceR + 1) {
       for (const s of stones) if (Math.abs(x - s.x) < 0.6 && Math.abs(z - s.z) < 0.6 && Math.hypot(x - s.x, z - s.z) < 0.44 + pad) return true;
       return false;

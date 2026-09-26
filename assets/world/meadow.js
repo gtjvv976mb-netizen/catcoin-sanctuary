@@ -1,16 +1,17 @@
-/* The meadow cats: the famous cat coins that live in the two meadow rings round the fence.
+/* The Hall of Fame cats: the legendary cat coins that already exist (data/famous.json), living
+   together on the Hall of Fame plaza in the first meadow ring (layout.js HALL_OF_FAME), apart from
+   the adoptable cats in the garden. The meadow rings themselves are kept free for adoptable cats
+   still to come.
 
-   No three.js here (it runs under plain Node too). Each meadow cat has a home spot in its ring,
-   spread evenly by area (the biggest coins of a ring nearest its inner edge), and a simple life
-   round it: stroll a few steps, sit and look about, loaf, have a wash, nap. A few live at the
-   second pond's edge and watch the water. They leave on each cat the same fields cats.js does
+   No three.js here (it runs under plain Node too). Each cat has a home spot on the plaza, round
+   the fountain (the biggest coins nearest it), and a simple life round it: stroll a few steps,
+   sit and look about, loaf, have a wash, nap. They leave on each cat the same fields cats.js does
    (pose, position, heading, stride, speed, anim, doing), so catviews.js draws them the same way.
 
-   Streaming. There are hundreds of them, so only the ones near what the camera looks at are
-   simulated at full rate; further out they are stepped a few times a second, and beyond that they
-   rest where they are (a cat mid-stroll finishes its walk first). A cat far from the camera is
-   `hidden` (not drawn at all); when the camera comes near, it appears, growing in over half a
-   second, so the rings fill in as you explore. */
+   Streaming. Only cats near what the camera looks at are simulated at full rate; further out they
+   are stepped a few times a second, and beyond that they rest where they are (a cat mid-stroll
+   finishes its walk first). A cat far from the camera is `hidden` (not drawn at all); when the
+   camera comes near, it appears, growing in over half a second. */
 
 import { makeRandom } from "./rng.js";
 import * as L from "./layout.js";
@@ -19,14 +20,14 @@ import * as L from "./layout.js";
 export const STREAM = { active: 30, lazy: 62, lazyStep: 0.3, draw: 115, appear: 0.5 };
 
 const SAY = {
-  look: "Watching the meadow", sit: "Sitting in the long grass", loaf: "Loafing in the grass", sleep: "Napping in the meadow",
-  groom: "Having a wash", walk: "Strolling through the meadow", pond: "Watching the pond", sun: "Basking in the sun",
+  look: "Watching the fountain", sit: "Sitting on the plaza", loaf: "Loafing on the warm stones", sleep: "Napping in the Hall of Fame",
+  groom: "Having a wash", walk: "Strolling round the plaza", pond: "Watching the pond", sun: "Basking in the sun",
 };
-const ROAM = 3.6; // how far a meadow cat strolls from home
+const ROAM = 2.6; // how far a Hall of Fame cat strolls from home
 
 /**
  * @param {object} o
- * @param {Array} o.residents  [{ id, name, model?: "cat" | "ginger", tier: "ring1" | "ring2" }], biggest first
+ * @param {Array} o.residents  [{ id, name, model?: "cat" | "ginger" }], biggest first
  * @param {number} [o.startIndex]  the first cat's index (after the main garden's cats)
  * @param {boolean} [o.reduced]
  */
@@ -36,45 +37,31 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
   let focus = { x: 0, z: 0 }, eye = { x: 0, z: 30 };
   let time = 0;
 
-  // Homes: per ring, evenly by area along a golden-angle spiral, nudged clear of trees, benches and the pond.
-  const rings = { ring1: [], ring2: [] };
-  for (const r of residents) (rings[r.tier] || rings.ring2).push(r);
-  const taken = [];
-  const clearOfHomes = (x, z) => taken.every((h) => Math.abs(h.x - x) > 1.4 || Math.abs(h.z - z) > 1.4 || Math.hypot(h.x - x, h.z - z) > 1.4);
-  for (const [tier, list] of Object.entries(rings)) {
-    const R = L.MEADOW[tier];
-    const n = list.length;
-    list.forEach((r, k) => {
-      const rnd = makeRandom(`meadow:${r.id}`);
-      let home = null;
-      for (let t = 0; t < 40 && !home; t++) {
-        const f = (k + 0.5 + (t ? rnd.range(-0.45, 0.45) : 0)) / Math.max(1, n);
-        const rr = Math.sqrt(R.inner ** 2 + f * (R.outer ** 2 - R.inner ** 2)) + (t ? rnd.range(-1.5, 1.5) : 0);
-        const a = k * 2.399963 + (tier === "ring2" ? 1.1 : 0.3) + (t ? rnd.range(-0.08, 0.08) : 0);
-        const x = Math.cos(a) * rr, z = Math.sin(a) * rr;
-        if (L.meadowFree(x, z, 0.8) && clearOfHomes(x, z)) home = { x, z };
-      }
-      if (!home) { const a = rnd.range(0, 6.28), rr = (R.inner + R.outer) / 2; home = { x: Math.cos(a) * rr, z: Math.sin(a) * rr }; }
-      taken.push(home);
-      cats.push(makeCat(r, home, rnd));
-    });
-  }
-  // The ring-1 cats nearest the second pond live at its edge.
-  for (const spot of L.POND2_SPOTS) {
-    let best = null, bd = 14;
-    for (const c of cats) {
-      if (c.tier !== "ring1" || c.pond) continue;
-      const d = Math.hypot(c.home.x - spot.x, c.home.z - spot.z);
-      if (d < bd) { bd = d; best = c; }
+  // Homes: rings round the fountain, filled from the inside out, spaced about 1.5 apart.
+  const H = L.HALL_OF_FAME;
+  const radii = [];
+  for (let rr = H.fountain.r + 1.1; rr < H.r - 0.7; rr += 1.45) radii.push(rr);
+  const slots = [];
+  radii.forEach((rr, i) => {
+    const n = Math.floor((2 * Math.PI * rr) / 1.5);
+    for (let k = 0; k < n; k++) {
+      const a = (k / n) * Math.PI * 2 + i * 0.37;
+      const x = H.x + Math.cos(a) * rr, z = H.z + Math.sin(a) * rr;
+      if (L.hallFree(x, z, 0.5)) slots.push({ x, z });
     }
-    if (best) { best.pond = spot; best.home = { x: spot.x, z: spot.z }; }
-  }
+  });
+  residents.forEach((r, k) => {
+    const rnd = makeRandom(`hall:${r.id}`);
+    // Spread the cats over the slots evenly, so a small Hall of Fame still rings the fountain.
+    const home = slots.length ? slots[Math.floor((k * slots.length) / Math.max(residents.length, 1)) % slots.length] : { x: H.x + H.fountain.r + 1.2, z: H.z };
+    cats.push(makeCat(r, { ...home }, rnd));
+  });
   cats.forEach((c, i) => { c.index = startIndex + i; });
   const byIdMap = new Map(cats.map((c) => [c.id, c]));
 
   function makeCat(r, home, rnd) {
     return {
-      id: r.id, name: r.name, model: r.model === "ginger" ? "ginger" : "cat", index: 0, tier: r.tier, meadow: true,
+      id: r.id, name: r.name, model: r.model === "ginger" ? "ginger" : "cat", index: 0, tier: r.tier, meadow: true, hall: true,
       rnd, home, pond: null, pace: rnd.range(0.8, 1.15),
       x: home.x, y: 0, z: home.z, yaw: rnd.range(-Math.PI, Math.PI), speed: 0,
       pose: "sit", poseSince: 0, prevPose: "sit",
@@ -104,7 +91,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       for (let t = 0; t < 8; t++) {
         const a = rnd.range(0, 6.28), d = rnd.range(0.8, ROAM);
         const x = c.home.x + Math.cos(a) * d, z = c.home.z + Math.sin(a) * d;
-        if (L.meadowFree(x, z, 0.6)) return walkTo(c, x, z);
+        if (L.hallFree(x, z, 0.4) && L.hallFree((x + c.x) / 2, (z + c.z) / 2, 0.3)) return walkTo(c, x, z);
       }
     }
     c.mode = "rest";

@@ -297,10 +297,10 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
   assert.equal(rows.length, list.length);
   for (const b of rows) {
     const r = list.find((x) => x.id === b.dataset.id);
-    assert.equal(b.querySelector("span.badge").textContent, r.kind === "famous" ? "Famous coin" : r.token.status === "launched" ? "Launched" : "Not launched yet", b.dataset.id);
+    assert.equal(b.querySelector("span.badge").textContent, r.kind === "famous" ? "Hall of Fame" : r.token.status === "launched" ? "Launched" : "Not launched yet", b.dataset.id);
     assert.equal(b.querySelector("span.find-meta").textContent.includes(`$${r.ticker}`), r.token.status === "launched" || r.kind === "famous", b.dataset.id);
   }
-  assert.match(root.querySelector("p.finder-intro").textContent, /so far, each paired with one stock/);
+  assert.match(root.querySelector("p.finder-intro").textContent, /adoptable cats so far, each with real, verified lore and no coin yet/);
 });
 
 test("a cat drawn like a company's cat says so: its whyLook's company cat comes with the fan-tribute line on its card, and held cats ship no portrait", async () => {
@@ -444,7 +444,7 @@ test("every planned cat's card shows its proof: the post's author, handle, words
 test("a famous coin's card: logo, who the cat is, lore, warnings, market cap with its time, chain, contract with a copy button, X and website, its one buy link, and the not-affiliated line", async () => {
   const list = await residents();
   const famous = list.filter((r) => r.kind === "famous");
-  assert.ok(famous.length >= 180, `${famous.length} famous coins on the page`);
+  assert.ok(famous.length >= 15, `${famous.length} Hall of Fame coins on the page`);
   assert.ok(famous.every((r) => r.chain === "solana"), "Solana coins only");
   const popcat = famous.find((r) => r.ticker === "POPCAT" && r.chain === "solana");
   const c = renderCard(popcat);
@@ -459,7 +459,9 @@ test("a famous coin's card: logo, who the cat is, lore, warnings, market cap wit
   assert.deepEqual(c.buy, [{ href: `https://gmgn.ai/sol/token/${popcat.contract}`, text: "Buy on GMGN" }]);
   assert.ok(c.links.some((l) => l.href === popcat.x), "its X account");
   assert.match(c.disclaimer, /not affiliated/i);
-  assert.match(c.root.querySelector("p.card-ticker").textContent, /\$POPCAT.*Famous coin/);
+  assert.match(c.root.querySelector("p.card-ticker").textContent, /\$POPCAT.*Hall of Fame/);
+  assert.equal(c.root.querySelector("p.card-inspiration-text").textContent, "Already a coin — here as inspiration");
+  assert.equal(c.root.querySelector("a.card-inspiration-link").href, `https://gmgn.ai/sol/token/${popcat.contract}`);
   for (const r of famous) {
     const k = renderCard(r);
     assert.match(k.disclaimer, /not affiliated/i, r.id);
@@ -471,33 +473,26 @@ test("a famous coin's card: logo, who the cat is, lore, warnings, market cap wit
     assert.equal(/Lore not researched yet/.test(k.section("card-who")), r.loreSource.kind !== "profile", `${r.id}: says whether its lore was researched`);
     assert.ok(!/Not launched yet/.test(k.text), `${r.id} says "Not launched yet"`);
   }
-  const meerkat = famous.find((r) => r.ticker === "NEARKAT");
-  assert.match(renderCard(meerkat).section("card-warnings"), /meerkat/);
 });
 
-test("the finder lists every cat, stock and famous, with filters for stock cats, famous coins and a chain", async () => {
-  const shipped = await residents();
-  // One coin on another chain, to exercise the chain filter (the shipped coins are all on Solana).
-  const other = normalize({ ...shipped.find((r) => r.ticker === "POPCAT"), id: "sample-base-cat", chain: "base", contract: "0x9a26f5433671751c3276a065f57e5a02d2817973", logo: null, buy: null });
-  const list = [...shipped, other];
+test("the finder lists every cat, with filters for adoptable cats and the Hall of Fame", async () => {
+  const list = await residents();
   const root = new Element("div");
   createFinder({ root, residents: list, inline: true, onChoose() {} });
   const rows = root.querySelectorAll("button.find-item");
   assert.equal(rows.length, list.length);
   const chips = root.querySelectorAll("button.chip");
-  assert.deepEqual(chips.map((b) => b.textContent).slice(0, 3), ["All", "Stock cats", "Famous coins"]);
+  assert.deepEqual(chips.map((b) => b.textContent).slice(0, 3), ["All", "Adoptable cats", "Hall of Fame"]);
   const shown = () => root.querySelectorAll("li").filter((li) => !li.hidden).length;
   const famousN = list.filter((r) => r.kind === "famous").length;
-  chips.find((b) => b.textContent === "Famous coins").click();
+  assert.ok(famousN > 0);
+  chips.find((b) => b.textContent === "Hall of Fame").click();
   assert.equal(shown(), famousN);
-  chips.find((b) => b.textContent === "Stock cats").click();
+  chips.find((b) => b.textContent === "Adoptable cats").click();
   assert.equal(shown(), list.length - famousN);
   chips.find((b) => b.textContent === "All").click();
-  const sel = root.querySelector("select.finder-chain-select");
-  const base = list.filter((r) => r.kind === "famous" && r.chain === "base").length;
-  assert.ok(base > 0);
-  sel.value = "base";
-  for (const fn of sel.listeners.change) fn();
-  assert.equal(shown(), base);
-  assert.match(root.querySelector("p.finder-intro").textContent, /famous cat coins/);
+  assert.equal(shown(), list.length);
+  assert.equal(root.querySelector("select.finder-chain-select"), null, "no chain filter: everything is on Solana");
+  assert.match(root.querySelector("p.finder-intro").textContent, /in the Hall of Fame: legendary cat coins that already exist/);
 });
+

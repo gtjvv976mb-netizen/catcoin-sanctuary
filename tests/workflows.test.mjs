@@ -83,6 +83,7 @@ test("famous coins: daily and by hand, contents: write only, no secrets, builder
   assert.ok(!/secrets\./.test(FAMOUS), "no secrets");
   assert.match(FAMOUS, /npm ci[\s\S]*npm run test:builder[\s\S]*node scripts\/refresh-famous\.mjs/);
   assert.match(FAMOUS, /git add -- data\/famous\.json/);
+  assert.match(FAMOUS, /Refresh the Hall of Fame coins/, "only the Hall of Fame coins are refreshed");
   assert.match(FAMOUS, /git diff --cached --quiet/);
   assert.match(FAMOUS, /concurrency:\n\s+group: famous/);
 });

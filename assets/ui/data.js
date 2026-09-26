@@ -167,7 +167,7 @@ function normalizeOld(e) {
    is its GMGN page (Solana, Ethereum, Base, BNB Chain) or a DexScreener page on its chain, for
    its own contract; its logo only when it is a picture on this site. */
 const GMGN_CHAIN = { solana: "sol", ethereum: "eth", base: "base", bsc: "bsc" };
-const TIERS = new Set(["main", "ring1", "ring2"]);
+const TIERS = new Set(["main"]);
 const num = (v) => (typeof v === "number" && Number.isFinite(v) && v >= 0 ? v : null);
 function famousBuy(b, chain, contract) {
   const url = httpsUrl(b?.url);
@@ -194,7 +194,7 @@ function normalizeFamous(e) {
     name: str(e.name, 60) || "A cat", ticker: str(e.ticker ?? e.symbol, 24).replace(/^\$+/, ""),
     chain, contract,
     pairQuote: str(pairIn.quote, 24), pairDex: str(pairIn.dex, 40), pairUrl: pairUrl && new URL(pairUrl).host === "dexscreener.com" ? pairUrl : null,
-    company: str(e.company, 120), stock: "", tier: TIERS.has(e.tier) ? e.tier : "ring2",
+    company: str(e.company, 120), stock: "", tier: TIERS.has(e.tier) ? e.tier : "main",
     logo: localPicture(e.logo), portrait: localPicture(e.logo),
     market: { marketCapUsd: num(m.marketCapUsd), liquidityUsd: num(m.liquidityUsd), volume24hUsd: num(m.volume24hUsd), measuredAt: str(m.measuredAt, 40), source: str(m.source, 20) },
     catName: str(e.catName, 120), who: para(e.who, 900), description: para(e.lore, 1200),

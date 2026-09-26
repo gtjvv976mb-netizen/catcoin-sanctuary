@@ -27,7 +27,7 @@ const byId = new Map(residents.map((r) => [r.id, r]));
 const launched = residents.filter(isLaunched).length;
 $("count").textContent = residents.length ? String(residents.length) : "";
 const famousN = residents.filter(isFamous).length;
-$("find").setAttribute("aria-label", `Find a cat: ${residents.length} cats, ${launched} launched${famousN ? `, ${famousN} famous cat coins` : ""}`);
+$("find").setAttribute("aria-label", `Find a cat: ${residents.length} cats, ${launched} launched${famousN ? `, ${famousN} in the Hall of Fame` : ""}`);
 $("legend-famous").hidden = famousN === 0;
 // The legend explains the gold coin only once there is one to see.
 $("legend-launched").hidden = launched === 0;
@@ -63,7 +63,7 @@ function show(id, { from = null } = {}) {
   card.open(r);
   world?.choose(id);
   tag.hidden = true;
-  say(isFamous(r) ? `${r.name}, $${r.ticker}. A famous cat coin, not made by the sanctuary.` : `${r.name}${r.ticker ? (isLaunched(r) ? `, $${r.ticker}` : `, planned ticker ${r.ticker}`) : ""}. ${r.example ? "An example cat, not a token." : isLaunched(r) ? "Launched." : "Not launched yet."}`);
+  say(isFamous(r) ? `${r.name}, $${r.ticker}. Hall of Fame: already a coin, here as inspiration, not made by the sanctuary.` : `${r.name}${r.ticker ? (isLaunched(r) ? `, $${r.ticker}` : `, planned ticker ${r.ticker}`) : ""}. ${r.example ? "An example cat, not a token." : isLaunched(r) ? "Launched." : "Not launched yet."}`);
   history.replaceState(null, "", `#cat=${encodeURIComponent(id)}`);
 }
 function hideCard() {
