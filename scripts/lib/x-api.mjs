@@ -85,3 +85,51 @@ export async function getLatestOwnPostId(userId, creds, fetchImpl = fetch) {
   const b = await call(fetchImpl, "GET", `https://api.x.com/2/users/${encodeURIComponent(userId)}/tweets?max_results=5`, creds);
   return b?.data?.[0]?.id ?? null;
 }
+
+/**
+ * Upload one video (a Buffer, MP4) in chunks; returns its media id string once X has processed it.
+ *
+ *   v2:   POST /2/media/upload/initialize (JSON) → POST /2/media/upload/:id/append (multipart, per
+ *         chunk) → POST /2/media/upload/:id/finalize → GET /2/media/upload?command=STATUS&media_id=:id
+ *   v1.1: the same four steps on upload.twitter.com/1.1/media/upload.json (command=INIT, APPEND,
+ *         FINALIZE, STATUS), used when the v2 endpoints refuse for any reason but bad keys (401).
+ */
+export async function uploadVideo(bytes, mime, creds, fetchImpl = fetch, { chunkBytes = 4 * 1024 * 1024, sleep = (ms) => new Promise((r) => setTimeout(r, ms)), maxWaitMs = 180_000 } = {}) {
+  const chunks = [];
+  for (let i = 0; i < bytes.length; i += chunkBytes) chunks.push(bytes.subarray(i, i + chunkBytes));
+  const waitFor = async (info, status) => {
+    let waited = 0;
+    while (info && (info.state === "pending" || info.state === "in_progress")) {
+      if (waited >= maxWaitMs) throw new XError("X is still processing the video", 200, info);
+      const s = Math.max(1, Math.min(info.check_after_secs ?? 2, 20));
+      await sleep(s * 1000); waited += s * 1000;
+      info = await status();
+    }
+    if (info?.state === "failed") throw new XError(`X could not process the video: ${info.error?.message ?? "failed"}`, 200, info);
+  };
+  try {
+    const init = await call(fetchImpl, "POST", "https://api.x.com/2/media/upload/initialize", creds, { headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ media_type: mime, total_bytes: bytes.length, media_category: "tweet_video" }) });
+    const id = String(init?.data?.id ?? init?.data?.media_id_string ?? init?.media_id_string ?? "");
+    if (!id) throw new XError("X media initialize returned no media id", 200, init);
+    for (const [i, c] of chunks.entries()) {
+      const f = new FormData(); f.append("media", new Blob([c], { type: "application/octet-stream" }), "clip.mp4"); f.append("segment_index", String(i));
+      await call(fetchImpl, "POST", `https://api.x.com/2/media/upload/${id}/append`, creds, { body: f });
+    }
+    const fin = await call(fetchImpl, "POST", `https://api.x.com/2/media/upload/${id}/finalize`, creds);
+    await waitFor(fin?.data?.processing_info, async () => (await call(fetchImpl, "GET", `https://api.x.com/2/media/upload?command=STATUS&media_id=${id}`, creds))?.data?.processing_info);
+    return id;
+  } catch (e) { if (!(e instanceof XError) || e.status === 401 || e.status === 200) throw e; }
+  const U = "https://upload.twitter.com/1.1/media/upload.json";
+  const form = (o) => { const f = new FormData(); for (const [k, v] of Object.entries(o)) f.append(k, v); return f; };
+  const init = await call(fetchImpl, "POST", U, creds, { body: form({ command: "INIT", media_type: mime, total_bytes: String(bytes.length), media_category: "tweet_video" }) });
+  const id = init?.media_id_string;
+  if (!id) throw new XError("X media INIT returned no media id", 200, init);
+  for (const [i, c] of chunks.entries()) await call(fetchImpl, "POST", U, creds, { body: form({ command: "APPEND", media_id: id, segment_index: String(i), media: new Blob([c], { type: "application/octet-stream" }) }) });
+  const fin = await call(fetchImpl, "POST", U, creds, { body: form({ command: "FINALIZE", media_id: id }) });
+  await waitFor(fin?.processing_info, async () => (await call(fetchImpl, "GET", `${U}?command=STATUS&media_id=${id}`, creds))?.processing_info);
+  return id;
+}
+
+/** When a post was made, read from its id (X ids are snowflakes: milliseconds since 2010-11-04 in the top bits). */
+export const postTime = (id) => new Date(Number(BigInt(id) >> 22n) + 1288834974657);

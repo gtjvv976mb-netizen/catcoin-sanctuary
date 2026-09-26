@@ -102,7 +102,7 @@ jobs:
           rsync -a \
             --exclude '.git' --exclude '/.github' --exclude '/_site' --exclude '/node_modules' \
             --exclude '/scripts' --exclude '/tests' --exclude '/package.json' --exclude '/package-lock.json' \
-            --exclude '*.prototype.html' --exclude '/data/collection-state.json' --exclude '/data/held.json' --exclude '/data/launches.json' --exclude '*.md' \
+            --exclude '*.prototype.html' --exclude '/data/collection-state.json' --exclude '/data/held.json' --exclude '/data/launches.json' --exclude '*.md' --exclude '/assets/promo' --exclude '/data/promo-*.json' \
             ./ _site/
           test -f _site/index.html && test -f _site/CNAME && test -f _site/data/collection.json && test -f _site/data/planned.json && test -f _site/data/wallets.json && test -f _site/data/famous.json
           test -f _site/favicon.ico && test -f _site/assets/og-image.jpg && test -f _site/assets/models/sanctuary.glb

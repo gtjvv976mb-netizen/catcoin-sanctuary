@@ -9,6 +9,7 @@ const read = (name) => fs.readFileSync(path.join(ROOT, ".github/workflows", name
 const PAGES = read("pages.yml");
 const COLLECTION = read("collection.yml");
 const FAMOUS = read("famous.yml");
+const PROMO = read("promo.yml");
 
 /* Each action at the commit its release tag points to (git ls-remote github.com/actions/<name>, 2026-09-25). */
 const PINNED = {
@@ -20,7 +21,7 @@ const PINNED = {
 };
 
 test("every action is pinned to the full commit SHA of its release", () => {
-  for (const [name, text] of [["pages.yml", PAGES], ["collection.yml", COLLECTION], ["famous.yml", FAMOUS]]) {
+  for (const [name, text] of [["pages.yml", PAGES], ["collection.yml", COLLECTION], ["famous.yml", FAMOUS], ["promo.yml", PROMO]]) {
     const uses = [...text.matchAll(/uses:\s*(\S+)(?:\s*#\s*(\S+))?/g)];
     assert.ok(uses.length > 0, name);
     for (const [, u, comment] of uses) {
@@ -86,4 +87,22 @@ test("famous coins: daily and by hand, contents: write only, no secrets, builder
   assert.match(FAMOUS, /Refresh the Hall of Fame coins/, "only the Hall of Fame coins are refreshed");
   assert.match(FAMOUS, /git diff --cached --quiet/);
   assert.match(FAMOUS, /concurrency:\n\s+group: famous/);
+});
+
+test("promo: every 20 minutes and by hand, contents: write only, the four X secrets on the posting step only, its own tests first, commits its state with a rebase retry", () => {
+  assert.match(PROMO, /^name: Promo$/m);
+  assert.match(PROMO, /cron: "[\d-]+\/20 \* \* \* \*"/);
+  assert.match(PROMO, /workflow_dispatch:/);
+  assert.match(PROMO, /^permissions: \{\}$/m);
+  const perms = [...PROMO.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim());
+  assert.deepEqual(perms, ["contents: write"]);
+  assert.match(PROMO, /persist-credentials: false/);
+  assert.deepEqual([...new Set([...PROMO.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))].sort(), ["X_ACCESS_SECRET", "X_ACCESS_TOKEN", "X_API_KEY", "X_API_SECRET"]);
+  assert.match(PROMO, /node --test tests\/promo\.test\.mjs[\s\S]*node scripts\/promo\.mjs/);
+  assert.match(PROMO, /git add -- data\/promo-state\.json/);
+  assert.match(PROMO, /git diff --cached --quiet/);
+  assert.match(PROMO, /pull --rebase origin main/);
+  // The promo media and posts are for X only: the site never loads them, so Pages does not serve them.
+  for (const excluded of ["/assets/promo", "/data/promo-*.json"]) assert.ok(PAGES.includes(`--exclude '${excluded}'`), excluded);
+  assert.match(PROMO, /concurrency:\n\s+group: promo\n\s+cancel-in-progress: false/);
 });
