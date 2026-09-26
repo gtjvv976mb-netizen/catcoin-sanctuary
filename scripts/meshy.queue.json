@@ -156,7 +156,8 @@
    "styleImage": "generate",
    "retexturePrompt": "Chubby golden-cream British Shorthair-type kitten with short plush fur. Coat pale apricot-cream to soft gold (#C1A36B), low saturation, not orange or ginger. Only faint darker golden ticking: a faint M on the forehead and a few faint cheek lines, with no bold stripes, no leg bars and no tail rings. White-cream muzzle, chin and whisker pads, white whiskers, pink nose and inner ears. Very large, round, glossy dark brown-black eyes with big dilated pupils and a white catch-light. Clean chest with no dark smudge. No accessories.",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. Chubby golden-cream British Shorthair-type kitten with short plush fur. Coat pale apricot-cream to soft gold (#C1A36B), low saturation, not orange or ginger. Only faint darker golden ticking: a faint M on the forehead and a few faint cheek lines, with no bold stripes, no leg bars and no tail rings. White-cream muzzle, chin and whisker pads, white whiskers, pink nose and inner ears. Very large, round, glossy dark brown-black eyes with big dilated pupils and a white catch-light. Clean chest with no dark smudge. No accessories.",
-   "order": 181
+   "order": 181,
+   "modelKey": "catcoin-6"
   },
   "CATE": {
    "action": "rebuild",
@@ -164,7 +165,8 @@
    "why": "Wrong colour and build: an adult ginger mackerel tabby with a white belly and four white paws, where the lore is a tiny 3-week grey-brown tabby kitten with white only on the chin, throat and upper chest. The logo is gold/sepia, so it is not usable as a colour reference.",
    "styleImage": "generate",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. A tiny three-week-old domestic shorthair kitten with a big head, big ears, short fluffy kitten fur and short legs. Brown/grey-brown mackerel tabby: a fawn-grey base with a warm ruddy-orange tint on the face, cheeks and flanks; dark brown-black stripes on the forehead (M), cheeks, back and legs; a ringed tail. White only on the chin, throat and a small upper-chest patch; legs, paws and belly tabby, with no white paws. Pale grey-green eyes, pink-brown nose. No accessories.",
-   "order": 182
+   "order": 182,
+   "modelKey": "cate-meme"
   },
   "CHEETLE": {
    "action": "rebuild",
@@ -205,7 +207,7 @@
    "priority": 1,
    "why": "Wrong colour and style: a realistic chocolate-brown kitten with a neckerchief, where the lore is flat kawaii Sanrio Chococat, black with a big head, white eyes, a brown nose, yellow inner ears and pink cheeks. The photo is a text-heavy profile card with another character on his head.",
    "styleImage": "generate",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Sanrio kawaii cartoon style with thick dark outlines, as a smooth stylised 3D toy. Chococat: a big round black (dark charcoal) head much larger than the small black body, short stubby black legs, and a thin curled black tail with a hooked tip. Pointed ears with pale-yellow inner ears. Large round white eyes with black pupils. A small oval chocolate-brown nose and no visible mouth. Pink oval blush cheeks under the eyes. Two short straight black whiskers on each side. A thin light-blue collar.",
+   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Sanrio kawaii cartoon style with thick dark outlines, as a smooth stylised 3D toy. Chococat walking ON ALL FOURS like a kitten, seen from the side, body horizontal with all four stubby legs on the ground (never standing upright on two legs): a big round black (dark charcoal) head much larger than the small black body, short stubby black legs, and a thin curled black tail with a hooked tip. Pointed ears with pale-yellow inner ears. Large round white eyes with black pupils. A small oval chocolate-brown nose and no visible mouth. Pink oval blush cheeks under the eyes. Two short straight black whiskers on each side. A thin light-blue collar.",
    "order": 28
   },
   "CHOUPETCAT": {
@@ -320,7 +322,8 @@
    "why": "The shape and the hat are already there. The hat is painted a dark rust fine-ribbed knit instead of the chunky salmon-peach knit, and the coat is a warm ginger tiger tabby with white socks instead of a grey-brown tabby with tabby feet. The coin logo is the mascot photo; the real photo is the different pirate cat from the first post.",
    "styleImage": "assets/coins/catwifhat-2.webp",
    "retexturePrompt": "Photo-real short-haired brown-grey mackerel tabby: dark brown/black stripes on a grey-brown base, warm tan on the face, a dark M on the forehead. White muzzle, white chin and a white chest stripe/bib. Legs and feet tabby, with no white socks. A ringed tail with a dark tip. Pale green eyes, pinkish-brown nose. On the head, a chunky hand-knit salmon-peach/terracotta-pink beanie (RGB 209,151,132) with thick, visible knit stitches and a thick folded brim, pulled down over the ears.",
-   "order": 183
+   "order": 183,
+   "modelKey": "catwifhat-2"
   },
   "DELILAHCAT": {
    "action": "retexture",
@@ -445,7 +448,8 @@
    "why": "The mackerel stripes and white chin are right, but the model is slim and leggy with saturated orange-bronze fur, orange paws and nose and no bib. Gato is large, heavy and stocky, which a repaint cannot fix. The coin logo is a tiny sitting shot, so generate a standing reference.",
    "styleImage": "generate",
    "referencePrompt": "One four-legged cat standing, full body, 3/4 side view, plain light grey background, photoreal Rockstar game-render style. A large, heavy, stocky adult domestic-shorthair tomcat: a brown mackerel tabby on a warm bronze/golden-tan brown agouti ground, never ginger or orange. Dense, narrow black mackerel stripes run vertically down the flanks with a partial swirl on the hip; thick black necklace rings cross the throat and chest; black bars on the forelegs; a ringed tail with a dark tip; a tabby 'M' and crown lines; dark cheek lines. White chin and muzzle, pale cream eye rims, a pale cream bib between the necklace rings, a brick-pink nose and white toe tips. Yellow-green eyes with a flat, unimpressed stare. No collar.",
-   "order": 184
+   "order": 184,
+   "modelKey": "gta6cat"
   },
   "GENKITTY": {
    "action": "rebuild",
@@ -519,7 +523,8 @@
    "why": "A broken, low-quality mesh with a flat orange leopard-blotch texture and polygon artefacts; Hosico is a stocky, round-faced, plush golden Scottish Straight. Both shape and texture need replacing. The real photo shows him lying on a chair, so generate a standing reference from it.",
    "styleImage": "generate",
    "referencePrompt": "One four-legged cat standing, full body, 3/4 side view, plain light grey background, photoreal. An adult male Scottish Straight (British Shorthair type), black golden ticked. A very round, broad head with huge chubby hamster cheek ruffs, smallish round-tipped ears set wide apart, a stocky heavy body and dense plush medium-short fur. A warm golden-apricot to honey-gold coat with darker cinnamon-brown ticking along the back and crown, ginger-brown tabby bars on the forehead, and faint bars on the legs and tail. Creamy white chin, lips, muzzle, big cheek fluff, throat and inner legs, with pale cream eye rims. Large round dark green eyes. An apricot-pink nose and dark toe tufts. No accessories.",
-   "order": 185
+   "order": 185,
+   "modelKey": "hosico-cat"
   },
   "HOVERPAW": {
    "action": "retexture",
@@ -612,7 +617,8 @@
    "why": "A plain realistic white cat with amber eyes and no ear patch; KET is a round-headed cartoon white cat with a black left-ear patch, half-closed lids and an office shirt and tie. Wrong art style and missing outfit. The coin logo is a flat face only, so generate (black patch follows the coin logo).",
    "styleImage": "generate",
    "referencePrompt": "One four-legged cartoon cat standing, full body, 3/4 side view, plain light grey background. The KET mascot as a soft, plush-like 3D cartoon, not realistic: a round-headed pure white cat with a single solid black patch covering its LEFT ear (the viewer's right) and the upper-right part of the crown; the rest of the head is white. Heavy-lidded, half-closed, unimpressed eyes, drawn as flat black lid lines with half-round black pupils peeking under them. A small black triangular nose, a small wavy 'ω' mouth and a cluster of black whisker-pore dots on each side of the muzzle. It wears a white office shirt with a black tie and a small 'KET' name badge.",
-   "order": 186
+   "order": 186,
+   "modelKey": "ket-3"
   },
   "KIOSKPAW": {
    "action": "rebuild",
@@ -636,7 +642,8 @@
    "why": "A realistic pink-and-white cat with a neck bow, built from the coin's pink-bow avatar; Hello Kitty is pure white with a red ear bow, no mouth and big-head cartoon proportions. Wrong character and style.",
    "styleImage": "generate",
    "referencePrompt": "One four-legged cartoon cat standing, full body, 3/4 side view, plain light grey background. Sanrio's Hello Kitty as a smooth, toy-like 3D figure, not a realistic furry cat. Pure white all over, with an oversized wide oval head about as big as the small rounded body and small rounded triangle ears. A red bow with a round centre knot over her LEFT ear (the viewer's right). Two solid black vertical oval eyes set wide apart, a small yellow horizontal-oval nose, NO mouth and three straight black whiskers on each cheek. She wears classic blue overalls.",
-   "order": 187
+   "order": 187,
+   "modelKey": "hello-kitty-sol"
   },
   "KNITPAW": {
    "action": "rebuild",
@@ -708,7 +715,8 @@
    "why": "The build and the white chest and legs are fine. The head is painted solid ginger with only a white muzzle, and the saddle is chestnut-ginger. It should be a medium brown agouti tabby with black stripes and a mostly white face with a broad blaze. The shocked open mouth cannot be added by a repaint, but the colours are the main error.",
    "styleImage": "assets/coins/leveraged-cat.webp",
    "retexturePrompt": "Photoreal chubby brown tabby-and-white shorthair cat. Tabby is medium brown agouti / cool grey-brown with black mackerel stripes, never ginger, red or orange. Face mostly white: broad white blaze from nose up the middle of the forehead to the crown, white muzzle, cheeks and chin. Brown tabby cap with black stripes on top of the head either side of the blaze and around and behind the ears; striped brown tabby patches on the outer cheeks. White chest, belly, front legs and paws. Brown tabby saddle with black stripes over back, shoulders and flanks. Tail brown tabby with black rings and dark tip. Pink nose, pink inner ears. Very wide round pale yellow-green eyes with huge black pupils. Long white whiskers.",
-   "order": 188
+   "order": 188,
+   "modelKey": "leveraged-cat"
   },
   "LICHENPAW": {
    "action": "rebuild",
@@ -748,7 +756,8 @@
    "why": "The shape is right: a chubby white cartoon cat with a collar and bell. The painted details are wrong: a big red crown patch, red brow dots, red whiskers, a red-striped tail, no blush or eye-corner marks, and shaded slit eyes. The beckoning paw is dropped under the four-legs rule.",
    "styleImage": "assets/coins/maneki.webp",
    "retexturePrompt": "Cartoon maneki-neko, flat colours, soft grey shading, bold black outlines. Pure white body, head and tail; the big fluffy fox-like tail is plain white with NO stripes. Red-orange inner ears. On the crown a small flattened black oval ringed in red, no large red patch. Two small GREY teardrop eyebrow marks above the eyes. At each outer eye corner a tiny red dot and a red teardrop flick. Eyes closed as thick black upward arcs (^ ^). Soft pink cheek blush, small red-orange nose, wide closed smile, three thin BLACK whiskers per side. Thick red ribbed padded collar with lighter red-orange ribs; round gold bell with a slit on short cords with gold beads.",
-   "order": 189
+   "order": 189,
+   "modelKey": "maneki"
   },
   "MARIEAC": {
    "action": "retexture",
@@ -806,7 +815,8 @@
    "why": "The model wears a red hood that is really the logo's background disc, and the hood hides the blue-shaded forelock. A repaint cannot remove a 3D hood. The coin logo shows the head on that red disc and would cause the same misread, so a new reference is generated.",
    "styleImage": "generate",
    "referencePrompt": "One MEW, an original flat cartoon white cat in clean vector/anime style, as a smooth toon 3D character standing on all four legs, full body, 3/4 side view, plain light grey background. Pure white cat with no hood and no clothing. Large pointed ears with pink insides. A white cowlick forelock tuft on top of the head sweeping up and to the side, shaded pale blue. Scowling half-lidded eyes: straight upper lids slanting down toward the nose, large black pupils with a pale sky-blue rim on the lower half. Tiny soft pink nose, black ':3' mouth, two thick black whisker lines on each side reaching past the face outline. White tail.",
-   "order": 190
+   "order": 190,
+   "modelKey": "cat-in-a-dogs-world"
   },
   "MICHI": {
    "action": "rebuild",
@@ -814,7 +824,8 @@
    "why": "Wrong character. The model is a short-coated adult brown tabby-and-white with a dark mask and stripes. michi is a fluffy, long-haired white kitten whose only markings are a taupe-grey cap and a smoky tail. The fur length and build need a rebuild. The coin logo is blurry and the realPhoto is a dark night shot, so a new reference is generated. The upright pose becomes four legs.",
    "styleImage": "generate",
    "referencePrompt": "One photoreal fluffy long-haired kitten (Ragdoll/Siberian-type baby coat) standing on all four legs, full body, 3/4 side view, plain light grey background. Body, chest, belly, legs and paws plain white with no stripes anywhere. A solid warm taupe-grey (grey-brown, about #756c63, not blue-grey) cap covers both ears and the top of the head, split by a narrow white stripe down the middle of the forehead and ending above the eyes. White face, muzzle and chin, pink nose, dark eyes, faintly surprised look. Fluffy smoky darker grey-brown tail.",
-   "order": 191
+   "order": 191,
+   "modelKey": "michi"
   },
   "MIGGLES": {
    "action": "rebuild",
@@ -938,7 +949,8 @@
    "why": "Wrong style and shade. The model is a realistic furry dark slate-blue cat with a fluffy tail and fuzzy black cheek puffs. Nub is a flat, pale sky-blue MS-Paint doodle blob with thick black outlines and tick-mark cheek tufts. The coin logo matches the look.",
    "styleImage": "assets/coins/sillynubcat.webp",
    "referencePrompt": "One Nub, a flat MS-Paint-style doodle cat, as a simple toon 3D character standing on four short stubby legs, full body, 3/4 side view, plain light grey background. Solid flat pale sky-blue (#b7d9ff) all over, no shading texture, no fur, no stripes or white patches, with thick rough black outlines. Head and body merge into one tall rounded blob topped by two small pointed ears. Two tiny round black dot eyes set wide apart and, between them at the same height, one small black blob forming a round nose and a tiny 'ω' mouth. Three short horizontal black tick strokes stick out from each side of the face as cheek tufts. Small two-toe paws. Blank, calm, loving stare. No accessories.",
-   "order": 192
+   "order": 192,
+   "modelKey": "sillynubcat"
   },
   "NYANKOSEN": {
    "action": "rebuild",
@@ -1019,7 +1031,8 @@
    "why": "Wrong style and missing face: a glitchy, faceted near-black semi-realistic kitten, where the lore is a flat comic-ink cartoon charcoal cat with Pepe's face (green eye area, droopy lids, white muzzle puffs, a huge coral-red grin) and a white bib. The puffs and grin need new geometry, not just paint. The coin logo is the exact look (bust only).",
    "styleImage": "assets/coins/pepecat-2.webp",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Flat comic-ink cartoon style with bold black outlines and hatch shading, as a stylised 3D toy with flat colours. A charcoal dark-grey cat (#4e4e4e) with Pepe the Frog's face: heavy droopy upper eyelids with brow wrinkles; the eye area bright green with big black pupils and white four-point star sparkles. Two round white muzzle puffs with a small coral-red nose and white whiskers. A very wide, open Pepe grin with thick coral/salmon-red lips, a dark red mouth and a red tongue. Ears with coral-red insides and pale grey rims. White chest bib and white belly, charcoal legs, charcoal tail with a white tip. No clothing.",
-   "order": 193
+   "order": 193,
+   "modelKey": "pepecat-2"
   },
   "PEPPERCAT": {
    "action": "ok",
@@ -1058,7 +1071,8 @@
    "styleImage": "generate",
    "retexturePrompt": "Oatmeal the Pop Cat: a mostly WHITE domestic shorthair. White body, back, flanks, legs, paws, tail, chest, face, muzzle and chin. Colour only on the head: a light grey-brown/tan tabby cap over the top of the head and the backs and rims of both ears. A large dark brown-black patch behind the ear and cheek on the cat's right side, a smaller dark grey-black patch at the back of the left cheek. Pink inner ears, big round near-black eyes, small pink nose. Mouth wide open in a round 'O', dark pink-red inside. No maroon or red-brown anywhere on the body. No clothing.",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. Oatmeal the Pop Cat: a mostly white domestic shorthair with a white body, legs, tail, chest and face. A light grey-brown/tan tabby cap covers the top of the head and the backs and rims of both ears. A large dark brown-black patch behind the ear and cheek on the cat's right side, a smaller dark grey-black patch at the back of the left cheek. Pink inner ears, big round near-black eyes, small pink nose. Head tilted up, mouth open in a huge, perfectly round 'O' with a dark pink-red inside. No clothing.",
-   "order": 194
+   "order": 194,
+   "modelKey": "popcat"
   },
   "PRISMPAW": {
    "action": "retexture",
@@ -1106,7 +1120,8 @@
    "why": "Missing outfit parts: a bucket hat with a vague purple emblem instead of a steel helmet with the Raydium hexagon 'R', and no military jacket or R shoulder patch. The coat is too warm, the eyes are green-yellow and the painterly storybook style is missing. The tabby and blue scarf read right, so it is recognisable. The coin logo is the exact look (bust only).",
    "styleImage": "assets/coins/raydium-cat.webp",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Painterly anime/storybook illustration style as a stylised 3D character. RayCat: a grey-brown mackerel tabby kitten with dark stripes on the forehead and cheeks, a cream-white muzzle and chin, a pink-tan nose, warm amber-hazel eyes, a calm, confident face and a long tail with dark rings. A dark charcoal steel soldier's helmet with the Raydium hexagon 'R' logo (blue-to-purple gradient) on the front. An indigo/royal-blue scarf knotted at the neck. A dark charcoal-olive military jacket over the body and front legs, with a Raydium hexagon 'R' patch on the shoulder.",
-   "order": 195
+   "order": 195,
+   "modelKey": "raydium-cat"
   },
   "RIMESTRIPE": {
    "action": "rebuild",
@@ -1122,7 +1137,8 @@
    "why": "Wrong colour and missing signature: a warm ginger-brown kitten with a calm, closed mouth, where Roaring Kitty's kitten is a cool grey-brown tabby with a cream muzzle, roaring wide open with squinted eyes. The roar needs new geometry. The red headband colour and side are right. The coin logo is the exact look (a real photo, front half only).",
    "styleImage": "assets/coins/red-kitten-crew.webp",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. A very young fluffy kitten (6-8 weeks), a brown mackerel tabby with a cool grey-brown/fawn agouti base (not orange or ginger) and black mackerel stripes: black bars on the forelegs, stripes on the flanks, a black 'M' on the forehead, a ringed, dark-tipped tail. Creamy-white muzzle, whisker pads and chin, pale cream chest and belly, pinkish-brown nose, large pink-lined ears. Mouth wide open in a roar showing a pink tongue and tiny teeth; eyes narrowed to a squint with blue-grey irises. A bright, glossy red headband tied straight across the forehead just above the eyes, its two tails hanging past the cheek on the kitten's left side.",
-   "order": 196
+   "order": 196,
+   "modelKey": "red-kitten-crew"
   },
   "ROOKIEPAW": {
    "action": "retexture",
@@ -1339,7 +1355,8 @@
    "why": "Wrong style and colour: a realistic silver-white tabby, where Stonk Cats #0055 is an anime/chibi periwinkle blue-grey tabby with closed-eye arcs and a blep tongue. The glasses and jacket shapes exist, but the jacket has white smears and the wrong logo and there is no black tee. The coin logo is the exact look (bust only).",
    "styleImage": "assets/coins/stonk-cats.webp",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. 2D anime/chibi illustration style as a stylised 3D character with painterly fluffy fur. A soft periwinkle blue-grey tabby with darker slate-blue stripes fanning over the forehead and crown and on the spiky cheek ruffs. Pure white lower face, muzzle, chin and throat. Large upright ears with pink insides and white tufts. Eyes closed happily as dark curved arcs, a tiny pink tongue tip poking out under a small 'w' mouth, a small pink nose. White-framed Pit Viper wraparound shield sunglasses with a magenta mirrored lens fading to orange, 'PIT' and 'VIPER' in white on the lenses. A heathered navy zip-up track jacket with a silver zipper and stand-up collar, open at the neck over a black tee, two light-blue stripes over each shoulder and down the sleeves, a small teal two-bar logo on the left chest.",
-   "order": 197
+   "order": 197,
+   "modelKey": "stonk-cats"
   },
   "STRAYB12": {
    "action": "retexture",
@@ -1512,7 +1529,8 @@
    "why": "Shape and style are right: an anime chibi black kitten with red eyes, an ivory forehead crescent and a chest tuft. The paint adds invented pale blue-grey socks on all four paws and a pale tail tip, and has a black nose, pinkish inner ears and no red rim glow. The coin logo matches the look.",
    "styleImage": "assets/coins/tsuki.webp",
    "retexturePrompt": "Anime chibi black kitten with glossy cartoon shading. Solid jet-black fur with a blue-black navy/teal sheen and a soft red rim-light glow along the outline. All four legs, paws and the whole tail solid black: no white or grey socks and no pale tail tip. The only light fur is a small blue-grey/white fluffy chest tuft. An ivory-white crescent moon, points up, centred on the forehead. Huge round glossy crimson-red eyes with dark pupils and white catchlights. Grey-blue inner ears with fluffy grey tufts. A tiny pink-red nose (#E094A1) and long white whiskers.",
-   "order": 198
+   "order": 198,
+   "modelKey": "tsuki"
   },
   "TUBBSCAT": {
    "action": "rebuild",
@@ -1576,7 +1594,8 @@
    "why": "Shape is close enough: a soft cartoon kitten with big eyes, if a little slim. The paint is wrong: a saturated coral red-orange body with reversed lighter stripes, where the logo has soft pink-magenta with darker coral-red stripes, big maroon eyes with sparkles, a ':3' smile and a pale peach tail tip. The coin logo matches.",
    "styleImage": "assets/coins/vibing-cat-coin.webp",
    "retexturePrompt": "Anime-cute cartoon kitten with a thin brown line-art feel and soft flat shading. Head orange-ginger (#EF896C) with darker orange tabby stripes on the forehead and cheeks. The coat fades from orange on the head and shoulders to soft pink-magenta (#F8657F) on the body and legs, with darker coral-red tabby stripes over the pink body, legs and tail. Pale peach-cream chest and muzzle, pink inner ears. Huge glossy eyes with dark maroon-brown irises, gold rims, big white highlights and eyelash flicks. Tiny pink nose, ':3' smiling mouth. Tail banded pink and coral with a pale peach tip.",
-   "order": 199
+   "order": 199,
+   "modelKey": "vibing-cat-coin"
   },
   "VIGNETPAW": {
    "action": "rebuild",
@@ -1610,7 +1629,8 @@
    "why": "Invented outfit: the head is enclosed in a grey fabric hood with a black 'V', because the forehead tabby mark was misread as a hat logo, and removing it needs new geometry. The coat is also neutral grey instead of light blue-grey, the legs and paws are white, and a striped, white-tipped tail was added. The coin logo shows the exact look.",
    "styleImage": "assets/coins/wen-4.webp",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Anime/chibi cartoon style, a soft, cute 3D character. Wen: a kitten with a light blue-grey (steel/sky-blue) coat on the head, back, legs, paws and tail, with no hood or hat. White lower face (cheeks, muzzle, around the mouth) and a white chest. A dark navy/slate tabby mark on the forehead: a central stripe flanked by two curved stripes, like a V or trident. Huge glossy turquoise/cyan eyes with white highlights and dark upper lash lines. A tiny pink nose and a ':3' mouth. Bright coral/orange-red inner ears with white ear tufts. Pink paw pads. A plain blue-grey tail with no stripes or white tip.",
-   "order": 200
+   "order": 200,
+   "modelKey": "wen-4"
   },
   "WHIRRPAW": {
    "action": "retexture",
@@ -1652,7 +1672,8 @@
    "why": "Shape is right: a four-legged cat with the paper-bag head and eye holes already modelled. The paint is wrong: an orange ginger tabby body with an orange-striped tail, where the cat is a grey tabby-and-white with long white neck and chest fur, yellow-green eyes, and a dark collar with a silver tag. The coin logo matches the bag and face.",
    "styleImage": "assets/coins/anonymous-cat.webp",
    "retexturePrompt": "A cat with a smooth, crisp, light-brown kraft-paper grocery bag over its whole head: plain matte tan paper with fold creases, two neat round eye holes and a small round nose hole. Through the holes: pale yellow-green eyes with big dark pupils, and a pink nose on a white muzzle. The body is grey tabby and white: white neck, chest, belly and legs with soft, long white fur; grey tabby with darker streaks on the back, flanks and tail. A dark brown/black collar with a maroon-and-cream patterned band and a round silver metal tag at the throat.",
-   "order": 201
+   "order": 201,
+   "modelKey": "anonymous-cat"
   }
  }
 }

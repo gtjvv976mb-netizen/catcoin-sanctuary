@@ -12,7 +12,7 @@
  *
  *   node scripts/meshy.mjs balance
  *   node scripts/meshy.mjs run [KEY ...] [--limit N] [--priority P] [--only retexture|rebuild]
- *                              [--image] [--reserve CREDITS] [--dry]
+ *                              [--image] [--views] [--reserve CREDITS] [--dry]
  *   node scripts/meshy.mjs status
  *   node scripts/meshy.mjs remesh KEY ... [--faces N]   a far copy (FAR_POLYCOUNT faces, 5 credits) for
  *                              a cat's current model; with --faces, replaces the model itself with an
@@ -81,7 +81,7 @@ export function imageRef(ref, root = ROOT) {
 
 /** The request bodies for one queued cat (pure, so tests can check them without the network). */
 export function retextureBody(q, job, { useImage = false, root = ROOT, originalUv = true } = {}) {
-  const model_url = job?.url || `https://catcoinsanctuary.com/assets/models/cats/${q.key}.glb`;
+  const model_url = job?.url || `https://catcoinsanctuary.com/assets/models/cats/${q.modelKey ?? q.key}.glb`;
   const img = useImage ? imageRef(q.styleImage, root) : null;
   const style = img ? { image_style_url: img } : { text_style_prompt: String(q.retexturePrompt || "").slice(0, 800) };
   if (!img && !style.text_style_prompt) throw new Error(`${q.key}: no retexturePrompt and no usable style image`);
@@ -91,8 +91,11 @@ export function retextureBody(q, job, { useImage = false, root = ROOT, originalU
 export function referenceBody(q, { root = ROOT } = {}) {
   const img = imageRef(q.styleImage, root);
   const prompt = `${String(q.referencePrompt || q.retexturePrompt || "").trim()} ${STANDING}`.trim();
+  // A reference picture's own pose wins over the prompt (a sitting or upright cat stays so), so
+  // the image prompt says first that the pose must change.
+  const repose = "Redraw this same character in a NEW POSE: walking on all four legs like a real cat, body horizontal. Keep its exact colours, markings, face and outfit.";
   return img
-    ? { kind: "image-to-image", body: { ai_model: "nano-banana-2", prompt, reference_image_urls: [img], generate_multi_view: true } }
+    ? { kind: "image-to-image", body: { ai_model: "nano-banana-2", prompt: `${repose} ${prompt}`, reference_image_urls: [img], generate_multi_view: true } }
     : { kind: "text-to-image", body: { ai_model: "nano-banana-2", prompt, generate_multi_view: true } };
 }
 
@@ -139,9 +142,11 @@ export function recordModel(jobs, key, entry) {
   return jobs;
 }
 
-async function fix(q, { useImage, log }) {
+async function fix(q, { useImage, log, prior = null, viewsOnly = false }) {
+  // A famous coin's model is filed under its coin id (queue "modelKey"), not its ticker.
+  const mk = q.modelKey ?? q.key;
   const jobs = readJson(FILES.jobs, {});
-  const job = jobs[q.key];
+  const job = jobs[mk];
   if (q.action === "retexture") {
     // The raw source first (full detail); if Meshy cannot take it (some Hunyuan sources are ~500k
     // faces), the site's own packed copy.
@@ -161,18 +166,24 @@ async function fix(q, { useImage, log }) {
     // Only a fresh UV layout is cut per triangle; the model's own UVs still simplify cleanly.
     const far = t.freshUv ? await task("remesh", farBody(t.id), log) : null;
     const keep = Object.fromEntries(Object.entries(job ?? {}).filter(([k]) => ["hd", "q", "yaw", "pose", "image_job", "clean_job"].includes(k)));
-    recordModel(jobs, q.key, { ...keep, image_job: job?.image_job ?? "-", model_job: t.id, model: `meshy retexture (${job?.model ?? "site model"})`, url: t.model_urls.glb, ...(far ? { lo_job: far.id, lo_url: far.model_urls.glb } : {}), status: "done" });
+    recordModel(jobs, mk, { ...keep, image_job: job?.image_job ?? "-", model_job: t.id, model: `meshy retexture (${job?.model ?? "site model"})`, url: t.model_urls.glb, ...(far ? { lo_job: far.id, lo_url: far.model_urls.glb } : {}), status: "done" });
     writeJson(FILES.jobs, jobs);
     return { tasks: far ? [t.id, far.id] : [t.id], credits: (t.consumed_credits ?? 10) + (far ? far.consumed_credits ?? 5 : 0) };
   }
-  const ref = referenceBody(q);
-  const views = await task(ref.kind, ref.body, log);
-  const urls = views.image_urls ?? [];
-  if (!urls.length) throw new Error(`${ref.kind} ${views.id} returned no images`);
-  for (const [i, u] of urls.entries()) await download(u, path.join(REFS, `${q.key}-ref-${i}.png`));
+  // Views made (and checked by eye) in an earlier --views run are reused.
+  let views = prior?.status === "views" ? { id: prior.views_job, image_urls: prior.urls, consumed_credits: 0 } : null;
+  if (!views) {
+    const ref = referenceBody(q);
+    views = await task(ref.kind, ref.body, log);
+    if (!views.image_urls?.length) throw new Error(`${ref.kind} ${views.id} returned no images`);
+    for (const f of fs.existsSync(REFS) ? fs.readdirSync(REFS) : []) if (f.startsWith(`${q.key}-ref-`)) fs.unlinkSync(path.join(REFS, f));
+    for (const [i, u] of views.image_urls.entries()) await download(u, path.join(REFS, `${q.key}-ref-${i}.png`));
+    if (viewsOnly) return { views: true, tasks: [views.id], views_job: views.id, urls: views.image_urls, credits: views.consumed_credits ?? 6 };
+  }
+  const urls = views.image_urls;
   const m = await task("multi-image-to-3d", modelBody(urls), log);
   const far = await task("remesh", farBody(m.id), log);
-  recordModel(jobs, q.key, { image_job: views.id, clean_job: views.id, model_job: m.id, model: "meshy-7.1 multi-image-to-3d", faces: 10000, url: m.model_urls.glb, lo_job: far.id, lo_url: far.model_urls.glb, pose: "standing on all fours", status: "done" });
+  recordModel(jobs, mk, { image_job: views.id, clean_job: views.id, model_job: m.id, model: "meshy-7.1 multi-image-to-3d", faces: 10000, url: m.model_urls.glb, lo_job: far.id, lo_url: far.model_urls.glb, pose: "standing on all fours", status: "done" });
   writeJson(FILES.jobs, jobs);
   return { tasks: [views.id, m.id, far.id], credits: (views.consumed_credits ?? 6) + (m.consumed_credits ?? 30) + (far.consumed_credits ?? 5) };
 }
@@ -207,7 +218,11 @@ async function main(argv) {
   }
   if (cmd !== "run") throw new Error(`unknown command ${cmd}`);
   const keys = rest.filter((a, i) => !a.startsWith("--") && !rest[i - 1]?.startsWith("--"));
-  const todo = ordered(queue, { keys, priority: flag("--priority") ? Number(flag("--priority")) : null, only: flag("--only"), state }).slice(0, Number(flag("--limit", 1e9)));
+  // --views: rebuilds stop after their reference views (6 credits) so the pose can be checked by
+  // eye; a later run without --views builds the 3D model from them (drop a state entry to redo it).
+  const todo = ordered(queue, { keys, priority: flag("--priority") ? Number(flag("--priority")) : null, only: flag("--only"), state })
+    .filter((q) => !rest.includes("--views") || state[q.key]?.status !== "views")
+    .slice(0, Number(flag("--limit", 1e9)));
   const reserve = Number(flag("--reserve", 100));
   console.log(`${todo.length} cats to fix (${todo.map((q) => `${q.key}:${q.action}`).join(" ")})`);
   if (rest.includes("--dry")) { for (const q of todo) console.log(q.key, JSON.stringify(q.action === "retexture" ? retextureBody(q, readJson(FILES.jobs, {})[q.key], { useImage: rest.includes("--image") }) : referenceBody(q)).slice(0, 300)); return; }
@@ -216,8 +231,10 @@ async function main(argv) {
     if (balance - COST[q.action] < reserve) { console.log(`stop: balance ${balance}, ${q.key} needs ${COST[q.action]}, reserve ${reserve}`); break; }
     console.log(`${q.key}: ${q.action} (priority ${q.priority}; balance ${balance})`);
     try {
-      const r = await fix(q, { useImage: rest.includes("--image"), log });
-      state[q.key] = { status: "done", action: q.action, tasks: r.tasks, credits: r.credits, at: new Date().toISOString() };
+      const r = await fix(q, { useImage: rest.includes("--image"), log, prior: state[q.key], viewsOnly: rest.includes("--views") });
+      state[q.key] = r.views
+        ? { status: "views", action: q.action, views_job: r.views_job, urls: r.urls, tasks: r.tasks, credits: r.credits, at: new Date().toISOString() }
+        : { status: "done", action: q.action, tasks: r.tasks, credits: r.credits + (state[q.key]?.status === "views" ? state[q.key].credits : 0), at: new Date().toISOString() };
     } catch (e) {
       console.log(`  failed: ${e.message}`);
       state[q.key] = { status: "failed", action: q.action, error: e.message.slice(0, 400), at: new Date().toISOString() };
