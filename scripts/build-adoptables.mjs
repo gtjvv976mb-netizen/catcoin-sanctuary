@@ -76,7 +76,7 @@ export function adoptableFrom(r, { root, captions = loreCaptions(root) }) {
       note: `Verified ${String(x.verifiedVia ?? "").replace(/^api\.fxtwitter\.com /, "on ")}`.trim(), image: null,
     },
     sources: (r.proof?.web ?? []).slice(0, 6).map((w) => ({ label: String(w.title ?? w.url).trim().slice(0, 140), url: w.url })),
-    existingCoin: e ? { symbol: String(e.symbol), contract: String(e.contract ?? ""), mcapUsd: Number(e.mcap) || 0 } : null,
+    existingCoin: e ? { symbol: String(e.symbol).replace(/^\$+/, ""), contract: String(e.contract ?? ""), mcapUsd: Number(e.mcap) || 0 } : null,
     memorial,
     tribute: tributeLine(owner),
     sensitivity: memorial ? `In loving memory of ${String(r.catName).trim()}.` : "",

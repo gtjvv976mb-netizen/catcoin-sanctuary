@@ -513,7 +513,7 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
   const rows = root.querySelectorAll("button.find-item");
   assert.equal(rows.length, list.length);
   const chips = root.querySelectorAll("button.chip");
-  assert.deepEqual(chips.map((b) => b.textContent), ["All", "Adoptable cats", "Celebrity", "TV & movies", "Company", "Viral", "Hall of Fame"]);
+  assert.deepEqual(chips.map((b) => b.textContent), ["All", "Adoptable cats", "Celebrity", "TV & movies", "Company", "Viral", "Crypto", "Hall of Fame"]);
   const shown = () => root.querySelectorAll("li").filter((li) => !li.hidden).length;
   const famousN = list.filter((r) => r.kind === "famous").length;
   assert.ok(famousN > 0);
@@ -521,7 +521,7 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
   assert.equal(shown(), famousN);
   chips.find((b) => b.textContent === "Adoptable cats").click();
   assert.equal(shown(), list.length - famousN);
-  for (const [chip, cat] of [["Celebrity", "celebrity"], ["TV & movies", "tv-movie"], ["Company", "company"], ["Viral", "viral"]]) {
+  for (const [chip, cat] of [["Celebrity", "celebrity"], ["TV & movies", "tv-movie"], ["Company", "company"], ["Viral", "viral"], ["Crypto", "crypto"]]) {
     chips.find((b) => b.textContent === chip).click();
     const n = list.filter((r) => r.kind === "adoptable" && r.category === cat).length;
     assert.ok(n > 0, chip);
