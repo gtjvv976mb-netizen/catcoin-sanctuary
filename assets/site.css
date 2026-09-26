@@ -78,7 +78,7 @@ button { font: inherit; color: inherit; }
 .loading-bar { position: relative; width: min(340px, 82vw); height: 26px; padding: 4px; border-radius: 999px; background: rgba(61, 24, 52, .78); box-shadow: 0 3px 0 rgba(20, 6, 22, .45), inset 0 2px 4px rgba(0, 0, 0, .3); }
 .loading-fill { display: block; height: 100%; border-radius: 999px; transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.2, .8, .2, 1);
   background: var(--paw) 0 50% / 14px 14px repeat-x, var(--stripes); background-blend-mode: soft-light, normal; }
-.loading-walker { position: absolute; top: -9px; left: 0; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: var(--cream) var(--paw) center / 16px no-repeat;
+.loading-walker { position: absolute; top: 0; left: 4px; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: var(--cream) var(--paw) center / 16px no-repeat;
   box-shadow: 0 0 0 3px var(--plum), 0 3px 0 3px rgba(20, 6, 22, .4); transition: left .45s cubic-bezier(.2, .8, .2, 1); animation: paw-step .5s ease-in-out infinite alternate; }
 .loading-text { margin: 4px 0 0; color: var(--cream); font-weight: 700; text-shadow: 0 1px 6px rgba(20, 6, 22, .7); }
 .loading-tip { margin: 0; max-width: 34ch; min-height: 3em; color: #ffe9c9; font-size: 14px; text-shadow: 0 1px 6px rgba(20, 6, 22, .8); transition: opacity .25s, transform .25s; }

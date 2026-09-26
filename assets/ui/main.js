@@ -44,7 +44,7 @@ const loader = (() => {
     set(p, msg) {
       shown = Math.max(shown, Math.min(100, p));
       fill.style.transform = `scaleX(${(shown / 100).toFixed(3)})`;
-      walker.style.left = `${shown.toFixed(1)}%`;
+      walker.style.left = `calc(4px + (100% - 8px) * ${(shown / 100).toFixed(3)})`; // the fill's right edge: it sits inside the bar's 4px padding
       bar.setAttribute("aria-valuenow", String(Math.round(shown)));
       if (msg && text.textContent !== msg) text.textContent = msg;
     },
