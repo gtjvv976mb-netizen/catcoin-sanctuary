@@ -52,6 +52,7 @@ test("a retexture keeps the model's own geometry and UVs and styles from the pro
   const b = retextureBody({ key: "A", ...QUEUE.cats.A }, job);
   assert.equal(b.model_url, job.url);
   assert.equal(b.enable_original_uv, true);
+  assert.equal(retextureBody({ key: "A", action: "retexture", retexturePrompt: "x" }, null, { originalUv: false }).enable_original_uv, false);
   assert.equal(b.text_style_prompt, "A jet-black cat with four white paws.");
   assert.ok(!("image_style_url" in b));
   const i = retextureBody({ key: "A", ...QUEUE.cats.A }, job, { useImage: true });
@@ -71,7 +72,7 @@ test("a rebuild makes four-legged reference views, from the picture when there i
   assert.deepEqual(ref.body.reference_image_urls, ["https://pbs.twimg.com/media/x.jpg"]);
   const m = modelBody(["u1", "u2", "u3", "u4", "u5"]);
   assert.deepEqual(m.image_urls, ["u1", "u2", "u3", "u4"]);
-  assert.equal(m.texture_image_url, "u1");
+  assert.equal(m.texture_image_url, undefined, "textured from all the views, not just the first (often the back)");
   assert.equal(m.should_texture, true);
 });
 

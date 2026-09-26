@@ -6,13 +6,17 @@
  * wrong fur colours or markings (fixed by a RETEXTURE: Meshy repaints the model's own geometry,
  * 10 credits) or a wrong shape or style (fixed by a REBUILD: image-to-image makes four-legged
  * reference views from the cat's best reference picture, then multi-image-to-3D builds a new
- * textured model, about 36 credits). Owner rules: every cat exactly like its lore; every resident
+ * textured model, about 36 credits). Each new model's UVs are cut per triangle, so gltfpack cannot
+ * simplify it without scrambling the texture: a Meshy remesh (5 credits) makes its far copy instead. Owner rules: every cat exactly like its lore; every resident
  * stands on four legs.
  *
  *   node scripts/meshy.mjs balance
  *   node scripts/meshy.mjs run [KEY ...] [--limit N] [--priority P] [--only retexture|rebuild]
  *                              [--image] [--reserve CREDITS] [--dry]
  *   node scripts/meshy.mjs status
+ *   node scripts/meshy.mjs remesh KEY ... [--faces N]   a far copy (FAR_POLYCOUNT faces, 5 credits) for
+ *                              a cat's current model; with --faces, replaces the model itself with an
+ *                              N-face remesh (for a dense model that cannot otherwise fit the budget)
  *
  * run takes queued cats in priority order (1 first), skipping ones already done in
  * scripts/meshy.state.json, and stops before the balance would drop under --reserve (default 100).
@@ -39,7 +43,7 @@ const FILES = {
   jobs: path.join(ROOT, "scripts/cat-models.jobs.json"),
 };
 const REFS = path.join(ROOT, "scripts/.cat-models-cache/meshy");
-export const COST = { retexture: 10, rebuild: 36 };
+export const COST = { retexture: 15, rebuild: 41 }; // the most each can take, far copy included
 export const STANDING = "Shown alone, full body, standing naturally on all four legs like a real cat: a real quadruped stance with a horizontal back, all four paws flat on the ground, legs clearly separated, head up, tail out behind. Never upright or human-like. Seen from the side at a slight 3/4 angle with the head to the right. Plain flat light grey background, no props, no ground, no text.";
 
 const readJson = (f, fallback) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : fallback);
@@ -76,24 +80,24 @@ export function imageRef(ref, root = ROOT) {
 }
 
 /** The request bodies for one queued cat (pure, so tests can check them without the network). */
-export function retextureBody(q, job, { useImage = false, root = ROOT } = {}) {
+export function retextureBody(q, job, { useImage = false, root = ROOT, originalUv = true } = {}) {
   const model_url = job?.url || `https://catcoinsanctuary.com/assets/models/cats/${q.key}.glb`;
   const img = useImage ? imageRef(q.styleImage, root) : null;
   const style = img ? { image_style_url: img } : { text_style_prompt: String(q.retexturePrompt || "").slice(0, 800) };
   if (!img && !style.text_style_prompt) throw new Error(`${q.key}: no retexturePrompt and no usable style image`);
-  return { model_url, ...style, ai_model: "meshy-6", enable_original_uv: true, texture_resolution: "2k", target_formats: ["glb"] };
+  return { model_url, ...style, ai_model: "meshy-6", enable_original_uv: originalUv, texture_resolution: "2k", target_formats: ["glb"] };
 }
 
 export function referenceBody(q, { root = ROOT } = {}) {
   const img = imageRef(q.styleImage, root);
   const prompt = `${String(q.referencePrompt || q.retexturePrompt || "").trim()} ${STANDING}`.trim();
   return img
-    ? { kind: "image-to-image", body: { ai_model: "nano-banana-2", prompt, reference_image_urls: [img], generate_multi_view: true, aspect_ratio: "1:1" } }
-    : { kind: "text-to-image", body: { ai_model: "nano-banana-2", prompt, generate_multi_view: true, aspect_ratio: "1:1" } };
+    ? { kind: "image-to-image", body: { ai_model: "nano-banana-2", prompt, reference_image_urls: [img], generate_multi_view: true } }
+    : { kind: "text-to-image", body: { ai_model: "nano-banana-2", prompt, generate_multi_view: true } };
 }
 
 export function modelBody(imageUrls) {
-  return { image_urls: imageUrls.slice(0, 4), ai_model: "meshy-7.1", should_texture: true, texture_image_url: imageUrls[0], should_remesh: true, target_polycount: 30000, target_formats: ["glb"] };
+  return { image_urls: imageUrls.slice(0, 4), ai_model: "meshy-7.1", should_texture: true, should_remesh: true, target_polycount: 10000, target_formats: ["glb"] };
 }
 
 async function api(method, route, body) {
@@ -125,6 +129,9 @@ async function download(url, file) {
   fs.writeFileSync(file, Buffer.from(await r.arrayBuffer()));
 }
 
+export const FAR_POLYCOUNT = 2000;
+export const farBody = (taskId) => ({ input_task_id: taskId, topology: "triangle", target_polycount: FAR_POLYCOUNT, target_formats: ["glb"] });
+
 /** Record a finished model where make-cat-models.py reads it, keeping the old entry. */
 export function recordModel(jobs, key, entry) {
   const { previous, ...old } = jobs[key] ?? {};
@@ -141,14 +148,22 @@ async function fix(q, { useImage, log }) {
     let t;
     try { t = await task("retexture", retextureBody(q, job, { useImage }), log); }
     catch (e) {
-      if (!job?.url) throw e;
-      log(`  raw source refused (${e.message.slice(0, 120)}); retrying with the site model`);
-      t = await task("retexture", retextureBody(q, null, { useImage }), log);
+      if (job?.url && !/model_insufficient_uv/.test(e.message)) {
+        log(`  raw source refused (${e.message.slice(0, 120)}); retrying with the site model`);
+        t = await task("retexture", retextureBody(q, null, { useImage }), log);
+      } else if (/model_insufficient_uv/.test(e.message)) {
+        // The model's own UV layout covers too little of the texture: let Meshy unwrap it afresh.
+        log("  UV coverage too small; retrying with a fresh UV layout");
+        t = await task("retexture", retextureBody(q, job, { useImage, originalUv: false }), log);
+        t.freshUv = true;
+      } else throw e;
     }
-    const keep = Object.fromEntries(Object.entries(job ?? {}).filter(([k]) => ["hd", "si", "si_lo", "sa", "sa_lo", "tex", "tex_lo", "q", "yaw", "pose", "image_job", "clean_job"].includes(k)));
-    recordModel(jobs, q.key, { ...keep, image_job: job?.image_job ?? "-", model_job: t.id, model: `meshy retexture (${job?.model ?? "site model"})`, url: t.model_urls.glb, status: "done" });
+    // Only a fresh UV layout is cut per triangle; the model's own UVs still simplify cleanly.
+    const far = t.freshUv ? await task("remesh", farBody(t.id), log) : null;
+    const keep = Object.fromEntries(Object.entries(job ?? {}).filter(([k]) => ["hd", "q", "yaw", "pose", "image_job", "clean_job"].includes(k)));
+    recordModel(jobs, q.key, { ...keep, image_job: job?.image_job ?? "-", model_job: t.id, model: `meshy retexture (${job?.model ?? "site model"})`, url: t.model_urls.glb, ...(far ? { lo_job: far.id, lo_url: far.model_urls.glb } : {}), status: "done" });
     writeJson(FILES.jobs, jobs);
-    return { tasks: [t.id], credits: t.consumed_credits ?? COST.retexture };
+    return { tasks: far ? [t.id, far.id] : [t.id], credits: (t.consumed_credits ?? 10) + (far ? far.consumed_credits ?? 5 : 0) };
   }
   const ref = referenceBody(q);
   const views = await task(ref.kind, ref.body, log);
@@ -156,9 +171,10 @@ async function fix(q, { useImage, log }) {
   if (!urls.length) throw new Error(`${ref.kind} ${views.id} returned no images`);
   for (const [i, u] of urls.entries()) await download(u, path.join(REFS, `${q.key}-ref-${i}.png`));
   const m = await task("multi-image-to-3d", modelBody(urls), log);
-  recordModel(jobs, q.key, { image_job: views.id, clean_job: views.id, model_job: m.id, model: "meshy-7.1 multi-image-to-3d", faces: 30000, url: m.model_urls.glb, pose: "standing on all fours", status: "done" });
+  const far = await task("remesh", farBody(m.id), log);
+  recordModel(jobs, q.key, { image_job: views.id, clean_job: views.id, model_job: m.id, model: "meshy-7.1 multi-image-to-3d", faces: 10000, url: m.model_urls.glb, lo_job: far.id, lo_url: far.model_urls.glb, pose: "standing on all fours", status: "done" });
   writeJson(FILES.jobs, jobs);
-  return { tasks: [views.id, m.id], credits: (views.consumed_credits ?? 6) + (m.consumed_credits ?? 30) };
+  return { tasks: [views.id, m.id, far.id], credits: (views.consumed_credits ?? 6) + (m.consumed_credits ?? 30) + (far.consumed_credits ?? 5) };
 }
 
 async function main(argv) {
@@ -172,6 +188,21 @@ async function main(argv) {
     const all = Object.values(queue.cats);
     const done = Object.values(state).filter((s) => s.status === "done").length;
     console.log(`queue: ${all.filter((q) => q.action === "retexture").length} retexture, ${all.filter((q) => q.action === "rebuild").length} rebuild, ${all.filter((q) => q.action === "ok").length} ok; done ${done}; failed ${Object.values(state).filter((s) => s.status === "failed").length}`);
+    return;
+  }
+  if (cmd === "remesh") {
+    const faces = flag("--faces") ? Number(flag("--faces")) : null;
+    const jobs = readJson(FILES.jobs, {});
+    for (const key of rest.filter((a, i) => !a.startsWith("--") && !rest[i - 1]?.startsWith("--"))) {
+      const job = jobs[key];
+      if (!job?.model_job) { console.log(`${key}: no model job`); continue; }
+      console.log(`${key}: remesh ${job.model_job} to ${faces ?? FAR_POLYCOUNT} faces`);
+      const t = await task("remesh", { ...farBody(job.model_job), ...(faces ? { target_polycount: faces } : {}) }, log);
+      if (faces) Object.assign(job, { model_job: t.id, url: t.model_urls.glb, faces, model: `${job.model} + meshy remesh`, remesh_of: job.model_job });
+      else Object.assign(job, { lo_job: t.id, lo_url: t.model_urls.glb });
+      for (const k of faces ? ["si", "sa", "tex"] : ["si_lo", "sa_lo", "tex_lo"]) delete job[k];
+      writeJson(FILES.jobs, jobs);
+    }
     return;
   }
   if (cmd !== "run") throw new Error(`unknown command ${cmd}`);

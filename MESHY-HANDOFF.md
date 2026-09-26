@@ -44,3 +44,16 @@ Meshy subscription (**3,000 credits**) and added `MESHY_API_KEY` to this cloud e
 - Portraits, lore pictures and kit logos still show the old looks for ~100 cats; they are a
   separate job (Meshy image-to-image, 3-12 credits each) once the models are done.
 - Never paste or print the API key.
+
+## Pilot findings (2026-09-26)
+- Pilot: AMBERDROP, TRIMCAT (retextures), CROOKSHNK, KPURRY (rebuilds): all four now match their lore.
+- Meshy models made with a fresh UV layout (every rebuild; a retexture whose source UVs were too
+  small, `model_insufficient_uv`) have UVs cut per triangle. gltfpack cannot simplify those
+  (plain `-si` stalls; `-sa` scrambles the texture into shards). So rebuilds are made at 10k faces
+  (fits the 600 KB budget unsimplified) and their far copy is a Meshy remesh to 2k faces
+  (`lo_url`, 5 credits). The runner does this itself; `node scripts/meshy.mjs remesh KEY
+  [--faces N]` fixes a cat by hand. Real costs: retexture 10 (15 with a fresh UV layout),
+  rebuild ~41.
+- The packer now fits each copy to its budget by itself and updates only the packed cats' rows in
+  `index.json` and `PROVENANCE.md` (the jobs file is out of date for older cats).
+- Check each shot's facing: a big plume tail can fool the heading guess (CROOKSHNK needed `--yaw 180`).

@@ -165,10 +165,11 @@ def heading(pts):
     return a if front >= back else a + math.pi
 
 
-def normalize(js, binc, yaw_deg=0.0):
-    """Wrap the scene in a node that makes it y-up, facing +X, 1 unit tall, feet on the ground."""
+def normalize(js, binc, yaw_deg=0.0, base=None):
+    """Wrap the scene in a node that makes it y-up, facing +X, 1 unit tall, feet on the ground.
+    base: the heading to use (the full model's, so a separate far copy faces the same way)."""
     pts = world_points(js, binc)
-    th = heading(pts) + math.radians(yaw_deg)  # Tripo H3.1 already puts the front at +X (checked with render-cat-thumbs)
+    th = (heading(pts) if base is None else base) + math.radians(yaw_deg)  # Tripo H3.1 already puts the front at +X (checked with render-cat-thumbs)
     c, s = math.cos(th), math.sin(th)
     R = np.array([[c, 0, s, 0], [0, 1, 0, 0], [-s, 0, c, 0], [0, 0, 0, 1]])
     p = (np.c_[pts, np.ones(len(pts))] @ R.T)[:, :3]
@@ -180,7 +181,7 @@ def normalize(js, binc, yaw_deg=0.0):
     js["nodes"].append({"name": "fit", "matrix": [float(x) for x in M.T.reshape(-1)], "children": sc["nodes"]})
     sc["nodes"] = [len(js["nodes"]) - 1]
     size = (hi - lo) * k
-    return js, {"len": round(float(size[0]), 4), "height": 1.0, "width": round(float(size[2]), 4)}
+    return js, {"len": round(float(size[0]), 4), "height": 1.0, "width": round(float(size[2]), 4), "heading": th - math.radians(yaw_deg)}
 
 
 def gltfpack(exe, src, dst, extra):
@@ -189,30 +190,59 @@ def gltfpack(exe, src, dst, extra):
 
 def build(ticker, job, exe, yaw):
     CACHE.mkdir(parents=True, exist_ok=True); OUT.mkdir(parents=True, exist_ok=True)
-    raw = CACHE / f"{ticker}.raw.glb"
-    stamp = raw.with_suffix(".job")
-    if not raw.exists() or not stamp.exists() or stamp.read_text() != job.get("model_job", ""):
-        req = urllib.request.Request(job["url"], headers={"User-Agent": "cat-sanctuary-models"})
-        raw.write_bytes(urllib.request.urlopen(req, timeout=120).read())
-        raw.with_suffix(".job").write_text(job.get("model_job", ""))
-    info = {}
+    def fetch(name, url, job_id):
+        raw = CACHE / f"{ticker}{name}.raw.glb"
+        stamp = raw.with_suffix(".job")
+        if not raw.exists() or not stamp.exists() or stamp.read_text() != job_id:
+            req = urllib.request.Request(url, headers={"User-Agent": "cat-sanctuary-models"})
+            raw.write_bytes(urllib.request.urlopen(req, timeout=120).read())
+            stamp.write_text(job_id)
+        return raw
+    raw = fetch("", job["url"], job.get("model_job", ""))
+    # Meshy models made with a fresh UV layout come with their own low-poly far copy ("lo_url", a
+    # Meshy remesh): their UVs are cut per triangle, so gltfpack cannot simplify them cleanly.
+    raw_lo = fetch("-lo", job["lo_url"], job.get("lo_job", "")) if job.get("lo_url") else raw
+    info, base = {}, None
     # Per-job overrides for dense sources (Hunyuan3D v3 gives ~500k faces): "si"/"si_lo" simplify
     # ratios, "tex"/"tex_lo" texture sizes, "sa_lo" aggressive simplification (-sa) for a far copy
     # that gltfpack cannot otherwise bring under budget; HD models get the larger full-size budget.
-    si_hi = ([] if not job.get("si") else ["-si", str(job["si"])]) + (["-sa"] if job.get("sa") else [])
-    si_lo = ["-si", str(job.get("si_lo", 0.25))] + (["-sa"] if job.get("sa_lo") else [])
-    hi_budget = BUDGET_HD if job.get("hd") else BUDGET_HI
-    for tag, tex, extra, budget in (("", job.get("tex", 1024), si_hi, hi_budget), ("-lo", job.get("tex_lo", 512), si_lo, BUDGET_HD_LO if job.get("hd") else BUDGET_LO)):
-        js, binc = read_glb(raw.read_bytes())
-        js, binc = retexture(js, binc, tex, job.get("q", 86))
-        js, dims = normalize(js, binc, yaw if yaw is not None else job.get("yaw", 0))
-        tmp = CACHE / f"{ticker}{tag}.fit.glb"; tmp.write_bytes(write_glb(js, binc))
+    # A copy over budget is re-packed smaller: the job's own settings first, then less geometry, and
+    # only when that is not enough at 5%, a smaller texture. Aggressive simplification (-sa) scrambles
+    # textures on per-triangle UVs, so it is used only where a job already asks for it. The settings
+    # that fit are written back to the job.
+    SI_STEPS = [0.8, 0.6, 0.45, 0.33, 0.25, 0.18, 0.12, 0.08, 0.05, 0.03, 0.02, 0.01]
+    for tag, src, si_key, tex_key, sa_key, si0, tex0, budget in (
+            ("", raw, "si", "tex", "sa", None, 1024, BUDGET_HD if job.get("hd") else BUDGET_HI),
+            ("-lo", raw_lo, "si_lo", "tex_lo", "sa_lo", None if job.get("lo_url") else 0.25, 512, BUDGET_HD_LO if job.get("hd") else BUDGET_LO)):
+        first = (job.get(si_key, si0), job.get(tex_key, tex0), bool(job.get(sa_key)))
         dst = OUT / f"{ticker}{tag}.glb"
-        gltfpack(exe, tmp, dst, extra)
-        sz = dst.stat().st_size
+        fits = {}
+
+        def pack(si, tex, sa):
+            if tex not in fits:
+                js, binc = read_glb(src.read_bytes())
+                js, binc = retexture(js, binc, tex, job.get("q", 86))
+                js, dims = normalize(js, binc, yaw if yaw is not None else job.get("yaw", 0), base)
+                tmp = CACHE / f"{ticker}{tag}-{tex}.fit.glb"; tmp.write_bytes(write_glb(js, binc))
+                fits[tex] = (tmp, dims)
+            gltfpack(exe, fits[tex][0], dst, ([] if not si else ["-si", str(si)]) + (["-sa"] if sa else []))
+            return dst.stat().st_size
+
+        tries = [first] + [(si, tex, sa) for tex in (1024, 512, 256) if tex <= first[1]
+                           for si in SI_STEPS if si < (first[0] or 1) and (si >= 0.05 or tex == 256) for sa in {first[2]}]
+        for si, tex, sa in tries:
+            sz = pack(si, tex, sa)
+            if sz <= budget: break
+        if (si, tex, sa) != first:
+            job[si_key], job[tex_key] = si, tex
+            if sa: job[sa_key] = True
+            else: job.pop(sa_key, None)
+        for tmp, _ in fits.values(): tmp.unlink()
         info["hi" if not tag else "lo"] = sz
         if sz > budget: print(f"  ! {dst.name} is {sz} bytes, over the {budget} budget", file=sys.stderr)
-        info.update(dims)
+        if not tag:
+            info.update({k: v for k, v in fits[tex][1].items() if k != "heading"})
+            base = fits[tex][1]["heading"]
     return info
 
 
@@ -232,24 +262,35 @@ def main():
         if a.yaw is not None: j["yaw"] = a.yaw
         print(f"  {info['hi']/1024:.0f} KB full, {info['lo']/1024:.0f} KB far; len {info['len']} x width {info['width']}")
     JOBS.write_text(json.dumps(jobs, indent=1) + "\n")
-    ready = {t: {**j["dims"], **({"hd": True} if j.get("hd") else {})} for t, j in jobs.items() if j.get("status") == "done" and (OUT / f"{t}.glb").exists() and (OUT / f"{t}-lo.glb").exists()}
-    (OUT / "index.json").write_text(json.dumps({"version": 1, "cats": ready}, indent=1) + "\n")
-    write_provenance(jobs)
+    # Only the cats packed now change in the index: other entries stay as they were published.
+    idx = OUT / "index.json"
+    ready = json.loads(idx.read_text())["cats"] if idx.exists() else {}
+    for t in todo:
+        if (OUT / f"{t}.glb").exists() and (OUT / f"{t}-lo.glb").exists():
+            ready[t] = {**{k: float(v) for k, v in jobs[t]["dims"].items()}, **({"hd": True} if jobs[t].get("hd") else {})}
+    idx.write_text(json.dumps({"version": 1, "cats": ready}, indent=1) + "\n")
+    write_provenance(jobs, todo)
 
 
-def write_provenance(jobs):
+def write_provenance(jobs, todo):
+    """Rewrite the rows of the cats packed now; every other row stays as it was published."""
     p = ROOT / "assets/models/PROVENANCE.md"
     text = p.read_text()
     mark = "\n## Per-cat models (assets/models/cats/)\n"
-    text = text.split(mark)[0].rstrip("\n") + "\n" + mark + (
-        "\nEach cat's own model, made from its own picture by scripts/make-cat-models.py (see scripts/CAT-MODELS.md).\n"
-        "Normalized: y up, facing +X, 1 unit tall, feet on y = 0; texture 1024 px JPEG; gltfpack 0.24 -kn -km -tr.\n"
-        "<TICKER>-lo.glb is the far copy (gltfpack -si 0.25, 512 px texture).\n\n"
-        "| Cat | Picture job | Clean image job | 3D job | Model | Full | Far |\n|---|---|---|---|---|---|---|\n")
-    for t, j in jobs.items():
+    head, _, table = text.partition(mark)
+    lines = table.rstrip("\n").split("\n") if table else [
+        "", "Each cat's own model, made from its own picture by scripts/make-cat-models.py (see scripts/CAT-MODELS.md).",
+        "Normalized: y up, facing +X, 1 unit tall, feet on y = 0; texture 1024 px JPEG; gltfpack 0.24 -kn -km -tr.",
+        "<TICKER>-lo.glb is the far copy (gltfpack -si 0.25, 512 px texture; a Meshy remesh where the job has lo_job).", "",
+        "| Cat | Picture job | Clean image job | 3D job | Model | Full | Far |", "|---|---|---|---|---|---|---|"]
+    row = lambda t, j: f"| {t} | {j['image_job']} | {j.get('clean_job', '-')} | {j['model_job']}{' (far: ' + j['lo_job'] + ')' if j.get('lo_job') else ''} | {j['model']}, {j.get('faces', '?')} faces | {j['sizes']['hi']/1024:.0f} KB | {j['sizes']['lo']/1024:.0f} KB |"
+    rows = {l.split(" | ")[0][2:]: i for i, l in enumerate(lines) if l.startswith("| ") and not l.startswith("| Cat ")}
+    for t in todo:
+        j = jobs[t]
         if j.get("status") != "done" or "sizes" not in j: continue
-        text += f"| {t} | {j['image_job']} | {j.get('clean_job', '-')} | {j['model_job']} | {j['model']}, {j.get('faces', '?')} faces | {j['sizes']['hi']/1024:.0f} KB | {j['sizes']['lo']/1024:.0f} KB |\n"
-    p.write_text(text)
+        if t in rows: lines[rows[t]] = row(t, j)
+        else: lines.append(row(t, j))
+    p.write_text(head.rstrip("\n") + "\n" + mark + "\n".join(lines) + "\n")
 
 
 if __name__ == "__main__":
