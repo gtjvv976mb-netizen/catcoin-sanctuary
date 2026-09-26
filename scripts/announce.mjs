@@ -231,7 +231,9 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
       const img = p1.image && path.join(root, p1.image);
       if (img && fs.existsSync(img)) {
         try { media = [await uploadImage(fs.readFileSync(img), /\.png$/i.test(img) ? "image/png" : /\.webp$/i.test(img) ? "image/webp" : "image/jpeg", creds, fetchImpl)]; }
-        catch (e) { if (e instanceof XError && (e.status === 401 || e.status === 403)) throw e; log(`::warning::${cat.key}: the portrait did not upload (${e.message}); posting without it.`); }
+        // A media-upload refusal (the free X tier and some app setups reject it) must not stop the text post;
+        // if the keys themselves are wrong, the post below fails with the same 401 and the run stops there.
+        catch (e) { log(`::warning::${cat.key}: the portrait did not upload (${e.message}); posting without it.`); }
       }
       ids.push(await createPost({ text: p1.text, mediaIds: media }, creds, fetchImpl));
       state.cats[cat.key] = { status: "posted", at: stamp(), ids: [...ids], attempts: state.cats[cat.key].attempts };
