@@ -1,371 +1,368 @@
 {
-  "note": "Which cats have been announced on X (@catcosanctuary), by site id (planned ticker, or mint for an unplanned adopted cat). backlog: existed before announcing began, announced a few a run when announce-config.json has announceBacklog: true. queued: drafted into announce-queue.json for posting by hand. posting/posted: sent (ids are the X post ids). failed: retried up to 3 times. needs_review: a draft broke a content rule; fix the data or post by hand, then set posted. Written by scripts/announce.mjs.",
-  "cats": {
-    "PATCHPAW": {
-      "status": "failed",
-      "at": "2026-09-26T05:54:11.379Z",
-      "attempts": 1,
-      "error": "X API POST /2/tweets: HTTP 401 {\"title\":\"Unauthorized\",\"type\":\"about:blank\",\"status\":401,\"detail\":\"Unauthorized\"}"
-    },
-    "WHISK100": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "INGOTLOAF": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SNOWCURL": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SOCKFOOT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "ROSETTE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "JELLIECAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "MOMOTHECAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "LEOTHELION": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "COUCHCAP": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "MIGGLES": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "PEWTER": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "TRINKETCAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "TUPPENCE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "WARMSPOT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SKEINKIT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SAVEPAWS": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "EVERLOOP": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "MILKWEED": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "CAMTHECAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "OLIVIACAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "UPDATECAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "TRILLBY": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "LATCHKEY": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "MEMOPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "GIMBALPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "CHIK": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "KEEPSAKE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "PINROW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "COOPERCAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SAFFWHISK": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "NOTEPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "APOTHECAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "COBBLEPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SCUFFPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "KERNELPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "TREADPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "COWARDLION": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "GLINTPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "HUBBUB": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "BOXWOOD": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "LIDNAP": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "PAWPOST": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "TALLYSPOT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "VELVETPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "PRISMPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "TARTANPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "BURLYPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SUNSTRETCH": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "AMRCAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "PEPPERCAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "KIOSKPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SANDSTEP": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "WAYBILL": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "WHIRRPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "WINDSOCK": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "VIGNETPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "CANDLEWICK": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "TOMRUTGERS": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "LACQUER": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "RUBYCAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SORRELPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SUGARSOOT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "GRIDDLE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "ROOKIEPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "CORSAGE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "RAFTERPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "UMBERPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "PUMICE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "JITTERPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "STUBTAIL": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "CASENAP": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "PAPRIKA": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SNUGPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "MITTENSCAT": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "AMBERDROP": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "DROWSEPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "CURFEWPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "LICHENPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "RUSTLEPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "ICICLEPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "RIMESTRIPE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "CABLETAIL": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "MILLRACE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "PARLORPUFF": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SQUINTPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "COTTAPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "HOVERPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "HUNCHPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "SILKSTRIPE": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    },
-    "KNITPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
-    }
+ "note": "Which cats have been announced on X (@catcosanctuary), by site id (planned ticker, or mint for an unplanned adopted cat). backlog: existed before announcing began, announced a few a run when announce-config.json has announceBacklog: true. queued: drafted into announce-queue.json for posting by hand. posting/posted: sent (ids are the X post ids). failed: retried up to 3 times. needs_review: a draft broke a content rule; fix the data or post by hand, then set posted. Written by scripts/announce.mjs.",
+ "cats": {
+  "PATCHPAW": {
+   "status": "backlog"
+  },
+  "WHISK100": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "INGOTLOAF": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SNOWCURL": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SOCKFOOT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "ROSETTE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "JELLIECAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "MOMOTHECAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "LEOTHELION": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "COUCHCAP": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "MIGGLES": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "PEWTER": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "TRINKETCAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "TUPPENCE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "WARMSPOT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SKEINKIT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SAVEPAWS": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "EVERLOOP": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "MILKWEED": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "CAMTHECAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "OLIVIACAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "UPDATECAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "TRILLBY": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "LATCHKEY": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "MEMOPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "GIMBALPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "CHIK": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "KEEPSAKE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "PINROW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "COOPERCAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SAFFWHISK": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "NOTEPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "APOTHECAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "COBBLEPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SCUFFPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "KERNELPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "TREADPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "COWARDLION": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "GLINTPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "HUBBUB": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "BOXWOOD": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "LIDNAP": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "PAWPOST": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "TALLYSPOT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "VELVETPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "PRISMPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "TARTANPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "BURLYPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SUNSTRETCH": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "AMRCAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "PEPPERCAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "KIOSKPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SANDSTEP": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "WAYBILL": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "WHIRRPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "WINDSOCK": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "VIGNETPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "CANDLEWICK": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "TOMRUTGERS": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "LACQUER": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "RUBYCAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SORRELPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SUGARSOOT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "GRIDDLE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "ROOKIEPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "CORSAGE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "RAFTERPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "UMBERPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "PUMICE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "JITTERPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "STUBTAIL": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "CASENAP": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "PAPRIKA": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SNUGPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "MITTENSCAT": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "AMBERDROP": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "DROWSEPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "CURFEWPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "LICHENPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "RUSTLEPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "ICICLEPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "RIMESTRIPE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "CABLETAIL": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "MILLRACE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "PARLORPUFF": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SQUINTPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "COTTAPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "HOVERPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "HUNCHPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "SILKSTRIPE": {
+   "status": "backlog",
+   "since": "2026-09-26"
+  },
+  "KNITPAW": {
+   "status": "backlog",
+   "since": "2026-09-26"
   }
+ }
 }
