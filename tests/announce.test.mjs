@@ -37,7 +37,7 @@ const quiet = { log: () => {}, sleep: async () => {} };
 test("the card link is the site's own deep link (#cat=<id>, as assets/ui/main.js reads it)", () => {
   const main = fs.readFileSync(path.join(ROOT, "assets/ui/main.js"), "utf8");
   assert.ok(main.includes("#cat=${encodeURIComponent(id)}"));
-  assert.equal(cardLink("PATCHPAW"), "https://catcoinsanctuary.com/#cat=PATCHPAW");
+  assert.match(cardLink("PATCHPAW"), /^https:\/\/catcoinsanctuary\.com\/(\?v=\w+)?#cat=PATCHPAW$/);
 });
 
 test("every planned cat drafts to <= 280 characters that pass the content rules, or is held", () => {

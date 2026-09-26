@@ -204,9 +204,9 @@ test("the head: title, description, canonical address, sharing picture, icons", 
   assert.equal(meta("name", "twitter:site"), "@catcosanctuary");
   assert.match(meta("property", "og:description") ?? "", /\$CATSANC/);
   assert.equal(meta("property", "og:url"), SITE);
-  assert.equal(meta("property", "og:image"), `${SITE}assets/og-image.jpg`);
+  assert.match(meta("property", "og:image"), /^https:\/\/catcoinsanctuary\.com\/assets\/og-image\.jpg(\?v=\w+)?$/);
   assert.equal(meta("name", "twitter:card"), "summary_large_image");
-  assert.equal(meta("name", "twitter:image"), `${SITE}assets/og-image.jpg`);
+  assert.match(meta("name", "twitter:image"), /^https:\/\/catcoinsanctuary\.com\/assets\/og-image\.jpg(\?v=\w+)?$/);
   const og = jpegInfo(fs.readFileSync(path.join(ROOT, "assets/og-image.jpg")));
   assert.deepEqual([og.width, og.height], [1200, 630]);
   assert.equal(meta("property", "og:image:width"), "1200");

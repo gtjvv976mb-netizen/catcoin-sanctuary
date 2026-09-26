@@ -43,7 +43,9 @@ export const DEFAULT_CONFIG = Object.freeze({ dryRun: true, perRun: 3, announceB
 const MAX_ATTEMPTS = 3;
 
 /** The site's deep link to a cat's card (assets/ui/main.js: `#cat=${encodeURIComponent(id)}`). */
-export const cardLink = (id) => `${SITE}#cat=${encodeURIComponent(id)}`;
+// ?v= makes X fetch the current preview image instead of an old cached one.
+export const PREVIEW_VERSION = "3";
+export const cardLink = (id) => `${SITE}?v=${PREVIEW_VERSION}#cat=${encodeURIComponent(id)}`;
 
 /** X's weighted length: most Latin text and punctuation counts 1, everything else (emoji, CJK) 2.
  *  URLs are counted at their full length, which is never less than X's 23. */
