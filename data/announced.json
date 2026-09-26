@@ -2,8 +2,10 @@
   "note": "Which cats have been announced on X (@catcosanctuary), by site id (planned ticker, or mint for an unplanned adopted cat). backlog: existed before announcing began, announced a few a run when announce-config.json has announceBacklog: true. queued: drafted into announce-queue.json for posting by hand. posting/posted: sent (ids are the X post ids). failed: retried up to 3 times. needs_review: a draft broke a content rule; fix the data or post by hand, then set posted. Written by scripts/announce.mjs.",
   "cats": {
     "PATCHPAW": {
-      "status": "backlog",
-      "since": "2026-09-26"
+      "status": "failed",
+      "at": "2026-09-26T05:40:42.204Z",
+      "attempts": 1,
+      "error": "X API POST /2/media/upload: HTTP 401 {\"title\":\"Unauthorized\",\"type\":\"about:blank\",\"status\":401,\"detail\":\"Unauthorized\"}"
     },
     "WHISK100": {
       "status": "backlog",
