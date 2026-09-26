@@ -107,7 +107,7 @@ const BASE = pathToFileURL(`${ROOT}/`);
 
 /** The real GMEx StonkFun launch (tests/fixtures), its symbol set to a planned cat's ticker, as a launched sample. */
 const GME = Object.freeze({
-  mint: "EcB7LMNFXdSbzY4DQ6Uc9AKXmb9DCKqAeoNmLvNp3HvL", name: "Save Point the Tabby", symbol: "SAVEPAWS",
+  mint: "EcB7LMNFXdSbzY4DQ6Uc9AKXmb9DCKqAeoNmLvNp3HvL", name: "Roaring Kitty", symbol: "SAVEPAWS",
   pair: { symbol: "GMEx", mint: "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc" }, pool: "2un6cyq4X2fMdgevvUSpcueiX1ER2CxRjsPxNMNkHcFz",
   payer: GME_LAUNCHER, tx: GME_LAUNCH, time: "2026-09-24T20:57:15Z",
 });
