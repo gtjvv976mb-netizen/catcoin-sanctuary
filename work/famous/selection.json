@@ -1,0 +1,1149 @@
+{
+ "generatedAt": "2026-09-25T20:15:40.687Z",
+ "measuredAt": {
+  "refreshStarted": "2026-09-25T19:55:18.129Z",
+  "refreshFinished": "2026-09-25T20:01:54.500Z",
+  "coingeckoMarkets": "2026-09-25T19:55:18.130Z",
+  "followUps": "2026-09-25T20:04-20:14Z (GeckoTerminal catwifhat, Solana RPC getTokenSupply, CoinGecko tickers MIU/ROAR, project-site scripts, DexScreener re-check of 12 known copies)"
+ },
+ "rule": {
+  "text": "market cap (circulating) >= $1,000,000 AND (24h volume >= $25,000 OR DEX liquidity >= $50,000); genuinely cat-branded; canonical contract; no copies or impersonator tickers",
+  "marketCap": "CoinGecko circulating market cap when present and fresh (<= 6h old); otherwise DexScreener market cap of the canonical contract, cross-checked with GeckoTerminal and on-chain supply",
+  "volume": "larger of CoinGecko 24h total volume (fresh only; includes centralized exchanges) and summed DexScreener pair volume",
+  "liquidity": "DexScreener liquidity summed over all pairs of the canonical contracts; counts only if the non-token side is >= $25,000"
+ },
+ "sources": {
+  "coingeckoMarkets": "famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json",
+  "coingeckoCategoryPages": [
+   "famous/raw/merge/2026-09-25T19-55-25-133Z_mg_31813_0002_cg_cat_category_p1_47759acb.json",
+   "famous/raw/merge/2026-09-25T19-55-32-136Z_mg_31813_0003_cg_cat_category_p2_7e5bf1eb.json"
+  ],
+  "liveTable": "famous/merge/live.json",
+  "scripts": [
+   "famous/merge/master.mjs",
+   "famous/merge/refresh.mjs",
+   "famous/merge/notes.mjs",
+   "famous/merge/decide.mjs"
+  ]
+ },
+ "counts": {
+  "uniqueCoinsMerged": 96,
+  "selected": 61,
+  "rejected": 47,
+  "rejectedCandidates": 35,
+  "rejectedCopiesAndImpersonators": 12
+ },
+ "selected": [
+  {
+   "id": "cash-cat",
+   "name": "Cash Cat",
+   "symbol": "CASHCAT",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0x020bfc650a365f8bb26819deaabf3e21291018b4",
+   "marketCapUsd": 186027705,
+   "volume24hUsd": 16153853,
+   "liquidityUsd": 12325404,
+   "coingeckoId": "cash-cat",
+   "otherContracts": [],
+   "evidence": "Logo is a sitting cat; named for Robinhood's original app name 'Cash Cat' (cashcattoken.xyz). Robinhood Chain native. Rule: PASS on volume and liquidity. Live mcap $186,027,705 (CoinGecko circulating); 24h vol $16,153,853 (CoinGecko $16,153,853, DEX $12,489,744); DEX liq $12,325,404 (non-token side $5,370,368; DexScreener). Measured 2026-09-25T19:55:32.483Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/cashcat.cc_.html, famous/raw/web/cashcattoken.xyz_.html); top pair uniswap CASHCAT/WETH 0xA70fc67C9F69da90B63a0e4C05D229954574E313. Merged from sweeps: coingecko. Links: https://cashcattoken.xyz/, https://x.com/cashcat_token. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-32-483Z_mg_31813_0004_ds_tp_cash-cat_robinhood_a902fe51.json; famous/raw/2026-09-25T19-10-28-425Z_cg_14842_0002_cg_coin_cash-cat_53468373.json."
+  },
+  {
+   "id": "cate-meme",
+   "name": "CATECOIN (cate.meme)",
+   "symbol": "CATE",
+   "chain": "solana",
+   "contract": "Ai66LHZG9MCzg1WKdawwqduVAXpNDUuV8M3uyq5ppump",
+   "marketCapUsd": 101556191,
+   "volume24hUsd": 5948333,
+   "liquidityUsd": 5169716,
+   "otherContracts": [],
+   "evidence": "CATECOIN 'The Ninth Life' (cate.meme: 'the cat sister of Dogecoin ... one coin. one cat.'); real cat face in a gold coin. Not the 2021 BSC CateCoin. Rule: PASS on volume and liquidity. Live mcap $101,556,191 (DexScreener (not on CoinGecko)); 24h vol $5,948,333 (CoinGecko n/a, DEX $5,948,333); DEX liq $5,169,716 (non-token side $3,024,230; DexScreener). Measured 2026-09-25T19:56:03.712Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: printed on the project site (famous/raw/web/cate.meme_.html, famous/raw/dex/sites/cate.meme.html); top pair pumpswap CATE/SOL HMzvsEEmtzHhvZNw9uwbaG85HCTmFnkbhzUx16cy7ca3. Flags: Not on CoinGecko: market cap is DexScreener's (GeckoTerminal $103.5M agrees). Impersonators: Solana 89x86Bx9rLGgrchyHw3S3avmykVKUEVsy2o9rrA1wYkP shows fake liquidity; Baby Catecoin is a separate spin-off. Merged from sweeps: coingecko+dex. Links: https://cate.meme/, https://x.com/i/communities/2004330768022004131, https://t.me/catecoin_telegram. Evidence: famous/raw/merge/2026-09-25T19-56-03-712Z_mg_31813_0105_ds_tp_cate-meme_solana_90d5885d.json; famous/raw/merge/2026-09-25T19-58-42-965Z_mg_31813_0128_gt_token_cate-meme_7db67e4f.json."
+  },
+  {
+   "id": "purr-2",
+   "name": "Purr",
+   "symbol": "PURR",
+   "chain": "hyperliquid (HyperCore spot)",
+   "contract": "0xc1fb593aeffbeb02f85e0308e9956a90",
+   "marketCapUsd": 74932306,
+   "volume24hUsd": 3359661,
+   "liquidityUsd": 776317,
+   "coingeckoId": "purr-2",
+   "otherContracts": [
+    {
+     "chain": "hyperevm",
+     "contract": "0x9b498c3c8a0b8cd8ba1d9851d40d186f1872b44e"
+    }
+   ],
+   "evidence": "PURR, the first spot token on Hyperliquid; its brand is the Hypurr cartoon cat (white cat logo). Rule: PASS on volume and liquidity. Live mcap $74,932,306 (CoinGecko circulating); 24h vol $3,359,661 (CoinGecko $3,359,661, DEX $351,162, HyperCore/GT $3,030,833); DEX liq $776,317 (non-token side $239,839; DexScreener). Measured 2026-09-25T19:55:18.129Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair PURR / USDC on hyperliquid (GeckoTerminal). Extra contracts: hyperevm 0x9b498c3c8a0b8cd8ba1d9851d40d186f1872b44e (DEX liq $776,317). Flags: Main venue is the Hyperliquid (HyperCore) spot order book (GeckoTerminal: $3.03M/24h); DEX liquidity is on HyperEVM. Impersonators: Solana 'Hypurr' $PURR 8RNUw4N655VSrZKuhGdywhbSMDTrheguFPfxbpE2NZHQ and fake-liquidity copies on Solana and Ethereum. Merged from sweeps: coingecko. Links: https://app.hyperliquid.xyz/trade/PURR/USDC, https://x.com/Hyperintern. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-41-733Z_mg_31813_0033_ds_tp_purr-2_hyperevm_2dc1375e.json; famous/raw/merge/2026-09-25T19-56-06-785Z_mg_31813_0116_gt_pools_purr-2_bcd9e49a.json; famous/raw/2026-09-25T19-15-44-045Z_cg_15520_0029_cg_coin_purr-2_2b65de72.json."
+  },
+  {
+   "id": "anonymous-cat",
+   "name": "Anonymous Cat",
+   "symbol": "ZCAT",
+   "chain": "solana",
+   "contract": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+   "marketCapUsd": 64132674,
+   "volume24hUsd": 5686861,
+   "liquidityUsd": 2557403,
+   "coingeckoId": "anonymous-cat",
+   "otherContracts": [],
+   "evidence": "Anonymous Cat: a cat wearing a paper bag; StonkFun launch with a 3% tax paid out in ZEC. No real cat behind it. Rule: PASS on volume and liquidity. Live mcap $64,132,674 (CoinGecko circulating); 24h vol $5,686,861 (CoinGecko $5,686,861, DEX $4,114,972); DEX liq $2,557,403 (non-token side $1,332,450; DexScreener). Measured 2026-09-25T19:55:33.206Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium ZCAT/ZEC BTccxxTFi7a9xJTE1exKn38Jgie35s6gNeRxd8DM61Rc. Merged from sweeps: coingecko. Links: https://www.stonkfun.xyz/token/HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-33-206Z_mg_31813_0006_ds_tp_anonymous-cat_solana_65b5b900.json; famous/raw/2026-09-25T19-11-58-943Z_cg_15520_0004_cg_coin_anonymous-cat_1041a8ee.json."
+  },
+  {
+   "id": "popcat",
+   "name": "Popcat",
+   "symbol": "POPCAT",
+   "chain": "solana",
+   "contract": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+   "marketCapUsd": 57292295,
+   "volume24hUsd": 10939304,
+   "liquidityUsd": 5068439,
+   "coingeckoId": "popcat",
+   "otherContracts": [],
+   "evidence": "Popcat = Oatmeal, a real cat whose two-frame 'O-mouth' photo became the popcat.click meme (2020); logo is the real cat. Not endorsed by the owner; community takeover. Rule: PASS on volume and liquidity. Live mcap $57,292,295 (CoinGecko circulating); 24h vol $10,939,304 (CoinGecko $10,939,304, DEX $461,791); DEX liq $5,068,439 (non-token side $2,522,713; DexScreener). Measured 2026-09-25T19:55:46.541Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/www.popcatsolana.xyz_.html); top pair raydium POPCAT/SOL FRhB8L7Y9Qq41qZXYLtC2nw8An1RJfLLxRF2x9RwLLMo. Merged from sweeps: coingecko+memes. Links: https://popcatsolana.xyz/, https://x.com/Popcatsolana. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-46-541Z_mg_31813_0049_ds_tp_popcat_solana_be5e9214.json; famous/raw/2026-09-25T19-17-14-093Z_cg_15520_0039_cg_coin_popcat_59066d06.json."
+  },
+  {
+   "id": "toshi",
+   "name": "Toshi",
+   "symbol": "TOSHI",
+   "chain": "base",
+   "contract": "0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4",
+   "marketCapUsd": 54595964,
+   "volume24hUsd": 3146802,
+   "liquidityUsd": 2008323,
+   "coingeckoId": "toshi",
+   "otherContracts": [
+    {
+     "chain": "bsc",
+     "contract": "0x6a2608dabe09bc1128eec7275b92dfb939d5db3f"
+    }
+   ],
+   "evidence": "Named after Coinbase CEO Brian Armstrong's real cat Toshi; 'face of Base'. Not formally endorsed. Rule: PASS on volume and liquidity. Live mcap $54,595,964 (CoinGecko circulating); 24h vol $3,146,802 (CoinGecko $3,146,802, DEX $330,836); DEX liq $2,008,323 (non-token side $748,565; DexScreener). Measured 2026-09-25T19:55:46.842Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/www.toshithecat.com_.html); top pair uniswap TOSHI/WETH 0x4b0Aaf3EBb163dd45F663b38b6d93f6093EBC2d3. Extra contracts: bsc 0x6a2608dabe09bc1128eec7275b92dfb939d5db3f (DEX liq $427,651). Merged from sweeps: coingecko+memes. Links: https://www.toshithecat.com/. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-46-842Z_mg_31813_0050_ds_tp_toshi_base_08afeef0.json; famous/raw/merge/2026-09-25T19-55-47-142Z_mg_31813_0051_ds_tp_toshi_bsc_8eae2763.json; famous/raw/2026-09-25T19-17-23-099Z_cg_15520_0040_cg_coin_toshi_67a7fdd6.json."
+  },
+  {
+   "id": "mog-coin",
+   "name": "Mog Coin",
+   "symbol": "MOG",
+   "chain": "ethereum",
+   "contract": "0xaaee1a9723aadb7afa2810263653a34ba2c21c7a",
+   "marketCapUsd": 48597846,
+   "volume24hUsd": 8928980,
+   "liquidityUsd": 6374418,
+   "coingeckoId": "mog-coin",
+   "otherContracts": [
+    {
+     "chain": "avalanche",
+     "contract": "0xeb2729257280580694a06c499cb8c622e74215c8"
+    },
+    {
+     "chain": "base",
+     "contract": "0x2da56acb9ea78330f947bd57c54119debda7af71"
+    },
+    {
+     "chain": "bsc",
+     "contract": "0x1d0a4821fdef156b0d051d08a166de5df2788cf7"
+    },
+    {
+     "chain": "solana",
+     "contract": "26VfKb7jjtdEdvfovoBijScoZmJbWWasFZkgfUD5w7cy"
+    }
+   ],
+   "evidence": "Crypto-native 'Joycat' laughing cat in pit-viper sunglasses ('mogging'), July 2023. Rule: PASS on volume and liquidity. Live mcap $48,597,846 (CoinGecko circulating); 24h vol $8,928,980 (CoinGecko $8,928,980, DEX $618,000); DEX liq $6,374,418 (non-token side $3,216,555; DexScreener). Measured 2026-09-25T19:55:47.443Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/www.mogcoin.xyz_.html); top pair uniswap Mog/WETH 0xc2eaB7d33d3cB97692eCB231A5D0e4A649Cb539d. Extra contracts: avalanche 0xeb2729257280580694a06c499cb8c622e74215c8 (DEX liq $2,841); base 0x2da56acb9ea78330f947bd57c54119debda7af71 (DEX liq $68,080); bsc 0x1d0a4821fdef156b0d051d08a166de5df2788cf7 (DEX liq $17,375); solana 26VfKb7jjtdEdvfovoBijScoZmJbWWasFZkgfUD5w7cy (DEX liq $50,292). Flags: The Solana and BSC bridged copies show the full market cap on DexScreener with thin liquidity; the Ethereum contract holds the real liquidity. Merged from sweeps: coingecko+memes. Links: https://www.mogcoin.xyz, https://x.com/MogCoin. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-47-443Z_mg_31813_0052_ds_tp_mog-coin_ethereum_89de8490.json; famous/raw/merge/2026-09-25T19-55-47-743Z_mg_31813_0053_ds_tp_mog-coin_avalanche_56f8bc22.json; famous/raw/merge/2026-09-25T19-55-48-043Z_mg_31813_0054_ds_tp_mog-coin_base_5be47594.json; famous/raw/merge/2026-09-25T19-55-48-343Z_mg_31813_0055_ds_tp_mog-coin_bsc_dfccd9b5.json; famous/raw/merge/2026-09-25T19-55-48-644Z_mg_31813_0056_ds_tp_mog-coin_solana_3f9d14f9.json; famous/raw/2026-09-25T19-17-32-104Z_cg_15520_0041_cg_coin_mog-coin_48a4fd2b.json."
+  },
+  {
+   "id": "cat-in-a-dogs-world",
+   "name": "cat in a dogs world",
+   "symbol": "MEW",
+   "chain": "solana",
+   "contract": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+   "marketCapUsd": 45260883,
+   "volume24hUsd": 5447078,
+   "liquidityUsd": 10554797,
+   "coingeckoId": "cat-in-a-dogs-world",
+   "otherContracts": [],
+   "evidence": "MEW, 'cat in a dogs world': crypto-native white cartoon cat, March 2024. Rule: PASS on volume and liquidity. Live mcap $45,260,883 (CoinGecko circulating); 24h vol $5,447,078 (CoinGecko $5,447,078, DEX $345,287); DEX liq $10,554,797 (non-token side $5,283,432; DexScreener). Measured 2026-09-25T19:55:48.944Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium MEW/SOL 879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce. Merged from sweeps: coingecko+memes. Links: https://mew.xyz/, https://x.com/mew. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-48-944Z_mg_31813_0057_ds_tp_cat-in-a-dogs-world_solana_84c267b3.json; famous/raw/2026-09-25T19-17-41-108Z_cg_15520_0042_cg_coin_cat-in-a-dogs-world_857376f1.json."
+  },
+  {
+   "id": "catizen",
+   "name": "Catizen",
+   "symbol": "CATI",
+   "chain": "ton",
+   "contract": "EQD-cvR0Nz6XAyRBvbhz-abTrRC6sI5tvHvvpeQraV9UAAD7",
+   "marketCapUsd": 42268079,
+   "volume24hUsd": 2634671,
+   "liquidityUsd": 60412,
+   "coingeckoId": "catizen",
+   "otherContracts": [],
+   "evidence": "Catizen (CATI): the cat-raising Telegram game on TON (cats are the game); paw-coin logo. Not in CoinGecko's Cat-Themed category (tagged Gaming/Telegram Apps). Rule: PASS on volume and liquidity. Live mcap $42,268,079 (CoinGecko circulating); 24h vol $2,634,671 (CoinGecko $2,634,671, DEX $3,556); DEX liq $60,412 (non-token side $30,159; DexScreener). Measured 2026-09-25T19:55:59.504Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair stonfi CATI/USD₮ EQADXB13-aMSXaAR7GDcQYeX1M13dw6qCvpTZB8OHoJ8oX6P. Flags: Volume is mostly on centralized exchanges; TON DEX liquidity is only $60.4k. A Mantle deployment 0x1Bdd8878252DaddD3Af2ba30628813271294eDc0 is not confirmed as official and is not listed. Neither GMGN nor FOMO supports TON. Merged from sweeps: coingecko+dex. Links: https://linktr.ee/catizen, https://catizen.ai/, https://x.com/CatizenAI. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-59-504Z_mg_31813_0091_ds_tp_catizen_ton_d278c989.json; famous/raw/2026-09-25T19-26-50-785Z_cg_21876_0002_cg_coin_catizen_2be2c238.json."
+  },
+  {
+   "id": "wiki-cat",
+   "name": "Wiki Cat",
+   "symbol": "WKC",
+   "chain": "bsc",
+   "contract": "0x6ec90334d89dbdc89e08a133271be3d104128edb",
+   "marketCapUsd": 33932370,
+   "volume24hUsd": 248532,
+   "liquidityUsd": 1150871,
+   "coingeckoId": "wiki-cat",
+   "otherContracts": [],
+   "evidence": "Wiki Cat (WKC) cat mascot (SMC DAO). The seed's spurious flag concerned the CoinGecko ATH only; today's price matches DexScreener. Rule: PASS on volume and liquidity. Live mcap $33,932,370 (CoinGecko circulating); 24h vol $248,532 (CoinGecko $248,532, DEX $132,276); DEX liq $1,150,871 (non-token side $575,414; DexScreener). Measured 2026-09-25T19:55:42.634Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pancakeswap WKC/WBNB 0x933477eba23726cA95A957cB85dBB1957267EF85. Flags: Solana copy FBgPx9MXvY36UCGdQxKHFN9kp5HTUYuQB1tztRTttAF1 shows $1.1B fake liquidity; exclude it. Merged from sweeps: coingecko. Links: https://wikicatcoin.com/, https://x.com/WikiCatCoin. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-42-634Z_mg_31813_0036_ds_tp_wiki-cat_bsc_4ee064bc.json; famous/raw/2026-09-25T19-16-11-061Z_cg_15520_0032_cg_coin_wiki-cat_28f043b2.json."
+  },
+  {
+   "id": "hakimi",
+   "name": "哈基米 (Hajimi)",
+   "symbol": "哈基米",
+   "chain": "bsc",
+   "contract": "0x82ec31d69b3c289e541b50e30681fd1acad24444",
+   "marketCapUsd": 33587720,
+   "volume24hUsd": 1224498,
+   "liquidityUsd": 2542256,
+   "coingeckoId": "hakimi",
+   "otherContracts": [],
+   "evidence": "哈基米 (Hajimi/'hachimi') is Chinese internet slang for cats; logo is a cat photo; community (CTO) coin. Rule: PASS on volume and liquidity. Live mcap $33,587,720 (CoinGecko circulating); 24h vol $1,224,498 (CoinGecko $1,224,498, DEX $590,458); DEX liq $2,542,256 (non-token side $1,278,330; DexScreener). Measured 2026-09-25T19:55:42.333Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/linktr.ee_Hajimi_BNB.html); top pair pancakeswap 哈基米/WBNB 0xc33bACFf9141Da689875e6381c1932348aB4c5CB. Flags: Exclude the Ethereum copy 0xF041218f6d2C5F1cd542BbaF74fBF632809A7AA8 and BSC copy 0x8437Bcb4Fb7a13Dbb947FDE0F2E963EB27858a60. Merged from sweeps: coingecko+memes. Links: https://x.com/i/communities/1974064002729980374, https://x.com/hajimi_CTO_BNB. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-42-333Z_mg_31813_0035_ds_tp_hakimi_bsc_b67beb5f.json; famous/raw/2026-09-25T19-16-02-055Z_cg_15520_0031_cg_coin_hakimi_1d1ac7e0.json."
+  },
+  {
+   "id": "catwifhat-2",
+   "name": "catwifhat",
+   "symbol": "CWIF",
+   "chain": "solana",
+   "contract": "7atgF8KQo4wJrD5ATGX7t1V2zVvykPJbFfNeVf1icFv1",
+   "marketCapUsd": 29941895,
+   "volume24hUsd": 2968,
+   "liquidityUsd": 512570,
+   "coingeckoId": "catwifhat-2",
+   "otherContracts": [],
+   "evidence": "catwifhat: a cat wearing a hat (WIF parody), Solana, Token-2022 with a 4% burn fee; airdropped to 1.48M holders. Rule: PASS on liquidity only. Live mcap $29,941,895 (CoinGecko circulating); 24h vol $2,968 (CoinGecko $2,968, DEX $707); DEX liq $512,570 (non-token side $268,328; DexScreener). Measured 2026-09-25T19:55:49.245Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair fluxbeam CWIF/SOL 4G2u4fo1iLCu7kvbiaiNSdA9GtbAPbfj7kR6vaDsCQcy. Flags: DexScreener shows $0.92M market cap because it uses a different supply; CoinGecko ($29.9M), GeckoTerminal ($31.6M) and the on-chain supply (999.92T via getTokenSupply) agree. Trading is thin: $3.0k volume, 73 DEX trades; passes on liquidity. Merged from sweeps: coingecko. Links: https://www.catwifhatsolana.com/, https://x.com/catwifhatsolana. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-49-245Z_mg_31813_0058_ds_tp_catwifhat-2_solana_6b6934bf.json; famous/raw/2026-09-25T19-17-50-113Z_cg_15520_0043_cg_coin_catwifhat-2_87c0baa4.json."
+  },
+  {
+   "id": "basecat",
+   "name": "Basecat",
+   "symbol": "BASECAT",
+   "chain": "base",
+   "contract": "0xb2000000000000000000004c27f6523082f41d01",
+   "marketCapUsd": 17640308,
+   "volume24hUsd": 2601061,
+   "liquidityUsd": 1334571,
+   "coingeckoId": "basecat",
+   "otherContracts": [],
+   "evidence": "Basecat, 'the cat on Base'; cat logo. Rule: PASS on volume and liquidity. Live mcap $17,640,308 (CoinGecko circulating); 24h vol $2,601,061 (CoinGecko $2,601,061, DEX $990,880); DEX liq $1,334,571 (non-token side $541,131; DexScreener). Measured 2026-09-25T19:55:42.033Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap Basecat/ETH 0x215b2146c3164aba3f5b18e8619b737c7f7dd11e5ba693646dcd9a336c5a30ba. Flags: Two zero-volume Base copies share the name; the CoinGecko contract is the traded one. Merged from sweeps: coingecko. Links: https://basecatonbase.com, https://x.com/BasecatOnBase. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-42-033Z_mg_31813_0034_ds_tp_basecat_base_0b2086f0.json; famous/raw/2026-09-25T19-15-53-050Z_cg_15520_0030_cg_coin_basecat_b101a7ff.json."
+  },
+  {
+   "id": "simon-s-cat",
+   "name": "Simon's Cat",
+   "symbol": "CAT",
+   "chain": "bsc",
+   "contract": "0x6894cde390a3f51155ea41ed24a33a4827d3063d",
+   "marketCapUsd": 16979298,
+   "volume24hUsd": 803476,
+   "liquidityUsd": 6671585,
+   "coingeckoId": "simon-s-cat",
+   "otherContracts": [
+    {
+     "chain": "solana",
+     "contract": "3joMReCCSESngJEpFLoKR2dNcChjSRCDtybQet5uSpse"
+    }
+   ],
+   "evidence": "Simon's Cat, Simon Tofield's animated cat (2008); OFFICIAL: launched with a full IP licence from the Simon's Cat brand (Floki/TokenFi, Aug 2024). Rule: PASS on volume and liquidity. Live mcap $16,979,298 (CoinGecko circulating); 24h vol $803,476 (CoinGecko $803,476, DEX $297,514); DEX liq $6,671,585 (non-token side $3,368,486; DexScreener). Measured 2026-09-25T19:55:49.546Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pancakeswap CAT/WBNB 0x6DF9aDc1837Bf37E0B1b943d59A7E50D9678c81B. Extra contracts: solana 3joMReCCSESngJEpFLoKR2dNcChjSRCDtybQet5uSpse (DEX liq $45,488). Merged from sweeps: coingecko+memes. Links: https://www.simons.cat, https://x.com/SimonsCatMeme. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-49-546Z_mg_31813_0059_ds_tp_simon-s-cat_bsc_40522946.json; famous/raw/merge/2026-09-25T19-55-49-846Z_mg_31813_0060_ds_tp_simon-s-cat_solana_dacbfda6.json; famous/raw/2026-09-25T19-17-59-117Z_cg_15520_0044_cg_coin_simon-s-cat_a1edac37.json."
+  },
+  {
+   "id": "thinking-cat",
+   "name": "Thinking Cat",
+   "symbol": "HMM",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0x7fe995a80075df3dc8ae11a9b82c7fe4202cd87f",
+   "marketCapUsd": 12662977,
+   "volume24hUsd": 1714943,
+   "liquidityUsd": 717732,
+   "coingeckoId": "thinking-cat",
+   "otherContracts": [],
+   "evidence": "Thinking Cat ($HMM), the 'hmm' thinking-cat meme on Robinhood Chain; cat photo logo. Rule: PASS on volume and liquidity. Live mcap $12,662,977 (CoinGecko circulating); 24h vol $1,714,943 (CoinGecko $1,714,943, DEX $439,083); DEX liq $717,732 (non-token side $398,845; DexScreener). Measured 2026-09-25T19:55:37.788Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/hmmmm.fun_.html, famous/raw/memes_sites/hmmmm.fun_.html); top pair uniswap HMM/WETH 0x2b0D0183d017c58B924401cA8AC362f6E01F0E9e. Merged from sweeps: coingecko+memes. Links: https://hmmmm.fun/, https://x.com/thinkingcatRH. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-37-788Z_mg_31813_0021_ds_tp_thinking-cat_robinhood_00bfbd3c.json; famous/raw/2026-09-25T19-13-55-996Z_cg_15520_0017_cg_coin_thinking-cat_65a16d2b.json."
+  },
+  {
+   "id": "bundle-cat",
+   "name": "Bundle Cat",
+   "symbol": "BUN",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0x07ebb29a38fbcb41563817e5e19f2cec619c90d2",
+   "marketCapUsd": 10786140,
+   "volume24hUsd": 2464897,
+   "liquidityUsd": 908525,
+   "coingeckoId": "bundle-cat",
+   "otherContracts": [],
+   "evidence": "Bundlecat: a kitten in armour with a sword, the first memecoin launched on the Mosh launchpad (Robinhood Chain). Rule: PASS on volume and liquidity. Live mcap $10,786,140 (CoinGecko circulating); 24h vol $2,464,897 (CoinGecko $2,464,897, DEX $1,048,044); DEX liq $908,525 (non-token side $515,917; DexScreener). Measured 2026-09-25T19:55:37.185Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap BUN/ETH 0x06e308b77bdafd691d179645296ce8c40e33c6af4a879a913efc7eedc402581c. Flags: Circulating is 29% of supply (FDV $37.7M). Merged from sweeps: coingecko. Links: https://mosh.trade/, https://x.com/BundleCatAI. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-37-185Z_mg_31813_0019_ds_tp_bundle-cat_robinhood_1bac0b20.json; famous/raw/2026-09-25T19-13-37-988Z_cg_15520_0015_cg_coin_bundle-cat_77436c95.json."
+  },
+  {
+   "id": "pepecat-2",
+   "name": "PEPECAT",
+   "symbol": "PEPECAT",
+   "chain": "solana",
+   "contract": "CRAMvzDsSpXYsFpcoDr6vFLJMBeftez1E7277xwPpump",
+   "marketCapUsd": 7365555,
+   "volume24hUsd": 1670,
+   "liquidityUsd": 317999,
+   "coingeckoId": "pepecat-2",
+   "otherContracts": [],
+   "evidence": "PEPECAT: a green Pepe-style cat on Solana. Rule: PASS on liquidity only. Live mcap $7,365,555 (CoinGecko circulating); 24h vol $1,670 (CoinGecko $1,670, DEX $1,667); DEX liq $317,999 (non-token side $158,981; DexScreener). Measured 2026-09-25T19:55:50.147Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium PEPECAT/SOL CycVvS19mPJ1cCWfiiWk3M32LTdrW8akChLMf8u75py1. Flags: Thin trading ($1.7k volume). Passes on liquidity only. Merged from sweeps: coingecko. Links: https://pepecat.vip/, https://x.com/pepecattoken. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-50-147Z_mg_31813_0061_ds_tp_pepecat-2_solana_400b593c.json; famous/raw/2026-09-25T19-18-08-121Z_cg_15520_0045_cg_coin_pepecat-2_aca41654.json."
+  },
+  {
+   "id": "keyboard-cat-base",
+   "name": "Keyboard Cat",
+   "symbol": "KEYCAT",
+   "chain": "base",
+   "contract": "0x9a26f5433671751c3276a065f57e5a02d2817973",
+   "marketCapUsd": 7214326,
+   "volume24hUsd": 101645,
+   "liquidityUsd": 1039661,
+   "coingeckoId": "keyboard-cat-base",
+   "otherContracts": [],
+   "evidence": "Keyboard Cat = Fatso, filmed by Charlie Schmidt (1984, uploaded 2007); OFFICIAL: licensed by Schmidt with meme manager Ben Lashes (Decrypt, Aug 2024). A separate Solana KEYCAT token from the same deal is a different coin (about $60k). Rule: PASS on volume and liquidity. Live mcap $7,214,326 (CoinGecko circulating); 24h vol $101,645 (CoinGecko $101,645, DEX $45,936); DEX liq $1,039,661 (non-token side $506,017; DexScreener). Measured 2026-09-25T19:55:50.447Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/www.keyboardcat.fun_.html); top pair uniswap KEYCAT/WETH 0x377FeeeD4820B3B28D1ab429509e7A0789824fCA. Merged from sweeps: coingecko+memes. Links: https://keyboardcat.fun, https://x.com/KeyboardCatBase. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-50-447Z_mg_31813_0062_ds_tp_keyboard-cat-base_base_eeaf1c5f.json; famous/raw/2026-09-25T19-18-17-127Z_cg_15520_0046_cg_coin_keyboard-cat-base_9a63b701.json."
+  },
+  {
+   "id": "wen-4",
+   "name": "Wen",
+   "symbol": "WEN",
+   "chain": "solana",
+   "contract": "WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk",
+   "marketCapUsd": 5486780,
+   "volume24hUsd": 214852,
+   "liquidityUsd": 148928,
+   "coingeckoId": "wen-4",
+   "otherContracts": [],
+   "evidence": "WEN: fractionalized NFT of Weremeow's poem; 'Wen is the internet's cutest cat'; white cat logo. Rule: PASS on volume and liquidity. Live mcap $5,486,780 (CoinGecko circulating); 24h vol $214,852 (CoinGecko $214,852, DEX $79,611); DEX liq $148,928 (non-token side $60,793; DexScreener). Measured 2026-09-25T19:55:41.433Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/www.wenwencoin.com.html); top pair meteora WEN/SOL 9dZ2bEQ9Ci4uV3FWiLdVPZwQs92kkK4TaMfpfQUJW73n. Merged from sweeps: coingecko. Links: https://www.wenwencoin.com/, https://x.com/wenwencoin. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-41-433Z_mg_31813_0032_ds_tp_wen-4_solana_8d8d39aa.json; famous/raw/2026-09-25T19-15-35-041Z_cg_15520_0028_cg_coin_wen-4_3a065bc3.json."
+  },
+  {
+   "id": "tsuki",
+   "name": "Tsuki",
+   "symbol": "TSUKI",
+   "chain": "solana",
+   "contract": "463SK47VkB7uE7XenTHKiVcMtxRsfNE2X4Q9wByaURVA",
+   "marketCapUsd": 5340372,
+   "volume24hUsd": 526631,
+   "liquidityUsd": 425441,
+   "coingeckoId": "tsuki",
+   "otherContracts": [],
+   "evidence": "TSUKI: 'Solana native cat coin' (tsuki = moon); black cat with a moon. Rule: PASS on volume and liquidity. Live mcap $5,340,372 (CoinGecko circulating); 24h vol $526,631 (CoinGecko $526,631, DEX $31,380); DEX liq $425,441 (non-token side $212,474; DexScreener). Measured 2026-09-25T19:55:33.807Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium TSUKI/SOL 7yMhxapzceFUo24KNgP77mGj1crdAv8ayYfqGvB5skZf. Flags: A 'TSUKI' on Robinhood Chain 0xed6A144a9B4269F4474d2Cb042DB78C1C0711092 is unconfirmed by CoinGecko or the project; not listed. CoinGecko volume ($527k) is not matched on DEX ($31.4k). Merged from sweeps: coingecko+memes. Links: http://tsukionsol.xyz. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-33-807Z_mg_31813_0008_ds_tp_tsuki_solana_de314b88.json; famous/raw/2026-09-25T19-12-16-949Z_cg_15520_0006_cg_coin_tsuki_333a4c1e.json."
+  },
+  {
+   "id": "golden-kitty",
+   "name": "Golden Kitty",
+   "symbol": "GOLDEN",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0x92e4b008161ac64a7d0c5e540f453f8e6b8bd8d7",
+   "marketCapUsd": 5038674,
+   "volume24hUsd": 477218,
+   "liquidityUsd": 207020,
+   "coingeckoId": "golden-kitty",
+   "otherContracts": [],
+   "evidence": "Golden Kitty: Product Hunt's golden cat trophy, which Robinhood won in 2015; golden cat statue logo; Robinhood Chain. Rule: PASS on volume and liquidity. Live mcap $5,038,674 (CoinGecko circulating); 24h vol $477,218 (CoinGecko $477,218, DEX $417,736); DEX liq $207,020 (non-token side $105,379; DexScreener). Measured 2026-09-25T19:55:37.487Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/goldenkitty.vip_.html); top pair uniswap GOLDEN/GLD 0x2b2f171fe944df3f8b230272682755b7d5c8adb0e2d76aabb621f1f870251841. Flags: A same-name Solana pump.fun copy TL6zbcgY9Smg8UF11CQ1VHW5V3pwYgTkrU6sitepump appeared on Sep 25; not canonical. Merged from sweeps: coingecko. Links: https://goldenkitty.vip/, https://x.com/golden_kitty_rh. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-37-487Z_mg_31813_0020_ds_tp_golden-kitty_robinhood_845ad2f8.json; famous/raw/2026-09-25T19-13-46-992Z_cg_15520_0016_cg_coin_golden-kitty_841d2a00.json."
+  },
+  {
+   "id": "catecoin",
+   "name": "CateCoin (BSC, 2021)",
+   "symbol": "CATE",
+   "chain": "bsc",
+   "contract": "0xe4fae3faa8300810c835970b9187c268f55d998f",
+   "marketCapUsd": 4878066,
+   "volume24hUsd": 5862,
+   "liquidityUsd": 239140,
+   "coingeckoId": "catecoin",
+   "otherContracts": [],
+   "evidence": "CateCoin (CATE), a 2021 BSC cat coin; orange cat logo. Not the same coin as the Solana CATECOIN (cate.meme). Rule: PASS on liquidity only. Live mcap $4,878,066 (DexScreener (CoinGecko 185.0h stale)); 24h vol $5,862 (CoinGecko n/a, DEX $5,862); DEX liq $239,140 (non-token side $119,618; DexScreener). Measured 2026-09-25T19:55:50.747Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/catecoin.com_.html); top pair pancakeswap CATE/WBNB 0x6C6636eaDA7Cc046C7A83aea0d973810234Ec291. Flags: CoinGecko price is stale (last updated 185h before the refresh), so DexScreener's market cap is used. Passes on liquidity only. Merged from sweeps: coingecko. Links: https://catecoin.com/, https://cate.family, https://play.catecoin.club/. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-50-747Z_mg_31813_0063_ds_tp_catecoin_bsc_d5172f4c.json; famous/raw/2026-09-25T19-18-26-128Z_cg_15520_0047_cg_coin_catecoin_808e172d.json."
+  },
+  {
+   "id": "hello-kitty-sol",
+   "name": "Hello Kitty",
+   "symbol": "KITTY",
+   "chain": "solana",
+   "contract": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+   "marketCapUsd": 4271778,
+   "volume24hUsd": 234715,
+   "liquidityUsd": 464012,
+   "otherContracts": [],
+   "evidence": "Hello Kitty fan memecoin ('The World's Most Iconic Cat ... a cute little cat with a red bow'). Rule: PASS on volume and liquidity. Live mcap $4,271,778 (DexScreener (not on CoinGecko)); 24h vol $234,715 (CoinGecko n/a, DEX $234,715); DEX liq $464,012 (non-token side $233,343; DexScreener). Measured 2026-09-25T19:56:04.012Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: printed on the project site (famous/raw/merge/web/hellokitty.website_index.js); top pair raydium KITTY/SOL 7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm. Flags: IP: Hello Kitty is a Sanrio trademark and the coin is NOT affiliated with Sanrio (Sanrio also says Hello Kitty is a little girl, not a cat). The card must say so and must not use Sanrio artwork; the owner may prefer to leave it out. Not on CoinGecko; zero-trading copies on Ethereum (0x3d67c07aa08fa4640af87ff93d8bd9c90c611f28) and Robinhood (0x8dc165d8a1622d97e97ee87840c89aadb135aaa3) are excluded. Merged from sweeps: dex+memes. Links: https://hellokitty.website, https://x.com/hkittycoin, https://t.me/hkittycoinchannel. Evidence: famous/raw/merge/2026-09-25T19-56-04-012Z_mg_31813_0106_ds_tp_hello-kitty-sol_solana_b645c4fc.json; famous/raw/merge/2026-09-25T19-58-45-566Z_mg_31813_0129_gt_token_hello-kitty-sol_72e3af8f.json."
+  },
+  {
+   "id": "cets-on-gold",
+   "name": "Cets On Gold",
+   "symbol": "CETS",
+   "chain": "bsc",
+   "contract": "0xb0c2ab5af4028461ace3f6e1c33a4ee1404e7777",
+   "marketCapUsd": 4075315,
+   "volume24hUsd": 1503374,
+   "liquidityUsd": 328533,
+   "coingeckoId": "cets-on-gold",
+   "otherContracts": [],
+   "evidence": "CETS ('cets' = cats slang): golden cat on BSC, paired with XAUt. Rule: PASS on volume and liquidity. Live mcap $4,075,315 (CoinGecko circulating); 24h vol $1,503,374 (CoinGecko $1,503,374, DEX $859,692); DEX liq $328,533 (non-token side $160,060; DexScreener). Measured 2026-09-25T19:55:51.048Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pancakeswap CETS/XAUt 0xdabbd019c0174BDAE6354f32b158D42e4A0E7489. Flags: Main pool is paired with XAUt. Merged from sweeps: coingecko. Links: https://x.com/cetsongold. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-51-048Z_mg_31813_0064_ds_tp_cets-on-gold_bsc_652225d0.json; famous/raw/2026-09-25T19-18-35-132Z_cg_15520_0048_cg_coin_cets-on-gold_9c88df65.json."
+  },
+  {
+   "id": "pussy-cat-club",
+   "name": "Pussy Cat Club",
+   "symbol": "PCC",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0xbf3e53713a53e9c3d5d1ddc25dd2c65669244663",
+   "marketCapUsd": 3933975,
+   "volume24hUsd": 61373,
+   "liquidityUsd": 252011,
+   "coingeckoId": "pussy-cat-club",
+   "otherContracts": [],
+   "evidence": "Pussy Cat Club: 'an exclusive club where cats rule the night', its proprietor a tabby; Robinhood Chain. Rule: PASS on volume and liquidity. Live mcap $3,933,975 (CoinGecko circulating); 24h vol $61,373 (CoinGecko $58,296, DEX $61,373); DEX liq $252,011 (non-token side $126,188; DexScreener). Measured 2026-09-25T19:55:38.389Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/thepussycatclubrh.com.html); top pair uniswap PCC/WETH 0x01D861dCc34cb22d7B520c54BA147bAA9e8Df894. Merged from sweeps: coingecko. Links: https://thepussycatclubrh.com/, https://x.com/pussycatclubrh. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-38-389Z_mg_31813_0023_ds_tp_pussy-cat-club_robinhood_90a3b2ac.json; famous/raw/2026-09-25T19-14-14-002Z_cg_15520_0019_cg_coin_pussy-cat-club_efbe2a53.json."
+  },
+  {
+   "id": "sillynubcat",
+   "name": "nubcat",
+   "symbol": "NUB",
+   "chain": "solana",
+   "contract": "4QsNTBKwHgyYUUHq9tDzk1CCVu7y5hK7z3GE9R36pump",
+   "marketCapUsd": 3841326,
+   "volume24hUsd": 151621,
+   "liquidityUsd": 849449,
+   "coingeckoId": "sillynubcat",
+   "otherContracts": [],
+   "evidence": "Nub, the silly blue cartoon cat drawn by Leon Karssen since 2012 (@sillynubcat). No endorsement found. Migrated Sept 2026: the old contract GtDZKAqvMZMnti46ZewMiXCa4oXF4bZxwQPoKzXPFxZn is deprecated and must not be linked. Rule: PASS on volume and liquidity. Live mcap $3,841,326 (DexScreener (CoinGecko has no circulating supply)); 24h vol $151,621 (CoinGecko $145,461, DEX $151,621); DEX liq $849,449 (non-token side $409,422; DexScreener). Measured 2026-09-25T19:55:58.303Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pumpswap nub/SOL BMh3pFZw5M4PvQvENd9yRQFKePjjUM2zTtKrKTvXMYSt. Flags: CoinGecko has no verified circulating supply; DexScreener market cap used (GeckoTerminal FDV agrees). Merged from sweeps: coingecko+memes. Links: https://x.com/devgwardo. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-58-303Z_mg_31813_0087_ds_tp_sillynubcat_solana_d88452a2.json; famous/raw/merge/2026-09-25T19-57-27-504Z_mg_31813_0123_gt_token_sillynubcat_c60b1589.json; famous/raw/2026-09-25T19-22-31-369Z_cg_15520_0068_cg_coin_sillynubcat_67d5cbe5.json."
+  },
+  {
+   "id": "michi",
+   "name": "michi",
+   "symbol": "MICHI",
+   "chain": "solana",
+   "contract": "AywAYdNJnSLSXwKWYxDciPjqGRnwp4iZdQptuuQTpump",
+   "marketCapUsd": 3640306,
+   "volume24hUsd": 44720,
+   "liquidityUsd": 186787,
+   "coingeckoId": "michi",
+   "otherContracts": [],
+   "evidence": "michi: 'the most memeable cat on the internet', a derpy cat face remixed into thousands of memes. Migrated in 2026: the old contract 5mbK36SZ7J19An8jFochhQS4of8g6BwUjbeCSxBSoWdp is CoinGecko 'michi [OLD]' and must not be linked. Rule: PASS on volume and liquidity. Live mcap $3,640,306 (CoinGecko circulating); 24h vol $44,720 (CoinGecko $44,720, DEX $17,252); DEX liq $186,787 (non-token side $93,735; DexScreener). Measured 2026-09-25T19:55:51.348Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/michi.meme_.html); top pair pumpswap MICHI/SOL 22FSz9QP7dS1PvrJKuHr16ymghZP92xPu3Bj7uuzu2bG. Merged from sweeps: coingecko+memes. Links: https://michi.meme/, https://x.com/michionsolana. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-51-348Z_mg_31813_0065_ds_tp_michi_solana_3eb7f66d.json; famous/raw/2026-09-25T19-18-44-137Z_cg_15520_0049_cg_coin_michi_c6353c99.json."
+  },
+  {
+   "id": "vibing-cat-coin",
+   "name": "Vibing Cat Coin",
+   "symbol": "VIBECOIN",
+   "chain": "solana",
+   "contract": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
+   "marketCapUsd": 3472840,
+   "volume24hUsd": 4292,
+   "liquidityUsd": 207921,
+   "coingeckoId": "vibing-cat-coin",
+   "otherContracts": [],
+   "evidence": "Vibing Cat / catJAM: Minette, a deaf white cat filmed bobbing her head by Mick Lagi (2020). Owner not involved. Rule: PASS on liquidity only. Live mcap $3,472,840 (CoinGecko circulating); 24h vol $4,292 (CoinGecko $4,292, DEX $4,200); DEX liq $207,921 (non-token side $103,932; DexScreener). Measured 2026-09-25T19:55:51.649Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/anoncoin.it_vibecoin.html); top pair meteora VIBECOIN/SOL 7uA6SabfDqA7mcv8A4yfv4gEe7RQ5NZCVemcbx2mJwdT. Flags: Thin trading ($4.3k volume). Passes on liquidity only. Merged from sweeps: coingecko+memes. Links: https://anoncoin.it/VIBECOIN. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-51-649Z_mg_31813_0066_ds_tp_vibing-cat-coin_solana_794d773d.json; famous/raw/2026-09-25T19-18-53-141Z_cg_15520_0050_cg_coin_vibing-cat-coin_67065727.json."
+  },
+  {
+   "id": "catcoin-6",
+   "name": "Catcoin (Solana)",
+   "symbol": "CAT",
+   "chain": "solana",
+   "contract": "9i3NFMa9pqR3suCUhyX3nQE1dy6i5wXafDtppUxYpump",
+   "marketCapUsd": 3415310,
+   "volume24hUsd": 14185,
+   "liquidityUsd": 171312,
+   "coingeckoId": "catcoin-6",
+   "otherContracts": [],
+   "evidence": "Catcoin on Solana (catcoin.com: 'a community-owned cat memecoin ... a very good cat'); real cat in a coin. Different coin from the 2013 proof-of-work Catcoin. Rule: PASS on liquidity only. Live mcap $3,415,310 (CoinGecko circulating); 24h vol $14,185 (CoinGecko $14,185, DEX $13,756); DEX liq $171,312 (non-token side $84,909; DexScreener). Measured 2026-09-25T19:56:00.105Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/catcoin.com_.html, famous/raw/dex/sites/catcoin.com.html); top pair pumpswap CATCOIN/SOL 6ExKfWXEwpMeFuzdqx8QHrBoHKxQ8Kp1MGHpLQuWrQX7. Flags: Passes on liquidity only ($14.2k volume). CoinGecko's description is copied from an older BSC CATCOIN. Merged from sweeps: coingecko+dex. Links: https://catcoin.com/, https://x.com/catcoin. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-56-00-105Z_mg_31813_0093_ds_tp_catcoin-6_solana_31dd805a.json; famous/raw/2026-09-25T19-27-06-792Z_cg_21876_0004_cg_coin_catcoin-6_e544e1a6.json."
+  },
+  {
+   "id": "vcat",
+   "name": "VCAT",
+   "symbol": "VCAT",
+   "chain": "base",
+   "contract": "0xfdcc845c048ad96b5c80b6a55d65c20a98d37777",
+   "marketCapUsd": 3266599,
+   "volume24hUsd": 511890,
+   "liquidityUsd": 223287,
+   "coingeckoId": "vcat",
+   "otherContracts": [],
+   "evidence": "VCAT: a real tabby cat in a Guy Fawkes mask ('V for Vendetta' cat), Base, paired with VVV. Rule: PASS on volume and liquidity. Live mcap $3,266,599 (DexScreener (CoinGecko has no circulating supply)); 24h vol $511,890 (CoinGecko $511,890, DEX $404,267); DEX liq $223,287 (non-token side $106,171; DexScreener). Measured 2026-09-25T19:56:01.608Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pancakeswap VCAT/VVV 0x8b9Ae9726173f933972cdfD6b0B9B573826cd243. Flags: Not in CoinGecko's Cat-Themed category and CoinGecko has no circulating supply; DexScreener market cap used (GeckoTerminal FDV agrees). Merged from sweeps: dex. Links: https://x.com/VCATBASE. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-56-01-608Z_mg_31813_0098_ds_tp_vcat_base_884d323d.json; famous/raw/merge/2026-09-25T19-57-35-307Z_mg_31813_0126_gt_token_vcat_49723a45.json."
+  },
+  {
+   "id": "robincat",
+   "name": "ROBINCAT",
+   "symbol": "ROBINCAT",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0xded852de9fe9ba9b6f27f39e8e81cf851a5c79cc",
+   "marketCapUsd": 3092179,
+   "volume24hUsd": 526421,
+   "liquidityUsd": 280609,
+   "coingeckoId": "robincat",
+   "otherContracts": [],
+   "evidence": "Robincat: a pixel cat character in a green hat on Robinhood Chain. Rule: PASS on volume and liquidity. Live mcap $3,092,179 (CoinGecko circulating); 24h vol $526,421 (CoinGecko $526,421, DEX $371,867); DEX liq $280,609 (non-token side $173,320; DexScreener). Measured 2026-09-25T19:55:38.088Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap ROBINCAT/USDG 0x05c53aa8db4ac905381ba999d92a40a13fc0bc93b5d0a287ca16dc107bd8d11b. Merged from sweeps: coingecko. Links: https://robincat.club/, https://x.com/robincat_coin. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-38-088Z_mg_31813_0022_ds_tp_robincat_robinhood_9b34d528.json; famous/raw/2026-09-25T19-14-04-996Z_cg_15520_0018_cg_coin_robincat_de35ac8a.json."
+  },
+  {
+   "id": "raydium-cat",
+   "name": "Raydium Cat",
+   "symbol": "RAYCAT",
+   "chain": "solana",
+   "contract": "CFNRDaxFcvRwRSNnA5cHrCCr6AHhk9dNkHWpRUjNupFL",
+   "marketCapUsd": 2983990,
+   "volume24hUsd": 776463,
+   "liquidityUsd": 531251,
+   "coingeckoId": "raydium-cat",
+   "otherContracts": [],
+   "evidence": "Raydium Cat (RAYCAT), Solana; cat in a hat logo; mainly paired with RAY. Rule: PASS on volume and liquidity. Live mcap $2,983,990 (CoinGecko circulating); 24h vol $776,463 (CoinGecko $650,428, DEX $776,463); DEX liq $531,251 (non-token side $269,293; DexScreener). Measured 2026-09-25T19:55:51.949Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium RAYCAT/RAY 987VwvJZ5FRjWCY9ZwC2tRUGL8FbMT1aF4pUrT7XjPjD. Merged from sweeps: coingecko. Links: https://raycatsolana.com/, https://x.com/RayCat_Solana. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-51-949Z_mg_31813_0067_ds_tp_raydium-cat_solana_58c085ec.json; famous/raw/2026-09-25T19-19-02-147Z_cg_15520_0051_cg_coin_raydium-cat_3385c7b7.json."
+  },
+  {
+   "id": "ket-3",
+   "name": "KET (Solana)",
+   "symbol": "KET",
+   "chain": "solana",
+   "contract": "9Pfync3ejPC9eHqVzq3nYQJAhyhjqpnB9UsaSfLxpump",
+   "marketCapUsd": 2969052,
+   "volume24hUsd": 737957,
+   "liquidityUsd": 322014,
+   "coingeckoId": "ket-3",
+   "otherContracts": [],
+   "evidence": "KET on Solana (ketonsolana.com: 'a cat with no plan and no fear'); white-and-black cat face on red. Rule: PASS on volume and liquidity. Live mcap $2,969,052 (CoinGecko circulating); 24h vol $737,957 (CoinGecko $737,957, DEX $112,943); DEX liq $322,014 (non-token side $126,825; DexScreener). Measured 2026-09-25T19:56:01.307Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/ketcto.com_.html, famous/raw/web/ketonsolana.com.html, famous/raw/dex/sites/ketonsolana.com.html); top pair pumpswap KET/SOL Fex8CSkNXfaxAPRqQARKGchYAMVfwDg28sfmBXXGkNGX. Merged from sweeps: coingecko+dex. Links: https://ketonsolana.com, https://ketflix.tv, https://www.ketpfp.com/. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-56-01-307Z_mg_31813_0097_ds_tp_ket-3_solana_1edf8777.json."
+  },
+  {
+   "id": "maneki",
+   "name": "MANEKI",
+   "symbol": "MANEKI",
+   "chain": "solana",
+   "contract": "25hAyBQfoDhfWx9ay6rarbgvWGwDdNqcHsXS3jQ3mTDJ",
+   "marketCapUsd": 2941228,
+   "volume24hUsd": 30910,
+   "liquidityUsd": 2993787,
+   "coingeckoId": "maneki",
+   "otherContracts": [],
+   "evidence": "MANEKI, the Japanese beckoning cat (maneki-neko), a 2024 Solana cat coin. Rule: PASS on volume and liquidity. Live mcap $2,941,228 (DexScreener (CoinGecko has no circulating supply)); 24h vol $30,910 (CoinGecko $30,910, DEX $696); DEX liq $2,993,787 (non-token side $1,498,223; DexScreener). Measured 2026-09-25T19:55:58.603Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium MANEKI/SOL 2aPsSVxFw6dGRqWWUKfwujN6WVoyxuhjJaPzYaJvGDDR. Flags: CoinGecko has no verified circulating supply; DexScreener market cap used (GeckoTerminal agrees). DEX volume only $696; one Raydium pool holds almost all liquidity. Merged from sweeps: coingecko+memes. Links: https://manekineko.world/. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-58-603Z_mg_31813_0088_ds_tp_maneki_solana_0418db02.json; famous/raw/merge/2026-09-25T19-57-30-105Z_mg_31813_0124_gt_token_maneki_6db2b5f3.json; famous/raw/2026-09-25T19-23-45-547Z_cg_15520_0070_cg_coin_maneki_722e8e33.json."
+  },
+  {
+   "id": "loaf-token",
+   "name": "Loaf Token",
+   "symbol": "LOAF",
+   "chain": "cronos",
+   "contract": "0x75689264a5e2dab1b27ddfb2b10592872139659a",
+   "marketCapUsd": 2417961,
+   "volume24hUsd": 341,
+   "liquidityUsd": 3023992,
+   "coingeckoId": "loaf-token",
+   "otherContracts": [],
+   "evidence": "LOAF: the 'cat loaf' meme, a cat that doubles as a loaf of bread; Cronos. Rule: PASS on liquidity only. Live mcap $2,417,961 (CoinGecko circulating); 24h vol $341 (CoinGecko $341, DEX $250); DEX liq $3,023,992 (non-token side $1,511,789; DexScreener). Measured 2026-09-25T19:55:45.640Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/loaftoken.com_.html, famous/raw/memes_sites/loaftoken.com_.html); top pair vvsfinance LOAF/WCRO 0xDA7f001f1679FeF8833dA61BA0a4D7CE0c4B376b. Flags: 3 DEX trades and $250 volume in 24h; all liquidity sits in one VVS pool. Passes on liquidity only. Merged from sweeps: coingecko+memes. Links: https://loaftoken.com/. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-45-640Z_mg_31813_0046_ds_tp_loaf-token_cronos_d934a51b.json; famous/raw/2026-09-25T19-16-47-079Z_cg_15520_0036_cg_coin_loaf-token_735307f6.json."
+  },
+  {
+   "id": "boxcat-rh",
+   "name": "BoxCat",
+   "symbol": "BOXY",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0x4BEeDe2E87CC6bA3e995b01911d36269465E1E18",
+   "marketCapUsd": 2376637,
+   "volume24hUsd": 208754,
+   "liquidityUsd": 478434,
+   "otherContracts": [],
+   "evidence": "BOXY the BoxCat: 'Box outside. Cat inside.' A cat in an Amazon-style box, traded against tokenized AMZN on Robinhood Chain. Rule: PASS on volume and liquidity. Live mcap $2,376,637 (DexScreener (not on CoinGecko)); 24h vol $208,754 (CoinGecko n/a, DEX $208,754); DEX liq $478,434 (non-token side $227,778; DexScreener). Measured 2026-09-25T19:56:04.613Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: printed on the project site (famous/raw/dex/sites/boxycat.xyz.html); top pair uniswap BOXY/AMZN 0x5846268ea3de08b15b5ef1d0092eee66a8b5843902ab79b5f2d9eea1bf1d0468. Flags: Not on CoinGecko; market cap is DexScreener's (GeckoTerminal FDV agrees). Liquidity is mostly against tokenized AMZN. Merged from sweeps: dex. Links: https://boxycat.xyz, https://x.com/BOXYboxcat, https://instagram.com/boxyboxcat. Evidence: famous/raw/merge/2026-09-25T19-56-04-613Z_mg_31813_0108_ds_tp_boxcat-rh_robinhood_fb80a781.json; famous/raw/merge/2026-09-25T19-58-50-769Z_mg_31813_0131_gt_token_boxcat-rh_6a17a2b1.json."
+  },
+  {
+   "id": "zhao-cai-mao",
+   "name": "招财猫 (Zhao Cai Mao)",
+   "symbol": "招财猫",
+   "chain": "bsc",
+   "contract": "0x975faed559b45feb8a5c5ceb940e614302947777",
+   "marketCapUsd": 2230153,
+   "volume24hUsd": 112651,
+   "liquidityUsd": 146671,
+   "coingeckoId": "zhao-cai-mao",
+   "otherContracts": [],
+   "evidence": "招财猫 Zhao Cai Mao, the golden beckoning lucky cat (maneki-neko); BSC, paired with XAUt. Rule: PASS on volume and liquidity. Live mcap $2,230,153 (CoinGecko circulating); 24h vol $112,651 (CoinGecko $105,915, DEX $112,651); DEX liq $146,671 (non-token side $73,328; DexScreener). Measured 2026-09-25T19:55:52.249Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pancakeswap 招财猫/XAUt 0xB574B9A4ac85A588E66F4cb8Fa4EDF30ca066172. Flags: Pool is paired with XAUt. Merged from sweeps: coingecko+memes. Links: https://flap.sh/bnb/0x975faed559b45feb8a5c5ceb940e614302947777, https://x.com/zhao_cai_mao_. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-52-249Z_mg_31813_0068_ds_tp_zhao-cai-mao_bsc_e0b89252.json; famous/raw/2026-09-25T19-19-11-152Z_cg_15520_0052_cg_coin_zhao-cai-mao_feddfe7e.json."
+  },
+  {
+   "id": "gta6cat",
+   "name": "GTA6CAT (Gato)",
+   "symbol": "GATO",
+   "chain": "solana",
+   "contract": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
+   "marketCapUsd": 2149255,
+   "volume24hUsd": 79242,
+   "liquidityUsd": 146170,
+   "otherContracts": [],
+   "evidence": "GATO, 'the cat on the ATM' from the GTA VI trailer; logo is a photo of the real tabby cat. Rule: PASS on volume and liquidity. Live mcap $2,149,255 (DexScreener (not on CoinGecko)); 24h vol $79,242 (CoinGecko n/a, DEX $79,242); DEX liq $146,170 (non-token side $72,424; DexScreener). Measured 2026-09-25T19:56:04.914Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: printed on the project site (famous/raw/merge/web/thegta6cat.com_main.js); top pair pumpswap GATO/SOL 5E3dXLXGwmTDCokA51WYYaKttjFZBwqCoyUHBUi5gt2m. Flags: IP: draws on Rockstar's GTA VI; not affiliated. Not on CoinGecko; market cap is DexScreener's (GeckoTerminal agrees). Merged from sweeps: dex. Links: https://thegta6cat.com/, https://x.com/TheGTA6cat. Evidence: famous/raw/merge/2026-09-25T19-56-04-914Z_mg_31813_0109_ds_tp_gta6cat_solana_6dcf2a96.json; famous/raw/merge/2026-09-25T19-58-53-370Z_mg_31813_0132_gt_token_gta6cat_7e647135.json."
+  },
+  {
+   "id": "nya",
+   "name": "Nya",
+   "symbol": "NYA",
+   "chain": "bsc",
+   "contract": "0x38f9bf9dce51833ec7f03c9dc218197999999999",
+   "marketCapUsd": 2112401,
+   "volume24hUsd": 12952,
+   "liquidityUsd": 909959,
+   "coingeckoId": "nya",
+   "otherContracts": [
+    {
+     "chain": "ethereum",
+     "contract": "0x38f9bf9dce51833ec7f03c9dc218197999999999"
+    },
+    {
+     "chain": "polygon",
+     "contract": "0x38f9bf9dce51833ec7f03c9dc218197999999999"
+    },
+    {
+     "chain": "arbitrum",
+     "contract": "0x38f9bf9dce51833ec7f03c9dc218197999999999"
+    },
+    {
+     "chain": "optimism",
+     "contract": "0x38f9bf9dce51833ec7f03c9dc218197999999999"
+    },
+    {
+     "chain": "avalanche",
+     "contract": "0x38f9bf9dce51833ec7f03c9dc218197999999999"
+    },
+    {
+     "chain": "base",
+     "contract": "0x38f9bf9dce51833ec7f03c9dc218197999999999"
+    }
+   ],
+   "evidence": "Nya ('meow' in Japanese), white cat face logo; the same address on 7 EVM chains. Rule: PASS on liquidity only. Live mcap $2,112,401 (CoinGecko circulating); 24h vol $12,952 (CoinGecko $12,952, DEX $12,549); DEX liq $909,959 (non-token side $455,261; DexScreener). Measured 2026-09-25T19:55:43.536Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pancakeswap NYA/WBNB 0x603A58f995885744AcBA41342d526084a474A63E. Extra contracts: ethereum 0x38f9bf9dce51833ec7f03c9dc218197999999999 (DEX liq $0); polygon 0x38f9bf9dce51833ec7f03c9dc218197999999999 (DEX liq $106,012); arbitrum 0x38f9bf9dce51833ec7f03c9dc218197999999999 (DEX liq $210,000); optimism 0x38f9bf9dce51833ec7f03c9dc218197999999999 (DEX liq $0); avalanche 0x38f9bf9dce51833ec7f03c9dc218197999999999 (DEX liq $139,362); base 0x38f9bf9dce51833ec7f03c9dc218197999999999 (DEX liq $208,595). Flags: Passes on liquidity only ($13.0k volume). Merged from sweeps: coingecko. Links: https://www.nya.vip/, https://x.com/NyaOnEarth. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-43-536Z_mg_31813_0039_ds_tp_nya_bsc_4119e997.json; famous/raw/merge/2026-09-25T19-55-43-837Z_mg_31813_0040_ds_tp_nya_ethereum_8eff81d8.json; famous/raw/merge/2026-09-25T19-55-44-137Z_mg_31813_0041_ds_tp_nya_polygon_355447c8.json; famous/raw/merge/2026-09-25T19-55-44-437Z_mg_31813_0042_ds_tp_nya_arbitrum_2b872558.json; famous/raw/merge/2026-09-25T19-55-44-737Z_mg_31813_0043_ds_tp_nya_optimism_d10e00b6.json; famous/raw/merge/2026-09-25T19-55-45-038Z_mg_31813_0044_ds_tp_nya_avalanche_e9501c4d.json; famous/raw/merge/2026-09-25T19-55-45-340Z_mg_31813_0045_ds_tp_nya_base_1ef7fa47.json; famous/raw/2026-09-25T19-16-38-073Z_cg_15520_0035_cg_coin_nya_3b2b54d4.json."
+  },
+  {
+   "id": "stonk-cats",
+   "name": "Stonk Cats",
+   "symbol": "STONKCATS",
+   "chain": "solana",
+   "contract": "9h5AzEQzYu9CV5K6uLtFRMD1KcbxZSFNxZEgBTNfw5Na",
+   "marketCapUsd": 2039089,
+   "volume24hUsd": 254807,
+   "liquidityUsd": 159362,
+   "coingeckoId": "stonk-cats",
+   "otherContracts": [],
+   "evidence": "Stonk Cats: 1,111 cat NFTs plus a StonkFun coin, 'cats aligned with Stonkfun' (the cats-of-stocks theme). Rule: PASS on volume and liquidity. Live mcap $2,039,089 (CoinGecko circulating); 24h vol $254,807 (CoinGecko $232,227, DEX $254,807); DEX liq $159,362 (non-token side $81,411; DexScreener). Measured 2026-09-25T19:55:40.833Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium STONKCATS/STONK C1CNCihCBJ2Jztbv7vfrXKrw9fKrma5fa3hhSjqyw9GH. Flags: Main pool is paired with the STONK token. Merged from sweeps: coingecko. Links: https://stonkcats.xyz, https://www.stonkfun.xyz/token/9h5AzEQzYu9CV5K6uLtFRMD1KcbxZSFNxZEgBTNfw5Na, https://x.com/stonkcatsnft. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-40-833Z_mg_31813_0030_ds_tp_stonk-cats_solana_3dcd0c59.json; famous/raw/2026-09-25T19-15-17-033Z_cg_15520_0026_cg_coin_stonk-cats_c627c346.json."
+  },
+  {
+   "id": "mister-miggles",
+   "name": "Mr. Miggles",
+   "symbol": "MIGGLES",
+   "chain": "base",
+   "contract": "0xb1a03eda10342529bbf8eb700a06c60441fef25d",
+   "marketCapUsd": 1952481,
+   "volume24hUsd": 43619,
+   "liquidityUsd": 484125,
+   "coingeckoId": "mister-miggles",
+   "otherContracts": [],
+   "evidence": "Mr. Miggles, the grumpy tongue-out cat from Coinbase's 2024 creator-rights campaign; OFFICIAL IP licence from Coinbase to purrLabs. Rule: PASS on volume and liquidity. Live mcap $1,952,481 (CoinGecko circulating); 24h vol $43,619 (CoinGecko $43,619, DEX $43,370); DEX liq $484,125 (non-token side $231,878; DexScreener). Measured 2026-09-25T19:55:52.550Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/www.miggles.io_.html); top pair uniswap MIGGLES/WETH 0x17A3Ad8c74c4947005aFEDa9965305ae2EB2518a. Merged from sweeps: coingecko+memes. Links: https://miggles.io, https://x.com/MrMigglesOnBase. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-52-550Z_mg_31813_0069_ds_tp_mister-miggles_base_536d69e0.json; famous/raw/2026-09-25T19-19-20-158Z_cg_15520_0053_cg_coin_mister-miggles_e69da897.json."
+  },
+  {
+   "id": "hosico-cat",
+   "name": "Hosico",
+   "symbol": "HOSICO",
+   "chain": "solana",
+   "contract": "Dx2bQe2UPv4k3BmcW8G2KhaL5oKsxduM5XxLSV3Sbonk",
+   "marketCapUsd": 1898529,
+   "volume24hUsd": 6286,
+   "liquidityUsd": 154096,
+   "coingeckoId": "hosico-cat",
+   "otherContracts": [
+    {
+     "chain": "glue",
+     "contract": "0x8f799534708044e27ec8f834edca4e90a81a527d"
+    }
+   ],
+   "evidence": "Hosico, the real Instagram-famous golden Scottish Straight cat (@hosico_cat). The owners have not endorsed the coin. Rule: PASS on liquidity only. Live mcap $1,898,529 (CoinGecko circulating); 24h vol $6,286 (CoinGecko $6,286, DEX $5,363); DEX liq $154,096 (non-token side $77,047; DexScreener). Measured 2026-09-25T19:55:52.851Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/www.hosico.cat_.html); top pair raydium Hosico/USD1 3rwERVY1J7oBztfLbydtMMRgj7UM26YsWCgVf2rmep21. Extra contracts: glue 0x8f799534708044e27ec8f834edca4e90a81a527d (DEX liq $0). Flags: Thin trading. Passes on liquidity only. CoinGecko's 'glue' contract has no pools; older copies 9wK8yN6iz1ie5kEJkvZCTxyN1x5sTdNfx8yeMY8Ebonk and PPpxMkWHnTFqAJGMMo58gseoxHWAw82zqt8UnAiFfsV are not canonical. Merged from sweeps: coingecko+memes. Links: https://www.hosico.cat/, https://x.com/Hosico_on_sol. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-52-851Z_mg_31813_0070_ds_tp_hosico-cat_solana_4a06cbfa.json; famous/raw/merge/2026-09-25T19-55-53-151Z_mg_31813_0071_ds_tp_hosico-cat_glue_238a6afa.json; famous/raw/2026-09-25T19-19-29-163Z_cg_15520_0054_cg_coin_hosico-cat_3ec9fdc9.json."
+  },
+  {
+   "id": "red-kitten-crew",
+   "name": "Red Kitten Crew",
+   "symbol": "RKC",
+   "chain": "solana",
+   "contract": "7HgfXftRBBqsYtAEYcqjGLQrNJLL6Tww9ek4rE3Apump",
+   "marketCapUsd": 1887903,
+   "volume24hUsd": 59191,
+   "liquidityUsd": 333791,
+   "coingeckoId": "red-kitten-crew",
+   "otherContracts": [],
+   "evidence": "Red Kitten Crew (RKC): a real kitten in a red headband; theme is Roaring Kitty (RKC.GG says the CA was posted by Keith Gill on May 11, 2026). Rule: PASS on volume and liquidity. Live mcap $1,887,903 (CoinGecko circulating); 24h vol $59,191 (CoinGecko $59,191, DEX $30,518); DEX liq $333,791 (non-token side $161,215; DexScreener). Measured 2026-09-25T19:56:00.405Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/RKC.GG.html, famous/raw/dex/sites/redkittencrew.vercel.app.html); top pair pumpswap RKC/SOL FzbYhPcoCuA2qSrV1s3j38RcQhP6c943p3KHYb6C5rCq. Flags: A Robinhood copy 0x4fe0bb45748093b7c8f17810dacc6d110c35fa0c has no trading; exclude it. Merged from sweeps: coingecko+dex. Links: https://RKC.GG, https://x.com/RKCcoin. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-56-00-405Z_mg_31813_0094_ds_tp_red-kitten-crew_solana_648a67f4.json; famous/raw/2026-09-25T19-28-19-951Z_cg_21876_0006_cg_coin_red-kitten-crew_a9376a24.json."
+  },
+  {
+   "id": "cat-call-agent",
+   "name": "Cat Call Agent",
+   "symbol": "CAT",
+   "chain": "ink",
+   "contract": "0x20c69c12abf2b6f8d8ca33604dd25c700c7e70a5",
+   "marketCapUsd": 1852191,
+   "volume24hUsd": 33,
+   "liquidityUsd": 70566,
+   "coingeckoId": "cat-call-agent",
+   "otherContracts": [],
+   "evidence": "Cat Call Agent: an AI agent 'with a feline persona', a purple cartoon cat in a suit, on Ink. Rule: PASS on liquidity only. Live mcap $1,852,191 (CoinGecko circulating); 24h vol $33 (CoinGecko $33, DEX $33); DEX liq $70,566 (non-token side $35,277; DexScreener). Measured 2026-09-25T19:56:00.705Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair inkyswap CAT/WETH 0x46C87B2b61C12FBE972C64131861Cc44bf8e80b6. Flags: Essentially no trading ($33 volume, 18 trades); passes only on liquidity ($70.6k, $35.3k of it WETH). Merged from sweeps: coingecko+dex. Links: https://catonink.com/, https://x.com/CatOnInkChain. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-56-00-705Z_mg_31813_0095_ds_tp_cat-call-agent_ink_1c5a848e.json; famous/raw/2026-09-25T19-28-27-953Z_cg_21876_0007_cg_coin_cat-call-agent_f146d185.json."
+  },
+  {
+   "id": "lmeow-2",
+   "name": "lmeow",
+   "symbol": "LMEOW",
+   "chain": "ethereum",
+   "contract": "0x1ae7e1d0ce06364ced9ad58225a1705b3e5db92b",
+   "marketCapUsd": 1831346,
+   "volume24hUsd": 15227,
+   "liquidityUsd": 517983,
+   "coingeckoId": "lmeow-2",
+   "otherContracts": [],
+   "evidence": "lmeow: a cat meme coin on Ethereum ('in a world led by dog coins'); white cat photo logo. Rule: PASS on liquidity only. Live mcap $1,831,346 (CoinGecko circulating); 24h vol $15,227 (CoinGecko $15,227, DEX $13,276); DEX liq $517,983 (non-token side $258,989; DexScreener). Measured 2026-09-25T19:55:53.452Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap LMEOW/WETH 0x6c2b607bF0A8edE629d58Ba5e05d0448fF7f890A. Flags: Passes on liquidity only ($15.2k volume). Merged from sweeps: coingecko. Links: https://lmeow.club/, https://x.com/lmeowcoineth. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-53-452Z_mg_31813_0072_ds_tp_lmeow-2_ethereum_b06be17c.json; famous/raw/2026-09-25T19-19-38-168Z_cg_15520_0055_cg_coin_lmeow-2_c0fdf478.json."
+  },
+  {
+   "id": "leveraged-cat",
+   "name": "Leveraged Cat",
+   "symbol": "LEVERCAT",
+   "chain": "solana",
+   "contract": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
+   "marketCapUsd": 1669154,
+   "volume24hUsd": 352446,
+   "liquidityUsd": 309912,
+   "coingeckoId": "leveraged-cat",
+   "otherContracts": [],
+   "evidence": "Leveraged Cat (LEVERCAT), a cat meme with a trading theme, Solana. Rule: PASS on volume and liquidity. Live mcap $1,669,154 (CoinGecko circulating); 24h vol $352,446 (CoinGecko $349,072, DEX $352,446); DEX liq $309,912 (non-token side $174,594; DexScreener). Measured 2026-09-25T19:55:54.353Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium LEVERCAT/xSOL CsjcF4mEmJsXZDWzBtuviVEV7JiKTY4NAJ1rdcHhVxi3. Merged from sweeps: coingecko. Links: https://levercat.money/, https://x.com/LeverCatSol. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-54-353Z_mg_31813_0075_ds_tp_leveraged-cat_solana_c140637c.json; famous/raw/2026-09-25T19-20-05-180Z_cg_15520_0058_cg_coin_leveraged-cat_c5d04bae.json."
+  },
+  {
+   "id": "miu-2",
+   "name": "MIU",
+   "symbol": "MIU",
+   "chain": "sui",
+   "contract": "0x32a976482bf4154961bf20bfa3567a80122fdf8e8f8b28d752b609d8640f7846::miu::MIU",
+   "marketCapUsd": 1668137,
+   "volume24hUsd": 116082,
+   "liquidityUsd": 27742,
+   "coingeckoId": "miu-2",
+   "otherContracts": [],
+   "evidence": "MIU, a cartoon cat coin on Sui. Rule: PASS on volume only. Live mcap $1,668,137 (CoinGecko circulating); 24h vol $116,082 (CoinGecko $116,082, DEX $2,655); DEX liq $27,742 (non-token side $14,428; DexScreener). Measured 2026-09-25T19:55:54.053Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair turbos-finance MIU/SUI 0x8ad594000a1b822e5295b939813ede94c85b011314472a18a7f4dbb950d6d3f1. Flags: Passes on centralized-exchange volume only (CoinGecko tickers: MEXC $66.7k, Toobit $42.9k); DEX liquidity is $27.7k and DEX volume $2.7k. Merged from sweeps: coingecko. Links: https://miucoin.org, https://www.geckoterminal.com/sui-network/pools/0x4edb54baafdf02a2219b6c327c9acacd79280b9c98cdc1b2b23230de906fa421, https://x.com/miucoin_sui. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-54-053Z_mg_31813_0074_ds_tp_miu-2_sui_106f3da9.json; famous/raw/2026-09-25T19-19-56-177Z_cg_15520_0057_cg_coin_miu-2_9b25a32b.json."
+  },
+  {
+   "id": "shi-gong-mao",
+   "name": "施工猫 (Sue the Builder Cat)",
+   "symbol": "SUE",
+   "chain": "bsc",
+   "contract": "0x2ab8a4dd2191989ac2898006df350b236d2b7777",
+   "marketCapUsd": 1642207,
+   "volume24hUsd": 372833,
+   "liquidityUsd": 240069,
+   "coingeckoId": "shi-gong-mao",
+   "otherContracts": [],
+   "evidence": "施工猫 'Sue the builder cat': a real orange kitten rescued from a Komatsu excavator in Barberton, Ohio, and adopted by the construction crew (Global News, KTLA). The coin says it is not connected to the crew or Komatsu. Rule: PASS on volume and liquidity. Live mcap $1,642,207 (CoinGecko circulating); 24h vol $372,833 (CoinGecko $372,833, DEX $266,384); DEX liq $240,069 (non-token side $120,399; DexScreener). Measured 2026-09-25T19:55:53.752Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pancakeswap Sue/WBNB 0xfFCa411CFbcD3194503eFfA80Fd394b55387915c. Flags: The Solana '施工猫' DH5nHy2UZ14YoN6aNs9Y3Qvy1GdMVeYXRimwCgk6fn6s is a copy. The BSC token has a 1% sell tax. Merged from sweeps: coingecko+memes. Links: https://www.sueonbsc.com/, https://flap.sh/bnb/0x2ab8a4dd2191989ac2898006df350b236d2b7777, https://x.com/Sue_BSC. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-53-752Z_mg_31813_0073_ds_tp_shi-gong-mao_bsc_d99a2a97.json; famous/raw/2026-09-25T19-19-47-174Z_cg_15520_0056_cg_coin_shi-gong-mao_2b506f18.json."
+  },
+  {
+   "id": "leopold",
+   "name": "LEO",
+   "symbol": "LEO",
+   "chain": "stacks",
+   "contract": "SP1AY6K3PQV5MRT6R4S671NWW2FRVPKM0BR162CT6.leo-token",
+   "marketCapUsd": 1633208,
+   "volume24hUsd": 1460,
+   "liquidityUsd": 80528,
+   "coingeckoId": "leopold",
+   "otherContracts": [],
+   "evidence": "LEO: named after Stacks founder Muneeb Ali's pet cat Leo. Rule: PASS on liquidity only. Live mcap $1,633,208 (CoinGecko circulating); 24h vol $1,460 (CoinGecko $1,460, DEX $822); DEX liq $80,528 (non-token side $40,337; DexScreener). Measured 2026-09-25T19:55:42.936Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair alex LEO/ALEX 0x88d2c0c350cae90ab46d304a859ec77a89e54ff6d09967ee1169eec3d705867c. Flags: Passes on liquidity only; the main pool is paired with ALEX. Merged from sweeps: coingecko. Links: https://linktr.ee/LeoSTX. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-42-936Z_mg_31813_0037_ds_tp_leopold_stacks_f930333a.json; famous/raw/2026-09-25T19-16-20-066Z_cg_15520_0033_cg_coin_leopold_29fcc931.json."
+  },
+  {
+   "id": "catgpt-3",
+   "name": "CATGPT",
+   "symbol": "CATGPT",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0xd6fde6a3fc6ab2d83b2be58383944ca1bade1e18",
+   "marketCapUsd": 1593606,
+   "volume24hUsd": 61165,
+   "liquidityUsd": 1110453,
+   "coingeckoId": "catgpt-3",
+   "otherContracts": [],
+   "evidence": "CATGPT: a cat in a beanie, Robinhood Chain. Rule: PASS on volume and liquidity. Live mcap $1,593,606 (CoinGecko circulating); 24h vol $61,165 (CoinGecko $4,911, DEX $61,165); DEX liq $1,110,453 (non-token side $69,456; DexScreener). Measured 2026-09-25T19:55:38.689Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap CATGPT/OPENAIx1L 0x086f510359ad57e4f8588b71ffa21fe29bbed044e4d13aa2f72ecaefeda95a36. Flags: DEX liquidity is lopsided: only $69.5k of $1.11M is the non-token side, held in OPENAIx1L. Passes on DEX volume ($61.2k; CoinGecko sees $4.9k). Merged from sweeps: coingecko. Links: https://bankr.bot/terminal/trade?out=0xd6fde6a3fc6ab2d83b2be58383944ca1bade1e18&chain=robinhood. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-38-689Z_mg_31813_0024_ds_tp_catgpt-3_robinhood_3691cb12.json; famous/raw/2026-09-25T19-14-23-004Z_cg_15520_0020_cg_coin_catgpt-3_0c0e5e4d.json."
+  },
+  {
+   "id": "ket",
+   "name": "KET (Avalanche)",
+   "symbol": "KET",
+   "chain": "avalanche",
+   "contract": "0xffff003a6bad9b743d658048742935fffe2b6ed7",
+   "marketCapUsd": 1541629,
+   "volume24hUsd": 2454,
+   "liquidityUsd": 217649,
+   "coingeckoId": "ket",
+   "otherContracts": [],
+   "evidence": "KET by YellowCatDAO on Avalanche; cat logo. A different coin from the Solana KET (ket-3). Rule: PASS on liquidity only. Live mcap $1,541,629 (CoinGecko circulating); 24h vol $2,454 (CoinGecko $2,454, DEX $2,331); DEX liq $217,649 (non-token side $108,279; DexScreener). Measured 2026-09-25T19:55:43.236Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pharaoh KET/WAVAX 0x9962Cf3ba621bEb96D3fA2614D24161A717ada71. Flags: Passes on liquidity only ($2.5k volume). Merged from sweeps: coingecko. Links: https://www.ketboard.xyz/, https://x.com/yellowcatdao. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-43-236Z_mg_31813_0038_ds_tp_ket_avalanche_7d24283c.json; famous/raw/2026-09-25T19-16-29-068Z_cg_15520_0034_cg_coin_ket_7ce82b4c.json."
+  },
+  {
+   "id": "something-the-cat",
+   "name": "SOMETHING THE CAT",
+   "symbol": "SOMETHING",
+   "chain": "solana",
+   "contract": "6kNNgyrdvjkRC8eRGQqx5sLfZG2jTmg3NCFmkX2hYP4j",
+   "marketCapUsd": 1488014,
+   "volume24hUsd": 184620,
+   "liquidityUsd": 116654,
+   "coingeckoId": "something-the-cat",
+   "otherContracts": [],
+   "evidence": "SOMETHING THE CAT: a tuxedo cat with glasses, StonkFun launch on Solana. Rule: PASS on volume and liquidity. Live mcap $1,488,014 (DexScreener (CoinGecko has no circulating supply)); 24h vol $184,620 (CoinGecko $184,620, DEX $175,368); DEX liq $116,654 (non-token side $60,095; DexScreener). Measured 2026-09-25T19:55:58.903Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium SOMETHING/SPX D1CbqwFX75ho4jdiU158qYJwjKGxeMiEGC5fExSNmYpH. Flags: CoinGecko has no verified circulating supply; DexScreener market cap used. Main pool is paired with SPX. Merged from sweeps: coingecko. Links: https://x.com/somethingthecat. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-58-903Z_mg_31813_0089_ds_tp_something-the-cat_solana_7a66a06c.json; famous/raw/merge/2026-09-25T19-57-32-706Z_mg_31813_0125_gt_token_something-the-cat_cba8a7ba.json; famous/raw/2026-09-25T19-23-54-552Z_cg_15520_0071_cg_coin_something-the-cat_5901e495.json."
+  },
+  {
+   "id": "moew",
+   "name": "MOEW",
+   "symbol": "MOEW",
+   "chain": "base",
+   "contract": "0x15ac90165f8b45a80534228bdcb124a011f62fee",
+   "marketCapUsd": 1452153,
+   "volume24hUsd": 117327,
+   "liquidityUsd": 548525,
+   "coingeckoId": "moew",
+   "otherContracts": [
+    {
+     "chain": "solana",
+     "contract": "C6Q5fMpuPjBPox84wbcE3Rn8HYJg11o4YHEmbQSuYs5L"
+    },
+    {
+     "chain": "ton",
+     "contract": "EQAWsIGMoGlbjJJIsik-9_6A4Iiodb1M7LW3kmu05v8ujo9h"
+    }
+   ],
+   "evidence": "MOEW (donotfomoew): a cat memecoin started by Bitget Wallet, later an AI agent; Base, with Solana and TON deployments. Rule: PASS on volume and liquidity. Live mcap $1,452,153 (CoinGecko circulating); 24h vol $117,327 (CoinGecko $117,327, DEX $11,725); DEX liq $548,525 (non-token side $292,643; DexScreener). Measured 2026-09-25T19:55:54.654Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap MOEW/WETH 0x8deB37B048F4b3c7Bd61EcA7dFcCbef7CbA726dE. Extra contracts: solana C6Q5fMpuPjBPox84wbcE3Rn8HYJg11o4YHEmbQSuYs5L (DEX liq $135,617); ton EQAWsIGMoGlbjJJIsik-9_6A4Iiodb1M7LW3kmu05v8ujo9h (DEX liq $0). Merged from sweeps: coingecko. Links: https://donotfomoew.org, https://x.com/MOEW_Agent. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-54-654Z_mg_31813_0076_ds_tp_moew_base_251b0c62.json; famous/raw/merge/2026-09-25T19-55-54-954Z_mg_31813_0077_ds_tp_moew_solana_545e2c85.json; famous/raw/merge/2026-09-25T19-55-55-255Z_mg_31813_0078_ds_tp_moew_ton_5ebe1a8e.json; famous/raw/2026-09-25T19-20-14-185Z_cg_15520_0059_cg_coin_moew_f57abce1.json."
+  },
+  {
+   "id": "og-roaring-kitty",
+   "name": "Roaring Kitty",
+   "symbol": "ROAR",
+   "chain": "ethereum",
+   "contract": "0xd8c978de79e12728e38aa952a6cb4166f891790f",
+   "marketCapUsd": 1333746,
+   "volume24hUsd": 388407,
+   "liquidityUsd": 180650,
+   "coingeckoId": "og-roaring-kitty",
+   "otherContracts": [
+    {
+     "chain": "shibarium",
+     "contract": "0xd1cb43c9d1859e57057770cb9ed0398736ad9d6f"
+    },
+    {
+     "chain": "solana",
+     "contract": "2nhStpBLy7umUR9NfhvurKoeTf4BJV5ui6Z5sHA3jaZf"
+    }
+   ],
+   "evidence": "OG Roaring Kitty ($ROAR, Sept 2022): the roaring-kitten avatar of Keith Gill, icon of the 2021 GameStop squeeze: the original 'cat of stocks'. NOT endorsed by Keith Gill. Rule: PASS on volume and liquidity. Live mcap $1,333,746 (CoinGecko circulating); 24h vol $388,407 (CoinGecko $388,407, DEX $3,490); DEX liq $180,650 (non-token side $90,287; DexScreener). Measured 2026-09-25T19:55:35.310Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/memes_sites/ogroaringkitty.com_.html); top pair uniswap $ROAR/WETH 0xA7A36dC1aF4C14226575890949998195a0146A18. Extra contracts: shibarium 0xd1cb43c9d1859e57057770cb9ed0398736ad9d6f (DEX liq $0); solana 2nhStpBLy7umUR9NfhvurKoeTf4BJV5ui6Z5sHA3jaZf (DEX liq $16,841). Flags: CoinGecko volume is almost all Biconomy.com ($383k); DEX volume is $3.5k. Passes on liquidity. The card must not imply Keith Gill is involved. Merged from sweeps: coingecko+memes. Links: https://ogroaringkitty.com. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-35-310Z_mg_31813_0013_ds_tp_og-roaring-kitty_ethereum_b20caa77.json; famous/raw/merge/2026-09-25T19-55-35-611Z_mg_31813_0014_ds_tp_og-roaring-kitty_shibarium_c2aaf681.json; famous/raw/merge/2026-09-25T19-55-35-912Z_mg_31813_0015_ds_tp_og-roaring-kitty_solana_e04658fc.json; famous/raw/2026-09-25T19-13-01-973Z_cg_15520_0011_cg_coin_og-roaring-kitty_36a9144a.json."
+  },
+  {
+   "id": "ocicat-token",
+   "name": "OciCat Token",
+   "symbol": "OCICAT",
+   "chain": "bsc",
+   "contract": "0xe53d384cf33294c1882227ae4f90d64cf2a5db70",
+   "marketCapUsd": 1274760,
+   "volume24hUsd": 2699,
+   "liquidityUsd": 95144,
+   "coingeckoId": "ocicat-token",
+   "otherContracts": [],
+   "evidence": "OciCat, the Ocicat cat breed, BSC. Rule: PASS on liquidity only. Live mcap $1,274,760 (CoinGecko circulating); 24h vol $2,699 (CoinGecko $2,699, DEX $2,682); DEX liq $95,144 (non-token side $47,572; DexScreener). Measured 2026-09-25T19:55:55.555Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pancakeswap Ocicat/WBNB 0x1df65d3a75AeCd000A9c17c97E99993aF01DbcD1. Flags: Passes on liquidity only. Circulating is about half of supply (CoinGecko). Merged from sweeps: coingecko. Links: https://www.ocicat.club, https://www.mrfud.fun, https://x.com/ocicattoken. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-55-555Z_mg_31813_0079_ds_tp_ocicat-token_bsc_0fb64a2c.json; famous/raw/2026-09-25T19-20-23-190Z_cg_15520_0060_cg_coin_ocicat-token_31a8ad41.json."
+  },
+  {
+   "id": "shark-cat",
+   "name": "Shark Cat",
+   "symbol": "SC",
+   "chain": "solana",
+   "contract": "6D7NaB2xsLd7cauWu1wKk6KBsJohJmP2qZH9GEfVi5Ui",
+   "marketCapUsd": 1192831,
+   "volume24hUsd": 4380,
+   "liquidityUsd": 422777,
+   "coingeckoId": "shark-cat",
+   "otherContracts": [
+    {
+     "chain": "base",
+     "contract": "0x49d803d2df2295185610f44961f2dcd40326f25c"
+    }
+   ],
+   "evidence": "Shark Cat: a cat in a shark costume, Solana. Rule: PASS on liquidity only. Live mcap $1,192,831 (CoinGecko circulating); 24h vol $4,380 (CoinGecko $4,380, DEX $4,306); DEX liq $422,777 (non-token side $212,792; DexScreener). Measured 2026-09-25T19:55:55.855Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair raydium SC/SOL BSzedbEvWRqVksaF558epPWCM16avEpyhm2HgSq9WZyy. Extra contracts: base 0x49d803d2df2295185610f44961f2dcd40326f25c (DEX liq $0). Flags: Thin trading ($4.4k volume). Passes on liquidity only. CoinGecko's Base contract has no pools. Merged from sweeps: coingecko. Links: https://www.sharkcatsolana.org/, https://x.com/SharkCatSolana. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-55-855Z_mg_31813_0080_ds_tp_shark-cat_solana_0d1748b3.json; famous/raw/merge/2026-09-25T19-55-56-155Z_mg_31813_0081_ds_tp_shark-cat_base_6109fad5.json; famous/raw/2026-09-25T19-20-32-195Z_cg_15520_0061_cg_coin_shark-cat_4b8b8c36.json."
+  },
+  {
+   "id": "catwifmask",
+   "name": "catwifmask",
+   "symbol": "MASK",
+   "chain": "solana",
+   "contract": "6MQpbiTC2YcogidTmKqMLK82qvE9z5QEm7EP3AEDpump",
+   "marketCapUsd": 1126477,
+   "volume24hUsd": 63443,
+   "liquidityUsd": 253561,
+   "coingeckoId": "catwifmask",
+   "otherContracts": [],
+   "evidence": "catwifmask: a cat wearing a mask, Solana. Rule: PASS on volume and liquidity. Live mcap $1,126,477 (CoinGecko circulating); 24h vol $63,443 (CoinGecko $63,443, DEX $3,783); DEX liq $253,561 (non-token side $127,350; DexScreener). Measured 2026-09-25T19:55:56.800Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair pumpswap MASK/SOL GWPLjamb5ZxrGbTsYNWW7V3p1pAMryZSfaPFTdaEsWgC. Flags: CoinGecko volume $63.4k is not matched on DEX ($3.8k). Merged from sweeps: coingecko. Links: https://thecatwifmask.com/, https://x.com/catwmask. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-56-800Z_mg_31813_0082_ds_tp_catwifmask_solana_43f00c2f.json; famous/raw/2026-09-25T19-20-41-200Z_cg_15520_0062_cg_coin_catwifmask_6e27ee7d.json."
+  },
+  {
+   "id": "dacat",
+   "name": "daCat",
+   "symbol": "DACAT",
+   "chain": "ethereum",
+   "contract": "0x814a870726edb7dfc4798300ae1ce3e5da0ac467",
+   "marketCapUsd": 1108802,
+   "volume24hUsd": 168,
+   "liquidityUsd": 303335,
+   "coingeckoId": "dacat",
+   "otherContracts": [],
+   "evidence": "daCat, Ethereum; cat logo. Rule: PASS on liquidity only. Live mcap $1,108,802 (DexScreener (CoinGecko 9.5h stale)); 24h vol $168 (CoinGecko n/a, DEX $168); DEX liq $303,335 (non-token side $151,597; DexScreener). Measured 2026-09-25T19:55:57.101Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap daCat/WETH 0xE6c9774F18C11Ebe7B993093DA432bcc422bec26. Flags: CoinGecko data 9.5h stale; 1 DEX trade and $168 volume in 24h. Passes on liquidity only. Merged from sweeps: coingecko. Links: https://dacat.fun/, https://x.com/daCat_token. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-57-101Z_mg_31813_0083_ds_tp_dacat_ethereum_2a474719.json; famous/raw/2026-09-25T19-20-50-205Z_cg_15520_0063_cg_coin_dacat_e92a5fd8.json."
+  },
+  {
+   "id": "catslap",
+   "name": "CatSlap",
+   "symbol": "SLAP",
+   "chain": "ethereum",
+   "contract": "0xf107edabf59ba696e38de62ad5327415bd4d4236",
+   "marketCapUsd": 1107165,
+   "volume24hUsd": 84,
+   "liquidityUsd": 595089,
+   "coingeckoId": "catslap",
+   "otherContracts": [],
+   "evidence": "CatSlap (SLAP): the slapping-cat game token, Ethereum. Rule: PASS on liquidity only. Live mcap $1,107,165 (CoinGecko circulating); 24h vol $84 (CoinGecko $84, DEX $83); DEX liq $595,089 (non-token side $297,644; DexScreener). Measured 2026-09-25T19:55:57.402Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap SLAP/WETH 0x9ec9620e1FDA9C1e57c46782bc3232903cacB59B. Flags: 1 DEX trade and $83 volume in 24h. Passes on liquidity only. Merged from sweeps: coingecko. Links: https://catslaptoken.com/, https://x.com/catslaptoken. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-57-402Z_mg_31813_0084_ds_tp_catslap_ethereum_f1109253.json; famous/raw/2026-09-25T19-22-04-354Z_cg_15520_0065_cg_coin_catslap_e0ad845a.json."
+  },
+  {
+   "id": "cat-processing-unit",
+   "name": "Cat Processing Unit",
+   "symbol": "CPU",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0x8eaa17be69ae9616cede4671e6d837bb89491e18",
+   "marketCapUsd": 1056296,
+   "volume24hUsd": 523352,
+   "liquidityUsd": 353375,
+   "coingeckoId": "cat-processing-unit",
+   "otherContracts": [],
+   "evidence": "Cat Processing Unit (CPU): cat logo, Robinhood Chain, paired with tokenized INTC. Rule: PASS on volume and liquidity. Live mcap $1,056,296 (CoinGecko circulating); 24h vol $523,352 (CoinGecko $523,352, DEX $387,263); DEX liq $353,375 (non-token side $167,611; DexScreener). Measured 2026-09-25T19:55:39.290Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page; top pair uniswap CPU/INTC 0xaf8aa959b7e460fbbc61d25b9896a6e3f92cbf3a2bde01fa2b5ac811f2d6a986. Flags: Barely over the bar ($1.06M). Merged from sweeps: coingecko. Links: https://bankr.bot/terminal/trade?out=0x8eaa17be69ae9616cede4671e6d837bb89491e18&chain=robinhood, https://x.com/CPUonHOOD. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-39-290Z_mg_31813_0026_ds_tp_cat-processing-unit_robinhood_88654763.json; famous/raw/2026-09-25T19-14-41-012Z_cg_15520_0022_cg_coin_cat-processing-unit_d778339a.json."
+  },
+  {
+   "id": "we-love-cats",
+   "name": "We Love Cats",
+   "symbol": "WELOVECATS",
+   "chain": "robinhood (Robinhood Chain)",
+   "contract": "0x134c4fb13dc3c873d699957a8493e463b56f1e18",
+   "marketCapUsd": 1037079,
+   "volume24hUsd": 129458,
+   "liquidityUsd": 304325,
+   "coingeckoId": "we-love-cats",
+   "otherContracts": [],
+   "evidence": "We Love Cats: 'three words from Robinhood's CEO'; Robinhood Chain, paired with tokenized NVDA. Rule: PASS on volume and liquidity. Live mcap $1,037,079 (DexScreener (CoinGecko has no circulating supply)); 24h vol $129,458 (CoinGecko $112,714, DEX $129,458); DEX liq $304,325 (non-token side $133,752; DexScreener). Measured 2026-09-25T19:55:39.891Z (CoinGecko markets 2026-09-25T19:55:18.130Z). Canonical contract: CoinGecko coin page, and the project site prints the same address (famous/raw/web/welovecats.fun_.html); top pair uniswap WELOVECATS/NVDA 0x62e1a0760e7bc62bf68853818c4c7e821d0c5fa75df643b63eb6e8ce1d75ce3e. Flags: Barely over the bar ($1.04M). CoinGecko has no verified circulating supply; DexScreener market cap used. Merged from sweeps: coingecko. Links: https://welovecats.fun/, https://x.com/welovecatscoin. Evidence: famous/raw/merge/2026-09-25T19-55-18-130Z_mg_31813_0001_cg_markets_merged_e3841aab.json; famous/raw/merge/2026-09-25T19-55-39-891Z_mg_31813_0028_ds_tp_we-love-cats_robinhood_fd7aebe1.json; famous/raw/merge/2026-09-25T19-57-24-902Z_mg_31813_0122_gt_token_we-love-cats_ccc432ea.json; famous/raw/2026-09-25T19-14-59-024Z_cg_15520_0024_cg_coin_we-love-cats_cd1ccf8a.json."
+  }
+ ],
+ "rejected": [
+  {
+   "name": "Catcoin (2013 PoW)",
+   "symbol": "CAT",
+   "reason": "Below the $1M market-cap bar. Live mcap $856,458 (CoinGecko circulating), vol $4,216, DEX liq $0 (non-token side $0)."
+  },
+  {
+   "name": "Nacho the Kat",
+   "symbol": "NACHO",
+   "reason": "Fails the trading test: 24h volume under $25k and no DEX liquidity of $50k with a $25k non-token side. Live mcap $5,840,156 (CoinGecko circulating), vol $4,875, DEX liq $0 (non-token side $0)."
+  },
+  {
+   "name": "MOTION",
+   "symbol": "MOTION",
+   "reason": "Not cat-branded: MOTION's logo is a '>' prompt (the ASCII cat is only a site mascot); also no real trading ($0 DEX volume, CoinGecko volume ~$2k). Live mcap $1,274,411 (CoinGecko circulating), vol $2,023, DEX liq $159,521 (non-token side $79,761)."
+  },
+  {
+   "name": "Signal",
+   "symbol": "SIGNAL",
+   "reason": "Not a cat: HyperEVM swap-tape/launchpad token with a teal-flame logo; no cat in name, logo, site or description (CoinGecko's Cat-Themed tag is wrong). Live mcap $3,912,804 (CoinGecko circulating), vol $299,910, DEX liq $496,981 (non-token side $284,135)."
+  },
+  {
+   "name": "aura",
+   "symbol": "AURA",
+   "reason": "Not cat-branded: the brand is 'aura' (a glowing human with a glowing cat in the logo); the site and description never present a cat. Live mcap $10,189,532 (CoinGecko circulating), vol $467,731, DEX liq $1,764,447 (non-token side $874,781)."
+  },
+  {
+   "name": "Bop",
+   "symbol": "BOP",
+   "reason": "Below the $1M market-cap bar. Live mcap $734,907 (CoinGecko circulating), vol $383,124, DEX liq $88,591 (non-token side $44,335)."
+  },
+  {
+   "name": "mini",
+   "symbol": "MINI",
+   "reason": "Not clearly a cat: minimini.lol never calls 'mini' a cat and the logo creature is ambiguous; also barely at the bar. Live mcap $1,041,821 (CoinGecko circulating), vol $37,559, DEX liq $495,326 (non-token side $247,456)."
+  },
+  {
+   "name": "MEOW",
+   "symbol": "MEOW",
+   "reason": "Below the $1M market-cap bar. Live mcap $765,684 (CoinGecko circulating), vol $771, DEX liq $50,467 (non-token side $28,604)."
+  },
+  {
+   "name": "Ansem Cat",
+   "symbol": "ANSEMCAT",
+   "reason": "Below $1M and spurious DEX data: its only pool prices it 132x CoinGecko, so the $25.7M 'liquidity' is about $3k real; CoinGecko volume is $6. Live mcap $819,693 (CoinGecko circulating), vol $1,085,789, DEX liq $25,720,508 (non-token side $3,142)."
+  },
+  {
+   "name": "UpSideDownCat",
+   "symbol": "USDC",
+   "reason": "Impersonator ticker: an upside-down cat that trades under the ticker USDC on Arc, where USDC is the native asset. Live mcap $2,184,596 (CoinGecko circulating), vol $601,087, DEX liq $190,669 (non-token side $93,385)."
+  },
+  {
+   "name": "Buy The Cat",
+   "symbol": "BTC",
+   "reason": "Impersonator ticker: 'Buy The Cat' trades as $BTC. Live mcap $2,402,826 (DexScreener), vol $478,856, DEX liq $300,647 (non-token side $168,598)."
+  },
+  {
+   "name": "Kitsu",
+   "symbol": "KITSU",
+   "reason": "Not a cat: Kitsu is Vlad Tenev's Shiba Inu (kitsudog.xyz); logo is a dog. Live mcap $1,175,488 (CoinGecko circulating), vol $14,949, DEX liq $140,946 (non-token side $65,284)."
+  },
+  {
+   "name": "Mooncat (Robinhood Chain)",
+   "symbol": "MOON",
+   "reason": "Below the $1M market-cap bar. Live mcap $883,003 (CoinGecko circulating), vol $17,310, DEX liq $184,867 (non-token side $92,438)."
+  },
+  {
+   "name": "LongCat",
+   "symbol": "LONGCAT",
+   "reason": "Below the $1M market-cap bar. Live mcap $752,200 (CoinGecko circulating), vol $81,372, DEX liq $546,101 (non-token side $47,085)."
+  },
+  {
+   "name": "Leopardus tilcayo",
+   "symbol": "TILCAYO",
+   "reason": "Below the $1M market-cap bar. Live mcap $883,104 (CoinGecko circulating), vol $557,969, DEX liq $151,523 (non-token side $77,645)."
+  },
+  {
+   "name": "Billy (Bitcoin)",
+   "symbol": "BDC",
+   "reason": "Fails the trading test: 24h volume under $25k and no DEX liquidity of $50k with a $25k non-token side. Live mcap $2,485,600 (CoinGecko circulating), vol $8,461, DEX liq $8,627 (non-token side $3,216)."
+  },
+  {
+   "name": "GIZMO",
+   "symbol": "GIZMO",
+   "reason": "Below the $1M market-cap bar. Live mcap $751,872 (CoinGecko circulating), vol $5,200, DEX liq $17,573 (non-token side $8,737)."
+  },
+  {
+   "name": "Mochi",
+   "symbol": "MOCHI",
+   "reason": "Below the $1M market-cap bar. Live mcap $956,826 (CoinGecko circulating), vol $52,490, DEX liq $148,632 (non-token side $68,173)."
+  },
+  {
+   "name": "hehe",
+   "symbol": "HEHE",
+   "reason": "Below the $1M market-cap bar. Live mcap $879,492 (CoinGecko circulating), vol $2,421, DEX liq $198,116 (non-token side $98,890)."
+  },
+  {
+   "name": "Marscat Token",
+   "symbol": "MCAT",
+   "reason": "Not a cat coin: MarsCat is a privacy-first P2P chat platform whose site never mentions a cat (cat only in the name and logo silhouette); also CEX-only with ~$0 DEX liquidity. Live mcap $71,688,503 (CoinGecko circulating), vol $4,504,963, DEX liq $0 (non-token side $0)."
+  },
+  {
+   "name": "Hypurr Fun",
+   "symbol": "HFUN",
+   "reason": "Not a cat coin: HFUN is the platform token of the HypurrFun Telegram trading bot and launchpad; the robot cat is the bot's logo (the Hyperliquid cat lore belongs to PURR, which is selected). Live mcap $14,238,941 (CoinGecko circulating), vol $37,519, DEX liq $1,079,742 (non-token side $541,674)."
+  },
+  {
+   "name": "rHYPURR",
+   "symbol": "RHYPURR",
+   "reason": "Not a cat coin in its own right (vault receipt token for HYPURR NFTs) and fails trading: $5 of volume and only about $8k of non-token-side liquidity. Live mcap $1,550,037 (CoinGecko circulating), vol $5, DEX liq $158,729 (non-token side $8,132)."
+  },
+  {
+   "name": "vankedisi",
+   "symbol": "VANKEDISI",
+   "reason": "Below $1M: CoinGecko circulating mcap matches the on-chain supply (85.2M tokens); DexScreener's $7.97M uses a wrong supply. Also no real trading. Live mcap $992,703 (CoinGecko circulating), vol $3, DEX liq $324,865 (non-token side $162,606)."
+  },
+  {
+   "name": "Catbal",
+   "symbol": "CATBAL",
+   "reason": "Below the $1M market-cap bar. Live mcap $791,416 (CoinGecko circulating), vol $2,143, DEX liq $74,151 (non-token side $33,032)."
+  },
+  {
+   "name": "Waffles",
+   "symbol": "WAFFLES",
+   "reason": "Below the $1M market-cap bar. Live mcap $763,182 (CoinGecko circulating), vol $8,167, DEX liq $163,983 (non-token side $81,895)."
+  },
+  {
+   "name": "NearKat",
+   "symbol": "NEARKAT",
+   "reason": "Not a cat: the logo is a meerkat and nearkat.xyz is a NEAR-Intents bridge meme that never mentions a cat. Live mcap $6,019,273 (CoinGecko circulating), vol $1,212,373, DEX liq $637,317 (non-token side $386,953)."
+  },
+  {
+   "name": "LOCK IN",
+   "symbol": "LOCKIN",
+   "reason": "Not a cat: the LOCKIN logo is a man 'locking in' at a desk and lockinsol.com never mentions a cat. Live mcap $1,373,939 (CoinGecko circulating), vol $240,161, DEX liq $367,006 (non-token side $184,071)."
+  },
+  {
+   "name": "ElonXCat",
+   "symbol": "EXC",
+   "reason": "Fake liquidity: a $489k pool with $26 on the non-token side, $1 volume and 6 trades in 24h; CoinGecko price 84h stale. Live mcap $12,233,285 (DexScreener), vol $1, DEX liq $489,379 (non-token side $26)."
+  },
+  {
+   "name": "喵喵币 (Meow Meow Coin)",
+   "symbol": "喵喵币",
+   "reason": "Unverifiable: cat by name only ('meow meow'), with no logo, site or socials; not on CoinGecko; its market cap is FDV (circulating unknown) and a 419k-holder airdrop pattern suggests spam distribution. Live mcap $15,192,237 (DexScreener), vol $33,788, DEX liq $1,315,246 (non-token side $657,623)."
+  },
+  {
+   "name": "猫王",
+   "symbol": "猫王",
+   "reason": "Unverifiable: no logo, site or socials ('猫王' is also Elvis Presley's Chinese nickname); not on CoinGecko; DexScreener and GeckoTerminal disagree on supply. Live mcap $1,507,932 (DexScreener), vol $13,436, DEX liq $363,859 (non-token side $181,854)."
+  },
+  {
+   "name": "Baby Catecoin",
+   "symbol": "BABYCATE",
+   "reason": "Derivative, not its own cat: a 'Baby' spin-off of CATECOIN (cate.meme) whose logo copies CATE's coin-cat and whose fees buy CATE (babycate.online says it is not affiliated). Live mcap $1,619,008 (DexScreener), vol $517,823, DEX liq $157,384 (non-token side $78,826)."
+  },
+  {
+   "name": "Mooncat (Solana)",
+   "symbol": "MCAT",
+   "reason": "Canonical contract unconfirmable: not on CoinGecko, no website or socials, 7 days old, and a same-name spoof pool exists; also only just over the bar. Live mcap $1,055,272 (DexScreener), vol $94,848, DEX liq $93,953 (non-token side $45,832)."
+  },
+  {
+   "name": "混混猫 (Thug Cat)",
+   "symbol": "混混猫",
+   "reason": "Below the $1M market-cap bar. Live mcap $768,059 (DexScreener), vol $31,906, DEX liq $130,491 (non-token side $65,224)."
+  },
+  {
+   "name": "Crypto Cat (猫姐)",
+   "symbol": "猫姐",
+   "reason": "Below the $1M market-cap bar. Live mcap $716,564 (DexScreener), vol $3,948, DEX liq $151,240 (non-token side $75,660)."
+  },
+  {
+   "name": "CocoCat",
+   "symbol": "CAT",
+   "reason": "Not a cat coin and market cap unverifiable: a privacy social-network platform token with a cat-silhouette logo, not on CoinGecko; DexScreener's market cap is FDV-based against about $174k of pool reserve. Live mcap $776,836,301 (DexScreener), vol $221,798, DEX liq $343,757 (non-token side $171,878)."
+  },
+  {
+   "name": "Hypurr (Solana PURR)",
+   "symbol": "PURR",
+   "reason": "Impersonator ticker: a Solana $PURR that calls itself the Hyperliquid mascot; the canonical PURR is the Hyperliquid token (selected). Contract solana 8RNUw4N655VSrZKuhGdywhbSMDTrheguFPfxbpE2NZHQ. Live mcap $5,299,177 (DexScreener), vol $1,132,865 (6895 trades), DEX liq $725,503 (non-token side $403,453). Evidence: famous/raw/merge/2026-09-25T20-13-44-081Z_mg_554_0001_ds_tp_copy_hypurr-sol_a90a839a.json."
+  },
+  {
+   "name": "michi [OLD]",
+   "symbol": "MICHI",
+   "reason": "Deprecated pre-migration contract (CoinGecko 'michi [OLD]'); the canonical michi is AywA...pump (selected). Contract solana 5mbK36SZ7J19An8jFochhQS4of8g6BwUjbeCSxBSoWdp. Live mcap $440,528 (DexScreener), vol $1,770 (96 trades), DEX liq $455,215 (non-token side n/a). Evidence: famous/raw/merge/2026-09-25T20-13-44-522Z_mg_554_0002_ds_tp_copy_michi-old_acb000d7.json."
+  },
+  {
+   "name": "nubcat (old contract)",
+   "symbol": "NUB",
+   "reason": "Deprecated after the Sept 2026 1:1 migration; the canonical nubcat is 4QsN...pump (selected). Contract solana GtDZKAqvMZMnti46ZewMiXCa4oXF4bZxwQPoKzXPFxZn. Live mcap $202,536 (DexScreener), vol $14,497 (320 trades), DEX liq $243,810 (non-token side $122,760). Evidence: famous/raw/merge/2026-09-25T20-13-44-822Z_mg_554_0003_ds_tp_copy_nub-old_963ec1ec.json."
+  },
+  {
+   "name": "Catecoin (cate.meme) copy",
+   "symbol": "CATE",
+   "reason": "Copy of CATECOIN with fake liquidity; the canonical CATE is Ai66...ppump (selected). Contract solana 89x86Bx9rLGgrchyHw3S3avmykVKUEVsy2o9rrA1wYkP. Live mcap $73,964,518 (DexScreener), vol $165,296 (16 trades), DEX liq $73,764,224 (non-token side $48). Evidence: famous/raw/merge/2026-09-25T20-13-45-123Z_mg_554_0004_ds_tp_copy_cate-copy_63189146.json."
+  },
+  {
+   "name": "哈基米 (Ethereum copy)",
+   "symbol": "哈基米",
+   "reason": "Fake-liquidity copy of the BSC 哈基米 (selected). Contract ethereum 0xF041218f6d2C5F1cd542BbaF74fBF632809A7AA8. Live mcap $35,300,252 (DexScreener), vol $0 (1 trades), DEX liq $17,650,134 (non-token side $0). Evidence: famous/raw/merge/2026-09-25T20-13-45-423Z_mg_554_0005_ds_tp_copy_hajimi-eth_a6b21026.json."
+  },
+  {
+   "name": "Wiki Cat (Solana copy)",
+   "symbol": "WKC",
+   "reason": "Fake-liquidity copy of the BSC Wiki Cat (selected). Contract solana FBgPx9MXvY36UCGdQxKHFN9kp5HTUYuQB1tztRTttAF1. Live mcap $1,100,094,045 (DexScreener), vol $166 (6 trades), DEX liq $1,096,929,309 (non-token side $10). Evidence: famous/raw/merge/2026-09-25T20-13-45-723Z_mg_554_0006_ds_tp_copy_wikicat-sol_67affc09.json."
+  },
+  {
+   "name": "施工猫 (Solana copy)",
+   "symbol": "施工猫",
+   "reason": "Copy of the BSC 施工猫/SUE (selected). Contract solana DH5nHy2UZ14YoN6aNs9Y3Qvy1GdMVeYXRimwCgk6fn6s. Live mcap $2,180,343 (DexScreener), vol $0 (2 trades), DEX liq $0 (non-token side $0). Evidence: famous/raw/merge/2026-09-25T20-13-46-023Z_mg_554_0007_ds_tp_copy_sue-sol_b4b79ca9.json."
+  },
+  {
+   "name": "Golden Kitty (Solana copy)",
+   "symbol": "GOLDEN",
+   "reason": "Same-name pump.fun copy launched Sep 25; the canonical Golden Kitty is on Robinhood Chain (selected). Contract solana TL6zbcgY9Smg8UF11CQ1VHW5V3pwYgTkrU6sitepump. Live mcap $2,766,883 (DexScreener), vol $119,486 (1620 trades), DEX liq $151,975 (non-token side $75,249). Evidence: famous/raw/merge/2026-09-25T20-13-46-324Z_mg_554_0008_ds_tp_copy_goldenkitty-sol_aec55d65.json."
+  },
+  {
+   "name": "TSUKI (Robinhood Chain)",
+   "symbol": "TSUKI",
+   "reason": "Unconfirmed copy: borrows Tsuki's socials on DexScreener but neither CoinGecko nor the project lists it; the canonical Tsuki is on Solana (selected). Contract robinhood 0xed6A144a9B4269F4474d2Cb042DB78C1C0711092. Live mcap $1,301,878 (DexScreener), vol $15,699 (60 trades), DEX liq $145,153 (non-token side $71,778). Evidence: famous/raw/merge/2026-09-25T20-13-46-624Z_mg_554_0009_ds_tp_copy_tsuki-rh_b5b76176.json."
+  },
+  {
+   "name": "Hello Kitty (Ethereum copy)",
+   "symbol": "KITTY",
+   "reason": "Copy of the Solana Hello Kitty coin (selected). Contract ethereum 0x3d67c07aa08fa4640af87ff93d8bd9c90c611f28. Live no DEX pools. Evidence: famous/raw/merge/2026-09-25T20-13-46-925Z_mg_554_0010_ds_tp_copy_hk-eth_d27952ef.json."
+  },
+  {
+   "name": "Hello Kitty (Robinhood copy)",
+   "symbol": "KITTY",
+   "reason": "Copy of the Solana Hello Kitty coin (selected). Contract robinhood 0x8dc165d8a1622d97e97ee87840c89aadb135aaa3. Live no DEX pools. Evidence: famous/raw/merge/2026-09-25T20-13-47-225Z_mg_554_0011_ds_tp_copy_hk-rh_08c65133.json."
+  },
+  {
+   "name": "Red Kitten Crew (Robinhood copy)",
+   "symbol": "RKC",
+   "reason": "Copy of the Solana Red Kitten Crew (selected). Contract robinhood 0x4fe0bb45748093b7c8f17810dacc6d110c35fa0c. Live no DEX pools. Evidence: famous/raw/merge/2026-09-25T20-13-47-811Z_mg_554_0012_ds_tp_copy_rkc-rh_893d3e06.json."
+  }
+ ]
+}

@@ -6,10 +6,11 @@
    models, which face +x: yaw 0 faces +x, and a cat moves along (cos yaw, -sin yaw).
 
    The garden is wide: two hundred-odd cats live in it at once (the stock cats and the biggest
-   famous cat coins), so there are many beds, five cat trees, four feeding corners, a pond, a
-   vegetable patch, sunny lawns and nap piles. Round the fence lie two meadow rings (MEADOW) where
-   the rest of the famous cat coins live, with ring paths, benches, trees, flower fields and a
-   second pond. No three.js here: this file also runs under plain Node. */
+   adoptable cats), so there are many beds, five cat trees, four feeding corners, a pond, a
+   vegetable patch, sunny lawns and nap piles. Round the fence lie two meadow rings (MEADOW), kept
+   free for the adoptable cats still to come, with ring paths, benches, trees, flower fields and a
+   second pond; in one corner of the first ring is the Hall of Fame plaza (HALL_OF_FAME), where the
+   legendary cat coins that already exist sit round a fountain. No three.js here: this file also runs under plain Node. */
 
 import { makeRandom } from "./rng.js";
 
@@ -168,12 +169,27 @@ export const BIRD_BATH = { id: "birdbath", x: 2.6, z: -9.2, r: 0.42, top: 0.98 }
 
 /* ── The meadow rings round the fence ─────────────────────────────────────── */
 
-/** Where the famous cat coins that don't live in the main garden roam: ring 1 (mid-sized coins)
-    and ring 2 (the smallest), each an annulus [inner, outer], with a ring path through its middle. */
+/** The two meadow rings round the fence, each an annulus [inner, outer] with a ring path through
+    its middle: room kept for the adoptable cats still to come (no cat lives there now). */
 export const MEADOW = {
   ring1: { inner: 32, outer: 50, path: 40.5 },
   ring2: { inner: 53.5, outer: 82, path: 66 },
 };
+
+/** The Hall of Fame: a round paved plaza in the first meadow ring (front right of the cottage),
+    where the legendary cat coins that already exist live, apart from the adoptable cats. A fountain
+    with a gold coin on a pedestal in the middle, a "Hall of Fame" sign at its garden edge. */
+export const HALL_OF_FAME = (() => {
+  const x = 28.6, z = 27.6, r = 7.2;
+  const toGarden = Math.atan2(-z, -x); // the direction from the plaza towards the cottage
+  return {
+    id: "hall-of-fame", x, z, r,
+    fountain: { x, z, r: 1.75 },
+    sign: { x: x + Math.cos(toGarden) * (r - 0.6), z: z + Math.sin(toGarden) * (r - 0.6), w: 4.2, yaw: Math.atan2(-x, -z) },
+  };
+})();
+/** True inside the Hall of Fame plaza (with `pad` more round its edge). */
+export const inHall = (x, z, pad = 0) => Math.hypot(x - HALL_OF_FAME.x, z - HALL_OF_FAME.z) < HALL_OF_FAME.r + pad;
 
 /** The second pond, out in the first meadow ring. */
 export const POND2 = { id: "pond-2", x: 34.7, z: -27.1, r: 4.0 };
@@ -261,13 +277,15 @@ export function groundHeight(x, z) {
   let h = Math.max(0, near) + Math.max(0, hills) + Math.max(0, ridge);
   const dp = Math.hypot(x - POND2.x, z - POND2.z);
   if (dp < POND2.r + 7) h *= smooth(POND2.r + 0.6, POND2.r + 7, dp);
+  const dh = Math.hypot(x - HALL_OF_FAME.x, z - HALL_OF_FAME.z);
+  if (dh < HALL_OF_FAME.r + 8) h *= smooth(HALL_OF_FAME.r + 0.4, HALL_OF_FAME.r + 8, dh);
   return h;
 }
 
 /** Every stepping stone's spot (the paths sampled), cached. */
 let stoneCache = null;
 export function pathStones() {
-  if (!stoneCache) stoneCache = PATHS.flatMap((p, i) => pathSamples(p, i === 0 ? 0.8 : 0.85));
+  if (!stoneCache) stoneCache = PATHS.flatMap((p, i) => pathSamples(p, i === 0 ? 0.8 : 0.85)).filter((s) => !inHall(s.x, s.z, -0.2)); // the plaza is paved
   return stoneCache;
 }
 function nearPath(x, z, d) {
@@ -289,7 +307,7 @@ export const FLOWER_FIELDS = [
   { x: -39.0, z: 22.5, rx: 7, rz: 4.5, cols: "lavender", n: 900 },
   { x: 44.5, z: 13.5, rx: 6.5, rz: 4.5, cols: "poppy", n: 800 },
   { x: -19.4, z: -44.2, rx: 7, rz: 4, cols: "buttercup", n: 800 },
-  { x: 24.0, z: 36.5, rx: 6, rz: 4, cols: "mixed", n: 700 },
+  { x: 12.0, z: 45.5, rx: 6, rz: 4, cols: "mixed", n: 700 },
   { x: -10.0, z: 58.5, rx: 9, rz: 5, cols: "pink", n: 900 },
   { x: 36.0, z: -62.5, rx: 9, rz: 5, cols: "buttercup", n: 900 },
   { x: -74.0, z: 4.0, rx: 6, rz: 9, cols: "lavender", n: 900 },
@@ -309,6 +327,7 @@ export const MEADOW_TREES = (() => {
     if (nearPath(x, z, 3.0)) continue;
     if (Math.hypot(x - POND2.x, z - POND2.z) < POND2.r + 3.5) continue;
     if (BENCHES.some((b) => Math.hypot(b.x - x, b.z - z) < 4)) continue;
+    if (inHall(x, z, 3.5)) continue;
     if (FLOWER_FIELDS.some((f) => ((x - f.x) / (f.rx + 1.5)) ** 2 + ((z - f.z) / (f.rz + 1.5)) ** 2 < 1)) continue;
     if (out.some((o) => Math.hypot(o.x - x, o.z - z) < 5.2)) continue;
     const s = rnd.range(1.1, 1.8);
@@ -327,6 +346,7 @@ export const MEADOW_BUSHES = (() => {
     if (nearPath(x, z, 2.0)) continue;
     if (Math.hypot(x - POND2.x, z - POND2.z) < POND2.r + 2.5) continue;
     if (BENCHES.some((b) => Math.hypot(b.x - x, b.z - z) < 3)) continue;
+    if (inHall(x, z, 2)) continue;
     if (MEADOW_TREES.some((o) => Math.hypot(o.x - x, o.z - z) < 3)) continue;
     if (out.some((o) => Math.hypot(o.x - x, o.z - z) < 4.5)) continue;
     out.push({ id: `mbush-${out.length + 1}`, x, z, r: rnd.range(0.6, 1.05), flowers: rnd.chance(0.55) ? rnd.pick([0xf29bb2, 0xfbe3ea, 0xf6d04d, 0xc9a6f0, 0xffffff]) : null });
@@ -340,6 +360,14 @@ export const POND2_SPOTS = [0.3, 1.2, 2.1, 3.0, 4.2, 5.2].map((a, i) => {
   const x = POND2.x + Math.cos(a) * d, z = POND2.z + Math.sin(a) * d;
   return { id: `pond2-${i + 1}`, x, z, yaw: Math.atan2(-(POND2.z - z), POND2.x - x) };
 });
+
+/** True when a Hall of Fame cat can stand at (x, z) with `pad` of room: on the plaza, clear of
+    the fountain and the sign. */
+export function hallFree(x, z, pad = 0.5) {
+  const H = HALL_OF_FAME, d = Math.hypot(x - H.x, z - H.z);
+  if (d > H.r - pad || d < H.fountain.r + pad) return false;
+  return Math.hypot(x - H.sign.x, z - H.sign.z) > 1.2 + pad;
+}
 
 /** True when a meadow cat can stand at (x, z) with `pad` of room: in a ring, clear of trees, benches and the pond. */
 export function meadowFree(x, z, pad = 0.5) {

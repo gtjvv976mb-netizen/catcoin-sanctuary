@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * REFRESHES the market figures of the famous cat coins in data/famous.json, from free public
+ * REFRESHES the market figures of the Hall of Fame coins (data/famous.json: legendary cat coins
+ * that already exist; the sanctuary's adoptable cats have no coin to refresh), from free public
  * endpoints, and writes the file only when something changed and it still validates.
  *
  *   node scripts/refresh-famous.mjs [--dry-run]
@@ -64,7 +65,8 @@ export async function refreshFamous({ data, fetchImpl = (...a) => globalThis.fet
   const coins = data.coins.map((c) => JSON.parse(JSON.stringify(c)));
   const ds = new Map();
   const byChain = new Map();
-  for (const c of coins) { if (!byChain.has(c.chain)) byChain.set(c.chain, []); byChain.get(c.chain).push(c); }
+  const hall = coins.filter((c) => c.tier === "main"); // the Hall of Fame; anything else is left as it is
+  for (const c of hall) { if (!byChain.has(c.chain)) byChain.set(c.chain, []); byChain.get(c.chain).push(c); }
   for (const [chain, list] of byChain) {
     for (let i = 0; i < list.length; i += DS_BATCH) {
       const part = list.slice(i, i + DS_BATCH);
@@ -74,7 +76,7 @@ export async function refreshFamous({ data, fetchImpl = (...a) => globalThis.fet
     }
   }
   const cg = new Map();
-  const ids = [...new Set(coins.map((c) => c.coingeckoId).filter(Boolean))];
+  const ids = [...new Set(hall.map((c) => c.coingeckoId).filter(Boolean))];
   for (let i = 0; i < ids.length; i += CG_BATCH) {
     const part = ids.slice(i, i + CG_BATCH);
     const r = await getJson(fetchImpl, `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=250&ids=${part.map(encodeURIComponent).join(",")}`);
@@ -83,7 +85,7 @@ export async function refreshFamous({ data, fetchImpl = (...a) => globalThis.fet
   }
   const updated = [], kept = [];
   const at = iso(nowMs);
-  for (const c of coins) {
+  for (const c of hall) {
     const d = ds.get(c.id), g = c.coingeckoId ? cg.get(c.coingeckoId) : null;
     if (!d && !g) { kept.push(c.id); continue; }
     const m = c.market;

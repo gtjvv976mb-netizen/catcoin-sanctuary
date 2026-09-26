@@ -1,5 +1,6 @@
-# Every day (and by hand), refreshes the market cap, liquidity and 24 h volume of the famous cat
-# coins in data/famous.json from DexScreener's and CoinGecko's free public endpoints
+# Every day (and by hand), refreshes the market cap, liquidity and 24 h volume of the Hall of Fame
+# coins (the only coins in data/famous.json: legendary cat coins that already exist; the sanctuary's
+# own cats are adoptable and have no coin to refresh) in data/famous.json from DexScreener's and CoinGecko's free public endpoints
 # (scripts/refresh-famous.mjs), and commits the file when, and only when, it changed. Nothing
 # else about a coin changes here: not where it lives in the garden, its lore, links or warnings.
 # The builder's own tests run first (`npm run test:builder`, which checks data/famous.json's
@@ -39,7 +40,7 @@ jobs:
           node-version: 22
       - run: npm ci
       - run: npm run test:builder
-      - name: Refresh the famous coins' market figures
+      - name: Refresh the Hall of Fame coins' market figures
         run: node scripts/refresh-famous.mjs
       - name: Commit the data if it changed
         env:
@@ -49,7 +50,7 @@ jobs:
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git diff --cached --stat
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
-            commit -q -m "Famous coins: refresh market figures"
+            commit -q -m "Hall of Fame: refresh market figures"
           auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
           echo "::add-mask::$auth"
           if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then

@@ -7,8 +7,15 @@
    worked out from the model-space position of each point on the cat (every pose is fitted to one
    cat size, x forward and y up), so the same markings read on a sitting, walking or sleeping cat:
 
-     0 solid   1 tabby stripes   2 tuxedo   3 calico patches   4 point (darker ears, face, paws,
-     tail)    5 spotted          6 bicolor  7 tortie
+     0 solid   1 tabby stripes (mackerel; bold for a tiger)   2 tuxedo   3 calico patches
+     4 point (darker ears, face, paws, tail)   5 spotted   6 bicolor   7 tortie
+     8 classic tabby (swirls on the flank)   9 ticked   10 van (white, coloured cap, ears, tail)
+     11 patch (white, one patch over an ear)
+
+   On top of the pattern, from the cat's look (looks.js): white chest, paws, muzzle, belly or a
+   nose blaze; a white or dark tail tip, a ringed or bobbed tail; a lion's mane; a jacket. Big
+   cats are drawn bigger. What a cat wears (hats, collars, bows, glasses, ...) is drawn as small
+   low-poly meshes that follow its head (buildWear, below), one InstancedMesh per kind and pose.
 
    The cream model's own texture is kept for its shading, eyes and nose; its darker "points" say
    where the ears, muzzle, paws and tail are. The ginger model is an orange tabby as modelled and
@@ -22,6 +29,8 @@ import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
 import { AMBIENT } from "./ambient.js";
 import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit } from "./catrig.js";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { lookOf } from "./looks.js";
 
 /** Pose ids for the shader's procedural animation. */
 const POSE_ID = { walk: 0, sit: 1, loaf: 2, stretch: 3, sleep: 4 };
@@ -40,7 +49,7 @@ const FIT = {
 /** Small heading corrections, measured: the cream walking cat was modelled turned about 40° off +x. */
 const YAW_FIX = { "cat-walk": -0.66 };
 
-export const PATTERNS = ["solid", "tabby", "tuxedo", "calico", "point", "spotted", "bicolor", "tortie"];
+export const PATTERNS = ["solid", "tabby", "tuxedo", "calico", "point", "spotted", "bicolor", "tortie", "classic", "ticked", "van", "patch"];
 
 /** Reads a texture's pixels (for the eyes and the reference colours). Null if the browser can't. */
 function pixels(image) {
@@ -113,6 +122,54 @@ export function decimate(geometry, cell, uvMatrix = null) {
   g.computeBoundingBox();
   g.computeBoundingSphere();
   return g;
+}
+
+/**
+ * The head's frame on a posed model, for what a cat wears: its centre, radius, forward (towards
+ * the eyes), up and side, the top of the skull, and the neck (a ring's centre, axis and radius).
+ */
+export function headFrame(pos, eye, head, size, pose = "sit") {
+  const n = pos.length / 3, V = (i) => new THREE.Vector3(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]);
+  let maxX = -Infinity, H = 0;
+  for (let i = 0; i < n; i++) { maxX = Math.max(maxX, pos[i * 3]); H = Math.max(H, pos[i * 3 + 1]); }
+  // The head's points: the top of a sitting cat, the front of the others (every pose faces +x).
+  const inHead = {
+    sit: (p) => p.y > 0.78 * H,
+    walk: (p) => p.x > maxX - 0.34 && p.y > 0.5 * H,
+    loaf: (p) => p.x > maxX - 0.4 && p.y > 0.45 * H,
+    stretch: (p) => p.x > maxX - 0.34 && p.y > 0.2 * H,
+    sleep: (p) => p.x > maxX - 0.38 && p.y > 0.35 * H,
+  }[pose] || ((p) => p.y > 0.78 * H);
+  const pts = [];
+  for (let i = 0; i < n; i++) { const p = V(i); if (inHead(p)) pts.push(p); }
+  if (pts.length < 12) return null;
+  // Leave the ears out of the centre: the highest tenth of the head's points.
+  const ys = pts.map((p) => p.y).sort((a, b) => a - b), earY = ys[Math.floor(ys.length * 0.88)];
+  const skull = pts.filter((p) => p.y <= earY);
+  const C = skull.reduce((m, p) => m.add(p), new THREE.Vector3()).divideScalar(skull.length);
+  const ds = skull.map((p) => p.distanceTo(C)).sort((a, b) => a - b);
+  const r = Math.max(0.08, Math.min(0.2, ds[Math.floor(ds.length * 0.5)]));
+  // Forward: towards the nose (the front-most point near the head's middle height).
+  let nose = C.clone().add(new THREE.Vector3(r, 0, 0));
+  for (const p of skull) if (Math.abs(p.z - C.z) < r * 0.3 && Math.abs(p.y - C.y) < r * 0.7 && p.x > nose.x) nose = p.clone();
+  const f = nose.clone().sub(C); f.z = 0; f.y *= 0.5; f.normalize();
+  const up = new THREE.Vector3(0, 1, 0).addScaledVector(f, -f.y).normalize();
+  const side = new THREE.Vector3().crossVectors(f, up).normalize();
+  // The top of the skull: the highest point on the head's middle line, between the ears.
+  let top = C.y + r * 0.6;
+  for (const p of pts) if (Math.abs(p.z - C.z) < r * 0.22 && Math.abs(p.x - C.x) < r * 0.5) top = Math.max(top, p.y);
+  top = Math.min(Math.max(top, earY - r * 0.1), C.y + r * 1.3);
+  // The neck: below and behind the head's centre.
+  const axis = pose === "sit" ? new THREE.Vector3(0.25, 1, 0).normalize() : pose === "sleep" ? new THREE.Vector3(1, 0.15, 0).normalize() : new THREE.Vector3(1, 0.9, 0).normalize();
+  const N = C.clone().addScaledVector(axis, -r * 0.95);
+  const radii = [];
+  for (let i = 0; i < n; i++) {
+    const d = V(i).sub(N), along = d.dot(axis);
+    if (Math.abs(along) < 0.025) { const rr = d.addScaledVector(axis, -along).length(); if (rr < r * 1.8) radii.push(rr); }
+  }
+  radii.sort((a, b) => a - b);
+  const rn = radii.length > 8 ? radii[Math.floor(radii.length * 0.85)] : r * 0.85;
+  return { C, r, f, up, side, top, neck: { N, axis, r: Math.max(r * 0.55, Math.min(rn * 0.7, r * 0.75)) } };
 }
 
 /** Loads the ten cat models; bakes each pose's fit into its geometry; finds its eyes. */
@@ -191,7 +248,12 @@ export async function loadCatModels(loader, base = "assets/models/", { cell = 0.
     const lite = cell > 0 ? decimate(geometry, cell, map ? map.matrix : null) : geometry;
     // …and a much lighter one again for cats far across the meadows (a few hundred triangles).
     const far = decimate(geometry, Math.max(cell, 0.045) * 2.6, map ? map.matrix : null);
-    out[coat][pose] = { geometry, lite, far, material, len: v.x, height: v.y, width: v.z, eye, head, pose, ref, ginger: coat === "ginger" };
+    // How long the tail is (for its tip), and the head's frame and the neck (for what the cat wears).
+    const [tx, ty0, ty1] = TAIL[pose];
+    let tailLen = 0;
+    for (let i = 0; i < P.count; i++) { const x = pos[i * 3], y = pos[i * 3 + 1]; if (x < tx && y > ty0 && y < ty1) tailLen = Math.max(tailLen, tx - x); }
+    const frame = headFrame(pos, eye, head, v, pose);
+    out[coat][pose] = { geometry, lite, far, material, len: v.x, height: v.y, width: v.z, eye, head, pose, ref, ginger: coat === "ginger", tailLen: Math.max(tailLen, 0.05), frame };
   })));
   return out;
 }
@@ -202,17 +264,24 @@ const VERT_HEAD = /* glsl */`
 attribute vec4 aCoatA; // base colour (linear rgb), pattern id
 attribute vec4 aCoatB; // second colour, seed
 attribute vec4 aCoatC; // eye colour, highlight
+attribute vec4 aCoatD; // white-mark flags, tail (1 white tip, 2 dark tip, 3 bob, 4 ringed), mane, stripe strength
+attribute vec4 aCoatE; // garment colour, garment (1 jacket)
 attribute vec4 aAnim;  // stride, walking (0..1), phase, awake (0 asleep)
 uniform float uTime;
 uniform int uPose;
 uniform vec3 uHead;
 uniform vec3 uTail;
+uniform vec3 uHeadF;
 varying vec4 vAnim;
 varying vec3 vCatPos;
 varying vec3 vCatNrm;
 varying vec4 vCoatA;
 varying vec4 vCoatB;
 varying vec4 vCoatC;
+varying vec4 vCoatD;
+varying vec4 vCoatE;
+varying float vTailD;
+varying vec3 vHeadV;
 `;
 
 const FRAG_HEAD = /* glsl */`
@@ -222,12 +291,18 @@ uniform vec3 uEye;
 uniform float uHeight;
 uniform float uGinger;
 uniform float uTime;
+uniform vec3 uHeadF;
+uniform float uTailLen;
 varying vec4 vAnim;
 varying vec3 vCatPos;
 varying vec3 vCatNrm;
 varying vec4 vCoatA;
 varying vec4 vCoatB;
 varying vec4 vCoatC;
+varying vec4 vCoatD;
+varying vec4 vCoatE;
+varying float vTailD;
+varying vec3 vHeadV;
 
 float cHash(vec3 p) { p = fract(p * 0.1031); p += dot(p, p.zyx + 31.32); return fract((p.x + p.y) * p.z); }
 float cNoise(vec3 p) {
@@ -257,12 +332,42 @@ vec3 coatColor(vec3 base, vec3 second, float pattern, float seed, vec3 p, vec3 n
   float muzzle = 1.0 - smoothstep(0.1, 0.16, length((p - (uEye + vec3(0.05, -0.08, 0.0))) * vec3(1.0, 1.3, 0.9)) + edge * 0.3);
   float white = clamp(max(max(belly, paws), max(chest, muzzle)), 0.0, 1.0);
   int pat = int(pattern + 0.5);
-  if (pat == 1) {            // tabby: soft bands round the body and legs, a darker back, a paler belly
-    float band = sin(6.2832 * (p.x * 3.6 + p.y * 2.7 + cFbm(s * 2.6) * 1.1));
-    float stripe = smoothstep(0.25, 0.65, band);
-    vec3 c = mix(base, second, stripe * 0.9);
-    c = mix(c, second, smoothstep(0.55, 0.95, n.y) * smoothstep(0.35, 0.8, p.y / h) * 0.35);
+  float legs = 1.0 - smoothstep(0.2, 0.34, p.y / h);
+  float legRings = smoothstep(0.3, 0.7, sin(6.2832 * (p.y * 9.0 + cFbm(s * 3.0) * 0.5)));
+  float stripeK = vCoatD.w;
+  if (pat == 1) {            // mackerel tabby: narrow stripes down the sides, rings round the legs, a darker back
+    float band = sin(6.2832 * (p.x * 5.4 + p.y * 0.8 + cFbm(s * 2.4) * 0.9));
+    float bold = step(0.97, stripeK);
+    float stripe = mix(smoothstep(0.3, 0.7, band), smoothstep(-0.05, 0.3, band), bold);
+    stripe = mix(stripe, legRings, legs);
+    vec3 c = mix(base, second, stripe * stripeK);
+    c = mix(c, second, smoothstep(0.6, 0.95, n.y) * smoothstep(0.35, 0.8, p.y / h) * 0.4 * stripeK);
     return mix(c, mix(base, vec3(1.0, 0.96, 0.9), 0.45), belly * 0.7);
+  }
+  if (pat == 8) {            // classic tabby: a bullseye swirl on each flank, lines along the spine
+    vec2 q = vec2(p.x + 0.04, (p.y - 0.45 * h) * 1.3);
+    float band = sin(6.2832 * (length(q) * 5.5 + cFbm(s * 2.0) * 0.7));
+    float spine = smoothstep(0.55, 0.9, n.y) * smoothstep(0.2, 0.7, abs(sin(p.z * 26.0)));
+    float stripe = max(smoothstep(0.2, 0.6, band), spine);
+    stripe = mix(stripe, legRings, legs);
+    vec3 c = mix(base, second, stripe * stripeK);
+    return mix(c, mix(base, vec3(1.0, 0.96, 0.9), 0.45), belly * 0.7);
+  }
+  if (pat == 9) {            // ticked: every hair banded, so a fine grain; faint bars on the legs, a darker back
+    float g = cNoise(s * 70.0) * 0.6 + cNoise(s * 23.0) * 0.4;
+    vec3 c = mix(base, second, smoothstep(0.35, 0.8, g) * 0.45);
+    c = mix(c, second, legs * legRings * 0.35 + smoothstep(0.6, 0.95, n.y) * 0.25);
+    return mix(c, mix(base, vec3(1.0, 0.96, 0.9), 0.45), belly * 0.6);
+  }
+  if (pat == 10) {           // van: white, with colour on the cap and ears, the tail and a patch or two
+    float cap = (vHeadV.x < 8.0) ? (1.0 - smoothstep(0.2, 0.24, length(vHeadV))) * smoothstep(-0.02, 0.05, vHeadV.y + (cFbm(s * 6.0) - 0.5) * 0.06) : 0.0;
+    float tail = step(0.0, vTailD);
+    float spots = smoothstep(0.63, 0.67, cFbm(s * 2.2)) * smoothstep(0.2, 0.6, n.y);
+    return mix(base, second, clamp(max(max(cap, tail), spots), 0.0, 1.0));
+  }
+  if (pat == 11) {           // patch: white with one patch over an ear and eye
+    float pa = (vHeadV.x < 8.0) ? 1.0 - smoothstep(0.1, 0.13, length(vHeadV - vec3(0.0, 0.07, 0.07)) + (cFbm(s * 7.0) - 0.5) * 0.04) : 0.0;
+    return mix(base, second, pa);
   }
   if (pat == 2) return mix(base, second, white);                                  // tuxedo: white bib, belly, socks and muzzle
   if (pat == 3) {            // calico: white with patches of the second colour and near-black
@@ -290,30 +395,48 @@ vec3 coatColor(vec3 base, vec3 second, float pattern, float seed, vec3 p, vec3 n
   }
   return base;               // solid
 }
+
+/* What the cat's look adds on top of its pattern: white marks, a tail tip, a mane, a jacket. */
+vec3 coatMarks(vec3 c, vec3 base, vec3 second, vec3 p, vec3 n, float pm) {
+  float h = max(uHeight, 0.3);
+  vec3 s = p + vCoatB.a * 13.7;
+  float edge = (cFbm(s * 5.0) - 0.5) * 0.14;
+  int f = int(vCoatD.x + 0.5);
+  vec3 W = vec3(0.96, 0.94, 0.9);
+  bool hasHead = vHeadV.x < 8.0;
+  vec3 hv = vHeadV;
+  float fwd = hasHead ? dot(normalize(hv + 1e-5), uHeadF) : -1.0;
+  float w = 0.0;
+  if ((f & 1) != 0) w = max(w, smoothstep(0.2, 0.6, n.x) * (1.0 - smoothstep(0.3, 0.62, (p.y + edge) / h)) * smoothstep(0.12, 0.3, p.y / h) * smoothstep(-0.05, 0.1, p.x + 0.12));
+  if ((f & 2) != 0) w = max(w, 1.0 - smoothstep(0.08, 0.16 + edge * 0.6, p.y));
+  if ((f & 4) != 0 && hasHead) w = max(w, smoothstep(0.55, 0.8, fwd) * (1.0 - smoothstep(-0.03, 0.02, hv.y + edge * 0.2)));
+  if ((f & 8) != 0) w = max(w, (1.0 - smoothstep(-0.5 + edge, -0.1 + edge, n.y)) * (1.0 - smoothstep(0.35, 0.6, p.y / h)));
+  if ((f & 16) != 0 && hasHead) w = max(w, smoothstep(0.7, 0.85, fwd) * (1.0 - smoothstep(0.012, 0.03, abs(dot(hv, cross(uHeadF, vec3(0.0, 1.0, 0.0)))))) * step(-0.04, hv.y));
+  c = mix(c, W, clamp(w, 0.0, 1.0));
+  int tl = int(vCoatD.y + 0.5);
+  if (vTailD >= 0.0) {
+    float t = vTailD / max(uTailLen, 0.05);
+    if (tl == 1) c = mix(c, W, smoothstep(0.78, 0.84, t));
+    if (tl == 2) c = mix(c, mix(second, vec3(0.05, 0.04, 0.035), 0.55), smoothstep(0.76, 0.84, t));
+    if (tl == 4) c = mix(c, mix(second, vec3(0.03), 0.4), smoothstep(0.2, 0.6, sin(t * 34.0)) * step(0.15, t));
+  }
+  // A lion's mane: round the head and down the neck, not over the face.
+  if (vCoatD.z > 0.5 && hasHead) {
+    float m = smoothstep(0.1, 0.16, length(hv)) * (1.0 - smoothstep(0.3, 0.38, length(hv))) * (1.0 - smoothstep(0.1, 0.45, fwd));
+    c = mix(c, second * (0.85 + 0.3 * cFbm(s * 18.0)), clamp(m * 1.2, 0.0, 1.0));
+  }
+  // A jacket: the torso, not the head, legs or tail.
+  if (vCoatE.w > 0.5) {
+    float torso = smoothstep(0.26, 0.34, p.y / h) * (hasHead ? smoothstep(0.22, 0.28, length(hv)) : 1.0) * (1.0 - step(0.0, vTailD));
+    c = mix(c, vCoatE.rgb * (0.9 + 0.2 * cNoise(s * 30.0)), torso);
+  }
+  return c;
+}
 `;
 
-function coatShader(material, md) {
-  material.onBeforeCompile = (shader) => {
-    Object.assign(shader.uniforms, {
-      uRefLum: { value: md.ref.lum },
-      uRefColor: { value: md.ref.color },
-      uEye: { value: md.eye },
-      uHeight: { value: md.height / CAT.size },
-      uGinger: { value: md.ginger ? 1 : 0 },
-      uTime: AMBIENT.uTime,
-      uPose: { value: POSE_ID[md.pose] },
-      uHead: { value: md.head },
-      uTail: { value: new THREE.Vector3(...TAIL[md.pose]) },
-    });
-    shader.vertexShader = VERT_HEAD + shader.vertexShader.replace("#include <begin_vertex>", `#include <begin_vertex>
-      vCatPos = position / ${CAT.size.toFixed(3)};
-      vCatNrm = normal;
-      vCoatA = aCoatA; vCoatB = aCoatB; vCoatC = aCoatC; vAnim = aAnim;
-      {
-        // Procedural life on top of the posed model: legs that swing, a tail that sways, a head
-        // that bobs, looks about and is drawn a touch bigger (cuter), ears that twitch now and then.
-        float T = uTime + aAnim.z;
-        vec3 p0 = position;
+/** The head's procedural life (look about, nod, tilt, a touch bigger, ear flicks), shared by the
+    coat and by what the cat wears, so a hat stays on the head. Needs T, p0 and transformed. */
+const HEAD_GLSL = /* glsl */`
         // Head: a little bigger, turning to look about when still, nodding with each step when walking.
         if (uHead.y > -1.0) {
           float hw = 1.0 - smoothstep(0.14, 0.34, distance(p0, uHead));
@@ -331,6 +454,43 @@ function coatShader(material, md) {
           float ear = step(uHead.y + 0.1, p0.y) * hw * pow(max(0.0, sin(T * 0.61 + aAnim.z)), 60.0) * aAnim.w;
           transformed.x -= ear * 0.05; transformed.z += sign(p0.z - uHead.z) * ear * 0.03;
         }
+`;
+
+function coatShader(material, md) {
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, {
+      uRefLum: { value: md.ref.lum },
+      uRefColor: { value: md.ref.color },
+      uEye: { value: md.eye },
+      uHeight: { value: md.height / CAT.size },
+      uGinger: { value: md.ginger ? 1 : 0 },
+      uTime: AMBIENT.uTime,
+      uPose: { value: POSE_ID[md.pose] },
+      uHead: { value: md.head },
+      uTail: { value: new THREE.Vector3(...TAIL[md.pose]) },
+      uHeadF: { value: md.frame ? md.frame.f : new THREE.Vector3(1, 0, 0) },
+      uTailLen: { value: md.tailLen },
+    });
+    shader.vertexShader = VERT_HEAD + shader.vertexShader.replace("#include <begin_vertex>", `#include <begin_vertex>
+      vCatPos = position / ${CAT.size.toFixed(3)};
+      vCatNrm = normal;
+      vCoatA = aCoatA; vCoatB = aCoatB; vCoatC = aCoatC; vCoatD = aCoatD; vCoatE = aCoatE; vAnim = aAnim;
+      vHeadV = uHead.y > -1.0 ? position - uHead : vec3(9.0);
+      vTailD = (position.x < uTail.x && position.y > uTail.y && position.y < uTail.z) ? uTail.x - position.x : -1.0;
+      {
+        // Procedural life on top of the posed model: legs that swing, a tail that sways, a head
+        // that bobs, looks about and is drawn a touch bigger (cuter), ears that twitch now and then.
+        float T = uTime + aAnim.z;
+        vec3 p0 = position;
+        // A bobcat's short tail: the tail beyond a stub is drawn up into it.
+        if (aCoatD.y > 2.5 && aCoatD.y < 3.5 && vTailD > 0.09) { transformed.x += vTailD - 0.09; transformed.z *= 0.6; transformed.y = mix(transformed.y, max(transformed.y, uTail.y + 0.12), 0.5); }
+        // A lion's mane stands out a little round the head.
+        if (aCoatD.z > 0.5 && uHead.y > -1.0) {
+          vec3 hv = position - uHead; float hl = length(hv);
+          float m = smoothstep(0.1, 0.16, hl) * (1.0 - smoothstep(0.3, 0.38, hl)) * (1.0 - smoothstep(0.1, 0.45, dot(hv / max(hl, 1e-4), uHeadF)));
+          transformed += hv / max(hl, 1e-4) * 0.045 * m;
+        }
+        ${HEAD_GLSL}
         // Legs (walking): diagonal pairs swing fore and aft, the paws lifting on the way forward.
         if (uPose == 0) {
           float w = (1.0 - smoothstep(0.04, 0.34, p0.y)) * aAnim.y;
@@ -360,10 +520,12 @@ function coatShader(material, md) {
           // The ginger tabby as modelled, nudged towards this cat's base colour.
           vec3 k = clamp(vCoatA.rgb / max(uRefColor, vec3(0.02)), vec3(0.55), vec3(1.5));
           coat = tex * k;
+          coat = coatMarks(coat, vCoatA.rgb, vCoatB.rgb, vCatPos, normalize(vCatNrm), 0.0);
         } else {
           float rel = lum / max(uRefLum, 0.05);
           float pm = (1.0 - smoothstep(0.45, 0.8, rel)) * (1.0 - eye);
           vec3 c = coatColor(vCoatA.rgb, vCoatB.rgb, vCoatA.a, vCoatB.a, vCatPos, normalize(vCatNrm), pm);
+          c = coatMarks(c, vCoatA.rgb, vCoatB.rgb, vCatPos, normalize(vCatNrm), pm);
           // Keep the model's own light and shade, without its darker points.
           float shade = clamp(rel / mix(1.0, 0.5, pm), 0.62, 1.18);
           coat = c * mix(1.0, shade, 0.75);
@@ -494,6 +656,10 @@ const NAMED = {
   silver: "#c9cbd0", blue: "#7f8aa0", brown: "#6b4a33", chocolate: "#5a3a28", lilac: "#b8aab4", fawn: "#d6b995", cinnamon: "#b9764a",
   golden: "#d9a64e", tan: "#c49a6c", smoke: "#6f6c77", tabby: "#a47a52", seal: "#4a3527", caramel: "#c48a4f", amber: "#e0a030",
   green: "#7fb069", yellow: "#e8c547", copper: "#c77b30", hazel: "#9b8a4a", gold: "#d9a64e", odd: "#7fb2e0",
+  olive: "#9a9a3a", lime: "#9ccc3c", lemon: "#f2d64b", honey: "#d99a3e", brass: "#c9a23a", sky: "#8cc4ec", ice: "#a8d8ef",
+  leaf: "#6aa84f", sage: "#a3b08f", rust: "#b5532a", charcoal: "#3a3638", taupe: "#8b7b6b", pink: "#f29ab2", purple: "#7b4bb0",
+  violet: "#8a5ac8", teal: "#2f9c95", aqua: "#7fd6d0", navy: "#1f2a52", magenta: "#d0268a", salmon: "#f29a8e", dark: "#2a1d16",
+  terracotta: "#c0643a", umber: "#4a3222", graphite: "#55565c", ash: "#b9b7b2", sand: "#d8bf92", tawny: "#c08a4a",
 };
 /** A coat colour from "#rrggbb", "#rgb" or a plain colour name; null if it can't tell. */
 export function colorOf(v) {
@@ -506,6 +672,10 @@ export function colorOf(v) {
 /** A pattern id from its name (or a close word for it). */
 export function patternOf(v) {
   const s = String(v || "").toLowerCase();
+  if (/classic|marble|swirl/.test(s)) return 8;
+  if (/ticked|agouti/.test(s)) return 9;
+  if (/\bvan\b/.test(s)) return 10;
+  if (/\bpatch\b/.test(s)) return 11;
   if (/tux|bib|mask/.test(s)) return 2;
   if (/calico/.test(s)) return 3;
   if (/tort|brindle/.test(s)) return 7;
@@ -516,22 +686,39 @@ export function patternOf(v) {
   return 0;
 }
 
-/** The coat a resident is drawn in: its sheet's coat when there is one, otherwise a plain one from its id. */
+/** White-mark flags for the shader. */
+const MARK = { chest: 1, paws: 2, muzzle: 4, belly: 8, blaze: 16 };
+const TAIL_CODE = { white: 1, dark: 2, bob: 3, ringed: 4 };
+
+/** The coat a resident is drawn in: its sheet's coat when there is one, otherwise a plain one
+    from its id; then what its look adds (looks.js): marks, tail, mane, jacket, size, what it wears. */
 export function coatFor(r, index = 0) {
   const c = r.coat || {};
-  let base = colorOf(c.base), second = colorOf(c.second), eyes = colorOf(c.eyes);
-  const pattern = patternOf(c.pattern);
+  const look = lookOf(r);
+  let base = colorOf(look.base) || colorOf(c.base), second = colorOf(c.second) || colorOf(look.second), eyes = colorOf(c.eyes) || colorOf(look.eyes);
+  let pattern = patternOf(look.pattern || c.pattern);
+  // A bicolour or tuxedo sheet whose look is a tabby with white (or the other way) keeps the sheet's pattern.
+  if (look.pattern === "mackerel" && pattern !== 1) pattern = 1;
   if (!base) {
     const fallback = ["#f1dcc0", "#9a9aa2", "#1d1a1c", "#e0823a", "#f7f3ec", "#b9764a", "#6f6c77", "#d6b995"];
     base = new THREE.Color(fallback[hash(r.id || String(index)) % fallback.length]);
   }
-  if (!second) second = pattern === 2 || pattern === 6 || pattern === 3 ? new THREE.Color("#f7f3ec") : base.clone().multiplyScalar(0.45);
+  if (look.mane) second = colorOf(look.mane) || second;
+  if (!second) second = pattern === 2 || pattern === 6 || pattern === 3 ? new THREE.Color("#f7f3ec") : pattern === 10 || pattern === 11 ? new THREE.Color("#4a4448") : base.clone().multiplyScalar(0.45);
   if (!eyes) eyes = new THREE.Color("#8fb04a");
   // Calico's "base" is its white; a calico sheet usually names the colours, so put white first.
   if (pattern === 3 && base.getHSL({ h: 0, s: 0, l: 0 }).l < 0.7) { const w = new THREE.Color("#f7f3ec"); second = base; base = w; }
   const hsl = base.getHSL({ h: 0, s: 0, l: 0 });
-  const ginger = pattern === 1 && hsl.h > 0.03 && hsl.h < 0.12 && hsl.s > 0.45;
-  return { base, second, eyes, pattern, ginger, seed: (hash(r.id || String(index)) % 997) / 97 };
+  const ginger = pattern === 1 && hsl.h > 0.03 && hsl.h < 0.12 && hsl.s > 0.45 && look.stripe < 0.97 && look.scale === 1;
+  let marks = 0;
+  for (const [k, bit] of Object.entries(MARK)) if (look.white?.[k]) marks |= bit;
+  const garment = look.garment ? colorOf(look.garment.color) : null;
+  const wears = (look.wears || []).map((w) => ({ type: w.type, color: colorOf(w.color) || new THREE.Color("#c0392b") }));
+  return {
+    base, second, eyes, pattern, ginger, seed: (hash(r.id || String(index)) % 997) / 97,
+    marks, tail: TAIL_CODE[look.tail] || 0, mane: look.mane ? 1 : 0, stripe: look.stripe ?? 0.9,
+    garment, scale: look.scale || 1, wears,
+  };
 }
 function hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 
@@ -554,6 +741,9 @@ export class CatHerd {
     this.own = new Map(); // cat id → { group, hi, lo, dims, s, u }
     this.ownMeshes = []; // [mesh, cat] for picking
     this.camera = null; // set by the world, for the near/far choice
+    this.wear = new Map(); // "type-model-pose" → InstancedMesh of that accessory
+    this.wearCount = {}; // type → how many cats wear it
+    for (const c of sim.cats) for (const w of coats.get(c.id)?.wears || []) this.wearCount[w.type] = (this.wearCount[w.type] || 0) + 1;
     const perModel = { cat: 0, ginger: 0 };
     for (const c of sim.cats) perModel[c.model]++;
     this.byKey = {};
@@ -566,6 +756,8 @@ export class CatHerd {
         geo.setAttribute("aCoatA", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         geo.setAttribute("aCoatB", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         geo.setAttribute("aCoatC", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
+        geo.setAttribute("aCoatD", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
+        geo.setAttribute("aCoatE", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         geo.setAttribute("aAnim", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
         coatShader(md.material, md);
         const im = new THREE.InstancedMesh(geo, md.material, n);
@@ -669,6 +861,7 @@ export class CatHerd {
   /** Writes every cat's matrix (and, when a slot changes hands, its coat) into the mesh for its pose. */
   update() {
     for (const im of this.meshes) { im.count = 0; this.lookup.get(im).length = 0; im.userData.coatDirty = false; }
+    for (const wm of this.wear.values()) wm.count = 0;
     // What the camera can see: cats outside it (and not close by) are skipped, far ones drawn light.
     const cam = this.camera;
     if (cam) { cam.updateMatrixWorld(); _pv.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse); _fr.setFromProjectionMatrix(_pv); }
@@ -749,10 +942,23 @@ export class CatHerd {
         A.setXYZW(i, c.base.r, c.base.g, c.base.b, c.pattern);
         B.setXYZW(i, c.second.r, c.second.g, c.second.b, c.seed);
         C.setXYZW(i, c.eyes.r, c.eyes.g, c.eyes.b, hl);
+        im.geometry.attributes.aCoatD.setXYZW(i, c.marks, c.tail, c.mane, c.stripe);
+        const g = c.garment;
+        im.geometry.attributes.aCoatE.setXYZW(i, g ? g.r : 0, g ? g.g : 0, g ? g.b : 0, g ? 1 : 0);
         im.userData.coatDirty = true;
       }
       this.lookup.get(im)[i] = cat;
-      im.geometry.attributes.aAnim.setXYZW(i, cat.stride || 0, cat.pose === "walk" && !this.still ? Math.min(1, (cat.speed || 0) / 1.2) : 0, (cat.phase || 0) % 50, cat.pose === "sleep" ? 0 : 1);
+      const anim = [cat.stride || 0, cat.pose === "walk" && !this.still ? Math.min(1, (cat.speed || 0) / 1.2) : 0, (cat.phase || 0) % 50, cat.pose === "sleep" ? 0 : 1];
+      im.geometry.attributes.aAnim.setXYZW(i, ...anim);
+      const coat = this.coats.get(cat.id);
+      if (coat?.wears.length) for (const w of coat.wears) {
+        const wm = this.wearMesh(w.type, cat.model, cat.pose);
+        if (!wm) continue;
+        const j = wm.count++;
+        wm.setMatrixAt(j, _m);
+        wm.setColorAt(j, w.color);
+        wm.geometry.attributes.aAnim.setXYZW(j, ...anim);
+      }
       if (this.blobs) {
         const k = cat.pose === "sit" ? [0.62, 0.5] : cat.pose === "sleep" ? [0.85, 0.8] : [md.len * 0.95, md.width * 0.8];
         _t.makeRotationY(cat.yaw).setPosition(cat.x, cat.y + 0.02, cat.z).multiply(_r.makeScale(k[0], 1, k[1]));
@@ -761,13 +967,41 @@ export class CatHerd {
     }
     this.drawn = drawn;
     if (this.blobs) this.blobs.instanceMatrix.needsUpdate = true;
+    for (const wm of this.wear.values()) {
+      wm.visible = wm.count > 0;
+      wm.instanceMatrix.needsUpdate = true;
+      if (wm.instanceColor) wm.instanceColor.needsUpdate = true;
+      wm.geometry.attributes.aAnim.needsUpdate = true;
+    }
     for (const im of this.meshes) {
       im.visible = im.count > 0;
       im.instanceMatrix.needsUpdate = true;
       im.geometry.attributes.aAnim.needsUpdate = true;
-      if (im.userData.coatDirty) for (const k of ["aCoatA", "aCoatB", "aCoatC"]) im.geometry.attributes[k].needsUpdate = true;
+      if (im.userData.coatDirty) for (const k of ["aCoatA", "aCoatB", "aCoatC", "aCoatD", "aCoatE"]) im.geometry.attributes[k].needsUpdate = true;
       im.boundingSphere = null; // recomputed on demand when picking
     }
+  }
+
+  /** The InstancedMesh for one accessory on one model and pose, made the first time it is needed. */
+  wearMesh(type, model, pose) {
+    const key = `${type}-${model}-${pose}`;
+    let wm = this.wear.get(key);
+    if (wm !== undefined) return wm;
+    const md = this.models[model][pose];
+    const geo = buildWear(type, md.frame);
+    if (!geo) { this.wear.set(key, null); return null; }
+    const n = this.wearCount[type] || 1;
+    geo.setAttribute("aAnim", new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4).setUsage(THREE.DynamicDrawUsage));
+    wm = new THREE.InstancedMesh(geo, wearMaterial(md), n);
+    wm.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    wm.setColorAt(0, new THREE.Color(1, 1, 1));
+    wm.name = `wear ${key}`;
+    wm.castShadow = !this.blobShadows;
+    wm.frustumCulled = false;
+    wm.count = 0;
+    this.scene.add(wm);
+    this.wear.set(key, wm);
+    return wm;
   }
 
   /** world = T(position + bob) · Ry(yaw) · [tilt about a pivot along the body] · [roll about the body's middle] · S(breath) */
@@ -786,7 +1020,8 @@ export class CatHerd {
       out.multiply(_r.makeRotationX(a.roll));
       if (py) out.multiply(_t.makeTranslation(0, -py, 0));
     }
-    if (a.sx !== 1 || a.sy !== 1 || a.sz !== 1) out.multiply(_t.makeScale(a.sx, a.sy, a.sz));
+    const k = this.coats.get(cat.id)?.scale || 1;
+    if (a.sx !== 1 || a.sy !== 1 || a.sz !== 1 || k !== 1) out.multiply(_t.makeScale(a.sx * k, a.sy * k, a.sz * k));
     return out;
   }
 
@@ -803,14 +1038,14 @@ export class CatHerd {
 
   /** A point just above the cat's head, for the tag that follows it. */
   headPoint(cat, out) {
-    const md = this.dimsOf(cat);
-    return out.set(cat.x, cat.y + md.height + 0.2, cat.z);
+    const md = this.dimsOf(cat), k = this.own.has(cat.id) ? 1 : this.coats.get(cat.id)?.scale || 1;
+    return out.set(cat.x, cat.y + md.height * k + 0.2, cat.z);
   }
 
   /** The middle of the cat, for "nearest cat to a tap" picking and for the camera to look at. */
   midPoint(cat, out) {
-    const md = this.dimsOf(cat);
-    return out.set(cat.x, cat.y + md.height * 0.5, cat.z);
+    const md = this.dimsOf(cat), k = this.own.has(cat.id) ? 1 : this.coats.get(cat.id)?.scale || 1;
+    return out.set(cat.x, cat.y + md.height * 0.5 * k, cat.z);
   }
 
   /** Triangles drawn for cats this frame (for the stats line). */
@@ -828,4 +1063,150 @@ export class CatHerd {
     for (const o of this.own.values()) { if (o.group.visible) shown++; if (o.group.visible && o.hi?.visible) full++; }
     return { own: this.own.size, shown, full };
   }
+}
+
+/* ── What a cat wears ──────────────────────────────────────────────────────
+   Small low-poly meshes built in the head's frame (headFrame: centre C, radius r, forward f, up,
+   side, skull top, neck ring) of each posed model, so they sit where the real cat wears them.
+   White parts take the cat's accessory colour (instance colour); other parts keep their own. */
+
+const WHITE = 0xffffff;
+function part(geo, color = WHITE) {
+  const g = geo.index ? geo.toNonIndexed() : geo;
+  for (const k of Object.keys(g.attributes)) if (k !== "position" && k !== "normal") g.deleteAttribute(k);
+  const n = g.attributes.position.count, col = new Float32Array(n * 3), c = new THREE.Color(color);
+  for (let i = 0; i < n; i++) col.set([c.r, c.g, c.b], i * 3);
+  g.setAttribute("color", new THREE.BufferAttribute(col, 3));
+  return g;
+}
+
+/** A matrix from the head frame: local x forward, y up, z side, in units of the head's radius, at `at`. */
+function frameMatrix(F, at, scale = F.r, axes = [F.f, F.up, F.side]) {
+  const m = new THREE.Matrix4().makeBasis(axes[0], axes[1], axes[2]);
+  m.scale(new THREE.Vector3(scale, scale, scale));
+  m.setPosition(at);
+  return m;
+}
+
+/** One accessory's geometry on a posed model, or null for an unknown kind. */
+export function buildWear(type, F) {
+  if (!F) return null;
+  const { C, r, f, up, side, neck } = F;
+  const top = new THREE.Vector3(C.x, F.top, C.z).addScaledVector(f, -r * 0.08);
+  const parts = [];
+  const add = (g, color, m) => parts.push(part(g, color).applyMatrix4(m));
+  const onTop = (dy = 0) => frameMatrix(F, top.clone().addScaledVector(up, dy * r));
+  // The neck ring's own frame: axis along the neck, "front" towards the face.
+  const nAxis = neck.axis.clone(), nFront = f.clone().addScaledVector(nAxis, -f.dot(nAxis)).normalize(), nSide = new THREE.Vector3().crossVectors(nFront, nAxis).normalize();
+  const neckM = (dy = 0, s = 1) => frameMatrix(F, neck.N.clone().addScaledVector(nAxis, dy * r), neck.r * s, [nFront, nAxis, nSide]);
+  const front = (k = 1.02) => neck.N.clone().addScaledVector(nFront, neck.r * k);
+  switch (type) {
+    case "beanie":
+      add(new THREE.SphereGeometry(0.95, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2).scale(1.05, 0.95, 1.05), WHITE, onTop(-0.45));
+      add(new THREE.TorusGeometry(0.98, 0.14, 5, 14).rotateX(Math.PI / 2), WHITE, onTop(-0.42));
+      add(new THREE.IcosahedronGeometry(0.24, 0), WHITE, onTop(0.5));
+      break;
+    case "cap":
+      add(new THREE.SphereGeometry(0.9, 10, 5, 0, Math.PI * 2, 0, Math.PI / 2).scale(1.05, 0.75, 1.0), WHITE, onTop(-0.35));
+      add(new THREE.CylinderGeometry(0.75, 0.75, 0.06, 12, 1, false, -Math.PI / 2, Math.PI).scale(1, 1, 1.1).translate(0.55, 0, 0), WHITE, onTop(-0.33));
+      break;
+    case "tweed":
+      add(new THREE.SphereGeometry(0.98, 10, 5, 0, Math.PI * 2, 0, Math.PI / 2).scale(1.1, 0.42, 1.0).translate(-0.05, 0, 0), WHITE, onTop(-0.22));
+      add(new THREE.CylinderGeometry(0.6, 0.6, 0.06, 10, 1, false, -Math.PI / 2, Math.PI).translate(0.62, 0, 0).rotateZ(-0.15), WHITE, onTop(-0.2));
+      break;
+    case "hood": // a Robin Hood cap with a red feather
+      add(new THREE.ConeGeometry(0.85, 1.5, 8).rotateZ(Math.PI / 2 + 0.35).scale(1, 0.55, 1), WHITE, onTop(0));
+      add(new THREE.BoxGeometry(1.1, 0.05, 0.14).rotateZ(0.7).translate(-0.2, 0.45, 0.4), 0xd8262e, onTop(0));
+      break;
+    case "witch":
+      add(new THREE.CylinderGeometry(1.45, 1.45, 0.08, 16), WHITE, onTop(-0.3));
+      add(new THREE.ConeGeometry(0.72, 2.0, 12).rotateZ(0.25).translate(-0.15, 1.0, 0), WHITE, onTop(-0.3));
+      add(new THREE.TorusGeometry(0.66, 0.08, 4, 14).rotateX(Math.PI / 2), 0xf5c542, onTop(-0.2));
+      break;
+    case "crown":
+      add(new THREE.CylinderGeometry(0.62, 0.62, 0.35, 10, 1, true), 0xf5c542, onTop(-0.08));
+      for (let k = 0; k < 5; k++) { const a = (k / 5) * Math.PI * 2; add(new THREE.ConeGeometry(0.14, 0.34, 4).translate(Math.cos(a) * 0.6, 0.32, Math.sin(a) * 0.6), 0xf5c542, onTop(-0.08)); }
+      add(new THREE.IcosahedronGeometry(0.1, 0).translate(0.64, 0.02, 0), 0xd8262e, onTop(-0.08));
+      break;
+    case "headband": {
+      const at = C.clone().addScaledVector(up, r * 0.3);
+      const ax = up.clone().addScaledVector(f, 0.45).normalize(), fr = f.clone().addScaledVector(ax, -f.dot(ax)).normalize(), sd = new THREE.Vector3().crossVectors(fr, ax);
+      const m = frameMatrix(F, at, r, [fr, ax, sd]);
+      add(new THREE.TorusGeometry(0.93, 0.13, 4, 18).rotateX(Math.PI / 2).scale(1.02, 1.3, 1.02), WHITE, m);
+      add(new THREE.BoxGeometry(0.1, 0.55, 0.16).rotateZ(0.5).translate(-1.12, -0.25, 0.12), WHITE, m);
+      add(new THREE.BoxGeometry(0.1, 0.5, 0.16).rotateZ(0.8).translate(-1.12, -0.3, -0.12), WHITE, m);
+      break;
+    }
+    case "bow": {
+      const at = C.clone().addScaledVector(up, r * 0.72).addScaledVector(side, r * 0.55).addScaledVector(f, r * 0.05);
+      const m = frameMatrix(F, at);
+      add(new THREE.ConeGeometry(0.32, 0.55, 5).rotateX(Math.PI / 2).translate(0, 0, 0.3), WHITE, m);
+      add(new THREE.ConeGeometry(0.32, 0.55, 5).rotateX(-Math.PI / 2).translate(0, 0, -0.3), WHITE, m);
+      add(new THREE.IcosahedronGeometry(0.16, 0), WHITE, m);
+      break;
+    }
+    case "collar":
+      add(new THREE.TorusGeometry(1.04, 0.1, 4, 18).rotateX(Math.PI / 2).scale(1, 1.6, 1), WHITE, neckM());
+      break;
+    case "bell":
+      add(new THREE.SphereGeometry(0.13, 8, 6), WHITE, frameMatrix(F, front(1.12).addScaledVector(nAxis, -r * 0.12), r));
+      break;
+    case "tag":
+      add(new THREE.CylinderGeometry(0.13, 0.13, 0.03, 10).rotateZ(Math.PI / 2), WHITE, frameMatrix(F, front(1.1).addScaledVector(nAxis, -r * 0.14), r, [nFront, nAxis, nSide]));
+      break;
+    case "tie":
+      add(new THREE.ConeGeometry(0.17, 0.75, 4).rotateZ(Math.PI).translate(0, -0.42, 0), WHITE, frameMatrix(F, front(1.06), r, [nFront, nAxis, nSide]));
+      add(new THREE.BoxGeometry(0.12, 0.14, 0.2), WHITE, frameMatrix(F, front(1.08), r, [nFront, nAxis, nSide]));
+      break;
+    case "scarf":
+      add(new THREE.TorusGeometry(1.06, 0.2, 5, 18).rotateX(Math.PI / 2).scale(1, 1.3, 1), WHITE, neckM(-0.05));
+      add(new THREE.BoxGeometry(0.1, 0.7, 0.3).translate(0, -0.4, 0.25).rotateX(0.2), WHITE, frameMatrix(F, front(1.08), r, [nFront, nAxis, nSide]));
+      break;
+    case "sunglasses": {
+      const eyeC = C.clone().addScaledVector(f, r * 0.92).addScaledVector(up, r * 0.1);
+      const m = frameMatrix(F, eyeC);
+      for (const z of [-0.36, 0.36]) {
+        add(new THREE.CylinderGeometry(0.27, 0.27, 0.06, 10).rotateZ(Math.PI / 2).translate(0.02, 0, z), 0x1a1a22, m);
+        add(new THREE.TorusGeometry(0.28, 0.05, 4, 12).rotateY(Math.PI / 2).translate(0.03, 0, z), WHITE, m);
+      }
+      add(new THREE.BoxGeometry(0.06, 0.06, 0.2), WHITE, m);
+      add(new THREE.BoxGeometry(0.7, 0.05, 0.05).translate(-0.35, 0.05, 0.62), WHITE, m);
+      add(new THREE.BoxGeometry(0.7, 0.05, 0.05).translate(-0.35, 0.05, -0.62), WHITE, m);
+      break;
+    }
+    case "bag": { // a paper bag over the head, with eye holes
+      const m = frameMatrix(F, C.clone().addScaledVector(up, r * 0.15));
+      add(new THREE.BoxGeometry(2.3, 2.5, 2.3), WHITE, m);
+      for (const z of [-0.42, 0.42]) add(new THREE.CylinderGeometry(0.2, 0.2, 0.04, 10).rotateZ(Math.PI / 2).translate(1.16, 0.2, z), 0x1a1410, m);
+      add(new THREE.CylinderGeometry(0.12, 0.12, 0.04, 8).rotateZ(Math.PI / 2).translate(1.16, -0.3, 0), 0x1a1410, m);
+      add(new THREE.BoxGeometry(2.36, 0.12, 2.36).translate(0, 1.2, 0), 0xa87a44, m);
+      break;
+    }
+    case "crescent": {
+      const at = C.clone().addScaledVector(f, r * 0.85).addScaledVector(up, r * 0.5);
+      add(new THREE.TorusGeometry(0.28, 0.07, 4, 10, Math.PI * 1.2).rotateY(Math.PI / 2).rotateX(-0.6), WHITE, frameMatrix(F, at));
+      break;
+    }
+    default:
+      return null;
+  }
+  const g = mergeGeometries(parts);
+  g.computeBoundingSphere();
+  return g;
+}
+
+/** The accessories' material: flat, lit, coloured per vertex times per cat, moving with the head. */
+function wearMaterial(md) {
+  const mat = new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true });
+  mat.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, { uTime: AMBIENT.uTime, uHead: { value: md.head } });
+    shader.vertexShader = "attribute vec4 aAnim;\nuniform float uTime;\nuniform vec3 uHead;\n" + shader.vertexShader.replace("#include <begin_vertex>", `#include <begin_vertex>
+      {
+        float T = uTime + aAnim.z;
+        vec3 p0 = position;
+        ${HEAD_GLSL.replace("distance(p0, uHead)", "min(distance(p0, uHead), 0.18)")}
+      }`);
+  };
+  mat.customProgramCacheKey = () => "cat-wear";
+  return mat;
 }

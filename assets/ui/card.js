@@ -15,7 +15,7 @@ export const CHAIN_NAMES = {
   unichain: "Unichain", abstract: "Abstract", zksync: "zkSync",
 };
 export const chainName = (c) => CHAIN_NAMES[c] || c;
-export const TIER_NAMES = { main: "Main garden", ring1: "Meadow ring 1", ring2: "Meadow ring 2" };
+export const TIER_NAMES = { main: "Hall of Fame" };
 /** $57.3M, $812K, $4,210. */
 export function usdShort(v) {
   if (typeof v !== "number" || !Number.isFinite(v)) return "Not measured";
@@ -150,7 +150,7 @@ export function tickerLabel(r) {
 
 export function badgeFor(r) {
   if (r.example) return el("span", "badge badge-example", "Example, not a token");
-  if (isFamous(r)) return el("span", "badge badge-famous", "Famous coin");
+  if (isFamous(r)) return el("span", "badge badge-famous", "Hall of Fame");
   return isLaunched(r) ? el("span", "badge badge-launched", "Launched") : el("span", "badge badge-planned", "Not launched yet");
 }
 
@@ -227,7 +227,7 @@ export function createCard({ root, onClose, onInset }) {
       pic.addEventListener("error", () => pic.replaceWith(faceFor(r, "face card-face")), { once: true });
     } else pic = faceFor(r, "face card-face");
     const titles = el("div", "card-titles");
-    titles.append(el("p", "card-kicker", `Famous cat coin · ${chainName(r.chain)} · ${TIER_NAMES[r.tier] || ""}`));
+    titles.append(el("p", "card-kicker", `Hall of Fame · ${chainName(r.chain)}`));
     const h2 = el("h2", "card-name", r.name);
     h2.id = "card-name";
     titles.append(h2);
@@ -240,6 +240,12 @@ export function createCard({ root, onClose, onInset }) {
     titles.append(doingEl);
     lastDoing = "";
     head.append(pic, titles);
+
+    // Why it is here: not adoptable, already a coin. Straight to its one buy link.
+    const insp = el("div", "card-inspiration");
+    insp.append(el("p", "card-inspiration-text", "Already a coin — here as inspiration"));
+    if (r.buyLink) insp.append(link(r.buyLink.url, r.buyLink.label === "GMGN" ? "Buy on GMGN" : "View on DexScreener", "card-inspiration-link"));
+    body.append(insp);
 
     const who = section("Who the cat is", "card-who");
     if (r.catName) who.append(el("p", "card-real-name card-cat-name", r.catName));

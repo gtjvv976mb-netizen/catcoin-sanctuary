@@ -64,7 +64,11 @@ test("the About and Socials panels: modal dialogs with a title, a close button a
     p.openAbout();
     assert.ok(about.open, "About opens as a modal dialog");
     assert.equal(about.getAttribute("aria-labelledby"), "about-title");
-    assert.match(about.textContent, /Where all catcoins live/);
+    assert.match(about.textContent, /A home for adoptable cats/);
+    assert.match(about.textContent, /companies, personalities, shows, movies and crypto projects/);
+    assert.match(about.textContent, /real, verified lore \(X posts and sources\)/);
+    assert.match(about.textContent, /under \$50k/);
+    assert.match(about.textContent, /Hall of Fame: legendary cat coins that already exist/);
     assert.match(about.textContent, /\$CATSANC/);
     assert.match(about.textContent, /StonkFun/);
     assert.ok(!/\$SANCTUARY/.test(about.textContent));

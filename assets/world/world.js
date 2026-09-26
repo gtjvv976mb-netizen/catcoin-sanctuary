@@ -3,10 +3,9 @@
    to a chosen cat. main.js loads this only when WebGL is available; the page's overlay lives in
    assets/ui/.
 
-   Two kinds of cat life share one herd: the main garden's cats (the stock cats and the biggest
-   famous cat coins, cats.js, every cat simulated in full) and the meadow cats in the rings round
-   the fence (meadow.js, streamed by distance: only those near the view are simulated at full
-   rate, far ones rest, and very far ones are not drawn until the camera comes near). */
+   Two kinds of cat life share one herd: the main garden's adoptable cats (cats.js, every cat
+   simulated in full) and the Hall of Fame cats on their plaza in the first meadow ring (meadow.js,
+   streamed by distance). The meadow rings are kept free for adoptable cats still to come. */
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -15,15 +14,16 @@ import { buildGarden } from "./garden.js";
 import { buildSky, SKY } from "./sky.js";
 import { buildCritters } from "./critters.js";
 import { buildAmbient } from "./ambient.js";
-import { buildSign } from "./sign.js";
+import { buildSign, buildHallSign } from "./sign.js";
 import { createSanctuary } from "./cats.js";
 import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
-import { HOUSE, GARDEN, MEADOW, groundHeight } from "./layout.js";
+import { HOUSE, GARDEN, MEADOW, HALL_OF_FAME, groundHeight } from "./layout.js";
 import { modelIdFor } from "../ui/models.js";
 
-/** Where a resident lives: famous coins of the rings in the meadows, everyone else in the garden. */
-export const livesInMeadow = (r) => r.kind === "famous" && (r.tier === "ring1" || r.tier === "ring2");
+/** Where a resident lives: the Hall of Fame coins (famous cat coins that already exist) on the Hall
+    of Fame plaza, the adoptable cats in the garden. */
+export const livesInHall = (r) => r.kind === "famous";
 
 /** Where the sun sits in the sky (seen from the usual view: up and to the left, behind the cottage)… */
 const SUN_DISC = new THREE.Vector3(-0.6, 0.13, -0.79).normalize();
@@ -87,7 +87,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
 
   /* The cottage and the cats (these load in parallel). */
   const loader = new GLTFLoader();
-  const [houseGltf, models, sign] = await Promise.all([loader.loadAsync("assets/models/sanctuary.glb"), loadCatModels(loader, "assets/models/", { cell: mobile ? 0.07 : 0.045 }), buildSign(scene, { roof: HOUSE.height - 0.75, yaw: 0.3, width: 5.4 }).catch(() => null)]);
+  const [houseGltf, models, sign] = await Promise.all([loader.loadAsync("assets/models/sanctuary.glb"), loadCatModels(loader, "assets/models/", { cell: mobile ? 0.07 : 0.045 }), buildSign(scene, { roof: HOUSE.height - 0.75, yaw: 0.3, width: 5.4 }).catch(() => null), buildHallSign(scene, HALL_OF_FAME.sign, groundHeight(HALL_OF_FAME.sign.x, HALL_OF_FAME.sign.z)).catch(() => null)]);
   const house = houseGltf.scene;
   {
     house.rotation.y = -Math.PI / 2; // the mesh's door faces +x in model space; turn it to face the porch side (+z)
@@ -112,9 +112,9 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   let hovered = null, hoverQueued = null;
   const coats = new Map(residents.map((r, i) => [r.id, coatFor(r, i)]));
   const simOf = (r) => ({ id: r.id, name: r.name, tier: r.tier, model: coats.get(r.id).ginger ? "ginger" : "cat" });
-  const mainResidents = residents.filter((r) => !livesInMeadow(r)).map(simOf);
-  // The meadow cats, biggest first, so the biggest of each ring live nearest the garden.
-  const meadowResidents = residents.filter(livesInMeadow).sort((a, b) => (b.market?.marketCapUsd || 0) - (a.market?.marketCapUsd || 0)).map(simOf);
+  const mainResidents = residents.filter((r) => !livesInHall(r)).map(simOf);
+  // The Hall of Fame cats, biggest first, so the biggest sit nearest the fountain.
+  const meadowResidents = residents.filter(livesInHall).sort((a, b) => (b.market?.marketCapUsd || 0) - (a.market?.marketCapUsd || 0)).map(simOf);
   let sim = null;
   const critters = buildCritters(scene, {
     mobile,

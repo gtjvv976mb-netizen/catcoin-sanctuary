@@ -259,11 +259,12 @@ import { DATA_NOW } from "./helpers.mjs";
 const FAMOUS = JSON.parse(fs.readFileSync(path.join(ROOT, "data/famous.json"), "utf8"));
 const coinBy = (sym, chain) => FAMOUS.coins.find((c) => c.symbol === sym && (!chain || c.chain === chain));
 
-test("famous coins: the shipped file validates, Solana coins only, every coin once, ids and contracts unique", () => {
+test("famous coins: the shipped file is the Hall of Fame only: validates, Solana coins only, every coin once, ids and contracts unique", () => {
   const r = validateFamous(FAMOUS, { nowMs: DATA_NOW });
   assert.deepEqual(r.refused, []);
   assert.equal(r.coins.length, FAMOUS.coins.length);
-  assert.ok(r.coins.length >= 180, `${r.coins.length} coins`);
+  assert.ok(r.coins.length >= 15 && r.coins.length <= 30, `${r.coins.length} coins`);
+  for (const sym of ["POPCAT", "MEW", "MICHI", "CATE", "ZCAT"]) assert.ok(coinBy(sym, "solana"), `${sym} is in the Hall of Fame`);
   assert.ok(r.coins.every((c) => c.chain === "solana"), "the owner's rule: Solana coins only");
   assert.equal(new Set(r.coins.map((c) => c.id)).size, r.coins.length);
   assert.equal(new Set(r.coins.map((c) => `${c.chain}:${c.contract.toLowerCase()}`)).size, r.coins.length);
@@ -271,19 +272,21 @@ test("famous coins: the shipped file validates, Solana coins only, every coin on
   for (const c of r.coins) assert.ok(!stock.has(c.id), `${c.id} is a stock cat's ticker`);
 });
 
-test("famous coins: tiers follow the rule (main for $1M and up or a company or project cat, ring 1 from $100k, ring 2 below), set when placed", () => {
+test("famous coins: every Hall of Fame coin is tier main with a researched profile; the rest are archived, not lost", () => {
   assert.equal(tierFor(5e6, null), "main");
-  assert.equal(tierFor(30_000, "Backpack (exchange/wallet) mascot"), "main");
-  assert.equal(tierFor(250_000, null), "ring1");
-  assert.equal(tierFor(40_000, null), "ring2");
-  const counts = { main: 0, ring1: 0, ring2: 0 };
+  assert.equal(tierFor(250_000, null), "ring1", "the old rule, kept for the archive");
   for (const c of FAMOUS.coins) {
-    counts[c.tier]++;
-    // Placed from the research's figures; the daily refresh never moves a coin, so only the shape is checked here.
-    assert.ok(["main", "ring1", "ring2"].includes(c.tier), c.id);
-    if (c.company) assert.equal(c.tier, "main", `${c.id}: a company or project cat lives in the main garden`);
+    assert.equal(c.tier, "main", c.id);
+    assert.equal(c.loreSource.kind, "profile", `${c.id}: a researched profile`);
   }
-  assert.ok(counts.main > 0 && counts.ring1 > 0 && counts.ring2 > 0, JSON.stringify(counts));
+  const archive = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/archive/famous-removed.json"), "utf8"));
+  assert.ok(archive.coins.length > 100, "the removed coins are kept");
+  const kept = new Set(FAMOUS.coins.map((c) => c.id));
+  assert.ok(archive.coins.every((c) => !kept.has(c.id)), "a coin is in one place only");
+  assert.ok(archive.coins.every((c) => c.tier !== "main" || c.loreSource.kind !== "profile"), "only ring coins and unresearched ones were archived");
+  for (const id of ["buy-the-cat", "backpack-cat", "hypurr", "nearkat"]) assert.ok(archive.coins.some((c) => c.id === id), `${id}: an owner pick without a profile is archived`);
+  assert.match(famousProblem({ ...coinBy("POPCAT", "solana"), tier: "ring1" }), /Hall of Fame/);
+  assert.match(famousProblem({ ...coinBy("POPCAT", "solana"), loreSource: { kind: "coin", label: "Its listing", url: "https://www.geckoterminal.com/solana" } }), /researched profile/);
 });
 
 test("famous coins: every buy link is the GMGN page for its own contract", () => {
@@ -326,19 +329,16 @@ test("famous coins: the rules refuse what is unsafe or unsourced", () => {
   assert.equal(validateFamous({ coins: [], extra: 1 }).refused[0].clause, "shape");
 });
 
-test("famous coins: the flagged Solana coins are in, each with an honest warning; unresearched lore says where it comes from", () => {
+test("famous coins: every Hall of Fame coin has researched lore and a not-affiliated line; the flagged coins' honest warnings stay in the archive", () => {
   const warns = (c) => c.warnings.join(" ");
-  assert.ok(FAMOUS.coins.some((c) => /panther/i.test(c.name) && /panther, not a house cat/i.test(warns(c))), "the Solana panther coin");
-  assert.ok(FAMOUS.coins.filter((c) => /cat-themed by CoinGecko/.test(warns(c))).length >= 25, "the CoinGecko cat-themed coins");
   for (const c of FAMOUS.coins) {
-    if (c.loreSource.kind === "profile") continue;
-    assert.equal(c.catName, null, `${c.id}: no researched cat name`);
-    assert.equal(c.who, "", `${c.id}: no researched story`);
-    assert.ok(c.loreSource.url, `${c.id}: its lore names its source`);
+    assert.ok(c.who || c.catName, `${c.id}: who the cat is`);
+    assert.match(c.disclaimer, /not affiliated/i, c.id);
   }
-  assert.match(warns(coinBy("PURR", "solana")), /not Hyperliquid's official PURR/);
-  assert.match(warns(coinBy("NEARKAT", "solana")), /meerkat/);
-  for (const c of FAMOUS.coins) assert.match(c.disclaimer, /not affiliated/i, c.id);
+  const archive = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/archive/famous-removed.json"), "utf8")).coins;
+  const old = (sym) => archive.find((c) => c.symbol === sym);
+  assert.match(warns(old("PURR")), /not Hyperliquid's official PURR/);
+  assert.match(warns(old("NEARKAT")), /meerkat/);
 });
 
 test("famous coins: market warnings come from the latest figures", () => {
@@ -367,7 +367,7 @@ test("famous coins: every logo is a small WebP on this site, and no logo file is
 
 test("famous coins: the daily refresh takes DexScreener's pair figures and CoinGecko's circulating market cap, keeps the rest, and still validates", async () => {
   const popcat = coinBy("POPCAT", "solana"), cash = coinBy("MEW", "solana");
-  const data = { ...FAMOUS, coins: [popcat, cash, { ...coinBy("BTC", "solana") }] };
+  const data = { ...FAMOUS, coins: [popcat, cash, { ...coinBy("MICHI", "solana") }] };
   const asked = [];
   const fetchImpl = async (url) => {
     asked.push(String(url));
