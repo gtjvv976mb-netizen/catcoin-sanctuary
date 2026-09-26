@@ -11,7 +11,7 @@ import { buildCritters } from "./critters.js";
 import { buildAmbient } from "./ambient.js";
 import { buildSign } from "./sign.js";
 import { createSanctuary } from "./cats.js";
-import { loadCatModels, CatHerd, coatFor } from "./catviews.js";
+import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
 import { HOUSE, GARDEN } from "./layout.js";
 
 /** Where the sun sits in the sky (seen from the usual view: up and to the left, behind the cottage)… */
@@ -112,6 +112,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   // On phones the cats don't cast into the shadow map (the most costly pass there); each gets a soft blob shadow instead.
   const herd = new CatHerd(scene, models, sim, coats, { blobShadows: mobile });
   herd.still = still;
+  herd.camera = camera;
   const byId = new Map(residents.map((r) => [r.id, r]));
 
   /* Launched cats wear a little gold coin that turns above their heads (one instanced mesh). */
@@ -474,6 +475,31 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   frame();
   startLoop();
 
+  /* ── Each cat's own model, after the first picture is up: nearest (and in view) first ── */
+  const ownLoad = (async () => {
+    await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
+    let index;
+    try { const res = await fetch(OWN.index); if (!res.ok) return; index = await res.json(); } catch { return; }
+    const want = Object.entries(index?.cats || {}).filter(([id]) => sim.byId(id));
+    const frustum = new THREE.Frustum(), pv = new THREE.Matrix4(), p = new THREE.Vector3();
+    const view = () => frustum.setFromProjectionMatrix(pv.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+    const score = (id) => { const c = sim.byId(id); herd.midPoint(c, p); return p.distanceTo(camera.position) + (frustum.containsPoint(p) ? 0 : 60); };
+    const load = (f) => loader.loadAsync(`assets/models/cats/${f}.glb`).then((g) => g.scene).catch(() => null);
+    // The far copies first (small), a few at a time, then the full models, re-sorted as the view moves.
+    for (const tag of ["-lo", ""]) {
+      const queue = want.slice();
+      const worker = async () => {
+        while (queue.length) {
+          view(); queue.sort(([a], [b]) => score(a) - score(b));
+          const [id, dims] = queue.shift();
+          const root = await load(id + tag);
+          if (root) { herd.attachOwn(id, tag ? { lo: root, dims } : { hi: root, dims }); requestRender(); }
+        }
+      };
+      await Promise.all([worker(), worker(), worker()]);
+    }
+  })();
+
   const api = {
     choose(id, opts) { choose(id, opts); if (!running) { requestAnimationFrame(tick); } },
     setInset(right, bottom) { setInset(right, bottom); requestRender(); if (!running) requestAnimationFrame(tick); },
@@ -492,7 +518,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   if (debug) {
     // For screenshots and checks: step the garden forward without waiting, and read the draw stats.
     Object.assign(api, {
-      sim, renderer, scene, camera, controls, critters, herd,
+      sim, renderer, scene, camera, controls, critters, herd, ownLoad,
       advance(seconds, dt = 1 / 30) { for (let t = 0; t < seconds; t += dt) { critters.update(dt, still); sim.update(dt); } sky.update(seconds, camera, still); ambientTime += seconds; frame(); },
       stats() {
         // three counts only the main pass unless the counters are reset by hand before the shadow pass.
@@ -504,7 +530,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
         renderer.info.autoReset = true;
         frame();
         const i = renderer.info.render;
-        return { calls: i.calls, triangles: i.triangles, callsWithShadowPass: all.calls, trianglesWithShadowPass: all.triangles, cats: sim.cats.length, catTriangles: herd.triangles(), frameCpuMs: +ms.toFixed(2), programs: renderer.info.programs?.length, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures, pixelRatio: renderer.getPixelRatio(), level: perf.level, census: sim.census() };
+        return { calls: i.calls, triangles: i.triangles, callsWithShadowPass: all.calls, trianglesWithShadowPass: all.triangles, cats: sim.cats.length, catTriangles: herd.triangles(), frameCpuMs: +ms.toFixed(2), programs: renderer.info.programs?.length, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures, pixelRatio: renderer.getPixelRatio(), level: perf.level, census: sim.census(), ownModels: herd.ownCounts() };
       },
       catsOnScreen() {
         return sim.cats.map((c) => { herd.midPoint(c, tmp).project(camera); return { id: c.id, x: (tmp.x * 0.5 + 0.5) * canvas.clientWidth, y: (-tmp.y * 0.5 + 0.5) * canvas.clientHeight, z: tmp.z, doing: c.doing, pose: c.pose }; });

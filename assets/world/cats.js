@@ -69,6 +69,7 @@ const SAY = {
   birdGo: "Creeping up on a bird", swat: "Swat!", birdGone: "Watching the bird fly off",
   pondGo: "Off to the pond", pond: "Watching the pond", dab: "Dabbing at the water",
   invite: "Inviting a friend to play", wait: "Waiting its turn",
+  sniff: "Sniffing about", knead: "Kneading before a nap", greet: "Saying hello, tail up", scratch: "Sharpening its claws",
 };
 
 /**
@@ -270,6 +271,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   function sleepSteps(cat, say, sleepFor) {
     return [
       { type: "circle", turns: cat.rnd.range(0.9, 1.5), doing: SAY.settle },
+      // Kneading the spot first, paw after paw, as cats do.
+      { type: "hold", pose: "sit", anim: "knead", dur: dur(cat, 1.6, 3.4), doing: SAY.knead },
       { type: "hold", pose: "loaf", anim: "breathe", dur: dur(cat, 2.5, 5.5), doing: SAY.settle },
       { type: "hold", pose: "sleep", anim: "sleep", dur: sleepFor, doing: say, restore: { sleep: 1.4 / sleepFor } },
       { type: "hold", pose: "stretch", anim: "stretch", dur: 1.9, doing: SAY.wake, then: () => { cat.needs.sleep = Math.min(cat.needs.sleep, 0.08); } },
@@ -366,6 +369,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         steps.push(
           { type: "go", x: T.ground.x, z: T.ground.z, speed: SPEED.purpose, arrive: 0.12, doing: SAY.climbGo },
           { type: "turn", yaw: yawTo(T.low.x - T.ground.x, T.low.z - T.ground.z), doing: SAY.climb },
+          // Now and then a good scratch on the post before going up.
+          ...(rnd.chance(0.45) ? [{ type: "hold", pose: "stretch", anim: "scratch", dur: dur(cat, 2, 3.6), doing: SAY.scratch }] : []),
           { type: "hold", pose: "loaf", anim: "crouch", dur: 0.55, doing: SAY.climb },
           { type: "hop", x: T.low.x, z: T.low.z, y: T.low.y, dur: 0.62, apex: 0.45, doing: SAY.climb, then: () => { cat.perch = { id: T.low.id, ground: T.ground, y: T.low.y }; } },
           { type: "hold", pose: "sit", anim: "look", dur: dur(cat, 7, 15), doing: SAY.perch, restore: { explore: 0.05 } },
@@ -486,6 +491,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         const lead = nearest(cat, ls);
         act.lead = lead;
         act.reason = `Following ${lead.name}`;
+        // A hello first: face the friend with the tail straight up.
+        steps.push({ type: "face", target: () => lead, doing: SAY.greet }, { type: "hold", pose: "walk", anim: "greet", dur: dur(cat, 1.2, 2.2), doing: SAY.greet });
         steps.push({ type: "follow", lead, until: dur(cat, 9, 17), doing: act.reason });
         steps.push({ type: "call", fn: () => { cat.needs.social = 0.08; } });
         break;
@@ -511,6 +518,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         cat.dest = s;
         act.reason = SAY.wander;
         steps.push({ type: "go", x: s.x, z: s.z, speed: SPEED.stroll, arrive: 0.25, doing: SAY.wander });
+        // Nose down to see who has been by.
+        if (rnd.chance(0.55)) steps.push({ type: "hold", pose: "walk", anim: "sniff", dur: dur(cat, 1.4, 3.2), doing: SAY.sniff, restore: { explore: 0.05 } });
         if (rnd.chance(0.6)) steps.push({ type: "hold", pose: "sit", anim: "look", dur: dur(cat, 3, 8), doing: SAY.look, restore: { explore: 0.06 } });
         else steps.push({ type: "hold", pose: "loaf", anim: "breathe", dur: dur(cat, 5, 11), doing: SAY.rest, restore: { explore: 0.04, sleep: 0.004 } });
         break;

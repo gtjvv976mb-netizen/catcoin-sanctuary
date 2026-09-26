@@ -21,6 +21,7 @@ import * as THREE from "three";
 import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
 import { AMBIENT } from "./ambient.js";
+import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit } from "./catrig.js";
 
 /** Pose ids for the shader's procedural animation. */
 const POSE_ID = { walk: 0, sit: 1, loaf: 2, stretch: 3, sleep: 4 };
@@ -396,6 +397,87 @@ function coatShader(material, md) {
   material.needsUpdate = true;
 }
 
+/* ── Cats with their own model ────────────────────────────────────────────
+   A cat whose picture was made into its own model (assets/models/cats/<TICKER>.glb, listed in
+   assets/models/cats/index.json) is drawn from that model, in its own colours, instead of the
+   tinted shared ones. Every such model is a cat standing on all fours; catrig.js rigs it at load
+   (a quadruped skeleton found from its shape, skin weights) and gives it a set of clips (walk,
+   trot, run, stalk, sit, loaf, sleep, groom, stretch, wiggle, pounce, eat, knead, scratch, ...)
+   that an AnimationMixer crossfades between as the cat's activity changes (clipFor, below).
+   Walking clips are stepped by the distance walked, so paws don't slide. Near the camera a cat is
+   drawn from the full model, far away from a lighter copy (<TICKER>-lo.glb) on the same
+   skeleton; only the nearest OWN.maxHi at a time get the full one, and far cats' animation is
+   updated less often. */
+
+export const OWN = { maxHi: 10, hiDist: 16, index: "assets/models/cats/index.json", fade: 0.3 };
+/** How tall a cat stands in each pose, as a share of its standing height (for its tag and the camera). */
+const OWN_HEIGHT = { walk: 1, sit: 1.05, stretch: 0.8, loaf: 0.62, sleep: 0.45 };
+
+/** The scale from a normalized model (1 unit tall, standing) to the garden's cat size. */
+export function ownScale(dims) {
+  return (CAT.size * 0.95) / (dims.height || 1);
+}
+
+/** Which clip a cat plays now, from its pose and what it is doing (cats.js leaves both on it). */
+export function clipFor(cat) {
+  const act = cat.act, step = act && act.steps ? act.steps[act.i] : null;
+  const anim = cat.clip || (step && step.type === "hold" ? step.anim : null);
+  if (cat.pose === "walk") {
+    const v = cat.speed || 0;
+    if (v > 2.2) return "run";
+    if (v > 1.4) return "trot";
+    if (v > 0.02 && v < 0.55 && step && step.type === "chase") return "stalk";
+    return v > 0.02 ? "walk" : anim === "sniff" ? "sniff" : anim === "greet" ? "greet" : "stand";
+  }
+  if (cat.pose === "sleep") return "sleep";
+  if (cat.pose === "stretch") {
+    if (step && step.type === "hop") return "pounce";
+    if (anim === "wiggle") return "wiggle";
+    if (anim === "scratch") return "scratch";
+    return "stretch";
+  }
+  const map = { eat: "eat", drink: "eat", groom: "groom", pant: "pant", look: "look", watch: "look", watchUp: "look", knead: "knead", crouch: "crouch", sniff: "sniff", greet: "greet", scratch: "scratch", dab: "loaf", roll: "loaf" };
+  if (anim && map[anim]) return map[anim];
+  return cat.pose === "loaf" ? "loaf" : "sit";
+}
+
+function ownMaterial(material, u) {
+  material.metalness = 0; material.roughness = Math.max(0.75, material.roughness ?? 0.85);
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, { uHl: u.hl });
+    shader.fragmentShader = "uniform float uHl;\n" + shader.fragmentShader.replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
+      {
+        // The chosen cat's warm rim, and a soft rim for every cat so it stands out on the grass.
+        float nv = 1.0 - clamp(dot(normalize(normal), normalize(vViewPosition)), 0.0, 1.0);
+        totalEmissiveRadiance += uHl * pow(nv, 4.0) * 0.55 * vec3(1.0, 0.72, 0.38);
+        totalEmissiveRadiance += pow(nv, 2.5) * 0.3 * (diffuseColor.rgb * 0.6 + vec3(0.35, 0.3, 0.22));
+      }`);
+  };
+  material.customProgramCacheKey = () => "cat-own";
+  material.needsUpdate = true;
+}
+
+/** The first mesh under a loaded model as plain float attributes in the model's own space. */
+export function flatMesh(root) {
+  root.updateMatrixWorld(true);
+  let mesh = null;
+  root.traverse((o) => { if (o.isMesh && !mesh) mesh = o; });
+  if (!mesh) return null;
+  const src = mesh.geometry, P = src.attributes.position, N = src.attributes.normal, v = new THREE.Vector3();
+  const nm = new THREE.Matrix3().getNormalMatrix(mesh.matrixWorld);
+  const pos = new Float32Array(P.count * 3), nrm = new Float32Array(P.count * 3);
+  for (let i = 0; i < P.count; i++) {
+    v.fromBufferAttribute(P, i).applyMatrix4(mesh.matrixWorld); pos.set([v.x, v.y, v.z], i * 3);
+    if (N) { v.fromBufferAttribute(N, i).applyMatrix3(nm).normalize(); nrm.set([v.x, v.y, v.z], i * 3); }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  if (N) g.setAttribute("normal", new THREE.BufferAttribute(nrm, 3)); else g.computeVertexNormals();
+  if (src.attributes.uv) g.setAttribute("uv", src.attributes.uv);
+  if (src.index) g.setIndex(src.index);
+  return { geometry: g, material: mesh.material, pos };
+}
+
 /* ── The herd ─────────────────────────────────────────────────────────── */
 
 const _m = new THREE.Matrix4(), _t = new THREE.Matrix4(), _r = new THREE.Matrix4(), _c = new THREE.Color();
@@ -460,6 +542,11 @@ export class CatHerd {
     this.lookup = new Map(); // InstancedMesh → [cat per instance]
     this.coats = coats;
     this.highlight = new Map(); // cat id → 0..1
+    this.scene = scene;
+    this.blobShadows = blobShadows;
+    this.own = new Map(); // cat id → { group, hi, lo, dims, s, u }
+    this.ownMeshes = []; // [mesh, cat] for picking
+    this.camera = null; // set by the world, for the near/far choice
     const perModel = { cat: 0, ginger: 0 };
     for (const c of sim.cats) perModel[c.model]++;
     this.byKey = {};
@@ -504,10 +591,124 @@ export class CatHerd {
     }
   }
 
+  /**
+   * Gives a cat its own model. `lo` (the far copy) may come first and `hi` later, or both at once;
+   * either may be null. `dims` is the model's { len, height, width } from index.json.
+   */
+  attachOwn(catId, { hi = null, lo = null, dims }) {
+    const cat = this.sim.byId(catId);
+    if (!cat) return false;
+    let o = this.own.get(catId);
+    const add = (root, tag) => {
+      const f = flatMesh(root);
+      if (!f) return null;
+      if (!o) {
+        const rig = findRig(f.pos), sk = buildSkeleton(rig);
+        const group = new THREE.Group();
+        group.name = `cat ${catId}`;
+        group.matrixAutoUpdate = false;
+        group.add(sk.root);
+        this.scene.add(group);
+        const mixer = new THREE.AnimationMixer(sk.root);
+        o = { group, hi: null, lo: null, dims, s: ownScale(dims), rig, sk, mixer, clips: makeClips(rig), actions: {}, clip: null, u: { hl: { value: 0 } }, lastT: 0 };
+        o.perUnit = cyclesPerUnit(rig, o.s);
+        this.own.set(catId, o);
+      }
+      const { index, weight } = skinWeights(f.pos, o.rig, o.sk);
+      f.geometry.setAttribute("skinIndex", index);
+      f.geometry.setAttribute("skinWeight", weight);
+      f.geometry.computeBoundingSphere();
+      const m = new THREE.SkinnedMesh(f.geometry, f.material);
+      m.bind(o.sk.skeleton, new THREE.Matrix4());
+      m.name = tag;
+      m.castShadow = !this.blobShadows; m.receiveShadow = true;
+      m.frustumCulled = false; // bones move it about; the group is culled by distance instead
+      if (m.material.map) m.material.map.anisotropy = 4;
+      ownMaterial(m.material, o.u);
+      m.visible = false;
+      o.group.add(m);
+      this.ownMeshes.push([m, cat]);
+      return m;
+    };
+    if (lo && !o?.lo) { const m = add(lo, "far"); if (m) o.lo = m; }
+    if (hi && !o?.hi) { const m = add(hi, "full"); if (m) o.hi = m; }
+    return !!o;
+  }
+
+  /** Plays `name` on a cat's mixer, crossfading from what it was doing. */
+  playClip(o, name, fade = OWN.fade) {
+    if (o.clip === name) return o.actions[name];
+    const clip = o.clips[name] || o.clips.stand;
+    let a = o.actions[name];
+    if (!a) {
+      a = o.actions[name] = o.mixer.clipAction(clip);
+      if (clip.userData?.loop === false) { a.setLoop(THREE.LoopOnce, 1); a.clampWhenFinished = true; }
+    }
+    a.reset().setEffectiveWeight(1).play();
+    const prev = o.clip && o.actions[o.clip];
+    if (prev && fade > 0) prev.crossFadeTo(a, fade, false); else if (prev) prev.stop();
+    if (prev) a.time = ["walk", "trot", "run", "stalk"].includes(name) && ["walk", "trot", "run", "stalk"].includes(o.clip) ? prev.time : a.time;
+    o.clip = name;
+    return a;
+  }
+
+  /** The size a cat is drawn at, for its tag and the camera: its own model's when it has one. */
+  dimsOf(cat) {
+    const o = this.own.get(cat.id);
+    if (o) return { len: (o.dims.len || 1.2) * o.s, height: o.s * (o.dims.height || 1) * (OWN_HEIGHT[cat.pose] || 1), width: (o.dims.width || 0.5) * o.s };
+    return this.models[cat.model][cat.pose];
+  }
+
   /** Writes every cat's matrix (and, when a slot changes hands, its coat) into the mesh for its pose. */
   update() {
     for (const im of this.meshes) { im.count = 0; this.lookup.get(im).length = 0; im.userData.coatDirty = false; }
+    // Which own-model cats get the full model: the nearest few within reach of the camera.
+    let near = null;
+    if (this.own.size) {
+      const cam = this.camera?.position;
+      const list = [];
+      for (const [id, o] of this.own) { const c = this.sim.byId ? this.sim.byId(id) : null; if (c) list.push([cam ? Math.hypot(c.x - cam.x, c.z - cam.z) : 0, id]); }
+      list.sort((a, b) => a[0] - b[0]);
+      near = new Set(list.filter(([d], i) => i < OWN.maxHi && d < OWN.hiDist).map(([, id]) => id));
+    }
+    const T = AMBIENT.uTime.value;
     for (const cat of this.sim.cats) {
+      const o = this.own.get(cat.id);
+      if (o && (o.hi || o.lo)) {
+        const md = this.dimsOf(cat);
+        // Place it: position and heading, the hop's pitch, the sun-roll's roll. The clips do the rest.
+        const a = cat.anim;
+        _m.makeRotationY(cat.yaw).setPosition(cat.x, cat.y, cat.z);
+        const hop = cat.pose === "stretch" && a.pitch && !a.pivot;
+        if (hop) _m.multiply(_r.makeRotationZ(a.pitch));
+        if (a.roll && a.rollY) _m.multiply(_t.makeTranslation(0, a.rollY * md.height, 0)).multiply(_r.makeRotationX(a.roll)).multiply(_t.makeTranslation(0, -a.rollY * md.height, 0));
+        _m.multiply(_t.makeScale(o.s, o.s, o.s));
+        o.group.matrix.copy(_m);
+        o.group.matrixWorldNeedsUpdate = true;
+        const useHi = o.hi && (!o.lo || near.has(cat.id));
+        if (o.hi) o.hi.visible = !!useHi;
+        if (o.lo) o.lo.visible = !useHi;
+        // Animate: the clip for what it is doing; walking clips follow the ground covered.
+        const name = this.still ? (cat.pose === "sleep" ? "sleep" : cat.pose === "loaf" ? "loaf" : cat.pose === "walk" ? "stand" : "sit") : clipFor(cat);
+        const act = this.playClip(o, name, this.still ? 0 : OWN.fade);
+        const gaitClip = name === "walk" || name === "trot" || name === "run" || name === "stalk";
+        const dist = (cat.stride || 0) / 5.2;
+        if (gaitClip) { act.timeScale = 0; act.time = ((dist * o.perUnit * (name === "run" ? 0.55 : name === "trot" ? 0.8 : name === "stalk" ? 1.3 : 1)) % 1) * act.getClip().duration; }
+        else act.timeScale = 1;
+        // Far cats step their animation less often (every third frame).
+        const now = T;
+        const every = useHi ? 0 : 0.05;
+        const dt = Math.min(0.1, Math.max(0, now - o.lastT));
+        if (this.still) { o.mixer.update(0); o.lastT = now; }
+        else if (dt >= every) { o.mixer.update(dt); o.lastT = now; }
+        o.u.hl.value = this.highlight.get(cat.id) || 0;
+        if (this.blobs) {
+          const k = [md.len * 0.8, md.width * 1.1];
+          _t.makeRotationY(cat.yaw).setPosition(cat.x, cat.y + 0.02, cat.z).multiply(_r.makeScale(k[0], 1, k[1]));
+          this.blobs.setMatrixAt(cat.index, _t);
+        }
+        continue;
+      }
       const im = this.byKey[`${cat.model}-${cat.pose}`];
       const md = this.models[cat.model][cat.pose];
       this.matrixFor(cat, md, _m);
@@ -565,20 +766,24 @@ export class CatHerd {
 
   /** The cat under a ray, if any. */
   pick(raycaster) {
-    const hits = raycaster.intersectObjects(this.meshes.filter((m) => m.visible), false);
-    for (const h of hits) { const cat = this.lookup.get(h.object)?.[h.instanceId]; if (cat) return cat; }
+    const own = this.ownMeshes.filter(([m]) => m.visible).map(([m]) => m);
+    const hits = raycaster.intersectObjects([...this.meshes.filter((m) => m.visible), ...own], false);
+    for (const h of hits) {
+      const cat = h.instanceId !== undefined ? this.lookup.get(h.object)?.[h.instanceId] : this.ownMeshes.find(([m]) => m === h.object)?.[1];
+      if (cat) return cat;
+    }
     return null;
   }
 
   /** A point just above the cat's head, for the tag that follows it. */
   headPoint(cat, out) {
-    const md = this.models[cat.model][cat.pose];
+    const md = this.dimsOf(cat);
     return out.set(cat.x, cat.y + md.height + 0.2, cat.z);
   }
 
   /** The middle of the cat, for "nearest cat to a tap" picking and for the camera to look at. */
   midPoint(cat, out) {
-    const md = this.models[cat.model][cat.pose];
+    const md = this.dimsOf(cat);
     return out.set(cat.x, cat.y + md.height * 0.5, cat.z);
   }
 
@@ -586,6 +791,14 @@ export class CatHerd {
   triangles() {
     let n = 0;
     for (const im of this.meshes) if (im.visible) n += (im.geometry.index ? im.geometry.index.count / 3 : im.geometry.attributes.position.count / 3) * im.count;
+    for (const o of this.own.values()) for (const m of [o.hi, o.lo]) if (m?.visible) n += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
     return n;
+  }
+
+  /** How many cats are drawn from their own model, and how many of those at full detail. */
+  ownCounts() {
+    let full = 0;
+    for (const o of this.own.values()) if (o.hi?.visible) full++;
+    return { own: this.own.size, full };
   }
 }
