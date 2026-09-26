@@ -72,7 +72,7 @@ test("backlog: the seeded record marks every existing cat backlog, and a run tak
   for (const c of PLANNED.cats) assert.ok(["backlog", "posted", "queued", "failed", "held"].includes(seeded.cats[c.ticker]?.status), c.ticker);
   const cfg = read("data/announce-config.json");
   assert.equal(typeof cfg.dryRun, "boolean");
-  assert.equal(pick(CATS, seeded, { ...cfg, perRun: 3, backlogPerRun: 2 }).length, 2);
+  assert.equal(pick(CATS, seeded, { ...cfg, perRun: 3, announceBacklog: true, backlogPerRun: 2 }).length, 2);
   assert.equal(pick(CATS, seeded, { ...cfg, announceBacklog: false }).length, 0);
   const oneNew = structuredClone(seeded); delete oneNew.cats[CATS[5].key];
   const p = pick(CATS, oneNew, { perRun: 3, announceBacklog: true, backlogPerRun: 1 });
