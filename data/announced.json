@@ -1,374 +1,379 @@
 {
- "note": "Which cats have been announced on X (@catcosanctuary), by site id (planned ticker, or mint for an unplanned adopted cat). backlog: existed before announcing began, announced a few a run when announce-config.json has announceBacklog: true. queued: drafted into announce-queue.json for posting by hand. posting/posted: sent (ids are the X post ids). failed: retried up to 3 times. needs_review: a draft broke a content rule; fix the data or post by hand, then set posted. Written by scripts/announce.mjs.",
- "cats": {
-  "PATCHPAW": {
-   "status": "posted",
-   "at": "2026-09-26T06:01:02.204Z",
-   "ids": [
-    "2103726517641474167",
-    "2103726519784718598"
-   ],
-   "attempts": 1
-  },
-  "WHISK100": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "INGOTLOAF": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SNOWCURL": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SOCKFOOT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "ROSETTE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "JELLIECAT": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "MOMOTHECAT": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "LEOTHELION": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "COUCHCAP": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "MIGGLES": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "PEWTER": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "TRINKETCAT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "TUPPENCE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "WARMSPOT": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "SKEINKIT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SAVEPAWS": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "EVERLOOP": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "MILKWEED": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "CAMTHECAT": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "OLIVIACAT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "UPDATECAT": {
-   "status": "backlog",
-   "since": "2026-09-26"
-  },
-  "TRILLBY": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "LATCHKEY": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "MEMOPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "GIMBALPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "CHIK": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "KEEPSAKE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "PINROW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "COOPERCAT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SAFFWHISK": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "NOTEPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "APOTHECAT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "COBBLEPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SCUFFPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "KERNELPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "TREADPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "COWARDLION": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "GLINTPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "HUBBUB": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "BOXWOOD": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "LIDNAP": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "PAWPOST": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "TALLYSPOT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "VELVETPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "PRISMPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "TARTANPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "BURLYPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SUNSTRETCH": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "AMRCAT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "PEPPERCAT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "KIOSKPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SANDSTEP": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "WAYBILL": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "WHIRRPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "WINDSOCK": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "VIGNETPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "CANDLEWICK": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "TOMRUTGERS": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "LACQUER": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "RUBYCAT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SORRELPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SUGARSOOT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "GRIDDLE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "ROOKIEPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "CORSAGE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "RAFTERPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "UMBERPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "PUMICE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "JITTERPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "STUBTAIL": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "CASENAP": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "PAPRIKA": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SNUGPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "MITTENSCAT": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "AMBERDROP": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "DROWSEPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "CURFEWPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "LICHENPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "RUSTLEPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "ICICLEPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "RIMESTRIPE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "CABLETAIL": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "MILLRACE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "PARLORPUFF": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SQUINTPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "COTTAPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "HOVERPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "HUNCHPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "SILKSTRIPE": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
-  },
-  "KNITPAW": {
-   "status": "held",
-   "reason": "proof does not show or name a cat"
+  "note": "Which cats have been announced on X (@catcosanctuary), by site id (planned ticker, or mint for an unplanned adopted cat). backlog: existed before announcing began, announced a few a run when announce-config.json has announceBacklog: true. queued: drafted into announce-queue.json for posting by hand. posting/posted: sent (ids are the X post ids). failed: retried up to 3 times. needs_review: a draft broke a content rule; fix the data or post by hand, then set posted. Written by scripts/announce.mjs.",
+  "cats": {
+    "PATCHPAW": {
+      "status": "posted",
+      "at": "2026-09-26T06:01:02.204Z",
+      "ids": [
+        "2103726517641474167",
+        "2103726519784718598"
+      ],
+      "attempts": 1
+    },
+    "WHISK100": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "INGOTLOAF": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SNOWCURL": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SOCKFOOT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "ROSETTE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "JELLIECAT": {
+      "status": "posted",
+      "at": "2026-09-26T06:03:57.611Z",
+      "ids": [
+        "2103727253985079789",
+        "2103727255511769257"
+      ],
+      "attempts": 1
+    },
+    "MOMOTHECAT": {
+      "status": "backlog",
+      "since": "2026-09-26"
+    },
+    "LEOTHELION": {
+      "status": "backlog",
+      "since": "2026-09-26"
+    },
+    "COUCHCAP": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "MIGGLES": {
+      "status": "backlog",
+      "since": "2026-09-26"
+    },
+    "PEWTER": {
+      "status": "backlog",
+      "since": "2026-09-26"
+    },
+    "TRINKETCAT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "TUPPENCE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "WARMSPOT": {
+      "status": "backlog",
+      "since": "2026-09-26"
+    },
+    "SKEINKIT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SAVEPAWS": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "EVERLOOP": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "MILKWEED": {
+      "status": "backlog",
+      "since": "2026-09-26"
+    },
+    "CAMTHECAT": {
+      "status": "backlog",
+      "since": "2026-09-26"
+    },
+    "OLIVIACAT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "UPDATECAT": {
+      "status": "backlog",
+      "since": "2026-09-26"
+    },
+    "TRILLBY": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "LATCHKEY": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "MEMOPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "GIMBALPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "CHIK": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "KEEPSAKE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "PINROW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "COOPERCAT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SAFFWHISK": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "NOTEPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "APOTHECAT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "COBBLEPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SCUFFPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "KERNELPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "TREADPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "COWARDLION": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "GLINTPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "HUBBUB": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "BOXWOOD": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "LIDNAP": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "PAWPOST": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "TALLYSPOT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "VELVETPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "PRISMPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "TARTANPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "BURLYPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SUNSTRETCH": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "AMRCAT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "PEPPERCAT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "KIOSKPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SANDSTEP": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "WAYBILL": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "WHIRRPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "WINDSOCK": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "VIGNETPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "CANDLEWICK": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "TOMRUTGERS": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "LACQUER": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "RUBYCAT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SORRELPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SUGARSOOT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "GRIDDLE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "ROOKIEPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "CORSAGE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "RAFTERPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "UMBERPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "PUMICE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "JITTERPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "STUBTAIL": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "CASENAP": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "PAPRIKA": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SNUGPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "MITTENSCAT": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "AMBERDROP": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "DROWSEPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "CURFEWPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "LICHENPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "RUSTLEPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "ICICLEPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "RIMESTRIPE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "CABLETAIL": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "MILLRACE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "PARLORPUFF": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SQUINTPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "COTTAPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "HOVERPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "HUNCHPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "SILKSTRIPE": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    },
+    "KNITPAW": {
+      "status": "held",
+      "reason": "proof does not show or name a cat"
+    }
   }
- }
 }
