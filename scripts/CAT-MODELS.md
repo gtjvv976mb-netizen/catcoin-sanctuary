@@ -88,3 +88,21 @@ index.json marks these cats `hd: true`. What is left is in `scripts/cat-models.q
   `modelIdFor` resolves.
 - Far copies gltfpack cannot bring under budget get `sa_lo: true` (aggressive simplification, `-sa`).
 - `--yaw 180` was needed for BENBUTTON, CHOUPETCAT and CROOKSHNK (long fluffy tails fooled the heading test).
+
+### 2026-09-26 (third run): Hall of Fame, xStock redo, next adoptables
+
+- Hall of Fame: RKC (`red-kitten-crew`) and LEVERCAT (`leveraged-cat`) got HD models from their coin logos. SOMETHING, SC and
+  MASK stay in the queue but are no longer in data/famous.json, so nothing on the page would use them.
+- The 24 xStock cats' Tripo models were redone with the HD method: standing reference from the realistic site portrait,
+  four views, Hunyuan3D v3. The old Tripo job is kept as `prev_model_job`.
+- Adoptable cats 26-90: realistic portrait from the proof photo (or the source page's image when the X post had none,
+  or the research look alone when neither showed the cat), standing reference, four views, Hunyuan3D v3. Two-cat entries
+  (Sushi & Tuna, Cole & Marmalade) and Kuroneko's mother-and-kitten logo are modelled as one cat; Octocat stands on four
+  legs with tentacles for a tail.
+- Most HD cats now pack at `si 0.03, q 70`; the few still over the 800 KB budget were redone at a lower `si`/`q`.
+
+Run result: 60 of 65 new adoptables have HD models. SNOWBALCAT, PUSSBOOCAT, TRIMCAT, TUBBSCAT and SGTTIBBS
+failed twice on Hunyuan and have no model yet. 21 of 24 xStock cats were redone as HD. PATCHPAW, SOCKFOOT and
+COUCHCAP failed twice and keep their Tripo models. MAYORSTUB and SEACAT meshes did not simplify well: MAYORSTUB
+uses si 0.02 with a 1024 texture, and SEACAT's model was generated a second time and uses si 0.015 with a
+1024 texture. SNOWBELCAT needed yaw 180.

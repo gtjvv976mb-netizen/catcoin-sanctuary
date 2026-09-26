@@ -4,28 +4,6 @@
  "credits_per_cat": 16.25,
  "remaining": [
   {
-   "id": "solana-7HgfXftRBBqsYtAEYcqjGLQrNJLL6Tww9ek4rE3Apump",
-   "symbol": "RKC",
-   "name": "Red Kitten Crew",
-   "kind": "famous-61",
-   "marketCapUsd": 1887903,
-   "imageUrl": null,
-   "coingeckoId": "red-kitten-crew",
-   "profile": "red-kitten-crew",
-   "ownerPick": false
-  },
-  {
-   "id": "solana-AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
-   "symbol": "LEVERCAT",
-   "name": "Leveraged Cat",
-   "kind": "famous-61",
-   "marketCapUsd": 1669154,
-   "imageUrl": null,
-   "coingeckoId": "leveraged-cat",
-   "profile": "leveraged-cat",
-   "ownerPick": false
-  },
-  {
    "id": "solana-6kNNgyrdvjkRC8eRGQqx5sLfZG2jTmg3NCFmkX2hYP4j",
    "symbol": "SOMETHING",
    "name": "SOMETHING THE CAT",
@@ -71,5 +49,6 @@
   "APOTHECAT",
   "COBBLEPAW"
  ],
- "note": "Owner 2026-09-26: famous coins Solana only; ring coins removed (Hall of Fame only)"
+ "note": "Owner 2026-09-26: famous coins Solana only; ring coins removed (Hall of Fame only)",
+ "note_2026_09_26_run3": "RKC and LEVERCAT got HD models. SOMETHING, SC and MASK are no longer in data/famous.json (see scripts/archive/famous-removed.json), so no card uses a model for them; they stay here only in case they return."
 }
