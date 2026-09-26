@@ -50,6 +50,8 @@ export const SITE = "https://catcoinsanctuary.com/";
 export const HASHTAGS = ["#catcoin", "#CatsOfX"];
 const LORE_CAPTIONS = (() => { try { return JSON.parse(fs.readFileSync(new URL("../data/lore.json", import.meta.url), "utf8")).cats || {}; } catch { return {}; } })();
 export const LIMIT = 280;
+/** The line a post carries when its in-game shot is attached. */
+export const INGAME_LINE = "🎮 + its in-game look in the garden 🌿";
 export const DEFAULT_CONFIG = Object.freeze({ dryRun: true, perRun: 3, announceBacklog: true, backlogPerRun: 1, spacingMinutes: 15, thread: true });
 const MAX_ATTEMPTS = 3;
 
@@ -134,7 +136,7 @@ export function proofCredit(p) {
 }
 
 /** Draft one cat's thread. Returns { ok, posts: [{ text, image?, link? }], violations }. */
-export function draft(cat, { thread = true } = {}) {
+export function draft(cat, { thread = true, ingame = false } = {}) {
   const link = cardLink(cat.id);
   const company = companyShort(cat.company);
   const owner = cat.adoptable ? (company || cat.name) : company ? `${company}'s ${cat.symbol}` : cat.symbol;
@@ -156,11 +158,12 @@ export function draft(cat, { thread = true } = {}) {
   outer:
   for (const hook of hooks) {
     for (const lore of lores) {
-      for (const tags of [HASHTAGS, HASHTAGS.slice(0, 1)]) {
-        const fixed = [hook, credit, status, link, tags.join(" ")].filter(Boolean);
+      for (const [tags, game] of [[HASHTAGS, ingame], [HASHTAGS.slice(0, 1), ingame], [HASHTAGS, false], [HASHTAGS.slice(0, 1), false]]) {
+        const look = game ? INGAME_LINE : null;
+        const fixed = [hook, credit, look, status, link, tags.join(" ")].filter(Boolean);
         const room = LIMIT - weightedLength(fixed.join("\n")) - 1;
         const loreLine = lore ? clip(lore, room) : "";
-        const text = [hook, loreLine, credit, status, link, tags.join(" ")].filter(Boolean).join("\n");
+        const text = [hook, loreLine, credit, look, status, link, tags.join(" ")].filter(Boolean).join("\n");
         const r = checkPost(text, cited);
         if (r.ok) { first = text; break outer; }
         violations = r.violations;
@@ -198,7 +201,19 @@ export function pick(cats, state, config, queued = new Set()) {
 
 export const RELEASE_SLACK_MINUTES = 5;
 
-/** Is a cat complete and ready to release: a proof, a portrait on disk, a launch kit? */
+/** A cat's in-game shot (scripts/capture-ingame.mjs), relative to the root. */
+export const ingameShot = (key) => `assets/ingame/${key}.jpg`;
+
+/** The images a cat's post carries, as paths on disk: the lore photo (or portrait) first, the in-game shot second. */
+export function postImages(cat, post, root) {
+  const lore = path.join(root, `assets/lore/${cat.key}.webp`);
+  const first = fs.existsSync(lore) ? lore : post?.image && path.join(root, post.image);
+  const game = path.join(root, ingameShot(cat.key));
+  return [first, game].filter((f) => f && fs.existsSync(f));
+}
+
+/** Is a cat complete and ready to release: a proof, a portrait on disk, a launch kit, and its in-game
+ *  shot (assets/ingame/<KEY>.jpg; make it with `node scripts/capture-ingame.mjs KEY`)? */
 export function readiness(cat, { root, kits = {} }) {
   const missing = [];
   if (!cat?.proof?.url) missing.push("proof");
@@ -206,6 +221,7 @@ export function readiness(cat, { root, kits = {} }) {
   const lore = cat && path.join(root, `assets/lore/${cat.key}.webp`);
   if (!((pic && fs.existsSync(pic)) || (lore && fs.existsSync(lore)))) missing.push("portrait");
   if (!kits[cat?.key]?.token) missing.push("kit");
+  if (!(cat && fs.existsSync(path.join(root, ingameShot(cat.key))))) missing.push("ingame");
   return missing;
 }
 
@@ -297,7 +313,7 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
 
   for (const [i, cat] of chosen.entries()) {
     const prev = state.cats[cat.key];
-    const d = draft(cat, { thread: config.thread });
+    const d = draft(cat, { thread: config.thread, ingame: fs.existsSync(path.join(root, ingameShot(cat.key))) });
     const entry = { key: cat.key, name: cat.name, card: cardLink(cat.id), from: prev?.status ?? "new", ok: d.ok, violations: d.violations,
       posts: d.posts.map((p) => ({ text: p.text, length: weightedLength(p.text), image: p.image ?? null, intent: intentLink(p.text) })) };
     summary.drafts.push(entry);
@@ -320,14 +336,13 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
     const ids = [];
     try {
       const [p1, p2] = d.posts;
-      let media = [];
-      const lore = path.join(root, `assets/lore/${cat.key}.webp`);
-      const img = fs.existsSync(lore) ? lore : p1.image && path.join(root, p1.image);
-      if (img && fs.existsSync(img)) {
-        try { media = [await uploadImage(fs.readFileSync(img), /\.png$/i.test(img) ? "image/png" : /\.webp$/i.test(img) ? "image/webp" : "image/jpeg", creds, fetchImpl)]; }
-        // A media-upload refusal (the free X tier and some app setups reject it) must not stop the text post;
-        // if the keys themselves are wrong, the post below fails with the same 401 and the run stops there.
-        catch (e) { log(`::warning::${cat.key}: the portrait did not upload (${e.message}); posting without it.`); }
+      // Lore/real photo first, the in-game look second; a failed upload leaves the post with whatever did upload.
+      // A media-upload refusal (the free X tier and some app setups reject it) must not stop the text post;
+      // if the keys themselves are wrong, the post below fails with the same 401 and the run stops there.
+      const media = [];
+      for (const img of postImages(cat, p1, root)) {
+        try { media.push(await uploadImage(fs.readFileSync(img), /\.png$/i.test(img) ? "image/png" : /\.webp$/i.test(img) ? "image/webp" : "image/jpeg", creds, fetchImpl)); }
+        catch (e) { log(`::warning::${cat.key}: ${path.basename(img)} did not upload (${e.message}); posting without it.`); }
       }
       ids.push(await createPost({ text: p1.text, mediaIds: media }, creds, fetchImpl));
       state.cats[cat.key] = { status: "posted", at: stamp(), ids: [...ids], attempts: state.cats[cat.key].attempts };

@@ -273,6 +273,7 @@ recorded fixtures keep a fixed one.
 | `assets/residents.js`, `assets/collection.js` | Loading and checking the three data files, merging cats with tokens, buy and explorer links, and the stock pairs. |
 | `assets/models/` | The cottage and the cats (glTF). See `PROVENANCE.md`. |
 | `assets/portraits/` | One 512 px portrait per planned cat. |
+| `assets/ingame/` | One 1600 x 900 in-game shot per cat, the second image on its X post (never loaded by the page). |
 | `assets/og-image.jpg`, `favicon.ico`, `assets/icons/` | The sharing picture (a screenshot of the world) and the icons. |
 | `data/planned.json` | Planned cats and the research for every stock pair (built). |
 | `data/collection.json`, `data/collection-state.json` | Proven launches, and the builder's cursor (built hourly). |
@@ -281,6 +282,26 @@ recorded fixtures keep a fixed one.
 | `data/held.json` | Planned cats held back until their picture is redrawn. |
 | `data/cats-info.json` | The sourced research, one entry per stock. |
 | `scripts/` | `build-planned.mjs`, `build-collection.mjs` and their helpers. |
+
+## In-game shots for X posts
+
+Every cat's announcement on X (`scripts/announce.mjs`) carries two pictures: its lore or real photo
+(`assets/lore/<KEY>.webp`, else its portrait) first, and its in-game look, `assets/ingame/<KEY>.jpg`,
+second (with a "🎮 + its in-game look" line when the post has room). If only one exists, that one is
+posted; if an upload fails, the post goes out with whatever uploaded.
+
+For a new cat, take its shot before it is queued:
+
+```sh
+node scripts/capture-ingame.mjs KEY…      # these cats (retakes them)
+node scripts/capture-ingame.mjs           # every postable cat with no shot yet
+```
+
+It serves the site on a free local port, opens it in headless Chromium (Playwright) at `?q=high`,
+flies the camera to each cat with the HUD hidden, waits for its full model and saves a 1600 x 900 JPG
+(about 150 KB). Look at the shot before committing it. A cat in `data/release-queue.json` is not
+released until its shot exists: the release readiness check wants a proof, a portrait, a launch kit
+and the in-game shot.
 
 ## The rules the page keeps
 

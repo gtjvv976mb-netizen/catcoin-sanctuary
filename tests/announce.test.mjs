@@ -5,7 +5,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { ROOT } from "./helpers.mjs";
-import { listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft } from "../scripts/announce.mjs";
+import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft } from "../scripts/announce.mjs";
 import { oauthHeader } from "../scripts/lib/x-api.mjs";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
@@ -187,7 +187,9 @@ function releaseSandbox({ queueKeys, announced, fail = false } = {}) {
   const s = sandbox({ planned, announced: state, config: { dryRun: false, perRun: 1, thread: false }, queue: { lastReleaseAt: null, cats: queueKeys.map((key) => ({ key, approved: true })) } });
   fs.mkdirSync(path.join(s.dir, "assets/portraits"), { recursive: true });
   fs.mkdirSync(path.join(s.dir, "assets/kits"), { recursive: true });
+  fs.mkdirSync(path.join(s.dir, "assets/ingame"), { recursive: true });
   for (const c of cats) fs.writeFileSync(path.join(s.dir, c.portrait), Buffer.from([0xff, 0xd8, 0xff]));
+  for (const c of cats) fs.writeFileSync(path.join(s.dir, `assets/ingame/${c.ticker}.jpg`), Buffer.from([0xff, 0xd8, 0xff]));
   fs.writeFileSync(path.join(s.dir, "assets/kits/kits.json"), JSON.stringify({ cats: Object.fromEntries(cats.map((c) => [c.ticker, { token: `assets/kits/${c.ticker}/token.png` }])) }));
   return { ...s, cats };
 }
@@ -254,6 +256,12 @@ test("release: not while the roster lasts; held, unapproved or incomplete cats w
   assert.deepEqual(readiness(s.cats[3] && listCats({ ...PLANNED, cats: [s.cats[3]] })[0], { root: s.dir, kits: {} }), ["kit"]);
   r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
   assert.equal(r.posted.length, 0);
+  // Missing in-game shot: not ready.
+  s = releaseSandbox({ queueKeys: [keys[3]] });
+  fs.rmSync(path.join(s.dir, `assets/ingame/${keys[3]}.jpg`));
+  assert.deepEqual(readiness(listCats({ ...PLANNED, cats: [s.cats[3]] })[0], { root: s.dir, kits: { [keys[3]]: { token: "x" } } }), ["ingame"]);
+  r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
+  assert.equal(r.posted.length, 0);
   // Not approved.
   s = releaseSandbox({ queueKeys: [keys[3]] });
   const q = s.read("release-queue.json"); q.cats[0].approved = false; fs.writeFileSync(path.join(s.dir, "data/release-queue.json"), JSON.stringify(q));
@@ -272,4 +280,46 @@ test("the shipped release queue and releases file are well formed", () => {
   for (const e of q.cats) assert.equal(typeof e.key, "string");
   const rel = read("data/releases.json");
   assert.ok(Array.isArray(rel.hidden) && Array.isArray(rel.released));
+});
+
+test("in-game shot: a second image after the lore photo, a line in the post if it fits, and a failed upload still posts", async () => {
+  const cat = CATS[0];
+  const planned = { ...PLANNED, cats: PLANNED.cats.filter((c) => c.ticker === cat.key) };
+  const setup = ({ portrait = true, game = true } = {}) => {
+    const s = sandbox({ planned, config: { dryRun: false, perRun: 1, thread: false } });
+    fs.mkdirSync(path.join(s.dir, "assets/portraits"), { recursive: true });
+    fs.mkdirSync(path.join(s.dir, "assets/ingame"), { recursive: true });
+    if (portrait) fs.writeFileSync(path.join(s.dir, planned.cats[0].portrait), Buffer.from([0xff, 0xd8, 0xff, 1]));
+    if (game) fs.writeFileSync(path.join(s.dir, `assets/ingame/${cat.key}.jpg`), Buffer.from([0xff, 0xd8, 0xff, 2]));
+    return s;
+  };
+  // Both: two uploads, portrait first, and the post names the in-game look.
+  let x = fakeX();
+  await run({ root: setup().dir, env: CREDS, fetchImpl: x, ...quiet });
+  let ups = x.calls.filter((c) => c.url.includes("media/upload"));
+  assert.equal(ups.length, 2);
+  let tweet = JSON.parse(x.calls.find((c) => c.url === "https://api.x.com/2/tweets").init.body);
+  assert.equal(tweet.media.media_ids.length, 2);
+  assert.ok(tweet.text.includes(INGAME_LINE));
+  assert.ok(weightedLength(tweet.text) <= LIMIT);
+  // Only the in-game shot: one upload.
+  x = fakeX();
+  await run({ root: setup({ portrait: false }).dir, env: CREDS, fetchImpl: x, ...quiet });
+  assert.equal(x.calls.filter((c) => c.url.includes("media/upload")).length, 1);
+  // No shot: no line.
+  x = fakeX();
+  await run({ root: setup({ game: false }).dir, env: CREDS, fetchImpl: x, ...quiet });
+  tweet = JSON.parse(x.calls.find((c) => c.url === "https://api.x.com/2/tweets").init.body);
+  assert.ok(!tweet.text.includes(INGAME_LINE));
+  assert.equal(tweet.media.media_ids.length, 1);
+  // The second upload fails: the post goes out with the first.
+  x = fakeX({ fail: (url) => (url.includes("media/upload") && x.calls.filter((c) => c.url.includes("media/upload")).length === 2 ? 500 : null) });
+  const r = await run({ root: setup().dir, env: CREDS, fetchImpl: x, ...quiet });
+  assert.equal(r.posted.length, 1);
+  tweet = JSON.parse(x.calls.find((c) => c.url === "https://api.x.com/2/tweets").init.body);
+  assert.equal(tweet.media.media_ids.length, 1);
+});
+
+test("every planned cat still drafts within 280 with the in-game line", () => {
+  for (const c of CATS) { const d = draft(c, { ingame: true }); if (d.ok) assert.ok(weightedLength(d.posts[0].text) <= LIMIT, c.key); }
 });
