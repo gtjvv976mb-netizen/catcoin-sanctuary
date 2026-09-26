@@ -49,6 +49,7 @@
    not launched. Every text reaches the page as data; the page sets it with textContent. */
 
 import { validateCollection, validateWallets, validatePlanned, validateFamous, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
+import { validateAdoptables, adoptableCard } from "./ui/adoptables.js";
 
 const NO_RESEARCH = Object.freeze({
   company: "", realCat: { name: null, who: "", basis: "", linkType: "none", strength: "none", linked: false }, links: [], virality: [], checked: null, disclaimer: "",
@@ -172,7 +173,14 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
     if (f.refused.length && typeof console !== "undefined") console.warn(`${f.refused.length} famous coins were left out`, f.refused);
     famous = f.coins.map(famousCard);
   } catch (e) { if (typeof console !== "undefined") console.warn("The famous cat coins could not be read", e); }
-  return [...stock, ...famous];
+  // The adoptable cats: optional too.
+  let adoptable = [];
+  try {
+    const a = validateAdoptables(await getJson(fetchImpl, new URL("data/adoptables.json", base)), { taken: new Set(planned.cats.map((c) => c.ticker)) });
+    if (a.refused.length && typeof console !== "undefined") console.warn(`${a.refused.length} adoptable cats were left out`, a.refused);
+    adoptable = a.cats.map(adoptableCard);
+  } catch (e) { if (typeof console !== "undefined") console.warn("The adoptable cats could not be read", e); }
+  return [...stock, ...adoptable, ...famous];
 }
 
 /** A famous coin's card: its data/famous.json row, marked as famous. */

@@ -222,7 +222,8 @@ test("page weight: the first view stays within budget", () => {
   assert.ok(total <= 4 * MB, `the first view is ${(total / MB).toFixed(2)} MB (budget 4 MB): ${files.join(", ")}`);
   assert.ok(of(/\.glb$/) <= 2 * MB, "models over 2 MB");
   assert.ok(of(/^assets\/vendor\//) <= 1 * MB, "three.js over 1 MB");
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 480 * 1024, "the page's own scripts over 480 KB");
+  // (Raised from 480 KB for the big HD garden: terrain, grass, trees, water and the finishing pass are all made in code.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 640 * 1024, "the page's own scripts over 640 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
@@ -240,7 +241,7 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
   const mints = new Set(COLLECTION.cats.map((c) => c.mint));
   for (const c of PLANNED.cats) assert.ok(list.some((r) => r.id === c.ticker), `${c.ticker} is in the garden`);
   for (const r of list) {
-    if (r.kind === "famous") continue; // their cards have tests of their own, below
+    if (r.kind === "famous" || r.kind === "adoptable") continue; // their cards have tests of their own, below
     const c = renderCard(r);
     if (r.token.status === "launched") {
       assert.ok(mints.has(r.token.mint), `${r.id}: launched with a mint the hourly check proved`);
@@ -482,7 +483,7 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
   const rows = root.querySelectorAll("button.find-item");
   assert.equal(rows.length, list.length);
   const chips = root.querySelectorAll("button.chip");
-  assert.deepEqual(chips.map((b) => b.textContent).slice(0, 3), ["All", "Adoptable cats", "Hall of Fame"]);
+  assert.deepEqual(chips.map((b) => b.textContent), ["All", "Adoptable cats", "Celebrity", "TV & movies", "Company", "Viral", "Hall of Fame"]);
   const shown = () => root.querySelectorAll("li").filter((li) => !li.hidden).length;
   const famousN = list.filter((r) => r.kind === "famous").length;
   assert.ok(famousN > 0);
@@ -490,9 +491,38 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
   assert.equal(shown(), famousN);
   chips.find((b) => b.textContent === "Adoptable cats").click();
   assert.equal(shown(), list.length - famousN);
+  for (const [chip, cat] of [["Celebrity", "celebrity"], ["TV & movies", "tv-movie"], ["Company", "company"], ["Viral", "viral"]]) {
+    chips.find((b) => b.textContent === chip).click();
+    const n = list.filter((r) => r.kind === "adoptable" && r.category === cat).length;
+    assert.ok(n > 0, chip);
+    assert.equal(shown(), n, chip);
+  }
   chips.find((b) => b.textContent === "All").click();
   assert.equal(shown(), list.length);
   assert.equal(root.querySelector("select.finder-chain-select"), null, "no chain filter: everything is on Solana");
   assert.match(root.querySelector("p.finder-intro").textContent, /in the Hall of Fame: legendary cat coins that already exist/);
 });
 
+
+test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it soon' and the fan-tribute line", async () => {
+  const list = await residents();
+  const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
+  assert.ok(ADOPT.length >= 25);
+  for (const a of ADOPT) {
+    const r = list.find((x) => x.id === a.ticker);
+    assert.ok(r && r.kind === "adoptable", `${a.ticker} is in the garden`);
+    const c = renderCard(r);
+    assert.ok(c.root.querySelector("span.adopt-chip"), `${a.ticker}: category chip`);
+    assert.match(c.text, new RegExp(a.owner.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.ok(c.text.includes(a.story.slice(0, 40)), `${a.ticker}: story`);
+    assert.ok(c.links.some((l) => l.href === a.proof.url && l.text === "View post on X ↗"), `${a.ticker}: X proof`);
+    for (const s of a.sources) assert.ok(c.links.some((l) => l.href === new URL(s.url).href), `${a.ticker}: source ${s.url}`);
+    assert.match(c.text, /Not launched yet — adopt it soon/);
+    assert.match(c.text, /Fan tribute, not affiliated with or endorsed by/);
+    assert.equal(/In loving memory/.test(c.text), a.memorial, `${a.ticker}: memorial line`);
+    if (a.existingCoin) assert.match(c.text, new RegExp(`A small coin already exists: \\$${a.existingCoin.symbol}`));
+    if (!a.portrait) assert.ok(c.root.querySelector(".card-silhouette"), `${a.ticker}: placeholder silhouette`);
+    assert.deepEqual(c.buy, []);
+    assert.ok(!c.links.some((l) => TOKEN_HOSTS.test(l.href)), `${a.ticker}: no token links`);
+  }
+});

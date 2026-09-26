@@ -279,6 +279,7 @@ uniform int uPose;
 uniform vec3 uHead;
 uniform vec3 uTail;
 uniform vec3 uHeadF;
+uniform vec4 uHeadC;
 varying vec4 vAnim;
 varying vec3 vCatPos;
 varying vec3 vCatNrm;
@@ -289,6 +290,7 @@ varying vec4 vCoatD;
 varying vec4 vCoatE;
 varying float vTailD;
 varying vec3 vHeadV;
+varying vec3 vHeadC;
 `;
 
 const FRAG_HEAD = /* glsl */`
@@ -300,6 +302,8 @@ uniform float uGinger;
 uniform float uTime;
 uniform vec3 uHeadF;
 uniform float uTailLen;
+uniform vec4 uHeadC;
+varying vec3 vHeadC;
 varying vec4 vAnim;
 varying vec3 vCatPos;
 varying vec3 vCatNrm;
@@ -432,9 +436,15 @@ vec3 coatMarks(vec3 c, vec3 base, vec3 second, vec3 p, vec3 n, float pm) {
     float m = smoothstep(0.1, 0.16, length(hv)) * (1.0 - smoothstep(0.3, 0.38, length(hv))) * (1.0 - smoothstep(0.1, 0.45, fwd));
     c = mix(c, second * (0.85 + 0.3 * cFbm(s * 18.0)), clamp(m * 1.2, 0.0, 1.0));
   }
-  // A jacket: the torso, not the head, legs or tail.
+  // A jacket: the torso, not the head, legs or tail. The head is kept clear by its own measured
+  // centre and radius (a good way past it: cheeks, ears and the back of the head stay fur), with
+  // the collar a little below the jaw.
   if (vCoatE.w > 0.5) {
-    float torso = smoothstep(0.26, 0.34, p.y / h) * (hasHead ? smoothstep(0.22, 0.28, length(hv)) : 1.0) * (1.0 - step(0.0, vTailD));
+    float hr = max(uHeadC.w * 1.6, 0.3);
+    float headOff = uHeadC.w > 0.0 ? smoothstep(hr, hr + 0.07, length(vHeadC)) : (hasHead ? smoothstep(0.3, 0.38, length(hv)) : 1.0);
+    // …and nothing level with the head nearby: a loafing or sleeping cat's head sits low, close to its back.
+    if (uHeadC.w > 0.0) headOff *= 1.0 - smoothstep(-0.1, -0.04, vHeadC.y) * (1.0 - smoothstep(0.36, 0.44, length(vHeadC.xz)));
+    float torso = smoothstep(0.26, 0.34, p.y / h) * headOff * (1.0 - step(0.0, vTailD));
     c = mix(c, vCoatE.rgb * (0.9 + 0.2 * cNoise(s * 30.0)), torso);
   }
   return c;
@@ -476,6 +486,8 @@ function coatShader(material, md) {
       uHead: { value: md.head },
       uTail: { value: new THREE.Vector3(...TAIL[md.pose]) },
       uHeadF: { value: md.frame ? md.frame.f : new THREE.Vector3(1, 0, 0) },
+      // The head's own centre and radius (headFrame), for keeping a jacket off the head and neck.
+      uHeadC: { value: md.frame ? new THREE.Vector4(md.frame.C.x, md.frame.C.y, md.frame.C.z, md.frame.r) : new THREE.Vector4(0, -9, 0, 0) },
       uTailLen: { value: md.tailLen },
     });
     shader.vertexShader = VERT_HEAD + shader.vertexShader.replace("#include <begin_vertex>", `#include <begin_vertex>
@@ -483,6 +495,7 @@ function coatShader(material, md) {
       vCatNrm = normal;
       vCoatA = aCoatA; vCoatB = aCoatB; vCoatC = aCoatC; vCoatD = aCoatD; vCoatE = aCoatE; vAnim = aAnim;
       vHeadV = uHead.y > -1.0 ? position - uHead : vec3(9.0);
+      vHeadC = uHeadC.w > 0.0 ? position - uHeadC.xyz : vec3(9.0);
       vTailD = (position.x < uTail.x && position.y > uTail.y && position.y < uTail.z) ? uTail.x - position.x : -1.0;
       {
         // Procedural life on top of the posed model: legs that swing, a tail that sways, a head
@@ -715,8 +728,10 @@ export function coatFor(r, index = 0) {
   if (!eyes) eyes = new THREE.Color("#8fb04a");
   // Calico's "base" is its white; a calico sheet usually names the colours, so put white first.
   if (pattern === 3 && base.getHSL({ h: 0, s: 0, l: 0 }).l < 0.7) { const w = new THREE.Color("#f7f3ec"); second = base; base = w; }
-  const hsl = base.getHSL({ h: 0, s: 0, l: 0 });
-  const ginger = pattern === 1 && hsl.h > 0.03 && hsl.h < 0.12 && hsl.s > 0.45 && look.stripe < 0.97 && look.scale === 1;
+  // Ginger (the orange model) is judged on the colour as seen (sRGB): in linear terms a brown tabby's
+  // coat (Red Kitten Crew's #a5845f) reads as saturated orange, and a near-white one as saturated too.
+  const hsl = base.getHSL({ h: 0, s: 0, l: 0 }, THREE.SRGBColorSpace);
+  const ginger = pattern === 1 && hsl.h > 0.03 && hsl.h < 0.12 && hsl.s > 0.45 && hsl.l < 0.8 && look.stripe < 0.97 && look.scale === 1;
   let marks = 0;
   for (const [k, bit] of Object.entries(MARK)) if (look.white?.[k]) marks |= bit;
   const garment = look.garment ? colorOf(look.garment.color) : null;
@@ -736,7 +751,7 @@ export class CatHerd {
    * @param {object} sim      from createSanctuary
    * @param {Map} coats       cat id → coatFor(resident)
    */
-  constructor(scene, models, sim, coats, { blobShadows = false } = {}) {
+  constructor(scene, models, sim, coats, { blobShadows = false, contact = false } = {}) {
     this.models = models;
     this.sim = sim;
     this.meshes = [];
@@ -782,14 +797,16 @@ export class CatHerd {
       }
     }
     this.blobs = null;
-    if (blobShadows) {
+    // A soft blob under each cat: its only shadow on phones (no shadow-map pass for cats there),
+    // and on the other tiers a contact shadow that grounds it where the sun's shadow is too soft.
+    if (blobShadows || contact) {
       const cv = document.createElement("canvas");
       cv.width = cv.height = 64;
       const g = cv.getContext("2d"), grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
       grd.addColorStop(0, "rgba(0,0,0,1)"); grd.addColorStop(0.55, "rgba(0,0,0,0.55)"); grd.addColorStop(1, "rgba(0,0,0,0)");
       g.fillStyle = grd; g.fillRect(0, 0, 64, 64);
       const tex = new THREE.CanvasTexture(cv);
-      this.blobs = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: tex, color: 0x2a3a1a, transparent: true, opacity: 0.32, depthWrite: false }), sim.cats.length);
+      this.blobs = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: tex, color: 0x2a3a1a, transparent: true, opacity: blobShadows ? 0.32 : 0.24, depthWrite: false }), sim.cats.length);
       this.blobs.renderOrder = 1;
       this.blobs.frustumCulled = false;
       this.blobs.name = "cat shadows";
