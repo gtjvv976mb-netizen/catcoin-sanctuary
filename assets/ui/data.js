@@ -206,6 +206,7 @@ function normalizeFamous(e) {
     logo: localPicture(e.logo), portrait: localPicture(e.logo),
     market: { marketCapUsd: num(m.marketCapUsd), liquidityUsd: num(m.liquidityUsd), volume24hUsd: num(m.volume24hUsd), measuredAt: str(m.measuredAt, 40), source: str(m.source, 20) },
     catName: str(e.catName, 120), who: para(e.who, 900), description: para(e.lore, 1200),
+    lorePic: loreOf(e.lorePic),
     loreSource: { kind: str(ls.kind, 20), label: str(ls.label, 80), url: httpsUrl(ls.url) },
     viral,
     x: x && ["x.com", "twitter.com"].includes(new URL(x).hostname) ? x : null,

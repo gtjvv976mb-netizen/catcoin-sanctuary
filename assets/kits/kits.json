@@ -1,0 +1,922 @@
+{
+  "note": "Launch kits built by scripts/build-kits.py; read by assets/ui/adopt.js.",
+  "built": "2026-09-26",
+  "cats": {
+    "AMBERDROP": {
+      "token": "assets/kits/AMBERDROP/token.png",
+      "banner": "assets/kits/AMBERDROP/banner.png",
+      "bannerPlain": "assets/kits/AMBERDROP/banner-plain.png",
+      "tokenSha256": "74f6fe0507fff77b03ada1fecc9081c16ffd2b73df66e72b60b292b7fbfdaf26",
+      "photo": null
+    },
+    "AMRCAT": {
+      "token": "assets/kits/AMRCAT/token.png",
+      "banner": "assets/kits/AMRCAT/banner.png",
+      "bannerPlain": "assets/kits/AMRCAT/banner-plain.png",
+      "tokenSha256": "9eaca141ecc1536d2a5bed262c43fc8455610aa6276dc0fb1a7eaf97f38749c8",
+      "photo": null
+    },
+    "APOTHECAT": {
+      "token": "assets/kits/APOTHECAT/token.png",
+      "banner": "assets/kits/APOTHECAT/banner.png",
+      "bannerPlain": "assets/kits/APOTHECAT/banner-plain.png",
+      "tokenSha256": "5b306ebf01e7c24c10aa57d1f6e9ced54b78ca535b58f2680fd2167a3fdd9c17",
+      "photo": null
+    },
+    "BENBUTTON": {
+      "token": "assets/kits/BENBUTTON/token.png",
+      "banner": "assets/kits/BENBUTTON/banner.png",
+      "bannerPlain": "assets/kits/BENBUTTON/banner-plain.png",
+      "tokenSha256": "53a78aa3aad3aed25474f6251530cd267856e1be316a7db35f8409597cc8bf91",
+      "photo": null
+    },
+    "BOXWOOD": {
+      "token": "assets/kits/BOXWOOD/token.png",
+      "banner": "assets/kits/BOXWOOD/banner.png",
+      "bannerPlain": "assets/kits/BOXWOOD/banner-plain.png",
+      "tokenSha256": "92b4778f0f3d56b9ab839c512fa14423c943d438bd9fb83f66e4c0ff1653ac4a",
+      "photo": null
+    },
+    "BURLYPAW": {
+      "token": "assets/kits/BURLYPAW/token.png",
+      "banner": "assets/kits/BURLYPAW/banner.png",
+      "bannerPlain": "assets/kits/BURLYPAW/banner-plain.png",
+      "tokenSha256": "93d1edf21726da54d821447a8bc1bb038bd46da721b7c9573443c5df84dc21ef",
+      "photo": null
+    },
+    "BUTTERED": {
+      "token": "assets/kits/BUTTERED/token.png",
+      "banner": "assets/kits/BUTTERED/banner.png",
+      "bannerPlain": "assets/kits/BUTTERED/banner-plain.png",
+      "tokenSha256": "2ffc292351ab60e1e263f98d72d01b326900211f330b8307aa17b4cab52b1071",
+      "photo": null
+    },
+    "CABLETAIL": {
+      "token": "assets/kits/CABLETAIL/token.png",
+      "banner": "assets/kits/CABLETAIL/banner.png",
+      "bannerPlain": "assets/kits/CABLETAIL/banner-plain.png",
+      "tokenSha256": "6d80120ee1cc284c89bb49a6d4c305ea7b55ef052929b54df8ef3134fda41fbc",
+      "photo": null
+    },
+    "CAMTHECAT": {
+      "token": "assets/kits/CAMTHECAT/token.png",
+      "banner": "assets/kits/CAMTHECAT/banner.png",
+      "bannerPlain": "assets/kits/CAMTHECAT/banner-plain.png",
+      "tokenSha256": "f9ce2bdb5d978c36df3c58d4291dfef1b54c60bacb6a6b76fd212a8e4fe47c9f",
+      "photo": null
+    },
+    "CANDLEWICK": {
+      "token": "assets/kits/CANDLEWICK/token.png",
+      "banner": "assets/kits/CANDLEWICK/banner.png",
+      "bannerPlain": "assets/kits/CANDLEWICK/banner-plain.png",
+      "tokenSha256": "892337de5699f106ddfc76c0026657df1cf754517e4a1c3f8c0f5c145d6d4d40",
+      "photo": null
+    },
+    "CASENAP": {
+      "token": "assets/kits/CASENAP/token.png",
+      "banner": "assets/kits/CASENAP/banner.png",
+      "bannerPlain": "assets/kits/CASENAP/banner-plain.png",
+      "tokenSha256": "13fec3b9b8a1d7d2521c94b3494ba47d8f11a6fea3a1f08734ad911a779f34d0",
+      "photo": null
+    },
+    "CHESHIRCAT": {
+      "token": "assets/kits/CHESHIRCAT/token.png",
+      "banner": "assets/kits/CHESHIRCAT/banner.png",
+      "bannerPlain": "assets/kits/CHESHIRCAT/banner-plain.png",
+      "tokenSha256": "36e4938a29f09bc0a6fabd13bf39f9013234dc4fd0b19120a7d24a13335c3da0",
+      "photo": null
+    },
+    "CHIK": {
+      "token": "assets/kits/CHIK/token.png",
+      "banner": "assets/kits/CHIK/banner.png",
+      "bannerPlain": "assets/kits/CHIK/banner-plain.png",
+      "tokenSha256": "bda6dd9e1061ef0fd524ac2bba6393ce0dee672f7c435bf1f452ba0c8fa3c6f8",
+      "photo": null
+    },
+    "CHOUPETCAT": {
+      "token": "assets/kits/CHOUPETCAT/token.png",
+      "banner": "assets/kits/CHOUPETCAT/banner.png",
+      "bannerPlain": "assets/kits/CHOUPETCAT/banner-plain.png",
+      "tokenSha256": "f4d863e1379771ded511270b71571d7babc9b32421a676d8c5fa8e05e870e85d",
+      "photo": null
+    },
+    "COBBLEPAW": {
+      "token": "assets/kits/COBBLEPAW/token.png",
+      "banner": "assets/kits/COBBLEPAW/banner.png",
+      "bannerPlain": "assets/kits/COBBLEPAW/banner-plain.png",
+      "tokenSha256": "8ccb1a40d95ca06efbb19d69385a95ffb88ac006c4dda0bdf4227c4154dadea6",
+      "photo": null
+    },
+    "COOPERCAT": {
+      "token": "assets/kits/COOPERCAT/token.png",
+      "banner": "assets/kits/COOPERCAT/banner.png",
+      "bannerPlain": "assets/kits/COOPERCAT/banner-plain.png",
+      "tokenSha256": "b64e94f815438ff0bb9caf4ae0d032cbb810c33c19256bb070b6a86966b9a113",
+      "photo": null
+    },
+    "CORSAGE": {
+      "token": "assets/kits/CORSAGE/token.png",
+      "banner": "assets/kits/CORSAGE/banner.png",
+      "bannerPlain": "assets/kits/CORSAGE/banner-plain.png",
+      "tokenSha256": "3d28298027e7f16e5433645ffcb5d3257dd8b008f890be937ba8e23cd8026062",
+      "photo": null
+    },
+    "COTTAPAW": {
+      "token": "assets/kits/COTTAPAW/token.png",
+      "banner": "assets/kits/COTTAPAW/banner.png",
+      "bannerPlain": "assets/kits/COTTAPAW/banner-plain.png",
+      "tokenSha256": "82dc781cddd59614e3ed7a47a62c812811e09318d0f3f2f87d591d5797514337",
+      "photo": null
+    },
+    "COUCHCAP": {
+      "token": "assets/kits/COUCHCAP/token.png",
+      "banner": "assets/kits/COUCHCAP/banner.png",
+      "bannerPlain": "assets/kits/COUCHCAP/banner-plain.png",
+      "tokenSha256": "f3e2f82babfd33a9e7ea07ff6abbd41f82034d97dcc5c77677dced75b4eaf1db",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/BORG8dyCEAE2568.jpg?name=orig",
+        "handle": "Pusheen",
+        "post": "https://x.com/Pusheen/status/352484675438120961"
+      }
+    },
+    "COWARDLION": {
+      "token": "assets/kits/COWARDLION/token.png",
+      "banner": "assets/kits/COWARDLION/banner.png",
+      "bannerPlain": "assets/kits/COWARDLION/banner-plain.png",
+      "tokenSha256": "0e4f538e9e615ab7be5ac1799d260014dc50d065efc89fe5f07fc1f4b3778fec",
+      "photo": null
+    },
+    "CROOKSHNK": {
+      "token": "assets/kits/CROOKSHNK/token.png",
+      "banner": "assets/kits/CROOKSHNK/banner.png",
+      "bannerPlain": "assets/kits/CROOKSHNK/banner-plain.png",
+      "tokenSha256": "5e61993df63107bca5eff44356688a14ea3c4422a12f5ae22fe149e64a975320",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GWU1ET4W8AE3ikS.jpg?name=orig",
+        "handle": "MuggleNet",
+        "post": "https://x.com/MuggleNet/status/1829927174687670423"
+      }
+    },
+    "CURFEWPAW": {
+      "token": "assets/kits/CURFEWPAW/token.png",
+      "banner": "assets/kits/CURFEWPAW/banner.png",
+      "bannerPlain": "assets/kits/CURFEWPAW/banner-plain.png",
+      "tokenSha256": "01e94b4752804beba7d618bbf3b3f0a945b501c0625c6e6d53552b8ac41e05fc",
+      "photo": null
+    },
+    "DELILAHCAT": {
+      "token": "assets/kits/DELILAHCAT/token.png",
+      "banner": "assets/kits/DELILAHCAT/banner.png",
+      "bannerPlain": "assets/kits/DELILAHCAT/banner-plain.png",
+      "tokenSha256": "9fd183a91151d539d4370deec7345cd95afd78075294ab379afad7843fe69473",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/F2d15NZWwAAoyTF.jpg?name=orig",
+        "handle": "Sothebys",
+        "post": "https://x.com/Sothebys/status/1686446587868758019"
+      }
+    },
+    "DROWSEPAW": {
+      "token": "assets/kits/DROWSEPAW/token.png",
+      "banner": "assets/kits/DROWSEPAW/banner.png",
+      "bannerPlain": "assets/kits/DROWSEPAW/banner-plain.png",
+      "tokenSha256": "1ed97543915aeb554a1601abd23a05893ea56be3ee30e08dffd93428f391ac95",
+      "photo": null
+    },
+    "EVERLOOP": {
+      "token": "assets/kits/EVERLOOP/token.png",
+      "banner": "assets/kits/EVERLOOP/banner.png",
+      "bannerPlain": "assets/kits/EVERLOOP/banner-plain.png",
+      "tokenSha256": "bebbe63a3cad202eae5d62cbaa12176ce15c304396ba5d169f90cfdf70f649a9",
+      "photo": null
+    },
+    "FLERKENCAT": {
+      "token": "assets/kits/FLERKENCAT/token.png",
+      "banner": "assets/kits/FLERKENCAT/banner.png",
+      "bannerPlain": "assets/kits/FLERKENCAT/banner-plain.png",
+      "tokenSha256": "ef69a137f0fca7217b89c2a39c80baab0770d8b4fcc2baa95d16dcfec88987ed",
+      "photo": null
+    },
+    "GIMBALPAW": {
+      "token": "assets/kits/GIMBALPAW/token.png",
+      "banner": "assets/kits/GIMBALPAW/banner.png",
+      "bannerPlain": "assets/kits/GIMBALPAW/banner-plain.png",
+      "tokenSha256": "eb801e0b34ed0a5f0e2960c27312c9ac7ea5d8353643998d41fbb88c1df46050",
+      "photo": null
+    },
+    "GLICAT": {
+      "token": "assets/kits/GLICAT/token.png",
+      "banner": "assets/kits/GLICAT/banner.png",
+      "bannerPlain": "assets/kits/GLICAT/banner-plain.png",
+      "tokenSha256": "bd70c04df685509846f28d61b9b8f8d9342e34955f571c20716bf9f09c488024",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/EdrKYWHXYAAA72q.jpg?name=orig",
+        "handle": "reuterspictures",
+        "post": "https://x.com/reuterspictures/status/1286563165032120320"
+      }
+    },
+    "GLINTPAW": {
+      "token": "assets/kits/GLINTPAW/token.png",
+      "banner": "assets/kits/GLINTPAW/banner.png",
+      "bannerPlain": "assets/kits/GLINTPAW/banner-plain.png",
+      "tokenSha256": "d6e12cfc18a31f8787bb6e71c4e709eaf19dbc653f6faa1688e7a831542f0c0f",
+      "photo": null
+    },
+    "GRIDDLE": {
+      "token": "assets/kits/GRIDDLE/token.png",
+      "banner": "assets/kits/GRIDDLE/banner.png",
+      "bannerPlain": "assets/kits/GRIDDLE/banner-plain.png",
+      "tokenSha256": "e31baea628c6e6598bccaa08fb1a4a868a38c7d34caef99f001f5cc2b5dad676",
+      "photo": null
+    },
+    "HOVERPAW": {
+      "token": "assets/kits/HOVERPAW/token.png",
+      "banner": "assets/kits/HOVERPAW/banner.png",
+      "bannerPlain": "assets/kits/HOVERPAW/banner-plain.png",
+      "tokenSha256": "203aa4a472a293ef32f68e495906f5a28001ae0fd65e2732b7de4452027658ea",
+      "photo": null
+    },
+    "HUBBUB": {
+      "token": "assets/kits/HUBBUB/token.png",
+      "banner": "assets/kits/HUBBUB/banner.png",
+      "bannerPlain": "assets/kits/HUBBUB/banner-plain.png",
+      "tokenSha256": "ae209ca708af00f9f405d74a873b71209d13585fd5c3c9cb0956636555e3917d",
+      "photo": null
+    },
+    "HUNCHPAW": {
+      "token": "assets/kits/HUNCHPAW/token.png",
+      "banner": "assets/kits/HUNCHPAW/banner.png",
+      "bannerPlain": "assets/kits/HUNCHPAW/banner-plain.png",
+      "tokenSha256": "c2037d145deeb16b4cf042685a3b9c89e8647e05d53d5ecc76c4b66454e7bfec",
+      "photo": null
+    },
+    "ICICLEPAW": {
+      "token": "assets/kits/ICICLEPAW/token.png",
+      "banner": "assets/kits/ICICLEPAW/banner.png",
+      "bannerPlain": "assets/kits/ICICLEPAW/banner-plain.png",
+      "tokenSha256": "c71e114edb2599e9893fb76dc2de1df37207f72f1c986cf6a621ce4078a13643",
+      "photo": null
+    },
+    "INGOTLOAF": {
+      "token": "assets/kits/INGOTLOAF/token.png",
+      "banner": "assets/kits/INGOTLOAF/banner.png",
+      "bannerPlain": "assets/kits/INGOTLOAF/banner-plain.png",
+      "tokenSha256": "a03dc01ac49ff10fb32e2f3a87c7e3d042e12948bcff845e57b6b8d804374ce6",
+      "photo": null
+    },
+    "JELLIECAT": {
+      "token": "assets/kits/JELLIECAT/token.png",
+      "banner": "assets/kits/JELLIECAT/banner.png",
+      "bannerPlain": "assets/kits/JELLIECAT/banner-plain.png",
+      "tokenSha256": "adfeb5073126c4294f62b95561ef11d17843526c810fa5492b22ff23e1969090",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/DsIa4loWoAEu_ZE.jpg?name=orig",
+        "handle": "Minecraft",
+        "post": "https://x.com/Minecraft/status/1063522092057067521"
+      }
+    },
+    "JITTERPAW": {
+      "token": "assets/kits/JITTERPAW/token.png",
+      "banner": "assets/kits/JITTERPAW/banner.png",
+      "bannerPlain": "assets/kits/JITTERPAW/banner-plain.png",
+      "tokenSha256": "900b271c2a875beef40393391b834995f554c4c341e870e180b823e3c9d6e93f",
+      "photo": null
+    },
+    "KEEPSAKE": {
+      "token": "assets/kits/KEEPSAKE/token.png",
+      "banner": "assets/kits/KEEPSAKE/banner.png",
+      "bannerPlain": "assets/kits/KEEPSAKE/banner-plain.png",
+      "tokenSha256": "d76eb0ed81b8aa69d9005edb00b4c5591229e9c2bb221476347db1872bf05521",
+      "photo": null
+    },
+    "KERNELPAW": {
+      "token": "assets/kits/KERNELPAW/token.png",
+      "banner": "assets/kits/KERNELPAW/banner.png",
+      "bannerPlain": "assets/kits/KERNELPAW/banner-plain.png",
+      "tokenSha256": "32d148bd67678413fc2ca1a6aa1d481143dd54bbbea5b8bcbb1be0090a1303ae",
+      "photo": null
+    },
+    "KIOSKPAW": {
+      "token": "assets/kits/KIOSKPAW/token.png",
+      "banner": "assets/kits/KIOSKPAW/banner.png",
+      "bannerPlain": "assets/kits/KIOSKPAW/banner-plain.png",
+      "tokenSha256": "592950e3c6bd1a3ab31663b901bb439b062662eb736a9ae528f95079f91d13c6",
+      "photo": null
+    },
+    "KNITPAW": {
+      "token": "assets/kits/KNITPAW/token.png",
+      "banner": "assets/kits/KNITPAW/banner.png",
+      "bannerPlain": "assets/kits/KNITPAW/banner-plain.png",
+      "tokenSha256": "3f2c99522929dad6be1afae9b8e43b4ab96c111679d3b42f0a0a3eb14271cf27",
+      "photo": null
+    },
+    "KPURRY": {
+      "token": "assets/kits/KPURRY/token.png",
+      "banner": "assets/kits/KPURRY/banner.png",
+      "bannerPlain": "assets/kits/KPURRY/banner-plain.png",
+      "tokenSha256": "9a5afd2d057496ecf0e20c79900106152dc6d6fefa97cabc036923daed3eab30",
+      "photo": null
+    },
+    "LACQUER": {
+      "token": "assets/kits/LACQUER/token.png",
+      "banner": "assets/kits/LACQUER/banner.png",
+      "bannerPlain": "assets/kits/LACQUER/banner-plain.png",
+      "tokenSha256": "3c78f315fe7ee50367f5abda54c41eb29f74d53081879929d32112287ece84e9",
+      "photo": null
+    },
+    "LALEO": {
+      "token": "assets/kits/LALEO/token.png",
+      "banner": "assets/kits/LALEO/banner.png",
+      "bannerPlain": "assets/kits/LALEO/banner-plain.png",
+      "tokenSha256": "25d6d9326a4ed8d27599c73d0f803ef895fcc3a6157633cf56123cda0dd02a80",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FLI6NCWaIAAgmOY.jpg?name=orig",
+        "handle": "CloutNewsMedia",
+        "post": "https://x.com/CloutNewsMedia/status/1491318437389672449"
+      }
+    },
+    "LARRY10": {
+      "token": "assets/kits/LARRY10/token.png",
+      "banner": "assets/kits/LARRY10/banner.png",
+      "bannerPlain": "assets/kits/LARRY10/banner-plain.png",
+      "tokenSha256": "618bfc58640950201da433f2b786d2129bfa3ed5c35618deda01d123dd63a58b",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HBMXfUAWsAAM30G.jpg?name=orig",
+        "handle": "Number10cat",
+        "post": "https://x.com/Number10cat/status/2022986489122972146"
+      }
+    },
+    "LATCHKEY": {
+      "token": "assets/kits/LATCHKEY/token.png",
+      "banner": "assets/kits/LATCHKEY/banner.png",
+      "bannerPlain": "assets/kits/LATCHKEY/banner-plain.png",
+      "tokenSha256": "1f74bda53b73957ec2d40b38a2122d84561a71e28af7cc0b26e0f6e7bb13b8a8",
+      "photo": null
+    },
+    "LEOTHELION": {
+      "token": "assets/kits/LEOTHELION/token.png",
+      "banner": "assets/kits/LEOTHELION/banner.png",
+      "bannerPlain": "assets/kits/LEOTHELION/banner-plain.png",
+      "tokenSha256": "a45f5852ffd5cd656ee1cdd7533ff7d36916a9084a6fc4cf34e21c19035e7b28",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/Ev-KI6KVkAEPgNG.jpg?name=orig",
+        "handle": "AmazonMGMStudio",
+        "post": "https://x.com/AmazonMGMStudio/status/1368971461449244673"
+      }
+    },
+    "LICHENPAW": {
+      "token": "assets/kits/LICHENPAW/token.png",
+      "banner": "assets/kits/LICHENPAW/banner.png",
+      "bannerPlain": "assets/kits/LICHENPAW/banner-plain.png",
+      "tokenSha256": "226c8a9fe69ba1821efda794582c5efe9c710ee6292fe90d26f98628e63b0bbd",
+      "photo": null
+    },
+    "LIDNAP": {
+      "token": "assets/kits/LIDNAP/token.png",
+      "banner": "assets/kits/LIDNAP/banner.png",
+      "bannerPlain": "assets/kits/LIDNAP/banner-plain.png",
+      "tokenSha256": "9ecf51490f4d32e67d7d013d8d6698506c0da25b9be81f0a91eef30897c2e4c3",
+      "photo": null
+    },
+    "LILBUBCAT": {
+      "token": "assets/kits/LILBUBCAT/token.png",
+      "banner": "assets/kits/LILBUBCAT/banner.png",
+      "bannerPlain": "assets/kits/LILBUBCAT/banner-plain.png",
+      "tokenSha256": "50911c38158559cea9ab6a0377b7902ca8d625660ed932599ae819691d5f7192",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/EKzFcdZWwAAqPWp.jpg?name=orig",
+        "handle": "IAMLILBUB",
+        "post": "https://x.com/IAMLILBUB/status/1201552296489967621"
+      }
+    },
+    "MARIEAC": {
+      "token": "assets/kits/MARIEAC/token.png",
+      "banner": "assets/kits/MARIEAC/banner.png",
+      "bannerPlain": "assets/kits/MARIEAC/banner-plain.png",
+      "tokenSha256": "467d86b05b194e02283a1cada533f21a36a91e0eb2b9d889ca4003e12a24b178",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/D8bH75fXoAAnzeq.jpg?name=orig",
+        "handle": "360DegreesofDis",
+        "post": "https://x.com/360DegreesofDis/status/1136815814064168960"
+      }
+    },
+    "MARUBOX": {
+      "token": "assets/kits/MARUBOX/token.png",
+      "banner": "assets/kits/MARUBOX/banner.png",
+      "bannerPlain": "assets/kits/MARUBOX/banner-plain.png",
+      "tokenSha256": "a9470dba3117a5c056898a83eb616b0115b5c7e1182245bc7ab923a481365077",
+      "photo": null
+    },
+    "MEMOPAW": {
+      "token": "assets/kits/MEMOPAW/token.png",
+      "banner": "assets/kits/MEMOPAW/banner.png",
+      "bannerPlain": "assets/kits/MEMOPAW/banner-plain.png",
+      "tokenSha256": "d9919eebadd6d3302f033f41c8e22e44bcce78a932f407d821c57817b112803b",
+      "photo": null
+    },
+    "MEOWTHR": {
+      "token": "assets/kits/MEOWTHR/token.png",
+      "banner": "assets/kits/MEOWTHR/banner.png",
+      "bannerPlain": "assets/kits/MEOWTHR/banner-plain.png",
+      "tokenSha256": "f69e245c20562a7ba20dbc2ba144b6b4739a45ce7e0b9c7a726e98518b2367f8",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/DmWV-OeW4AIWU6b.jpg?name=orig",
+        "handle": "NintendoAmerica",
+        "post": "https://x.com/NintendoAmerica/status/1037400199524745216"
+      }
+    },
+    "MEREDITCAT": {
+      "token": "assets/kits/MEREDITCAT/token.png",
+      "banner": "assets/kits/MEREDITCAT/banner.png",
+      "bannerPlain": "assets/kits/MEREDITCAT/banner-plain.png",
+      "tokenSha256": "080056b478f7accc158127f40951f008d441c2daba036813306ae1d87e404a15",
+      "photo": null
+    },
+    "MIGGLES": {
+      "token": "assets/kits/MIGGLES/token.png",
+      "banner": "assets/kits/MIGGLES/banner.png",
+      "bannerPlain": "assets/kits/MIGGLES/banner-plain.png",
+      "tokenSha256": "e11a22940989b3ff97e9d2aef1d1d3bd4c1878dd92c667a93de200520746eeb4",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GStfMGabEAApawq.jpg?name=orig",
+        "handle": "coinbase",
+        "post": "https://x.com/coinbase/status/1813651794930925634"
+      }
+    },
+    "MILKWEED": {
+      "token": "assets/kits/MILKWEED/token.png",
+      "banner": "assets/kits/MILKWEED/banner.png",
+      "bannerPlain": "assets/kits/MILKWEED/banner-plain.png",
+      "tokenSha256": "2888945af3a057d1111b87918f41fd33dfebca0aab3e17207851522073bd7767",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HPhueICWgAAqS92.jpg?name=orig",
+        "handle": "McDonalds",
+        "post": "https://x.com/McDonalds/status/2087539894377664959"
+      }
+    },
+    "MILLRACE": {
+      "token": "assets/kits/MILLRACE/token.png",
+      "banner": "assets/kits/MILLRACE/banner.png",
+      "bannerPlain": "assets/kits/MILLRACE/banner-plain.png",
+      "tokenSha256": "ac5c9fa8698f0f764be79b76cd5bbcc07ad42a2250629bcaf703b260cf79d42b",
+      "photo": null
+    },
+    "MITTENSCAT": {
+      "token": "assets/kits/MITTENSCAT/token.png",
+      "banner": "assets/kits/MITTENSCAT/banner.png",
+      "bannerPlain": "assets/kits/MITTENSCAT/banner-plain.png",
+      "tokenSha256": "674d83e2e4df3d3f70162c6b67206f4695270e1ee57bf9159ed626225e895a60",
+      "photo": null
+    },
+    "MOMOTHECAT": {
+      "token": "assets/kits/MOMOTHECAT/token.png",
+      "banner": "assets/kits/MOMOTHECAT/banner.png",
+      "bannerPlain": "assets/kits/MOMOTHECAT/banner-plain.png",
+      "tokenSha256": "52356dce0eb201833e0fb62adf7a35e89527061a03bec59675ef11fd6e27cd79",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/CwHms69XgAItuDM.jpg?name=orig",
+        "handle": "Google",
+        "post": "https://x.com/Google/status/793168672571416576"
+      }
+    },
+    "NEKOBUS": {
+      "token": "assets/kits/NEKOBUS/token.png",
+      "banner": "assets/kits/NEKOBUS/banner.png",
+      "bannerPlain": "assets/kits/NEKOBUS/banner-plain.png",
+      "tokenSha256": "cefddc07cbee6ea71a5e82a640eb011c7c45e2e7e4ffd604aaefb8ec182f58c7",
+      "photo": null
+    },
+    "NOSTROMCAT": {
+      "token": "assets/kits/NOSTROMCAT/token.png",
+      "banner": "assets/kits/NOSTROMCAT/banner.png",
+      "bannerPlain": "assets/kits/NOSTROMCAT/banner-plain.png",
+      "tokenSha256": "d815f2da30fa809de68abb6afedebc303ef56d1ce26cfef02c1f2ffb986d12b4",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/EPpDHwQW4AYgX5C.jpg?name=orig",
+        "handle": "NECA_TOYS",
+        "post": "https://x.com/NECA_TOYS/status/1223364068402221056"
+      }
+    },
+    "NOTEPAW": {
+      "token": "assets/kits/NOTEPAW/token.png",
+      "banner": "assets/kits/NOTEPAW/banner.png",
+      "bannerPlain": "assets/kits/NOTEPAW/banner-plain.png",
+      "tokenSha256": "b3dbe46906443a2216e006c29a2d6366b2aee05896f00408ac5264cd0b277861",
+      "photo": null
+    },
+    "OLIVIACAT": {
+      "token": "assets/kits/OLIVIACAT/token.png",
+      "banner": "assets/kits/OLIVIACAT/banner.png",
+      "bannerPlain": "assets/kits/OLIVIACAT/banner-plain.png",
+      "tokenSha256": "0c79499e4e9b4e8687ccb850142be82ae0efe0ece743f8b80a621305b141640a",
+      "photo": null
+    },
+    "PAPRIKA": {
+      "token": "assets/kits/PAPRIKA/token.png",
+      "banner": "assets/kits/PAPRIKA/banner.png",
+      "bannerPlain": "assets/kits/PAPRIKA/banner-plain.png",
+      "tokenSha256": "f44dbea1da7c8869c501ebfd2bd4d32d49510530b31cc8e40b06939dae0f9ddb",
+      "photo": null
+    },
+    "PARLORPUFF": {
+      "token": "assets/kits/PARLORPUFF/token.png",
+      "banner": "assets/kits/PARLORPUFF/banner.png",
+      "bannerPlain": "assets/kits/PARLORPUFF/banner-plain.png",
+      "tokenSha256": "2da2edbce4c136906ce769345b525ef4bb272f4e7f5953a4ee61ba3bbf4fcef0",
+      "photo": null
+    },
+    "PATCHPAW": {
+      "token": "assets/kits/PATCHPAW/token.png",
+      "banner": "assets/kits/PATCHPAW/banner.png",
+      "bannerPlain": "assets/kits/PATCHPAW/banner-plain.png",
+      "tokenSha256": "95829076d8c81053a51657861ec71005bad5d451f1216ad6d033a740319077f3",
+      "photo": null
+    },
+    "PAWPOST": {
+      "token": "assets/kits/PAWPOST/token.png",
+      "banner": "assets/kits/PAWPOST/banner.png",
+      "bannerPlain": "assets/kits/PAWPOST/banner-plain.png",
+      "tokenSha256": "19c6487cad5cbe9678db132de2ba876cd7c9c8872aa815fe88df4af94f008f5f",
+      "photo": null
+    },
+    "PEPPERCAT": {
+      "token": "assets/kits/PEPPERCAT/token.png",
+      "banner": "assets/kits/PEPPERCAT/banner.png",
+      "bannerPlain": "assets/kits/PEPPERCAT/banner-plain.png",
+      "tokenSha256": "3a6c999e443b8a2e86a000e858158aee8e82faaa8500544930787b9a62d17a56",
+      "photo": null
+    },
+    "PEWTER": {
+      "token": "assets/kits/PEWTER/token.png",
+      "banner": "assets/kits/PEWTER/banner.png",
+      "bannerPlain": "assets/kits/PEWTER/banner-plain.png",
+      "tokenSha256": "3c53e3964b55640404da38cb94a763ddf6813350d55b2f8cfa8e42dcadc50f4e",
+      "photo": null
+    },
+    "PINROW": {
+      "token": "assets/kits/PINROW/token.png",
+      "banner": "assets/kits/PINROW/banner.png",
+      "bannerPlain": "assets/kits/PINROW/banner-plain.png",
+      "tokenSha256": "e3d078e52257e13d594d4348cc97e716f85ae1ebffb49fffc32bee089cd77cd3",
+      "photo": null
+    },
+    "PRISMPAW": {
+      "token": "assets/kits/PRISMPAW/token.png",
+      "banner": "assets/kits/PRISMPAW/banner.png",
+      "bannerPlain": "assets/kits/PRISMPAW/banner-plain.png",
+      "tokenSha256": "8a80907c323f3c95441873c7848632c43087f0da29d25c98c7ff1736a75aea92",
+      "photo": null
+    },
+    "PUMICE": {
+      "token": "assets/kits/PUMICE/token.png",
+      "banner": "assets/kits/PUMICE/banner.png",
+      "bannerPlain": "assets/kits/PUMICE/banner-plain.png",
+      "tokenSha256": "8c724575b2b1501b0db219ce07f9bfc3648b9f4617c2c4f7343e4ebe8bd5c2c7",
+      "photo": null
+    },
+    "PUSHEENX": {
+      "token": "assets/kits/PUSHEENX/token.png",
+      "banner": "assets/kits/PUSHEENX/banner.png",
+      "bannerPlain": "assets/kits/PUSHEENX/banner-plain.png",
+      "tokenSha256": "987a53f19bec38d5eddd463d319b70911992a0f5881ae32a24b1c0f88187a229",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GvmAIaFWYAAwo6Q.jpg?name=orig",
+        "handle": "BrickFanatics",
+        "post": "https://x.com/BrickFanatics/status/1943725597965852816"
+      }
+    },
+    "RAFTERPAW": {
+      "token": "assets/kits/RAFTERPAW/token.png",
+      "banner": "assets/kits/RAFTERPAW/banner.png",
+      "bannerPlain": "assets/kits/RAFTERPAW/banner-plain.png",
+      "tokenSha256": "ea80d5515dede617d913054bb43f6bf8dc92abb8e9ce1ca52adc14a496498f23",
+      "photo": null
+    },
+    "RIMESTRIPE": {
+      "token": "assets/kits/RIMESTRIPE/token.png",
+      "banner": "assets/kits/RIMESTRIPE/banner.png",
+      "bannerPlain": "assets/kits/RIMESTRIPE/banner-plain.png",
+      "tokenSha256": "8e880b59b58b85aa6d3ebe495e653ad37f5529b06cfe9492b43f7aef52bf12f6",
+      "photo": null
+    },
+    "ROOKIEPAW": {
+      "token": "assets/kits/ROOKIEPAW/token.png",
+      "banner": "assets/kits/ROOKIEPAW/banner.png",
+      "bannerPlain": "assets/kits/ROOKIEPAW/banner-plain.png",
+      "tokenSha256": "03360b7a9315e3b31365efc2ea68c028d35e9b129e1a68532bb115d4836bda11",
+      "photo": null
+    },
+    "ROSETTE": {
+      "token": "assets/kits/ROSETTE/token.png",
+      "banner": "assets/kits/ROSETTE/banner.png",
+      "bannerPlain": "assets/kits/ROSETTE/banner-plain.png",
+      "tokenSha256": "e968859b4116daacbeb503653030071ba29c827b96a2699414042cc08171447e",
+      "photo": null
+    },
+    "RUBYCAT": {
+      "token": "assets/kits/RUBYCAT/token.png",
+      "banner": "assets/kits/RUBYCAT/banner.png",
+      "bannerPlain": "assets/kits/RUBYCAT/banner-plain.png",
+      "tokenSha256": "57d9cc92b581ccd45b884597aa6b2da7d09aca224a33df12e382eb38a5763086",
+      "photo": null
+    },
+    "RUSTLEPAW": {
+      "token": "assets/kits/RUSTLEPAW/token.png",
+      "banner": "assets/kits/RUSTLEPAW/banner.png",
+      "bannerPlain": "assets/kits/RUSTLEPAW/banner-plain.png",
+      "tokenSha256": "5b2c7e1ca81896d3a9f6eb53000b182785be802eb28502fff4746c2cf8647ce3",
+      "photo": null
+    },
+    "SAFFWHISK": {
+      "token": "assets/kits/SAFFWHISK/token.png",
+      "banner": "assets/kits/SAFFWHISK/banner.png",
+      "bannerPlain": "assets/kits/SAFFWHISK/banner-plain.png",
+      "tokenSha256": "035fe4fceb17229bfa2c28e8f3bcd3733c9bd2e1bbfcdedfe2c7e4b05613fe7b",
+      "photo": null
+    },
+    "SANDSTEP": {
+      "token": "assets/kits/SANDSTEP/token.png",
+      "banner": "assets/kits/SANDSTEP/banner.png",
+      "bannerPlain": "assets/kits/SANDSTEP/banner-plain.png",
+      "tokenSha256": "e35e2bc993f9151e725a0baa1a72bb4536ad00e37692b25d5cd6131799864e59",
+      "photo": null
+    },
+    "SAVEPAWS": {
+      "token": "assets/kits/SAVEPAWS/token.png",
+      "banner": "assets/kits/SAVEPAWS/banner.png",
+      "bannerPlain": "assets/kits/SAVEPAWS/banner-plain.png",
+      "tokenSha256": "064f2025c88de0aa426a84ca0539b544ab3b4c9780ef3eafcd4971073f4f77f9",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GM6prYuWUAAIQ2c.png?name=orig",
+        "handle": "TheRoaringKitty",
+        "post": "https://x.com/TheRoaringKitty/status/1789807772542067105"
+      }
+    },
+    "SCUFFPAW": {
+      "token": "assets/kits/SCUFFPAW/token.png",
+      "banner": "assets/kits/SCUFFPAW/banner.png",
+      "bannerPlain": "assets/kits/SCUFFPAW/banner-plain.png",
+      "tokenSha256": "6e01d2ea0f7b6ad25bbe4a8dfeae4a577d2e6ac343c57b258f5a7d9fd1e015a8",
+      "photo": null
+    },
+    "SILKSTRIPE": {
+      "token": "assets/kits/SILKSTRIPE/token.png",
+      "banner": "assets/kits/SILKSTRIPE/banner.png",
+      "bannerPlain": "assets/kits/SILKSTRIPE/banner-plain.png",
+      "tokenSha256": "4217ebc224b79e241c1d652aa320adeae5de778ae02d8a5214cb25a2884e4747",
+      "photo": null
+    },
+    "SKEINKIT": {
+      "token": "assets/kits/SKEINKIT/token.png",
+      "banner": "assets/kits/SKEINKIT/banner.png",
+      "bannerPlain": "assets/kits/SKEINKIT/banner-plain.png",
+      "tokenSha256": "0d70062756f41400a28292f44e9de94006783c5edb1751e02a36a31da111d597",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/Ge8BdUqWgAAmG9b.jpg?name=orig",
+        "handle": "PalantirTech",
+        "post": "https://x.com/PalantirTech/status/1868713995064021371"
+      }
+    },
+    "SNOWCURL": {
+      "token": "assets/kits/SNOWCURL/token.png",
+      "banner": "assets/kits/SNOWCURL/banner.png",
+      "bannerPlain": "assets/kits/SNOWCURL/banner-plain.png",
+      "tokenSha256": "30875d9d817aea3323d12c8fd880fe2264b5ba1157442bb5422bdc47924c0a4d",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HIHutIdb0AAi9NW.jpg?name=orig",
+        "handle": "NotATeslaApp",
+        "post": "https://x.com/NotATeslaApp/status/2054185377917984963"
+      }
+    },
+    "SNUGPAW": {
+      "token": "assets/kits/SNUGPAW/token.png",
+      "banner": "assets/kits/SNUGPAW/banner.png",
+      "bannerPlain": "assets/kits/SNUGPAW/banner-plain.png",
+      "tokenSha256": "efebcdbe488ab151ea09b6cdf7f81d666fa2fb327f0edc46b3791193eef15b04",
+      "photo": null
+    },
+    "SOCKFOOT": {
+      "token": "assets/kits/SOCKFOOT/token.png",
+      "banner": "assets/kits/SOCKFOOT/banner.png",
+      "bannerPlain": "assets/kits/SOCKFOOT/banner-plain.png",
+      "tokenSha256": "eef07cd3249bb63d7d3ca5679b8e916407d1f4773aeaa03dc09542fcfd90fbf2",
+      "photo": null
+    },
+    "SORRELPAW": {
+      "token": "assets/kits/SORRELPAW/token.png",
+      "banner": "assets/kits/SORRELPAW/banner.png",
+      "bannerPlain": "assets/kits/SORRELPAW/banner-plain.png",
+      "tokenSha256": "5e92b0ac827969647a1421e5eaa1f382c9875a47830de82aae78fc33445c126c",
+      "photo": null
+    },
+    "SQUINTPAW": {
+      "token": "assets/kits/SQUINTPAW/token.png",
+      "banner": "assets/kits/SQUINTPAW/banner.png",
+      "bannerPlain": "assets/kits/SQUINTPAW/banner-plain.png",
+      "tokenSha256": "52669dd0b587d05b2b935b27cf8c5162af38e64da90b14ca1769a7631c08ec5a",
+      "photo": null
+    },
+    "STEPANCAT": {
+      "token": "assets/kits/STEPANCAT/token.png",
+      "banner": "assets/kits/STEPANCAT/banner.png",
+      "bannerPlain": "assets/kits/STEPANCAT/banner-plain.png",
+      "tokenSha256": "9e7e72747e1a3d8b074e6eb0abc7f764afbe54a940cd9a2d90f745058ce7464d",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FGRIbv9WUAE6RGX.jpg?name=orig",
+        "handle": "Ukraine",
+        "post": "https://x.com/Ukraine/status/1469379026196307969"
+      }
+    },
+    "STREETBOB": {
+      "token": "assets/kits/STREETBOB/token.png",
+      "banner": "assets/kits/STREETBOB/banner.png",
+      "bannerPlain": "assets/kits/STREETBOB/banner-plain.png",
+      "tokenSha256": "6cc001176f3ceebb8222a4bb52cb5bda6c223e2cb73efc1be4d52cedfb2a4c29",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/E6vkbblXsAEBt38.jpg?name=orig",
+        "handle": "artukdotorg",
+        "post": "https://x.com/artukdotorg/status/1417483804000804868"
+      }
+    },
+    "STUBTAIL": {
+      "token": "assets/kits/STUBTAIL/token.png",
+      "banner": "assets/kits/STUBTAIL/banner.png",
+      "bannerPlain": "assets/kits/STUBTAIL/banner-plain.png",
+      "tokenSha256": "396622598a859093f82c7ad87f7295d3db4e06291ff863257afd369c7785a5b3",
+      "photo": null
+    },
+    "SUCCOTASH": {
+      "token": "assets/kits/SUCCOTASH/token.png",
+      "banner": "assets/kits/SUCCOTASH/banner.png",
+      "bannerPlain": "assets/kits/SUCCOTASH/banner-plain.png",
+      "tokenSha256": "2f88067f0e3ad045e399219074ec9e619718914bc6452727d97484a27896cff7",
+      "photo": null
+    },
+    "SUGARSOOT": {
+      "token": "assets/kits/SUGARSOOT/token.png",
+      "banner": "assets/kits/SUGARSOOT/banner.png",
+      "bannerPlain": "assets/kits/SUGARSOOT/banner-plain.png",
+      "tokenSha256": "783ef884e121a0712e84ce893721007049319fe9125de04278339183f1f9ba3a",
+      "photo": null
+    },
+    "SUNSTRETCH": {
+      "token": "assets/kits/SUNSTRETCH/token.png",
+      "banner": "assets/kits/SUNSTRETCH/banner.png",
+      "bannerPlain": "assets/kits/SUNSTRETCH/banner-plain.png",
+      "tokenSha256": "408d1118a00831851b6659de5ef29343d748bb2a075cb4e77dfbff282d38914c",
+      "photo": null
+    },
+    "TALLYSPOT": {
+      "token": "assets/kits/TALLYSPOT/token.png",
+      "banner": "assets/kits/TALLYSPOT/banner.png",
+      "bannerPlain": "assets/kits/TALLYSPOT/banner-plain.png",
+      "tokenSha256": "a0eb75dc410f22f2e49b8c7e2c6333ba14a6ecab79211ccf30dc601883e7935d",
+      "photo": null
+    },
+    "TAMAEKI": {
+      "token": "assets/kits/TAMAEKI/token.png",
+      "banner": "assets/kits/TAMAEKI/banner.png",
+      "bannerPlain": "assets/kits/TAMAEKI/banner-plain.png",
+      "tokenSha256": "41e555377348e638f9a6a2b791ff28671c7c05d3d9d4bd79afd6072beb607e1b",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/DncGS6uW4AEeLj0.jpg?name=orig",
+        "handle": "qikipedia",
+        "post": "https://x.com/qikipedia/status/1042473398264184832"
+      }
+    },
+    "TARTANPAW": {
+      "token": "assets/kits/TARTANPAW/token.png",
+      "banner": "assets/kits/TARTANPAW/banner.png",
+      "bannerPlain": "assets/kits/TARTANPAW/banner-plain.png",
+      "tokenSha256": "44a280a95525cc316df9f450f170496d1456045c59ecae990009e9eb4a64d8a6",
+      "photo": null
+    },
+    "TOMBILICAT": {
+      "token": "assets/kits/TOMBILICAT/token.png",
+      "banner": "assets/kits/TOMBILICAT/banner.png",
+      "bannerPlain": "assets/kits/TOMBILICAT/banner-plain.png",
+      "tokenSha256": "10169e6b7339a71db530cf540a298bc05d0499be38ccd5de53e0f27bcfe3d3aa",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/G0PGU3IWYAAgs-f.png?name=orig",
+        "handle": "volcaholic1",
+        "post": "https://x.com/volcaholic1/status/1964632949829280232"
+      }
+    },
+    "TOMRUTGERS": {
+      "token": "assets/kits/TOMRUTGERS/token.png",
+      "banner": "assets/kits/TOMRUTGERS/banner.png",
+      "bannerPlain": "assets/kits/TOMRUTGERS/banner-plain.png",
+      "tokenSha256": "550c812eaf97237fabb8df82af5cef1fb4fd3b1c5534ddf900cc3defe2f6682d",
+      "photo": null
+    },
+    "TREADPAW": {
+      "token": "assets/kits/TREADPAW/token.png",
+      "banner": "assets/kits/TREADPAW/banner.png",
+      "bannerPlain": "assets/kits/TREADPAW/banner-plain.png",
+      "tokenSha256": "6620aeaba99c9103a9adb094a9eb6c75b1ccbc1f8541f7da32e819595539dd5f",
+      "photo": null
+    },
+    "TRILLBY": {
+      "token": "assets/kits/TRILLBY/token.png",
+      "banner": "assets/kits/TRILLBY/banner.png",
+      "bannerPlain": "assets/kits/TRILLBY/banner-plain.png",
+      "tokenSha256": "be219f960d4e4bcd650e4d2fd4570c11664bc1f643d4dd85e44b10665d669753",
+      "photo": null
+    },
+    "TRINKETCAT": {
+      "token": "assets/kits/TRINKETCAT/token.png",
+      "banner": "assets/kits/TRINKETCAT/banner.png",
+      "bannerPlain": "assets/kits/TRINKETCAT/banner-plain.png",
+      "tokenSha256": "f897759fa83214777a7297b885041f7301a70dfa554824a85b14ce6b3fd09a6c",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FOdN0LLXMAENIpq.jpg?name=orig",
+        "handle": "MicroStrategy",
+        "post": "https://x.com/MicroStrategy/status/1506258161753366537"
+      }
+    },
+    "TUPPENCE": {
+      "token": "assets/kits/TUPPENCE/token.png",
+      "banner": "assets/kits/TUPPENCE/banner.png",
+      "bannerPlain": "assets/kits/TUPPENCE/banner-plain.png",
+      "tokenSha256": "b6fe421237d7fb3e27de43bfc4091143f21917589701527d69346261c75b6fc7",
+      "photo": null
+    },
+    "UMBERPAW": {
+      "token": "assets/kits/UMBERPAW/token.png",
+      "banner": "assets/kits/UMBERPAW/banner.png",
+      "bannerPlain": "assets/kits/UMBERPAW/banner-plain.png",
+      "tokenSha256": "c9723bc08cdbdf3e66795e018893c3eea3121f6026f83528171a0c9c179dfa11",
+      "photo": null
+    },
+    "UPDATECAT": {
+      "token": "assets/kits/UPDATECAT/token.png",
+      "banner": "assets/kits/UPDATECAT/banner.png",
+      "bannerPlain": "assets/kits/UPDATECAT/banner-plain.png",
+      "tokenSha256": "00acea6d5c3a668be6450497d2da13fa9dbf8ac1fcdce06799c86088fb4b95cb",
+      "photo": null
+    },
+    "VELVETPAW": {
+      "token": "assets/kits/VELVETPAW/token.png",
+      "banner": "assets/kits/VELVETPAW/banner.png",
+      "bannerPlain": "assets/kits/VELVETPAW/banner-plain.png",
+      "tokenSha256": "e5515f73b870a35e41a9d3318cb8d649b6a71ea00b963842aee6c0876f8d9207",
+      "photo": null
+    },
+    "VIGNETPAW": {
+      "token": "assets/kits/VIGNETPAW/token.png",
+      "banner": "assets/kits/VIGNETPAW/banner.png",
+      "bannerPlain": "assets/kits/VIGNETPAW/banner-plain.png",
+      "tokenSha256": "95aae8d3e787944655f446f0d4aa6b324589a5a03cf86ed8e1d44e25f9afc6f8",
+      "photo": null
+    },
+    "WARMSPOT": {
+      "token": "assets/kits/WARMSPOT/token.png",
+      "banner": "assets/kits/WARMSPOT/banner.png",
+      "bannerPlain": "assets/kits/WARMSPOT/banner-plain.png",
+      "tokenSha256": "c57246b2b6fcbb19d0e332fdc474369ec0292f4367b3aeef7386fa1ca5792478",
+      "photo": null
+    },
+    "WAYBILL": {
+      "token": "assets/kits/WAYBILL/token.png",
+      "banner": "assets/kits/WAYBILL/banner.png",
+      "bannerPlain": "assets/kits/WAYBILL/banner-plain.png",
+      "tokenSha256": "9a8d3d81f8b9b99458542bcfa77b5636b9d4fb869b633965f2923e17ad61029a",
+      "photo": null
+    },
+    "WHIRRPAW": {
+      "token": "assets/kits/WHIRRPAW/token.png",
+      "banner": "assets/kits/WHIRRPAW/banner.png",
+      "bannerPlain": "assets/kits/WHIRRPAW/banner-plain.png",
+      "tokenSha256": "14e922c0b3f9b6960378961bba95b4cc6802614ac5d4487ee6220af8cd64029f",
+      "photo": null
+    },
+    "WHISK100": {
+      "token": "assets/kits/WHISK100/token.png",
+      "banner": "assets/kits/WHISK100/banner.png",
+      "bannerPlain": "assets/kits/WHISK100/banner-plain.png",
+      "tokenSha256": "3b412d40cc65777c3d4648235a2c06b31f210573d3ac6286f2605acc4c19b70c",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/Fa3maZJWQAAQUxl.jpg?name=orig",
+        "handle": "InvescoUS",
+        "post": "https://x.com/InvescoUS/status/1562157992170201088"
+      }
+    },
+    "WILLOWCAT": {
+      "token": "assets/kits/WILLOWCAT/token.png",
+      "banner": "assets/kits/WILLOWCAT/banner.png",
+      "bannerPlain": "assets/kits/WILLOWCAT/banner-plain.png",
+      "tokenSha256": "4bea66d67e2fd0b84472aa6cac25fb018f6fee1050b0d005b0ba4f9b6763bffd",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FKMDZgVWUAIiL55.jpg?name=orig",
+        "handle": "Reuters",
+        "post": "https://x.com/Reuters/status/1487039201816289280"
+      }
+    },
+    "WINDSOCK": {
+      "token": "assets/kits/WINDSOCK/token.png",
+      "banner": "assets/kits/WINDSOCK/banner.png",
+      "bannerPlain": "assets/kits/WINDSOCK/banner-plain.png",
+      "tokenSha256": "4cd9ff449120b55e8792ebfac30cc850c740e2ca1e2e9a1bcfc1c667328c2ea5",
+      "photo": null
+    }
+  }
+}

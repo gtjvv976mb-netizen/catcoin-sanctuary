@@ -323,3 +323,18 @@ laptop, when you want it. Nothing runs on a server and nothing runs when the lap
 **How often:** once or twice a week is plenty; each run adds up to ~10 leads.
 **What it costs:** nothing extra. It uses your own Claude plan's usage (a run is a few dozen web
 searches and fetches, so it counts like a longer Claude Code session). No API keys or servers.
+## Adopt a cat (a hand-off)
+
+Every planned or adoptable cat that has not launched has an **Adopt this cat** button on its card. It opens the Adopt panel (`assets/ui/adopt.js`), which hands the visitor everything needed to launch the cat's coin **themselves**:
+
+- the LAUNCH KIT words, each with a copy button: token name (at most 32 characters), ticker (at most 10), description (the cat's lore, its proof link and "Not affiliated with <owner>. A memecoin with no intrinsic value; not financial advice."), website (the cat's card, `https://catcoinsanctuary.com/#cat=<TICKER>`) and X (the proof post, or blank);
+- the logo: the real photo from the cat's X proof post when it has one, hotlinked from `pbs.twimg.com` with its credit and a note to ask the owner's permission (never copied to this site), and our Sanctuary portrait as a free-to-use 1024 x 1024 PNG download (the only logo when the post has no photo);
+- an optional 1500 x 500 banner ("Include banner", on by default), Sanctuary-style or plain;
+- a **Launch on StonkFun** button (with the quote token to pick and its mint, after StonkFun's terms: 18+, restricted regions) and a **Launch on pump.fun** button (SOL pair). Both open the launchpad's own create page in a new tab.
+
+The visitor decides the final details on the launchpad and is the coin's creator. This site never signs or sends anything, holds no keys and takes no fee. Neither launchpad reads its form from the address (checked 2026-09-26: pump.fun/create reads only `?mayhem=true`; StonkFun's /launch reads no query and has no description field), so the flow is copy-and-open.
+
+The kit pictures are built by `python3 scripts/build-kits.py [--offline] [TICKER ...]` into `assets/kits/<TICKER>/` (`token.png`, `banner.png`, `banner-plain.png`) and listed in `assets/kits/kits.json` with each token logo's `tokenSha256` and the proof photo's URL and credit. Run it again after portraits or lore pictures change (`--offline` keeps the photo URLs already found and calls nothing).
+
+**Finding an adoption later (not built yet).** A launch made from a kit is an ordinary launch by the visitor's wallet, so the hourly Collection job (or a later check) can find it by matching new StonkFun and pump.fun launches on the kit's exact name and ticker, and confirm it by the token image's hash (`tokenSha256` in `assets/kits/kits.json`; a visitor who used the real photo or edited the image will not match on the hash, so name and ticker plus the quote token are the main key). Until that check exists, an adopted cat still shows "Not launched yet".
+

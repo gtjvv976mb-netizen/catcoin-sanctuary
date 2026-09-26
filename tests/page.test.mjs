@@ -53,7 +53,8 @@ test("no call to another host at run time: fetches and imports are relative, and
   const directive = (name) => csp.split(";").map((d) => d.trim()).find((d) => d.startsWith(`${name} `)) ?? "";
   assert.match(directive("default-src"), /^default-src 'self'$/);
   for (const name of ["connect-src", "script-src", "img-src", "font-src", "style-src"]) {
-    const d = directive(name);
+    // The one exception: img-src shows the credited proof photo in the Adopt panel, hotlinked from X's image host (never copied here).
+    const d = name === "img-src" ? directive(name).replace(/ https:\/\/pbs\.twimg\.com(?= |$)/, "") : directive(name);
     if (d) assert.ok(!/https?:|\*|wss?:/.test(d), `${name} allows another host: ${d}`);
   }
   for (const src of [...INDEX.matchAll(/\b(?:src|href)="([^"]+)"/g)].map((m) => m[1])) {

@@ -7,6 +7,7 @@
 import { isLaunched, isFamous, isAdoptable, shortMint, hostOf, dateText, swatchOf } from "./data.js";
 import { marketWarnings } from "../collection.js";
 import { CATEGORY_LABELS, existingCoinLine } from "./adoptables.js";
+import { adoptPanel, canAdopt, kitFiles, loadKits, loadLaunchpads } from "./adopt.js";
 
 /** Chains as a card names them. */
 export const CHAIN_NAMES = {
@@ -225,6 +226,15 @@ export function createCard({ root, onClose, onInset }) {
     grip?.setAttribute("aria-label", on ? "Show less of this card" : "Show more of this card");
   }
 
+  /* "Adopt this cat": swaps the card's body for the Adopt panel (assets/ui/adopt.js); its Back
+     button brings the cat's card back. */
+  function adoptButton(r) {
+    const b = el("button", "btn btn-buy btn-adopt", "Adopt this cat");
+    b.type = "button";
+    b.addEventListener("click", () => api.adopt());
+    return b;
+  }
+
   /** The copy button for an address. */
   function copyButton(value, what) {
     const copy = el("button", "card-copy", "Copy");
@@ -280,6 +290,7 @@ export function createCard({ root, onClose, onInset }) {
       if (r.who || !researched) who.append(el("h4", "card-sub", researched ? "Lore" : "In its own words"));
       who.append(el("p", r.who ? "card-lore" : "card-story", r.description));
     }
+    if (r.lorePic) who.append(loreFigure({ lore: r.lorePic }));
     if (r.loreSource?.label) {
       const src = el("p", "card-note");
       src.append("From: ");
@@ -392,7 +403,8 @@ export function createCard({ root, onClose, onInset }) {
     body.append(pf);
 
     const st = section("Status", "card-adopt");
-    st.append(el("p", "adopt-cta", "Not launched yet — adopt it soon."));
+    st.append(el("p", "adopt-cta", "Not launched yet — adopt it now."));
+    st.append(adoptButton(r));
     st.append(el("p", "card-note", `Nothing to buy yet. Any token called ${r.ticker} that you find before launch is not this cat.`));
     if (r.portraitStatus !== "ready") st.append(el("p", "card-none", "Portrait coming soon."));
     const coin = existingCoinLine(r.existingCoin);
@@ -574,7 +586,10 @@ export function createCard({ root, onClose, onInset }) {
       row("Paired with", pw);
     }
     tk.append(dl);
-    if (!isLaunched(r) && !r.example) tk.append(el("p", "card-note", "No token exists for this cat yet. It becomes one when the sanctuary's keeper launches it on StonkFun and the hourly check finds that launch on Solana."));
+    if (!isLaunched(r) && !r.example) {
+      tk.append(el("p", "card-note", "No token exists for this cat yet. Anyone can adopt it: launch its coin yourself on StonkFun or pump.fun with its launch kit."));
+      if (canAdopt(r)) tk.append(adoptButton(r));
+    }
     body.append(tk);
 
     /* 5. Where to buy it: GMGN and FOMO, only for a launched token (data.js keeps only links that name its mint). */
@@ -619,6 +634,19 @@ export function createCard({ root, onClose, onInset }) {
       root.hidden = true;
       current = null;
       onInset?.(0, 0);
+    },
+    /** Show the Adopt panel for the open cat in place of its card's body. */
+    async adopt({ kits, pads, site } = {}) {
+      const r = current;
+      if (!r || !canAdopt(r)) return;
+      const [k, p] = await Promise.all([kits ?? loadKits(), pads ?? loadLaunchpads()]);
+      if (current !== r) return;
+      const body = root.querySelector(".card-body");
+      if (!body) return;
+      body.replaceChildren(adoptPanel(r, { files: kitFiles(k, r.ticker), pads: p, site, onBack: () => { render(r); root.querySelector(".btn-adopt")?.focus?.(); } }));
+      body.scrollTo?.(0, 0);
+      if (isSheet()) setTall(true);
+      body.querySelector(".adopt-back")?.focus?.();
     },
     /** What the cat is doing now (shown under its name). */
     setDoing(text) {

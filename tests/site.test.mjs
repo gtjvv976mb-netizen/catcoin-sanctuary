@@ -155,7 +155,7 @@ test("nothing the page loads comes from another host", () => {
   // The only absolute URLs in the head are the page's own address, for sharing (never loaded by the page).
   for (const m of INDEX.matchAll(/<(?:meta|link)\b[^>]*\b(?:content|href)="(https?:\/\/[^"]+)"/g)) assert.ok(m[1].startsWith(SITE), `the head names ${m[1]}`);
   // In the page's own scripts, a web address is only ever an outbound link (buy and explorer pages) or a comment.
-  const OUTBOUND = new Set(["gmgn.ai", "fomo.family", "solscan.io", "www.stonkfun.xyz", "dexscreener.com",
+  const OUTBOUND = new Set(["gmgn.ai", "fomo.family", "solscan.io", "www.stonkfun.xyz", "dexscreener.com", "pump.fun", "getstonked.xyz",
     "www.w3.org"]); // www.w3.org: the SVG namespace name, never fetched
   for (const rel of moduleGraph().filter((m) => !m.includes("/vendor/"))) {
     const code = read(rel).replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'`\\])\/\/.*$/gm, "$1");
@@ -531,7 +531,7 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
 });
 
 
-test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it soon' and the fan-tribute line", async () => {
+test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' and the fan-tribute line", async () => {
   const list = await residents();
   const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
   assert.ok(ADOPT.length >= 25);
@@ -544,7 +544,7 @@ test("adoptable cats: each card shows its category chip, owner, story, X proof, 
     assert.ok(c.text.includes(a.story.slice(0, 40)), `${a.ticker}: story`);
     assert.ok(c.links.some((l) => l.href === a.proof.url && l.text === "View post on X ↗"), `${a.ticker}: X proof`);
     for (const s of a.sources) assert.ok(c.links.some((l) => l.href === new URL(s.url).href), `${a.ticker}: source ${s.url}`);
-    assert.match(c.text, /Not launched yet — adopt it soon/);
+    assert.match(c.text, /Not launched yet — adopt it now/);
     assert.match(c.text, /Fan tribute, not affiliated with or endorsed by/);
     assert.equal(/In loving memory/.test(c.text), a.memorial, `${a.ticker}: memorial line`);
     if (a.existingCoin) assert.match(c.text, new RegExp(`A small coin already exists: \\$${a.existingCoin.symbol}`));
