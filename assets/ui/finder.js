@@ -3,8 +3,9 @@
    page): type to narrow the list by name, ticker, stock or contract, filter by kind (adoptable
    cats, Hall of Fame, launched), choose one, and its card opens (and the camera goes to it). */
 
-import { isLaunched, isFamous } from "./data.js";
-import { faceFor, badgeFor, tickerLabel, chainName, usdShort } from "./card.js";
+import { isLaunched, isFamous, isAdoptable } from "./data.js";
+import { faceFor, silhouetteFor, badgeFor, tickerLabel, chainName, usdShort } from "./card.js";
+import { ADOPTABLE_CATEGORIES, CATEGORY_CHIPS } from "./adoptables.js";
 
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
@@ -64,6 +65,8 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     return b;
   };
   chips.append(chipFor("all", "All"), chipFor("adoptable", "Adoptable cats"));
+  // One chip per category of adoptable (famous) cat that is present.
+  for (const cat of ADOPTABLE_CATEGORIES) if (residents.some((r) => isAdoptable(r) && r.category === cat)) chips.append(chipFor(`cat:${cat}`, CATEGORY_CHIPS[cat]));
   if (famousCount) chips.append(chipFor("hall", "Hall of Fame"));
   if (launchedCount) chips.append(chipFor("launched", "Launched"));
 
@@ -86,11 +89,12 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
       thumb = el("img", "find-thumb");
       thumb.src = r.portrait; thumb.alt = ""; thumb.width = 44; thumb.height = 44; thumb.loading = "lazy"; thumb.decoding = "async";
       thumb.addEventListener("error", () => thumb.replaceWith(faceFor(r, "face find-face")), { once: true });
-    } else thumb = faceFor(r, "face find-face");
+    } else if (isAdoptable(r)) thumb = silhouetteFor(r, "find-thumb card-silhouette");
+    else thumb = faceFor(r, "face find-face");
     const text = el("span", "find-text");
     text.append(el("span", "find-name", r.name));
     const who = r.company || r.stock;
-    const meta = isFamous(r)
+    const meta = isAdoptable(r) ? [tickerLabel(r), r.owner].filter(Boolean).join(" · ") : isFamous(r)
       ? [tickerLabel(r), usdShort(r.market?.marketCapUsd), "Already a coin"].filter(Boolean).join(" · ")
       : [tickerLabel(r), r.pair.symbol, who && who !== r.pair.symbol ? who : ""].filter(Boolean).join(" · ");
     if (meta) text.append(el("span", "find-meta", meta));
@@ -98,7 +102,7 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     b.addEventListener("click", () => { if (!inline) root.close?.(); onChoose(r.id); });
     li.append(b);
     list.append(li);
-    return { r, li, hay: [r.name, r.ticker, r.stock, r.company, r.realCatName, r.pair.symbol, r.catName, isFamous(r) ? `${r.chain} ${chainName(r.chain)} ${r.contract}` : "solana"].join(" ").toLowerCase() };
+    return { r, li, hay: [r.name, r.ticker, r.stock, r.company, r.realCatName, r.pair.symbol, r.catName, r.owner, r.category, isFamous(r) ? `${r.chain} ${chainName(r.chain)} ${r.contract}` : "solana"].join(" ").toLowerCase() };
   });
 
   function draw() {
@@ -106,7 +110,7 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     let n = 0;
     for (const it of items) {
       const r = it.r;
-      const okF = filter === "all" || (filter === "launched" ? isLaunched(r) : filter === "hall" ? isFamous(r) : !isFamous(r));
+      const okF = filter === "all" || (filter === "launched" ? isLaunched(r) : filter === "hall" ? isFamous(r) : filter.startsWith("cat:") ? isAdoptable(r) && r.category === filter.slice(4) : !isFamous(r));
       const ok = okF && (!q || it.hay.includes(q));
       it.li.hidden = !ok;
       if (ok) n++;

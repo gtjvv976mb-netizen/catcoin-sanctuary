@@ -130,14 +130,16 @@ export function decimate(geometry, cell, uvMatrix = null) {
  */
 export function headFrame(pos, eye, head, size, pose = "sit") {
   const n = pos.length / 3, V = (i) => new THREE.Vector3(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]);
-  let maxX = -Infinity, H = 0;
+  let maxX = -Infinity, H = 0, hiX = -Infinity;
   for (let i = 0; i < n; i++) { maxX = Math.max(maxX, pos[i * 3]); H = Math.max(H, pos[i * 3 + 1]); }
+  // (A stretching cat's front paws reach past its head: its head is the front of what is up high.)
+  for (let i = 0; i < n; i++) if (pos[i * 3 + 1] > 0.4 * H) hiX = Math.max(hiX, pos[i * 3]);
   // The head's points: the top of a sitting cat, the front of the others (every pose faces +x).
   const inHead = {
     sit: (p) => p.y > 0.78 * H,
     walk: (p) => p.x > maxX - 0.34 && p.y > 0.5 * H,
     loaf: (p) => p.x > maxX - 0.4 && p.y > 0.45 * H,
-    stretch: (p) => p.x > maxX - 0.34 && p.y > 0.2 * H,
+    stretch: (p) => p.x > hiX - 0.34 && p.y > 0.4 * H,
     sleep: (p) => p.x > maxX - 0.38 && p.y > 0.35 * H,
   }[pose] || ((p) => p.y > 0.78 * H);
   const pts = [];
@@ -147,29 +149,34 @@ export function headFrame(pos, eye, head, size, pose = "sit") {
   const ys = pts.map((p) => p.y).sort((a, b) => a - b), earY = ys[Math.floor(ys.length * 0.88)];
   const skull = pts.filter((p) => p.y <= earY);
   const C = skull.reduce((m, p) => m.add(p), new THREE.Vector3()).divideScalar(skull.length);
+  // A sitting cat's head points reach down its tall ears less than its face: its eyes sit about a
+  // ninth of a unit below the middle of those points (measured on both models).
+  if (pose === "sit") { C.y -= 0.11; C.x += 0.03; }
   const ds = skull.map((p) => p.distanceTo(C)).sort((a, b) => a - b);
-  const r = Math.max(0.08, Math.min(0.2, ds[Math.floor(ds.length * 0.5)]));
-  // Forward: towards the nose (the front-most point near the head's middle height).
-  let nose = C.clone().add(new THREE.Vector3(r, 0, 0));
-  for (const p of skull) if (Math.abs(p.z - C.z) < r * 0.3 && Math.abs(p.y - C.y) < r * 0.7 && p.x > nose.x) nose = p.clone();
-  const f = nose.clone().sub(C); f.z = 0; f.y *= 0.5; f.normalize();
+  const r0 = Math.max(0.08, Math.min(0.2, ds[Math.floor(ds.length * 0.5)]));
+  const f = new THREE.Vector3(1, 0, 0);
+  let nose = null;
+  for (const p of skull) if (Math.abs(p.z - C.z) < r0 * 0.3 && Math.abs(p.y - C.y) < r0 * 0.7 && (!nose || p.x > nose.x)) nose = p.clone();
+  if (nose) { f.copy(nose).sub(C); f.z = 0; f.y *= 0.5; f.normalize(); }
   const up = new THREE.Vector3(0, 1, 0).addScaledVector(f, -f.y).normalize();
   const side = new THREE.Vector3().crossVectors(f, up).normalize();
   // The top of the skull: the highest point on the head's middle line, between the ears.
-  let top = C.y + r * 0.6;
-  for (const p of pts) if (Math.abs(p.z - C.z) < r * 0.22 && Math.abs(p.x - C.x) < r * 0.5) top = Math.max(top, p.y);
-  top = Math.min(Math.max(top, earY - r * 0.1), C.y + r * 1.3);
+  let top = C.y + r0 * 0.5;
+  for (const p of pts) if (Math.abs(p.z - C.z) < r0 * 0.22 && Math.abs(p.x - C.x) < r0 * 0.5) top = Math.max(top, p.y);
+  top = Math.min(Math.max(top, earY - r0 * 0.1), C.y + r0 * 1.2);
+  // The head's radius: from its centre up to the skull (the points round it reach into the cheeks and neck).
+  const r = Math.max(0.1, Math.min(0.18, (top - C.y) * 0.56 + (nose ? nose.distanceTo(C) : r0) * 0.38));
   // The neck: below and behind the head's centre.
   const axis = pose === "sit" ? new THREE.Vector3(0.25, 1, 0).normalize() : pose === "sleep" ? new THREE.Vector3(1, 0.15, 0).normalize() : new THREE.Vector3(1, 0.9, 0).normalize();
-  const N = C.clone().addScaledVector(axis, -r * 0.95);
+  const N = C.clone().addScaledVector(axis, -r * (pose === "sit" ? 1.05 : 0.9));
   const radii = [];
   for (let i = 0; i < n; i++) {
     const d = V(i).sub(N), along = d.dot(axis);
-    if (Math.abs(along) < 0.025) { const rr = d.addScaledVector(axis, -along).length(); if (rr < r * 1.8) radii.push(rr); }
+    if (Math.abs(along) < 0.025) { const rr = d.addScaledVector(axis, -along).length(); if (rr < r * 2) radii.push(rr); }
   }
   radii.sort((a, b) => a - b);
-  const rn = radii.length > 8 ? radii[Math.floor(radii.length * 0.85)] : r * 0.85;
-  return { C, r, f, up, side, top, neck: { N, axis, r: Math.max(r * 0.55, Math.min(rn * 0.7, r * 0.75)) } };
+  const rn = radii.length > 8 ? radii[Math.floor(radii.length * 0.95)] : r * 0.85;
+  return { C, r, f, up, side, top, nose: nose ? nose.distanceTo(C) : r, neck: { N, axis, r: Math.max(r * 0.7, Math.min(rn * 1.02, r * 1.05)), raw: rn } };
 }
 
 /** Loads the ten cat models; bakes each pose's fit into its geometry; finds its eyes. */
@@ -272,6 +279,7 @@ uniform int uPose;
 uniform vec3 uHead;
 uniform vec3 uTail;
 uniform vec3 uHeadF;
+uniform vec4 uHeadC;
 varying vec4 vAnim;
 varying vec3 vCatPos;
 varying vec3 vCatNrm;
@@ -282,6 +290,7 @@ varying vec4 vCoatD;
 varying vec4 vCoatE;
 varying float vTailD;
 varying vec3 vHeadV;
+varying vec3 vHeadC;
 `;
 
 const FRAG_HEAD = /* glsl */`
@@ -293,6 +302,8 @@ uniform float uGinger;
 uniform float uTime;
 uniform vec3 uHeadF;
 uniform float uTailLen;
+uniform vec4 uHeadC;
+varying vec3 vHeadC;
 varying vec4 vAnim;
 varying vec3 vCatPos;
 varying vec3 vCatNrm;
@@ -425,9 +436,15 @@ vec3 coatMarks(vec3 c, vec3 base, vec3 second, vec3 p, vec3 n, float pm) {
     float m = smoothstep(0.1, 0.16, length(hv)) * (1.0 - smoothstep(0.3, 0.38, length(hv))) * (1.0 - smoothstep(0.1, 0.45, fwd));
     c = mix(c, second * (0.85 + 0.3 * cFbm(s * 18.0)), clamp(m * 1.2, 0.0, 1.0));
   }
-  // A jacket: the torso, not the head, legs or tail.
+  // A jacket: the torso, not the head, legs or tail. The head is kept clear by its own measured
+  // centre and radius (a good way past it: cheeks, ears and the back of the head stay fur), with
+  // the collar a little below the jaw.
   if (vCoatE.w > 0.5) {
-    float torso = smoothstep(0.26, 0.34, p.y / h) * (hasHead ? smoothstep(0.22, 0.28, length(hv)) : 1.0) * (1.0 - step(0.0, vTailD));
+    float hr = max(uHeadC.w * 1.6, 0.3);
+    float headOff = uHeadC.w > 0.0 ? smoothstep(hr, hr + 0.07, length(vHeadC)) : (hasHead ? smoothstep(0.3, 0.38, length(hv)) : 1.0);
+    // …and nothing level with the head nearby: a loafing or sleeping cat's head sits low, close to its back.
+    if (uHeadC.w > 0.0) headOff *= 1.0 - smoothstep(-0.1, -0.04, vHeadC.y) * (1.0 - smoothstep(0.36, 0.44, length(vHeadC.xz)));
+    float torso = smoothstep(0.26, 0.34, p.y / h) * headOff * (1.0 - step(0.0, vTailD));
     c = mix(c, vCoatE.rgb * (0.9 + 0.2 * cNoise(s * 30.0)), torso);
   }
   return c;
@@ -469,6 +486,8 @@ function coatShader(material, md) {
       uHead: { value: md.head },
       uTail: { value: new THREE.Vector3(...TAIL[md.pose]) },
       uHeadF: { value: md.frame ? md.frame.f : new THREE.Vector3(1, 0, 0) },
+      // The head's own centre and radius (headFrame), for keeping a jacket off the head and neck.
+      uHeadC: { value: md.frame ? new THREE.Vector4(md.frame.C.x, md.frame.C.y, md.frame.C.z, md.frame.r) : new THREE.Vector4(0, -9, 0, 0) },
       uTailLen: { value: md.tailLen },
     });
     shader.vertexShader = VERT_HEAD + shader.vertexShader.replace("#include <begin_vertex>", `#include <begin_vertex>
@@ -476,6 +495,7 @@ function coatShader(material, md) {
       vCatNrm = normal;
       vCoatA = aCoatA; vCoatB = aCoatB; vCoatC = aCoatC; vCoatD = aCoatD; vCoatE = aCoatE; vAnim = aAnim;
       vHeadV = uHead.y > -1.0 ? position - uHead : vec3(9.0);
+      vHeadC = uHeadC.w > 0.0 ? position - uHeadC.xyz : vec3(9.0);
       vTailD = (position.x < uTail.x && position.y > uTail.y && position.y < uTail.z) ? uTail.x - position.x : -1.0;
       {
         // Procedural life on top of the posed model: legs that swing, a tail that sways, a head
@@ -708,8 +728,10 @@ export function coatFor(r, index = 0) {
   if (!eyes) eyes = new THREE.Color("#8fb04a");
   // Calico's "base" is its white; a calico sheet usually names the colours, so put white first.
   if (pattern === 3 && base.getHSL({ h: 0, s: 0, l: 0 }).l < 0.7) { const w = new THREE.Color("#f7f3ec"); second = base; base = w; }
-  const hsl = base.getHSL({ h: 0, s: 0, l: 0 });
-  const ginger = pattern === 1 && hsl.h > 0.03 && hsl.h < 0.12 && hsl.s > 0.45 && look.stripe < 0.97 && look.scale === 1;
+  // Ginger (the orange model) is judged on the colour as seen (sRGB): in linear terms a brown tabby's
+  // coat (Red Kitten Crew's #a5845f) reads as saturated orange, and a near-white one as saturated too.
+  const hsl = base.getHSL({ h: 0, s: 0, l: 0 }, THREE.SRGBColorSpace);
+  const ginger = pattern === 1 && hsl.h > 0.03 && hsl.h < 0.12 && hsl.s > 0.45 && hsl.l < 0.8 && look.stripe < 0.97 && look.scale === 1;
   let marks = 0;
   for (const [k, bit] of Object.entries(MARK)) if (look.white?.[k]) marks |= bit;
   const garment = look.garment ? colorOf(look.garment.color) : null;
@@ -729,7 +751,7 @@ export class CatHerd {
    * @param {object} sim      from createSanctuary
    * @param {Map} coats       cat id → coatFor(resident)
    */
-  constructor(scene, models, sim, coats, { blobShadows = false } = {}) {
+  constructor(scene, models, sim, coats, { blobShadows = false, contact = false } = {}) {
     this.models = models;
     this.sim = sim;
     this.meshes = [];
@@ -775,14 +797,16 @@ export class CatHerd {
       }
     }
     this.blobs = null;
-    if (blobShadows) {
+    // A soft blob under each cat: its only shadow on phones (no shadow-map pass for cats there),
+    // and on the other tiers a contact shadow that grounds it where the sun's shadow is too soft.
+    if (blobShadows || contact) {
       const cv = document.createElement("canvas");
       cv.width = cv.height = 64;
       const g = cv.getContext("2d"), grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
       grd.addColorStop(0, "rgba(0,0,0,1)"); grd.addColorStop(0.55, "rgba(0,0,0,0.55)"); grd.addColorStop(1, "rgba(0,0,0,0)");
       g.fillStyle = grd; g.fillRect(0, 0, 64, 64);
       const tex = new THREE.CanvasTexture(cv);
-      this.blobs = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: tex, color: 0x2a3a1a, transparent: true, opacity: 0.32, depthWrite: false }), sim.cats.length);
+      this.blobs = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ map: tex, color: 0x2a3a1a, transparent: true, opacity: blobShadows ? 0.32 : 0.24, depthWrite: false }), sim.cats.length);
       this.blobs.renderOrder = 1;
       this.blobs.frustumCulled = false;
       this.blobs.name = "cat shadows";
@@ -1092,6 +1116,7 @@ function frameMatrix(F, at, scale = F.r, axes = [F.f, F.up, F.side]) {
 export function buildWear(type, F) {
   if (!F) return null;
   const { C, r, f, up, side, neck } = F;
+  const rf = Math.max(r, F.nose || r); // how far the face reaches forward
   const top = new THREE.Vector3(C.x, F.top, C.z).addScaledVector(f, -r * 0.08);
   const parts = [];
   const add = (g, color, m) => parts.push(part(g, color).applyMatrix4(m));
@@ -1099,7 +1124,7 @@ export function buildWear(type, F) {
   // The neck ring's own frame: axis along the neck, "front" towards the face.
   const nAxis = neck.axis.clone(), nFront = f.clone().addScaledVector(nAxis, -f.dot(nAxis)).normalize(), nSide = new THREE.Vector3().crossVectors(nFront, nAxis).normalize();
   const neckM = (dy = 0, s = 1) => frameMatrix(F, neck.N.clone().addScaledVector(nAxis, dy * r), neck.r * s, [nFront, nAxis, nSide]);
-  const front = (k = 1.02) => neck.N.clone().addScaledVector(nFront, neck.r * k);
+  const front = (k = 1.02) => neck.N.clone().addScaledVector(nFront, neck.r * (k * 1.18 + 0.12));
   switch (type) {
     case "beanie":
       add(new THREE.SphereGeometry(0.95, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2).scale(1.05, 0.95, 1.05), WHITE, onTop(-0.45));
@@ -1129,24 +1154,24 @@ export function buildWear(type, F) {
       add(new THREE.IcosahedronGeometry(0.1, 0).translate(0.64, 0.02, 0), 0xd8262e, onTop(-0.08));
       break;
     case "headband": {
-      const at = C.clone().addScaledVector(up, r * 0.3);
-      const ax = up.clone().addScaledVector(f, 0.45).normalize(), fr = f.clone().addScaledVector(ax, -f.dot(ax)).normalize(), sd = new THREE.Vector3().crossVectors(fr, ax);
+      const at = C.clone().addScaledVector(up, r * 0.5);
+      const ax = up.clone().addScaledVector(f, -0.3).normalize(), fr = f.clone().addScaledVector(ax, -f.dot(ax)).normalize(), sd = new THREE.Vector3().crossVectors(fr, ax);
       const m = frameMatrix(F, at, r, [fr, ax, sd]);
-      add(new THREE.TorusGeometry(0.93, 0.13, 4, 18).rotateX(Math.PI / 2).scale(1.02, 1.3, 1.02), WHITE, m);
+      add(new THREE.TorusGeometry(1.0, 0.13, 4, 18).rotateX(Math.PI / 2).scale(1.08, 1.3, 1.02), WHITE, m);
       add(new THREE.BoxGeometry(0.1, 0.55, 0.16).rotateZ(0.5).translate(-1.12, -0.25, 0.12), WHITE, m);
       add(new THREE.BoxGeometry(0.1, 0.5, 0.16).rotateZ(0.8).translate(-1.12, -0.3, -0.12), WHITE, m);
       break;
     }
     case "bow": {
-      const at = C.clone().addScaledVector(up, r * 0.72).addScaledVector(side, r * 0.55).addScaledVector(f, r * 0.05);
-      const m = frameMatrix(F, at);
+      const at = C.clone().addScaledVector(up, r * 0.85).addScaledVector(side, r * 0.62).addScaledVector(f, r * 0.1);
+      const m = frameMatrix(F, at, r * 2.1);
       add(new THREE.ConeGeometry(0.32, 0.55, 5).rotateX(Math.PI / 2).translate(0, 0, 0.3), WHITE, m);
       add(new THREE.ConeGeometry(0.32, 0.55, 5).rotateX(-Math.PI / 2).translate(0, 0, -0.3), WHITE, m);
       add(new THREE.IcosahedronGeometry(0.16, 0), WHITE, m);
       break;
     }
     case "collar":
-      add(new THREE.TorusGeometry(1.04, 0.1, 4, 18).rotateX(Math.PI / 2).scale(1, 1.6, 1), WHITE, neckM());
+      add(new THREE.TorusGeometry(1.04, 0.1, 4, 18).rotateX(Math.PI / 2).scale(1.18, 1.6, 1).translate(0.12, 0, 0), WHITE, neckM());
       break;
     case "bell":
       add(new THREE.SphereGeometry(0.13, 8, 6), WHITE, frameMatrix(F, front(1.12).addScaledVector(nAxis, -r * 0.12), r));
@@ -1159,11 +1184,11 @@ export function buildWear(type, F) {
       add(new THREE.BoxGeometry(0.12, 0.14, 0.2), WHITE, frameMatrix(F, front(1.08), r, [nFront, nAxis, nSide]));
       break;
     case "scarf":
-      add(new THREE.TorusGeometry(1.06, 0.2, 5, 18).rotateX(Math.PI / 2).scale(1, 1.3, 1), WHITE, neckM(-0.05));
+      add(new THREE.TorusGeometry(1.08, 0.2, 5, 18).rotateX(Math.PI / 2).scale(1.18, 1.3, 1).translate(0.12, 0, 0), WHITE, neckM(-0.05));
       add(new THREE.BoxGeometry(0.1, 0.7, 0.3).translate(0, -0.4, 0.25).rotateX(0.2), WHITE, frameMatrix(F, front(1.08), r, [nFront, nAxis, nSide]));
       break;
     case "sunglasses": {
-      const eyeC = C.clone().addScaledVector(f, r * 0.92).addScaledVector(up, r * 0.1);
+      const eyeC = C.clone().addScaledVector(f, rf * 0.86).addScaledVector(up, r * 0.18);
       const m = frameMatrix(F, eyeC);
       for (const z of [-0.36, 0.36]) {
         add(new THREE.CylinderGeometry(0.27, 0.27, 0.06, 10).rotateZ(Math.PI / 2).translate(0.02, 0, z), 0x1a1a22, m);
@@ -1175,7 +1200,7 @@ export function buildWear(type, F) {
       break;
     }
     case "bag": { // a paper bag over the head, with eye holes
-      const m = frameMatrix(F, C.clone().addScaledVector(up, r * 0.15));
+      const m = frameMatrix(F, C.clone().addScaledVector(up, r * 0.15).addScaledVector(f, (rf - r) * 0.5), (rf + r) / 2);
       add(new THREE.BoxGeometry(2.3, 2.5, 2.3), WHITE, m);
       for (const z of [-0.42, 0.42]) add(new THREE.CylinderGeometry(0.2, 0.2, 0.04, 10).rotateZ(Math.PI / 2).translate(1.16, 0.2, z), 0x1a1410, m);
       add(new THREE.CylinderGeometry(0.12, 0.12, 0.04, 8).rotateZ(Math.PI / 2).translate(1.16, -0.3, 0), 0x1a1410, m);
@@ -1183,7 +1208,7 @@ export function buildWear(type, F) {
       break;
     }
     case "crescent": {
-      const at = C.clone().addScaledVector(f, r * 0.85).addScaledVector(up, r * 0.5);
+      const at = C.clone().addScaledVector(f, rf * 0.8).addScaledVector(up, r * 0.55);
       add(new THREE.TorusGeometry(0.28, 0.07, 4, 10, Math.PI * 1.2).rotateY(Math.PI / 2).rotateX(-0.6), WHITE, frameMatrix(F, at));
       break;
     }

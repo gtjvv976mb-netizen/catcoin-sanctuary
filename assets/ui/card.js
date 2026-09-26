@@ -4,8 +4,9 @@
    assets/residents.js through assets/ui/data.js; nothing is made up here. When there is
    nothing to show, the card says so ("Not measured", "Not launched yet"). */
 
-import { isLaunched, isFamous, shortMint, hostOf, dateText, swatchOf } from "./data.js";
+import { isLaunched, isFamous, isAdoptable, shortMint, hostOf, dateText, swatchOf } from "./data.js";
 import { marketWarnings } from "../collection.js";
+import { CATEGORY_LABELS, existingCoinLine } from "./adoptables.js";
 
 /** Chains as a card names them. */
 export const CHAIN_NAMES = {
@@ -37,6 +38,18 @@ function link(href, text, cls) {
   a.target = "_blank";
   a.rel = "noopener noreferrer";
   return a;
+}
+
+/** A clean placeholder for a cat whose portrait is still to come: a sitting-cat silhouette in its coat colours on the dusk sky. */
+export function silhouetteFor(r, cls = "card-portrait card-silhouette") {
+  const f = el("span", cls);
+  f.setAttribute("role", "img");
+  f.setAttribute("aria-label", `${r.name}: portrait coming soon`);
+  const base = swatchOf(r), second = swatchOf(r, "second") || base;
+  f.style.setProperty("--coat", base);
+  f.style.setProperty("--coat2", second);
+  f.innerHTML = '<svg viewBox="0 0 112 112" width="112" height="112" aria-hidden="true"><defs><linearGradient id="adopt-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2350"/><stop offset=".65" stop-color="#8a4f6e"/><stop offset="1" stop-color="#e59a6a"/></linearGradient></defs><rect width="112" height="112" rx="14" fill="url(#adopt-sky)"/><path d="M40 100c-6-18-4-34 6-44l-4-24 12 12h12l12-12-4 24c10 10 12 26 6 44z" class="sil-body" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/><path d="M50 100c-2-14 0-24 6-30 6 6 8 16 6 30z" class="sil-chest" opacity=".9"/><path d="M78 98c12 2 18-6 16-16" fill="none" class="sil-tail" stroke-width="6" stroke-linecap="round"/></svg>';
+  return f;
 }
 
 /** A little drawn cat face in the cat's coat colour (used when there is no portrait). */
@@ -151,6 +164,7 @@ export function tickerLabel(r) {
 export function badgeFor(r) {
   if (r.example) return el("span", "badge badge-example", "Example, not a token");
   if (isFamous(r)) return el("span", "badge badge-famous", "Hall of Fame");
+  if (isAdoptable(r)) return el("span", "badge badge-planned", "Not launched yet");
   return isLaunched(r) ? el("span", "badge badge-launched", "Launched") : el("span", "badge badge-planned", "Not launched yet");
 }
 
@@ -322,6 +336,59 @@ export function createCard({ root, onClose, onInset }) {
     body.append(buy);
   }
 
+  /* An adoptable cat: a fan tribute to a famous cat, with its X proof and sources, not launched yet. */
+  function adoptableBody(r, head, body) {
+    let pic;
+    if (r.portrait) {
+      pic = el("img", "card-portrait");
+      pic.src = r.portrait; pic.alt = `Portrait of ${r.name}`; pic.width = 112; pic.height = 112; pic.decoding = "async";
+      pic.addEventListener("error", () => pic.replaceWith(silhouetteFor(r)), { once: true });
+    } else pic = silhouetteFor(r);
+    const titles = el("div", "card-titles");
+    const kick = el("p", "card-kicker");
+    kick.append(el("span", `adopt-chip adopt-${r.category}`, CATEGORY_LABELS[r.category] || "Adoptable cat"), ` · priced in ${r.pair.symbol || "STONK"}`);
+    titles.append(kick);
+    const h2 = el("h2", "card-name", r.name);
+    h2.id = "card-name";
+    titles.append(h2);
+    const tick = el("p", "card-ticker");
+    const t = el("span", "card-planned-ticker"); t.append("Planned ticker ", el("span", "mono", r.ticker));
+    tick.append(t, badgeFor(r));
+    titles.append(tick);
+    doingEl = el("p", "card-doing");
+    doingEl.setAttribute("aria-hidden", "true");
+    titles.append(doingEl);
+    lastDoing = "";
+    head.append(pic, titles);
+
+    const who = section("Who the cat is", "card-who");
+    if (r.memorial) who.append(el("p", "adopt-memorial", r.sensitivity || `In loving memory of ${r.name}.`));
+    const own = el("p", "adopt-owner");
+    own.append(el("span", "card-real-kicker", "Owner"), " ", el("b", null, r.owner));
+    who.append(own);
+    if (r.description) who.append(el("p", "card-story", r.description));
+    if (r.tribute) who.append(el("p", "card-tribute", r.tribute));
+    body.append(who);
+
+    const pf = section("Proof", "card-proof");
+    if (r.proof) pf.append(proofBlock(r.proof));
+    else pf.append(el("p", "card-none", "No proof post recorded yet."));
+    if (r.sources.length) {
+      const ul = el("ul", "card-list adopt-sources");
+      for (const s of r.sources) { const li = el("li"); li.append(link(s.url, `${s.label} ↗`)); ul.append(li); }
+      pf.append(el("p", "card-real-kicker", "Sources"), ul);
+    }
+    body.append(pf);
+
+    const st = section("Status", "card-adopt");
+    st.append(el("p", "adopt-cta", "Not launched yet — adopt it soon."));
+    st.append(el("p", "card-note", `Nothing to buy yet. Any token called ${r.ticker} that you find before launch is not this cat.`));
+    if (r.portraitStatus !== "ready") st.append(el("p", "card-none", "Portrait coming soon."));
+    const coin = existingCoinLine(r.existingCoin);
+    if (coin) st.append(el("p", "adopt-coin", coin));
+    body.append(st);
+  }
+
   function render(r) {
     root.replaceChildren();
     grip = el("button", "card-grip");
@@ -348,6 +415,15 @@ export function createCard({ root, onClose, onInset }) {
       body.addEventListener("scroll", () => { if (body.scrollTop > 24 && isSheet() && !root.classList.contains("card-tall")) setTall(true); }, { passive: true });
       famousBody(r, head, body);
       const foot = el("p", "card-disclaimer", r.disclaimer || `Not affiliated with ${r.name} or its team. Not financial advice.`);
+      root.append(grip, close, head, body, foot);
+      setTall(false);
+      return;
+    }
+    if (isAdoptable(r)) {
+      const body = el("div", "card-body");
+      body.addEventListener("scroll", () => { if (body.scrollTop > 24 && isSheet() && !root.classList.contains("card-tall")) setTall(true); }, { passive: true });
+      adoptableBody(r, head, body);
+      const foot = el("p", "card-disclaimer", `${r.tribute} Not launched and not financial advice.`);
       root.append(grip, close, head, body, foot);
       setTall(false);
       return;

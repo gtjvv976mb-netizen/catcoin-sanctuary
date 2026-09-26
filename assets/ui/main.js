@@ -156,7 +156,7 @@ if (loadError || !residents.length) {
   try {
     const { startWorld } = await import("../world/world.js");
     world = await startWorld({
-      canvas, residents, reduce, debug, adaptive: !(debug && params.has("noadapt")),
+      canvas, residents, reduce, debug, adaptive: !(debug && params.has("noadapt")), quality: params.get("q"),
       onPick: (id) => {
         if (id) show(id, { from: canvas });
         else if (card.isOpen && !matchMedia("(max-width: 640px)").matches) hideCard();

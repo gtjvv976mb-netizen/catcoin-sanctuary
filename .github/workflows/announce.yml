@@ -1,0 +1,68 @@
+# Announces new cats on X (@catcosanctuary): on a push to main that changes data/planned.json,
+# every 2 hours, and by hand. scripts/announce.mjs drafts each new cat's post, checks it against
+# the content rules, and posts at most perRun cats a run, spacingMinutes apart
+# (data/announce-config.json). It starts with dryRun: true, which only writes the preview to
+# data/announce-queue.json.
+#
+# Secrets: four, optional. X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET (OAuth 1.0a
+# user context of the @catcosanctuary app, Read and Write). Only the posting step sees them.
+# Without them the drafts go to data/announce-queue.json with one-click intent links.
+#
+# The checkout keeps no credentials; the push hands the workflow token to git for that one
+# command. The job may write repository contents and nothing else.
+name: Announce
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - data/planned.json
+  schedule:
+    - cron: "41 */2 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: announce
+  cancel-in-progress: false
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: node --test tests/announce.test.mjs
+      - name: Draft and post the new cats
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: node scripts/post-thread.mjs && node scripts/announce.mjs
+      - name: Commit the record if it changed
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/announced.json data/announce-queue.json data/intro-thread.json
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git diff --cached --stat
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Announce: record announced cats"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi

@@ -215,10 +215,29 @@ function normalizeFamous(e) {
 }
 
 export const isFamous = (r) => r?.kind === "famous";
+export const isAdoptable = (r) => r?.kind === "adoptable";
+
+/* An adoptable cat (data/adoptables.json, checked by assets/ui/adoptables.js): the common fields as
+   a planned cat has them, plus its category, owner, sources, any coin that already exists, and the
+   gentle notes its card shows. It is never launched here: the page shows it as "Not launched yet". */
+const ADOPT_CATEGORIES = new Set(["celebrity", "tv-movie", "company", "viral", "crypto"]);
+function normalizeAdoptable(e) {
+  const r = normalizeNew({ ...e, token: { status: "planned" }, buy: [], explorer: null });
+  if (!r || !ADOPT_CATEGORIES.has(e.category)) return null;
+  const ec = e.existingCoin && typeof e.existingCoin === "object" ? e.existingCoin : null;
+  return {
+    ...r, kind: "adoptable",
+    category: e.category, owner: str(e.owner, 120), company: str(e.owner, 120), coinName: str(e.coinName, 60),
+    sources: (Array.isArray(e.sources) ? e.sources : []).slice(0, 6).map((s) => ({ label: str(s?.label, 140), url: httpsUrl(s?.url) })).filter((s) => s.url),
+    existingCoin: ec && str(ec.symbol, 24) ? { symbol: str(ec.symbol, 24), mcapUsd: num(ec.mcapUsd) ?? 0 } : null,
+    memorial: e.memorial === true, sensitivity: str(e.sensitivity, 300), portraitStatus: e.portraitStatus === "ready" && r.portrait ? "ready" : "pending",
+  };
+}
 
 export function normalize(e) {
   if (!e || typeof e !== "object") return null;
   if (e.kind === "famous") return normalizeFamous(e);
+  if (e.kind === "adoptable") return normalizeAdoptable(e);
   const old = !("token" in e) && ("example" in e || "look" in e || "arrived" in e);
   return old ? normalizeOld(e) : normalizeNew(e);
 }

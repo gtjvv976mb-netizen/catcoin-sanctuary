@@ -15,7 +15,7 @@ export const AMBIENT = { uTime: { value: 0 } };
 
 /* The wind at a point on the ground: a steady breeze from the west-south-west, small flutters,
    and broad gusts that roll across the garden. Returns a sideways push (roughly 0..1.6). */
-const WIND_GLSL = /* glsl */`
+export const WIND_GLSL = /* glsl */`
   uniform float uTime;
   vec2 windAt(vec2 p) {
     float t = uTime;
