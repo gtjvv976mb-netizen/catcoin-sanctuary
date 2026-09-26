@@ -69,7 +69,7 @@ test("the rules refuse price talk, promises, links that are not cited, brands, a
 test("backlog: the seeded record marks every existing cat backlog, and a run takes new cats first, then 1-2 from the backlog", () => {
   const seeded = read("data/announced.json");
   assert.equal(Object.keys(seeded.cats).length, PLANNED.cats.length);
-  for (const c of PLANNED.cats) assert.ok(["backlog", "posted", "queued", "failed"].includes(seeded.cats[c.ticker]?.status), c.ticker);
+  for (const c of PLANNED.cats) assert.ok(["backlog", "posted", "queued", "failed", "held"].includes(seeded.cats[c.ticker]?.status), c.ticker);
   const cfg = read("data/announce-config.json");
   assert.equal(typeof cfg.dryRun, "boolean");
   assert.equal(pick(CATS, seeded, { ...cfg, perRun: 3, backlogPerRun: 2 }).length, 2);
