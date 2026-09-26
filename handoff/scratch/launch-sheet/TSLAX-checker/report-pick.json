@@ -1,0 +1,113 @@
+[
+ {
+  "name": "Snowcurl the Garden Cat",
+  "ticker": "SNOWCURL",
+  "lengths": {
+   "name": 23,
+   "ticker": 8,
+   "description": 272,
+   "okName": true,
+   "okTicker": true,
+   "okDesc": true
+  },
+  "tickerFormat": true,
+  "disclosureExactAtEnd": true,
+  "bodyLength": 157,
+  "checkProposal_body": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Snowcurl is a sleek white cat with her t",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_all": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_withoutDisclosure": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "confusable": {
+   "containsTSLA": false,
+   "startsWithTS": false,
+   "levToTSLA": 8,
+   "levToTSLAX": 8,
+   "commonCatTicker": false
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=SNOWCURL",
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "all": []
+  }
+ }
+]

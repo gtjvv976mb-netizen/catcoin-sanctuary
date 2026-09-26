@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Velvet the Shadow-Spot Cat",
+   "ticker": "VELVETPAW",
+   "nameLen": 26,
+   "blurbLen": 138,
+   "descLen": 276,
+   "tickerHasAndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Velvet, a sleek glossy-black shorthair w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Velvet, a sleek glossy-black shorthair whose coat shows faint darker rosettes in bright sun, watches the lily pond with round golden eyes. A cat coin priced in LMT. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Soot the Long-Tailed Black Cat",
+   "ticker": "SOOTTAIL",
+   "nameLen": 30,
+   "blurbLen": 142,
+   "descLen": 280,
+   "tickerHasAndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Soot, a lean long-legged black cat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 5,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Soot, a lean long-legged black cat with a rope-long tail, a glossy coat and pale green-gold eyes, stretches along the warm stone path at noon. A cat coin priced in LMT. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Cinder the Sun-Glint Black Cat",
+   "ticker": "CINDERPAW",
+   "nameLen": 30,
+   "blurbLen": 135,
+   "descLen": 273,
+   "tickerHasAndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cinder, a sturdy coal-black cat whose fu",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Cinder, a sturdy coal-black cat whose fur glints faint rust-brown in the sun, dozes under the fern fronds with copper eyes half closed. A cat coin priced in LMT. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

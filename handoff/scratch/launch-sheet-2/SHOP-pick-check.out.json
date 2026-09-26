@@ -1,0 +1,501 @@
+{
+ "disclosure": "A cat coin priced in SHOP. Not affiliated with Shopify, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "disclosureOnly_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclosureOnly_checkTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "SHOP",
+    "field": "disclosure"
+   }
+  ]
+ },
+ "results": [
+  {
+   "id": "draft1",
+   "name": "Parcel the Cardboard Tabby",
+   "ticker": "PARCELPAW",
+   "nameLen": 26,
+   "blurbLen": 137,
+   "descLen": 268,
+   "nameOK": true,
+   "descOK": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "knownCatMemeTicker": false,
+   "alreadyUsedInSheets": false,
+   "endsWithDisclaimer": true,
+   "description": "Parcel, a cardboard-brown mackerel tabby with a cream chin and honey-gold eyes, naps in every empty box that turns up by the garden gate. A cat coin priced in SHOP. Not affiliated with Shopify, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Parcel, a cardboard-brown mackerel tabby",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Stripe",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "cachedVerifiedListSymbolMatch": [],
+   "jupNameSearch": {
+    "query": "Parcel",
+    "status": 200,
+    "results": 20,
+    "nameOrSymbolHits": [
+     {
+      "symbol": "UPS",
+      "name": "United Parcel Service - Backpack Securities",
+      "isVerified": true
+     },
+     {
+      "symbol": "UPSx",
+      "name": "United Parcel Service xStock",
+      "isVerified": true
+     },
+     {
+      "symbol": "PARCEL",
+      "name": "Send your Parcel.Cash"
+     },
+     {
+      "symbol": "SEND",
+      "name": "send a parcel.cash"
+     },
+     {
+      "symbol": "Parcel",
+      "name": "Parcel RWA"
+     },
+     {
+      "symbol": "PARCEL",
+      "name": "Send your Parcel.Cash"
+     },
+     {
+      "symbol": "PARCEL",
+      "name": "Send your Parcel.Cash"
+     },
+     {
+      "symbol": "Parcel",
+      "name": "Parcel"
+     }
+    ]
+   }
+  },
+  {
+   "id": "draft2",
+   "name": "Tillbell the Tuxedo Cat",
+   "ticker": "TILLBELL",
+   "nameLen": 23,
+   "blurbLen": 143,
+   "descLen": 274,
+   "nameOK": true,
+   "descOK": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "knownCatMemeTicker": false,
+   "alreadyUsedInSheets": false,
+   "endsWithDisclaimer": true,
+   "description": "Tillbell, a black-and-white tuxedo cat with white mittens and green-gold eyes, sits on the garden stall counter and chirps at each new visitor. A cat coin priced in SHOP. Not affiliated with Shopify, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tillbell, a black-and-white tuxedo cat w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "SHOP",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 15,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "cachedVerifiedListSymbolMatch": [],
+   "jupNameSearch": {
+    "query": "Tillbell",
+    "status": 200,
+    "results": 15,
+    "nameOrSymbolHits": []
+   }
+  },
+  {
+   "id": "draft3",
+   "name": "Patchwork the Calico Cat",
+   "ticker": "PATCHPAW",
+   "nameLen": 24,
+   "blurbLen": 146,
+   "descLen": 277,
+   "nameOK": true,
+   "descOK": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "knownCatMemeTicker": false,
+   "alreadyUsedInSheets": true,
+   "endsWithDisclaimer": true,
+   "description": "Patchwork, a calico with white paws and bold ginger and black patches, strolls between the little garden stalls as if every one of them were hers. A cat coin priced in SHOP. Not affiliated with Shopify, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Patchwork, a calico with white paws and ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "cachedVerifiedListSymbolMatch": [],
+   "jupNameSearch": {
+    "query": "Patchwork",
+    "status": 200,
+    "results": 7,
+    "nameOrSymbolHits": [
+     {
+      "symbol": "PN",
+      "name": "Patchwork Naval "
+     },
+     {
+      "symbol": "Mika",
+      "name": "Patchwork Cat"
+     },
+     {
+      "symbol": "PN",
+      "name": "Patchwork Naval"
+     },
+     {
+      "symbol": "PATCHWORK",
+      "name": "PATCHWORK"
+     },
+     {
+      "symbol": "$PN",
+      "name": "Patchwork Naval"
+     },
+     {
+      "symbol": "PN",
+      "name": "Patchwork Naval"
+     }
+    ]
+   }
+  },
+  {
+   "id": "pick",
+   "name": "Tillbell the Tuxedo Cat",
+   "ticker": "TILLBELL",
+   "nameLen": 23,
+   "blurbLen": 143,
+   "descLen": 274,
+   "nameOK": true,
+   "descOK": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "knownCatMemeTicker": false,
+   "alreadyUsedInSheets": false,
+   "endsWithDisclaimer": true,
+   "description": "Tillbell, a black-and-white tuxedo cat with white mittens and green-gold eyes, sits on the garden stall counter and chirps at each new visitor. A cat coin priced in SHOP. Not affiliated with Shopify, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tillbell, a black-and-white tuxedo cat w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 15,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "cachedVerifiedListSymbolMatch": [],
+   "jupNameSearch": {
+    "query": "Tillbell",
+    "status": 200,
+    "results": 15,
+    "nameOrSymbolHits": []
+   }
+  }
+ ],
+ "verifiedListSize": 3694,
+ "usedTickerCount": 46,
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": null,
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "transferHook": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "programId": null
+  },
+  "permanentDelegate": {
+   "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+  },
+  "tokenMetadata": {
+   "name": "Shopify - Backpack Securities",
+   "symbol": "SHOP"
+  },
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "CdiZcEvWcCs2hbUzW9x3ZpBftbPNwm2W3QrY5ZuyupK8",
+  "decimals": 6
+ }
+}

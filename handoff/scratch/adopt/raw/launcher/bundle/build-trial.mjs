@@ -1,0 +1,10 @@
+import path from "node:path";
+const { buildOptions } = await import("/home/user/Cat-Intelligence-Agency/build.mjs");
+const { createRequire } = await import("node:module");
+const require = createRequire("/home/user/Cat-Intelligence-Agency/build.mjs");
+const esbuild = require("esbuild");
+const base = buildOptions({ outdir: path.resolve("out") });
+const r = await esbuild.build({ ...base, entryPoints: { adopt: path.resolve("entry.mjs") }, outdir: path.resolve("out"), metafile: true, logLevel: "warning" });
+const out = Object.entries(r.metafile.outputs).map(([f, o]) => ({ f, bytes: o.bytes }));
+const inputs = Object.entries(r.metafile.inputs).map(([f, i]) => ({ f: f.replace(/^.*node_modules\//, "nm/"), bytes: i.bytes })).sort((a, b) => b.bytes - a.bytes).slice(0, 15);
+console.log(JSON.stringify({ errors: r.errors.length, warnings: r.warnings.length, out, biggestInputs: inputs }, null, 1));

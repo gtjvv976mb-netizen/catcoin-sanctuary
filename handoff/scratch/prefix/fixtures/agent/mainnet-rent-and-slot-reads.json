@@ -1,0 +1,278 @@
+{
+ "note": "Three reads on api.mainnet-beta.solana.com, nothing signed or sent. (1) RENT: getMinimumBalanceForRentExemption for 0, 165 and 170 bytes, and the rent sysvar itself (in jupiter-usdc-lmeow-pumpswap.json, the same minutes: 5,080 lamports a byte-year, threshold 1, so (128 + bytes) x 5,080). (2) AN ADDRESS SENT SOL BEFORE ITS ACCOUNT IS OPENED: two simulations (sigVerify false, replaceRecentBlockhash true) for `wallet` \u2014 the idempotent create of its LMEOW account alone, then an OUTSIDER's transfer of 650,240 lamports (the 0-byte minimum above) to that account's address followed by the same create, the wallet paying the fee. The two simulations ran one slot apart (createAlone.slot, prefundedThenCreate.slot). The account ended at 1,513,840 either way, its 170-byte minimum; the wallet ended 645,240 lamports higher when the address had been pre-funded \u2014 the 650,240 of rent the outsider's SOL covered, less the 5,000 fee of the second signature \u2014 so the create charged it 863,600 (1,513,840 less 650,240), not 1,513,840: the associated-token program tops a pre-funded address up to its minimum and charges the payer the difference only (its logs: a transfer, an allocate and an assign in place of one create). preRead is the three accounts read at an earlier slot, for reference. (3) SLOT PAIRS: twenty times, a getMultipleAccounts of `wallet` (processed) and right after it a simulateTransaction (processed) of a compute-budget-only transaction it pays for, 700 ms between pairs. Seven pairs answered from different slots, one apart each time; every pair that answered from one slot showed the wallet 5,000 lamports lower after (the simulated fee) and nothing else, while two of the seven split pairs showed 53,000 and 36,000: the wallet's own transactions landing between the read and the simulation.",
+ "capturedAt": "2026-09-25T12:22:13.952Z",
+ "rpc": "https://api.mainnet-beta.solana.com",
+ "wallet": "g1NcQKARd9jh3ZV28UFZ3L6yzaQL798WbBDXf1Rchv7",
+ "outsider": "FJx61bqznoVfVDFoujYGgJoJsJq4DxDQ8K3YG5kgRm6G",
+ "mint": "CB8afe6zJDGoCoSHx2iJACqemTUjgpvKKLTa86qMpump",
+ "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "ata": "BpeYUn2cdLifqeC1R9D8A2tuBCgTVW8VTVAWXpGsBdgw",
+ "minimumBalance": {
+  "0": 650240,
+  "165": 1488440,
+  "170": 1513840
+ },
+ "preRead": {
+  "context": {
+   "apiVersion": "4.3.0",
+   "slot": 450351360
+  },
+  "value": [
+   {
+    "data": [
+     "",
+     "base64"
+    ],
+    "executable": false,
+    "lamports": 2111929530,
+    "owner": "11111111111111111111111111111111",
+    "rentEpoch": 18446744073709552000,
+    "space": 0
+   },
+   null,
+   {
+    "data": [
+     "",
+     "base64"
+    ],
+    "executable": false,
+    "lamports": 189715794380,
+    "owner": "11111111111111111111111111111111",
+    "rentEpoch": 18446744073709552000,
+    "space": 0
+   }
+  ]
+ },
+ "createAlone": {
+  "slot": 450351362,
+  "err": null,
+  "fee": 5000,
+  "accounts": [
+   {
+    "owner": "11111111111111111111111111111111",
+    "lamports": 2110410690,
+    "dataLength": 0
+   },
+   {
+    "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+    "lamports": 1513840,
+    "dataLength": 170
+   }
+  ],
+  "logs": [
+   "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+   "Program log: CreateIdempotent",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb invoke [2]",
+   "Program log: Instruction: GetAccountDataSize",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1523 of 194736 compute units",
+   "Program return: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb qgAAAAAAAAA=",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb success",
+   "Program 11111111111111111111111111111111 invoke [2]",
+   "Program 11111111111111111111111111111111 success",
+   "Program log: Initialize the associated token account",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb invoke [2]",
+   "Program log: Instruction: InitializeImmutableOwner",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 736 of 188391 compute units",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb success",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb invoke [2]",
+   "Program log: Instruction: InitializeAccount3",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2153 of 185320 compute units",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb success",
+   "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 17116 of 200000 compute units",
+   "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success"
+  ]
+ },
+ "prefundedThenCreate": {
+  "transferLamports": 650240,
+  "slot": 450351363,
+  "err": null,
+  "fee": 10000,
+  "accounts": [
+   {
+    "owner": "11111111111111111111111111111111",
+    "lamports": 2111055930,
+    "dataLength": 0
+   },
+   {
+    "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+    "lamports": 1513840,
+    "dataLength": 170
+   },
+   {
+    "owner": "11111111111111111111111111111111",
+    "lamports": 189715144140,
+    "dataLength": 0
+   }
+  ],
+  "logs": [
+   "Program 11111111111111111111111111111111 invoke [1]",
+   "Program 11111111111111111111111111111111 success",
+   "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL invoke [1]",
+   "Program log: CreateIdempotent",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb invoke [2]",
+   "Program log: Instruction: GetAccountDataSize",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1523 of 197586 compute units",
+   "Program return: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb qgAAAAAAAAA=",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb success",
+   "Program 11111111111111111111111111111111 invoke [2]",
+   "Program 11111111111111111111111111111111 success",
+   "Program 11111111111111111111111111111111 invoke [2]",
+   "Program 11111111111111111111111111111111 success",
+   "Program 11111111111111111111111111111111 invoke [2]",
+   "Program 11111111111111111111111111111111 success",
+   "Program log: Initialize the associated token account",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb invoke [2]",
+   "Program log: Instruction: InitializeImmutableOwner",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 736 of 188160 compute units",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb success",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb invoke [2]",
+   "Program log: Instruction: InitializeAccount3",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2153 of 185089 compute units",
+   "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb success",
+   "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 20197 of 202850 compute units",
+   "Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success"
+  ]
+ },
+ "slotPairs": [
+  {
+   "at": "2026-09-25T12:22:16.223Z",
+   "readSlot": 450351363,
+   "simSlot": 450351363,
+   "readLamports": 2111929530,
+   "simLamports": 2111924530
+  },
+  {
+   "at": "2026-09-25T12:22:17.041Z",
+   "readSlot": 450351366,
+   "simSlot": 450351367,
+   "readLamports": 2111922530,
+   "simLamports": 2111917530
+  },
+  {
+   "at": "2026-09-25T12:22:17.862Z",
+   "readSlot": 450351370,
+   "simSlot": 450351370,
+   "readLamports": 2111922530,
+   "simLamports": 2111917530
+  },
+  {
+   "at": "2026-09-25T12:22:18.715Z",
+   "readSlot": 450351372,
+   "simSlot": 450351372,
+   "readLamports": 2111908530,
+   "simLamports": 2111903530
+  },
+  {
+   "at": "2026-09-25T12:22:19.524Z",
+   "readSlot": 450351375,
+   "simSlot": 450351375,
+   "readLamports": 2111908530,
+   "simLamports": 2111903530
+  },
+  {
+   "at": "2026-09-25T12:22:20.346Z",
+   "readSlot": 450351378,
+   "simSlot": 450351378,
+   "readLamports": 2111908530,
+   "simLamports": 2111903530
+  },
+  {
+   "at": "2026-09-25T12:22:21.179Z",
+   "readSlot": 450351381,
+   "simSlot": 450351381,
+   "readLamports": 2111880530,
+   "simLamports": 2111875530
+  },
+  {
+   "at": "2026-09-25T12:22:21.987Z",
+   "readSlot": 450351384,
+   "simSlot": 450351384,
+   "readLamports": 2111880530,
+   "simLamports": 2111875530
+  },
+  {
+   "at": "2026-09-25T12:22:22.820Z",
+   "readSlot": 450351386,
+   "simSlot": 450351387,
+   "readLamports": 2111880530,
+   "simLamports": 2111875530
+  },
+  {
+   "at": "2026-09-25T12:22:23.622Z",
+   "readSlot": 450351389,
+   "simSlot": 450351390,
+   "readLamports": 2111880530,
+   "simLamports": 2111875530
+  },
+  {
+   "at": "2026-09-25T12:22:24.429Z",
+   "readSlot": 450351392,
+   "simSlot": 450351393,
+   "readLamports": 2111880530,
+   "simLamports": 2111827530
+  },
+  {
+   "at": "2026-09-25T12:22:25.322Z",
+   "readSlot": 450351395,
+   "simSlot": 450351396,
+   "readLamports": 2111832530,
+   "simLamports": 2111796530
+  },
+  {
+   "at": "2026-09-25T12:22:26.187Z",
+   "readSlot": 450351399,
+   "simSlot": 450351399,
+   "readLamports": 2111568530,
+   "simLamports": 2111563530
+  },
+  {
+   "at": "2026-09-25T12:22:27.030Z",
+   "readSlot": 450351402,
+   "simSlot": 450351403,
+   "readLamports": 2111568530,
+   "simLamports": 2111563530
+  },
+  {
+   "at": "2026-09-25T12:22:28.018Z",
+   "readSlot": 450351406,
+   "simSlot": 450351406,
+   "readLamports": 2111561530,
+   "simLamports": 2111556530
+  },
+  {
+   "at": "2026-09-25T12:22:28.914Z",
+   "readSlot": 450351409,
+   "simSlot": 450351409,
+   "readLamports": 2111554530,
+   "simLamports": 2111549530
+  },
+  {
+   "at": "2026-09-25T12:22:29.820Z",
+   "readSlot": 450351412,
+   "simSlot": 450351413,
+   "readLamports": 2111554530,
+   "simLamports": 2111549530
+  },
+  {
+   "at": "2026-09-25T12:22:30.626Z",
+   "readSlot": 450351415,
+   "simSlot": 450351415,
+   "readLamports": 2111554530,
+   "simLamports": 2111549530
+  },
+  {
+   "at": "2026-09-25T12:22:31.440Z",
+   "readSlot": 450351418,
+   "simSlot": 450351418,
+   "readLamports": 2111554530,
+   "simLamports": 2111549530
+  },
+  {
+   "at": "2026-09-25T12:22:32.293Z",
+   "readSlot": 450351422,
+   "simSlot": 450351422,
+   "readLamports": 2111542530,
+   "simLamports": 2111537530
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+origin=[] -> {"jsonrpc":"2.0","result":450424598,"id":1}
+ http=200
+origin=[https://example.com] ->  {"jsonrpc":"2.0","error":{"code": 403,"message":"Access forbidden"}, "id": 1 } 
+ http=403
+origin=[https://gtjvv976mb-netizen.github.io] ->  {"jsonrpc":"2.0","error":{"code": 403,"message":"Access forbidden"}, "id": 1 } 
+ http=403

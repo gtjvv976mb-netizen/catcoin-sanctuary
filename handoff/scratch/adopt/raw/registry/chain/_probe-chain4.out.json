@@ -1,0 +1,143 @@
+{
+ "r": {
+  "slot": 450437442,
+  "epochFromSlot": 1042,
+  "slotInEpoch": 293442,
+  "epochHistogram": {
+   "count": 31468,
+   "ms": 1244,
+   "byEpoch": [
+    [
+     "1042",
+     2559
+    ],
+    [
+     "1041",
+     3905
+    ],
+    [
+     "1040",
+     3263
+    ],
+    [
+     "1039",
+     3462
+    ],
+    [
+     "1038",
+     2725
+    ],
+    [
+     "1037",
+     3002
+    ],
+    [
+     "1036",
+     1672
+    ],
+    [
+     "1035",
+     1103
+    ],
+    [
+     "1034",
+     1591
+    ],
+    [
+     "1033",
+     1685
+    ],
+    [
+     "1032",
+     2259
+    ],
+    [
+     "1031",
+     1735
+    ],
+    [
+     "1030",
+     1428
+    ],
+    [
+     "1029",
+     1073
+    ],
+    [
+     "1028",
+     5
+    ],
+    [
+     "1027",
+     1
+    ]
+   ],
+   "distinct": 16
+  },
+  "currentEpochSweep": {
+   "count": 2559,
+   "ms": 140,
+   "bytes": 1136065,
+   "sample": [
+    {
+     "pool": "1Btk8UrCEKWXpoDnMDYEPSmYVBm9P7u8J5EBKrRSrBd",
+     "baseMint": "Bi5q9MQeLYL5rr6F5qsp17jSLsYR8sZFs3qCbc5c4fW1",
+     "quote": "So11111111111111111111111111111111111111112",
+     "creator": "2CFsrRQsUENm46GGi4meHd9JjnK9u5t7Wh9oNQ4ECcRW"
+    },
+    {
+     "pool": "1r2CtruRShHk2a8uZ5LwK5ctWUWQsaaCEoyFdRbNewg",
+     "baseMint": "9fSowgcqJ2dp1bML3HrsJAn18EkSgpp6DvD6DjFsmjCT",
+     "quote": "So11111111111111111111111111111111111111112",
+     "creator": "7CSgyqMX2frLFgWgeG2kT2fdQY4C36huUrbgSGB1JRwj"
+    },
+    {
+     "pool": "13UbB6UJhGEhs5qXeB3ECXuCQKzQ97uubJ2wDaGBGKh2",
+     "baseMint": "CqTbUVcBJf517UT19pyigUuNoJ5ceMKatgFQ2sYR85Sy",
+     "quote": "Pren1FvFX6J3E4kXhJuCiAD5aDmGEb7qJRncwA8Lkhw",
+     "creator": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj"
+    }
+   ]
+  },
+  "token2022MetadataScan": {
+   "error": {
+    "error": {
+     "code": 403,
+     "message": "Your IP or provider is blocked from this endpoint"
+    },
+    "httpStatus": 403
+   },
+   "ms": 511
+  }
+ },
+ "log": [
+  {
+   "at": "2026-09-25T18:47:23.261Z",
+   "method": "getSlot",
+   "status": 200,
+   "ms": 284,
+   "bytes": 44
+  },
+  {
+   "at": "2026-09-25T18:47:24.410Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 833,
+   "bytes": 7550565
+  },
+  {
+   "at": "2026-09-25T18:47:24.636Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 131,
+   "bytes": 1136099
+  },
+  {
+   "at": "2026-09-25T18:47:25.166Z",
+   "method": "getProgramAccounts",
+   "status": 403,
+   "ms": 61,
+   "bytes": 115
+  }
+ ]
+}

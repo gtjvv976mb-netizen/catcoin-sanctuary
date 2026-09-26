@@ -1,0 +1,338 @@
+[
+ {
+  "name": "Snowcurl the Garden Cat",
+  "ticker": "SNOWCURL",
+  "lengths": {
+   "name": 23,
+   "ticker": 8,
+   "description": 271,
+   "okName": true,
+   "okTicker": true,
+   "okDesc": true
+  },
+  "tickerFormat": true,
+  "disclosureExactAtEnd": true,
+  "bodyLength": 156,
+  "checkProposal_body": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Snowcurl is a sleek white cat with her t",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_all": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_withoutDisclosure": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "confusable": {
+   "containsTSLA": false,
+   "startsWithTS": false,
+   "levToTSLA": 8,
+   "levToTSLAX": 8,
+   "commonCatTicker": false
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=SNOWCURL",
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "all": []
+  }
+ },
+ {
+  "name": "Mallow the Cloud Cat",
+  "ticker": "MALLOWCAT",
+  "lengths": {
+   "name": 20,
+   "ticker": 9,
+   "description": 268,
+   "okName": true,
+   "okTicker": true,
+   "okDesc": true
+  },
+  "tickerFormat": true,
+  "disclosureExactAtEnd": true,
+  "bodyLength": 153,
+  "checkProposal_body": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Mallow is a soft, glossy white cat, smoo",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_all": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_withoutDisclosure": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "confusable": {
+   "containsTSLA": false,
+   "startsWithTS": false,
+   "levToTSLA": 7,
+   "levToTSLAX": 7,
+   "commonCatTicker": false
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=MALLOWCAT",
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "all": []
+  }
+ },
+ {
+  "name": "Coolpaw the Patient Cat",
+  "ticker": "COOLPAW",
+  "lengths": {
+   "name": 23,
+   "ticker": 7,
+   "description": 274,
+   "okName": true,
+   "okTicker": true,
+   "okDesc": true
+  },
+  "tickerFormat": true,
+  "disclosureExactAtEnd": true,
+  "bodyLength": 159,
+  "checkProposal_body": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Coolpaw is a calm white shorthair who ne",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_all": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_withoutDisclosure": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "tesla",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "confusable": {
+   "containsTSLA": false,
+   "startsWithTS": false,
+   "levToTSLA": 5,
+   "levToTSLAX": 5,
+   "commonCatTicker": false
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=COOLPAW",
+   "status": 200,
+   "results": 2,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "all": [
+    "TCA |  The Cool AstroPaws | verified=undefined | GLSwVscNUNDPoiNHbB9kitDcvEaTDs9w9tEaEWFkpump",
+    "CONRAD | Conrad The Immortal Diamond Paws | verified=undefined | CsHVzc9oq9noWaXNmq75CaNy9YXvgdEqxCNyckgSpump"
+   ]
+  }
+ }
+]

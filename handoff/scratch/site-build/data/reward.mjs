@@ -1,0 +1,14 @@
+import fs from "node:fs";
+import { base58Decode } from "/home/user/cat-sanctuary/assets/collection.js";
+const url = "https://api.mainnet-beta.solana.com";
+const params = ["5CnDowFR37yvC1uTUwcT7acKmv2Ge5Em9CKF9UdRrd2HZLhbts46pRPwL6Zma9U26CMYbZNqgrw5cdQpKA1eerpm", { encoding: "json", maxSupportedTransactionVersion: 0, commitment: "finalized" }];
+const r = await fetch(url, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "getTransaction", params }) });
+const j = await r.json();
+const answer = { method: "getTransaction", params, readAt: new Date().toISOString(), result: j.result };
+fs.writeFileSync("reward-launch.json", JSON.stringify(answer));
+const tx = j.result, m = tx.transaction.message, keys = m.accountKeys;
+console.log("version", tx.version, "err", tx.meta.err, "ixs", m.instructions.map(ix => keys[ix.programIdIndex].slice(0, 6)).join(" "));
+const init = m.instructions.find(ix => keys[ix.programIdIndex].startsWith("LanMV"));
+console.log("accounts", init.accounts.length, init.accounts.map(i => keys[i].slice(0, 6)).join(" "));
+console.log("platform", keys[init.accounts[3]], "quote", keys[init.accounts[7]]);
+const d = Buffer.from(base58Decode(init.data, 2000)); console.log("tail", d.subarray(d.length - 12).toString("hex"));

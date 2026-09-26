@@ -1,0 +1,13 @@
+const ROOT = "/home/user/cat-sanctuary";
+const { createSanctuary } = await import(`${ROOT}/assets/world/cats.js`);
+const residents = Array.from({ length: 30 }, (_, i) => ({ id: `cat-${i}`, name: `Cat ${i}`, look: { model: i % 3 ? "cat" : "ginger" } }));
+const sim = createSanctuary({ residents });
+let routes = 0, fails = 0, segs = 0;
+const R = sim.nav.route.bind(sim.nav); sim.nav.route = (...a) => { routes++; const r = R(...a); if (!r) fails++; return r; };
+const SC = sim.nav.segmentClear.bind(sim.nav); sim.nav.segmentClear = (...a) => { segs++; return SC(...a); };
+const aborts = new Map();
+let worst = 0;
+const t0 = performance.now();
+const ws = []; for (let f = 0; f < 60 * 300; f++) { const a = performance.now(); sim.update(1 / 60); const d = performance.now() - a; if (f > 600) { worst = Math.max(worst, d); ws.push(d); } } ws.sort((a, b) => b - a); console.log("p99.9", ws[Math.floor(ws.length / 1000)].toFixed(2), "top5", ws.slice(0, 5).map((v) => v.toFixed(1)).join(","));
+const ms = (performance.now() - t0) / (60 * 300);
+console.log({ msPerFrame: ms.toFixed(3), worstFrameMs: worst.toFixed(2), routesPerSec: (routes / 300).toFixed(1), routeFails: fails, segTestsPerFrame: (segs / 18000).toFixed(0) });

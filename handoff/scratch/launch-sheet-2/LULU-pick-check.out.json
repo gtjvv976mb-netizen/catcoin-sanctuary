@@ -1,0 +1,390 @@
+{
+ "disclaimer": "A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "disclaimerLen": 142,
+ "disclaimer_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "disclaimer"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "disclaimer"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "disclaimer_checkTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "LULU",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Sunstretch the Red Tabby Cat",
+   "ticker": "SUNSTRETCH",
+   "nameLen": 28,
+   "blurbLen": 134,
+   "descLen": 277,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "wellKnownCatMeme": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sunstretch, a red-orange tabby with bold",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_coinText": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "tiger",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupTicker": {
+    "status": 200,
+    "results": 3,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "nearSymbols": [
+     "SUNNY|SUNSTRETCHER|v=undefined",
+     "SUNNY|SUNSTRETCHER|v=undefined",
+     "This Coin Is Going To Completely Fuck Up Your Shit Dawg Lmfao We Don't Use No Ten Character Limit Pussy Ass Token Names Around Here Dawg We Only Dev The Longest Thickest Meatiest Sloppiest Token Names This Side Of The Mississippi Man Get Ready For Your Butthole To Be Torn Asunder|TCIGTCFUYSDLWDUNTCLPATNAHDWODTLTMSTNTSOTMMGRFYBTBTA|v=undefined"
+    ]
+   },
+   "jupFirstWord": {
+    "query": "Sunstretch",
+    "status": 200,
+    "results": 3,
+    "verified": [],
+    "top": [
+     "SUNNY|SUNSTRETCHER|v=undefined",
+     "SUNNY|SUNSTRETCHER|v=undefined",
+     "This Coin Is Going To Completely Fuck Up Your Shit Dawg Lmfao We Don't Use No Ten Character Limit Pussy Ass Token Names Around Here Dawg We Only Dev The Longest Thickest Meatiest Sloppiest Token Names This Side Of The Mississippi Man Get Ready For Your Butthole To Be Torn Asunder|TCIGTCFUYSDLWDUNTCLPATNAHDWODTLTMSTNTSOTMMGRFYBTBTA|v=undefined"
+    ]
+   },
+   "description": "Sunstretch, a red-orange tabby with bold black stripes and copper eyes, starts each day with one long stretch on the warm garden path. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Russet the Striped Cat",
+   "ticker": "RUSSETLAP",
+   "nameLen": 22,
+   "blurbLen": 133,
+   "descLen": 276,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "wellKnownCatMeme": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Russet, a deep rust-red tabby with dark ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_coinText": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "tiger",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "nearSymbols": [
+     "This Coin Is Going To Completely Fuck Up Your Shit Dawg Lmfao We Don't Use No Ten Character Limit Pussy Ass Token Names Around Here Dawg We Only Dev The Longest Thickest Meatiest Sloppiest Token Names This Side Of The Mississippi Man Get Ready For Your Butthole To Be Torn Asunder|TCIGTCFUYSDLWDUNTCLPATNAHDWODTLTMSTNTSOTMMGRFYBTBTA|v=undefined"
+    ]
+   },
+   "jupFirstWord": {
+    "query": "Russet",
+    "status": 200,
+    "results": 20,
+    "verified": [
+     "IWMon|iShares Russell 2000 ETF (Ondo Tokenized)",
+     "IWMx|Russell 2000 xStock"
+    ],
+    "top": [
+     "Russet|Justice For Russet|v=undefined",
+     "Ole4ka|Jack Russell Terrier|v=undefined",
+     "RUSSELL|Russell the TV Crow|v=undefined",
+     "Russell Th|Russell|v=undefined",
+     "RTV|Russell Thurlow Vought|v=undefined",
+     "Russell Petty|Professor Russell Petty|v=undefined",
+     "JACK|Jack Russell Network|v=undefined",
+     "DENTON|RUSSELL DENTON|v=undefined"
+    ]
+   },
+   "description": "Russet, a deep rust-red tabby with dark brown stripes and green eyes, trots easy laps around the flower beds, then naps in the shade. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Wiggle the Ginger Tabby Cat",
+   "ticker": "WIGGLEPAW",
+   "nameLen": 27,
+   "blurbLen": 134,
+   "descLen": 277,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "wellKnownCatMeme": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Wiggle, a ginger tabby with wide dark st",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_coinText": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "tiger",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "nearSymbols": []
+   },
+   "jupFirstWord": {
+    "query": "Wiggle",
+    "status": 200,
+    "results": 20,
+    "verified": [],
+    "top": [
+     "WIGGLE|MewWiggle|v=undefined",
+     "Wiggle|The Wiggle Runner|v=undefined",
+     "Winston|Sir Winston C Wigglebottom|v=undefined",
+     "Wiggles|WigglesCoin|v=undefined",
+     "WIGGLE|VINECAT|v=undefined",
+     "Wiggles|Wiggles |v=undefined",
+     "Wiggles|Timeline cleanse: Happy Wiggles|v=undefined",
+     "WIGGLES|WIGGLES|v=undefined"
+    ]
+   },
+   "description": "Wiggle, a ginger tabby with wide dark stripes and a cream chest, crouches and wiggles before every pounce at the swaying garden grass. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "4dFwFB8UdV9xV5FSVsKquYwd2k9FXgT2Fy4EKgjKLiL9",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": null,
+  "permanentDelegate": {
+   "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+  },
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "transferHook": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "programId": null
+  },
+  "metadata": {
+   "name": "lululemon athletica inc. - Backpack Securities",
+   "symbol": "LULU"
+  }
+ }
+}

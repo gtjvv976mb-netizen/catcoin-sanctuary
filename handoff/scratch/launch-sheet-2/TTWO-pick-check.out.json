@@ -1,0 +1,386 @@
+{
+ "disclosureAlone": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "pair": {
+  "mint": "TTWofwAge91oFhZs7kpQdyrVRkmevgM88xijGvQFbKo",
+  "symbol": "TTWO",
+  "name": "TTWO",
+  "decimals": 6,
+  "logoUrl": "/api/asset/quote-logo/TTWofwAge91oFhZs7kpQdyrVRkmevgM88xijGvQFbKo?v=77d0de00",
+  "category": "backpack",
+  "categoryLabel": "Sunrise",
+  "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "launchable": true,
+  "symbolAmbiguous": false,
+  "launchLabReady": true
+ },
+ "chain": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": null,
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "permanentDelegate": {
+   "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+  },
+  "transferHook": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "programId": null
+  }
+ },
+ "results": [
+  {
+   "tag": "draft1",
+   "name": "Savepoint the Silver Cat",
+   "ticker": "SAVEPAW",
+   "nameLen": 24,
+   "blurbLen": 126,
+   "descLen": 279,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Savepoint, a smoky silver-grey cat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_blurbAsDescription": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Savepoint, a smoky silver-grey cat with a white muzzle and bib, naps on the same warm stone daily so he never loses his place. A cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "tag": "draft2",
+   "name": "Joypad the Mitten Cat",
+   "ticker": "JOYPAD",
+   "nameLen": 21,
+   "blurbLen": 126,
+   "descLen": 279,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Joypad, a pale silver cat with four snow",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_blurbAsDescription": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 2,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Joypad, a pale silver cat with four snow-white mitten paws and a white chest, bats a pinecone along the garden path for hours. A cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "tag": "draft3",
+   "name": "Highscore the Grey Cat",
+   "ticker": "HIGHSCORE",
+   "nameLen": 22,
+   "blurbLen": 125,
+   "descLen": 278,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Highscore, a grey-and-white cat with a w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_blurbAsDescription": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 5,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Highscore, a grey-and-white cat with a white chin and dark grey brow marks, hops stone to stone to beat yesterday's best run. A cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "tag": "pick (draft1, light grey, save-point line)",
+   "name": "Savepoint the Silver Cat",
+   "ticker": "SAVEPAW",
+   "nameLen": 24,
+   "blurbLen": 123,
+   "descLen": 276,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Savepoint, a light silver-grey cat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_blurbAsDescription": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Savepoint, a light silver-grey cat with a white muzzle and bib, naps on the same warm stone daily, right where he left off. A cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

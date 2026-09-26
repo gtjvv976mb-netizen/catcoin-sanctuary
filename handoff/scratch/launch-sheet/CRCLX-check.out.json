@@ -1,0 +1,176 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Doughball the Bowler Cat",
+   "ticker": "DOUGHBALL",
+   "nameLen": 24,
+   "tickerLen": 9,
+   "blurbLen": 157,
+   "descLen": 267,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Doughball, a plump black-and-white cat in a tiny brown felt bowler hat, waddles between the herb beds and naps in any sunny flowerpot big enough to hold him. A cat coin priced in CRCLx. Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tuppence the Tweed Cat",
+   "ticker": "TUPPENCE",
+   "nameLen": 22,
+   "tickerLen": 8,
+   "blurbLen": 145,
+   "descLen": 255,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 3,
+   "jupSymbolMatches": [
+    {
+     "symbol": "TUPPENCE",
+     "name": "Tuppence",
+     "isVerified": false,
+     "tags": [
+      "unknown",
+      "token-2022"
+     ],
+     "id": "HnU8E8dza4kx7PPd5ZC7HAxqeD5UATvdbkrD5DNHpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Tuppence, a tubby silver tabby in a flat tweed cap, strolls the garden path each morning, then settles on the warm bench to watch the bees go by. A cat coin priced in CRCLx. Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Porridge the Sun Hat Cat",
+   "ticker": "PORRIDGE",
+   "nameLen": 24,
+   "tickerLen": 8,
+   "blurbLen": 146,
+   "descLen": 256,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 15,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Porridge, a chubby oat-coloured cat with a white bib and a wide straw sun hat, dozes in the pumpkin patch and wakes only when a treat bag rustles. A cat coin priced in CRCLx. Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

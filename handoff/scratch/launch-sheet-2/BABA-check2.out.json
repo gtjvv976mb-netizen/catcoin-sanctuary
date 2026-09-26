@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Lacquer the Sleek Black Cat",
+   "ticker": "LACQUER",
+   "nameLen": 27,
+   "blurbLen": 140,
+   "descLen": 277,
+   "tickerHasBabaRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lacquer, a sleek jet-black shorthair wit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Lacquer, a sleek jet-black shorthair with a mirror-glossy coat and bright gold eyes, sits tall on the garden gatepost to greet each visitor. A cat coin priced in BABA. Not affiliated with Alibaba Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Magpie the Tuxedo Cat",
+   "ticker": "MAGPIEPAW",
+   "nameLen": 21,
+   "blurbLen": 134,
+   "descLen": 271,
+   "tickerHasBabaRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Magpie, a trim black-and-white tuxedo ca",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Magpie, a trim black-and-white tuxedo cat with a crisp white bib and four white socks, tidies fallen leaves along the stepping stones. A cat coin priced in BABA. Not affiliated with Alibaba Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Satchel the Ghost-Stripe Cat",
+   "ticker": "SATCHNAP",
+   "nameLen": 28,
+   "blurbLen": 140,
+   "descLen": 277,
+   "tickerHasBabaRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Satchel, a glossy black cat whose faint ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Satchel, a glossy black cat whose faint ghost stripes show only in bright sun, naps in every empty delivery box left beside the garden shed. A cat coin priced in BABA. Not affiliated with Alibaba Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

@@ -1,0 +1,153 @@
+
+1. THE 24 PAIRS, AGAINST WHAT WAS READ ON 2026-09-25
+────────────────────────────────────────────────────
+  ok   24 pairs: the fifteen built-in xStocks and nine more; XSTOCK_BUILTIN is still fifteen
+  ok   every pair's symbol and name are the official product list's for its mint (xstocks.com, read 2026-09-25)  — 24 of 24
+  ok   …and StonkFun's /pairs lists each by that mint as an xStock, launchable and LaunchLab-ready, under the symbol and name the config records
+  ok   …and every xStock StonkFun listed as ready is one of the 24
+  ok   every pair's mint, read in base64 that day, is Token-2022 at 8 decimals and passes every quote check (the issuer's keys in every seat)  — 24 of 24
+  ok   the issuer's keys the checks hold them to
+  ok   stock cats call one host of their own: StonkFun's
+  ok   every other quote StonkFun listed is a count with its reason, never a pair  — 390 custom, 76 backpack, 7 prestock, 5 currency, 3 leverage, 3 solana, 2 tessera, 2 collectible
+
+2. THE RESEARCH GATE
+────────────────────
+  ok   the notes ship empty
+  ok   so every one of the 24 pairs is refused at pair_terms_missing, and none gets a suggestion
+  ok   a row with every list, a real date and its method counts; an empty list is a dated "none found"
+  ok   …a row with no date, a date that is no day, or no method does not
+  ok   …nor one missing a list, with an empty name, or a fact without its source or date
+  ok   …nor two rows for one mint
+  ok   a name may carry its source: { name, source }
+
+3. THE RULES, CLAUSE BY CLAUSE
+──────────────────────────────
+  ok   a clean stock cat passes every rule  — []
+  ok   pair_unknown: a pair that is not one of the 24
+  ok   pair_term: this pair's symbol, root, StonkFun's spelling, a word of its name
+  ok   …and a person, mascot or brand its research row names
+  ok   other_pair: any other pair's term ("Tesla Cat" beside SPYx; McDonald's beside PLTRx)
+  ok   pair_ticker: this pair's root at either end, as letters and digits (BRK.Bx is BRKB)
+  ok   …and any pair's root of three or more characters inside it
+  ok   launch_claim: "stock"
+  ok   launch_claim: "xstock"
+  ok   launch_claim: "share"
+  ok   launch_claim: "equity"
+  ok   launch_claim: "backed"
+  ok   launch_claim: "dividend"
+  ok   launch_claim: "collateral"
+  ok   launch_claim: "dev buy"
+  ok   launch_claim: "no dev"
+  ok   launch_claim: "fair launch"
+  ok   launch_claim: "stealth"
+  ok   launch_claim: "renounced"
+  ok   launch_claim: "lp burned"
+  ok   launch_claim: "locked"
+  ok   name_taken: an earlier stock cat's name or ticker
+  ok   and CashCat's own rules: a person, a brand, a promise, a ticker a verified token has, no cat
+  ok   the brand fix holds here too: "SpaceX Cat", "McDonald's Cat", "OpenAI Cat", "JPMorgan Cat" are brands
+  ok   each pair's terms: its symbol, root, StonkFun's symbol and name, and every name word of three or more letters but "xStock"; its disclosure word for word, naming the symbol and never the company
+  ok   each pair gets suggestions that pass every rule, "<Background> <Kitten> Cat" with four letters and three for a ticker and the fixed line, in the same order every time
+  ok   …the order seeded by each pair's mint, so the pairs do not all start alike  — 17 different first suggestions over 24 pairs
+  ok   a fixed line reads as English: "an orange sign", "an ink sign"
+
+4. THE STOCK'S OWN MINT
+───────────────────────
+  ok   quote_paused: the mint's own paused flag set, read from its bytes
+  ok   quote_default_frozen: new accounts opened frozen
+  ok   quote_transfer_fee: a transfer fee
+  ok   quote_hook: a transfer hook program
+  ok   quote_symbol: the mint's own symbol is not the pair's
+  ok   quote_issuer: another key in any seat (mint, freeze, pause, permanent delegate)
+
+5. THE LAUNCH, IN A LAUNCHLAB CHAIN DOUBLE
+──────────────────────────────────────────
+(node:27833) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok   as shipped (no research rows), no name is suggested, and "Check the launch" is refused at pair_terms_missing before anything is read or built
+  ok   the list: 24 pairs, the researched ones marked, their facts for the owner labelled as sourced facts, not endorsements
+  ok   reading StonkFun marks all 24 ready and counts the rest
+  ok   "Check the launch": a v0 message with two signers, the recorded simulation's spend inside the StonkFun budget, and nothing pinned, signed or sent  — {"spend":0.0086739,"units":98272}
+  ok   …showing the accounts (StonkFun's platform, the pair's config and curve rule), the raise, StonkFun's market caps as its pricing figure, the multiplier and the three notes
+  ok   …and the disclosure its coin will carry
+  ok   one transaction was sent, and the engine's signSendConfirm was asked once, though CashCat's dev buy is set to 0.05 SOL
+  ok   it is a v0 transaction with no lookup table, signed by exactly [the autopilot wallet, the new mint], both verified by the chain; Phantom never asked
+  ok   the bytes sent pass the bot's own pre-sign check with venue "stonkfun": the planned signers, program, sixteen accounts, the shape, the raise and the pinned URI (Pinata's gateway form)  — true
+  ok   the simulation it passed logged InitializeWithToken2022 and spent the recorded 8,673,900 lamports
+  ok   the metadata was pinned for StonkFun, its description the tagline and the disclosure, created on StonkFun, with no "Made with CashCat"
+  ok   no research text reaches the coin or the model: not a cat fact, not its source, not the row's method
+  ok   …and the document names the xStock's symbol, never the company
+  ok   the journal: venue, pair, pool, mint, signature, cost, a clean mint, and the links to StonkFun and Solscan  — {"at":1790348400000,"kind":"launched","mode":"manual","venue":"stonkfun","mint":"HEwkcQi9Gmwc8t4nm2eVYcbws3Te7faHXmiz8UA1a3qw","creator":"J5tGWhivpCH581a8JfRpSFinSL2tj254Ah1ViGv3KkKn","name":"Violet Tuxedo Cat","symbol":"VIOLTUX","pair":{"official":"SPYx","stonkfun":"SPYX","mint":"XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W"},"pool":"8EUfVgnR65ZCD2xWRLDXE9BieFo4ptf6Vr4yvp4YQAng","raiseRaw":"1326271533","checkedRaiseRaw":"1326271533","source":"suggested","uri":"https://gateway.pinata.cloud/ipfs/bafkreisssssssssssssssssssssssssssssssssssssssssssssssssssb","simulatedSpendSol":0.0086739,"signature":"4znhiPMTA5Vqg6vPhjPH1P4o1gv1GLJ2yFqE22hV7hfu42t5yioEit1UVw6tpXcvhKUX7DTDiqu4cF9L7vxTjobG","costSol":0.0086739,"mintClean":true,"links":["https://www.stonkfun.xyz/token/HEwkcQi9Gmwc8t4nm2eVYcbws3Te7faHXmiz8UA1a3qw","https://solscan.io/tx/4znhiPMTA5Vqg6vPhjPH1P4o1gv1GLJ2yFqE22hV7hfu42t5yioEit1UVw6tpXcvhKUX7DTDiqu4cF9L7vxTjobG"],"updatedAt":1790348400000}
+  ok   the new mint's key was used once and dropped
+  ok   the model reviewed it as a stock cat: the pair's symbol and every term it must not reference, and the stock cat's own rules
+  ok   Popcat, Snipurr and the agent are told it is the owner's own (CashCat's exclusions)
+
+6. ARMED BY THE CHECK ALONE: EVERY WAY A LAUNCH IS REFUSED BEFORE IT RUNS
+─────────────────────────────────────────────────────────────────────────
+  ok   prepare_first: nothing was checked
+  ok   prepare_stale: the check is over ten minutes old — refused, nothing pinned, signed or sent  — ""
+  ok   pair_changed: another pair than the one checked — refused, nothing pinned, signed or sent  — ""
+  ok   draft_changed: the draft changed after the check — refused, nothing pinned, signed or sent  — ""
+  ok   wallet_changed: the autopilot wallet changed after the check — refused, nothing pinned, signed or sent  — ""
+  ok   confirm: the wrong ticker typed — refused, nothing pinned, signed or sent  — ""
+  ok   prepare_first: another check's id — refused, nothing pinned, signed or sent  — ""
+  ok   a check is used once: after a refused launch, the same id is refused at prepare_first
+  FAIL …and each refusal is journaled as a stock cat's
+
+7. THE CAPS: ONE CAT PER STOCK, THE DAY'S CAP, A MINT THAT READ BACK UNCLEAN
+────────────────────────────────────────────────────────────────────────────
+  ok   stock_has_cat: SPYx has its cat; another is refused, ever
+  ok   name_taken: PLTRx may not take SPYx's cat's name or ticker
+  ok   the day's cap is 2 by default and fenced 1 to 6, the bot's own fence; outside it, refused by name
+  ok   stock_day_cap: at 1 a day, the second launch the same UTC day is refused
+  ok   …counting every launch from the extension: two CashCat coins today fill the default cap
+  ok   a launch whose mint reads back with a mint authority still set is journaled mintClean:false, and the owner told
+  ok   unclean_mint: every further stock cat is refused until the owner marks it checked
+  ok   …after CashCat's own MARK_CHECKED, the next is checked again
+
+8. THE PLAN AGAIN AT THE LAUNCH, THE PLANNER'S REFUSALS, THE OWNER'S RPC, HOSTILE BYTES
+───────────────────────────────────────────────────────────────────────────────────────
+  ok   plan_changed: StonkFun's curve rule (or config, platform, token program) differs at the launch — refused before a pin
+  ok   a changed raise is only written down: launched at the new raise, the one checked beside it
+  ok   plan_refused: the planner's own refusal (a reward platform in the pricing) is reported with its inner clause
+  ok   a plan that itself names the reward platform is refused by the pre-sign check before any simulation
+  ok   a quote check at the tab: the stock's own mint read paused with the plan → quote_paused, before any build
+  ok   no_rpc: with only the public RPC (which answers 403 to the extension) the plan is refused as no_rpc, not as a StonkFun refusal
+  ok   …and with no RPC set at all, refused the same way before anything is read
+  ok   the check itself passes on honest bytes (the simulation spends more than the 0.015 SOL budget: set after it)
+  ok   simulation_refused: the simulation spends more than the 0.015 SOL budget — before a pin, the mint's key or a signature
+  ok   the check itself passes on honest bytes (the simulation does not log InitializeWithToken2022: set after it)
+  ok   simulation_refused: the simulation does not log InitializeWithToken2022 — before a pin, the mint's key or a signature
+  ok   the honest v0 launch, as the tab builds it, passes
+  ok   StonkFun's reward (taxed) platform → accounts
+  ok   another raise → raise
+  ok   vesting → vesting
+  ok   a transfer fee → transfer_fee
+  ok   the curve rule left off → accounts
+  ok   an extra transfer → instructions
+  ok   a lookup table → lookup_tables
+
+9. ADOPTION, WHEN THE OWNER ASKS
+────────────────────────────────
+  ok   the recorded xStock-paired launch reads adopted: mint, pool (PDA of the mint and the stock), creator, LaunchLab, standard mode, the stock as the quote  — []
+  ok   …and the journal says so
+  ok   not adopted when StonkFun's record names another mint (launch.mint)
+  ok   not adopted when StonkFun's record names another pool (launch.pool)
+  ok   not adopted when StonkFun's record names another creator (launch.creator)
+  ok   not adopted when StonkFun's record names another launchpad (launch.launchpad)
+  ok   not adopted when StonkFun's record names the reward mode (launch.mode)
+  ok   not adopted when StonkFun's record names another quote (token.quote.mint)
+  ok   StonkFun's recorded 404 ("No platform pool exists for this mint.") is "not adopted yet", never a failure
+  ok   a mint that is not a launched stock cat is refused (not_found)
+
+10. NEVER IN AUTO MODE, NEVER A DEV BUY ON STONKFUN, AND THE JOURNAL KEEPS EVERY STOCK CAT
+──────────────────────────────────────────────────────────────────────────────────────────
+  ok   venue: a venue the tab does not launch on (pump.fun paired with a stock) is refused by name
+  ok   manual_only: StonkFun in auto mode is refused by name; pump.fun's auto mode is not
+  ok   no_dev_buy_on_stonkfun: the dev buy refuses every venue but pump.fun
+  ok   with a stock cat drafted and checked, auto mode's tick launches a pump.fun coin and never a LaunchLab launch
+  ok   a stock cat's launch is never trimmed from the journal (one cat per stock, ever); an old pump.fun launch is
+  ok   a stock cat's draft key binds its words, its art, the venue and the pair
+
+test-cats-stockcats: 117 passed, 1 failed
+

@@ -1,0 +1,22 @@
+{
+  "note": "Stills (1600x900 JPG) and silent clips (1280x720 H.264 MP4) captured from the live site in headless Chromium, for the promo posts (data/promo-posts.json, scripts/promo.mjs). Stills at ?q=high; clips frame-stepped at ?q=medium (orbit) or ?q=low (the rest) so software rendering could keep up. The page never loads these files.",
+  "media": [
+    { "id": "garden-overview", "file": "assets/promo/garden-overview-1.jpg", "type": "image", "shows": "The whole garden from the default view: the Catcoin Sanctuary logo over the Research HQ cottage, paths, pond, picnic blanket and cats everywhere." },
+    { "id": "garden-overview-2", "file": "assets/promo/garden-overview-2.jpg", "type": "image", "shows": "The garden from the side, the lily pond in the foreground, the logo and cottage in the middle." },
+    { "id": "garden-overview-3", "file": "assets/promo/garden-overview-3.jpg", "type": "image", "shows": "Closer on the cottage with its logo and speech bubble, cats walking the lawn in front, the pond's edge at the bottom." },
+    { "id": "cats-closeup", "file": "assets/promo/cats-closeup.jpg", "type": "image", "shows": "Cats up close by the food bowls, one chosen (Atchoum) with its card open beside the view." },
+    { "id": "cats-closeup-2", "file": "assets/promo/cats-closeup-2.jpg", "type": "image", "shows": "A crowd of cats up close on the lawn, a calico in front, the chosen cat's card on the right." },
+    { "id": "cats-walking", "file": "assets/promo/cats-walking.jpg", "type": "image", "shows": "A group of cats trotting across the grass under the trees, the greenhouse behind; no panels open." },
+    { "id": "cat-card", "file": "assets/promo/cat-card.jpg", "type": "image", "shows": "A cat card open (Goose): its portrait, lore and photo, the Adopt this cat button, the cat ringed in the garden." },
+    { "id": "cat-card-2", "file": "assets/promo/cat-card-2.jpg", "type": "image", "shows": "Another cat card open (Big the Cat) with its lore and photo, cats playing around the chosen cat." },
+    { "id": "adopt-panel", "file": "assets/promo/adopt-panel.jpg", "type": "image", "shows": "The Adopt panel: launch this cat's coin yourself, and its launch kit (token name, ticker, description) with Copy buttons." },
+    { "id": "adopt-launch", "file": "assets/promo/adopt-launch.jpg", "type": "image", "shows": "The Adopt panel scrolled to Launch it: the StonkFun launchpad section with the quote token to copy." },
+    { "id": "adopt-pill", "file": "assets/promo/adopt-pill.jpg", "type": "image", "shows": "The Adopt a Cat pill opened: the list of adoptable cats with their portraits, all Not launched yet." },
+    { "id": "research-hq", "file": "assets/promo/research-hq.jpg", "type": "image", "shows": "Research HQ: the cottage, the researcher cat at its laptop desk and map board, and the speech bubble above." },
+    { "id": "hall-of-fame", "file": "assets/promo/hall-of-fame.jpg", "type": "image", "shows": "The Hall of Fame list: legendary cat coins made by others, shown as inspiration." },
+    { "id": "clip-orbit", "file": "assets/promo/clip-orbit.mp4", "type": "video", "shows": "A slow camera orbit around the whole garden (7 s)." },
+    { "id": "clip-cats", "file": "assets/promo/clip-cats.mp4", "type": "video", "shows": "Cats walking and playing up close as the camera drifts round (7 s)." },
+    { "id": "clip-research", "file": "assets/promo/clip-research.mp4", "type": "video", "shows": "A slow pan around Research HQ and its speech bubble (7 s)." },
+    { "id": "clip-adopt", "file": "assets/promo/clip-adopt.mp4", "type": "video", "shows": "Clicking a cat in the garden, its card opening, then Adopt: the launch kit panel (about 12 s)." }
+  ]
+}

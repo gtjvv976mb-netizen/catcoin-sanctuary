@@ -1,0 +1,21 @@
+== Pebble the Garden Cat PEBBLECAT | name len 21 | symbol len 9 | body len 128 | desc len 253 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"microsoft","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 2 | same-symbol 0 | same-symbol verified 0 
+ DESC: Pebble is a grey-and-white cat with grey-green eyes who naps on sun-warmed stones by the pond and wakes only for a chin scratch. A cat coin priced in MSFTx. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.
+== Fogwhisker Cat FOGWHISK | name len 14 | symbol len 8 | body len 133 | desc len 258 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"microsoft","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 0 | same-symbol 0 | same-symbol verified 0 
+ DESC: A grey-and-white cat with grey-green eyes who drifts through the garden at dawn like morning mist, then curls up on the warmest step. A cat coin priced in MSFTx. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.
+== Halfsmile Cat HALFSMILE | name len 13 | symbol len 9 | body len 151 | desc len 276 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"microsoft","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 0 | same-symbol 0 | same-symbol verified 0 
+ DESC: A grey-and-white cat with grey-green eyes and a crooked half-smile that looks cross until you see it is a grin. Loves laps, slow blinks and loud purrs. A cat coin priced in MSFTx. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.

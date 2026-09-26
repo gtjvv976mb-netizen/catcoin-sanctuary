@@ -1,0 +1,10 @@
+import { chromium } from "playwright";
+const b = await chromium.launch({ args: ["--use-gl=swiftshader","--enable-unsafe-swiftshader"] });
+const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+const errs = []; p.on("pageerror", e => errs.push(e.message));
+await p.goto("https://catcoinsanctuary.com/", { timeout: 90000 });
+await p.waitForTimeout(40000);
+await p.screenshot({ path: process.argv[2] });
+const px = await p.evaluate(() => { const c = document.querySelector("canvas"); return c ? [c.width, c.height] : null; });
+console.log("canvas", px, "errors", errs);
+await b.close();

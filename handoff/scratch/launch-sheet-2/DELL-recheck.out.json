@@ -1,0 +1,448 @@
+{
+ "checkedAt": "2026-09-25T18:46:07.810Z",
+ "disclaimer": "A cat coin priced in DELL. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "disclaimerOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "id": "coin1-draft",
+   "name": "Frostpuff the Fold-Eared Cat",
+   "ticker": "FROSTPUFF",
+   "description": "Frostpuff, a fluffy white cat with faint silver brow stripes, folded ears, a pink nose and big teal eyes, peeks out from the garden hedge. A cat coin priced in DELL. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "lengths": {
+    "name": 28,
+    "blurb": 138,
+    "description": 279
+   },
+   "withinLimits": true,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "catMemeBlocklist": false,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Frostpuff, a fluffy white cat with faint",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "bbc",
+      "field": "look"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Avatar",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupiterNameWord": {
+    "query": "Frostpuff",
+    "status": 200,
+    "results": 0,
+    "hits": []
+   }
+  },
+  {
+   "id": "coin1-fixed",
+   "name": "Frostpuff the Fold-Eared Cat",
+   "ticker": "FROSTPUFF",
+   "description": "Frostpuff, a fluffy white cat with faint silver brow stripes, folded ears, a pink nose and big grey-green eyes, peeks from the garden hedge. A cat coin priced in DELL. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "lengths": {
+    "name": 28,
+    "blurb": 140,
+    "description": 281
+   },
+   "withinLimits": false,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "catMemeBlocklist": false,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Frostpuff, a fluffy white cat with faint",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupiterNameWord": {
+    "query": "Frostpuff",
+    "status": 200,
+    "results": 0,
+    "hits": []
+   }
+  },
+  {
+   "id": "coin2",
+   "name": "Lidnap the Gunmetal Cat",
+   "ticker": "LIDNAP",
+   "description": "Lidnap, a sleek gunmetal-grey shorthair with a silver bib and pale blue eyes, folds flat as a closed laptop lid on the warm garden bench. A cat coin priced in DELL. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "lengths": {
+    "name": 23,
+    "blurb": 137,
+    "description": 278
+   },
+   "withinLimits": true,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "catMemeBlocklist": false,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lidnap, a sleek gunmetal-grey shorthair ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupiterNameWord": {
+    "query": "Lidnap",
+    "status": 200,
+    "results": 20,
+    "hits": [
+     "ANSEMHOUSE | 123 Linden Blvd APT 23G | verified=undefined",
+     "ANSEMHOUSE | 123 Linden Blvd APT 23G | verified=undefined",
+     "ANSEMHOUSE | 123 Linden Blvd APT 23G | verified=undefined",
+     "ANSEMHOUSE | 123 Linden Blvd APT 23G | verified=undefined",
+     "Bape | a blindin ape | verified=undefined",
+     "PEANUT | #1 Blind Squirrel Named Peanut | verified=undefined",
+     "PEANUT | #1 Blind Squirrel Named Peanut | verified=undefined",
+     "AGI | Grok replied not Anthropic | verified=undefined"
+    ]
+   }
+  },
+  {
+   "id": "coin3",
+   "name": "Whirr the Smoke-Black Cat",
+   "ticker": "WHIRR",
+   "description": "Whirr, a lean smoke-black shorthair with ice-blue eyes, purrs like a soft cooling fan while napping on the sunny stone wall by the shed. A cat coin priced in DELL. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "lengths": {
+    "name": 25,
+    "blurb": 136,
+    "description": 277
+   },
+   "withinLimits": true,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "catMemeBlocklist": false,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Whirr, a lean smoke-black shorthair with",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupiterNameWord": {
+    "query": "Whirr",
+    "status": 200,
+    "results": 20,
+    "hits": [
+     "WHITEMRROR | White Mirror | verified=undefined",
+     "WGAI | WHITE GIRRAFES AI | verified=undefined",
+     "$WGIRRAFE | THE WHITE GIRRAFES | verified=undefined",
+     "$WGIRRAFES | THE WHITE GIRRAFES | verified=undefined",
+     "WHITEBELKA | The White Squirrel | verified=undefined",
+     "WHITESQUIR | The White Squirrel | verified=undefined",
+     "KEVIN | Ultra Rare White Squirrel | verified=undefined",
+     "PENNY | #1 White Squirrel Ambassador | verified=undefined"
+    ]
+   }
+  }
+ ],
+ "pair": [
+  {
+   "mint": "DELL2aRKQz7DMq5DrKLtkn47ZCnbxXPZXrSGbkmd13wy",
+   "symbol": "DELL",
+   "name": "DELL",
+   "decimals": 6,
+   "logoUrl": "/api/asset/quote-logo/DELL2aRKQz7DMq5DrKLtkn47ZCnbxXPZXrSGbkmd13wy?v=0883956f",
+   "category": "backpack",
+   "categoryLabel": "Sunrise",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  }
+ ],
+ "rpc": {
+  "status": 200,
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "type": "mint",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": false,
+  "paused": false,
+  "permanentDelegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "transferHookProgram": null,
+  "mintAuthority": "8ffbEV276khmZuLftwR8XTUTDFZ16GFogxx4vdyuoJXs",
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+ }
+}

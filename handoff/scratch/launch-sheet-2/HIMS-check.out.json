@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Tuft the Full-Ruff Cat",
+   "ticker": "TUFTRUFF",
+   "nameLen": 22,
+   "blurbLen": 136,
+   "descLen": 278,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tuft, a long-haired brown tabby with a t",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Tuft, a long-haired brown tabby with a thick, full coat and a big fluffy neck ruff, gets brushed every morning on the sunny garden wall. A cat coin priced in HIMS. Not affiliated with Hims & Hers Health, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Parcel the Amber-and-White Cat",
+   "ticker": "PARCELPAW",
+   "nameLen": 30,
+   "blurbLen": 134,
+   "descLen": 276,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Parcel, a sturdy amber-and-white shortha",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Parcel, a sturdy amber-and-white shorthair with a white chest and white paws, waits by the garden gate each week for the delivery box. A cat coin priced in HIMS. Not affiliated with Hims & Hers Health, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Dewpaw the Soft-Cream Cat",
+   "ticker": "DEWPAW",
+   "nameLen": 25,
+   "blurbLen": 133,
+   "descLen": 275,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Dewpaw, a sleek, soft-coated cream cat w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 8,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Dewpaw, a sleek, soft-coated cream cat with pale fawn points and calm blue eyes, starts each day with a slow stretch beside the pond. A cat coin priced in HIMS. Not affiliated with Hims & Hers Health, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

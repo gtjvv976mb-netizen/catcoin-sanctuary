@@ -1,0 +1,563 @@
+{
+ "disclaimerOnly": {
+  "checkFields": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "costco",
+     "field": "disclaimer"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclaimer"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclaimer"
+    }
+   ]
+  },
+  "checkTerms": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "stock",
+     "term": "COST",
+     "field": "disclaimer"
+    }
+   ]
+  }
+ },
+ "candidates": [
+  {
+   "name": "Carton the Cardboard-Tan Cat",
+   "ticker": "CARTONPAW",
+   "nameLen": 28,
+   "blurbLen": 139,
+   "descLen": 279,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Carton, a big broad-chested cat with a c",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "look"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "otherHits": [
+     {
+      "symbol": "CONRAD",
+      "name": "Conrad The Immortal Diamond Paws"
+     }
+    ]
+   },
+   "description": "Carton, a big broad-chested cat with a cardboard-tan coat, cream bib and cream paws, naps on a tall pile of brown boxes in the garden shed. A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Stacks the Cardboard-Tan Cat",
+   "ticker": "STACKPAW",
+   "nameLen": 28,
+   "blurbLen": 139,
+   "descLen": 279,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stacks, a big broad-chested cat with a c",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "look"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Stacks",
+      "field": "name"
+     },
+     {
+      "rule": "stock",
+      "term": "Stacks",
+      "field": "tagline"
+     },
+     {
+      "rule": "stock",
+      "term": "Stacks",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "otherHits": []
+   },
+   "description": "Stacks, a big broad-chested cat with a cardboard-tan coat, cream bib and cream paws, naps on a tall pile of brown boxes in the garden shed. A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Roastie the Golden-Crust Cat",
+   "ticker": "ROASTPAW",
+   "nameLen": 28,
+   "blurbLen": 137,
+   "descLen": 277,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Roastie, a plump shorthair with a glossy",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "otherHits": []
+   },
+   "description": "Roastie, a plump shorthair with a glossy golden-brown coat and herb-green eyes, dozes in the warmest sunny patch beside the garden grill. A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Toastbun the Long Ginger Cat",
+   "ticker": "TOASTBUN",
+   "nameLen": 28,
+   "blurbLen": 130,
+   "descLen": 270,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Toastbun, a long, low ginger tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "otherHits": [
+     {
+      "symbol": "WOC",
+      "name": "send og not coasty bundled "
+     }
+    ]
+   },
+   "description": "Toastbun, a long, low ginger tabby with toasty bun-brown stripes and a cream belly, stretches the full length of the garden bench. A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "jupName_Stacks": {
+  "status": 200,
+  "results": 20,
+  "top": [
+   {
+    "symbol": "STKS",
+    "name": "STACKS",
+    "mcap": 3111,
+    "id": "94VpJZwozYW8YPhF2rAjV8s259dmbwutU2UJnEgLpump"
+   },
+   {
+    "symbol": "STKS",
+    "name": "STACKS",
+    "mcap": 3274,
+    "id": "44f1ujf75drmy1MZ1PCsukhexpo9n1gnthxE99dZpump"
+   },
+   {
+    "symbol": "STACKS",
+    "name": "Stacks On Stacks",
+    "mcap": 3327,
+    "id": "4zhaEUUMNikU4CTa2GWyzww1JqLd4BTm5jK2HdvSpump"
+   },
+   {
+    "symbol": "HoldmanSt",
+    "name": "Holdman Stacks",
+    "mcap": 3390,
+    "id": "FjtSX4kFrSD5XBtD6V8HwZahSM9dGWtzc3eNisRBpump"
+   },
+   {
+    "symbol": "STACKS",
+    "name": "CASHCAT 2.0",
+    "mcap": 3044,
+    "id": "hqW5ijYAEie9bpwP2m1yj133o7pNgzuuvLMFnYspump"
+   },
+   {
+    "symbol": "STACKS",
+    "name": "STACKS",
+    "mcap": 28751,
+    "id": "8npbXTu4oTNw3xrMGY1aTm4CtB7cMPVuRUCh3Wqj3fSW"
+   }
+  ]
+ },
+ "jupName_STX": {
+  "status": 200,
+  "results": 20,
+  "top": [
+   {
+    "symbol": "STXon",
+    "name": "Seagate (Ondo Tokenized)",
+    "isVerified": true,
+    "mcap": 2892,
+    "id": "EXtprP1wzrNo2bByrU9JyzqEg2hQMSCVJakeHHYondo"
+   },
+   {
+    "symbol": "STX",
+    "name": "Shitcoin Futures Exchange",
+    "mcap": 3158,
+    "id": "FcZn7J5bhXjnEXKopaV5Q7UoRrxdT6YWs2pNcbFYnzj6"
+   },
+   {
+    "symbol": "STX",
+    "name": "Shitcoin Futures Exchange",
+    "mcap": 3124,
+    "id": "F1FVFvCUAcgFLMyzV4zr9dEGEk23g9GwVmjZcmS2pump"
+   },
+   {
+    "symbol": "STX",
+    "name": "Shitcoin Futures Exchange",
+    "mcap": 3167,
+    "id": "6yEEcTFCtiWh9ER5qagmjFXSoXQXMamoeM3W3V5SVsoL"
+   },
+   {
+    "symbol": "STX",
+    "name": "Shitcoin Futures Exc",
+    "mcap": 3103,
+    "id": "EbTfB2BGnsYyLbEcqe5f5ywYhXBaRgBQ4PbS2FHxoSoL"
+   },
+   {
+    "symbol": "STX",
+    "name": "Shitcoin Futures Exchange",
+    "mcap": 3092,
+    "id": "a4WGcahKSNqxwR4gtM2dFRb8g7gMfRWn5CmHsNBpump"
+   }
+  ]
+ },
+ "jupName_Carton": {
+  "status": 200,
+  "results": 20,
+  "top": [
+   {
+    "symbol": "DOLLYCART",
+    "name": "Dolly Carton",
+    "mcap": 3310,
+    "id": "HRP4YjdCtkEkK6mjGPq29HzeSmKHMZXU9K1xAKGNpump"
+   },
+   {
+    "symbol": "EMPTYC",
+    "name": "Empty Carton",
+    "mcap": 4368,
+    "id": "4qwmeWaRGM6EfFUGFuhv7yULLGwAx3QsWqeg9TZ8pump"
+   },
+   {
+    "symbol": "ANSTON",
+    "name": "The Carton Bull",
+    "mcap": 2796,
+    "id": "7ck3u7wf21faB1iVRpwHoFVNifNBj63YjRAT3Qipump"
+   },
+   {
+    "symbol": "Cartoonify",
+    "name": "Cartonification",
+    "mcap": 0,
+    "id": "2R2Z89puoiCfrvFZNCJMSz1FmLKmUZGCxFdZEkdvpump"
+   },
+   {
+    "symbol": "PMC",
+    "name": "PROJECT MILK CARTON",
+    "mcap": 0,
+    "id": "RmbKTDqyEE9vSLziMxBK4vKFyPnWKryhZocLn3Zpump"
+   },
+   {
+    "symbol": "MILK",
+    "name": "Carton Of Milk",
+    "mcap": 0,
+    "id": "CAmcDCpcc7cG7p3XKPWqp9bfdSrFc5pLfFcZ9WJipump"
+   }
+  ]
+ },
+ "jupName_CARTON": {
+  "status": 200,
+  "results": 20,
+  "top": [
+   {
+    "symbol": "DOLLYCART",
+    "name": "Dolly Carton",
+    "mcap": 3310,
+    "id": "HRP4YjdCtkEkK6mjGPq29HzeSmKHMZXU9K1xAKGNpump"
+   },
+   {
+    "symbol": "EMPTYC",
+    "name": "Empty Carton",
+    "mcap": 4368,
+    "id": "4qwmeWaRGM6EfFUGFuhv7yULLGwAx3QsWqeg9TZ8pump"
+   },
+   {
+    "symbol": "ANSTON",
+    "name": "The Carton Bull",
+    "mcap": 2796,
+    "id": "7ck3u7wf21faB1iVRpwHoFVNifNBj63YjRAT3Qipump"
+   },
+   {
+    "symbol": "Cartoonify",
+    "name": "Cartonification",
+    "mcap": 0,
+    "id": "2R2Z89puoiCfrvFZNCJMSz1FmLKmUZGCxFdZEkdvpump"
+   },
+   {
+    "symbol": "PMC",
+    "name": "PROJECT MILK CARTON",
+    "mcap": 0,
+    "id": "RmbKTDqyEE9vSLziMxBK4vKFyPnWKryhZocLn3Zpump"
+   },
+   {
+    "symbol": "MILK",
+    "name": "Carton Of Milk",
+    "mcap": 0,
+    "id": "CAmcDCpcc7cG7p3XKPWqp9bfdSrFc5pLfFcZ9WJipump"
+   }
+  ]
+ }
+}

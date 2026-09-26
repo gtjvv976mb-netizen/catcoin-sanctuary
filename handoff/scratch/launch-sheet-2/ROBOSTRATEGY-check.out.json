@@ -1,0 +1,224 @@
+{
+ "results": [
+  {
+   "name": "Sprocket the Steel-Grey Cat",
+   "ticker": "SPROCKET",
+   "nameLen": 27,
+   "tickerLen": 8,
+   "blurbLen": 164,
+   "descLen": 293,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sprocket, a sleek steel-grey shorthair w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "Sprocket",
+     "name": "Sprocket",
+     "id": "ARjm9yk6pZTLGU2w2EHBQKdSgaQmi8ZRdzwLbP4dpump",
+     "mcap": 2797.83383090701
+    },
+    {
+     "symbol": "SPROCKET",
+     "name": "Sprocket",
+     "id": "EizziR3NrzoPfNpfQuVKdTxzqJztuzgqp99QM4atpump"
+    },
+    {
+     "symbol": "Sprocket",
+     "name": "Sprocket",
+     "id": "HgFz672bphxkV982oyH89SQDdS7rPiBh6f6HK735qBjv",
+     "mcap": 2759.2642920593744
+    },
+    {
+     "symbol": "SPROCKET",
+     "name": "SPROCKET, THE SPACE ROCKET",
+     "id": "EzgMHkY1G7fK2LVkS37T58dN51vNQ1eMr8G9Y1kmzagG",
+     "mcap": 1769.5986471062954
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Sprocket, a sleek steel-grey shorthair with amber eyes, crosses the garden in neat, even steps and stops at the very same flower at the very same time each morning. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Gearpaw the Helper Cat",
+   "ticker": "GEARPAW",
+   "nameLen": 22,
+   "tickerLen": 7,
+   "blurbLen": 154,
+   "descLen": 283,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 6,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Gearpaw, a gunmetal-grey and white tuxedo cat with bright green eyes, copies whatever the gardener does, patting the soil and nudging pots into tidy rows. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Rivet the Silver-Point Cat",
+   "ticker": "RIVETPAW",
+   "nameLen": 26,
+   "tickerLen": 8,
+   "blurbLen": 158,
+   "descLen": 287,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Rivet, a pale silver cat with dark steel-grey ears, paws and tail and ice-blue eyes, naps by the tool shed with a low, steady purr like a small motor at rest. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "ext": {
+  "BoTx8y9ynfdxf5ZjWtCoBVkff52qKA82ysaLU8ZM6d8T": {
+   "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "extensions": [
+    {
+     "extension": "metadataPointer"
+    },
+    {
+     "extension": "permanentDelegate",
+     "state": {
+      "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+     }
+    },
+    {
+     "extension": "defaultAccountState",
+     "state": {
+      "accountState": "initialized"
+     }
+    },
+    {
+     "extension": "pausableConfig",
+     "state": {
+      "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+      "paused": false
+     }
+    },
+    {
+     "extension": "confidentialTransferMint"
+    },
+    {
+     "extension": "transferHook",
+     "state": {
+      "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+      "programId": null
+     }
+    },
+    {
+     "extension": "scaledUiAmountConfig",
+     "state": {
+      "authority": "HcSDK8nSoSft3VMP2d8ASnXnzDJnnY4Ak2xkhBtHgQ4H",
+      "multiplier": "1",
+      "newMultiplier": "1",
+      "newMultiplierEffectiveTimestamp": 0
+     }
+    },
+    {
+     "extension": "tokenMetadata"
+    }
+   ]
+  }
+ }
+}

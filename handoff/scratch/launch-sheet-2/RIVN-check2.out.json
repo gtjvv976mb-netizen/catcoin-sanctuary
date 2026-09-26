@@ -1,0 +1,208 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   {
+    "e": "metadataPointer"
+   },
+   {
+    "e": "permanentDelegate",
+    "s": {
+     "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+    }
+   },
+   {
+    "e": "defaultAccountState",
+    "s": {
+     "accountState": "initialized"
+    }
+   },
+   {
+    "e": "pausableConfig",
+    "s": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "paused": false
+    }
+   },
+   {
+    "e": "confidentialTransferMint"
+   },
+   {
+    "e": "transferHook",
+    "s": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "programId": null
+    }
+   },
+   {
+    "e": "scaledUiAmountConfig"
+   },
+   {
+    "e": "tokenMetadata"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Nightseat the Black Cat",
+   "ticker": "NIGHTSEAT",
+   "nameLen": 23,
+   "blurbLen": 131,
+   "descLen": 272,
+   "tickerHasRivRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Nightseat, a sleek black shorthair with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 7,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Nightseat, a sleek black shorthair with gold-green eyes and an aqua patterned collar, always takes the highest perch in the garden. A cat coin priced in RIVN. Not affiliated with Rivian Automotive, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Sparkwhisker the Black Cat",
+   "ticker": "SPARKPAW",
+   "nameLen": 26,
+   "blurbLen": 118,
+   "descLen": 259,
+   "tickerHasRivRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sparkwhisker, a glossy black shorthair w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sparkwhisker, a glossy black shorthair with yellow-gold eyes, naps by the warm garden lamp and wakes up fully charged. A cat coin priced in RIVN. Not affiliated with Rivian Automotive, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Coalpaw the Trail Cat",
+   "ticker": "COALPAW",
+   "nameLen": 21,
+   "blurbLen": 127,
+   "descLen": 268,
+   "tickerHasRivRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Coalpaw, a slim coal-black cat with tall",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Coalpaw, a slim coal-black cat with tall ears and lemon-gold eyes, follows every muddy garden trail, then naps under the pines. A cat coin priced in RIVN. Not affiliated with Rivian Automotive, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

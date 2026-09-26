@@ -1,0 +1,157 @@
+{
+ "name": "Tally the Sand-Spotted Cat",
+ "ticker": "TALLYSPOT",
+ "blurb": "Tally, a lean sandy-gold cat with black spots, dark tear-marks and a white-tipped tail, counts the pond's goldfish each morning and never misses one.",
+ "description": "Tally, a lean sandy-gold cat with black spots, dark tear-marks and a white-tipped tail, counts the pond's goldfish each morning and never misses one. A cat coin priced in IBM. Not affiliated with IBM, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "nameLen": 26,
+ "blurbLen": 149,
+ "descLen": 275,
+ "tickerFormat": true,
+ "tickerHasIBM": false,
+ "doubleSpace": false,
+ "endsWithDisc": true,
+ "checkProposal": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Tally, a lean sandy-gold cat with black ",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_all": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup_TALLYSPOT": {
+  "status": 200,
+  "results": 2,
+  "symbolMatches": [],
+  "verifiedSymbolMatch": false,
+  "verifiedAny": []
+ },
+ "jup_TALLY": {
+  "status": 200,
+  "results": 20,
+  "symbolMatches": [
+   {
+    "s": "TALLY",
+    "n": "Tally Vote",
+    "v": null
+   },
+   {
+    "s": "tally",
+    "n": "tally",
+    "v": null
+   },
+   {
+    "s": "Tally",
+    "n": "Tally",
+    "v": null
+   },
+   {
+    "s": "Tally",
+    "n": "Tally",
+    "v": null
+   },
+   {
+    "s": "TALLY",
+    "n": "Tally",
+    "v": null
+   },
+   {
+    "s": "Tally",
+    "n": "Tally",
+    "v": null
+   },
+   {
+    "s": "TALLY",
+    "n": "TALLY",
+    "v": null
+   },
+   {
+    "s": "TALLY",
+    "n": "TALLY",
+    "v": null
+   },
+   {
+    "s": "TALLY",
+    "n": "tallyrh.xyz",
+    "v": null
+   },
+   {
+    "s": "TALLY",
+    "n": "tally",
+    "v": null
+   },
+   {
+    "s": "Tally",
+    "n": "Tally",
+    "v": null
+   },
+   {
+    "s": "Tally",
+    "n": "Tally",
+    "v": null
+   },
+   {
+    "s": "TALLY",
+    "n": "Tally",
+    "v": null
+   }
+  ],
+  "verifiedSymbolMatch": false,
+  "verifiedAny": []
+ },
+ "jup_TALLYPAW": {
+  "status": 200,
+  "results": 2,
+  "symbolMatches": [],
+  "verifiedSymbolMatch": false,
+  "verifiedAny": []
+ }
+}

@@ -1,0 +1,16 @@
+import { chromium } from "/opt/node22/lib/node_modules/playwright/index.mjs";
+import fs from "node:fs";
+const S = process.argv[2];
+const b = await chromium.launch({ args: ["--disable-gpu","--disable-webgl"] });
+const snap = async (p, f) => { const c = await p.context().newCDPSession(p); const r = await c.send("Page.captureScreenshot",{format:"png"}); fs.writeFileSync(`${S}/${f}`, Buffer.from(r.data,"base64")); };
+let p = await b.newPage({ viewport: { width: 1000, height: 900 } });
+await p.goto("http://127.0.0.1:8773/#cat=popcat", { waitUntil: "domcontentloaded" }); await p.waitForTimeout(6000);
+console.log(await p.evaluate(() => { const f = [...document.querySelectorAll("figure img")].find(i => /lore\//.test(i.src)); if (!f) return "no lore fig"; f.scrollIntoView({block:"center"}); return f.src + " " + f.naturalWidth; }));
+await p.waitForTimeout(1000); await snap(p, "hof-popcat-lore.png"); await p.close();
+p = await b.newPage({ viewport: { width: 1000, height: 900 } });
+await p.goto("http://127.0.0.1:8773/", { waitUntil: "domcontentloaded" }); await p.waitForTimeout(6000);
+console.log(await p.evaluate(() => { const b = [...document.querySelectorAll("button.find-item")].find(x => /Bigglesworth/.test(x.textContent)); if (!b) return "no row"; b.click(); return "clicked"; }));
+await p.waitForTimeout(2000);
+console.log(await p.evaluate(() => location.hash + " " + [...document.querySelectorAll("img")].filter(i=>/BIGGLES/.test(i.src)).map(i=>i.src+" "+i.naturalWidth).join(" | ")));
+await snap(p, "adoptable-bigglesworth.png");
+await b.close();

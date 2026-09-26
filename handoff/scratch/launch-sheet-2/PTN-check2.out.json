@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Mottle the Tortie Cat",
+   "ticker": "MOTTLE",
+   "nameLen": 21,
+   "blurbLen": 137,
+   "descLen": 280,
+   "tickerHasPtnRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Mottle, a small tortoiseshell with black",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Mottle, a small tortoiseshell with black and ginger patches blended like soft brushstrokes and honey-gold eyes, sunbathes on warm stones. A cat coin priced in PTN. Not affiliated with Palatin Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Umber the Deep-Brown Cat",
+   "ticker": "UMBERPAW",
+   "nameLen": 24,
+   "blurbLen": 137,
+   "descLen": 280,
+   "tickerHasPtnRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Umber, a sleek shorthair with a deep umb",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Umber, a sleek shorthair with a deep umber-brown coat that looks almost black in the shade and warm copper eyes, naps under the fig tree. A cat coin priced in PTN. Not affiliated with Palatin Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Sprig the Trim Tabby Cat",
+   "ticker": "SPRIGPAW",
+   "nameLen": 24,
+   "blurbLen": 136,
+   "descLen": 279,
+   "tickerHasPtnRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sprig, a lean, long-legged grey tabby wi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sprig, a lean, long-legged grey tabby with neat dark stripes and green eyes, eats small, slow suppers, then takes one lap of the garden. A cat coin priced in PTN. Not affiliated with Palatin Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

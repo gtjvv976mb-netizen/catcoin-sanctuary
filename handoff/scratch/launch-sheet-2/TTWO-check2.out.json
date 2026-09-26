@@ -1,0 +1,285 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Savepoint the Silver Cat",
+   "ticker": "SAVEPAW",
+   "nameLen": 24,
+   "blurbLen": 132,
+   "descLen": 285,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Savepoint, a smoky silver-grey cat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": 0,
+    "verifiedMatch": false,
+    "matches": []
+   },
+   "description": "Savepoint, a smoky silver-grey cat with a white muzzle and white bib, naps on the same warm stone daily so he never loses his place. A cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Joypad the Mitten Cat",
+   "ticker": "JOYPAD",
+   "nameLen": 21,
+   "blurbLen": 126,
+   "descLen": 279,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Joypad, a pale silver cat with four snow",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 2,
+    "symbolMatches": 0,
+    "verifiedMatch": false,
+    "matches": []
+   },
+   "description": "Joypad, a pale silver cat with four snow-white mitten paws and a white chest, bats a pinecone along the garden path for hours. A cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Highscore the Grey Cat",
+   "ticker": "HIGHSCORE",
+   "nameLen": 22,
+   "blurbLen": 125,
+   "descLen": 278,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Highscore, a grey-and-white cat with a w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 5,
+    "symbolMatches": 0,
+    "verifiedMatch": false,
+    "matches": []
+   },
+   "description": "Highscore, a grey-and-white cat with a white chin and dark grey brow marks, hops stone to stone to beat yesterday's best run. A cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "alt": {
+  "SAVEPOINT": {
+   "status": 200,
+   "results": 1,
+   "symbolMatches": 1,
+   "verifiedMatch": false,
+   "matches": [
+    {
+     "symbol": "Savepoint",
+     "name": "Solana Savepoint",
+     "id": "7S83WmKXgF3CspZkGPUQZMmaLSg1qb5JgrX89Kczpump"
+    }
+   ]
+  },
+  "HISCORE": {
+   "status": 200,
+   "results": 20,
+   "symbolMatches": 1,
+   "verifiedMatch": false,
+   "matches": [
+    {
+     "symbol": "HISCORE",
+     "name": "HISCORE GAMES",
+     "id": "Cxs4PHECeSNju47G6tbjjijfNMpwGWDFF4wrmHxpump"
+    }
+   ]
+  },
+  "JOYSTICK": {
+   "status": 200,
+   "results": 20,
+   "symbolMatches": 3,
+   "verifiedMatch": false,
+   "matches": [
+    {
+     "symbol": "JOYSTICK",
+     "name": "Joystick",
+     "id": "GJV1R2Pgn6t3uSHgHnYMFeQX431WUvth5kYUu1whpump"
+    },
+    {
+     "symbol": "joystick",
+     "name": "joystick",
+     "id": "9LZ3Qa4LAvGAep1tpBwsh3UFcBS4gAv6MrUrfn2opump"
+    },
+    {
+     "symbol": "JOYSTICK",
+     "name": "Pepe's AI Joystick",
+     "id": "E6nu6ZFGVL4m8a2wizbbwHW7cHLtp3dXLMAkDUuGbAVc"
+    }
+   ]
+  }
+ }
+}

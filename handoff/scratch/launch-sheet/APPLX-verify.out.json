@@ -1,0 +1,176 @@
+[
+ {
+  "name": "Rosette the Garden Cat",
+  "ticker": "ROSETTE",
+  "endsWithDisclosure": true,
+  "lens": {
+   "name": 22,
+   "ticker": 7,
+   "description": 272,
+   "body": 158
+  },
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "apple",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsBody": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms": {
+   "ok": true,
+   "violations": []
+  },
+  "memeTicker": false,
+  "confusableWithRoot": false,
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=ROSETTE",
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "symbols": "CRL,STONE,SINGLEMOM,COMMIT,SINGLEMOM,Spur,MY ROLEX,RUNNERROBS,RUNNERROBS,NCIS6900,NCIS6900,CSI6900,CSl6900,CSI6900,CSI6900,NCIS6900,ELECTRICIAN,RCCG,X,X"
+  }
+ },
+ {
+  "name": "Snowspot the Cloud Cat",
+  "ticker": "SNOWSPOT",
+  "endsWithDisclosure": true,
+  "lens": {
+   "name": 22,
+   "ticker": 8,
+   "description": 272,
+   "body": 158
+  },
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "apple",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsBody": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms": {
+   "ok": true,
+   "violations": []
+  },
+  "memeTicker": false,
+  "confusableWithRoot": false,
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=SNOWSPOT",
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "symbols": ""
+  }
+ },
+ {
+  "name": "Clementine the Stripy Cat",
+  "ticker": "STRIPEY",
+  "endsWithDisclosure": true,
+  "lens": {
+   "name": 25,
+   "ticker": 7,
+   "description": 268,
+   "body": 154
+  },
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "apple",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsBody": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms": {
+   "ok": true,
+   "violations": []
+  },
+  "memeTicker": false,
+  "confusableWithRoot": false,
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=STRIPEY",
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "symbols": "STRICKLAND,Ripley,Ripley,Ripley,READ,Ripley,Ripley,Ripley,Ripley,SHIP,SHIPLEY,SHIPLEY,SHIPLEY,shipley,Shipley,Shipley,Shipley,SHIPLEY,Shipley,Shipley"
+  }
+ }
+]

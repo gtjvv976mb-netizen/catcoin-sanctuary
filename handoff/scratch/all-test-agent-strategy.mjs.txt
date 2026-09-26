@@ -1,0 +1,90 @@
+
+1. EVERY PRESET MINT IS THE ONE THE CHAIN DESCRIBED
+───────────────────────────────────────────────────
+  ok   the fixture is the live read the constants cite  — 2026-09-25T09:48:11.460Z, slot 450316711
+  ok   USDC (EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v): the recorded mint account decodes to 6 decimals under the Token program
+  ok   USDC: Jupiter's token API agrees on decimals and program, and marks it verified  — community|moonshot-verified|strict|verified|stable
+  ok   USDT (Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB): the recorded mint account decodes to 6 decimals under the Token program
+  ok   USDT: Jupiter's token API agrees on decimals and program, and marks it verified  — verified|stable|community|moonshot-verified|strict
+  ok   MEW (MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5): the recorded mint account decodes to 5 decimals under the Token program
+  ok   MEW: Jupiter's token API agrees on decimals and program, and marks it verified  — community|moonshot-verified|strict|verified|meme
+  ok   POPCAT (7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr): the recorded mint account decodes to 9 decimals under the Token program
+  ok   POPCAT: Jupiter's token API agrees on decimals and program, and marks it verified  — birdeye-trending|community|moonshot-verified|strict|verified|meme
+  ok   KITTY (4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk): the recorded mint account decodes to 9 decimals under the Token program
+  ok   KITTY: Jupiter's token API agrees on decimals and program, and marks it verified  — meme|verified
+  ok   GRUMPY (GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR): the recorded mint account decodes to 9 decimals under the Token program
+  ok   GRUMPY: Jupiter's token API agrees on decimals and program, and marks it verified  — community|verified|meme
+  ok   KWIF (6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt): the recorded mint account decodes to 6 decimals under the Token program
+  ok   KWIF: Jupiter's token API agrees on decimals and program, and marks it verified  — community|verified|meme
+  ok   KHAI (3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC): the recorded mint account decodes to 8 decimals under the Token program
+  ok   KHAI: Jupiter's token API agrees on decimals and program, and marks it verified  — community|strict|verified|meme
+  ok   eight distinct mints, none of them wrapped SOL, none Token-2022
+  ok   the cat coins are six, and fit the ten-token universe
+  ok   every preset coin is a cat by the check Popcat uses, and has no mint and no freeze authority
+  ok   the issuer controls the constants' comment names are the ones the chain shows (USDC and USDT keep a freeze authority)
+
+2. THE DEFAULTS
+───────────────
+  ok   paper by default, settled in USDC, asked every 30 minutes
+  ok   the universe defaults to the six cat coins
+  ok   the schedules are 15, 30 and 60 minutes; the modes paper and live
+  ok   the limits default inside their fences: $25 a token, 60% exposure, −8% stop, +15% take, 5% daily drawdown that stops entries, 6 trades, 100 bps
+  ok   the $10 minimum trade and the $50 minimum vault are fixed, not dials
+  ok   the paper vault defaults to $100, and may not be under the $50 minimum
+  ok   the model is left to run time: an empty string, never an identifier
+  ok   a new spec is a draft: it saves, and says what keeps it from starting
+  ok   the spec is frozen
+  ok   the words the UI prints say it runs while Chrome is open, spot only, on the owner's credits, unmeasured
+
+3. REFUSALS BY NAME
+───────────────────
+  ok   SOL is not in v1: the wrapped-SOL mint is refused in the universe
+  ok   …and as a custom mint
+  ok   the settlement token cannot be traded into
+  ok   a mint that is neither a preset cat nor a verified custom one is refused
+  ok   a malformed address is refused
+  ok   a mint listed twice is refused
+  ok   six cat coins and five custom mints is eleven: over the ten-token universe
+  ok   …five cat coins and five custom is ten, and saves
+  ok   CAT COINS ONLY: a custom mint whose Jupiter name is not a cat is refused (not_a_cat_coin)
+  ok   …nor can a cat ticker typed over a token Jupiter names otherwise pass
+  ok   …a cat coin from anywhere on Solana passes by its name or its ticker
+  ok   …and a custom mint whose name was never looked up is unverified
+  ok   a custom mint without its on-chain decimals, program or read time is unverified
+  ok   a custom mint that is in the cat preset is sent back to it
+  ok   a custom symbol is short and plain
+  ok   a verified custom mint joins the universe with what the chain said
+  ok   an unknown schedule is refused
+  ok   maxPositionUsd = 9.99 is refused (out_of_range)
+  ok   maxExposurePct = 101 is refused (out_of_range)
+  ok   maxExposurePct = 0 is refused (out_of_range)
+  ok   stopLossPct = 0 is refused (out_of_range)
+  ok   stopLossPct = 51 is refused (out_of_range)
+  ok   takeProfitPct = 0.1 is refused (out_of_range)
+  ok   maxDailyDrawdownPct = 60 is refused (out_of_range)
+  ok   maxTradesPerDay = 0 is refused (out_of_range)
+  ok   maxTradesPerDay = 2.5 is refused (not_whole)
+  ok   slippageBps = 500 is refused (out_of_range)
+  ok   slippageBps = 5 is refused (out_of_range)
+  ok   minBuyConfidence = 1.5 is refused (out_of_range)
+  ok   maxPositionUsd = "lots" is refused (not_a_number)
+  ok   a name over 40 characters, or with a quote, is refused
+  ok   a strategy over 4,000 characters is refused
+  ok   an unknown mode, drawdown action or settlement token is refused
+  ok   control characters are stripped from the strategy, line breaks kept
+  ok   unknown keys are dropped, not carried
+
+4. THE PAIRS A SWAP MAY BE
+──────────────────────────
+  ok   the settlement token into each listed token and back, and nothing else
+
+5. THE ARM SENTENCE
+───────────────────
+  ok   it names the agent, the wallet, the settlement and says nothing will ask  — I arm the CoinMarketCat agent "Popcat cat" for US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx: settled in USDC, at most $25 in one token and 60% of the vault in tokens, a 8% stop loss, a 15% take profit, a 5% daily drawdown that stops new buys, 6 trades a day at 100 bps slippage, buys only at 0.6 confidence or more, in POPCAT, TESTC (3mg7sM6RFEBHiiFotFNfvteH1WdFcc9cujKuPaqZdfDz) — signed without asking me, by the autopilot key this browser holds
+  ok   it names every limit
+  ok   it names every token, a custom one by its mint
+  ok   change any limit, the settlement, the universe or the name, and the sentence changes
+  ok   another wallet, another sentence
+
+72 passed, 0 failed
+

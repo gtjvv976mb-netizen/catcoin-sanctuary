@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Parcel the Cardboard Tabby",
+   "ticker": "PARCELPAW",
+   "nameLen": 26,
+   "blurbLen": 137,
+   "descLen": 268,
+   "tickerHasShopRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Parcel, a cardboard-brown mackerel tabby",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Parcel, a cardboard-brown mackerel tabby with a cream chin and honey-gold eyes, naps in every empty box that turns up by the garden gate. A cat coin priced in SHOP. Not affiliated with Shopify, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tillbell the Tuxedo Cat",
+   "ticker": "TILLBELL",
+   "nameLen": 23,
+   "blurbLen": 143,
+   "descLen": 274,
+   "tickerHasShopRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tillbell, a black-and-white tuxedo cat w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 15,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Tillbell, a black-and-white tuxedo cat with white mittens and green-gold eyes, sits on the garden stall counter and chirps at each new visitor. A cat coin priced in SHOP. Not affiliated with Shopify, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Patchwork the Calico Cat",
+   "ticker": "PATCHPAW",
+   "nameLen": 24,
+   "blurbLen": 146,
+   "descLen": 277,
+   "tickerHasShopRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Patchwork, a calico with white paws and ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Patchwork, a calico with white paws and bold ginger and black patches, strolls between the little garden stalls as if every one of them were hers. A cat coin priced in SHOP. Not affiliated with Shopify, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

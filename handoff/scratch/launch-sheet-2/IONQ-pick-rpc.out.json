@@ -1,0 +1,29 @@
+{
+ "status": 200,
+ "slot": 450448805,
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "decimals": 6,
+ "extensionNames": [
+  "metadataPointer",
+  "permanentDelegate",
+  "defaultAccountState",
+  "pausableConfig",
+  "confidentialTransferMint",
+  "transferHook",
+  "scaledUiAmountConfig",
+  "tokenMetadata"
+ ],
+ "transferFeeConfig": null,
+ "pausable": {
+  "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "paused": false
+ },
+ "transferHook": {
+  "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "programId": null
+ },
+ "tokenMetadata": {
+  "name": "IonQ - Backpack Securities",
+  "symbol": "IONQ"
+ }
+}

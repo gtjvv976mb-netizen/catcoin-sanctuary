@@ -1,0 +1,75 @@
+
+1. THE CATS' MESSAGES
+─────────────────────
+  ok   POPCAT is status, scan, set-background and clear
+  ok   CRYING is one message: check
+  ok   CASHCAT is status, settings, the JWT's save and clear, drafts, the preview, prepare, launch, mark-checked and auto mode's arm and disarm
+  ok   exactly one carries a secret: the Pinata JWT, from Options
+  ok   STOCKCATS is list, refresh, suggest, draft, prepare, launch, adoption and settings, all under cia:stockcats:, none carrying a secret
+  ok   none hands a secret back
+  ok   every one is under cia:, apart from the lanes', the autopilot's and the agent's tables
+  ok   no web page can send one: the page relay carries none
+  ok   src/content.mjs: never names a cat's message, the JWT or Pinata
+  ok   src/injected.mjs: never names a cat's message, the JWT or Pinata
+  ok   the cats answer the extension's own pages only
+  ok   no cat handler reads transaction bytes from a message: the worker builds every byte
+
+2. THE SOURCE
+─────────────
+  ok   the JWT's storage key is written in the service worker and nowhere else under src/  — src/background.mjs
+  ok   the worker has the JWT's reader, its save and its clear  — all three
+  ok   the worker touches the stored JWT only in its reader, its save and its clear  — 4 uses
+  ok   the JWT is read from a message in the save handler, and nowhere else  — 2 reads
+  ok   the reader is used by hasPinataJwt and by the pin, which hands it to pinMetadata alone
+  ok   …for pump.fun or StonkFun only, refused before the JWT is read
+  ok   StonkFun is called through its own client, allowed StonkFun's host alone (the owner's RPC is added by the planner's RPC client), and it never carries the JWT
+  ok   …over a client allowed Pinata's upload API and its gateway only
+  ok   pinMetadata puts the JWT in one header, of the one request to Pinata's upload API; the read-back carries none
+  ok   no log, console or notification line in the worker names the JWT  — 32 lines
+  ok   the status says whether a JWT is saved, never what it is
+  ok   options: the JWT is typed into a password field
+  ok   options: the field is cleared the moment it is read, before anything is sent
+  ok   options: the JWT is sent once, as SET_PINATA_JWT, and never shown again
+  ok   src/options/cats.mjs: logs nothing and stores nothing itself
+  ok   src/popup/cats.mjs: logs nothing and stores nothing itself
+  ok   the popup never handles the JWT at all (it only says, in words, that Pinata is used)
+  ok   the only files that name Pinata's upload host are the worker's map of hosts' reasons and the options page's words
+
+3. THE RUNNING WORKER
+─────────────────────
+  ok   a web page (the console tab) is refused by every cat, and nothing is stored
+  ok   something that is not a JWT is refused
+  ok   from the extension's own page the JWT is saved, under its one storage key
+  ok   STATUS says a JWT is saved, and does not carry it
+  ok   a draft is judged by the rules in the worker  — []
+  ok   the logo is drawn in the worker, from the extension's own files, as a PNG
+  ok   a whole launch runs through the worker: pinned, checked, simulated, signed by the new mint and the autopilot wallet, sent once  — ""
+  ok   every request that carried the JWT went to https://uploads.pinata.cloud/v3/files, in the Authorization header, and nowhere else  — 2 of 19 requests
+  ok   …the read-back from the public gateway, the RPC and Jupiter were asked without it
+  ok   nothing else stored carries it: the journal, the draft, the settings, the lanes' state  — hawk:config, hawk:state, hawk:shadow, coinmarketcat:session-wallet, cia:cashcat:draft, cia:cashcat:journal, coinmarketcat:session-secret
+  ok   no log line, no notification and no answer carries it
+  ok   …nor the RPC's key
+  ok   CLEAR removes it from storage, and STATUS says so
+  ok   …and without it CashCat refuses to launch, by name
+  ok   Crying Cat refuses a bad input in the worker too, before any read
+
+4. THE BUNDLES
+──────────────
+
+  ../../../tmp/cats-dist-QzhxIA/background.js    1.5mb ⚠️
+  ../../../tmp/cats-dist-QzhxIA/options.js     773.2kb
+  ../../../tmp/cats-dist-QzhxIA/welcome.js     732.4kb
+  ../../../tmp/cats-dist-QzhxIA/injected.js    581.3kb
+  ../../../tmp/cats-dist-QzhxIA/popup.js       148.6kb
+  ../../../tmp/cats-dist-QzhxIA/content.js      72.3kb
+
+⚡ Done in 285ms
+  ok   background.js carries the JWT's storage key and Pinata's upload API (the worker and pinMetadata)
+  ok   content.js: no storage key for the JWT, and no request to Pinata's upload API
+  ok   injected.js: no storage key for the JWT, and no request to Pinata's upload API
+  ok   popup.js: no storage key for the JWT, and no request to Pinata's upload API
+  ok   welcome.js: no storage key for the JWT, and no request to Pinata's upload API
+  ok   options.js: no storage key for the JWT, and no request to Pinata's upload API
+
+51 passed, 0 failed
+

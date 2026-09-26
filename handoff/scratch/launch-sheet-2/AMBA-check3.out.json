@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Gloam the Night-Eyed Cat",
+   "ticker": "GLOAMEYE",
+   "nameLen": 24,
+   "blurbLen": 138,
+   "descLen": 271,
+   "tickerHasAmbaRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Gloam, a sleek charcoal-black shorthair ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Gloam, a sleek charcoal-black shorthair with big round green eyes that catch the porch light, keeps watch over the dark garden until dawn. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Iris the Seal-Point Cat",
+   "ticker": "IRISPAW",
+   "nameLen": 23,
+   "blurbLen": 146,
+   "descLen": 279,
+   "tickerHasAmbaRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Iris, a cream seal-point cat with a dark",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Iris, a cream seal-point cat with a dark brown mask, ears, paws and tail, gazes out from the porch step with wide sky-blue eyes and blinks slowly. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Etchline the Silver Tabby Cat",
+   "ticker": "ETCHLINE",
+   "nameLen": 29,
+   "blurbLen": 143,
+   "descLen": 276,
+   "tickerHasAmbaRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Etchline, a slim silver tabby with fine,",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 3,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Etchline, a slim silver tabby with fine, straight charcoal stripes and copper eyes, sits on the garden fence and follows every passing bicycle. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

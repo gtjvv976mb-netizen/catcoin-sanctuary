@@ -1,0 +1,134 @@
+{
+ "simulatedAt": "2026-09-25T17:50:37.509Z",
+ "payer": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+ "payerLamports": 2303984260,
+ "pricing": {
+  "configId": "2NuVPU5ViAyQsZamVfJ1vU6Cp77WSzret4LtNTMiWFQ4",
+  "platform": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+  "curveRule": "9MHtkhfnaBGgUPxThD67t1GYbYY7urggGvsat3AXWe9g",
+  "raise": "4557731261",
+  "observedAt": "2026-09-25T17:50:16.792Z"
+ },
+ "results": [
+  {
+   "id": "A_correct_shape",
+   "note": "exactly the published shape; payer = creator",
+   "mint": "H2UQkeGFzjdF4LtuUTSXUvRnDT4Z9ZPU4PZqPSPphGV6",
+   "pool": "5qTuiwJNQUP2HsMFzfBTt7Bxoa3pqYcuq47Rf7tRBAmY",
+   "txBytes": 836,
+   "err": null,
+   "unitsConsumed": 94118,
+   "payerBefore": 2303984260,
+   "payerAfter": 2295450020,
+   "payerCostLamports": 8534240,
+   "logs": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3572 of 576816 compute units",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 626 of 553012 compute units",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 925 of 546724 compute units",
+    "Program log: Instruction: InitializeMint2",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1772 of 544415 compute units",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3502 of 537104 compute units",
+    "Program log: Instruction: InitializeAccount3",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2108 of 528223 compute units",
+    "Program log: Instruction: MintTo",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1707 of 512520 compute units",
+    "Program log: Instruction: SetAuthority",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1044 of 509146 compute units",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 93968 of 599850 compute units"
+   ],
+   "transactionBase64": "AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAKDyIW56HAksG3SnSvfA7hSf3qGpxvsWfuLXvX4xGKootM7huQTU2znWD11G+E+RxjnbtN16fhV+n2gta0ekdSFqknCqA1F6qwixxDG02HPWJirwlnbKLecKHc3TkXNmxVz0fZDXtscqdNjvDBUANSOdrkQzG4a9q/BJs2z/TuqaLLfBB/kkrgrIcAcggs25qcveWjyqT2OAzOzWJ2ewQuGCEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIHuZs13eKOS57e6X5J12OXtaSgyT+v0nTHhqAGjt1vFHg74bXj0RNAHXQkbT4m9JKn3O3AZNwnG3zyaEmgj8kv76UoyW8/kSO/XTQhGtcPshtjskAzEmFgU9mvfUhN3HwQNjcX9gHztmhYQS2rctXaFXbonG9LfmXBEO4VqZ4zAwZGb+UhFzL/7K26csOb57yM5bvF9xJrLEObOkAAAAAFBDuVTcom4e+RtSxPj4mvim9ayMYhVvFxzw8hrFHJIgbd9uHudY/eGEJdvORszdq2GvxNg7kNJ/69+SjYoYv8B4OoFSYhD5Sg6OhNIIcAOzpCYNKc552s/iGk6ncfpigH6KUOFA/aV5H0VmqVf9OuP4c+ajRm/8E9eRGd+pq1Co7V05VsOg6HGEk69oI8yd8cuT8nQ/jRiX7LGePl0rWsAgoABQLAJwkACxAAAAcIDQMBDgQCDAwFBgsJogElvn7eLJqrEQYYAAAAU29ja2Zvb3QgdGhlIE1vcm5pbmcgQ2F0CAAAAFNPQ0tGT09ULwAAAGh0dHBzOi8vY2F0Y29pbnNhbmN0dWFyeS5jb20va2l0cy9TT0NLRk9PVC5qc29uAACAxqR+jQMAAHjF+1HRAgC9dakPAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  {
+   "id": "B_no_curve_rule",
+   "note": "curve-rule account omitted",
+   "mint": "P7KSjN3bVcULYeJumiMmySb2f38Zxjy9hur2EFkvPDo",
+   "pool": "9RpW8R191zCXBeypCXmv2dbWDBxvrxmjRgq54rUP72t6",
+   "txBytes": 803,
+   "err": {
+    "InstructionError": [
+     1,
+     {
+      "Custom": 6018
+     }
+    ]
+   },
+   "unitsConsumed": 44820,
+   "payerBefore": 2303984260,
+   "payerAfter": null,
+   "payerCostLamports": null,
+   "logs": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3572 of 574089 compute units",
+    "Program log: AnchorError occurred. Error Code: NotEnoughRemainingAccounts. Error Number: 6018. Error Message: Not enough remaining accounts.",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 44670 of 599850 compute units",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj failed: custom program error: 0x1782"
+   ],
+   "transactionBase64": "AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAJDiIW56HAksG3SnSvfA7hSf3qGpxvsWfuLXvX4xGKootMBanr7IUykny2UCASioIsdnh5W6bFKxrHalWrIUA4g3Z9OSVPVTnhgoQELH2Bmg49FhXgsOPT2rKNCCAQbqtOp5rgm1R2yZRdMqF45bKP2jcV5yzTKsO4rbcbzgg6lWEA+M+ZGMiTpmuDDYRjrpcWD1+16tGvtvPR7Ycfev7Gu9oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIHuZs13eKOS57e6X5J12OXtaSgyT+v0nTHhqAGjt1vFHg74bXj0RNAHXQkbT4m9JKn3O3AZNwnG3zyaEmgj8kv76UoyW8/kSO/XTQhGtcPshtjskAzEmFgU9mvfUhN3AMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAABQQ7lU3KJuHvkbUsT4+Jr4pvWsjGIVbxcc8PIaxRySIG3fbh7nWP3hhCXbzkbM3athr8TYO5DSf+vfko2KGL/AeDqBUmIQ+UoOjoTSCHADs6QmDSnOedrP4hpOp3H6YoB+ilDhQP2leR9FZqlX/Trj+HPmo0Zv/BPXkRnfqatQqO1dOVbDoOhxhJOvaCPMnfHLk/J0P40Yl+yxnj5dK1rAIJAAUCwCcJAAoPAAAHCAwCAQ0DBAsLBQYKogElvn7eLJqrEQYYAAAAU29ja2Zvb3QgdGhlIE1vcm5pbmcgQ2F0CAAAAFNPQ0tGT09ULwAAAGh0dHBzOi8vY2F0Y29pbnNhbmN0dWFyeS5jb20va2l0cy9TT0NLRk9PVC5qc29uAACAxqR+jQMAAHjF+1HRAgC9dakPAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  {
+   "id": "C_wrong_supply",
+   "note": "supply doubled",
+   "mint": "4Njpz6SxiHjRcDB7zQWVVdLb2pYG8Y46pZUBf7sc2sgK",
+   "pool": "FvV1XnWAnxdhFn5y77fhDvXcsJufojj7n8cHG5yxw2To",
+   "txBytes": 836,
+   "err": {
+    "InstructionError": [
+     1,
+     {
+      "Custom": 6025
+     }
+    ]
+   },
+   "unitsConsumed": 51265,
+   "payerBefore": 2303984260,
+   "payerAfter": null,
+   "payerCostLamports": null,
+   "logs": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3572 of 572316 compute units",
+    "Program log: AnchorError thrown in programs/launchpad/src/states/platform_curve_rule.rs:305. Error Code: CurveParamNotMatchPlatformRule. Error Number: 6025. Error Message: The curve param does not match any check group of the platform curve rule.",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 51115 of 599850 compute units",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj failed: custom program error: 0x1789"
+   ],
+   "transactionBase64": "AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAKDyIW56HAksG3SnSvfA7hSf3qGpxvsWfuLXvX4xGKootMMiSuyhe9V8Z3zjwKGzRBWMNHqD1ckesdfNk37f7sWwiAounG2HyfyMS277ryDAznzGg+XDyiYuqZv8qLFI4UJLLp2bYSBmHpBRNYPJHZ+SBg0v4HlQP6j58MP0xzADfA3bcR5NeTArvCPeldJAbSkHVp1BdTBHAjn46KjMLouZYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIHuZs13eKOS57e6X5J12OXtaSgyT+v0nTHhqAGjt1vFHg74bXj0RNAHXQkbT4m9JKn3O3AZNwnG3zyaEmgj8kv76UoyW8/kSO/XTQhGtcPshtjskAzEmFgU9mvfUhN3HwQNjcX9gHztmhYQS2rctXaFXbonG9LfmXBEO4VqZ4zAwZGb+UhFzL/7K26csOb57yM5bvF9xJrLEObOkAAAAAFBDuVTcom4e+RtSxPj4mvim9ayMYhVvFxzw8hrFHJIgbd9uHudY/eGEJdvORszdq2GvxNg7kNJ/69+SjYoYv8B4OoFSYhD5Sg6OhNIIcAOzpCYNKc552s/iGk6ncfpigH6KUOFA/aV5H0VmqVf9OuP4c+ajRm/8E9eRGd+pq1Co7V05VsOg6HGEk69oI8yd8cuT8nQ/jRiX7LGePl0rWsAgoABQLAJwkACxAAAAcIDQQBDgIDDAwFBgsJogElvn7eLJqrEQYYAAAAU29ja2Zvb3QgdGhlIE1vcm5pbmcgQ2F0CAAAAFNPQ0tGT09ULwAAAGh0dHBzOi8vY2F0Y29pbnNhbmN0dWFyeS5jb20va2l0cy9TT0NLRk9PVC5qc29uAAAAjUn9GgcAAHjF+1HRAgC9dakPAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+  },
+  {
+   "id": "D_creator_not_payer",
+   "note": "creator = a different wallet that does NOT sign (IDL marks creator non-signer)",
+   "mint": "3steH1TJsY8Tx9NdHkW6Lj4m5VWZa64mYFz9BYp8FV6m",
+   "pool": "5oQhbztLNoUMwmUU4BYvwTRqosseVUWQYg5EbyeMPRvc",
+   "txBytes": 868,
+   "err": null,
+   "unitsConsumed": 98839,
+   "payerBefore": 2303984260,
+   "payerAfter": 2295450020,
+   "payerCostLamports": 8534240,
+   "logs": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3572 of 576623 compute units",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 626 of 548319 compute units",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 925 of 542031 compute units",
+    "Program log: Instruction: InitializeMint2",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1772 of 539722 compute units",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3502 of 532411 compute units",
+    "Program log: Instruction: InitializeAccount3",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2108 of 523530 compute units",
+    "Program log: Instruction: MintTo",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1707 of 507827 compute units",
+    "Program log: Instruction: SetAuthority",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1044 of 504453 compute units",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 98689 of 599850 compute units"
+   ],
+   "transactionBase64": "AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgALECIW56HAksG3SnSvfA7hSf3qGpxvsWfuLXvX4xGKootMKsDOj81gA/Xt4san3S3vD5WeDckX/Ram5R9ZdDHsX/5HUkM+APL9NNKJK4e+pzLpMOigng6LH2O8kMpAjgNIVYAHVMUSwwoPtTc6A9NPXw3knQVLQBJRNf1RH/m6xX6KlvlPNl/TE5BAV5KH625Xc/2wNWbBxEmNm3Ee2SYl0l8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIHuZs13eKOS57e6X5J12OXtaSgyT+v0nTHhqAGjt1vFHg74bXj0RNAHXQkbT4m9JKn3O3AZNwnG3zyaEmgj8kv76UoyW8/kSO/XTQhGtcPshtjskAzEmFgU9mvfUhN3D5PhCp9CwyeyOJOoDoxyfh5o13DBHWJGqruXZ6wCC/5fBA2Nxf2AfO2aFhBLaty1doVduicb0t+ZcEQ7hWpnjMDBkZv5SEXMv/srbpyw5vnvIzlu8X3EmssQ5s6QAAAAAUEO5VNyibh75G1LE+Pia+Kb1rIxiFW8XHPDyGsUckiBt324e51j94YQl285GzN2rYa/E2DuQ0n/r35KNihi/wHg6gVJiEPlKDo6E0ghwA7OkJg0pznnaz+IaTqdx+mKAfopQ4UD9pXkfRWapV/064/hz5qNGb/wT15EZ36mrUKjtXTlWw6DocYSTr2gjzJ3xy5PydD+NGJfssZ4+XStawCCwAFAsAnCQAMEAAJBwgOAgEPBAMNDQUGDAqiASW+ft4smqsRBhgAAABTb2NrZm9vdCB0aGUgTW9ybmluZyBDYXQIAAAAU09DS0ZPT1QvAAAAaHR0cHM6Ly9jYXRjb2luc2FuY3R1YXJ5LmNvbS9raXRzL1NPQ0tGT09ULmpzb24AAIDGpH6NAwAAeMX7UdECAL11qQ8BAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+  }
+ ]
+}

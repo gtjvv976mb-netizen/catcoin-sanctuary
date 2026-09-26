@@ -1,0 +1,107 @@
+{
+ "name": "Hubbub the Stubby Tabby Cat",
+ "ticker": "HUBBUB",
+ "nameLen": 27,
+ "blurbLen": 141,
+ "descLen": 277,
+ "endsWithDisclaimer": true,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "checkProposal_nameTickerBlurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "reddit",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Hubbub, a short-legged brown tabby with ",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "reddit",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_descriptionWithoutDisclaimer": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_disclaimerOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "Reddit",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup_HUBBUB": {
+  "status": 200,
+  "results": 7,
+  "symbolMatches": [],
+  "nameHits": [],
+  "verifiedMatch": false
+ },
+ "jup_Hubbub": {
+  "status": 200,
+  "results": 7,
+  "symbolMatches": [],
+  "nameHits": [],
+  "verifiedMatch": false
+ },
+ "jup_Stubby Tabby": {
+  "status": 200,
+  "results": 0,
+  "symbolMatches": [],
+  "nameHits": [],
+  "verifiedMatch": false
+ },
+ "description": "Hubbub, a short-legged brown tabby with a cream bib and white toe tips, trots between the sanctuary garden benches to hear every lively chat. A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

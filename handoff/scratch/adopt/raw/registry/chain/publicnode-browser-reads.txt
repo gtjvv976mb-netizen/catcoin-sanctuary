@@ -1,0 +1,20 @@
+== getSignatureStatuses
+{"jsonrpc":"2.0","result":{"context":{"apiVersion":"4.2.2","slot":450438091},"value":[{"confirmationStatus":"finalized","confirmations":null,"err":null,"slot":450416570,"status":{"Ok":null}}]},"id":1}
+
+HTTP 200 201B 0.405114s
+
+== getAccountInfo-pool
+{"jsonrpc":"2.0","result":{"context":{"apiVersion":"4.2.2","slot":450438064},"value":{"data":["ny0Dol7sWtfxldthBcJARmyj2cXgKjlqcnpE+2gYaFg=","base64"],"executable":false,"lamports":2829560,"owner":"LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj","rentEpoch":18446744073709551615,"space":429}},"id":1}
+
+HTTP 200 298B 0.263759s
+
+== getProgramAccounts-MU-standard
+{"jsonrpc":"2.0","error":{"code":-32602,"message":"Indexed requests require a personal token. Get one at: https://www.allnodes.com/publicnode"},"id":1}
+
+HTTP 403 152B 0.170598s
+
+== getSignaturesForAddress-pool-limit1
+{"jsonrpc":"2.0","result":[{"blockTime":1790356914,"confirmationStatus":"finalized","err":null,"memo":null,"signature":"63SbXhSNGwdJZEcPTunhdE3AY5KLBtwE5AhscyY5w9F8tj48uhKf7H83mkRXMvcBQ4fYZSK88AsEbZtWfAgDEUpq","slot":450418418,"transactionIndex":860}],"id":1}
+
+HTTP 200 260B 0.166953s
+

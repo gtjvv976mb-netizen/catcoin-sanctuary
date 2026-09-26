@@ -1,0 +1,42 @@
+
+THE KITTENS
+───────────
+  ok   eight kittens, as the art folder holds them
+  ok   black: a 1024 × 1024 PNG with an alpha channel
+  ok   calico: a 1024 × 1024 PNG with an alpha channel
+  ok   ginger: a 1024 × 1024 PNG with an alpha channel
+  ok   greytabby: a 1024 × 1024 PNG with an alpha channel
+  ok   siamese: a 1024 × 1024 PNG with an alpha channel
+  ok   sphynx: a 1024 × 1024 PNG with an alpha channel
+  ok   tuxedo: a 1024 × 1024 PNG with an alpha channel
+  ok   white: a 1024 × 1024 PNG with an alpha channel
+
+THE SIGNS, MEASURED AGAIN
+─────────────────────────
+  ok   black: {"x":257,"y":96,"w":509,"h":252}
+  ok   calico: {"x":268,"y":98,"w":488,"h":227}
+  ok   ginger: {"x":236,"y":100,"w":552,"h":245}
+  ok   greytabby: {"x":279,"y":91,"w":467,"h":226}
+  ok   siamese: {"x":284,"y":90,"w":457,"h":230}
+  ok   sphynx: {"x":270,"y":61,"w":483,"h":235}
+  ok   tuxedo: {"x":264,"y":91,"w":495,"h":231}
+  ok   white: {"x":262,"y":98,"w":500,"h":240}
+
+THE FONT AND ITS LICENCE
+────────────────────────
+  ok   Press Start 2P, shipped as downloaded from Google Fonts (41,660 bytes, pinned by hash)
+  ok   beside it the SIL Open Font License 1.1, with the font's copyright and reserved name
+  ok   the font file's own name table carries the same copyright and the OFL
+
+A RENDERED LOGO
+───────────────
+  ok   1024 × 1024
+  ok   the background fills the corners
+  ok   the ticker's dark ink is on the sign  — 15900 ink pixels inside the sign
+  ok   another ticker is another image
+  ok   a bad ticker, kitten or background is refused
+  ok   ten characters still fit the narrowest sign, on the font's 8-pixel grid
+  ok   without the model's choice, the art is picked the same way for the same ticker
+
+test-bots-logo: 27 passed, 0 failed
+

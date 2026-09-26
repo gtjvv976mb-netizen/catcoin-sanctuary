@@ -1,0 +1,611 @@
+{
+ "verifiedListSize": 3695,
+ "othersTermCount": 2938,
+ "earlierCount": 27,
+ "out": [
+  {
+   "id": "fixD",
+   "name": "Cotta the Terracotta Cat",
+   "ticker": "COTTAPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "blurb": 142,
+    "description": 270
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Golden",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Cotta",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Cotta, a sleek terracotta-orange cat with golden eyes, sits by the garden bench all day and gives a sleepy wink to anyone hard at work nearby. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "fixE",
+   "name": "Cotta the Terracotta Cat",
+   "ticker": "COTTAPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "blurb": 137,
+    "description": 265
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "PURR",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Cotta",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Cotta, a sleek terracotta-orange cat with golden eyes, keeps watch from the garden bench all day and purrs at anyone hard at work nearby. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "fixF",
+   "name": "Cotta the Terracotta Cat",
+   "ticker": "COTTAPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "blurb": 146,
+    "description": 274
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Golden",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Cotta",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Cotta, a sleek terracotta-orange cat with golden eyes, sits by the garden bench all day and narrows her eyes fondly at anyone hard at work nearby. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "fixG",
+   "name": "Cotta the Terracotta Cat",
+   "ticker": "COTTAPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "blurb": 145,
+    "description": 273
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Golden",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Cotta",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Cotta, a sleek terracotta-orange cat with golden eyes, sits by the sanctuary garden bench all day and gives a sleepy wink to anyone hard at work. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "fixH",
+   "name": "Cotta the Terracotta Cat",
+   "ticker": "COTTAPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "blurb": 147,
+    "description": 275
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Golden",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Cotta",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Cotta, a sleek terracotta-orange cat with golden eyes, lounges on the sanctuary garden bench and gives a sleepy wink to anyone hard at work nearby. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 9,
+  "extensions": [
+   "permanentDelegate",
+   "defaultAccountState",
+   "transferFeeConfig",
+   "confidentialTransferMint",
+   "confidentialTransferFeeConfig",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "metadataPointer",
+   "pausableConfig",
+   "tokenMetadata"
+  ],
+  "transferFee": {
+   "older": {
+    "epoch": 1039,
+    "maximumFee": 18446744073709552000,
+    "transferFeeBasisPoints": 100
+   },
+   "newer": {
+    "epoch": 1043,
+    "maximumFee": 18446744073709552000,
+    "transferFeeBasisPoints": 300
+   }
+  },
+  "epoch": 1042
+ },
+ "stonkfunPair": [
+  {
+   "mint": "Pren1FvFX6J3E4kXhJuCiAD5aDmGEb7qJRncwA8Lkhw",
+   "symbol": "ANTHROPIC",
+   "name": "ANTHROPIC",
+   "decimals": 9,
+   "logoUrl": "/api/asset/quote-logo/Pren1FvFX6J3E4kXhJuCiAD5aDmGEb7qJRncwA8Lkhw?v=aaf04940",
+   "category": "prestock",
+   "categoryLabel": "PreStock",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  }
+ ]
+}

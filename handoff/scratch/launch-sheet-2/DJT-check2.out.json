@@ -1,0 +1,170 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "real_person",
+    "term": "trump",
+    "field": "description"
+   },
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Marmalade the Town Crier Cat",
+   "ticker": "TOWNCRIER",
+   "nameLen": 28,
+   "blurbLen": 128,
+   "descLen": 281,
+   "tickerHasDjtRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Marmalade, a lean ginger tabby with rust stripes and gold eyes, meows the morning's gossip from the garden gate to all who pass. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Soapbox the Ginger Tabby",
+   "ticker": "SOAPPAW",
+   "nameLen": 24,
+   "blurbLen": 128,
+   "descLen": 281,
+   "tickerHasDjtRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Soapbox, a fluffy ginger tabby with a cream chin and copper eyes, stands on an upturned crate to lecture the sparrows at length. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Echo the Noticeboard Cat",
+   "ticker": "PAWPOST",
+   "nameLen": 24,
+   "blurbLen": 131,
+   "descLen": 284,
+   "tickerHasDjtRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 4,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Echo, a stocky ginger tabby with swirled stripes and green eyes, stamps a paw print on every note pinned to the garden noticeboard. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

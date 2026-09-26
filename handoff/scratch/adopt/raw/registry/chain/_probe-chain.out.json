@@ -1,0 +1,210 @@
+{
+ "r": {
+  "pool": {
+   "size": 429,
+   "owner": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+   "globalConfig": "B7ctMMdGvy46Am56myTtzfkNzt9kWZVTNGM2BWrJ9adg",
+   "platformConfig": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+   "baseMint": "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5",
+   "quoteMint": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+   "creator": "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+   "status": 0,
+   "supply": "1000000000000000"
+  },
+  "gpaSpyx": {
+   "count": 785,
+   "ms": 451,
+   "sample": [
+    {
+     "pool": "1pbH5fXkdSCoiqvj48FW8P259aiXaMdW8pMRFv5TFPu",
+     "baseMint": "CZ3Jju2XEP7mskDM9a7psSZw3dGQkpzRHiQA86ihdsFu"
+    },
+    {
+     "pool": "12AZh8983ZiC9D4yDiwJy8Y2oRnDX9nQC3Tng4rtsQt9",
+     "baseMint": "345BmW3JWTuLUfiYHyDeSkGtH9eZN6T1yzuHTHae4eZe"
+    }
+   ]
+  },
+  "gpaMU": {
+   "count": 38,
+   "ms": 514
+  },
+  "gpaANTHROPIC": {
+   "count": 402,
+   "ms": 619
+  },
+  "gpaTSLAx": {
+   "count": 295,
+   "ms": 595
+  },
+  "platformSigs": {
+   "n": 1000,
+   "newest": "2026-09-25T18:03:37.000Z",
+   "oldest": "2026-09-25T18:03:00.000Z",
+   "spanSec": 37,
+   "failed": 949,
+   "slotsDistinct": 94,
+   "ms": 678
+  },
+  "platformSigKinds": {
+   "2L6oZnikFF": {
+    "discs": [
+     "9527de9bd37c981a",
+     "e445a52e51cb9a1d"
+    ],
+    "logs": [
+     "Program log: Instruction: SellExactIn",
+     "Program log: Instruction: TransferChecked",
+     "Program log: Instruction: TransferChecked",
+     "Program log: Instruction: TransferChecked",
+     "Program log: Instruction: SwapV2",
+     "Program log: Instruction: TransferChecked"
+    ]
+   },
+   "gqEjH624JJ": {
+    "error": {
+     "error": {
+      "code": -32015,
+      "message": "Transaction version (1) is not supported by the requesting client. Please try the request again with the following configuration parameter: \"maxSupportedTransactionVersion\": 1"
+     },
+     "httpStatus": 200
+    }
+   },
+   "31hUQRhJtB": {
+    "discs": [
+     "faea0d7bd59c13ec",
+     "e445a52e51cb9a1d"
+    ],
+    "logs": [
+     "Program log: Instruction: SwapTob",
+     "Program log: Instruction: Swap2",
+     "Program log: Instruction: SwapV2",
+     "Program log: Instruction: SwapV2",
+     "Program log: Instruction: BuyExactIn",
+     "Program log: Instruction: TransferChecked"
+    ]
+   },
+   "ERSABaLQ6U": {
+    "discs": [
+     "9447b4887a903b15",
+     "5a64cec43675788b"
+    ],
+    "logs": [
+     "Program log: Instruction: CreatePlatformCurveRule",
+     "Program log: Instruction: UpdatePlatformCurveRule"
+    ]
+   },
+   "66BxKRhaTS": {
+    "discs": [
+     "9527de9bd37c981a",
+     "e445a52e51cb9a1d"
+    ],
+    "logs": [
+     "Program log: Instruction: RouteV2",
+     "Program log: Instruction: SellExactIn",
+     "Program log: Instruction: TransferChecked",
+     "Program log: Instruction: Swap"
+    ]
+   },
+   "3NGdXEcVzp": {
+    "discs": [
+     "25be7ede2c9aab11",
+     "e445a52e51cb9a1d"
+    ],
+    "logs": [
+     "Program log: Instruction: InitializeWithToken2022",
+     "Program log: Instruction: InitializeMint2",
+     "Program log: Instruction: InitializeAccount3",
+     "Program log: Instruction: MintTo",
+     "Program log: Instruction: SetAuthority"
+    ]
+   }
+  }
+ },
+ "log": [
+  {
+   "at": "2026-09-25T18:03:37.229Z",
+   "method": "getAccountInfo",
+   "status": 200,
+   "ms": 332,
+   "bytes": 826
+  },
+  {
+   "at": "2026-09-25T18:03:37.678Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 180,
+   "bytes": 213500
+  },
+  {
+   "at": "2026-09-25T18:03:38.195Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 96,
+   "bytes": 10368
+  },
+  {
+   "at": "2026-09-25T18:03:38.814Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 114,
+   "bytes": 109360
+  },
+  {
+   "at": "2026-09-25T18:03:39.408Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 107,
+   "bytes": 80259
+  },
+  {
+   "at": "2026-09-25T18:03:40.084Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 183,
+   "bytes": 255699
+  },
+  {
+   "at": "2026-09-25T18:03:40.555Z",
+   "method": "getTransaction",
+   "status": 200,
+   "ms": 54,
+   "bytes": 15178
+  },
+  {
+   "at": "2026-09-25T18:03:41.160Z",
+   "method": "getTransaction",
+   "status": 200,
+   "ms": 57,
+   "bytes": 239
+  },
+  {
+   "at": "2026-09-25T18:03:41.761Z",
+   "method": "getTransaction",
+   "status": 200,
+   "ms": 58,
+   "bytes": 30529
+  },
+  {
+   "at": "2026-09-25T18:03:42.371Z",
+   "method": "getTransaction",
+   "status": 200,
+   "ms": 68,
+   "bytes": 2517
+  },
+  {
+   "at": "2026-09-25T18:03:42.985Z",
+   "method": "getTransaction",
+   "status": 200,
+   "ms": 82,
+   "bytes": 19376
+  },
+  {
+   "at": "2026-09-25T18:03:43.557Z",
+   "method": "getTransaction",
+   "status": 200,
+   "ms": 53,
+   "bytes": 8145
+  }
+ ]
+}

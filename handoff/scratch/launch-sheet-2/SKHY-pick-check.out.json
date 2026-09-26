@@ -1,0 +1,312 @@
+{
+ "disclaimerAlone": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Clockout the Ginger Cat",
+   "ticker": "CLOCKPAW",
+   "nameLen": 23,
+   "blurbLen": 143,
+   "descLen": 275,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Clockout, a fluffy ginger tabby with fai",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupVerifiedAny": [],
+   "description": "Clockout, a fluffy ginger tabby with faint forehead stripes and big dark eyes, wears a teal collared shirt and trots home the moment work ends. A cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Brookspot the Spotted Cat",
+   "ticker": "BROOKSPOT",
+   "nameLen": 25,
+   "blurbLen": 140,
+   "descLen": 272,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Brookspot, a tawny house cat with dark l",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupVerifiedAny": [],
+   "description": "Brookspot, a tawny house cat with dark leopard-like spots and white streaks by her eyes, keeps watch from the reeds by the sanctuary stream. A cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Bubble the Helmet Cat",
+   "ticker": "BUBBLEHAT",
+   "nameLen": 21,
+   "blurbLen": 136,
+   "descLen": 268,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Bubble, a white cat with one red-orange ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 13,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupVerifiedAny": [],
+   "description": "Bubble, a white cat with one red-orange patch over his eye and ear, wears a round clear helmet and checks the garden for specks of dust. A cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "Bv1CLW7r7JNv18Zgp8bebE6KPjhkaeFHCHgNDHHXjkYD",
+  "extensions": [
+   {
+    "ext": "metadataPointer",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "metadataAddress": "SKHYhSjuRWHgikq8eRKbtBbpABgJSkd7ytQV14i9EQ3"
+    }
+   },
+   {
+    "ext": "permanentDelegate",
+    "state": {
+     "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+    }
+   },
+   {
+    "ext": "defaultAccountState",
+    "state": {
+     "accountState": "initialized"
+    }
+   },
+   {
+    "ext": "pausableConfig",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "paused": false
+    }
+   },
+   {
+    "ext": "confidentialTransferMint",
+    "state": {
+     "auditorElgamalPubkey": null,
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "autoApproveNewAccounts": false
+    }
+   },
+   {
+    "ext": "transferHook",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "programId": null
+    }
+   },
+   {
+    "ext": "scaledUiAmountConfig",
+    "state": {
+     "authority": "Bv1CLW7r7JNv18Zgp8bebE6KPjhkaeFHCHgNDHHXjkYD",
+     "multiplier": "1",
+     "newMultiplier": "1",
+     "newMultiplierEffectiveTimestamp": 0
+    }
+   },
+   {
+    "ext": "tokenMetadata",
+    "state": {
+     "name": "SK Hynix - Backpack Securities",
+     "symbol": "SKHY"
+    }
+   }
+  ],
+  "hasTransferFee": false
+ }
+}

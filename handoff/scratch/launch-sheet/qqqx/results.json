@@ -1,0 +1,187 @@
+[
+  {
+    "name": "Circuit Tabby",
+    "ticker": "CIRCTAB",
+    "endsWithDisclosure": true,
+    "storyLen": 156,
+    "lengths": {
+      "name": 13,
+      "ticker": 7,
+      "description": 274
+    },
+    "lenOk": true,
+    "tickerFormat": true,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDesc": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "qqqInTicker": false,
+    "memeTicker": false,
+    "jupiter": {
+      "status": 200,
+      "count": 11,
+      "symbolMatches": [],
+      "firstSymbols": [
+        "BITCOIN",
+        "CYUSD",
+        "CCTP",
+        "CIRCUITLAB",
+        "HCAT",
+        "CCAT",
+        "BCAT",
+        "FCAT",
+        "THUNES",
+        "PSYOP"
+      ]
+    },
+    "jupiterVerifiedClash": false
+  },
+  {
+    "name": "Basket Kitten",
+    "ticker": "BASKETKIT",
+    "endsWithDisclosure": true,
+    "storyLen": 154,
+    "lengths": {
+      "name": 13,
+      "ticker": 9,
+      "description": 272
+    },
+    "lenOk": true,
+    "tickerFormat": true,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDesc": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "qqqInTicker": false,
+    "memeTicker": false,
+    "jupiter": {
+      "status": 200,
+      "count": 0,
+      "symbolMatches": [],
+      "firstSymbols": []
+    },
+    "jupiterVerifiedClash": false
+  },
+  {
+    "name": "Hundred Whisker Cat",
+    "ticker": "WHISK100",
+    "endsWithDisclosure": true,
+    "storyLen": 160,
+    "lengths": {
+      "name": 19,
+      "ticker": 8,
+      "description": 278
+    },
+    "lenOk": true,
+    "tickerFormat": true,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDesc": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "qqqInTicker": false,
+    "memeTicker": false,
+    "jupiter": {
+      "status": 200,
+      "count": 0,
+      "symbolMatches": [],
+      "firstSymbols": []
+    },
+    "jupiterVerifiedClash": false
+  }
+]

@@ -1,0 +1,1375 @@
+{
+ "verifiedListSize": 3695,
+ "othersTermCount": 3188,
+ "pairOthersCount": 810,
+ "earlierCount": 66,
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "out": [
+  {
+   "id": "D1",
+   "name": "Saffron the Tawny Cat",
+   "ticker": "SAFFRONPAW",
+   "lengths": {
+    "name": 21,
+    "ticker": 10,
+    "blurb": 129,
+    "description": 277
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Saffron, a tawny-gold shorthair with a c",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_allStonkfunPairNames": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stonkfun_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Saffron",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [
+    {
+     "name": "Saffron the Long-Whisker Cat",
+     "symbol": "SAFFWHISK",
+     "coat": {
+      "base": "#DB7F2E",
+      "second": "#1C1814",
+      "pattern": "tabby",
+      "eyes": "#C9B062"
+     },
+     "from": "NBIS-pick.json"
+    }
+   ],
+   "draftsElsewhereSharingFirstWordOrTicker": [
+    {
+     "name": "Saffron the Long-Whisker Cat",
+     "symbol": "SAFFWHISK",
+     "from": "NBIS-coins.json"
+    },
+    {
+     "name": "Saffron the Ruffled Cat",
+     "symbol": "SAFFRUFF",
+     "from": "SPHR-coins.json"
+    }
+   ],
+   "closestEarlierCoats": [
+    {
+     "name": "Sandstep the Tawny Cat",
+     "from": "SNAP-pick.json",
+     "coat": {
+      "base": "#B8864E",
+      "second": "#EFE2C9",
+      "pattern": "bicolor",
+      "eyes": "#D29B3F"
+     },
+     "d": 106
+    },
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 118
+    },
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-retry-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 118
+    },
+    {
+     "name": "Burly the Amber-and-White Cat",
+     "from": "HIMS-pick.json",
+     "coat": {
+      "base": "#D38B3C",
+      "second": "#F6F1E7",
+      "pattern": "bicolor",
+      "eyes": "#7BAE5A"
+     },
+     "d": 128
+    }
+   ],
+   "description": "Saffron, a tawny-gold shorthair with a cream chin, deep gold eyes and a dark tip on her tail, sunbathes on the warm garden steps. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "D2",
+   "name": "Sorrel the Sand-Gold Cat",
+   "ticker": "SORRELPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 9,
+    "blurb": 127,
+    "description": 275
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sorrel, a sleek sand-gold cat with a pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "GOLD",
+      "field": "name"
+     },
+     {
+      "rule": "other_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_allStonkfunPairNames": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stonkfun_pair",
+      "term": "GOLD",
+      "field": "name"
+     },
+     {
+      "rule": "stonkfun_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "launch_claim",
+      "term": "backed",
+      "field": "blurb"
+     }
+    ]
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Sorrel",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "closestEarlierCoats": [
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 64
+    },
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-retry-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 64
+    },
+    {
+     "name": "Sandstep the Tawny Cat",
+     "from": "SNAP-pick.json",
+     "coat": {
+      "base": "#B8864E",
+      "second": "#EFE2C9",
+      "pattern": "bicolor",
+      "eyes": "#D29B3F"
+     },
+     "d": 80
+    },
+    {
+     "name": "Burly the Amber-and-White Cat",
+     "from": "HIMS-pick.json",
+     "coat": {
+      "base": "#D38B3C",
+      "second": "#F6F1E7",
+      "pattern": "bicolor",
+      "eyes": "#7BAE5A"
+     },
+     "d": 98
+    }
+   ],
+   "description": "Sorrel, a sleek sand-gold cat with a pale cream belly and dark-backed ears, pads quietly through the tall garden grass at dusk. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "D3",
+   "name": "Marigold the Ruffled Cat",
+   "ticker": "GOLDRUFF",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "blurb": 126,
+    "description": 274
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Marigold, a fluffy bronze-gold longhair ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_allStonkfunPairNames": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stonkfun_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Marigold",
+    "status": 200,
+    "results": 8,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "closestEarlierCoats": [
+    {
+     "name": "Hunch the Cream Tabby",
+     "from": "POLYMARKET-pick.json",
+     "coat": {
+      "base": "#DDC08A",
+      "second": "#C39A55",
+      "pattern": "tabby",
+      "eyes": "#9A703D"
+     },
+     "d": 160
+    },
+    {
+     "name": "Clockout the Ginger Cat",
+     "from": "SKHY-pick.json",
+     "coat": {
+      "base": "#E6A04A",
+      "second": "#C47329",
+      "pattern": "tabby",
+      "eyes": "#2A1E1A"
+     },
+     "d": 163
+    },
+    {
+     "name": "Cotta the Terracotta Cat",
+     "from": "ANTHROPIC-pick.json",
+     "coat": {
+      "base": "#C55531",
+      "second": "#D8784F",
+      "pattern": "solid",
+      "eyes": "#E8C23A"
+     },
+     "d": 167
+    },
+    {
+     "name": "Windsock the Ginger Tabby Cat",
+     "from": "BOEING-pick.json",
+     "coat": {
+      "base": "#D98E4C",
+      "second": "#A95F2C",
+      "pattern": "tabby",
+      "eyes": "#A8873F"
+     },
+     "d": 167
+    }
+   ],
+   "description": "Marigold, a fluffy bronze-gold longhair with a thick ruff round her neck and faint bands on her tail, dozes in the flower bed. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "P1",
+   "name": "Sorrel the Sand-Fawn Cat",
+   "ticker": "SORRELPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 9,
+    "blurb": 130,
+    "description": 278
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sorrel, a sleek sand-fawn cat with a pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Brown",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_allStonkfunPairNames": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stonkfun_pair",
+      "term": "EYE",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "launch_claim",
+      "term": "backed",
+      "field": "blurb"
+     }
+    ]
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Sorrel",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "closestEarlierCoats": [
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 48
+    },
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-retry-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 48
+    },
+    {
+     "name": "Sandstep the Tawny Cat",
+     "from": "SNAP-pick.json",
+     "coat": {
+      "base": "#B8864E",
+      "second": "#EFE2C9",
+      "pattern": "bicolor",
+      "eyes": "#D29B3F"
+     },
+     "d": 63
+    },
+    {
+     "name": "Burly the Amber-and-White Cat",
+     "from": "HIMS-pick.json",
+     "coat": {
+      "base": "#D38B3C",
+      "second": "#F6F1E7",
+      "pattern": "bicolor",
+      "eyes": "#7BAE5A"
+     },
+     "d": 81
+    }
+   ],
+   "description": "Sorrel, a sleek sand-fawn cat with a pale cream belly, dark-backed ears and honey-brown eyes, slips through the long meadow grass. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "P2",
+   "name": "Sorrel the Sandy Cat",
+   "ticker": "SORRELPAW",
+   "lengths": {
+    "name": 20,
+    "ticker": 9,
+    "blurb": 126,
+    "description": 274
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sorrel, a sleek sandy cat with a pale cr",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Brown",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_allStonkfunPairNames": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stonkfun_pair",
+      "term": "EYE",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "launch_claim",
+      "term": "backed",
+      "field": "blurb"
+     }
+    ]
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Sorrel",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "closestEarlierCoats": [
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 48
+    },
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-retry-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 48
+    },
+    {
+     "name": "Sandstep the Tawny Cat",
+     "from": "SNAP-pick.json",
+     "coat": {
+      "base": "#B8864E",
+      "second": "#EFE2C9",
+      "pattern": "bicolor",
+      "eyes": "#D29B3F"
+     },
+     "d": 63
+    },
+    {
+     "name": "Burly the Amber-and-White Cat",
+     "from": "HIMS-pick.json",
+     "coat": {
+      "base": "#D38B3C",
+      "second": "#F6F1E7",
+      "pattern": "bicolor",
+      "eyes": "#7BAE5A"
+     },
+     "d": 81
+    }
+   ],
+   "description": "Sorrel, a sleek sandy cat with a pale cream belly, dark-backed ears and honey-brown eyes, slips through the long meadow grass. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "P3",
+   "name": "Sorrel the Sand-Fawn Cat",
+   "ticker": "SORRELPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 9,
+    "blurb": 137,
+    "description": 285
+   },
+   "limitsOk": false,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sorrel, a sleek sand-fawn cat with a pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Orchard",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_allStonkfunPairNames": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stonkfun_pair",
+      "term": "GRASS",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Sorrel",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "closestEarlierCoats": [
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 80
+    },
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-retry-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 80
+    },
+    {
+     "name": "Sandstep the Tawny Cat",
+     "from": "SNAP-pick.json",
+     "coat": {
+      "base": "#B8864E",
+      "second": "#EFE2C9",
+      "pattern": "bicolor",
+      "eyes": "#D29B3F"
+     },
+     "d": 97
+    },
+    {
+     "name": "Savepoint the Silver Cat",
+     "from": "TTWO-pick.json",
+     "coat": {
+      "base": "#a9abb5",
+      "second": "#eef0f4",
+      "pattern": "bicolor",
+      "eyes": "#d9a93a"
+     },
+     "d": 100
+    }
+   ],
+   "description": "Sorrel, a sleek sand-fawn cat with a pale cream belly and dark-rimmed ears, creeps softly through the long grass under the orchard trees. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "P4",
+   "name": "Sorrel the Sand-Fawn Cat",
+   "ticker": "SORRELPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 9,
+    "blurb": 133,
+    "description": 281
+   },
+   "limitsOk": false,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sorrel, a sleek sand-fawn cat with a pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Orchard",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_allStonkfunPairNames": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stonkfun_pair",
+      "term": "GRASS",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Sorrel",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "closestEarlierCoats": [
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 80
+    },
+    {
+     "name": "Carton the Cardboard-Tan Cat",
+     "from": "COST-retry-pick.json",
+     "coat": {
+      "base": "#B98A57",
+      "second": "#F2E6CF",
+      "pattern": "bicolor",
+      "eyes": "#D9A03A"
+     },
+     "d": 80
+    },
+    {
+     "name": "Sandstep the Tawny Cat",
+     "from": "SNAP-pick.json",
+     "coat": {
+      "base": "#B8864E",
+      "second": "#EFE2C9",
+      "pattern": "bicolor",
+      "eyes": "#D29B3F"
+     },
+     "d": 97
+    },
+    {
+     "name": "Savepoint the Silver Cat",
+     "from": "TTWO-pick.json",
+     "coat": {
+      "base": "#a9abb5",
+      "second": "#eef0f4",
+      "pattern": "bicolor",
+      "eyes": "#d9a93a"
+     },
+     "d": 100
+    }
+   ],
+   "description": "Sorrel, a sleek sand-fawn cat with a pale cream belly and dark-rimmed ears, creeps softly through the long grass by the orchard wall. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "mintAuthority": "9XSEXpLnarTRAVzxjCrCM85zjmwXcqUopfaUGbgf1N2B",
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "extensions": [
+   {
+    "extension": "metadataPointer",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "metadataAddress": "MGMuubtUEirmkhfEQdmGUh4pr7HuUdMWcZXFtpPbVJD"
+    }
+   },
+   {
+    "extension": "permanentDelegate",
+    "state": {
+     "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+    }
+   },
+   {
+    "extension": "defaultAccountState",
+    "state": {
+     "accountState": "initialized"
+    }
+   },
+   {
+    "extension": "pausableConfig",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "paused": false
+    }
+   },
+   {
+    "extension": "confidentialTransferMint",
+    "state": {
+     "auditorElgamalPubkey": null,
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "autoApproveNewAccounts": false
+    }
+   },
+   {
+    "extension": "transferHook",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "programId": null
+    }
+   },
+   {
+    "extension": "scaledUiAmountConfig",
+    "state": {
+     "authority": "9XSEXpLnarTRAVzxjCrCM85zjmwXcqUopfaUGbgf1N2B",
+     "multiplier": "1",
+     "newMultiplier": "1",
+     "newMultiplierEffectiveTimestamp": 0
+    }
+   },
+   {
+    "extension": "tokenMetadata",
+    "state": {
+     "additionalMetadata": [],
+     "mint": "MGMuubtUEirmkhfEQdmGUh4pr7HuUdMWcZXFtpPbVJD",
+     "name": "MGM Resorts International - Backpack Securities",
+     "symbol": "MGM",
+     "updateAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "uri": "https://metadata.backpack.exchange/stocks/mgm.us.json"
+    }
+   }
+  ],
+  "epoch": 1042
+ },
+ "stonkfunPair": [
+  {
+   "mint": "MGMuubtUEirmkhfEQdmGUh4pr7HuUdMWcZXFtpPbVJD",
+   "symbol": "MGM",
+   "name": "MGM",
+   "decimals": 6,
+   "logoUrl": "/api/asset/quote-logo/MGMuubtUEirmkhfEQdmGUh4pr7HuUdMWcZXFtpPbVJD?v=b9dbf7e0",
+   "category": "backpack",
+   "categoryLabel": "Sunrise",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  }
+ ]
+}

@@ -1,0 +1,128 @@
+
+REPLAYED FROM THE RECORDED CHAIN AND API
+────────────────────────────────────────
+  ok   Asset Cat: the same twelve checks, the same results  — passes every check
+  ok   cosmic cat protocol: the same twelve checks, the same results  — top10_share, age, curve
+  ok   one recorded coin passes every check; the other fails top-10/holders, age and curve
+  ok   every check is shown, twelve of them, and none is advice
+  ok   the checks also give what the pick ranks by: holders besides the curve, the top 10's share, the curve sold, and the curve's transactions (not counted in a recording that did not count them)  — {"holders":39,"top10Pct":2.8,"curvePct":100,"txs":null}
+
+EVERY RED FLAG IN PLAIN WORDS, WITH THE CHECKS' OWN NUMBERS
+───────────────────────────────────────────────────────────
+  ok   every check has its red flag in plain words
+  ok   the words quote THRESHOLDS: creator 5%, top 10 30% and 25 holders, 2 same-slot buyers, 10 earlier coins, 15 minutes to 24 hours, 10% of the curve
+  ok   only the two checks whose source may be silent may read "info"
+  ok   a spotted coin is checked again only for red flags that can clear with time
+
+EVERY THRESHOLD AT ITS EDGE (inputs changed from the recordings)
+────────────────────────────────────────────────────────────────
+  ok   creator share: 5% passes, a hair more fails
+  ok   top-10 share, bonding curve excluded: 30% passes, more fails  — 30.0% of the supply; 30 holders besides the curve and pools
+  ok   at least 25 holders besides the curve
+  ok   the bonding curve's own account never counts toward the top 10
+  ok   a program-held account (a graduated coin's pool) never counts: an 80% pool leaves the top 10 at 10%  — 10.00% of the supply; 30 holders besides the curve and pools
+  ok   same-slot buyers: 2 pass, one more fails
+  ok   a creation beyond the paging limit reads "not reached" (info), not a guess
+  ok   creator's earlier coins: 10 pass, 11 fail, unknown is "not available"
+  ok   age: under 15 minutes fails, 15 passes, over 24 hours fails
+  ok   curve: 10% sold passes, 9.99% fails, and the value says the market cap in SOL
+  ok   a graduated curve passes as graduated
+  ok   a live mint authority fails
+  ok   a live freeze authority fails (and the extension audit refuses it on Token-2022)
+  ok   a Token-2022 transfer fee (the recorded catwifhat mint) fails the extension audit  — Token-2022 extension TransferFeeConfig is refused
+  ok   no socials in the metadata fails; unreadable metadata fails
+
+COPYCATS, AGAINST THE ESTABLISHED CAT COINS
+───────────────────────────────────────────
+  ok   six established cat coins, each verified and strict on Jupiter as recorded
+  ok   their recorded mints read as live mints with supply
+  ok   re-reading them finds none stale
+  ok   "Popcat", "$POPCAT", "MEW", "michi", "catwifhat", "shark cat" are copies
+  ok   a coin is never a copy of itself, and "Pop Cat Party" is not a copy
+  ok   a copy fails its callout, naming the coin it copies
+
+NEVER A CASHCAT COIN, BY WHAT THE CHAIN SAYS AS WELL AS PUMP.FUN'S LISTING
+──────────────────────────────────────────────────────────────────────────
+  ok   a coin whose bonding curve names CashCat's wallet as its creator fails not_cashcat, whatever the listing says
+  ok   and the creator's share counts what the curve's creator holds too
+
+THE CHAIN READS
+───────────────
+  ok   holders come from getProgramAccounts filtered by the mint, owner and amount read from a 40-byte slice
+  ok   the creation is the oldest signature; same-slot buyers are the other fee payers in its slot, the creator and failed ones left out
+  ok   a curve with exactly 1,000 signatures still finds its creation  — {"createSig":"t999","createSlot":1001,"createTime":4001,"sameSlotBuyers":[],"sameSlotTxs":0,"sameSlotUnread":0,"curveTxs
+  ok   same-slot transactions it did not read, or could not, count as buyers it cannot rule out: the check fails  — up to 4 in slot 10 (4 not read)
+  ok   pump.fun metadata is read by CID only
+  ok   pump.fun's gateway refusing (403, as it did for some CIDs that day) falls back to Pinata's
+  ok   a metadata URI on any other host is not fetched at all
+
+A WHOLE POPCAT RUN, ON A SCRIPTED PUMP.FUN AND CHAIN
+────────────────────────────────────────────────────
+  ok   a dry run checks both recorded cat coins and writes nothing  — {"read":3,"queued":2,"checked":2,"callouts":1,"spotted":1,"waiting":0,"left":0,"dropped":0}
+  ok   the not-a-cat coin was never checked on chain
+  ok   a live run publishes every cat coin it checked, as the site validates them: the passing one as a callout, the failing one as spotted
+  ok   the spotted coin carries its red flags, each in plain words: too few holders, too little of its curve sold
+  ok   both show all twelve checks, with the stats the pick ranks by, and no link or image of the coin's own (socials are named, never linked)
+  ok   it remembers what it checked, and queues the spotted coin for one more look in an hour (its red flags can clear)
+  ok   the same coin is not listed twice, and a spotted coin is not checked again before its hour is up
+  ok   a coin pump.fun lists as 15 minutes old but the chain says is younger waits for its age, never flagged for it
+  ok   a test environment is never live
+  ok   a coin whose creator is CashCat's wallet (CASHCAT_WALLET_ADDRESS) is never listed, nor even checked
+  ok   a coin in CashCat's launches is never listed
+  ok   a coin whose bonding curve names CashCat's wallet on chain, whatever pump.fun lists, is checked and then never listed or picked
+  ok   with a model key, a coin the model says is not a cat is not listed
+  ok   a coin whose name carries a web address is never printed, nor even checked on chain: counted as skipped
+  ok   a coin whose bonding curve does not decode is dropped by name, and the run goes on to the end  — [{"mint":"64xwhN5Rshirb1rB6KAC5Qw26zhYhPEXGPxLkpNmpump","name":"Asset Cat","symbol":"ASSCAT","why":"its accounts do not decode as a pump.fun coin"}]
+
+THE LISTING, AND NO CAT COIN MISSED ACROSS A SKIPPED RUN (synthetic coins)
+──────────────────────────────────────────────────────────────────────────
+  ok   with the 12:22 run skipped, the 12:37 run reads back to where 12:07's listing began, and says so
+  ok   no cat coin missed: all 65 created from the first listing's reach to fifteen minutes before the last run are listed, the 9 made around the skipped run among them  — 0 missing
+  ok   coins younger than fifteen minutes wait in the queue rather than being checked or skipped
+  ok   spotted coins and callouts both reach the file, one entry per coin, and the file validates
+  ok   two skipped runs outrun the listing: the stretch it could not read is named in the log and in the summary, never passed over quietly  — 12 minutes, 7 cat coin(s)
+  ok   the listing says how far it read and why it stopped: a failed page (kept pages read), reaching the last listing, or running out
+
+THE BUDGET, AND WHAT FAILED TO READ
+───────────────────────────────────
+  ok   a run checks at most 30 coins, oldest first, and names the ones left for the next run
+  ok   the next run checks them
+  ok   a coin whose accounts could not be read waits in the queue, its try counted
+  ok   and is checked on the next run
+  ok   after 3 failed tries it is dropped, by name
+  ok   a coin a day old leaves the queue; one never checked is named as dropped (none here: it was checked)
+  ok   …and a queued coin no run reached before it was a day old is dropped and named, never silently
+
+POPCAT'S PICK
+─────────────
+  ok   the windows start at 00, 06, 12 and 18 UTC
+  ok   a pick is due at the first run in a window that was not tried yet, and only then
+  ok   ranked by holders, then transactions on the curve, then the curve sold
+  ok   a tie on all three goes to the mint that sorts first, whatever order the coins come in
+  ok   none when no coin checked in the six hours before is clean: spotted coins, older checks and coins already picked do not count
+  ok   the pick names its window, when it was chosen, when its checks ran, and the facts it was chosen on
+  ok   the site's validator takes it
+  ok   every draft is at most 200 characters, opens with the name and ticker, ends with the disclosure, and carries no price, promise or "buy"  — longest 200
+  ok   it says no red flags in twelve on-chain checks, and when  — Asset Cat ($CAT): no red flags in 12 on-chain checks at 11:37 UTC. 25 holders, top 10 hold 30%, mint and freeze revoked. No position held; may earn callout rewards. Not financial advice.
+  ok   the ticker carries one "$", whatever the coin wrote
+  ok   a coin whose own name carries such a word gets no draft, so it is never picked
+  ok   the next coin down is picked instead, and the one passed over is counted
+  ok   the first run in the 12:00 window picks the best clean coin: most holders, then most transactions
+  ok   a later run in the same window makes no second pick
+  ok   the next window gets its own pick, from coins checked in the six hours before it, never a coin picked before
+  ok   each pick's draft is in the file, within the rules
+  ok   no pick when no coin checked in the six hours before is clean, and the window is marked tried
+  ok   a clean coin found later in the same window waits for the next window's pick
+  ok   …and is picked then, as it was checked within the six hours before
+
+THE JOB SUMMARY, AGAINST HOSTILE NAMES
+──────────────────────────────────────
+  ok   nothing a coin wrote can open a tag, a link, emphasis, a table or a code span: every character but letters, digits and spaces is a numbered reference
+  ok   every line of it is HTML or blank, so none can start a heading, a list or a workflow command
+  ok   no blank line inside a block, so no block ends early and lets Markdown in
+  ok   the pick, its window and its draft are there, the draft in a <pre> of its own, with the rules for posting it and the disclosure
+  ok   the only link is the coin's pump.fun page, built from a checked address
+  ok   a run that stopped says why, escaped the same way
+
+test-bots-popcat: 92 passed, 0 failed
+

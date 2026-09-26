@@ -1,0 +1,31 @@
+== CNAME
+catcoinsanctuary.com
+
+== https://catcoinsanctuary.com/
+HTTP/1.1 200 Connection Established
+HTTP/2 200 
+server: GitHub.com
+content-type: text/html; charset=utf-8
+cache-control: max-age=600
+== https://www.catcoinsanctuary.com/
+HTTP/1.1 200 Connection Established
+HTTP/2 301 
+server: GitHub.com
+content-type: text/html
+location: https://catcoinsanctuary.com/
+== https://catcoinsanctuary.com/cat/patchpaw
+HTTP/1.1 200 Connection Established
+HTTP/2 404 
+server: GitHub.com
+content-type: text/html; charset=utf-8
+== https://catcoinsanctuary.com/index
+HTTP/1.1 200 Connection Established
+HTTP/2 200 
+server: GitHub.com
+content-type: text/html; charset=utf-8
+cache-control: max-age=600
+== GH pages subfolder extensionless (solana-web3.js typedoc)
+HTTP/1.1 200 Connection Established
+HTTP/2 200 
+server: GitHub.com
+content-type: text/html; charset=utf-8

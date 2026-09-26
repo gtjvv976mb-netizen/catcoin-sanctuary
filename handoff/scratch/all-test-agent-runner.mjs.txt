@@ -1,0 +1,175 @@
+
+1. IT WILL NOT START UNNAMED, UNDESCRIBED, OR WITHOUT THE OWNER'S KEY
+─────────────────────────────────────────────────────────────────────
+  ok   a fresh agent is stopped, in paper, and a tick does nothing
+  ok   unnamed and undescribed, it will not start (not_ready)
+  ok   without an API key it will not start (no_api_key)
+  ok   with both it starts, in PAPER, with a $100 paper vault
+  ok   the spec it saved is the owner's, and the stored copy matches
+
+2. A TICK: SNAPSHOT, THE MODEL, THE LIMITS, PAPER FILLS, THE JOURNAL
+────────────────────────────────────────────────────────────────────
+  ok   the model was asked on the first tick, and its rationale is journaled
+  ok   the model saw the snapshot: every universe token with its price, changes, liquidity and indicators
+  ok   …the vault, the limits (read-only), the day and no positions yet
+  ok   …and the owner's strategy in the system prompt
+  ok   …the agency's lessons in the system prompt, and no buy-and-hold figure before a start price exists
+  ok   two paper buys filled at Jupiter's quotes: POPCAT $20, and MEW clamped from $100 to the $25 per-token cap
+  ok   …the POPCAT fill is the quote's: $20 at $0.30 less 0.1% is 66.6 POPCAT
+  ok   the SOL buy was refused by the format (not_in_universe) and journaled
+  ok   the decision's outcomes say what became of each action
+  ok   the paper vault paid $45: $55 of USDC left, $100 of equity less the 0.1%  — {"settlementUsd":55,"positionsUsd":44.95,"equityUsd":99.95,"exposurePct":44.9752,"stale":[],"unpriced":[],"at":1790251200000}
+  ok   the token usage is recorded: one call, its tokens
+  ok   two trades counted today; the next decision is 30 minutes after this one
+  ok   half a minute later the model is not asked again
+  ok   …and no candles were read for a tick that did not ask it
+
+3. THE PROTECTIONS FIRE BETWEEN THE MODEL'S TURNS
+─────────────────────────────────────────────────
+  ok   POPCAT up 16.7%: sold at the take profit, on the half-minute tick, the model not asked
+  ok   the round trip is booked: a win, realized P&L positive, win rate 100%  — 3.29
+  ok   the protection's sell did not use up a model trade
+  ok   MEW down 9%: sold at the stop loss
+  ok   a win and a loss: win rate 50%, and the max drawdown recorded  — max DD 2.2%
+  ok   the closed trades carry their reasons
+  ok   buy and hold is the bar: the universe held equally from the first tick's prices is +2.56%, set beside the agent's return  — {"since":"2026-09-24T12:00:00.000Z","agentReturnPct":1.04,"holdReturnPct":2.56,"edgePct":-1.52,"holdEquityUsd":102.51}
+
+4. THE MODEL FAILING MEANS NO NEW ENTRIES, AND THE PROTECTIONS STILL RUN
+────────────────────────────────────────────────────────────────────────
+  ok   a fresh MEW position to protect
+  ok   the model answered 500: journaled as brain_failure (server), no decision, no buy
+  ok   …and in that same tick the stop loss sold MEW
+  ok   a 401 is journaled as unauthorized, telling the owner to check the key
+  ok   a decision carrying a limit is refused whole (unexpected_field): nothing bought
+  ok   …and the spec is exactly what the owner saved, in memory and in storage
+  ok   failures are counted in the usage
+
+5. THE DAILY DRAWDOWN BREAKER, AND UTC MIDNIGHT
+───────────────────────────────────────────────
+  ok   three buys: $25, $25, and $10 left under the 60% exposure cap  — 59.94
+  ok   down about 4.2% on the UTC day against a 3% limit: the breaker trips and says so
+  ok   …'stop entries' sells nothing
+  ok   after the trip the model's sell still goes through; its buy of GRUMPY, outside this universe, is refused first at not_in_universe
+  ok   a buy of a listed token after the trip: refused at drawdown_breaker, naming UTC midnight
+  ok   after UTC midnight the day starts over: the breaker is reset and the buy fills
+  ok   with 'liquidate', the trip sells every position back to USDC
+  ok   …and the model is not asked for the rest of the UTC day
+
+6. PAUSE, RESUME, LIQUIDATE ALL, STOP
+─────────────────────────────────────
+  ok   paused: the model is not asked, however late the schedule
+  ok   …and the stop loss still fires
+  ok   resumed: the model is asked again at once (its turn was overdue)
+  ok   liquidate all: every position sold back to USDC through the same path, then paused
+  ok   …journaled as the owner's control
+  ok   stopped: what is still held keeps its stop loss
+  ok   …and a stopped agent holding nothing asks nothing of anyone
+
+7. THE MODEL CAN CHANGE NO LIMIT AND REACH NO WITHDRAWAL
+────────────────────────────────────────────────────────
+  ok   withdraw and sweep are not actions: refused by name (action_unknown)
+  ok   the $1,000 buy is clamped to the $25 the owner set
+  ok   in paper the fences — the only way to the wallet — were never even asked for
+  ok   the spec is byte-for-byte the owner's
+  ok   the runner's code names no sweep builder and no transfer: there is no path from a decision to a withdrawal
+
+7b. THE OWNER'S OWN LAUNCHES ARE NEVER BOUGHT, AND LEAVE THE UNIVERSE (own_launch)
+──────────────────────────────────────────────────────────────────────────────────
+  ok   a coin the owner launched is not in the market the model is shown  — MEW, KITTY
+  ok   a buy of it is refused by name (own_launch) and journaled; the other buy fills
+  ok   when the owner's launches cannot be read, no buy goes, under the same clause
+
+8. THE JOURNAL IS CAPPED; THE STATE SURVIVES; THE KEY IS NEVER KEPT
+───────────────────────────────────────────────────────────────────
+  ok   the journal keeps at most 300 entries, newest first  — 300
+  ok   a new runner over the same storage resumes the same agent: running, its journal, its usage  — running, 300, 170 of 170
+  ok   the owner's API key is in no stored state, no journal entry, no log line and no notification
+  ok   the key was sent only to the Anthropic API, and only in its header
+  ok   the state is small enough for chrome.storage.local  — 124 KB
+
+9. LIVE ARMS ONLY WITH THE WALLET UNLOCKED, FUNDED, AND THE SENTENCE TYPED
+──────────────────────────────────────────────────────────────────────────
+(node:25115) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok   locked, underfunded and with the wrong sentence it does not arm (not_armed), naming each  — autopilot_unlocked,vault_funded,live_ack_typed
+  ok   …and the checklist prints the exact sentence to type, naming the autopilot wallet
+  ok   with 0.005 SOL it does not arm: fees and account rent need 0.02 (sol_for_fees)
+  ok   unlocked, $100 of USDC, 0.1 SOL and the sentence typed: it starts LIVE, armed
+
+10. A LIVE BUY: CHECKED, SIGNED BY THE AUTOPILOT KEY, SENT, READ BACK
+─────────────────────────────────────────────────────────────────────
+  ok   the buy filled live, with a signature  — {}
+  ok   the bytes on chain carry the autopilot key's signature, and Phantom was asked nothing
+  ok   the check ran before the send: tables read, custody read, the simulation, then the send  — gma,gma,gma,gma,sim,send
+  ok   the chain moved exactly $20 of USDC, and the book holds exactly the POPCAT the chain delivered
+  ok   the fee and rent are counted in SOL, beside the P&L  — 0.002094 SOL
+  ok   a live fill notifies the owner
+
+11. HOSTILE TRANSACTIONS ARE REFUSED BEFORE SIGNING
+───────────────────────────────────────────────────
+  ok   an account made for another wallet, to receive the output: refused at account_create, before signing — nothing sent, Phantom not asked  — account_create: an account create is paid by ESFqdt3FiKcAQrS3UznfyxtkQPyhjakDMmGhhLayBgA or owned by 2UULA
+  ok   the route paying the output into another wallet's account: refused at route_accounts, before signing — nothing sent, Phantom not asked  — route_accounts: route_v2 destination token account is GDQV6NMHEZcWVJQpPKi8gR68EJsXjMrzabVLkxLaAqNT, not ES
+  ok   a System transfer draining SOL: refused at program_not_allowed, before signing — nothing sent, Phantom not asked  — program_not_allowed: the transaction calls 11111111111111111111111111111111, which a EPjFWdd5AufqSSqeM2qN1xzyba
+  ok   a swap into a mint the order did not name: refused at account_create, before signing — nothing sent, Phantom not asked  — account_create: an account create for 7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr, which is neither side 
+  ok   a second signer: refused at signers, before signing — nothing sent, Phantom not asked  — signers: the transaction's signers are ESFqdt3FiKcAQrS3UznfyxtkQPyhjakDMmGhhLayBgA, 2UULAVv4tk4m7Jw
+  ok   …and the vault still holds only what the good buy left
+
+12. A LIVE TAKE PROFIT, AND A LOCKED WALLET THAT CANNOT SELL
+────────────────────────────────────────────────────────────
+  ok   POPCAT up 25%: sold at the take profit, live, signed by the autopilot wallet
+  ok   the USDC came back to the vault, more than was spent  — 104.875158 USDC
+  ok   bought again
+  ok   locked, the stop loss cannot sign: refused at autopilot_locked, retried every tick, and the owner told
+  ok   …and a locked wallet disarms the live agent
+
+13. THE PAIR ALLOWLIST, ON THE LIVE RECORDED USDC → POPCAT TRANSACTION
+──────────────────────────────────────────────────────────────────────
+  ok   with POPCAT in the universe, Jupiter's live transaction passes the check (route_v2, one account create)
+  ok   with POPCAT not in the universe, the same bytes are refused at pair_not_allowed
+  ok   …and a swap between two listed tokens is never a pair (POPCAT → MEW)
+
+14. LIQUIDATE ALL KEEPS SELLING WHAT IT COULD NOT SELL AT ONCE
+──────────────────────────────────────────────────────────────
+  ok   liquidate all with MEW unroutable: POPCAT sold, MEW not, the agent paused and still liquidating
+  ok   the next tick sells MEW for liquidate all, not for a stop or a take
+  ok   …and says it is finished; nothing is left to liquidate
+  ok   resuming ends the liquidation: what is held is the model's again
+
+15. A LIVE BUY SENT WITHOUT A READABLE OUTCOME PAUSES THE AGENT
+───────────────────────────────────────────────────────────────
+  ok   the buy landed on chain, and the book could not know it
+  ok   the agent is PAUSED, saying the tokens may be in the wallet with no stop loss
+  ok   …and the owner is told
+  ok   …and the pause is already in storage
+
+16. THE BOOK IS WRITTEN AS IT CHANGES, NOT ONLY WHEN A TICK ENDS
+────────────────────────────────────────────────────────────────
+  ok   a new worker finds the POPCAT fill made before the old one died
+  ok   …and the model's turn it had taken
+  ok   …so it does not ask the model again, or buy again, on waking
+  ok   (the buy landed while the old worker waited)
+  ok   a new worker that finds a live buy in flight pauses the agent and says why
+  ok   …and tells the owner to check the wallet
+
+17. WITHDRAW: THE TICKS STAND ASIDE, AND THE BREAKER JUDGES TRADING, NOT THE WITHDRAWAL
+───────────────────────────────────────────────────────────────────────────────────────
+  ok   (a live POPCAT position, $80 of USDC beside it)
+  ok   a tick during the sweep stands aside: no breaker, nothing sold
+  ok   after it, the ticks run again; the POPCAT row is closed as withdrawn, not sold
+  ok   …and the breaker does not trip on money the owner took out  — drawdown 0%
+  ok   …nor does it write a max drawdown the trading never had  — 0%
+  ok   …and the journal says what left, as flows, not trades
+  ok   a withdrawal that failed still hands the wallet back to the ticks
+
+18. A DEPOSIT MOVES THE DAY'S BASE: THE BREAKER IS NOT BLUNTED
+──────────────────────────────────────────────────────────────
+  ok   (the UTC day starts at the $100 vault)
+  ok   the deposit is a flow: the day's base is now $1,100, and the $400 buy fills  — 1100
+  ok   a 5.9% loss on the funded vault trips the 5% breaker  — 5.9067% of 1100
+
+19. PAUSE PRESSED WHILE THE MODEL IS DECIDING: NO BUY FROM THAT DECISION
+────────────────────────────────────────────────────────────────────────
+  ok   the decision arrives after Pause was pressed: its buy is refused (paused), nothing bought
+
+110 passed, 0 failed
+

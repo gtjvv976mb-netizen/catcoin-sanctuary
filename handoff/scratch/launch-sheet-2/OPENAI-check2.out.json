@@ -1,0 +1,208 @@
+{
+ "results": [
+  {
+   "name": "Parlor Puff the Portrait Cat",
+   "ticker": "PARLORPUFF",
+   "nameLen": 28,
+   "tickerLen": 10,
+   "blurbLen": 159,
+   "descLen": 270,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "openai",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Parlor Puff, a fluffy taupe tabby with a snowy ruff and big dark eyes, sits so still by the flower pots that visitors take her for a painting until she blinks. A cat coin priced in OPENAI. Not affiliated with OpenAI or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Nextpaw the Guessing Cat",
+   "ticker": "NEXTPAW",
+   "nameLen": 24,
+   "tickerLen": 7,
+   "blurbLen": 154,
+   "descLen": 265,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "openai",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Nextpaw, a long-haired taupe tabby with a white bib and round dark eyes, always seems to know what you will say next and starts purring before you finish. A cat coin priced in OPENAI. Not affiliated with OpenAI or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Mull the Thinking Cat",
+   "ticker": "MULLPAW",
+   "nameLen": 21,
+   "tickerLen": 7,
+   "blurbLen": 155,
+   "descLen": 266,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "openai",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Mull, a round, long-haired taupe tabby with a white ruff and snowy paws, answers every question with one slow blink after thinking it over for a long time. A cat coin priced in OPENAI. Not affiliated with OpenAI or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "ext": {
+  "oPAiAikWTaFj9RYoRFD35ccfwhnMcB3ThgBZRHSkjTZ": {
+   "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "extensions": [
+    {
+     "extension": "transferFeeConfig",
+     "state": {
+      "older": {
+       "epoch": 987,
+       "maximumFee": 18446744073709552000,
+       "transferFeeBasisPoints": 20
+      },
+      "newer": {
+       "epoch": 987,
+       "maximumFee": 18446744073709552000,
+       "transferFeeBasisPoints": 20
+      }
+     }
+    },
+    {
+     "extension": "metadataPointer"
+    },
+    {
+     "extension": "tokenMetadata"
+    }
+   ]
+  },
+  "PreweJYECqtQwBtpxHL171nL2K6umo692gTm7Q3rpgF": {
+   "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "extensions": [
+    {
+     "extension": "permanentDelegate"
+    },
+    {
+     "extension": "defaultAccountState"
+    },
+    {
+     "extension": "transferFeeConfig",
+     "state": {
+      "older": {
+       "epoch": 1039,
+       "maximumFee": 18446744073709552000,
+       "transferFeeBasisPoints": 100
+      },
+      "newer": {
+       "epoch": 1043,
+       "maximumFee": 18446744073709552000,
+       "transferFeeBasisPoints": 300
+      }
+     }
+    },
+    {
+     "extension": "confidentialTransferMint"
+    },
+    {
+     "extension": "confidentialTransferFeeConfig"
+    },
+    {
+     "extension": "transferHook"
+    },
+    {
+     "extension": "scaledUiAmountConfig"
+    },
+    {
+     "extension": "metadataPointer"
+    },
+    {
+     "extension": "pausableConfig"
+    },
+    {
+     "extension": "tokenMetadata"
+    }
+   ]
+  }
+ }
+}

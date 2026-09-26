@@ -1,0 +1,341 @@
+=================== FWDI
+- Underlying: Forward Industries, Inc. (Nasdaq: FWDI) - Solana treasury company
+# FWDI
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: Forward Industries, Inc; StonkFun category: backpack
+- Underlying: Forward Industries, Inc. (Nasdaq: FWDI) - Solana treasury company
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: Forward Industries, Inc. - Backpack Securities (FWDI)
+- Cat research: not done in this pass (identification only).
+
+## Cat research (2026-09-25)
+
+Method note: session WebSearch budget exhausted (200/200); research by direct fetch of official sources. Raw in raw/fwdi/, raw/x/.
+Sources checked:
+- https://forwardindustries.com/sitemap.xml -> all 58 pages downloaded (home, about-us, solana, sol-treasury, ecosystem,
+  brand-kit, media, all-media, all-pr, all-articles, governance, 40+ "insights" press releases Sept 2025 - Sept 24 2026)
+  and grepped text + image alt for cat/kitty/kitten/feline/meow/Hello Kitty/Garfield/Pusheen/lion/tiger/jaguar/panther/
+  leopard/puma/cheetah/cougar/lynx/bobcat + memecoin names (BONK, POPCAT, MEW, WIF): ZERO hits.
+- Brand kit (https://forwardindustries.com/brand-kit): colours "Quantum Purple", logo is an "F" arrow mark; the 6 brand
+  illustrations were downloaded and viewed: abstract purple/gold grid and green gradient art, no animals.
+- SEC EDGAR (CIK 38264): 10-Ks for FY2025 (filed 2025-12-11), FY2024, FY2018, FY2015 grepped for cat/pet/animal/lion/
+  tiger/jaguar/panther/leopard/puma/meme: ZERO hits. (Legacy business = carrying cases/OEM design, no pet line found.)
+- Wikipedia: no article for Forward Industries (404) or Multicoin Capital (404).
+- Official X account @FWDind (linked from forwardindustries.com; joined 2025-09-11) read via the public fxtwitter
+  read API: 836 posts (2025-12-12 -> 2026-09-25) + full media timeline 236 posts (2025-09-15 -> 2026-09-25).
+  Text/alt grep: zero cat hits. All 228 original media posts viewed as contact sheets (raw/x/fwd_sheet_0..4.jpg): charts,
+  press-release cards, interview stills, Times Square/Nasdaq billboards; NO cat or big-cat image.
+- Chairman Kyle Samani (@KyleSamani, Multicoin co-founder; named Chairman on https://forwardindustries.com/about-us):
+  695 posts 2025-10-22 -> 2026-09-25 grepped: only hit is a REPOST (2026-06-13) of @calmanxx
+  https://x.com/calmanxx/status/2065742505484714031 "I rotated my $PURR into $FWDI" -> $PURR here is a Nasdaq ticker of a
+  HYPE treasury company (name-only cat word, not a cat post by Forward/Samani). No cat photo/pet found.
+- Not checked: CEO Michael Pruitt / other execs' personal accounts; Kyle Samani's media timeline images (text-only scan).
+
+Verdict: none_found. The company has no cat mascot, no cat post, no big-cat branding, no cat IP collab; the "Forward"
+brand is an abstract "F" arrow in Quantum Purple. Confidence: medium-high (official site, SEC filings, full official X
+media timeline checked visually; could not run web search).
+=================== LUV
+- Underlying: Southwest Airlines Co. (NYSE: LUV)
+# LUV
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: Southwest Airlines Co.; StonkFun category: backpack
+- Underlying: Southwest Airlines Co. (NYSE: LUV)
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: Southwest Airlines Co. - Backpack Securities (LUV)
+- Cat research: not done in this pass (identification only).
+
+## Cat research (2026-09-25)
+
+Method note: session WebSearch budget exhausted (200/200); research by direct fetch of official sources. Raw in raw/luv/, raw/x/.
+Sources checked:
+- Southwest newsroom https://www.swamedia.com (Salesforce site; pages are JS-rendered, so content was read through the
+  site's own public CMS delivery API /webruntime/api/services/data/v60.0/connect/sites/0DMHu000000NZBROA4/cms/delivery/contents).
+  All 1,664 news releases + "Southwest Stories" items from the sitemap were downloaded and grepped for cat/kitten/feline/
+  meow/Hello Kitty/Garfield/lion/tiger/jaguar/panther/leopard/puma/cheetah/cougar/lynx/bobcat.
+- Official X @SouthwestAir media timeline (public fxtwitter read API): 620 posts 2024-07-26 -> 2026-06-18, text/alt grep = 0
+  cat hits; all 620 thumbnails viewed as contact sheets (raw/x/sw_sheet_0..10.jpg): employee reaction GIFs, fare
+  calendars, aircraft; NO cat image.
+
+### OFFICIAL cat posts (Southwest's own newsroom)
+1. "Operation Get Walter Home: Completing the Mission" (Southwest Story, dateline 2020-11-25, author AshleyOmondi)
+   https://www.swamedia.com/southwest-stories/operation-get-walter-home-completing-the-mission-MCDVWRLN2FDFCBRNAYO25STG6GAM
+   "One story that comes to mind is the special journey of a fallen hero's beloved pet cat, Walter." ... "Walter, the
+   beloved cat, honorably completed his tour with HM3 Jordan W. Way's shipmates and made his final journey home to
+   Baltimore." ... "Walter was honorably promoted to HM3 Walter Way and given an engraved nametag". (Named cat; Southwest
+   Customer Relations, Military Ambassadors and San Diego/Baltimore stations organised the flight.)
+2. "Flying with Felines—Southwest Airlines Celebrates National Cat Day" (Southwest Story, dateline 2020-10-29, author
+   "TheWingedCat") https://www.swamedia.com/southwest-stories/flying-with-felines-southwest-airlines-celebrates-national-cat-day-MCNWEP4B4EQZE6XOSDQC2S5X2C7Q
+   "I thought about how easy it was to fly Southwest with a new kitten ... compete with my Somalis and rescue kitties. I
+   estimate that I have completed nearly 100 flights with my cats on Southwest." Includes Pet Fare ($95) and carrier tips.
+3. News release 2024-10-14 (Greater Good Charities + Lucky Dog Animal Rescue airlift of 145 shelter pets after Hurricane
+   Helene): https://www.swamedia.com/news-and-stories/news-release/greater-good-charities-partners-with-southwest-airlines-and-lucky-dog-animal-res-MCRBOCHB2PCFAA5NVAPDNIY53NK4
+   "Avery the kitten was adopted from Lucky Dog Animal Rescue by Southwest Airlines Captain, Matthew Prebish, who piloted
+   this rescue flight." ... "32 dogs and 93 cats".
+4. Maui airlift 2023-08-19: "Southwest Airlines Employees and Crew members helped transport 136 shelter cats and dogs ...
+   in the aircraft cabin of a Boeing 737-800"
+   https://www.swamedia.com/news-and-stories/news-release/southwest-partners-with-greater-good-charities-and-lucky-dog-animal-rescue-to-tr-MCXONYJ322ORAZ3GFVYMTSNTO57I
+5. "Southwest Heart in Action: Meet a Few Southwest Volunteer Ambassadors" (2025-12-26): an employee volunteer writes
+   "BFAS gave me one of the greatest gifts of all: my cat, Zuko."
+   https://www.swamedia.com/southwest-stories/southwest-heart-in-action-meet-a-fe-southwest-s-volunteer-ambassador-leadership-MCP4PVKK7EVBEKPBMJMZZ7JFY4PE
+6. Policy: in-cabin pets program is "dogs and cats only" (news release 2021-01-25, ESA policy change); holiday tips
+   2023-12-11 "Small cats and dogs are allowed on Southwest Airlines".
+
+### Not found / other
+- No Southwest cat mascot or cat character; brand symbol is the Heart. No Hello Kitty/other cat-IP collaboration found
+  (Hello Kitty jets belong to EVA Air, not Southwest). No big-cat logo/mascot/codename.
+- Big-cat words only incidental: "The Flying Tigers" story (2022-05-26) about Southwest sponsoring the 80th anniversary
+  of the WWII American Volunteer Group; inflight movie listings (Lion King, Black Panther); "Meow Wolf Denver" partner.
+- CEO/founder: nothing found (Wikipedia not re-checked for Bob Jordan; no search available).
+- Ticker LUV: not cat-related (Love Field).
+
+Verdict: official_account_posted_cat (named cats Walter / Avery featured in Southwest's own newsroom; National Cat Day
+story). Confidence: high.
+=================== WULF
+- Underlying: TeraWulf Inc. (Nasdaq: WULF)
+# WULF
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: TeraWulf; StonkFun category: backpack
+- Underlying: TeraWulf Inc. (Nasdaq: WULF)
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: TeraWulf - Backpack Securities (WULF)
+- Cat research: not done in this pass (identification only).
+
+## Cat research pass (2026-09-25)
+
+Tooling note: the session's WebSearch budget was exhausted (200/200) before this pass, so searches ran through
+Bing HTML/RSS (bing.com/search, parsed with a script) and Google News RSS (news.google.com/rss/search). Bing
+returned the same entity results (terawulf.com, Wikipedia, Yahoo quote) regardless of the extra "cat"/"office cat"/
+"Hello Kitty" terms, i.e. no cat-specific hits. X/Twitter could not be read (xcancel suspended, nitter down,
+syndication 429).
+
+Queries run:
+- Bing: TeraWulf cat mascot; TeraWulf cat; "TeraWulf" "cat" mascot; TeraWulf "office cat"; TeraWulf "Hello Kitty";
+  "Paul Prager" cat; TeraWulf lion OR tiger OR jaguar OR panther OR leopard; TeraWulf wolf logo name origin Prager
+  -> only generic entity results, nothing about cats.
+- Google News RSS: TeraWulf "cat" (5 items, all generic data-center/finance/zoning stories; no cat content in titles);
+  TeraWulf mascot (0 items); TeraWulf "Hello Kitty" (0 items); TeraWulf lion OR tiger OR jaguar OR panther OR leopard
+  (14 items; the only match is "Tiger Brokers" as a news source, name coincidence, not TeraWulf branding);
+  "Paul Prager" cat (2 items: Bethesda Magazine Easton dining piece 2026-07-15, Grizzly Research report 2024-08-15;
+  neither about a cat per titles); "Paul Prager" TeraWulf dog OR cat OR pet (10 items, all business news);
+  TeraWulf Beowulf name wolf (2 items, business).
+
+URLs opened:
+- https://www.terawulf.com/ (fetched 2026-09-25). Image alt texts: "TeraWulf wolf shield logo mark.",
+  "TeraWulf simplified wolf shield logo.", "TeraWulf vertical logo with wolf shield and wordmark.", campus logos for
+  Lake Mariner, Lake Hawkeye, Justified, Chesapeake, Muskie. No cat/big-cat terms anywhere in the page.
+- https://www.terawulf.com/about (fetched 2026-09-25). Same wolf-shield logo alts; team headshots; no cats.
+- https://investors.terawulf.com/news-events/press-releases (fetched 2026-09-25). Text scanned for cat, kitty, kitten,
+  lion, tiger, jaguar, panther, leopard, puma, cheetah, mascot: zero hits.
+- https://en.wikipedia.org/wiki/TeraWulf (raw wikitext, fetched 2026-09-25): founded Jan 2021 by Paul Prager and
+  Nazar Khan via Prager's Beowulf Energy LLC (the "Wulf" in the name tracks Beowulf). No mascot, no cat.
+
+Verdict: none_found. The brand animal is a WOLF (wolf-shield logo), which is a canine, not a cat. No official cat,
+no big-cat mascot, no cat IP collaboration, no known CEO cat posting found.
+=================== RUM
+- Underlying: RUM Group Inc., formerly Rumble Inc. (Nasdaq: RUM) - Rumble video + Quake AI
+# RUM
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: RUM Group Inc.; StonkFun category: backpack
+- Underlying: RUM Group Inc., formerly Rumble Inc. (Nasdaq: RUM) - Rumble video + Quake AI
+- Asset type: company_stock
+- Source: https://backpack.exchange/stocks/RUM (opened: RUM Group Inc., Communication Services / Internet Content & Information)
+- Source: WebSearch snippet: GlobeNewswire 2026-06-17 https://www.globenewswire.com/news-release/2026/06/17/3313814/0/en/ (Rumble renamed its corporate parent to RUM Group Inc. effective June 18, 2026)
+- Note: Backpack Securities token; GlobeNewswire 2026-06-17: Rumble renamed parent to RUM Group Inc. effective June 18, 2026; Jupiter token name: RUM Group Inc. - Backpack Securities (RUM)
+- Cat research: not done in this pass (identification only).
+
+## Cat research pass (2026-09-25)
+
+Tooling note: WebSearch budget exhausted (200/200); searches ran via Google News RSS (news.google.com/rss/search)
+and Bing HTML (returned only generic Rumble entity results for every cat query). rumble.com and
+investors.rumble.com returned Cloudflare 403 ("Just a moment...") to both curl and WebFetch, so the official
+Rumble / Rumble Viral channels could not be browsed. archive.org returned 429. X/Twitter unreadable.
+
+Queries run (Google News RSS unless noted):
+- Rumble cat mascot (8 items: NBA mascots, Fisher Cats, Kentucky Wildcat etc.; none about Rumble the company)
+- Rumble "cat" Pavlovski (6 items; one relevant: Rolling Stone 2022-01-04 "Rumble Mixes Cat Videos With Covid
+  Misinformation — and the Right Is Loving It")
+- "Chris Pavlovski" cat (3 items; same Rolling Stone piece + WaPo 2020-11-16 + Globe and Mail 2022-02-16, business)
+- Rumble "Hello Kitty" (19 items; all "Crumble Rumble" puzzle in Hello Kitty Island Adventure / Sonic Rumble games;
+  name coincidence, nothing to do with Rumble Inc.)
+- Rumble "office cat" (2 unrelated); Rumble "Grumpy Cat" (2 unrelated); Rumble "Garfield" OR "Pusheen" OR
+  "Doraemon" (21 unrelated: wrestling, sound clash, Andrew Garfield)
+- Rumble Pavlovski cat meme (0); Rumble "rumblevideo" cat (0); Rumble "kitten" Pavlovski (0);
+  "RUM Group" cat (1 unrelated business item); Rumble Viral cat video licensing 2017 (0)
+- Rumble lion OR tiger OR jaguar OR panther mascot (17 items; all sports mascots / "Royal Rumble", none Rumble Inc.)
+- "Rumble" "Quake AI" logo (13 items; rebrand coverage 2026-06-17 onward; no animal branding mentioned)
+- Rumble "cat videos" (10; only the Rolling Stone piece is about Rumble Inc.; plus a 2015 mix931fm.com post
+  "Richard the Ragdoll Cat Loves to Slide Across the Floor [VIDEO]" — user viral clip, not an official post, unverified
+  that it is Rumble-hosted)
+- Bing: Rumble Mixes Cat Videos With Covid Misinformation Rolling Stone; Rumble Pavlovski founded 2013 cat videos
+  viral licensing -> generic entity results only.
+
+URLs opened:
+- https://www.rollingstone.com/culture/culture-news/rand-paul-rumble-conservative-youtube-1277997/ (read via
+  rollingstone.com wp-json API; page itself redirects to tollbit paywall). Published 2022-01-04. Headline:
+  "Rumble Mixes Cat Videos With Covid Misinformation — and the Right Is Loving It". Body quote: "It's a bit of a
+  mishmash of viral clips of cute animals doing funny things, political commentary, and conspiracy theories about
+  where society is headed." -> third-party description of platform CONTENT, not a company mascot or official post.
+- https://www.rum.group/ (fetched 2026-09-25; RUM Group corporate site). Image alts: "logo", "quakeai-logo",
+  "rounded play triangle", "rumble-logo". No cat / big-cat terms on the page.
+- https://en.wikipedia.org/wiki/Rumble_(company) (raw wikitext, fetched 2026-09-25): logo "Rumble logo 2022.svg"
+  (green play-button mark); products Rumble Viral, Locals; founder Chris Pavlovski; rebranded RUM Group 2026.
+  No mention of cats, mascots, or big cats.
+
+Verdict: none_found for an official cat or cat mascot. Logo is a rounded play triangle; Quake AI has its own
+wordmark logo. The only cat link is third-party press (Rolling Stone 2022) describing Rumble's early content mix
+as viral cute-animal/cat clips. Could not verify whether the official @rumblevideo X account or the Rumble Viral
+channel has posted a cat video (both unreachable), though as a viral-video licensor it is plausible; unverified.
+=================== USO
+- Underlying: United States Oil Fund, LP (NYSE Arca: USO) - crude-oil futures fund
+# USO
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: United Sates Oil Fund, LP; StonkFun category: backpack
+- Underlying: United States Oil Fund, LP (NYSE Arca: USO) - crude-oil futures fund
+- Asset type: etf_or_fund
+- Note: Backpack Securities token; StonkFun name misspelled "United Sates"; commodity (oil) exposure; Jupiter token name: United States Oil Fund, LP - Backpack Securities (USO)
+- Cat research: not done in this pass (identification only).
+
+## Cat research pass (2026-09-25)
+
+Tooling note: WebSearch budget exhausted (200/200); searches ran via Google News RSS. X/Twitter unreadable.
+Issuer: United States Commodity Funds LLC (USCF Investments), a subsidiary of The Marygold Companies, Inc.
+
+Queries run (Google News RSS):
+- "United States Oil Fund" cat (18 items: oil-market, tokenized-USO price pages, one benzinga headline mentioning
+  Caterpillar; nothing about a cat or a mascot; matches are incidental words)
+- USCF Investments mascot (0 items)
+- "USCF" "cat" ETF (2 items, generic ETF lists)
+- "United States Oil Fund" mascot OR logo (54 items; all market news / price pages; no mascot)
+- "USCF Investments" "Hello Kitty" OR Garfield (0 items)
+- "United States Oil Fund" lion OR tiger OR jaguar OR panther (6 items; oil news, nothing about big-cat branding)
+- "John Love" USCF cat (1 unrelated obituary); "Marygold" cat mascot (0 items)
+
+URLs opened (fetched 2026-09-25):
+- https://www.uscfinvestments.com/ — title "USCF Investments - Commodity & Alternative ETF Leader"; image alts:
+  "USCF Invest In What's Real" (logo), "The Real Spiel" (podcast) plus social/podcast icons. No cat/big-cat terms.
+- https://www.uscfinvestments.com/uso — title "USO | United States Oil Fund | The Original Oil ETF"; only the
+  USCF logo; no cat/big-cat/mascot terms.
+- https://themarygoldcompanies.com/ — parent company site; alts "Home Page", "People high-five each other in a
+  circle at the office."; no cat/big-cat terms.
+
+Verdict: none_found. USO is a crude-oil futures fund; neither the fund nor its issuer USCF (or parent Marygold)
+uses a cat or big-cat mascot, and no cat IP collaboration or cat post was found. Note: the ticker/acronym USO
+also collides with the United Service Organizations (a separate charity), which is irrelevant here.
+=================== CYPH
+- Underlying: Cypherpunk Technologies Inc., formerly Leap Therapeutics (Nasdaq: CYPH) - Zcash treasury company
+# CYPH
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: CYPH; StonkFun category: backpack
+- Underlying: Cypherpunk Technologies Inc., formerly Leap Therapeutics (Nasdaq: CYPH) - Zcash treasury company
+- Asset type: company_stock
+- Source: WebSearch snippet: PR Newswire https://www.prnewswire.com/news-releases/leap-therapeutics-rebrands-as-cypherpunk-expands-leadership-team-to-drive-new-zcash-treasury-strategy-302612466.html and SEC 10-Q (renamed from Leap Therapeutics Nov 12 2025, Nasdaq CYPH from Nov 13 2025, Winklevoss-led ZEC treasury)
+- Note: Backpack Securities token; SEC 8-K/PR Newswire: renamed Nov 12 2025, CYPH trading from Nov 13 2025; Jupiter token name: Cypherpunk Technologies - Backpack Securities (CYPH)
+- Cat research: not done in this pass (identification only).
+
+## Cat research pass (2026-09-25)
+
+Tooling note: WebSearch budget exhausted (200/200); searches ran via Google News RSS. X/Twitter unreadable
+(the company's "Transmissions" essays are hosted on X). Wikipedia has no Cypherpunk Technologies / Leap
+Therapeutics article (raw fetch returned an error page).
+
+Queries run (Google News RSS):
+- "Cypherpunk Technologies" cat (3 items: Moomoo ticker page 2026-09-17; CoinMarketCap 2016 listing page;
+  CaptainAltcoin 2026-05-21 "Zcash (ZEC) Price 74% Flush Was the Setup - Is the Next Move a Dead Cat Bounce or
+  Full Reversal?" -> "dead cat bounce" is a market idiom, not a cat)
+- Cypherpunk Zcash mascot (1 unrelated: Greenpeace mascot vs Bitcoin mining, ForkLog 2023-03-24)
+- Winklevoss cat (4 unrelated: WaPo ballroom donors, RIABiz 2013, Harvard Crimson 2011 "The Winklevi Like Their
+  Nuts", ADWEEK Wonderful Pistachios 2023 — no pet cat)
+- "Will McEvoy" cat (2 unrelated: obituary, DRAM Scotland design piece)
+- Zcash cat mascot (2 items about other cat meme coins Basecat/CashCat — not Zcash or Cypherpunk)
+- Zcash zebra mascot (0); "Leap Therapeutics" cat OR mascot (0)
+- "Cypherpunk" CYPH lion OR tiger OR jaguar OR panther (2 items, ZEC-treasury business news, no big-cat branding)
+- Winklevoss "Hello Kitty" (1 item: ledgerinsights 2020-03-18 "Winklevoss firm launches blockchain marketplace for
+  digital art, collectibles" — about the twins' other firm (Nifty Gateway/Gemini), not Cypherpunk; article body
+  not opened (WP API returned non-JSON), so no claim made about Hello Kitty content)
+
+URLs opened (fetched 2026-09-25):
+- https://www.prnewswire.com/news-releases/leap-therapeutics-rebrands-as-cypherpunk-expands-leadership-team-to-drive-new-zcash-treasury-strategy-302612466.html
+  (2025-11-12): Leap Therapeutics renames to Cypherpunk Technologies, ticker CYPH from Nov 13 2025; Winklevoss
+  Capital-led $58.88M PIPE; Khing Oei chairman, Will McEvoy CIO, Douglas Onsi CEO. No cat/mascot/big-cat terms.
+- https://www.cypherpunk.com/ — image alts only "Cypherpunk"; assets cyphlogo-static.svg (green #0CE700
+  terminal-prompt style "./" wordmark), zcash.png, privacy.png, Interlocked-Box.svg, cypherpunk1.mp4. No cat terms.
+- https://www.cypherpunk.com/cyphlogo-static.svg — green path wordmark; no animal.
+- https://www.cypherpunk.com/transmissions — essays 001-005 (Tyler Winklevoss 2025-11-12 "Introducing
+  Cypherpunk"; Will McEvoy "DATS ARE LAME" 2026-04-08, "Zcash & Entropy" 2026-08-03, "Launching Cypherpunk
+  Mining" 2026-08-18; NU7 recommendations 2026-08-26). No cat terms.
+- https://www.cypherpunk.com/investors/releases and /investors/leadership — no cat terms.
+- https://en.wikipedia.org/wiki/Winklevoss_twins (raw) — no cat/pet terms.
+
+Verdict: none_found. Brand is a green terminal-style wordmark; focus is Zcash (ZEC). No official cat, no cat
+mascot, no big-cat branding, no cat IP collaboration, and no CEO/CIO/Winklevoss cat posting found.
+=================== BB
+- Underlying: BlackBerry Limited (NYSE/TSX: BB)
+# BB
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: BlackBerry; StonkFun category: backpack
+- Underlying: BlackBerry Limited (NYSE/TSX: BB)
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: BlackBerry - Backpack Securities (BB)
+- Cat research: not done in this pass (identification only).
+
+## Cat research (research pass, 2026-09-25)
+
+Tooling note: the session WebSearch budget was already exhausted when this pass started, so searches ran via Google News RSS
+(news.google.com/rss/search, tools/gn.py + gnews2.py to decode article URLs), the Wikipedia API (tools/wpg.py, word-boundary regex
+for cat|kitten|kitty|lion|tiger|jaguar|panther|leopard|puma|cheetah|mascot|feline|cougar|lynx|Sanrio|Garfield), direct curl of
+official sites, and WebFetch. X/Instagram could not be read directly.
+
+### Queries run (Google News RSS)
+- BlackBerry cat mascot (0 items)
+- BlackBerry "Hello Kitty" (16 items; only relevant: WIRED Q5 headline and CrackBerry theme roundup - see below)
+- BlackBerry "office cat" (1 unrelated item); BlackBerry "National Cat Day" (1 unrelated); BlackBerry "Cat Day" (1 unrelated)
+- BlackBerry BBM stickers cat (0 relevant); BBM sticker pack cat (0); BBM stickers "Hello Kitty" (0); BBM stickers Garfield (0);
+  "BlackBerry" "Garfield" stickers (0); BlackBerry "Grumpy Cat" (0)
+- BlackBerry lion OR tiger OR panther OR leopard codename (0 relevant); BlackBerry Cylance mascot (0)
+- "John Giamatteo" cat (0); "John Chen" BlackBerry cat (0 relevant); BlackBerry tweet cat / Instagram cat / "cat video" (0 relevant)
+- BlackBerry "Jaguar Land Rover" QNX (9 items - customer deal, see below); "Roaring Kitty" BlackBerry (24 items, see below)
+
+### Sources opened
+- WIRED, Roberto Baldwin, 14 May 2013, "BlackBerry's New Q5: The Cheap Keyboard Phone for Emerging Markets and Hello Kitty Fans"
+  https://www.wired.com/2013/05/blackberry-introduces-q5/ (curl, pages/bb_wired_q5.html). "Hello Kitty" appears only in the
+  headline; body: "The low-cost Q5 will be available in red, black, white and pink." -> a journalist's joke about the pink colour,
+  NOT an official Sanrio/Hello Kitty collaboration.
+- CrackBerry, 22 Oct 2013, "BlackBerry theme roundup ... Halloween Edition"
+  https://crackberry.com/blackberry-theme-roundup-october-22-2013-halloween-edition (WebFetch): a Hello Kitty werewolf theme
+  ("If you love that adorable little feline then be sure to catch her all decked out in her werewolf costume...") by third-party
+  developer "Solution One" - not BlackBerry, not Sanrio. FAN/THIRD-PARTY, not official.
+- CrackBerry, 22 Mar 2018 https://crackberry.com/blackberry-and-jaguar-land-rover-enter-multi-year-agreement-collaborate-automotive-technology
+  (WebFetch): multi-year deal; JLR licenses BlackBerry QNX and Certicom tech; BlackBerry engineers assigned to JLR ECU work.
+  Wikipedia "BlackBerry": "In March 2018, BlackBerry announced that it would be working with Jaguar Land Rover to develop software
+  for the car manufacturer's vehicles." -> Jaguar is a CUSTOMER brand, not a BlackBerry mascot/logo/codename. Weak big-cat link only.
+- CBS News, 14 May 2024 https://www.cbsnews.com/news/amc-blackberry-gamestop-meme-stocks-roaring-kitty-wallstreetbets/ (WebFetch):
+  "Among them are movie-theater operator AMC Entertainment, whose shares soared 31%, and BlackBerry, with a 12% gain." Keith Gill
+  ("Roaring Kitty") posted only a sketch of a man in a chair; he did not post about BlackBerry. InvestorPlace 14 May 2024 headline
+  (GN): "BB Stock Surges 16% as BlackBerry Joins the Roaring Kitty Rally". -> FAN/COMMUNITY (retail-investor persona), not official.
+- Wikipedia API (word-boundary cat/big-cat regex): BlackBerry Limited, BlackBerry, List of BlackBerry products, Cylance,
+  John S. Chen, Mike Lazaridis, Jim Balsillie, BBM (software), BlackBerry PlayBook -> no cat/kitten/mascot/lion/tiger/panther/
+  leopard/puma/cheetah hits; only "Jaguar Land Rover" (customer). John Giamatteo (CEO since Dec 2023): no Wikipedia article.
+- https://www.blackberry.com/en/sitemap.xml (451 URLs, curl 2026-09-25): no cat/kitten/mascot/big-cat URL.
+- https://blogs.blackberry.com/ (redirects to "Secure Communications Blog" listing, curl 2026-09-25): no cat/big-cat words.
+- Device codenames I could check (Wikipedia list) are places/words (e.g. London, Nevada, Windermere, Venice, Mercury, Athena) -
+  none are big cats. Logo = "BlackBerry" drupelet mark; no animal.
+
+### Verdict
+none_found for an official cat. No BlackBerry cat mascot, official cat post, Hello Kitty/other cat-IP licence, or CEO cat found.
+Weak side links only: (1) Hello Kitty BlackBerry theme by third-party dev Solution One (2013, fan/third-party); (2) BB rallied in
+the May 2024 "Roaring Kitty" meme-stock surge (fan/community; Gill did not post about BB); (3) Jaguar Land Rover is a QNX customer
+(2018) - big-cat car brand, not BlackBerry's own branding. Confidence medium-high (social accounts not directly readable).

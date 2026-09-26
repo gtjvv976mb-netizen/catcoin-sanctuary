@@ -1,0 +1,61 @@
+{
+ "capturedAt": "2026-09-25T12:03:40.958Z",
+ "quote": {
+  "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "inAmount": "25000000",
+  "outputMint": "CB8afe6zJDGoCoSHx2iJACqemTUjgpvKKLTa86qMpump",
+  "outAmount": "1720275519193",
+  "otherAmountThreshold": "1703072764002",
+  "swapMode": "ExactIn",
+  "slippageBps": 100,
+  "platformFee": null,
+  "priceImpactPct": "0.0190752772372390343078103457",
+  "routePlan": [
+   {
+    "swapInfo": {
+     "ammKey": "4fVThFYyxAcXe2hGMj2Z3CSFDSJY8ctwbRxY9Noivh6j",
+     "label": "Pump.fun Amm",
+     "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+     "outputMint": "CB8afe6zJDGoCoSHx2iJACqemTUjgpvKKLTa86qMpump",
+     "inAmount": "25000000",
+     "outAmount": "1720275519193",
+     "updateContextSlot": "450302673"
+    },
+    "percent": null,
+    "bps": 10000
+   }
+  ],
+  "contextSlot": 450347186,
+  "timeTaken": 0.00005395,
+  "swapUsdValue": "24.998307731413475",
+  "mostReliableAmmsQuoteReport": {
+   "info": {
+    "4fVThFYyxAcXe2hGMj2Z3CSFDSJY8ctwbRxY9Noivh6j": "1720275519193",
+    "BZtgQEyS6eXUXicYPHecYQ7PybqodXQMvkjUbP4R8mUU": "Not used RG: FullLiquidIntermediate, contains ALT: true"
+   }
+  },
+  "longtailMarketQuoteReport": null,
+  "useIncurredSlippageForQuoting": null,
+  "useRewards": null,
+  "otherRoutePlans": null,
+  "loadedLongtailToken": false,
+  "instructionVersion": "V2",
+  "transactionVersion": 0
+ },
+ "swapTransaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAFC0jAG1BZAFRV2dywxrzs3LT7Wy6rwamoK1c5K6qkDwTmApumQkjZYm/x3Oxn565ZwGzeaGX4o5MKUs1VuCndli2knmRHlCtM3Js3BmwAA6wN2XaaVqTr9VVlG/4T7/IZhM748IpV/u+AQ2rD0QkuFoB3BOYvez7lKcfWtS4N3Qi13sTeRGTwuXxew5/kivghLMd/7RlS2oFJdI1UTmJL6wDuCYvC+an0MeCID/mTIRrJPU6wKH48VT/vcA167rbldwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwZGb+UhFzL/7K26csOb57yM5bvF9xJrLEObOkAAAAAEedVb8jHAbu50xW7OaBUH/bGy3qP0jlECsc2iVrwTj4yXJY9OJInxuz0QKRSODYMLWhOZ2v8QhASOe9jb6fhZtD/6J/XX9kp0wJsfKVh53ksJqzbfyd1RSzIap7OM5ej5BDSEjKDqpsILoBtISajIvL0oXnSG14nkWi2+4sFYSQQHAAUCwFwVAAcACQOCiwAAAAAAAAkGAAEAGAYRAQEIJwAEARkYEBEICggSDAAXGBkBBAsOFgIREAYJGhIPFQ0DFBMAHBsFCCe7ZPrMMcSvFEB4fQEAAAAA2UZpiJABAABkAAAAAAABAAAAYxAnAAEBiu6ex2cD4j7FGuf0VIAX9oBla4NMmLmx7QF7MQAWftoFMVUJUVcNAAUpJAs0KBMsLgQHOA==",
+ "spend": "2915040",
+ "created": [
+  {
+   "address": "BBUQgacXrEzkQgBxjS6N4nXwAXen1a42cjHL98QQ6Ra",
+   "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "lamports": 1513840,
+   "isWalletTokenAta": true
+  },
+  {
+   "address": "Evw9etGbouboUYwq4K3FTTNkcULS2WxFhmmUBUxAc3rk",
+   "owner": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+   "lamports": 1346200,
+   "isWalletTokenAta": false
+  }
+ ]
+}

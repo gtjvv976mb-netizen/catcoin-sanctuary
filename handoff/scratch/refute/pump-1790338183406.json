@@ -1,0 +1,117 @@
+{
+ "at": "2026-09-25T12:09:16.315Z",
+ "rows": [
+  {
+   "base": "https://lite-api.jup.ag/swap/v1",
+   "sym": "LMEOW",
+   "side": "buy",
+   "ask": "HEAD (direct)",
+   "res": "Pump.fun Amm out=689595181612 impact=0.0169256076665806290202325019 | checkQuote ok interm=null"
+  },
+  {
+   "base": "https://lite-api.jup.ag/swap/v1",
+   "sym": "LMEOW",
+   "side": "buy",
+   "ask": "working tree (solHop)",
+   "res": "no_route: No routes found (NO_ROUTES_FOUND)"
+  },
+  {
+   "base": "https://lite-api.jup.ag/swap/v1",
+   "sym": "LMEOW",
+   "side": "sell",
+   "ask": "HEAD (direct)",
+   "res": "Pump.fun Amm out=2823391 impact=0.009740847391362461376911517 | checkQuote ok interm=null"
+  },
+  {
+   "base": "https://lite-api.jup.ag/swap/v1",
+   "sym": "LMEOW",
+   "side": "sell",
+   "ask": "working tree (solHop)",
+   "res": "no_route: No routes found (NO_ROUTES_FOUND)"
+  },
+  {
+   "base": "https://lite-api.jup.ag/swap/v1",
+   "sym": "CATWIF",
+   "side": "buy",
+   "ask": "HEAD (direct)",
+   "res": "Pump.fun Amm out=128341663366 impact=0.0200294874659165524134040687 | checkQuote impact_over_cap: price impact 2.003% is over the 2% cap"
+  },
+  {
+   "base": "https://lite-api.jup.ag/swap/v1",
+   "sym": "CATWIF",
+   "side": "buy",
+   "ask": "working tree (solHop)",
+   "res": "no_route: No routes found (NO_ROUTES_FOUND)"
+  },
+  {
+   "base": "https://lite-api.jup.ag/swap/v1",
+   "sym": "CATWIF",
+   "side": "sell",
+   "ask": "HEAD (direct)",
+   "res": "Pump.fun Amm out=15198222 impact=0.0047837834212922541943226488 | checkQuote ok interm=null"
+  },
+  {
+   "base": "https://lite-api.jup.ag/swap/v1",
+   "sym": "CATWIF",
+   "side": "sell",
+   "ask": "working tree (solHop)",
+   "res": "no_route: No routes found (NO_ROUTES_FOUND)"
+  },
+  {
+   "base": "https://api.jup.ag/swap/v1",
+   "sym": "LMEOW",
+   "side": "buy",
+   "ask": "HEAD (direct)",
+   "res": "Pump.fun Amm out=689595181612 impact=0.0169256076665806290202325019 | checkQuote ok interm=null"
+  },
+  {
+   "base": "https://api.jup.ag/swap/v1",
+   "sym": "LMEOW",
+   "side": "buy",
+   "ask": "working tree (solHop)",
+   "res": "no_route: No routes found (NO_ROUTES_FOUND)"
+  },
+  {
+   "base": "https://api.jup.ag/swap/v1",
+   "sym": "LMEOW",
+   "side": "sell",
+   "ask": "HEAD (direct)",
+   "res": "Pump.fun Amm out=2823391 impact=0.009740847391362461376911517 | checkQuote ok interm=null"
+  },
+  {
+   "base": "https://api.jup.ag/swap/v1",
+   "sym": "LMEOW",
+   "side": "sell",
+   "ask": "working tree (solHop)",
+   "res": "no_route: No routes found (NO_ROUTES_FOUND)"
+  },
+  {
+   "base": "https://api.jup.ag/swap/v1",
+   "sym": "CATWIF",
+   "side": "buy",
+   "ask": "HEAD (direct)",
+   "res": "Pump.fun Amm out=128341663366 impact=0.0200294874659165524134040687 | checkQuote impact_over_cap: price impact 2.003% is over the 2% cap"
+  },
+  {
+   "base": "https://api.jup.ag/swap/v1",
+   "sym": "CATWIF",
+   "side": "buy",
+   "ask": "working tree (solHop)",
+   "res": "rate_limited: Jupiter answered 429: over the keyless rate limit"
+  },
+  {
+   "base": "https://api.jup.ag/swap/v1",
+   "sym": "CATWIF",
+   "side": "sell",
+   "ask": "HEAD (direct)",
+   "res": "Pump.fun Amm out=15198222 impact=0.0047837834212922541943226488 | checkQuote ok interm=null"
+  },
+  {
+   "base": "https://api.jup.ag/swap/v1",
+   "sym": "CATWIF",
+   "side": "sell",
+   "ask": "working tree (solHop)",
+   "res": "no_route: No routes found (NO_ROUTES_FOUND)"
+  }
+ ]
+}

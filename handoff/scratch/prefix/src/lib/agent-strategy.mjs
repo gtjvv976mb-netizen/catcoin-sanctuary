@@ -1,0 +1,342 @@
+/**
+ * THE AGENT'S SPEC: WHAT THE OWNER WROTE, AND THE LIMITS NOTHING ELSE MAY MOVE.
+ *
+ * CoinMarketCat's agent trades Solana spot tokens for its owner from a strategy written in
+ * plain English. This file is the shape of that agent, and the fence around it:
+ *
+ *   · A NAME AND A STRATEGY. The strategy is the owner's own words, length-capped, handed
+ *     to the model as the strategy to follow. It is not code and it is not a limit: nothing
+ *     it says can widen a number below, because the numbers below are read by agent-risk.mjs
+ *     and never by the model (agent-brain.mjs shows them to it, read-only).
+ *
+ *   · A UNIVERSE of at most ten CAT COINS: the "Solana cat coins" preset, other cat coins
+ *     added as custom mints, or both. Every preset mint below was read live on 2026-09-25
+ *     (see SOLANA_CATS_VERIFIED)
+ *     and never typed from memory; a custom mint is read on chain by the worker, over the
+ *     owner's RPC, before it can be saved, and its decimals and token program come from
+ *     that read. SOL ITSELF IS NOT IN v1. Buying SOL through Jupiter delivers wrapped SOL,
+ *     and the check before signing (jupiter-swap.mjs) is a port that dropped the executor's
+ *     wrapped-SOL branches: a native-SOL leg would mix the position with the SOL that pays
+ *     the network fees, and the fill reader refuses exactly that. So the wrapped-SOL mint is
+ *     refused by name (`sol_not_in_v1`). SOL is not a cat coin in any case.
+ *
+ *   · A SETTLEMENT TOKEN: USDC by default, or USDT. Every buy spends it and every sell
+ *     returns it, so every trade is a token-to-token swap — the one kind the existing check
+ *     before signing was built and tested for. Cat coins trade against SOL: on 2026-09-25
+ *     only POPCAT of the preset had a direct USDC route and none a direct USDT one
+ *     (fixtures/agent/jupiter-cat-route-shapes.json), so the route may pass through SOL on
+ *     the way: one hop, held in Jupiter's own account, never the wallet's (jupiter-swap.mjs
+ *     `solHop`). Both are counted at face value, $1 a unit.
+ *
+ *   · A SCHEDULE: the model is asked every 15, 30 or 60 minutes. The protections do not
+ *     wait for it: stop loss, take profit and the daily drawdown breaker run on the worker's
+ *     half-minute alarm, and they run with the model unreachable.
+ *
+ *   · LIMITS: the most in one token, the most of the vault in tokens, the stop loss, the
+ *     take profit, the daily drawdown and what it does when it trips, trades per day, and
+ *     the slippage written into every Jupiter instruction. The minimum trade ($10) and the
+ *     minimum vault ($50) are CoinMarketCap's Agentic Trading OS numbers and are not dials.
+ *
+ *   · A MODE: PAPER (the default) fills at Jupiter's quotes and signs nothing; LIVE trades
+ *     from the autopilot wallet and arms only with a typed sentence (agentArmSentence) that
+ *     names the wallet, the settlement, every limit and every token. Change any of them and
+ *     the sentence changes, so a sentence typed for one agent cannot arm another.
+ *
+ * Nothing here touches the network, chrome.* or a key. `normalizeAgentSpec` is the only
+ * way a spec is made: the options page runs it before sending, the worker runs it again
+ * before storing, and the runner reads nothing else. It refuses the malformed by name.
+ */
+import { PublicKey } from "@solana/web3.js";
+import { TOKEN_PROGRAM, TOKEN_2022_PROGRAM } from "../../vendor/executor/token2022.mjs";
+import { WSOL } from "./tx.mjs";
+import { detectCat } from "../../bots/lib/catdetect.mjs";
+
+export const AGENT_SPEC_VERSION = 1;
+
+/**
+ * THE SETTLEMENT TOKENS, each read live on 2026-09-24T19:27Z at slot 450,123,200 and again with the cat coins on 2026-09-25: the mint
+ * account over https://api.mainnet-beta.solana.com (getMultipleAccounts, base64, confirmed)
+ * and Jupiter's token API (https://api.jup.ag/tokens/v2/search?query=<mint>) agree on the
+ * decimals and the token program. The latest reads are in fixtures/agent/cats-verified.json and
+ * test-agent-strategy.mjs re-derives every field below from those bytes. Both mints carry a
+ * live freeze authority held by their issuer; that is said in the UI, not hidden.
+ */
+export const SETTLEMENT_TOKENS = Object.freeze([
+  Object.freeze({ mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", symbol: "USDC", name: "USD Coin", decimals: 6, program: TOKEN_PROGRAM }),
+  Object.freeze({ mint: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB", symbol: "USDT", name: "USDT", decimals: 6, program: TOKEN_PROGRAM }),
+]);
+export const DEFAULT_SETTLEMENT_MINT = SETTLEMENT_TOKENS[0].mint;
+
+/**
+ * CAT COINS ONLY. CoinMarketCat trades cat coins and nothing else: this preset, and any
+ * other cat coin on Solana the owner adds as a custom mint (its name or ticker must be a
+ * cat by bots/lib/catdetect.mjs, the check Popcat uses, as Jupiter's token API names it).
+ *
+ * THE "SOLANA CAT COINS" PRESET. Every cat coin Jupiter's token API marks verified, found
+ * by searching it for cat words and kept only where it is a classic SPL Token mint with NO
+ * mint authority and NO freeze authority (nobody can print more of it or freeze a holder),
+ * then read back as a mint account on mainnet. Read 2026-09-25T09:48Z, slot 450,316,711, recorded in
+ * fixtures/agent/cats-verified.json with each coin's pool liquidity that day: MEW about
+ * $10.6M and POPCAT about $5.0M; the other four between $22k and $221k, thin enough that
+ * the 2% buy-impact cap and a small per-token cap matter. Simon's Cat (CAT) was left out:
+ * it keeps a mint authority. The order is the order the popup lists them.
+ */
+export const SOLANA_CATS = Object.freeze([
+  ["MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5", "MEW", "cat in a dogs world", 5],
+  ["7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr", "POPCAT", "Popcat", 9],
+  ["4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk", "KITTY", "Hello Kitty", 9],
+  ["GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR", "GRUMPY", "Grumpy Cat", 9],
+  ["6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt", "KWIF", "Kitten Wif Hat", 6],
+  ["3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC", "KHAI", "Kitten Haimer", 8],
+].map(([mint, symbol, name, decimals]) => Object.freeze({ mint, symbol, name, decimals, program: TOKEN_PROGRAM, source: "cats" })));
+export const SOLANA_CATS_VERIFIED = Object.freeze({
+  at: "2026-09-25T09:48Z",
+  slot: 450_316_711,
+  how: "each mint account read over https://api.mainnet-beta.solana.com (owner, decimals, authorities) and matched to https://lite-api.jup.ag/tokens/v2/search (verified)",
+  fixture: "fixtures/agent/cats-verified.json",
+});
+
+/** The fences every dial is held inside, and the two numbers that are not dials. */
+export const AGENT_BOUNDS = Object.freeze({
+  nameMax: 40,
+  strategyMax: 4_000,
+  universeMax: 10,
+  customSymbolMax: 12,
+  schedules: Object.freeze([15, 30, 60]),
+  minTradeUsd: 10,            // CoinMarketCap's minimum trade; not a dial
+  minVaultUsd: 50,            // CoinMarketCap's minimum vault; not a dial
+  maxPositionUsd: Object.freeze({ min: 10, max: 1_000_000 }),
+  maxExposurePct: Object.freeze({ min: 1, max: 100 }),
+  stopLossPct: Object.freeze({ min: 0.5, max: 50 }),
+  takeProfitPct: Object.freeze({ min: 0.5, max: 1_000 }),
+  maxDailyDrawdownPct: Object.freeze({ min: 0.5, max: 50 }),
+  maxTradesPerDay: Object.freeze({ min: 1, max: 96 }),
+  slippageBps: Object.freeze({ min: 10, max: 300 }),
+  minBuyConfidence: Object.freeze({ min: 0, max: 1 }),
+  paperVaultUsd: Object.freeze({ min: 50, max: 10_000_000 }),
+});
+/** A buy whose Jupiter quote moves the price more than this is refused. A sell is never
+ *  refused for its impact: an exit that cannot fire for an impact figure is not an exit. */
+export const AGENT_MAX_BUY_IMPACT_PCT = 2;
+/** The priority fee a swap between the settlement token and a major may carry, in
+ *  lamports: written into Jupiter's request as the cap, and the check before signing
+ *  refuses a transaction whose compute budget implies more. A swap between the settlement token and a cat coin is not a
+ *  race with a launch's insiders; this lands it under ordinary load. */
+export const AGENT_PRIORITY_FEE_LAMPORTS = 50_000;
+/** SOL the autopilot wallet must hold for network fees and token-account rent before the
+ *  live agent arms: a first buy of each token creates its account (2,039,280 lamports of
+ *  rent, returned when the sweep closes it), and every swap pays a fee. */
+export const AGENT_MIN_SOL_LAMPORTS = 20_000_000n;
+
+export const AGENT_MODES = Object.freeze(["paper", "live"]);
+export const DRAWDOWN_ACTIONS = Object.freeze(["stop_entries", "liquidate"]);
+
+export const AGENT_SPEC_DEFAULTS = Object.freeze({
+  v: AGENT_SPEC_VERSION,
+  name: "",
+  strategy: "",
+  universe: Object.freeze(SOLANA_CATS.map((m) => m.mint)),   // mints; a preset mint by address, a custom one also in `custom`
+  custom: Object.freeze([]),                                    // [{ mint, symbol, decimals, program, verifiedAt }] — read on chain by the worker
+  settlementMint: DEFAULT_SETTLEMENT_MINT,
+  scheduleMinutes: 30,
+  maxPositionUsd: 25,
+  maxExposurePct: 60,
+  stopLossPct: 8,
+  takeProfitPct: 15,
+  maxDailyDrawdownPct: 5,
+  drawdownAction: "stop_entries",
+  maxTradesPerDay: 6,
+  slippageBps: 100,
+  /* The desk's lesson (Claude-Company #29): its 51 calls under its own conviction bar were
+   * 39% of its record and all of its loss. A buy the model itself rates under this is not
+   * placed. The model's 0–1 confidence is not the desk's score, so 0.6 is a starting bar to
+   * be graded on this agent's own journal, not a measured line. 0 turns it off. */
+  minBuyConfidence: 0.6,
+  mode: "paper",
+  paperVaultUsd: 100,
+  model: "",                  // "" = the first model the API lists (it lists newest first), chosen at run time
+  liveAck: "",                // the arm sentence, typed
+});
+
+export class AgentSpecError extends Error {
+  constructor(key, clause, message) { super(message); this.name = "AgentSpecError"; this.key = key; this.clause = clause; }
+}
+
+const isPlainObject = (v) => v != null && typeof v === "object" && !Array.isArray(v);
+const refuse = (key, clause, message) => { throw new AgentSpecError(key, clause, message); };
+const CAT_BY_MINT = new Map(SOLANA_CATS.map((m) => [m.mint, m]));
+const SETTLEMENT_BY_MINT = new Map(SETTLEMENT_TOKENS.map((s) => [s.mint, s]));
+/** Control characters, except tab and newline, are stripped from free text. */
+const cleanText = (v) => String(v ?? "").replace(/\r\n?/g, "\n").replace(/[\u0000-\u0008\u000b-\u001f\u007f]/g, "").trim();
+
+function isPublicKey(value) {
+  if (typeof value !== "string" || !/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(value)) return false;
+  try { return new PublicKey(value).toBase58() === value; } catch { return false; }
+}
+function numberIn(src, key, bounds, { integer = false } = {}) {
+  const raw = src[key];
+  if (raw === undefined || raw === null || raw === "") return AGENT_SPEC_DEFAULTS[key];
+  const n = Number(raw);
+  if (!Number.isFinite(n)) refuse(key, "not_a_number", `${key} must be a number, got ${JSON.stringify(raw)}`);
+  if (integer && !Number.isInteger(n)) refuse(key, "not_whole", `${key} must be a whole number, got ${n}`);
+  if (n < bounds.min || n > bounds.max) refuse(key, "out_of_range", `${key} must be from ${bounds.min} to ${bounds.max}, got ${n}`);
+  return n;
+}
+
+/** A custom universe entry as the worker verified it on chain. */
+function normalizeCustom(entry, i) {
+  const at = `custom[${i}]`;
+  if (!isPlainObject(entry)) refuse("custom", "custom_malformed", `${at} is not an object`);
+  const mint = String(entry.mint ?? "").trim();
+  if (!isPublicKey(mint)) refuse("custom", "mint_malformed", `${at}: "${mint}" is not a mint address`);
+  if (mint === WSOL) refuse("custom", "sol_not_in_v1", "SOL (the wrapped-SOL mint) is not in v1: the check before signing handles token-to-token swaps only, and SOL is not a cat coin");
+  if (SETTLEMENT_BY_MINT.has(mint)) refuse("custom", "settlement_in_universe", `${at}: ${SETTLEMENT_BY_MINT.get(mint).symbol} is a settlement token, not something to trade into`);
+  if (CAT_BY_MINT.has(mint)) refuse("custom", "custom_in_preset", `${at}: ${CAT_BY_MINT.get(mint).symbol} is in the cat coins preset; tick it there`);
+  const symbol = cleanText(entry.symbol);
+  if (!/^[A-Za-z0-9$._-]{1,12}$/.test(symbol)) refuse("custom", "symbol_malformed", `${at}: a symbol is 1 to ${AGENT_BOUNDS.customSymbolMax} letters, digits or $._- (got ${JSON.stringify(symbol)})`);
+  const decimals = Number(entry.decimals);
+  if (!(Number.isInteger(decimals) && decimals >= 0 && decimals <= 18)) refuse("custom", "custom_unverified", `${at} (${symbol}): its decimals were not read on chain — save it from Options with an RPC set`);
+  if (entry.program !== TOKEN_PROGRAM && entry.program !== TOKEN_2022_PROGRAM) refuse("custom", "custom_unverified", `${at} (${symbol}): its token program was not read on chain`);
+  const verifiedAt = Number(entry.verifiedAt);
+  if (!(Number.isFinite(verifiedAt) && verifiedAt > 0)) refuse("custom", "custom_unverified", `${at} (${symbol}): no record of when it was read on chain`);
+  /* CAT COINS ONLY. The name is the token's own as Jupiter's token API gives it, which the
+     worker looks up when the mint is saved; the ticker the owner typed is not enough alone. */
+  const name = cleanText(entry.name ?? "").slice(0, 80);
+  if (!name) refuse("custom", "custom_unverified", `${at} (${symbol}): its name was not looked up on Jupiter's token list`);
+  if (!detectCat({ name, symbol: entry.jupiterSymbol ?? symbol }).isCat) refuse("custom", "not_a_cat_coin", `${at}: "${name}" (${symbol}) is not a cat coin. CoinMarketCat trades cat coins only`);
+  return Object.freeze({ mint, symbol, name, decimals, program: entry.program, source: "custom", verifiedAt,
+    ...(entry.jupiterSymbol ? { jupiterSymbol: cleanText(entry.jupiterSymbol).slice(0, 20) } : {}),
+    ...(entry.freezeAuthority ? { freezeAuthority: String(entry.freezeAuthority) } : {}), ...(entry.mintAuthority ? { mintAuthority: String(entry.mintAuthority) } : {}) });
+}
+
+/**
+ * Coerce whatever a form or storage handed over into a spec, refusing the malformed by
+ * name (AgentSpecError: key, clause). Unknown keys are dropped. An empty name or strategy
+ * is a draft, allowed here and refused at start (agentStartProblems).
+ */
+export function normalizeAgentSpec(input = {}) {
+  const src = isPlainObject(input) ? input : {};
+  const out = { ...AGENT_SPEC_DEFAULTS };
+  const name = cleanText(src.name ?? "").replace(/\s+/g, " ");
+  if (name.length > AGENT_BOUNDS.nameMax) refuse("name", "name_too_long", `the agent's name is at most ${AGENT_BOUNDS.nameMax} characters`);
+  if (/["\n]/.test(name)) refuse("name", "name_malformed", "the agent's name may not contain a double quote or a line break");
+  out.name = name;
+  const strategy = cleanText(src.strategy ?? "");
+  if (strategy.length > AGENT_BOUNDS.strategyMax) refuse("strategy", "strategy_too_long", `the strategy is at most ${AGENT_BOUNDS.strategyMax} characters (it is ${strategy.length})`);
+  out.strategy = strategy;
+
+  const settlementMint = src.settlementMint === undefined || src.settlementMint === null || src.settlementMint === "" ? DEFAULT_SETTLEMENT_MINT : String(src.settlementMint);
+  if (!SETTLEMENT_BY_MINT.has(settlementMint)) refuse("settlementMint", "settlement_unknown", `the settlement token must be one of ${SETTLEMENT_TOKENS.map((s) => s.symbol).join(", ")}`);
+  out.settlementMint = settlementMint;
+
+  const custom = src.custom === undefined || src.custom === null ? [] : src.custom;
+  if (!Array.isArray(custom)) refuse("custom", "custom_malformed", "custom mints must be a list");
+  const customEntries = custom.map(normalizeCustom);
+  const customByMint = new Map(customEntries.map((c) => [c.mint, c]));
+  if (customByMint.size !== customEntries.length) refuse("custom", "duplicate_mint", "a custom mint is listed twice");
+
+  const universe = src.universe === undefined || src.universe === null ? [...AGENT_SPEC_DEFAULTS.universe] : src.universe;
+  if (!Array.isArray(universe)) refuse("universe", "universe_malformed", "the universe must be a list of mint addresses");
+  const seen = new Set();
+  for (const raw of universe) {
+    const mint = String(raw ?? "").trim();
+    if (mint === WSOL) refuse("universe", "sol_not_in_v1", "SOL (the wrapped-SOL mint) is not in v1: the check before signing handles token-to-token swaps only, and SOL is not a cat coin");
+    if (!isPublicKey(mint)) refuse("universe", "mint_malformed", `"${mint}" is not a mint address`);
+    if (SETTLEMENT_BY_MINT.has(mint)) refuse("universe", "settlement_in_universe", `${SETTLEMENT_BY_MINT.get(mint).symbol} is a settlement token, not something to trade into`);
+    if (!CAT_BY_MINT.has(mint) && !customByMint.has(mint)) refuse("universe", "mint_unverified", `${mint} is neither in the cat coins preset nor a custom mint read on chain`);
+    if (seen.has(mint)) refuse("universe", "duplicate_mint", `${mint} is listed twice`);
+    seen.add(mint);
+  }
+  /* Every custom mint the owner kept is in the universe; a custom row not ticked is dropped. */
+  for (const c of customEntries) if (!seen.has(c.mint)) seen.add(c.mint);
+  if (seen.size > AGENT_BOUNDS.universeMax) refuse("universe", "universe_too_big", `the universe is at most ${AGENT_BOUNDS.universeMax} tokens (it has ${seen.size})`);
+  out.universe = Object.freeze([...seen]);
+  out.custom = Object.freeze(customEntries);
+
+  const schedule = src.scheduleMinutes === undefined || src.scheduleMinutes === null || src.scheduleMinutes === "" ? AGENT_SPEC_DEFAULTS.scheduleMinutes : Number(src.scheduleMinutes);
+  if (!AGENT_BOUNDS.schedules.includes(schedule)) refuse("scheduleMinutes", "schedule_unknown", `the agent runs every ${AGENT_BOUNDS.schedules.join(", ")} minutes; got ${JSON.stringify(src.scheduleMinutes)}`);
+  out.scheduleMinutes = schedule;
+
+  out.maxPositionUsd = numberIn(src, "maxPositionUsd", AGENT_BOUNDS.maxPositionUsd);
+  out.maxExposurePct = numberIn(src, "maxExposurePct", AGENT_BOUNDS.maxExposurePct);
+  out.stopLossPct = numberIn(src, "stopLossPct", AGENT_BOUNDS.stopLossPct);
+  out.takeProfitPct = numberIn(src, "takeProfitPct", AGENT_BOUNDS.takeProfitPct);
+  out.maxDailyDrawdownPct = numberIn(src, "maxDailyDrawdownPct", AGENT_BOUNDS.maxDailyDrawdownPct);
+  out.maxTradesPerDay = numberIn(src, "maxTradesPerDay", AGENT_BOUNDS.maxTradesPerDay, { integer: true });
+  out.slippageBps = numberIn(src, "slippageBps", AGENT_BOUNDS.slippageBps, { integer: true });
+  out.minBuyConfidence = numberIn(src, "minBuyConfidence", AGENT_BOUNDS.minBuyConfidence);
+  out.paperVaultUsd = numberIn(src, "paperVaultUsd", AGENT_BOUNDS.paperVaultUsd);
+
+  const drawdownAction = src.drawdownAction === undefined || src.drawdownAction === null || src.drawdownAction === "" ? AGENT_SPEC_DEFAULTS.drawdownAction : String(src.drawdownAction);
+  if (!DRAWDOWN_ACTIONS.includes(drawdownAction)) refuse("drawdownAction", "drawdown_action_unknown", `when the daily drawdown trips the agent must ${DRAWDOWN_ACTIONS.join(" or ")}`);
+  out.drawdownAction = drawdownAction;
+  const mode = src.mode === undefined || src.mode === null || src.mode === "" ? "paper" : String(src.mode);
+  if (!AGENT_MODES.includes(mode)) refuse("mode", "mode_unknown", `the mode is ${AGENT_MODES.join(" or ")}`);
+  out.mode = mode;
+
+  const model = cleanText(src.model ?? "");
+  if (model && !/^[A-Za-z0-9._:@/-]{1,120}$/.test(model)) refuse("model", "model_malformed", "a model id is letters, digits and ._:@/- only");
+  out.model = model;
+  out.liveAck = typeof src.liveAck === "string" ? src.liveAck.trim() : "";
+  return Object.freeze(out);
+}
+
+/** The universe as entries — symbol, decimals, program — in the spec's order. */
+export function universeEntries(spec) {
+  const custom = new Map((spec.custom ?? []).map((c) => [c.mint, c]));
+  return Object.freeze((spec.universe ?? []).map((mint) => CAT_BY_MINT.get(mint) ?? custom.get(mint)).filter(Boolean));
+}
+export function settlementFor(spec) { return SETTLEMENT_BY_MINT.get(spec.settlementMint) ?? SETTLEMENT_TOKENS[0]; }
+export const catFor = (mint) => CAT_BY_MINT.get(mint) ?? null;
+export const settlementByMint = (mint) => SETTLEMENT_BY_MINT.get(mint) ?? null;
+
+/**
+ * THE PAIRS A SWAP MAY BE: the settlement token into a universe token (a buy) and back (a
+ * sell), and nothing else. jupiter-swap.mjs's checkSwapTransaction refuses any other pair
+ * at `pair_not_allowed`, so neither the model nor Jupiter can route the vault anywhere the
+ * owner did not list. (A route may pass THROUGH SOL between the two, held by Jupiter for
+ * the length of the swap; it never ends anywhere but the pair.)
+ */
+export function allowedPairsFor(spec) {
+  const s = spec.settlementMint;
+  return Object.freeze((spec.universe ?? []).flatMap((m) => [`${s}>${m}`, `${m}>${s}`]));
+}
+
+/** What keeps a spec from starting, in words. Empty means it may start (in paper). */
+export function agentStartProblems(spec) {
+  const out = [];
+  if (!spec.name) out.push({ name: "name", detail: "name the agent" });
+  if (spec.strategy.length < 20) out.push({ name: "strategy", detail: "describe the strategy in plain English (at least 20 characters)" });
+  if (!spec.universe.length) out.push({ name: "universe", detail: "choose at least one token for its universe" });
+  if (spec.maxPositionUsd < AGENT_BOUNDS.minTradeUsd) out.push({ name: "maxPositionUsd", detail: `the per-token cap is under the $${AGENT_BOUNDS.minTradeUsd} minimum trade` });
+  return out;
+}
+
+const money = (n) => `$${Number(n).toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
+/**
+ * THE ARM SENTENCE FOR A LIVE AGENT. It names the agent, the autopilot wallet that signs,
+ * the settlement token, every limit, and every token in the universe (a custom one with its
+ * mint address), and ends in the words the autopilot clause uses for the sniper lane: nothing
+ * asks before it signs. The worker compares what was typed byte for byte.
+ */
+export function agentArmSentence(spec, wallet) {
+  const settlement = settlementFor(spec);
+  const tokens = universeEntries(spec).map((t) => (t.source === "custom" ? `${t.symbol} (${t.mint})` : t.symbol)).join(", ");
+  const trip = spec.drawdownAction === "liquidate" ? "sells everything" : "stops new buys";
+  return `I arm the CoinMarketCat agent "${spec.name}" for ${wallet}: settled in ${settlement.symbol}, ` +
+    `at most ${money(spec.maxPositionUsd)} in one token and ${spec.maxExposurePct}% of the vault in tokens, ` +
+    `a ${spec.stopLossPct}% stop loss, a ${spec.takeProfitPct}% take profit, a ${spec.maxDailyDrawdownPct}% daily drawdown that ${trip}, ` +
+    `${spec.maxTradesPerDay} trades a day at ${spec.slippageBps} bps slippage, buys only at ${spec.minBuyConfidence} confidence or more, in ${tokens}` +
+    " — signed without asking me, by the autopilot key this browser holds";
+}
+
+/**
+ * WHAT IS NOT MEASURED, IN WORDS THE UI PRINTS. The agent is new: nothing about what it
+ * returns has been measured, on paper or live, and nothing here claims otherwise.
+ */
+export const AGENT_UNMEASURED = "Nothing about this agent's returns has been measured: no win rate, no return, no drawdown " +
+  "from a real run. Paper fills are Jupiter's quotes, not trades. The model decides from a snapshot of prices and a few " +
+  "indicators; nothing shows that it decides well. Run it on paper first, and fund live only what you can lose.";
+export const AGENT_RUNS_WHERE = "It runs while Chrome is open on this computer: the protections check every half minute and the " +
+  "model is asked on your schedule, from this browser. Close Chrome, or put the computer to sleep, and nothing runs — not the " +
+  "model, not the stop loss. It is spot only, with no leverage. Every model call is billed to your own API key.";

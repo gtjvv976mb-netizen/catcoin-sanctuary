@@ -1,0 +1,251 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Tiptoe the Tall Tabby Cat",
+   "ticker": "TIPTOE",
+   "nameLen": 25,
+   "blurbLen": 151,
+   "descLen": 292,
+   "tickerHasRumRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tiptoe, a fluffy brown tabby with a whit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "TipToe",
+     "name": "TipToe",
+     "id": "7JCLSaS45Z2XCYkfPTfLHXLbWDqWfaHGh8AmU6iCpump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "Tiptoe",
+     "id": "4JE9ci178yCbfHAZhw9cmMUBHxXSTQvvimFKCovHpump"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tortoise saved from LA fire",
+     "id": "Gi4aFDTuyGDPP11H9k2GamfugA9qYVjbYet1aGM2pump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "Turtle Saved From LA FIre",
+     "id": "847z8Zjwvgw5RmkPkFFyicoJ2mM8dDuTSXj8eHatpump"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "FJdG7htUEKifk7yPksQ2vryo4bXD2kkEfUStB1Atpump"
+    },
+    {
+     "symbol": "tiptoe",
+     "name": "most viral tortoise",
+     "id": "R9fpdmDFsTYiYeNfmLhwQZtN8a1g4A9rQbSrrqypump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "Most Followed TikTok Tortoise",
+     "id": "Bv8L3ZbnngSDrJvpEEmMCTPjX5aA5ERAJisRtSEGpump"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "TikTok Tortoise Saved From Fire",
+     "id": "99Awp57d8qTPPq1Zpp5jBwFLquVNJnHYbaku1D9hpump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "No1 TikTok Turtle",
+     "id": "8VS4msiovBagxFuipshvzf2yiUwsmbB6uJvSgEBZpump"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "6wTtc22WszEZsWJ1NRpYccCmYxRE85PpHE9tsTubpump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "Turtle Saved From LA FIre",
+     "id": "JB19JP1PkBdjb9vgDtFCLo3DDQeU66sE2z1f2P1Wp1Rr"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "4EUMqdqRDR87YQZTtajKbGFXD5boM6bm5ygL5WeGS1xj"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "2PCVEUR7MSJWKNeVGkXj6emTdxyhPo1sBj8JoqNQ984n"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "AazjFohp2bL4wbHfzj8cuR8kYdTeXScHPy42oLnGGn2j"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "Bdo4Nv8fhQxgdtNFsW7ZJbuGvtMBnqTRYpW8t69Lixj8"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "J6A5DgLf6dwmCT8fHtDpd68CPN5r1TVCAbDEdwpjzqLf"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "5uo3CYPV6xLFWLm6cKZh9B8nMXAkhWjW4SPAGzHm8XR7"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Tiptoe, a fluffy brown tabby with a white bib, white front legs and pale green eyes, rises onto her hind legs by the stone hearth to see over everyone. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Hearthbib the Fluffy Cat",
+   "ticker": "HEARTHBIB",
+   "nameLen": 24,
+   "blurbLen": 149,
+   "descLen": 290,
+   "tickerHasRumRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hearthbib, a long-haired brown tabby wit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Hearthbib, a long-haired brown tabby with a snowy chest, white socks and tufted ears, dozes on the warm hearthstones and sits up tall at every creak. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Stilts the Upright Cat",
+   "ticker": "STILTPAW",
+   "nameLen": 22,
+   "blurbLen": 152,
+   "descLen": 293,
+   "tickerHasRumRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stilts, a slim striped brown tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Stilts, a slim striped brown tabby with a white blaze down her nose and white forepaws, stands straight up on her back legs when the tall grass rustles. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

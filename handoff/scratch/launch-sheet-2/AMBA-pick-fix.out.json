@@ -1,0 +1,93 @@
+{
+ "name": "Sepia the Seal-Point Cat",
+ "ticker": "SEPIAPAW",
+ "nameLen": 24,
+ "blurbLen": 146,
+ "descLen": 279,
+ "descBytes": 279,
+ "endsWithDisclaimer": true,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Sepia, a cream seal-point cat with a dar",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "SEPIAPAW": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "SEPIA": {
+   "status": 200,
+   "results": 20,
+   "symbolMatches": [
+    {
+     "name": "Mexican Filter In Movies",
+     "id": "3kxYNRPVH3Fj22tWn7TANYoXWceiVF85G7YJ5aDcpump"
+    }
+   ],
+   "verifiedMatch": false
+  }
+ },
+ "description": "Sepia, a cream seal-point cat with a dark brown mask, ears, paws and tail, gazes out from the porch step with wide sky-blue eyes and a slow blink. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A normal four-legged cream cat with seal-point colouring: a dark brown mask, ears, paws and tail, and wide sky-blue eyes. It is based on a camera's dark lens ring around a bright eye, and the warm brown of an old photograph. It wears nothing."
+}

@@ -1,0 +1,84 @@
+
+1. THE AGENT MESSAGES
+─────────────────────
+  ok   the AGENT table is exactly status, save-spec, set-api-key, clear-api-key, list-models, start, pause, stop, run-now, liquidate and withdraw  — hawk:agent:status, hawk:agent:save-spec, hawk:agent:set-api-key, hawk:agent:clear-api-key, hawk:agent:list-models, hawk:agent:start, hawk:agent:pause, hawk:agent:stop, hawk:agent:run-now, hawk:agent:liquidate, hawk:agent:withdraw
+  ok   exactly one carries a secret: the API key, from Options
+  ok   none hands a secret back
+  ok   no agent message names a signature or transaction bytes
+  ok   no web page can send one: the page relay carries none
+  ok   src/content.mjs: never names an agent message, the key's storage or the Anthropic API
+  ok   src/injected.mjs: never names an agent message, the key's storage or the Anthropic API
+  ok   the UI table (Snipurr's lane) gained no message
+
+2. THE SOURCE
+─────────────
+  ok   the key's storage key is written in the service worker and nowhere else under src/  — src/background.mjs
+  ok   the worker has its reader, its save, its clear, its status and its withdrawal  — all five
+  ok   the worker touches the stored key only in its reader, its save and its clear  — 4 uses
+  ok   the key is read from a message in the save handler, and nowhere else  — 2 reads
+  ok   the reader is handed to the brain and to hasApiKey, and nothing else
+  ok   the status says whether a key is saved, never what it is
+  ok   no log or console line in the worker names the key  — 30 log lines
+  ok   the agent messages are answered for the extension's own pages only
+  ok   the x-api-key header is written in the brain and nowhere else  — src/lib/agent-brain.mjs
+  ok   the brain's only host is api.anthropic.com  — api.anthropic.com
+  ok   the brain refuses to build a request anywhere else
+  ok   the brain touches no storage, no chrome API and logs nothing
+  ok   the Anthropic origin is in the brain's code, and otherwise only in the options page's words to the owner  — src/lib/agent-brain.mjs, src/options/options.mjs
+  ok   src/lib/agent-runner.mjs: never names the key, its header or its storage
+  ok   src/lib/agent-risk.mjs: never names the key, its header or its storage
+  ok   src/lib/agent-market.mjs: never names the key, its header or its storage
+  ok   src/lib/agent-strategy.mjs: never names the key, its header or its storage
+  ok   options: the key is typed into a password field
+  ok   options: the field is cleared the moment it is read, before anything is sent
+  ok   options: the key is sent once, as SET_API_KEY, and never shown again
+  ok   src/options/options.mjs: logs nothing and stores nothing itself
+  ok   src/popup/popup.mjs: logs nothing and stores nothing itself
+  ok   the popup never handles the key at all
+
+3. THE RUNNING WORKER
+─────────────────────
+  ok   a web page (the console tab) is refused, and nothing is stored
+  ok   something that is not a key is refused
+  ok   from the extension's own page the key is saved, under its one storage key
+  ok   STATUS says a key is saved, and does not carry it
+  ok   the model list comes from the API with the key
+  ok   the spec is saved
+  ok   the agent starts on paper through the worker
+  ok   its first tick asked the model and filled a paper buy at Jupiter's quote  — 1 decisions
+  ok   every request that carried the key went to https://api.anthropic.com, in the x-api-key header  — 2 of 5 requests
+  ok   …and DexScreener, GeckoTerminal and Jupiter were asked without it
+  ok   nothing else stored carries the key: the agent's spec and state, the lane's config and book  — coinmarketcat:agent:spec, coinmarketcat:agent:state
+  ok   no log line and no notification carries it
+  ok   CLEAR removes it from storage, and STATUS says so
+
+4. THE BUNDLES
+──────────────
+
+  ../../../tmp/agent-dist-PlSJIv/background.js    1.5mb ⚠️
+  ../../../tmp/agent-dist-PlSJIv/options.js     773.2kb
+  ../../../tmp/agent-dist-PlSJIv/welcome.js     732.4kb
+  ../../../tmp/agent-dist-PlSJIv/injected.js    581.3kb
+  ../../../tmp/agent-dist-PlSJIv/popup.js       148.6kb
+  ../../../tmp/agent-dist-PlSJIv/content.js      72.3kb
+
+⚡ Done in 285ms
+  ok   background.js carries the key's storage key and the Anthropic origin (the worker and its brain)
+  ok   content.js: no storage key for the API key, no Anthropic origin, no x-api-key header
+  ok   injected.js: no storage key for the API key, no Anthropic origin, no x-api-key header
+  ok   popup.js: no storage key for the API key, no Anthropic origin, no x-api-key header
+  ok   welcome.js: no storage key for the API key, no Anthropic origin, no x-api-key header
+  ok   options.js: no storage key for the API key and no x-api-key header (it names the API only in its words to the owner)
+
+5. THE SITE
+───────────
+  ok   no page of the site names the Anthropic API, the header, the key's storage or an agent message
+
+6. NO MODEL IDENTIFIER, ANYWHERE
+────────────────────────────────
+  ok   no file of the repository names a model identifier (244 text files scanned)
+  ok   no commit message names one either  — 1217 lines of history
+  ok   the agent's default model is chosen at run time: an empty string
+
+54 passed, 0 failed
+

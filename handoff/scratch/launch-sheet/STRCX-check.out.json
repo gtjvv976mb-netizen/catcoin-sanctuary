@@ -1,0 +1,143 @@
+[
+ {
+  "name": "Firstbowl the Cream Cat",
+  "ticker": "FIRSTBOWL",
+  "nameLen": 23,
+  "tickerLen": 9,
+  "blurbLen": 149,
+  "descLen": 266,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_blurbOnly": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 14,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Firstbowl, a chunky cream-and-white shorthair, is always first to the row of garden food bowls, sitting politely with her tail tucked round her paws. A cat coin priced in STRCx. Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Everloop the Sleepy Cat",
+  "ticker": "EVERLOOP",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "blurbLen": 149,
+  "descLen": 266,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_blurbOnly": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 7,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Everloop, a round silver tabby, curls into a perfect ring with her nose tucked in her tail and naps in the garden as if the afternoon will never end. A cat coin priced in STRCx. Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Rung the Ladder Cat",
+  "ticker": "LADDERCAT",
+  "nameLen": 19,
+  "tickerLen": 9,
+  "blurbLen": 152,
+  "descLen": 269,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_blurbOnly": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 4,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Rung, a brown tabby with white socks, climbs the old garden ladder each month and tries a new rung, a bit higher or lower, until the view is just right. A cat coin priced in STRCx. Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice."
+ }
+]

@@ -1,0 +1,48 @@
+{
+ "name": "Sockfoot the Garden Tabby",
+ "ticker": "SOCKFOOT",
+ "description": "Sockfoot is a grey tabby with a white bib and four white paws like socks. At first light he strolls the path, sniffs the flowers, then naps on warm stones. A cat coin priced in NVDAx. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A slim dark-grey tabby shorthair house cat with a white chin and muzzle, a white bib and four white paws that look like socks, and a long striped grey tail held up, strolling a garden path. It wears nothing; the 'socks' are only its white fur.",
+ "nameLen": 25,
+ "tickerLen": 8,
+ "storyLen": 155,
+ "descLen": 277,
+ "endsWithDisclosure": true,
+ "tickerFormat": true,
+ "checkProposal": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFieldsStoryLook": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFieldsFull": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "nvidia",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkTerms": {
+  "ok": true,
+  "violations": []
+ }
+}

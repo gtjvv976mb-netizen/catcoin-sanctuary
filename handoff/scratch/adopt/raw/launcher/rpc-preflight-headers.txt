@@ -1,0 +1,13 @@
+HTTP/1.1 200 Connection Established
+
+HTTP/2 200 
+content-length: 2
+content-type: application/json
+access-control-allow-origin: https://catcoinsanctuary.com
+access-control-allow-methods: OPTIONS, POST, GET
+access-control-allow-headers: authorization, content-type
+access-control-max-age: 86400
+allow: OPTIONS, POST, GET
+accept: application/json
+alt-svc: h3=":443"; ma=60
+

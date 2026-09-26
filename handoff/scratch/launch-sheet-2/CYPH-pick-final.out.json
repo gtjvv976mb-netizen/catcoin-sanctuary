@@ -1,0 +1,107 @@
+{
+ "name": "Goldruff the Tawny Cat",
+ "ticker": "GOLDRUFF",
+ "nameLen": 22,
+ "blurbLen": 130,
+ "descLen": 277,
+ "tickerFormat": true,
+ "endsWithDisclosure": true,
+ "checkProposal_nameTickerBlurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Goldruff, a tawny golden cat with a crea",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "jup_GOLDRUFF": {
+  "status": 200,
+  "n": 0,
+  "symbolMatches": []
+ },
+ "jup_GOLDRUF": {
+  "status": 200,
+  "n": 0,
+  "symbolMatches": []
+ },
+ "jup_RUFF": {
+  "status": 200,
+  "n": 20,
+  "symbolMatches": [
+   {
+    "symbol": "RUFF",
+    "name": "Bark"
+   },
+   {
+    "symbol": "RUFF",
+    "name": "RUFF"
+   },
+   {
+    "symbol": "RUFF",
+    "name": "RUFF DAY "
+   },
+   {
+    "symbol": "RUFF",
+    "name": "Rufus"
+   },
+   {
+    "symbol": "RUFF",
+    "name": "ruff coin"
+   },
+   {
+    "symbol": "RUFF",
+    "name": "JUST A BABY"
+   }
+  ]
+ },
+ "description": "Goldruff, a tawny golden cat with a cream chin and belly, a fluffy neck ruff and green eyes, watches the garden like a small lion. A cat coin priced in CYPH. Not affiliated with Cypherpunk Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

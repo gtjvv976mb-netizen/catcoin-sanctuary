@@ -1,0 +1,182 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Strongbox the Blue Cat",
+   "ticker": "STRONGBOX",
+   "nameLen": 22,
+   "blurbLen": 138,
+   "descLen": 280,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Strongbox, a stocky solid blue-grey cat ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Strongbox, a stocky solid blue-grey cat with round copper eyes, sits square on the old garden chest all day and will not budge for anyone. A cat coin priced in FWDI. Not affiliated with Forward Industries, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tally the Golden Tabby Cat",
+   "ticker": "TALLYPAW",
+   "nameLen": 26,
+   "blurbLen": 135,
+   "descLen": 277,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tally, a round golden tabby with cream p",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Tally, a round golden tabby with cream paws and amber eyes, stacks garden pebbles into neat piles each morning and naps by the tallest. A cat coin priced in FWDI. Not affiliated with Forward Industries, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Satchel the Tortie Cat",
+   "ticker": "SATCHEL",
+   "nameLen": 22,
+   "blurbLen": 142,
+   "descLen": 284,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Satchel, a small tortoiseshell cat in bl",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "SATCHEL",
+     "name": "It’s not a mans purse",
+     "id": "HZAbDPfWHpzXnoYfFqWHqV2N2HBVkLodH9BHjHMhpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Satchel, a small tortoiseshell cat in black, ginger and cream patches with gold eyes, naps curled up inside an old carrying case on the porch. A cat coin priced in FWDI. Not affiliated with Forward Industries, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

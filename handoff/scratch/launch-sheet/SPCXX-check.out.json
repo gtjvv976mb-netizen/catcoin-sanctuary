@@ -1,0 +1,359 @@
+[
+ {
+  "name": "Snowloaf the Tabby Cat",
+  "ticker": "SNOWLOAF",
+  "nameLen": 22,
+  "tickerLen": 8,
+  "blurbLen": 148,
+  "descLen": 258,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Snowloaf, a fluffy brown tabby with dark stripes and gold eyes, folds into a tight loaf on a warm round dish in the snow and naps there till spring. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Warmspot the Tuxedo Cat",
+  "ticker": "WARMSPOT",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "blurbLen": 154,
+  "descLen": 264,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 1,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Warmspot, a black-and-white tuxedo cat with a white stripe down her nose and a white chin, always finds the one warm spot in a snowy garden, and keeps it. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Muffler the Fluffy Cat",
+  "ticker": "MUFFLER",
+  "nameLen": 22,
+  "tickerLen": 7,
+  "blurbLen": 150,
+  "descLen": 260,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 2,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Muffler, a long-haired black cat with a thick white ruff and a white muzzle, curls up with friends on a warm dish in the snow, snug as a winter scarf. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Frostwatch the Lookout Cat",
+  "ticker": "FROSTWATCH",
+  "nameLen": 26,
+  "tickerLen": 10,
+  "blurbLen": 156,
+  "descLen": 266,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 2,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Frostwatch, a dark tabby with a white blaze, a white bib and green-gold eyes, sits up tall on the warm dish while the others nap, keeping watch on the snow. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Huddle the Tuxedo Cat",
+  "ticker": "HUDDLE",
+  "nameLen": 21,
+  "tickerLen": 6,
+  "blurbLen": 20,
+  "descLen": 130,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 20,
+  "jupSymbolMatches": [
+   {
+    "symbol": "Huddle",
+    "name": "PudgyParty",
+    "id": "2izs2je6kTgiu2peCTSZkcpw8GTgrn4qNppzngAopump",
+    "mcap": 1.7377622471703893,
+    "holders": 4
+   },
+   {
+    "symbol": "HUDDLE",
+    "name": "MrHuddle",
+    "id": "CR3arWBZEmEPtrdZyyxAXRbffro7nea44d2TEHA5pump",
+    "mcap": 52763.24033655252,
+    "holders": 110
+   },
+   {
+    "symbol": "HUDDLE",
+    "name": "Huddle",
+    "id": "vd9WH8ZWNvMvEmLp6feqd5YYD6rSFMn12ZW8rW1YcJf",
+    "mcap": 3819.0631564551354,
+    "holders": 1
+   },
+   {
+    "symbol": "Huddle",
+    "name": "The 19 Penguins",
+    "id": "HucXTmSYhMqGcy7KWHh9tCNxcEMceZmWDi9G1u3Hpump",
+    "mcap": 2936.4547035813966,
+    "holders": 1
+   },
+   {
+    "symbol": "Huddle",
+    "name": "The Huddle",
+    "id": "DcAddgshv1xCpGppkkWEjTXoi7gjsfgFdSCZJ278pump",
+    "mcap": 2849.580158590257,
+    "holders": 1
+   },
+   {
+    "symbol": "HUDDLE",
+    "name": "the huddle",
+    "id": "BM6FFAcQRej3LWTUknJZWbPNZ6d4Qs3FrrhtEtYLEGfp",
+    "holders": 1
+   },
+   {
+    "symbol": "Huddle",
+    "name": "OFFICIAL PUDGY CULT",
+    "id": "6DPbsLfNVPa8YsV1N7h7AF8eu9dkVkFQzDbxZz4uGgKF",
+    "mcap": 1786.9793978032228,
+    "holders": 26
+   },
+   {
+    "symbol": "HUDDLE",
+    "name": "Pengu Cult",
+    "id": "GjZhWQWbjVEE6kfzJBDf1TSfUGNKS9j9FzWCBKzPpump",
+    "holders": 133
+   },
+   {
+    "symbol": "HUDDLE",
+    "name": "HUDDLE",
+    "id": "5dwQKvu5EyACSd7qRGVcfY4Ch3j9s7BSXH8W1ay5bfsG",
+    "mcap": 2202.6198838876426,
+    "holders": 1
+   },
+   {
+    "symbol": "Huddle",
+    "name": "Huddle",
+    "id": "HakuGJo7Sfxvcxxt32MYY3irQBQoeKC8jDtwZURYpump",
+    "mcap": 2267.197341617592,
+    "holders": 82
+   },
+   {
+    "symbol": "HUDDLE",
+    "name": "HUDDLE",
+    "id": "DG2HSLR2XHa5pnpzRshsdduDQXKNjb3YXvxtJPigpump",
+    "holders": 136
+   }
+  ],
+  "jupVerifiedMatch": false,
+  "description": "xxxxxxxxxxxxxxxxxxxx A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Toastloaf the Tabby Cat",
+  "ticker": "TOASTLOAF",
+  "nameLen": 23,
+  "tickerLen": 9,
+  "blurbLen": 20,
+  "descLen": 130,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "xxxxxxxxxxxxxxxxxxxx A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ }
+]

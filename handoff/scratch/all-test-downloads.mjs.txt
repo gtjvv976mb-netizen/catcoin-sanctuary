@@ -1,0 +1,68 @@
+
+THE EXTENSION ZIP
+─────────────────
+  ok   manifest.json is at the zip's root, so the unzipped folder is the one Load unpacked takes
+  ok   its name and version are this manifest's  — "Cat Intelligence Agency" 0.1.0
+  ok   it holds every file of the build and nothing else, plus INSTALL.txt  — 32 entries
+  ok   every file the manifest names is in it: the worker, the popup, the options page, the content and injected scripts, the icons
+  ok   no source map, no hidden file, no name the browser reserves (a leading underscore), every path safe
+  ok   a source map in dist/ is left out
+  ok   INSTALL.txt: the version, the six steps for Chrome, Brave and Edge, the update, the removal, the SHA-256 commands, and not in the Chrome Web Store
+
+THE SAME BYTES EVERY TIME
+─────────────────────────
+  ok   every entry is dated 1980-01-01 00:00, with mode 0644
+  ok   entries are in sorted order
+  ok   text is deflated and pictures are stored
+  ok   a second build, packaged again, gives the same extension zip, byte for byte  — 4342a9cc6ccc31bc
+  ok   and the same cats pack  — 16a70f67ddcc1d93
+  ok   the same entries in another order give the same zip
+  ok   the system's unzip tests both zips and lists the same entries  — No errors detected in compressed data of /tmp/cia-downloads-test-6SZda9/out-1/cat-intelligence-agency-extension.zip. | No errors detected in compressed data of /tmp/cia-downloads-test-6SZda9/out-1/cia-cats.zip.
+
+THE CATS PACK
+─────────────
+  ok   all seven cats, in the order the kit lists them
+  ok   The Director: its sprite, 400 avatar and 1024 art, byte for byte the kit's
+  ok   Crying Cat: its sprite, 400 avatar and 1024 art, byte for byte the kit's
+  ok   Grumpy Cat: its sprite, 400 avatar and 1024 art, byte for byte the kit's
+  ok   CashCat: its sprite, 400 avatar and 1024 art, byte for byte the kit's
+  ok   Popcat: its sprite, 400 avatar and 1024 art, byte for byte the kit's
+  ok   Snipurr: its sprite, 400 avatar and 1024 art, byte for byte the kit's
+  ok   CoinMarketCat: its sprite, 400 avatar and 1024 art, byte for byte the kit's
+  ok   the X header, the link preview, the roster scene and the $CIA logo, byte for byte the kit's
+  ok   and nothing else but README.txt  — 26 entries
+  ok   README.txt names each cat and what it does
+  ok   README.txt calls it the agency's art, and claims no licence
+  ok   README.txt carries the owner's disclaimer
+
+THE DATA FILE
+─────────────
+  ok   it evaluates as a plain script to window.CIA_DOWNLOADS, marked built
+  ok   its sizes and SHA-256s are the zips'
+  ok   its versions are package.json's and the manifest's, its name the manifest's, its commit the one given
+  ok   it is ASCII, whatever the name holds
+  ok   the committed placeholder is the script's own, and every number in it says "built at deploy"
+
+REFUSALS
+────────
+  ok   the zip writer refuses an unsafe name
+  ok   and a name twice
+  ok   packaging refuses a build with no manifest
+  ok   and a version it was not asked for (a tag that is not the manifest's)
+  ok   and a dist/ built from another manifest
+
+THE DEPLOY AND THE RELEASE
+──────────────────────────
+  ok   pages.yml: npm ci, the overlay, then the build and the packaging, then the site's tests on what was packaged, then the upload
+  ok   a failed build or packaging fails the deploy: no continue-on-error, no `|| true`
+  ok   a push that changes the extension or the art redeploys, so the zips follow main
+  ok   …and so does a change to any file the extension is built from: every import the bundles follow, and every file the build copies  — 91 files
+  ok   release.yml: on a pushed tag v*, and nothing else
+  ok   its job may write contents (the release) and nothing more
+  ok   it runs the suite, builds, and packages for the tag's version only
+  ok   it attaches both zips and SHA256SUMS.txt to the tag's release
+  ok   its actions are pinned to a commit, and its checkout keeps no credentials
+  ok   the release's packaging output is ignored by git
+
+47 passed, 0 failed
+

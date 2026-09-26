@@ -1,0 +1,235 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Hunch the Cream Tabby",
+   "ticker": "HUNCHPAW",
+   "nameLen": 21,
+   "blurbLen": 148,
+   "descLen": 278,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hunch, a fluffy cream-ginger tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Hunch, a fluffy cream-ginger tabby with a round face and big copper eyes, sits by the garden gate each morning and guesses which path visitors take. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tossup the Cream Cat",
+   "ticker": "TOSSUP",
+   "nameLen": 20,
+   "blurbLen": 151,
+   "descLen": 281,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tossup, a soft pale-cream cat with a rou",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "TOSSUP",
+     "name": "TossUp",
+     "id": "C9hrUQER5AFL7RvRRgqTpVamsZrhgANm2BjJoo1Dpump",
+     "mcap": 2839.030554297081
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Tossup, a soft pale-cream cat with a round face and wide copper eyes, sits between two flowerpots for ages deciding which to nap in, then naps in both. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Drizzle the Butterscotch Cat",
+   "ticker": "DRIZZPAW",
+   "nameLen": 28,
+   "blurbLen": 151,
+   "descLen": 281,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Drizzle, a round-faced butterscotch tabb",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Drizzle, a round-faced butterscotch tabby with big copper eyes, tucks under the porch just before each rain shower and waits there for the first drops. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "ext": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   {
+    "extension": "permanentDelegate"
+   },
+   {
+    "extension": "defaultAccountState"
+   },
+   {
+    "extension": "transferFeeConfig",
+    "state": {
+     "older": {
+      "epoch": 1039,
+      "maximumFee": 18446744073709552000,
+      "transferFeeBasisPoints": 100
+     },
+     "newer": {
+      "epoch": 1043,
+      "maximumFee": 18446744073709552000,
+      "transferFeeBasisPoints": 300
+     }
+    }
+   },
+   {
+    "extension": "confidentialTransferMint"
+   },
+   {
+    "extension": "confidentialTransferFeeConfig"
+   },
+   {
+    "extension": "transferHook"
+   },
+   {
+    "extension": "scaledUiAmountConfig"
+   },
+   {
+    "extension": "metadataPointer"
+   },
+   {
+    "extension": "pausableConfig"
+   },
+   {
+    "extension": "tokenMetadata"
+   }
+  ],
+  "jup": [
+   {
+    "symbol": "POLYMARKET",
+    "name": "Polymarket PreStocks",
+    "tags": [
+     "verified",
+     "stocks",
+     "rwa",
+     "prestocks",
+     "token-2022"
+    ],
+    "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+    "isVerified": true
+   }
+  ],
+  "epoch": 1042
+ }
+}

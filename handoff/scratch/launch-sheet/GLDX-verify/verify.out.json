@@ -1,0 +1,432 @@
+{
+ "checkedAt": "2026-09-25T16:04:53.583Z",
+ "coins": [
+  {
+   "name": "Ingot the Loaf Cat",
+   "ticker": "INGOTLOAF",
+   "lens": {
+    "name": 18,
+    "ticker": 9,
+    "description": 269,
+    "blurb": 117
+   },
+   "lenOk": true,
+   "tickerRegex": true,
+   "endsWithDisclosure": true,
+   "tickerContainsRoot": false,
+   "memeTicker": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "count": 0,
+    "symbolMatches": []
+   },
+   "jupVerifiedCollision": false
+  },
+  {
+   "name": "Nugget the Kitten",
+   "ticker": "NUGGETKIT",
+   "lens": {
+    "name": 17,
+    "ticker": 9,
+    "description": 265,
+    "blurb": 113
+   },
+   "lenOk": true,
+   "tickerRegex": true,
+   "endsWithDisclosure": true,
+   "tickerContainsRoot": false,
+   "memeTicker": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "count": 0,
+    "symbolMatches": []
+   },
+   "jupVerifiedCollision": false
+  },
+  {
+   "name": "Karat the Gilded Tabby",
+   "ticker": "KARATTABBY",
+   "lens": {
+    "name": 22,
+    "ticker": 10,
+    "description": 269,
+    "blurb": 117
+   },
+   "lenOk": true,
+   "tickerRegex": true,
+   "endsWithDisclosure": true,
+   "tickerContainsRoot": false,
+   "memeTicker": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "count": 0,
+    "symbolMatches": []
+   },
+   "jupVerifiedCollision": false
+  }
+ ],
+ "nameWordTickers": {
+  "INGOT": {
+   "status": 200,
+   "count": 20,
+   "exact": [
+    {
+     "symbol": "Ingot",
+     "name": "Iron Ingot",
+     "id": "6sqJyH1w57tGQnbRvridjawBSqQ3ZYQwtmE7ZNUxpump"
+    },
+    {
+     "symbol": "Ingot",
+     "name": "Copper Ingot",
+     "id": "3QWXeSdfP6eZSLX4LLYUfVk22nfATzgCpsukFdwTpump"
+    },
+    {
+     "symbol": "INGOT",
+     "name": "MINECRAFT GOLD",
+     "id": "uNNvRY73itxhdHa5rcgySrghCWJ6jnFUyitaXxCpump"
+    },
+    {
+     "symbol": "INGOT",
+     "name": "Stranglewood Ingot",
+     "id": "FjjyD5wJXiKW95bqJtSCW6sVpbNtmcveGGN6cAKayUJh"
+    },
+    {
+     "symbol": "INGOT",
+     "name": "Ingot",
+     "id": "EGHm56n8Nsoxbqa5TWbyzW1oznACNncjJHEB96pJpump"
+    },
+    {
+     "symbol": "Ingot",
+     "name": "Gold Ingot",
+     "id": "6x6iQjdMiAC5GvAPfqsmSKhA77R23tLjd7SkBmfLpump"
+    },
+    {
+     "symbol": "INGOT",
+     "name": "The Ingot",
+     "id": "2Z4KnBZJFxepz4qKG5RcgxGLVXPJErDFHjKqkmZQpump"
+    },
+    {
+     "symbol": "INGOT",
+     "name": "Ingot of Tundra",
+     "id": "FqgjDoA3Au267MGj2pXEmvJkSjFyrfuvpema5obUphA"
+    },
+    {
+     "symbol": "INGOT",
+     "name": "Ingot",
+     "id": "BJSqhGkbVnqhToeTxkqHpxDzJrtXuqAt7DGX9ikMpump"
+    }
+   ]
+  },
+  "NUGGET": {
+   "status": 200,
+   "count": 20,
+   "exact": [
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "2Nj7NHwtq9zxU7gLutPX7jVVmV43ydt716Ue1jHcpump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "JCp8EcVRJ8kxNFwCtj37rgkBF4TRyAmvK7n41ohTpump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "26HWcxZSqdQsp3MVzFYJpFJdfyjgKEShquKxvMBgpump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "5de5NjZ61FtQpeM3aa4MqyLmGpHTW1j6fwM6keKJpump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "Fi2CEUXT6zUkziRV3TcyqptKToD42nXYRRw5LgWUpump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "GNsJxfPWox48HnNbtYXKzTLsR5pf6W4TXKUJDWAjpump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "EdbnK2oSWaLAzRH3iZ3LVBkx7R4LD4xZif2jvccipump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "GameNugget",
+     "id": "2Uzi2YPgKnbAKzSudUzitgB7vgYdmsiPsixGHWLdGg6c"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "26HWVFpcpawGhGSXmAPFamxYBcznfs3SsXrbFH2bpump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "The Golden Nugget",
+     "id": "4S8MpjE4KWFcwJx1BcV2A9GDfEN4YKKr6hFL9uUUX1ev"
+    },
+    {
+     "symbol": "Nugget",
+     "name": "NUGGET",
+     "id": "AvpVjpTGxgSbo2Kx2HDc1NMYKHYCUZHEXtGbmnWFpump"
+    },
+    {
+     "symbol": "Nugget",
+     "name": "NUGGET",
+     "id": "5CyKvdYEfk3LvXi5yGR7xwhVLjXQpKMueJxqr1C2pump"
+    },
+    {
+     "symbol": "NUGGET",
+     "name": "mcnugget",
+     "id": "3VewYpFmZrRjttEucJMj7pemGnuLBJVPEZX84iiRpump"
+    }
+   ]
+  },
+  "KARAT": {
+   "status": 200,
+   "count": 20,
+   "exact": [
+    {
+     "symbol": "kaRAT",
+     "name": "kaRAT",
+     "id": "G4QVy9Hk2QrrrK2HDbzxvvK7a8nWF5bjEHQqdhuMSTNK"
+    },
+    {
+     "symbol": "kaRAT",
+     "name": "kaRAT",
+     "id": "EdetmcQHEpvKM3L8ALNT7mTin8g998Xpa8LUAJFjpump"
+    },
+    {
+     "symbol": "kaRAT",
+     "name": "kaRAT",
+     "id": "628qXKBL2BLP9C6mz6ZhzwbphQzTicvYqfrHfkyYpump"
+    },
+    {
+     "symbol": "kaRAT",
+     "name": "kaRAT",
+     "id": "4wMsC8i17A736EVh4sY4ak9WzCQRxdrSovSZP9Q4pump"
+    },
+    {
+     "symbol": "KARAT",
+     "name": "KARAT",
+     "id": "2vdmEXEqca7ArMw3VXBaQ24p7JghcqWnjN6mtjUypKHJ"
+    }
+   ]
+  },
+  "LOAF": {
+   "status": 200,
+   "count": 20,
+   "exact": [
+    {
+     "symbol": "Loaf",
+     "name": "Loaf",
+     "id": "3tJ1nMB7TRuS15zvqad1fQRgVWuRCexYShexiTqRpump"
+    },
+    {
+     "symbol": "LOAF",
+     "name": "Loaf",
+     "id": "3Z78uex1T9Dha7gS9VmfDzGM1oRKfn4X2uh1PuFvebcX"
+    },
+    {
+     "symbol": "LOAF",
+     "name": "THE ALMIGHTY LOAF",
+     "id": "2HPC48x9LyqsifsDrnUZTgqQnD1PX2yEZEc7M3hqpump"
+    },
+    {
+     "symbol": "LOAF",
+     "name": "LOAF",
+     "id": "ESk5tyAGMV6V4zJhwfBqzBpmHDod6XrYHCPAjPE6pump"
+    },
+    {
+     "symbol": "LOAF",
+     "name": "Loaf Wif Dog",
+     "id": "A4Eo587fN8JmjnyhCjqtKy8y1ufBxt2J2dGDbnz5pump"
+    },
+    {
+     "symbol": "LOAF",
+     "name": "LoafCat",
+     "id": "CrVw3afV4oiubcnjwesFcGpqg9dV1HumWcBjqrdmpump"
+    },
+    {
+     "symbol": "LOAF",
+     "name": "Loaf",
+     "id": "7TBMdnqhn6npXdxouBswrR7zLD9sU38e4KpsgKa9pump"
+    }
+   ]
+  }
+ }
+}

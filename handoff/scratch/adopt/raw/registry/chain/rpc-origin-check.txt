@@ -1,0 +1,20 @@
+== Origin https://catcoinsanctuary.com
+HTTP/1.1 200 Connection Established
+HTTP/2 403 
+access-control-max-age: 86400
+access-control-allow-origin: *
+access-control-allow-methods: POST, GET, OPTIONS
+content-type: application/json
+ {"jsonrpc":"2.0","error":{"code": 403,"message":"Access forbidden"}, "id": 1 } 
+
+== Origin https://gtjvv976mb-netizen.github.io
+HTTP/1.1 200 Connection Established
+HTTP/2 403 
+access-control-allow-methods: POST, GET, OPTIONS
+access-control-max-age: 86400
+access-control-allow-origin: *
+content-type: application/json
+ {"jsonrpc":"2.0","error":{"code": 403,"message":"Access forbidden"}, "id": 1 } 
+
+{"jsonrpc":"2.0","result":450428656,"id":1}
+ HTTP 200

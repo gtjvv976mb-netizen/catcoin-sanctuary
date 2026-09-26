@@ -1,0 +1,230 @@
+[
+ {
+  "name": "Patchpaw the Calico",
+  "ticker": "PATCHPAW",
+  "nameLen": 19,
+  "tickerLen": 8,
+  "descLen": 270,
+  "endsWithDisclosure": true,
+  "storyLen": 155,
+  "tickerRegex": true,
+  "tickerContainsSPY": false,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_full": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolsSeen": [],
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false
+ },
+ {
+  "name": "Longnap the Tabby",
+  "ticker": "LONGNAP",
+  "nameLen": 17,
+  "tickerLen": 7,
+  "descLen": 272,
+  "endsWithDisclosure": true,
+  "storyLen": 157,
+  "tickerRegex": true,
+  "tickerContainsSPY": false,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_full": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jupStatus": 200,
+  "jupResults": 20,
+  "jupSymbolsSeen": [
+   "LARP",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "TERAFAB",
+   "NOTHING",
+   "NOTHING",
+   "NOTHING",
+   "ELON"
+  ],
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false
+ },
+ {
+  "name": "Wicker the Basket Cat",
+  "ticker": "WICKERCAT",
+  "nameLen": 21,
+  "tickerLen": 9,
+  "descLen": 252,
+  "endsWithDisclosure": true,
+  "storyLen": 137,
+  "tickerRegex": true,
+  "tickerContainsSPY": false,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_full": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolsSeen": [],
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false
+ }
+]

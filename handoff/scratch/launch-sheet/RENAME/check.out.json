@@ -1,0 +1,325 @@
+{
+ "MSFTx": {
+  "description": "Jellie is a grey-and-white cat with grey-green eyes and a crooked grin. Fan tribute to Microsoft's cat. Not affiliated with or endorsed by Microsoft. A cat coin priced in MSFTx. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.",
+  "lengths": {
+   "name": 6,
+   "ticker": 9,
+   "description": 274,
+   "story": 71
+  },
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "not_cat",
+     "term": "Jellie",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_story_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "microsoft",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_tributeAndDisclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "microsoft",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  }
+ },
+ "GOOGLx": {
+  "description": "Momo, a solid black cat with bright yellow eyes, blinks hello from the lantern-lit porch. Fan tribute to Google's cat. Not affiliated with or endorsed by Google. A cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice.",
+  "lengths": {
+   "name": 12,
+   "ticker": 10,
+   "description": 279,
+   "story": 89
+  },
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_story_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "google",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_tributeAndDisclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "google",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  }
+ },
+ "AMZNx": {
+  "description": "Leo, a sturdy tawny cat with a mane-like ruff, turns on the old sundial to follow the sun. Fan tribute to Amazon's cat. Not affiliated with or endorsed by Amazon. A cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice.",
+  "lengths": {
+   "name": 12,
+   "ticker": 10,
+   "description": 272,
+   "story": 90
+  },
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "not_cat",
+     "term": "Leo the Lion",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_story_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "amazon",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_tributeAndDisclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "amazon",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  }
+ },
+ "COINx": {
+  "description": "Mister Miggles, a fluffy flat-faced grey cat with a grumpy pout, glares at pigeons. Fan tribute to Coinbase's cat. Not affiliated with or endorsed by Coinbase. A cat coin priced in COINx. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice.",
+  "lengths": {
+   "name": 14,
+   "ticker": 7,
+   "description": 271,
+   "story": 83
+  },
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "not_cat",
+     "term": "Mister Miggles",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_story_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coinbase",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_tributeAndDisclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coinbase",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  }
+ },
+ "BRK.Bx": {
+  "description": "Cam, a white calico, guards the garden pond like a moat. Fan tribute to Berkshire Hathaway's cat. Not affiliated with or endorsed by Berkshire Hathaway. A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice.",
+  "lengths": {
+   "name": 11,
+   "ticker": 9,
+   "description": 275,
+   "story": 56
+  },
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_story_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_tributeAndDisclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "endorsed",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  }
+ }
+}

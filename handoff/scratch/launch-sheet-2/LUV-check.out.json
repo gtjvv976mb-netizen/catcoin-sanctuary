@@ -1,0 +1,187 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Emberfox the Ruddy Cat",
+   "ticker": "EMBERFOX",
+   "nameLen": 22,
+   "blurbLen": 158,
+   "descLen": 299,
+   "tickerHasLuvRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Emberfox, a ruddy-orange kitten with a s",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 5,
+   "jupSymbolMatches": [
+    {
+     "symbol": "EMBERFOX",
+     "name": "The Ember Fox",
+     "id": "VGMFpWJ38gsXDpYMbhMwANSnVjjifnFEbbhQahJpump"
+    },
+    {
+     "symbol": "EMBERFOX",
+     "name": "EMBER FOX",
+     "id": "3QVkFKxiTTWTCrTsxi2na1mWCSTLH4qiLWvbGCjiKWbS"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Emberfox, a ruddy-orange kitten with a softly ticked, fluffy coat, tall ears and a bushy fox-like tail, rides on a warm shoulder and eyes the garden sparrows. A cat coin priced in LUV. Not affiliated with Southwest Airlines, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Inkstache the Bicolor Cat",
+   "ticker": "INKSTACHE",
+   "nameLen": 25,
+   "blurbLen": 160,
+   "descLen": 301,
+   "tickerHasLuvRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Inkstache, a white cat with a black cap ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Inkstache, a white cat with a black cap over both ears, a few black patches and a black smudge of moustache under the nose, stares down beetles with amber eyes. A cat coin priced in LUV. Not affiliated with Southwest Airlines, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tassel the Tufted Tabby Cat",
+   "ticker": "TASSELEAR",
+   "nameLen": 27,
+   "blurbLen": 153,
+   "descLen": 294,
+   "tickerHasLuvRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tassel, a big fluffy brown tabby with a ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Tassel, a big fluffy brown tabby with a white muzzle and bib, a pink nose and long tufts on its ears, pads up close to sniff every visitor to the garden. A cat coin priced in LUV. Not affiliated with Southwest Airlines, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

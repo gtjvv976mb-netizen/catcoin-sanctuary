@@ -1,0 +1,357 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Pipette the Lab-Coat Cat",
+   "ticker": "PIPETTE",
+   "nameLen": 24,
+   "blurbLen": 149,
+   "descLen": 293,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Pipette, a spotless snow-white shorthair",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 9,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Pipette, a spotless snow-white shorthair with pale blue eyes and tidy pink paws, keeps the garden greenhouse neat and naps on the warm potting bench. A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Capsule the Two-Tone Cat",
+   "ticker": "CAPSULE",
+   "nameLen": 24,
+   "blurbLen": 133,
+   "descLen": 277,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Capsule, a sleek bicolor cat, crisp whit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "CAPSULE",
+     "name": "capsule",
+     "id": "6egXunrt1LQ6rr7eXRnuXKMFgPEDLCh3SidH6DvdE3Ey"
+    },
+    {
+     "symbol": "Capsule",
+     "name": "Capsule",
+     "id": "9rTyEyUUNjgB1kFfnFjDn3DCAtDVKZpEQjVwJrfrpump"
+    },
+    {
+     "symbol": "CAPSULE",
+     "name": "CAPSULE",
+     "id": "hiYWTKZr4t79hCRAA3vrAPbcKV64opSXfP21YJipump"
+    },
+    {
+     "symbol": "CAPSULE",
+     "name": "capsule",
+     "id": "HERTsvwVdnhs8uyavXCVAG84CSYB8EEFTm8HAbtUpump"
+    },
+    {
+     "symbol": "CAPSULE",
+     "name": "capsule",
+     "id": "GrCsJ5rBF6Mg1CNhYjHCzigDDFEn5gXQxZRJ9HiQpump"
+    },
+    {
+     "symbol": "Capsule",
+     "name": "The Capsule",
+     "id": "3pcDhULbwhvFFPYvYwP7vvERbSKB2KvSrGTXZ3P8pump"
+    },
+    {
+     "symbol": "Capsule",
+     "name": "Capsule",
+     "id": "EJK5w9dFgarED2XDVdLPFPwVJmT4JgMEE4eEaPHLpump"
+    },
+    {
+     "symbol": "Capsule",
+     "name": "Capsule",
+     "id": "2LtNojVLCefJtqoh2Ecbeemot3Y4H8i6SjPajtHnpump"
+    },
+    {
+     "symbol": "CAPSULE",
+     "name": "Capsule Coin",
+     "id": "3qogf1nJHPdaJ8v6y8sHgTxQDTXFLV8EwtNCKFPppump"
+    },
+    {
+     "symbol": "CAPSULE",
+     "name": "capsule",
+     "id": "5QqwSrbFa2qjXeZqTXiaDBfJTkJjwXQao91eHhemio9z"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Capsule, a sleek bicolor cat, crisp white up front and warm butterscotch behind, curls into a neat oval on the sunny stepping stones. A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Sage the Apothecary Cat",
+   "ticker": "APOTHECAT",
+   "nameLen": 23,
+   "blurbLen": 126,
+   "descLen": 270,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sage, a smoky sage-grey mackerel tabby w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sage, a smoky sage-grey mackerel tabby with olive eyes, dozes among old glass jars and pots of thyme in the garden's herb bed. A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "x Cat",
+   "ticker": "TWOTONE",
+   "nameLen": 5,
+   "blurbLen": 34,
+   "descLen": 178,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate A cat",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 13,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "x Cat",
+   "ticker": "SAGEJAR",
+   "nameLen": 5,
+   "blurbLen": 34,
+   "descLen": 178,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate A cat",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "x Cat",
+   "ticker": "SNOWPIP",
+   "nameLen": 5,
+   "blurbLen": 34,
+   "descLen": 178,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate A cat",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

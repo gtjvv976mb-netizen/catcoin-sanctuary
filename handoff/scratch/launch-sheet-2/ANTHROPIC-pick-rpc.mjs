@@ -1,0 +1,11 @@
+const RPC = "https://api.mainnet-beta.solana.com";
+const rpc = async (method, params) => (await (await fetch(RPC, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) })).json()).result;
+const a = await rpc("getAccountInfo", ["Pren1FvFX6J3E4kXhJuCiAD5aDmGEb7qJRncwA8Lkhw", { encoding: "jsonParsed" }]);
+const info = a?.value?.data?.parsed?.info;
+const pick = (n) => (info.extensions.find((e) => e.extension === n) ?? {}).state;
+console.log(JSON.stringify({ slot: a?.context?.slot, mintAuthority: info.mintAuthority, freezeAuthority: info.freezeAuthority, permanentDelegate: pick("permanentDelegate"), defaultAccountState: pick("defaultAccountState"), transferHook: pick("transferHook"), pausable: pick("pausableConfig"), scaledUi: pick("scaledUiAmountConfig"), fee: pick("transferFeeConfig") }, null, 1));
+const r = await fetch("https://raw.githubusercontent.com/anthropics/claude-desktop-buddy/main/src/buddies/cat.cpp");
+const t = await r.text();
+console.log("CATCPP", r.status, t.length);
+console.log(t.split("\n").filter((l) => /SPECIES|0x[0-9A-F]{4}|collar|hat|bow|stripe|spot|color|colour/i.test(l)).slice(0, 20).join("\n"));
+console.log(t.slice(0, 1500));

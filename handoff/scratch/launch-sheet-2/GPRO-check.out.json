@@ -1,0 +1,245 @@
+{
+ "discLen": 134,
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Scuff the Tabby-and-White Cat",
+   "ticker": "SCUFFPAW",
+   "nameLen": 29,
+   "blurbLen": 153,
+   "descLen": 288,
+   "tickerFmt": true,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "minors",
+      "term": "kids",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "minors",
+      "term": "kids",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Scuff, a sturdy brown tabby with a white",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "minors",
+      "term": "kids",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Scuff, a sturdy brown tabby with a white stripe down her nose, a white chest and four white paws, zooms down the sloping garden path and skids to a stop. A cat coin priced in GPRO. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Thistle the White-Socked Cat",
+   "ticker": "THISTLEPAW",
+   "nameLen": 28,
+   "blurbLen": 156,
+   "descLen": 291,
+   "tickerFmt": true,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Thistle, a dark-striped brown tabby with",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Thistle, a dark-striped brown tabby with a snowy bib, white socks and pale green eyes, walks the top of the garden wall and leans down to peer right at you. A cat coin priced in GPRO. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Cobble the Snow-Bib Cat",
+   "ticker": "COBBLEBIB",
+   "nameLen": 23,
+   "blurbLen": 150,
+   "descLen": 285,
+   "tickerFmt": true,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cobble, a brown-and-black striped tabby ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Cobble, a brown-and-black striped tabby with a white bib, white paws and a white muzzle, hops each garden step in one bound and lands without a sound. A cat coin priced in GPRO. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Sandstep the Tawny Cat",
+   "ticker": "SANDSTEP",
+   "nameLen": 22,
+   "blurbLen": 143,
+   "descLen": 276,
+   "tickerHasStockRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sandstep, a lean tawny shorthair with a ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sandstep, a lean tawny shorthair with a cream chest, dark-tipped tail and gold-brown eyes, pads across the little garden footbridge every dusk. A cat coin priced in SNAP. Not affiliated with Snap Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Cloudleap the Striped Cat",
+   "ticker": "CLOUDLEAP",
+   "nameLen": 25,
+   "blurbLen": 138,
+   "descLen": 271,
+   "tickerHasStockRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cloudleap, a bright orange mackerel tabb",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Cloudleap, a bright orange mackerel tabby with bold dark stripes, a white chin and gold eyes, springs over the garden hedges in one bound. A cat coin priced in SNAP. Not affiliated with Snap Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Shutterpaw the Tuxedo Cat",
+   "ticker": "SHUTTERPAW",
+   "nameLen": 25,
+   "blurbLen": 142,
+   "descLen": 275,
+   "tickerHasStockRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Shutterpaw, a sleek black-and-white tuxe",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Shutterpaw, a sleek black-and-white tuxedo cat with a white face blaze and green eyes, poses for one quick photo, then slips behind the hedge. A cat coin priced in SNAP. Not affiliated with Snap Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

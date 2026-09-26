@@ -1,0 +1,12 @@
+import { chromium } from "/opt/node22/lib/node_modules/playwright/index.mjs";
+const mode = process.argv[2];
+const opts = mode === "new" ? { channel: "chromium" } : {};
+const b = await chromium.launch({ ...opts, args: ["--enable-unsafe-swiftshader","--ignore-gpu-blocklist"] });
+const p = await b.newPage({ viewport: { width: 1600, height: 900 } });
+await p.goto("http://127.0.0.1:8768/?q=high&debug&noadapt");
+let t=Date.now();
+await p.waitForFunction(() => document.body.classList.contains("ready"), null, { timeout: 240000 });
+console.log(mode, "ready", Date.now()-t);
+await p.evaluate(() => window.__world.pause());
+t=Date.now(); await p.screenshot({ path: `cap/p-${mode}.jpg`, quality: 85, timeout: 90000 }); console.log("shot", Date.now()-t);
+await b.close();

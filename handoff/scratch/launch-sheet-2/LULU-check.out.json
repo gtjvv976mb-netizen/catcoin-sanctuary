@@ -1,0 +1,227 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Sunstretch the Red Tabby Cat",
+   "ticker": "SUNSTRETCH",
+   "nameLen": 28,
+   "blurbLen": 140,
+   "descLen": 283,
+   "tickerHasLuluRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sunstretch, a red-orange tabby with bold",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LULU",
+      "field": "description"
+     }
+    ]
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 3,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sunstretch, a red-orange tabby with bold black stripes and amber eyes, starts every day with one long, slow stretch on the warm garden path. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Paprika the Striped Cat",
+   "ticker": "PAPRIKA",
+   "nameLen": 23,
+   "blurbLen": 134,
+   "descLen": 277,
+   "tickerHasLuluRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Paprika, a deep rust-red tabby with dark",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LULU",
+      "field": "description"
+     }
+    ]
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 6,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Paprika, a deep rust-red tabby with dark brown stripes and green eyes, trots easy laps around the flower beds, then naps in the shade. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Warmup the Ginger Tabby Cat",
+   "ticker": "WARMUP",
+   "nameLen": 27,
+   "blurbLen": 138,
+   "descLen": 281,
+   "tickerHasLuluRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Warmup, a ginger tabby with wide dark st",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LULU",
+      "field": "description"
+     }
+    ]
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 13,
+   "jupSymbolMatches": [
+    {
+     "symbol": "WARMUP",
+     "name": "Solana WarmUP",
+     "id": "8csb5z7XPiWs31CtYqHNqnDrN3LFcdaqDMSY3VPCpump"
+    },
+    {
+     "symbol": "WARMUP",
+     "name": "Solana WarmUP",
+     "id": "5Msf3tnDqTffLz5f4UD8QjBTd73N56EGibk3RCXTpump"
+    },
+    {
+     "symbol": "Warmup",
+     "name": "immersive interactive warmup",
+     "id": "FFabdkty1anTWNJUk6L54gEUmobthi551wo4kpLzpump"
+    },
+    {
+     "symbol": "warmup",
+     "name": "warmup",
+     "id": "4xC5zXBN7Evyofd7V6TCDr2g5vwQBzrJsnNxCvhrpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Warmup, a ginger tabby with wide dark stripes and a cream chest, crouches low and wiggles before every pounce at the swaying garden grass. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

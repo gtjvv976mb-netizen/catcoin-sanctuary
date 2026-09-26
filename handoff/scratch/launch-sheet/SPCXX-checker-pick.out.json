@@ -1,0 +1,104 @@
+[
+ {
+  "name": "Warmspot the Tuxedo Cat",
+  "ticker": "WARMSPOT",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "blurbLen": 154,
+  "descLen": 264,
+  "endsWithDisclosure": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Warmspot, a black-and-white tuxedo cat w",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock_look": {
+   "ok": true,
+   "violations": []
+  },
+  "stockCatRefusals": [],
+  "tickerRegex": true,
+  "memeBanned": false,
+  "confusableWithRoot": false,
+  "inVerifiedIndex": null,
+  "jupStatus": 200,
+  "jupResults": 1,
+  "jupAll": [
+   {
+    "symbol": "USDC",
+    "name": "NyanWalterGrumpyCheemsPopcat"
+   }
+  ],
+  "jupSymbolMatches": [],
+  "jupVerifiedCollision": false,
+  "description": "Warmspot, a black-and-white tuxedo cat with a white stripe down her nose and a white chin, always finds the one warm spot in a snowy garden, and keeps it. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ }
+]

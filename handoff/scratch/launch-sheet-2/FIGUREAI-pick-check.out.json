@@ -1,0 +1,678 @@
+{
+ "verifiedListSize": 3696,
+ "othersTermCount": 3011,
+ "earlierCount": 39,
+ "out": [
+  {
+   "id": "D1",
+   "name": "Knit the Woolly Grey Cat",
+   "ticker": "KNITPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 7,
+    "blurb": 145,
+    "description": 272
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Knit, a plush ash-grey tabby with a soft",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "S&P",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Knit",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Knit, a plush ash-grey tabby with a soft woolly coat and faint ribbed stripes, pads between the flowerpots so carefully that none ever tips over. A cat coin priced in FIGUREAI. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "D2",
+   "name": "Tidy the Tuxedo Cat",
+   "ticker": "TIDYTUX",
+   "lengths": {
+    "name": 19,
+    "ticker": 7,
+    "blurb": 149,
+    "description": 276
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tidy, a black-and-white tuxedo cat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Tuxedo",
+      "field": "name"
+     },
+     {
+      "rule": "other_pair",
+      "term": "Tuxedo",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Tidy",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Tidy, a black-and-white tuxedo cat with neat white mittens, carries fallen leaves one by one to a pile by the shed, then naps on the folded blankets. A cat coin priced in FIGUREAI. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "D3",
+   "name": "Dewdrop the Soft-Paw Cat",
+   "ticker": "SOFTTOES",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "blurb": 143,
+    "description": 270
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Dewdrop, a pale silver cat with a white ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "FLY",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 2,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Dewdrop",
+    "status": 200,
+    "results": 3,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Dewdrop, a pale silver cat with a white chest and extra-soft pink toe beans, taps a ladybug on a leaf so gently that it does not even fly away. A cat coin priced in FIGUREAI. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "PICK",
+   "name": "Knit the Woolly Grey Cat",
+   "ticker": "KNITPAW",
+   "lengths": {
+    "name": 24,
+    "ticker": 7,
+    "blurb": 150,
+    "description": 277
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Knit, a plush pale ash-grey tabby with a",
+      "field": "tagline"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "look"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "S&P",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Knit",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Knit, a plush pale ash-grey tabby with a soft woolly coat and faint ribbed stripes, pads between the flowerpots so carefully that none ever tips over. A cat coin priced in FIGUREAI. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 9,
+  "mintAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+  "freezeAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+  "extensions": [
+   {
+    "extension": "permanentDelegate",
+    "state": {
+     "delegate": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc"
+    }
+   },
+   {
+    "extension": "defaultAccountState",
+    "state": {
+     "accountState": "initialized"
+    }
+   },
+   {
+    "extension": "transferFeeConfig",
+    "state": {
+     "newerTransferFee": {
+      "epoch": 1043,
+      "maximumFee": 18446744073709552000,
+      "transferFeeBasisPoints": 300
+     },
+     "olderTransferFee": {
+      "epoch": 1039,
+      "maximumFee": 18446744073709552000,
+      "transferFeeBasisPoints": 100
+     },
+     "transferFeeConfigAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "withdrawWithheldAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "withheldAmount": 306969828
+    }
+   },
+   {
+    "extension": "confidentialTransferMint",
+    "state": {
+     "auditorElgamalPubkey": null,
+     "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "autoApproveNewAccounts": false
+    }
+   },
+   {
+    "extension": "confidentialTransferFeeConfig",
+    "state": {
+     "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "harvestToMintEnabled": true,
+     "withdrawWithheldAuthorityElgamalPubkey": "YIHVbuQq0xDvW8g8vW1enaIBxIdrm7v+7EyEiMaHDmM=",
+     "withheldAmount": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    }
+   },
+   {
+    "extension": "transferHook",
+    "state": {
+     "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "programId": null
+    }
+   },
+   {
+    "extension": "scaledUiAmountConfig",
+    "state": {
+     "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "multiplier": "1",
+     "newMultiplier": "1",
+     "newMultiplierEffectiveTimestamp": 0
+    }
+   },
+   {
+    "extension": "metadataPointer",
+    "state": {
+     "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "metadataAddress": "PreZad18qfPtbxNpMtMuAuX2zVpvkEU8DnJx56faCWd"
+    }
+   },
+   {
+    "extension": "pausableConfig",
+    "state": {
+     "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "paused": false
+    }
+   },
+   {
+    "extension": "tokenMetadata",
+    "state": {
+     "additionalMetadata": [],
+     "mint": "PreZad18qfPtbxNpMtMuAuX2zVpvkEU8DnJx56faCWd",
+     "name": "Figure AI PreStocks",
+     "symbol": "FIGUREAI",
+     "updateAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "uri": "https://prestocks.com/metadata/figureai.json"
+    }
+   }
+  ],
+  "epoch": 1042
+ },
+ "stonkfunPair": [
+  {
+   "mint": "PreZad18qfPtbxNpMtMuAuX2zVpvkEU8DnJx56faCWd",
+   "symbol": "FIGUREAI",
+   "name": "FIGUREAI",
+   "decimals": 9,
+   "logoUrl": "/api/asset/quote-logo/PreZad18qfPtbxNpMtMuAuX2zVpvkEU8DnJx56faCWd?v=01cfaf08",
+   "category": "prestock",
+   "categoryLabel": "PreStock",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  }
+ ]
+}

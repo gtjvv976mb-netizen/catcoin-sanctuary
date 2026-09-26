@@ -1,0 +1,82 @@
+{
+ "name": "Waybill the Label-Bib Cat",
+ "ticker": "WAYBILL",
+ "nameLen": 25,
+ "blurbLen": 132,
+ "descLen": 276,
+ "tickerFormat": true,
+ "endsWithDisclaimer": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_disclaimerOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 2,
+  "symbolMatches": 0,
+  "verifiedMatch": false
+ },
+ "jupNameSearch": [
+  {
+   "symbol": "AD",
+   "name": "Blank Highway Billboard Sign"
+  },
+  {
+   "symbol": "LQBD",
+   "name": "Low Quality Billy Dog"
+  }
+ ],
+ "description": "Waybill, a slate-grey cat with a square white bib like a shipping label and four white socks, waits by the garden gate each morning. A cat coin priced in UPS. Not affiliated with United Parcel Service, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

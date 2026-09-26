@@ -1,0 +1,150 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Candlewick the Barred Tabby Cat",
+   "ticker": "CANDLEWICK",
+   "nameLen": 31,
+   "blurbLen": 125,
+   "descLen": 269,
+   "tickerHasBullRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Candlewick, a brown tabby with dark side bars that rise and dip like a chart, sits on the garden wall watching every flicker. A cat coin priced in WEBULL. Not affiliated with Webull Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Lamplit the Smoke-Grey Cat",
+   "ticker": "LAMPLIT",
+   "nameLen": 26,
+   "blurbLen": 128,
+   "descLen": 272,
+   "tickerHasBullRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 15,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Lamplit, a smoke-grey shorthair with big round copper eyes, stays up all night under the garden lamp after the other cats sleep. A cat coin priced in WEBULL. Not affiliated with Webull Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Pocket the Little Tuxedo Cat",
+   "ticker": "POCKETPAW",
+   "nameLen": 28,
+   "blurbLen": 131,
+   "descLen": 275,
+   "tickerHasBullRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Pocket, a small, quick tuxedo cat with a white bib and four white paws, naps curled up in the pocket of a coat on the garden bench. A cat coin priced in WEBULL. Not affiliated with Webull Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

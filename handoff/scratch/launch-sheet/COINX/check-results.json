@@ -1,0 +1,218 @@
+[
+ {
+  "ticker": "HARRUMPH",
+  "lengths": {
+   "name": 22,
+   "ticker": 8,
+   "description": 271,
+   "tagline": 159
+  },
+  "tickerFormat": true,
+  "disclosureVerbatimAtEnd": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coinbase",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsDisclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coinbase",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTermsStockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerContainsCOIN": false,
+  "jupiterSearch": {
+   "status": 200,
+   "results": 10,
+   "exactSymbol": [],
+   "verifiedExact": 0
+  },
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "copycatOf": null,
+  "stockCatRefusals": []
+ },
+ {
+  "ticker": "THISTLECAT",
+  "lengths": {
+   "name": 25,
+   "ticker": 10,
+   "description": 264,
+   "tagline": 152
+  },
+  "tickerFormat": true,
+  "disclosureVerbatimAtEnd": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coinbase",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsDisclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coinbase",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTermsStockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerContainsCOIN": false,
+  "jupiterSearch": {
+   "status": 200,
+   "results": 4,
+   "exactSymbol": [],
+   "verifiedExact": 0
+  },
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "copycatOf": null,
+  "stockCatRefusals": []
+ },
+ {
+  "ticker": "BRAMBLECAT",
+  "lengths": {
+   "name": 20,
+   "ticker": 10,
+   "description": 269,
+   "tagline": 157
+  },
+  "tickerFormat": true,
+  "disclosureVerbatimAtEnd": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coinbase",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsDisclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coinbase",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTermsStockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerContainsCOIN": false,
+  "jupiterSearch": {
+   "status": 200,
+   "results": 0,
+   "exactSymbol": [],
+   "verifiedExact": 0
+  },
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "copycatOf": null,
+  "stockCatRefusals": []
+ }
+]

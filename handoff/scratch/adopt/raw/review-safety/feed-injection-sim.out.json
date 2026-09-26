@@ -1,0 +1,38 @@
+{
+ "probedAt": "2026-09-25T19:27:32.341Z",
+ "rule": "QYZp1YzqEHU67ngXphF9LAkxkxWGvpWEv3rXh4yDbWA",
+ "payer": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+ "cases": {
+  "a_credit_1_lamport": {
+   "accountKeys": [
+    "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+    "QYZp1YzqEHU67ngXphF9LAkxkxWGvpWEv3rXh4yDbWA",
+    "11111111111111111111111111111111"
+   ],
+   "ruleInAccountKeys": true,
+   "simErr": null,
+   "rpcError": null,
+   "unitsConsumed": 150,
+   "logs": [
+    "Program 11111111111111111111111111111111 invoke [1]",
+    "Program 11111111111111111111111111111111 success"
+   ]
+  },
+  "b_readonly_mention": {
+   "accountKeys": [
+    "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+    "11111111111111111111111111111111",
+    "QYZp1YzqEHU67ngXphF9LAkxkxWGvpWEv3rXh4yDbWA"
+   ],
+   "ruleInAccountKeys": true,
+   "simErr": null,
+   "rpcError": null,
+   "unitsConsumed": 150,
+   "logs": [
+    "Program 11111111111111111111111111111111 invoke [1]",
+    "Program 11111111111111111111111111111111 success"
+   ]
+  }
+ },
+ "ruleOwner": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+}

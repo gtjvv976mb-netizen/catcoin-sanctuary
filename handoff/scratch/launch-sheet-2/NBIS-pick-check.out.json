@@ -1,0 +1,437 @@
+{
+ "disclaimerAlone": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Grassline the Striped Cat",
+   "ticker": "GRASSLINE",
+   "nameLen": 25,
+   "blurbLen": 134,
+   "descLen": 275,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Grassline, a deep-orange shorthair with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "description": "Grassline, a deep-orange shorthair with bold black stripes, white cheeks and gold eyes, creeps low through the long grass after moths. A cat coin priced in NBIS. Not affiliated with Nebius Group N.V., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Ember the Snow-Muzzle Cat",
+   "ticker": "EMBERMUZ",
+   "nameLen": 25,
+   "blurbLen": 136,
+   "descLen": 277,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Ember, a rust-orange cat with thick blac",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "description": "Ember, a rust-orange cat with thick black stripes, a snow-white muzzle and white-spotted black ears, sniffs every seed-head on the path. A cat coin priced in NBIS. Not affiliated with Nebius Group N.V., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Saffron the Long-Whisker Cat",
+   "ticker": "SAFFWHISK",
+   "nameLen": 28,
+   "blurbLen": 133,
+   "descLen": 274,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Saffron, a burnt-orange tabby with black",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "description": "Saffron, a burnt-orange tabby with black stripes, white brows and very long white whiskers, stares down the garden sprinkler at dusk. A cat coin priced in NBIS. Not affiliated with Nebius Group N.V., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "prefix": {
+  "GRASS": {
+   "status": 200,
+   "n": 20,
+   "verified": [
+    {
+     "symbol": "GRASS",
+     "name": "Grass",
+     "id": "Grass7B4RdKfBCjTKgSqnXkqjwiGvQyFbuSCUJr3XXjs"
+    },
+    {
+     "symbol": "TOUCHGRASS",
+     "name": "Touch Grass",
+     "id": "5314GTpDziP2ZdaANnt5KJEABGXy5Nn5Kyc3SFPYpump"
+    }
+   ],
+   "exactSymbol": [
+    {
+     "symbol": "GRASS",
+     "name": "Grass",
+     "isVerified": true
+    },
+    {
+     "symbol": "GRASS",
+     "name": "touch grASS"
+    },
+    {
+     "symbol": "grASS",
+     "name": "touch grASS"
+    },
+    {
+     "symbol": "GRASS",
+     "name": "그래스 찬"
+    },
+    {
+     "symbol": "GRASS",
+     "name": "Touch Grass"
+    },
+    {
+     "symbol": "grASS",
+     "name": "Touch some grASS"
+    }
+   ]
+  },
+  "EMBER": {
+   "status": 200,
+   "n": 20,
+   "verified": [
+    {
+     "symbol": "EMBER",
+     "name": "embercurve",
+     "id": "5dvXTZ5qwgafnHtwu3Ls3QrWx1U4LQsFeCuJgkk4QEC6"
+    }
+   ],
+   "exactSymbol": [
+    {
+     "symbol": "EMBER",
+     "name": "embercurve",
+     "isVerified": true
+    },
+    {
+     "symbol": "EMBER",
+     "name": "embercurve"
+    }
+   ]
+  },
+  "SAFFRON": {
+   "status": 200,
+   "n": 20,
+   "verified": [],
+   "exactSymbol": [
+    {
+     "symbol": "Saffron",
+     "name": "Saffron"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "Saffron"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "SAFFRON "
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "Baby Red Panda"
+    },
+    {
+     "symbol": "Saffron",
+     "name": "Saffron"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "Saffron Coin"
+    }
+   ]
+  },
+  "GRASSLINE": {
+   "status": 200,
+   "n": 0,
+   "verified": [],
+   "exactSymbol": []
+  },
+  "EMBERMUZ": {
+   "status": 200,
+   "n": 0,
+   "verified": [],
+   "exactSymbol": []
+  },
+  "SAFFWHISK": {
+   "status": 200,
+   "n": 0,
+   "verified": [],
+   "exactSymbol": []
+  }
+ },
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "4ATEQWSyeEaGaBNoJjKKrEnpf7vTozhvoeZme64BVm3t",
+  "extensions": [
+   {
+    "ext": "metadataPointer",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "metadataAddress": "NBiSF3UaVUFtRzHwAfxyHsBCAZWGEKnMpewAE4oh7BG"
+    }
+   },
+   {
+    "ext": "permanentDelegate",
+    "state": {
+     "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+    }
+   },
+   {
+    "ext": "defaultAccountState",
+    "state": {
+     "accountState": "initialized"
+    }
+   },
+   {
+    "ext": "pausableConfig",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "paused": false
+    }
+   },
+   {
+    "ext": "confidentialTransferMint",
+    "state": {
+     "auditorElgamalPubkey": null,
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "autoApproveNewAccounts": false
+    }
+   },
+   {
+    "ext": "transferHook",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "programId": null
+    }
+   },
+   {
+    "ext": "scaledUiAmountConfig",
+    "state": {
+     "authority": "4ATEQWSyeEaGaBNoJjKKrEnpf7vTozhvoeZme64BVm3t",
+     "multiplier": "1",
+     "newMultiplier": "1",
+     "newMultiplierEffectiveTimestamp": 0
+    }
+   },
+   {
+    "ext": "tokenMetadata",
+    "state": {
+     "name": "Nebius Group N.V. - Backpack Securities",
+     "symbol": "NBIS"
+    }
+   }
+  ],
+  "hasTransferFee": false
+ }
+}

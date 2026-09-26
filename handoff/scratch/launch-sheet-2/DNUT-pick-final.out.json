@@ -1,0 +1,109 @@
+{
+ "name": "Sugarsoot the Sparkle-Black Cat",
+ "ticker": "SUGARSOOT",
+ "nameLen": 31,
+ "blurbLen": 140,
+ "descLen": 276,
+ "tickerFormat": true,
+ "endsWithDisclosure": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Sugarsoot, a sleek black cat whose coat ",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup_SUGARSOOT": {
+  "status": 200,
+  "results": [
+   {
+    "symbol": "SUGAR",
+    "name": "Raw Sugar Advances to 14-month"
+   }
+  ],
+  "exactSymbol": 0
+ },
+ "jup_Sugarsoot": {
+  "status": 200,
+  "results": [
+   {
+    "symbol": "SUGAR",
+    "name": "Raw Sugar Advances to 14-month"
+   }
+  ],
+  "exactSymbol": 0
+ },
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "hasTransferFeeConfig": false,
+  "paused": false,
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "GsxfJifoHKMP7QRuzoxWfhzcj3sDTdv65FrBYngWvNHJ",
+  "decimals": 6
+ },
+ "description": "Sugarsoot, a sleek black cat whose coat glints like sugar in the sun, with lime-green eyes and a white muzzle, sniffs the sweet morning air. A cat coin priced in DNUT. Not affiliated with Krispy Kreme, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

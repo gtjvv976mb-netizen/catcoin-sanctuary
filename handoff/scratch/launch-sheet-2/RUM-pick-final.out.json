@@ -1,0 +1,346 @@
+{
+ "disclaimer_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclaimer_checkTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "RUM",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Hearthbib the Fluffy Cat",
+   "ticker": "HEARTHBIB",
+   "nameLen": 24,
+   "blurbLen": 135,
+   "descLen": 276,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hearthbib, a fluffy brown tabby with a w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_HEARTHBIB": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "sample": []
+   },
+   "jup_Hearthbib": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "sample": []
+   },
+   "description": "Hearthbib, a fluffy brown tabby with a white bib, white front legs and pale green eyes, stands up on her hind legs by the stone hearth. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tallpaw the Tabby Cat",
+   "ticker": "TALLPAW",
+   "nameLen": 21,
+   "blurbLen": 130,
+   "descLen": 271,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tallpaw, a fluffy brown tabby with a whi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Tallpaw",
+      "field": "name"
+     },
+     {
+      "rule": "stock",
+      "term": "Tallpaw",
+      "field": "symbol"
+     },
+     {
+      "rule": "stock",
+      "term": "Tallpaw",
+      "field": "tagline"
+     },
+     {
+      "rule": "stock",
+      "term": "Tallpaw",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_TALLPAW": {
+    "status": 200,
+    "results": 5,
+    "symbolMatches": [],
+    "sample": [
+     "CatGang|The Alley Pawthugs|undefined",
+     "USDP|United State Dollar Paw|undefined",
+     "ChillPaws|Just a ChillPaws|undefined",
+     "E|Literally has 3 hands and a paws|undefined",
+     "SHENGNEKO|SHENGNEKO                             FwZsmXZWgFPNTpDa2jdWLUTKJ4YL4gRPaWn7PhkBpBxc|undefined"
+    ]
+   },
+   "jup_Tallpaw": {
+    "status": 200,
+    "results": 5,
+    "symbolMatches": [],
+    "sample": [
+     "CatGang|The Alley Pawthugs|undefined",
+     "USDP|United State Dollar Paw|undefined",
+     "ChillPaws|Just a ChillPaws|undefined",
+     "E|Literally has 3 hands and a paws|undefined",
+     "SHENGNEKO|SHENGNEKO                             FwZsmXZWgFPNTpDa2jdWLUTKJ4YL4gRPaWn7PhkBpBxc|undefined"
+    ]
+   },
+   "description": "Tallpaw, a fluffy brown tabby with a white bib, white front legs and pale green eyes, rises on her hind legs to see over everyone. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Stilts the Upright Cat",
+   "ticker": "STILTPAW",
+   "nameLen": 22,
+   "blurbLen": 135,
+   "descLen": 276,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stilts, a slim brown tabby with a white ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_STILTPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "sample": []
+   },
+   "jup_Stilts": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "sample": [
+     "STILTS|Pill on Stilts |undefined",
+     "STILTS|Stilt Cat|undefined",
+     "HIT|but she still lets you hit|undefined",
+     "ST|school toilets|undefined",
+     "$tiltskin|rumpelstiltskin|undefined"
+    ]
+   },
+   "description": "Stilts, a slim brown tabby with a white nose blaze and white forepaws, stands straight up on her back legs when the tall grass rustles. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "pairMint": [
+  {
+   "name": "RUM Group Inc. - Backpack Securities",
+   "symbol": "RUM",
+   "isVerified": true,
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "tags": [
+    "verified",
+    "stocks",
+    "rwa",
+    "backpack",
+    "token-2022"
+   ],
+   "mintAuthority": "4ffj7SAFJJEnqPgbyrtL77MqtQ61MpzED9o8Ei94N1gj",
+   "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "keys": []
+  }
+ ]
+}

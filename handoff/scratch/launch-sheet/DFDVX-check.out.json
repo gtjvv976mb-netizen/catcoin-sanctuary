@@ -1,0 +1,254 @@
+[
+ {
+  "name": "Latchkey the Vault Cat",
+  "ticker": "LATCHKEY",
+  "nameLen": 22,
+  "tickerLen": 8,
+  "blurbLen": 151,
+  "descLen": 277,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Latchkey, a sturdy brown tabby with white socks, naps curled on a little iron-banded strongbox in the garden shed, its brass key tucked under her chin. A cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Stashpaw the Hoarding Cat",
+  "ticker": "STASHPAW",
+  "nameLen": 25,
+  "tickerLen": 8,
+  "blurbLen": 151,
+  "descLen": 277,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Stashpaw, a sleek smoke-grey cat with pale green eyes, hides shiny buttons and bottle caps under the hedge and adds one more to the pile every morning. A cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Doorstop the Guard Cat",
+  "ticker": "DOORSTOP",
+  "nameLen": 22,
+  "tickerLen": 8,
+  "blurbLen": 153,
+  "descLen": 279,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 3,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Doorstop, a hefty cream long-haired cat, flops across the little wooden cellar hatch at the end of the garden and will not budge, however nicely you ask. A cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Trinket the Hoarding Cat",
+  "ticker": "TRINKETPAW",
+  "nameLen": 24,
+  "tickerLen": 10,
+  "blurbLen": 150,
+  "descLen": 276,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Trinket, a sleek smoke-grey cat with pale green eyes, hides shiny buttons and bottle caps under the hedge and adds one more to the pile every morning. A cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice."
+ }
+]

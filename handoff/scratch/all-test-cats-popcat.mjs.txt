@@ -1,0 +1,60 @@
+
+THE LIST AND THE CHECKS, FROM THE RECORDED COINS
+────────────────────────────────────────────────
+  ok   one step reads the listing and checks at most two coins  — {"ran":true,"listed":8,"checked":2}
+  ok   the recorded passing coin is listed: NO RED FLAGS FOUND  — NO RED FLAGS FOUND
+  ok   the recorded failing coin is listed with its red flags counted, as the bot's checks find them  — RED FLAGS (2): top10_share,curve
+  ok   each shows all twelve checks, labelled as the floor labels them, with what each read
+  ok   a red flag is said in the floor's plain words, which quote Popcat's own thresholds
+  ok   each carries the counts the checks read: holders besides the curve, the top 10's share, the curve sold
+  ok   only the two recorded cat coins are listed  — cosmic cat protocol, Asset Cat
+  ok   the coin that is not a cat was never checked on chain
+  ok   the coin whose name carries HTML is never shown, not even as waiting, nor checked
+  ok   a cat coin whose accounts do not exist on chain is tried, dropped after three tries, and never rests the scanner for the others
+  ok   the coin pump.fun marks banned is never shown
+  ok   a coin that is a cat only by its description is left out (no model in the tab to confirm it, as the bot without a key)
+  ok   the not-advice line and the CashCat rule are carried with the list
+
+TEXT ONLY: NO PICTURE, NO LINK BUT PUMP.FUN'S AND SOLSCAN'S
+───────────────────────────────────────────────────────────
+  ok   every URL in what the popup is given is a pump.fun coin page or a Solscan account page
+  ok   …each built from the coin's validated mint or creator
+  ok   no picture and no link the coin supplied: not its image, its IPFS metadata, its website or its socials
+  ok   the popup draws the tab with textContent and createElement, and never assigns innerHTML
+  ok   …and draws a link only when it is pump.fun's coin page, a stock cat's StonkFun page or Solscan's, checked again there
+  ok   …which opens a StonkFun token page and nothing else of StonkFun's, nor any look-alike host
+  ok   the stock cats' card draws with textContent too, never innerHTML, and links only through the same checked list
+  ok   …opened in a new tab with no referrer and no opener
+  ok   …and shows no image but CashCat's own logo, drawn in this browser
+
+THE USER'S OWN CASHCAT COINS ARE NEVER LISTED
+─────────────────────────────────────────────
+  ok   a coin in the user's CashCat journal is never listed, nor checked
+  ok   a coin whose creator is the user's autopilot wallet is never listed
+  ok   a coin whose bonding curve names the user's wallet as creator, whatever pump.fun lists, is checked and then never listed
+  ok   a coin listed before the user launched it with CashCat leaves the list once it is in the journal (the validator excludes it)
+
+THE PACE: RATE LIMITS AND BACK-OFF
+──────────────────────────────────
+  ok   never two steps at once
+  ok   not two steps closer than twenty seconds, whoever asks (but the popup's Scan now may force it)
+  ok   pump.fun answering 429 rests the scanner, and says why  — pump.fun's listing could not be read (rate_limited): frontend-api-v3.pump.fun answered 429
+  ok   while it rests, nothing is asked of pump.fun, even when forced
+  ok   a second failure rests it twice as long  — 60000 then 120000
+  ok   the public RPC refusing this browser (403) rests the checks for half an hour and says to set an RPC
+  ok   with no RPC it still lists what it will check, checks nothing, and says why
+
+A COIN IS CHECKED ONLY ONCE IT IS OLD ENOUGH
+────────────────────────────────────────────
+  ok   a coin younger than 15 minutes waits in the queue, unchecked, and says when it will be checked  — [{"name":"cosmic cat protocol","ticker":"$Meow","ageMin":2,"dueInMin":13}]
+
+NO TRADING FROM THIS TAB
+────────────────────────
+  ok   the scanner's code names no signer, no key, no transaction and no swap
+  ok   it touches no chrome.* API and stores only through the storage it is given
+  ok   its hosts are pump.fun's API and the two IPFS gateways (plus the RPC the user set)
+  ok   …and those are the only hosts a scan called  — frontend-api-v3.pump.fun, pump.mypinata.cloud
+  ok   what it keeps is its own state, under one key
+
+test-cats-popcat: 39 passed, 0 failed
+

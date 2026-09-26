@@ -1,0 +1,81 @@
+{
+ "lens": {
+  "name": 24,
+  "description": 280,
+  "blurb": 137
+ },
+ "tickerFmt": true,
+ "endsWithDisclosure": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Umber, a sleek shorthair with a deep umb",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jupiter": {
+  "status": 200,
+  "results": 0,
+  "symbolMatches": 0,
+  "verifiedMatch": false
+ },
+ "jupiterUMBER": {
+  "status": 200,
+  "results": 20,
+  "verifiedSymbols": []
+ }
+}

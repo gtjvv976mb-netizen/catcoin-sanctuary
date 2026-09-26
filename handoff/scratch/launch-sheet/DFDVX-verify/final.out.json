@@ -1,0 +1,58 @@
+{
+ "name": "Latchkey the Vault Cat",
+ "ticker": "LATCHKEY",
+ "description": "Latchkey, a sturdy brown tabby with white socks, naps curled on a little iron-banded strongbox in the garden shed, the brass key tucked under her chin. A cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A sturdy brown mackerel-tabby house cat with four white socks, curled asleep on top of a small wooden strongbox with iron bands, an old brass key tucked under her chin.",
+ "lengths": {
+  "name": 22,
+  "ticker": 8,
+  "description": 277,
+  "tagline": 151
+ },
+ "tickerFormat": true,
+ "endsWithDisclosure": true,
+ "checkProposal": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "altName_ifVaultClash": {
+  "name": "Latchkey the Keeper Cat",
+  "len": 23,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  }
+ },
+ "jup": {
+  "status": 200,
+  "results": 0
+ }
+}

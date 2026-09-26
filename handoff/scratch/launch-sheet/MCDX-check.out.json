@@ -1,0 +1,235 @@
+[
+ {
+  "name": "Snowdrop the Garden Cat",
+  "ticker": "SNOWDROP",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "blurbLen": 154,
+  "descLen": 267,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 4,
+  "jupSymbolMatches": [
+   {
+    "symbol": "Snowdrop",
+    "name": "The Nietzschean Penguin",
+    "id": "qW1DDiiYzmELfRNsRgftRLdUKPzKguh3qsV1x61pump"
+   },
+   {
+    "symbol": "Snowdrop",
+    "name": "Snowdrop",
+    "id": "HSsNsCuQXeECMiMuNPyvVR4YhSBNitnZSpRxfoE5pump"
+   },
+   {
+    "symbol": "Snowdrop",
+    "name": "The Nietzschean Penguin",
+    "id": "6aLRRqzg2PGYwZAhgVddqHxjTXt4bZ6xeq3kzBvFpump"
+   },
+   {
+    "symbol": "SNOWDROP",
+    "name": "スノードロップ",
+    "id": "5EEhT5DLZPVJpHxR1F3rQpfG78ajr5E1fxU8Sd4apump"
+   }
+  ],
+  "jupVerifiedMatch": false,
+  "description": "Snowdrop, a sleek white cat with pale green eyes and a pink nose, naps in an empty cardboard box by the herb bed and purrs whenever someone says her name. A cat coin priced in MCDx. Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Meringue the Porch Cat",
+  "ticker": "MERINGUE",
+  "nameLen": 22,
+  "tickerLen": 8,
+  "blurbLen": 157,
+  "descLen": 270,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 12,
+  "jupSymbolMatches": [
+   {
+    "symbol": "Meringue",
+    "name": "メレンゲフィギュア",
+    "id": "9sYXFmH85HQw8nZKdnjUUZToW3MQcJ22yQtE17niLXZX"
+   },
+   {
+    "symbol": "Meringue",
+    "name": "メレンゲフィギュア",
+    "id": "5BQvnQLZ2aK7AjzAbzBPj9sScx2kAECW5WQMdkrF1x9y"
+   }
+  ],
+  "jupVerifiedMatch": false,
+  "description": "Meringue, a soft all-white cat with sky-blue eyes, waits on the warm porch step every evening and slowly blinks at the fireflies as they rise from the grass. A cat coin priced in MCDx. Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Milkweed the Meadow Cat",
+  "ticker": "MILKWEED",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "blurbLen": 157,
+  "descLen": 270,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Milkweed, a fluffy white cat with one blue eye and one gold eye, pounces on drifting seed fluff in the long grass, then flops in the sun like a fallen cloud. A cat coin priced in MCDx. Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice."
+ }
+]

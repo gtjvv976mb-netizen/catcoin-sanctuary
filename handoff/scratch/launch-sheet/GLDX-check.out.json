@@ -1,0 +1,191 @@
+[
+ {
+  "name": "Ingot the Loaf Cat",
+  "ticker": "INGOTLOAF",
+  "nameLen": 18,
+  "tickerLen": 9,
+  "blurbLen": 117,
+  "descLen": 269,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Ingot, a sleek honey-golden cat, tucks in her paws and loafs on the warm garden steps, shaped just like a little bar. A cat coin priced in GLDx. Not affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Nugget the Kitten",
+  "ticker": "NUGGETKIT",
+  "nameLen": 17,
+  "tickerLen": 9,
+  "blurbLen": 113,
+  "descLen": 265,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Nugget, a tiny round golden-ginger kitten, naps in flower pots and pops out like a lucky find in a garden stream. A cat coin priced in GLDx. Not affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Karat the Gilded Tabby",
+  "ticker": "KARATTABBY",
+  "nameLen": 22,
+  "tickerLen": 10,
+  "blurbLen": 117,
+  "descLen": 269,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Karat, a fluffy cream tabby with glittering golden-tipped fur, combs his long shining whiskers by the pond each dawn. A cat coin priced in GLDx. Not affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice."
+ }
+]

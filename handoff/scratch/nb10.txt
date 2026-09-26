@@ -1,0 +1,307 @@
+=================== URA
+- Underlying: Global X Uranium ETF (NYSE Arca: URA)
+# URA
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: Global X Uranium ETF; StonkFun category: backpack
+- Underlying: Global X Uranium ETF (NYSE Arca: URA)
+- Asset type: etf_or_fund
+- Note: Backpack Securities token; Jupiter token name: Global X Uranium ETF - Backpack Securities (URA)
+- Cat research: not done in this pass (identification only).
+
+### Issuer-level research (shared by URA and COPX; research pass 2026-09-25)
+
+Tooling note: the session WebSearch budget was already exhausted; searches ran via Google News RSS (English: tools/gn.py,
+gnews2.py; Korean: tools/gnko.py, gnko2.py), the Wikipedia API (tools/wpg.py, word-boundary cat/big-cat regex), curl of official
+sites, and WebFetch. X/Instagram/LinkedIn could not be read directly.
+
+Issuer: Global X Management Company LLC ("Global X ETFs"), owned by Mirae Asset Global Investments (Korea).
+- Wikipedia "Global X ETFs" (API extract): "Global X was acquired by Mirae Asset Global Investments in July 2018 for $488 million."
+  CEO: Ryan O'Connor (appointed Feb 2024, effective 8 Apr 2024). No cat/mascot/big-cat words in the article.
+- https://www.globalxetfs.com/ (curl 2026-09-25): og:image https://assets.globalxetfs.com/images/gx-og-image.jpg (viewed) =
+  orange "GLOBAL X" wordmark, "by Mirae Asset", "Beyond Ordinary ETFs(R)" on a dotted world map. No animal. Logo = wordmark (logo.svg).
+- Global X US homepage + fund pages (curl 2026-09-25): no cat/kitten/kitty/feline/lion/tiger/jaguar/panther/leopard/puma/cheetah/
+  mascot words. (globalxetfs.com/sitemap.xml returns 404.)
+
+Google News RSS queries (English): "Global X" mascot (0 relevant); "Global X ETFs" cat (0 relevant); "Global X" "Hello Kitty"
+(0 relevant); "Global X" tiger OR lion OR panther OR jaguar logo (only Mirae TIGER ETF items); "Global X Japan" mascot OR character
+(0 relevant); "Global X" Mirae "TIGER" ETF Korea; "Ryan O'Connor" "Global X" cat (0); "Luis Berruga" (ex-CEO) cat (0).
+
+PARENT-LEVEL BIG CAT (Mirae Asset, not Global X itself):
+- Mirae Asset Global Investments' Korean ETF brand is "TIGER ETF" (Global X's sister brand under the same parent).
+  - Korea Herald, Im Eun-byel, 25 Jun 2026 https://www.koreaherald.com/article/10788354 (WebFetch): "Its first ETF products,
+    the Tiger Semiconductor ETF and the Tiger Banking ETF, were launched in June 2006" and "Under the leadership of Mirae Asset
+    Group Global Strategy Officer Park Hyeon-joo, the asset manager acquired ETF manager Global X, accelerating its overseas expansion."
+  - Official site https://investments.miraeasset.com/tigeretf/ko/main/index.do (curl 2026-09-25): title "미래에셋 TIGER ETF";
+    og:image TigerETF_newlogo.jpg (viewed) = orange "TIGER" + navy "ETF" wordmark (no drawn tiger in the logo).
+  - Tiger character: Edaily/Marketin, Kim Eung-tae, 24 Apr 2025
+    https://marketin.edaily.co.kr/News/ReadE?newsId=02945446642139400 (curl + WebFetch): 'TIGER ETF 어린이 회원' event - 2,000
+    selected children receive "TIGER ETF 어린이 회원을 인증하는 마그네틱 카드와 호랑이 캐릭터 인형, 모자가 제공된다" (= "a magnetic
+    card certifying TIGER ETF kids membership, a tiger character doll and a hat are provided"). Official YouTube channel name
+    "스마트타이거" (Smart Tiger). -> Mirae's TIGER ETF brand uses a tiger character in marketing (name not found).
+  - Korean GN queries: "TIGER ETF 캐릭터", "TIGER ETF 호랑이 마스코트" (0), "미래에셋 TIGER 호랑이 로고" (0), "미래에셋 호랑이 캐릭터"
+    (5 items: the kids-event articles above + Ledesk 26 Aug 2025 https://www.ledesk.co.kr/view.php?uid=13813 (WebFetch):
+    Mirae Asset Securities' generative-AI English animation '동물원정대' features "북극곰, 호랑이, 거북이 등 귀여운 동물 캐릭터"
+    (polar bears, tigers, turtles) - a sister company, tangential).
+- None of this is Global X / URA / COPX branding: Global X's own US/Canada/Europe/Australia marketing shows no cat or big cat.
+
+### Fund-level (URA)
+- https://www.globalxetfs.com/funds/ura/ (curl 2026-09-25): "The Global X Uranium ETF (URA) seeks to provide investment results that
+  correspond generally to ... the Solactive Global Uranium & Nuclear Components Total Return Index." Inception 11/04/10, net assets
+  $5.76B (as of 24 Sep 2026). No cat/big-cat words or imagery references.
+- GN: Global X Uranium ETF cat (14 items, none about a cat; only "cat-and-mouse" idiom in a Reuters uranium story);
+  "Global X" URA uranium marketing campaign (49 items, index-inclusion/news only).
+- Korean GN: "TIGER 우라늄 ETF 미래에셋" / "Global X 우라늄 미래에셋" - no Mirae TIGER uranium product found; no cat.
+
+### Verdict
+No cat and no cat mascot for URA or Global X. Only link: parent Mirae Asset's Korean ETF brand "TIGER ETF" (wordmark logo +
+tiger character doll in a 2025 kids promotion) - a BIG CAT at parent level, not URA's own branding. Classified big_cat_official
+with medium confidence and an explicit parent-level caveat; if the pairing logic needs the fund's own branding, treat as none_found.
+=================== COPX
+- Underlying: Global X Copper Miners ETF (NYSE Arca: COPX)
+# COPX
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: Global X Copper Miners ETF; StonkFun category: backpack
+- Underlying: Global X Copper Miners ETF (NYSE Arca: COPX)
+- Asset type: etf_or_fund
+- Note: Backpack Securities token; Jupiter token name: Global X Copper Miners ETF - Backpack Securities (COPX)
+- Cat research: not done in this pass (identification only).
+
+### Issuer-level research (shared by URA and COPX; research pass 2026-09-25)
+
+Tooling note: the session WebSearch budget was already exhausted; searches ran via Google News RSS (English: tools/gn.py,
+gnews2.py; Korean: tools/gnko.py, gnko2.py), the Wikipedia API (tools/wpg.py, word-boundary cat/big-cat regex), curl of official
+sites, and WebFetch. X/Instagram/LinkedIn could not be read directly.
+
+Issuer: Global X Management Company LLC ("Global X ETFs"), owned by Mirae Asset Global Investments (Korea).
+- Wikipedia "Global X ETFs" (API extract): "Global X was acquired by Mirae Asset Global Investments in July 2018 for $488 million."
+  CEO: Ryan O'Connor (appointed Feb 2024, effective 8 Apr 2024). No cat/mascot/big-cat words in the article.
+- https://www.globalxetfs.com/ (curl 2026-09-25): og:image https://assets.globalxetfs.com/images/gx-og-image.jpg (viewed) =
+  orange "GLOBAL X" wordmark, "by Mirae Asset", "Beyond Ordinary ETFs(R)" on a dotted world map. No animal. Logo = wordmark (logo.svg).
+- Global X US homepage + fund pages (curl 2026-09-25): no cat/kitten/kitty/feline/lion/tiger/jaguar/panther/leopard/puma/cheetah/
+  mascot words. (globalxetfs.com/sitemap.xml returns 404.)
+
+Google News RSS queries (English): "Global X" mascot (0 relevant); "Global X ETFs" cat (0 relevant); "Global X" "Hello Kitty"
+(0 relevant); "Global X" tiger OR lion OR panther OR jaguar logo (only Mirae TIGER ETF items); "Global X Japan" mascot OR character
+(0 relevant); "Global X" Mirae "TIGER" ETF Korea; "Ryan O'Connor" "Global X" cat (0); "Luis Berruga" (ex-CEO) cat (0).
+
+PARENT-LEVEL BIG CAT (Mirae Asset, not Global X itself):
+- Mirae Asset Global Investments' Korean ETF brand is "TIGER ETF" (Global X's sister brand under the same parent).
+  - Korea Herald, Im Eun-byel, 25 Jun 2026 https://www.koreaherald.com/article/10788354 (WebFetch): "Its first ETF products,
+    the Tiger Semiconductor ETF and the Tiger Banking ETF, were launched in June 2006" and "Under the leadership of Mirae Asset
+    Group Global Strategy Officer Park Hyeon-joo, the asset manager acquired ETF manager Global X, accelerating its overseas expansion."
+  - Official site https://investments.miraeasset.com/tigeretf/ko/main/index.do (curl 2026-09-25): title "미래에셋 TIGER ETF";
+    og:image TigerETF_newlogo.jpg (viewed) = orange "TIGER" + navy "ETF" wordmark (no drawn tiger in the logo).
+  - Tiger character: Edaily/Marketin, Kim Eung-tae, 24 Apr 2025
+    https://marketin.edaily.co.kr/News/ReadE?newsId=02945446642139400 (curl + WebFetch): 'TIGER ETF 어린이 회원' event - 2,000
+    selected children receive "TIGER ETF 어린이 회원을 인증하는 마그네틱 카드와 호랑이 캐릭터 인형, 모자가 제공된다" (= "a magnetic
+    card certifying TIGER ETF kids membership, a tiger character doll and a hat are provided"). Official YouTube channel name
+    "스마트타이거" (Smart Tiger). -> Mirae's TIGER ETF brand uses a tiger character in marketing (name not found).
+  - Korean GN queries: "TIGER ETF 캐릭터", "TIGER ETF 호랑이 마스코트" (0), "미래에셋 TIGER 호랑이 로고" (0), "미래에셋 호랑이 캐릭터"
+    (5 items: the kids-event articles above + Ledesk 26 Aug 2025 https://www.ledesk.co.kr/view.php?uid=13813 (WebFetch):
+    Mirae Asset Securities' generative-AI English animation '동물원정대' features "북극곰, 호랑이, 거북이 등 귀여운 동물 캐릭터"
+    (polar bears, tigers, turtles) - a sister company, tangential).
+- None of this is Global X / URA / COPX branding: Global X's own US/Canada/Europe/Australia marketing shows no cat or big cat.
+
+### Fund-level (COPX)
+- https://www.globalxetfs.com/funds/copx/ (curl 2026-09-25): "The Global X Copper Miners ETF (COPX) seeks to provide investment
+  results that correspond generally to ... the Solactive Global Copper Miners Total Return Index." Inception 04/19/10, net assets
+  $7.39B (as of 24 Sep 2026). No cat/big-cat words.
+- GN: "Global X" Copper Miners ETF cat (13 items, none about a cat); "Global X" COPX marketing (44 items, market news only).
+- Korean GN "TIGER 구리 ETF 미래에셋" (34 items): Mirae runs a copper product under the tiger brand - search-result headline (verbatim,
+  Dealsite 16 Dec 2021): "'미래에셋TIGER구리실물 수익률 940%?' 서버 오류" (TIGER Copper Physical ETF; server error story), and
+  Seoul Economic Daily 28 Apr 2026 headline "미래에셋, 'TIGER 은액티브 ETF' 상장…"금·은·동 현물 라인업 완성"" (gold/silver/copper
+  spot lineup). Sister product, not COPX.
+
+### Verdict
+No cat and no cat mascot for COPX or Global X. Only link: parent Mirae Asset's Korean ETF brand "TIGER ETF" (wordmark + tiger
+character doll in a 2025 kids promotion; Mirae even has a "TIGER 구리실물" copper ETF). BIG CAT at parent level, not COPX's own
+branding. Classified big_cat_official with medium confidence and a parent-level caveat; treat as none_found if only the fund's own
+branding counts.
+=================== IONQ
+- Underlying: IonQ, Inc. (NYSE: IONQ)
+# IONQ
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: IonQ; StonkFun category: backpack
+- Underlying: IonQ, Inc. (NYSE: IONQ)
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: IonQ - Backpack Securities (IONQ)
+- Cat research: not done in this pass (identification only).
+
+## Cat research (research pass, 2026-09-25)
+
+Tooling note: the session WebSearch budget was already exhausted; searches ran via Google News RSS (tools/gn.py, gnews2.py),
+the Wikipedia API (tools/wpg.py, word-boundary cat/big-cat regex), curl of ionq.com (pages/ionq_*.html, raw/ionq_sitemap.xml),
+and WebFetch. X/LinkedIn/Instagram posts could not be read directly.
+
+### Queries run (Google News RSS)
+- IonQ cat (46 items - dominated by IonQ's "Walking Cat Architecture", see below)
+- IonQ mascot (10 items, all Iona University sports mascots - irrelevant)
+- IonQ "Schrödinger" cat (20; IonQ-relevant = Walking Cat items); IonQ "cat state" (9; Walking Cat items)
+- IonQ "Hello Kitty" (0); "IonQ" "office cat" OR kitten (0)
+- IonQ tiger OR lion OR panther OR jaguar OR leopard (49; none IonQ branding - e.g. "Jaguar Health, IONQ ..." Benzinga movers list)
+- "Niccolo de Masi" cat (0 relevant); "de Masi" IonQ pet OR dog OR cat (0 relevant); "Peter Chapman" IonQ cat (0 relevant);
+  "Chris Monroe" IonQ cat (0 relevant)
+- IonQ Unveils Definitive Blueprint...; "walking cat" IonQ arXiv; "walking cat" quantum
+
+### OFFICIAL: "Walking Cat Architecture" (IonQ's named fault-tolerant quantum computing blueprint)
+- IonQ blog, "IonQ Staff, April 22, 2026": "Blueprint for Fault-Tolerant Trapped-Ion Quantum Computing: The Walking Cat Architecture"
+  https://www.ionq.com/blog/blueprint-for-fault-tolerant-trapped-ion-quantum-computing-the-walking-cat-architecture
+  (curl -> pages/ionq_walkingcat_blog.html). Verbatim: "The architecture is named for what it does at the physical level: cat
+  states, walking. "Cat" refers to cat states, a specific class of quantum resource state used to perform fault-tolerant logical
+  measurements." ... "The concept traces back to Erwin Schrödinger's 1935 thought experiment, which birthed (and maybe killed) the
+  famous cat. When Peter Shor authored one of the first fault-tolerant quantum error correction schemes in 1996, he chose the cat
+  as a natural moniker for this specific res[ource state]". Also "cat factories that generate the cat states".
+- Dedicated landing page https://ionq.com/walking-cat (listed in https://www.ionq.com/sitemap.xml; curl 2026-09-25 ->
+  pages/ionq_walking_cat_landing.html): <title>Walking Cat Architecture</title>; "The Walking Cat Architecture is IonQ's end-to-end
+  blueprint for fault-tolerant trapped-ion computing, built on quantum LDPC codes and the ability to move ions across a chip. Cat
+  states are produced in dedicated factories and walked to where they're needed..." Interactive legend: "Cat: cat states that move
+  throughout the chip to conduct logical measurements."
+- IonQ resources page (22 Apr 2026) https://www.ionq.com/resources/fault-tolerant-quantum-computing-with-trapped-ions-the-walking-cat-architecture
+  title "IonQ Walking Cat Architecture: A Blueprint for Fault-Tolerant Quantum Computing".
+- Images on these pages (downloaded img/ionq_wc_res.png, viewed): technical slides ("The Blueprint: Four Pillars of Scalability",
+  text "relies on straightforward cat states for rapid logical measurements") - NO drawn cat / mascot artwork found.
+- Official press release same day (https://www.ionq.com/news/ionq-publishes-definitive-technical-report-establishing-its-fault-tolerant-quantum-computing-trajectory---setting-a-new-standard-for-technical-specificity-and-transparency,
+  "College Park, MD April 22, 2026") does not use the words "walking cat" (grep).
+- Press: The Quantum Insider, Matt Swayne, 23 Apr 2026
+  https://thequantuminsider.com/2026/04/23/ionq-researchers-say-walking-cat-blueprint-could-lead-to-machines-that-run-millions-of-gates-on-thousands-of-qubits/
+  (WebFetch): "Cat states, named after the Schrödinger's cat thought experiment, ..."; featured image is an AI image of the
+  JOURNALIST's own cat "Harper" walking on a quantum computer keyboard - media art, not IonQ. Also Quantum Computing Report
+  7 May 2026 "IonQ Details "Walking Cat" Blueprint for Fault-Tolerant Trapped-Ion Systems" (GN headline) and Quantum Zeitgeist
+  24 Apr 2026 "Quantum Computer Design Uses 'cat States' To Correct Errors Reliably" (GN headline).
+
+### Other checks
+- ionq.com sitemap (558 URLs): only cat-related URLs are the 3 Walking Cat pages; no mascot/pet/big-cat URLs.
+- Wikipedia API: IonQ (no cat/big-cat words; CEO Niccolo de Masi since Feb 2025, Peter Chapman May 2019-Feb 2025);
+  no Wikipedia articles found for de Masi, Chris Monroe, Jungsang Kim, Peter Chapman (businessman).
+- Product names (Harmony, Aria, Forte, Tempo, Superion) - no big cats. Logo = hexagon + "IONQ" wordmark.
+- No CEO/founder cat coverage found; no Hello Kitty or other cat-IP collaboration; no big-cat mascot/logo/codename.
+
+### Verdict
+official_cat_character_or_product: IonQ officially named its fault-tolerant quantum computer blueprint the "Walking Cat
+Architecture" (22 Apr 2026; own landing page ionq.com/walking-cat), explicitly tracing the name to Schrödinger's cat via
+quantum "cat states". It is a technical/physics name - no animal mascot or cat artwork from IonQ was found.
+=================== ARM
+- Underlying: Arm Holdings plc (Nasdaq ADS: ARM)
+# ARM
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: Arm Holdings; StonkFun category: backpack
+- Underlying: Arm Holdings plc (Nasdaq ADS: ARM)
+- Asset type: company_stock
+- Note: Backpack Securities token (Jupiter tag unknown); Jupiter token name: Arm Holdings - Backpack Securities (ARM)
+- Cat research: not done in this pass (identification only).
+
+## Cat research pass (2026-09-25)
+
+Constraint: the session's WebSearch budget was already used up (200/200) before this pass, so every WebSearch call
+("Arm Holdings cat mascot", "Arm office cat Cambridge", "Arm Holdings Rene Haas cat") came back with no results. All research
+below comes from fetching pages directly: Wikipedia raw wikitext, the Arm newsroom (WordPress search RSS feeds) and the
+pages it linked to. X/Twitter, Instagram, LinkedIn and general news/web search could not be checked.
+
+### Sources fetched
+- Wikipedia raw: Arm_Holdings, Rene_Haas, List_of_ARM_processors, ARM_architecture_family, Mali_(processor), ARM_Neoverse,
+  ARM_Cortex-A15, ARM_Cortex-X1. Grepped for cat|kitten|kitty|feline|lion|tiger|jaguar|panther|leopard|puma|cougar|cheetah|lynx|mascot|codename.
+  - Arm_Holdings / Rene_Haas: no match at all. Logo = lowercase "arm" wordmark since 1 Aug 2017 (Arm_Holdings wikitext line 55).
+  - Neoverse codenames are Greek gods (Ares, Zeus, Perseus, Demeter, Poseidon). No big-cat codenames for Arm's own cores.
+  - Only big-cat core codenames in List_of_ARM_processors: Samsung Exynos M4 "Cheetah" and M5 "Lion". These are SAMSUNG's
+    custom cores that use the Arm architecture, not Arm Holdings products. Mali page: "Socle Leopard-6" is a third-party SoC.
+- Arm newsroom search (https://newsroom.arm.com/search/<term>/feed/rss2/):
+  - kitten, feline, mascot, cheetah, "Hello Kitty", lioness, cougar, doraemon, pusheen, sanrio: 0 results.
+  - kitty: 1 result, https://newsroom.arm.com/blog/arm-and-unicef-launch-ai-in-play (24 Aug 2026). The match is the person
+    "Kitty van der Heijden, UNICEF Deputy Executive Director". Incidental, not a cat.
+  - cats: 6 results, all passing mentions ("detecting of YouTube videos had cats in them": Tech Unheard Ep 5, Alex Wang,
+    16 Apr 2025, https://newsroom.arm.com/podcasts/tech-unheard-episode-5-alex-wang; "fun tech for recognizing cats in pictures":
+    Arm at 30, 8 Dec 2020, https://newsroom.arm.com/blog/arm-30-future). No cat posts, no mascot.
+  - tiger/jaguar/leopard/puma: wildlife-conservation podcast "Bear Necessities" (8 Nov 2024,
+    https://newsroom.arm.com/podcasts/how-technology-is-changing-wildlife-research) mentions pumas and jaguars in Ecuador.
+    Blog "Cybersecurity: Do You Hear the Tiger in the Grass?" (11 Oct 2021, guest author Matthew Griffin). Neither is a mascot.
+  - panther: "Beyond the Arm Newsroom: What's new at Arm in March 2024?" (28 Mar 2024,
+    https://newsroom.arm.com/blog/arm-technology-roundup-march-2024) mentions "Panther, the open-source driver for
+    third-generation Arm Valhall GPUs". That is the community Linux driver usually spelled "Panthor". It is not an Arm product
+    codename or mascot.
+  - garfield: podcast "Arm in Consumer Tech" (13 Jul 2022, https://newsroom.arm.com/podcasts/consumer-technology-on-arm): the
+    guest likes lasagna, and the host quips "You and Garfield have that in common." A joke, not a licensed Garfield collaboration.
+  - lynx: DEEP Robotics' "LYNX M20 Pro" robot named in a CES 2026 trends blog. Third-party product.
+- The CEO (Rene Haas): Wikipedia has nothing on pets. No evidence found that he posts cats (social accounts not checkable).
+
+### Verdict
+NONE FOUND. Arm has no cat mascot, no cat character, no cat-IP collaboration, and no big-cat logo or codename of its own. The
+official newsroom mentions cats only in passing. Confidence: medium (X/Instagram and general web search unavailable this pass).
+=================== CRWV
+- Underlying: CoreWeave, Inc. (Nasdaq: CRWV)
+# CRWV
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: CoreWeave; StonkFun category: backpack
+- Underlying: CoreWeave, Inc. (Nasdaq: CRWV)
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: CoreWeave - Backpack Securities (CRWV)
+- Cat research: not done in this pass (identification only).
+
+## Cat research pass (2026-09-25)
+
+Constraint: the session's WebSearch budget was already used up (200/200) before this pass, so no general web or news search
+was possible. Research below comes from fetching pages directly: Wikipedia raw wikitext, the CoreWeave sitemap and the
+CoreWeave site search (Webflow, https://www.coreweave.com/search?query=<term>). X/Twitter, Instagram and LinkedIn could not be checked.
+
+### Sources fetched
+- Wikipedia raw: CoreWeave, Michael_Intrator. Grepped for cat|kitten|kitty|feline|lion|tiger|jaguar|panther|leopard|puma|
+  cougar|cheetah|lynx|mascot|codename: NO match. Logo = "CoreWeave logo.svg" (wordmark). Founders: Michael Intrator (CEO),
+  Brian Venturo, Brannin McBee, Peter Salanki.
+- Sitemap https://www.coreweave.com/sitemap.xml (832 URLs). URLs grepped for cat/kitty/lion/tiger/jaguar/panther/leopard/cheetah/
+  puma/mascot/meow/feline: the only hits were words that merely contain "cat" (e.g. "blog-categories", "applications", "no-catch"),
+  plus a session "a-fireside-chat-on-physical-ai-featuring-caterpillar-104" (Caterpillar Inc. as a customer, a name only).
+- CoreWeave site search. The engine is fuzzy, so every hit was checked in context:
+  - kitty, mascot, tiger, jaguar, panther, meow, pets, garfield, sanrio, puma, cougar, lynx, wildcat: 0 results.
+  - cat: "What is computer vision?" (https://www.coreweave.com/topics/what-is-computer-vision): "identifying whether it contains
+    a cat, a car, or a tumor". A generic example.
+  - cats: blog "What OpenAI Strawberry Tells Us About the Future of LLMs"
+    (https://www.coreweave.com/blog/openai-strawberry-future-of-llms): "Generating images of cats doing yoga". A generic example.
+  - leopard, lion, cheetah, feline, kitten, pusheen: fuzzy matches only ("Lionel Martin" on the Aston Martin page, "Chetan
+    Kapoor", "pushes"). Checked in context: no cat or big-cat content.
+- Sponsorship: CoreWeave is the official AI cloud computing partner of the Aston Martin Aramco F1 team (winged logo, not a cat).
+
+### Verdict
+NONE FOUND. CoreWeave has no cat mascot, no cat character, no cat-IP collaboration and no big-cat branding, and no CEO cat was
+found. Confidence: medium (X, Instagram and general news search unavailable). Subsidiary Weights & Biases was not checked separately.
+=================== IREN
+- Underlying: IREN Limited, formerly Iris Energy (Nasdaq: IREN)
+# IREN
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: IREN; StonkFun category: backpack
+- Underlying: IREN Limited, formerly Iris Energy (Nasdaq: IREN)
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: IREN - Backpack Securities (IREN)
+- Cat research: not done in this pass (identification only).
+
+## Cat research pass (2026-09-25)
+
+Constraint: the session's WebSearch budget was already used up (200/200) before this pass, so no general web or news search
+was possible. Research below comes from fetching pages directly: Wikipedia raw wikitext and the whole iren.com sitemap
+(121 pages downloaded and grepped). X/Twitter, Instagram and LinkedIn could not be checked.
+
+### Sources fetched
+- Wikipedia raw "IREN" (https://en.wikipedia.org/wiki/IREN): IREN Ltd, formerly Iris Energy Ltd, renamed Nov 2024. Founded
+  6 Nov 2018 in Sydney by brothers Daniel and William Roberts, who are the co-CEOs. Logo "IREN logo.svg". Sponsorship: jersey
+  patch sponsor of the Golden State Warriors, 2026 (bizjournals, 25 Jun 2026). Grepped for cat/lion/tiger/jaguar/panther/leopard/
+  puma/cougar/cheetah/lynx/mascot: NO match. (Pages "Iris_Energy" and "IREN_Limited" do not exist: 404.)
+- https://iren.com/sitemap.xml has 121 URLs: locations, community grants, 72 news/blog/video resource pages and legal pages.
+  All were downloaded and the raw HTML was grepped for cats?|kittens?|kitty|feline|spca|humane society|animal shelter|lions?|tigers?|
+  jaguars?|panthers?|leopards?|cougars?|wildcats?|bobcats?|mascot: ZERO matches on any page (sanity check: the pages hold real
+  content, and 11 of them mention bitcoin). There were also no dog or animal mentions, so none of the community grants
+  (Childress, Fisher County, Prince George, Mackenzie) went to an animal shelter.
+- Site search https://iren.com/?s=cat only returns the homepage (Next.js site, no working search).
+
+### Verdict
+NONE FOUND. IREN has no cat mascot, no cat character, no cat-IP collaboration and no big-cat branding, and no evidence was found
+of the Roberts brothers posting cats. Confidence: medium (X, Instagram and news search unavailable).

@@ -1,0 +1,150 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "nike",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Cinder the Matte-Coat Cat",
+   "ticker": "CINDERLAP",
+   "nameLen": 25,
+   "blurbLen": 144,
+   "descLen": 278,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Cinder, a lean, long-legged jet-black shorthair with graphite-grey whisker tips and honey-gold eyes, runs dusk laps on the garden's cinder path. A cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Soot the Graphite-Smoke Cat",
+   "ticker": "SOOTSTEP",
+   "nameLen": 27,
+   "blurbLen": 144,
+   "descLen": 278,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 4,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Soot, a sleek black smoke cat whose velvety coat shows a graphite-grey undercoat when she stretches, hops from stepping stone to stepping stone. A cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tread the Soft-Step Cat",
+   "ticker": "TREADPAW",
+   "nameLen": 23,
+   "blurbLen": 144,
+   "descLen": 278,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Tread, a wiry jet-black shorthair with a soft matte coat, graphite-grey paw pads and gold eyes, pads silent circuits of the garden pond at dawn. A cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

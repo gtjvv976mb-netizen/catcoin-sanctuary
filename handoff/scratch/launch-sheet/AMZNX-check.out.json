@@ -1,0 +1,191 @@
+[
+ {
+  "name": "Sunmane the Garden Cat",
+  "ticker": "SUNMANE",
+  "nameLen": 22,
+  "tickerLen": 7,
+  "blurbLen": 140,
+  "descLen": 250,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "amazon",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "amazon",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 13,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Sunmane, a sturdy tawny-gold cat with a fluffy ruff like a little mane, naps in the warmest patch of the garden and pads his rounds at dusk. A cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Honeyruff the House Cat",
+  "ticker": "HONEYRUFF",
+  "nameLen": 23,
+  "tickerLen": 9,
+  "blurbLen": 147,
+  "descLen": 257,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "amazon",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "amazon",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 1,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Honeyruff, a round honey-coloured cat with a cream chin and a thick soft neck ruff, loafs on the sunny wall and blinks slowly at every passing bee. A cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Tuft the Toffee Cat",
+  "ticker": "TOFFEETUFT",
+  "nameLen": 19,
+  "tickerLen": 10,
+  "blurbLen": 142,
+  "descLen": 252,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "amazon",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "amazon",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Tuft, a sandy toffee-coloured cat with a pale belly and a dark tip on her tail, flicks it like a feather to tease the moths in the long grass. A cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice."
+ }
+]

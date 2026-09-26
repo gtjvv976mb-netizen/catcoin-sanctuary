@@ -1,0 +1,167 @@
+{
+ "name": "Cabletail the Charcoal Tabby",
+ "ticker": "CABLETAIL",
+ "nameLen": 28,
+ "blurbLen": 138,
+ "descLen": 271,
+ "description": "Cabletail, a lean charcoal tabby whose bold black stripes run like bundled cables, threads through the flower beds and never gets tangled. A cat coin priced in CRWV. Not affiliated with CoreWeave, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "tickerRegex": true,
+ "checkProposal_name_symbol_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkProposal_fullDescriptionAsTagline": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Cabletail, a lean charcoal tabby whose b",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup_CABLETAIL": {
+  "status": 200,
+  "results": 1,
+  "all": [
+   {
+    "symbol": "LARP",
+    "name": "VCAlbemarleRetardioMiladyPNganoo",
+    "tags": [
+     "unknown"
+    ],
+    "id": "CQbv8jFJaABRogxhtEPEDMzLeMQMFBu9RfwP2yyY42FD"
+   }
+  ]
+ },
+ "jup_CRWV": {
+  "status": 200,
+  "results": 20,
+  "all": [
+   {
+    "symbol": "CRWV",
+    "name": "CoreWeave - Backpack Securities",
+    "isVerified": true,
+    "tags": [
+     "verified",
+     "stocks",
+     "rwa",
+     "backpack",
+     "token-2022"
+    ],
+    "id": "CRWVJeR2yEZuDUKYfGuKCHvLz8ywn4LGvovHfy5WiFmi"
+   },
+   {
+    "symbol": "CRWVon",
+    "name": "CoreWeave (Ondo Tokenized)",
+    "isVerified": true,
+    "tags": [
+     "token-2022",
+     "verified",
+     "stocks",
+     "rwa",
+     "ondo"
+    ],
+    "id": "BfPGpgNyxe6rjAru1EJarjSBAcCABuMF5L32v7nondo"
+   },
+   {
+    "symbol": "CRWVx",
+    "name": "CoreWeave xStock",
+    "isVerified": true,
+    "tags": [
+     "verified",
+     "token-2022",
+     "stocks",
+     "rwa",
+     "xstocks"
+    ],
+    "id": "Xs3trfdPXSZuxBJsgau6HRfu8SdrCirkwHpPNgSpJz9"
+   },
+   {
+    "symbol": "CRWV",
+    "name": "CRWV",
+    "tags": [
+     "unknown",
+     "token-2022"
+    ],
+    "id": "HZhadNzBdcTR6vhekMCxF5JoJgMWSRoodCXW75Rrpump"
+   },
+   {
+    "symbol": "CRWV",
+    "name": "CoreWeave ",
+    "tags": [
+     "unknown",
+     "token-2022"
+    ],
+    "id": "9h6YjWDiMRoGFfQdJM1QjKADun3nSDoojCpxM66Zpump"
+   }
+  ]
+ },
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "hasTransferFeeConfig": false,
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "checkedAt": "2026-09-25T19:42:27.267Z"
+ }
+}

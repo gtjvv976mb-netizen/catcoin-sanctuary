@@ -1,0 +1,181 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "wendys",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Griddle the Grill-Stripe Cat",
+   "ticker": "GRIDDLE",
+   "nameLen": 28,
+   "blurbLen": 144,
+   "descLen": 286,
+   "tickerHasWenRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "wendys",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Griddle, a toast-brown tabby with dark s",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 10,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Griddle, a toast-brown tabby with dark stripes like grill marks and leaf-green eyes, dozes on the warm patio bricks of the Cat Sanctuary garden. A cat coin priced in WEN. Not affiliated with The Wendy's Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Cocoa Swirl the Bicolor Cat",
+   "ticker": "COCOSWIRL",
+   "nameLen": 27,
+   "blurbLen": 148,
+   "descLen": 290,
+   "tickerHasWenRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "wendys",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cocoa Swirl, a chocolate-brown cat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Cocoa Swirl, a chocolate-brown cat with a cream-white chest, socks and chin, naps in the cool shade by the Cat Sanctuary fountain on hot afternoons. A cat coin priced in WEN. Not affiliated with The Wendy's Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Crinkle the Golden Fry Cat",
+   "ticker": "CRINKLE",
+   "nameLen": 26,
+   "blurbLen": 153,
+   "descLen": 295,
+   "tickerHasWenRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "wendys",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Crinkle, a golden-yellow shorthair with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 8,
+   "jupSymbolMatches": [
+    {
+     "symbol": "Crinkle",
+     "name": "The Master Key",
+     "id": "6dWEdLsLgjVmhLEUdtALZNtzsRBAXFSpwCFBn9czpump"
+    },
+    {
+     "symbol": "Crinkle",
+     "name": "The DNA Monkey",
+     "id": "GFK1VMaoR6WMaU71j9Hypv8zn5CvsVQc7WXrqmhVpump"
+    },
+    {
+     "symbol": "CRINKLE",
+     "name": "CRINKLE FRIES",
+     "id": "EXi3nWXn6aKKRJPUdp5pqKv8xkWPTi4FaSTKzvpiKLA6"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Crinkle, a golden-yellow shorthair with a pale cream belly and bright green eyes, trots the sunny Cat Sanctuary path on tiptoe as if the stones were hot. A cat coin priced in WEN. Not affiliated with The Wendy's Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

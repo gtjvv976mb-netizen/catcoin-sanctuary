@@ -1,0 +1,109 @@
+
+THE MODEL IS CHOSEN AT RUN TIME
+───────────────────────────────
+  ok   with none named: the first the API lists
+  ok   the key travels in x-api-key, to api.anthropic.com only, with the API version
+  ok   the owner's named model when the key lists it
+  ok   a named model the key does not list is an error, never a substitute
+  ok   no key: no call at all
+
+THE CAPS, THE FENCES AND THE LIVE GUARDS
+────────────────────────────────────────
+  ok   defaults: dry, 2 launches a day, one a run, 0.05 SOL minimum, no dev buy, pump.fun and StonkFun, SPYx
+  ok   a dev buy over 0.05 SOL is refused
+  ok   more than 6 launches a day, or a fraction, is refused
+  ok   a minimum balance under 0.02 SOL is refused
+  ok   anything but a plain number is refused
+  ok   an unknown venue is refused
+  ok   live only with CASHCAT_LIVE exactly 1
+  ok   every guard green: no refusal
+  ok   each guard refuses by name
+  ok   venues take turns by the launches on file
+
+A DRY RUN NEVER SENDS
+─────────────────────
+  ok   the outcome is a dry run, with the coin the model proposed  — {"mode":"dry","outcome":"dry_run","venue":"pumpfun","coin":{"name":"Match Day Cat","symbol":"MDCAT","trend":"tunisia vs uganda"},"simulated":true,"refusals":["CASHCAT_LIVE is not 1"]}
+  ok   it checked and simulated the launch
+  ok   it sent nothing, uploaded nothing, wrote nothing
+  ok   it says what a live launch would still need
+  ok   no secret reached the log
+  ok   with nothing set at all it still runs safely, as a dry run on a template coin, and says why it did not simulate
+
+LIVE REFUSES WITHOUT EVERY GUARD
+────────────────────────────────
+  ok   no wallet secret: refused by name, nothing sent or uploaded  — CASHCAT_WALLET_SECRET is not set
+  ok   no wallet address: refused by name, nothing sent or uploaded  — CASHCAT_WALLET_ADDRESS is not set
+  ok   the address of another wallet: refused by name, nothing sent or uploaded  — CASHCAT_WALLET_ADDRESS is not the address of CASHCAT_WALLET_SECRET
+  ok   no RPC of its own: refused by name, nothing sent or uploaded  — SOLANA_RPC_URL is not set (the public endpoint is for reads only)
+  ok   no Pinata token: refused by name, nothing sent or uploaded  — PINATA_JWT is not set (the metadata must be pinned)
+  ok   a test environment: refused by name, nothing sent or uploaded  — this is a test environment (NODE_ENV=test)
+  ok   no API key: no coin (a live launch needs the model's proposal and review), nothing sent
+  ok   a wallet under the minimum plus the launch's budget: refused
+  ok   two launches already today: the cap stops the run before a coin is invented
+  ok   the model review refuses both proposals: no coin, nothing sent
+
+A GREEN LIVE RUN
+────────────────
+  ok   it launched  — {"mode":"live","outcome":"launched","entry":{"time":"2026-09-24T22:00:00Z","venue":"pumpfun","name":"Match Day Cat","symbol":"MDCAT","tagline":"A cat who watches every match from the top of the telly.","trend":{"title":"tunisia vs uganda","source":"google-trends"},"mint":"C3x9RHRQUZpf8fUP5hCHhuRUNnU
+  ok   exactly one transaction was sent
+  ok   its signatures verify, and they are the wallet's and the new mint's
+  ok   the message that was sent passes the pre-sign check, with the pinned metadata URI  — true
+  ok   Pinata got two public uploads (logo, then document) with the bearer token
+  ok   the metadata carries the disclosure: CashCat, the agency, not affiliated, not financial advice
+  ok   the launch is recorded, and the site validates it
+  ok   its cost is the wallet's balance change read back from the chain
+  ok   two model calls (propose, review), both on the first model listed, both forced through their tool
+  ok   no secret reached the log, the RPC URL's key included
+  ok   no request went anywhere but the allowed hosts
+  ok   the next run the same day takes the other venue (StonkFun, unscripted here, so its plan is refused and nothing is sent)
+
+A LAUNCH THE SITE COULD NOT SHOW IS NEVER SENT
+──────────────────────────────────────────────
+  ok   a line the site would refuse: no coin, nothing uploaded, nothing signed or sent, and the run ends cleanly  — {"mode":"live","outcome":"no_coin","why":"every proposal was refused","attempts":[{"source":"model","coin":{"name":"Match Day Cat","symbol":"MDCAT","trend":"tunisia vs uganda"},"refusals":["the site would refuse it: \"tagline\" contains a l
+  ok   the refusal names the site's rule, so the model is told why  — {"source":"model","coin":{"name":"Match Day Cat","symbol":"MDCAT","trend":"tunisia vs uganda"},"refusals":["the site would refuse it: \"tagline\" contains a link scheme"]}
+
+THE FEE CLAIM WAITS FOR EVERY GUARD
+───────────────────────────────────
+  ok   CASHCAT_WALLET_ADDRESS naming another wallet: nothing is signed or sent, not even a fee claim  — 0 sent
+  ok   a test environment: no fee claim either  — 0 sent
+  ok   every guard green: the claim goes first, checked and simulated, then the launch
+
+THE WALLET'S LAUNCHES ON CHAIN: COUNTED TO THE END, OR NO LAUNCH
+────────────────────────────────────────────────────────────────
+  ok   an unrecorded launch behind forty dust transfers to the wallet is still found: refused, nothing sent  — {"mode":"live","outcome":"refused","refusals":["1 launch(es) on chain since yesterday are not in launches.json — record them before launching again"]}
+  ok   a launch from yesterday's last run that never reached launches.json still stops the next day's first run  — {"mode":"live","outcome":"refused","refusals":["1 launch(es) on chain since yesterday are not in launches.json — record them before launching again"]}
+  ok   a transaction of the day the RPC cannot return: live refuses rather than guess  — {"mode":"live","outcome":"refused","refusals":["the wallet's launches since yesterday could not be counted on chain"]}
+  ok   more of the day's transactions than it will read: live refuses (spam can stop CashCat, never make it launch twice)  — {"mode":"live","outcome":"refused","refusals":["the wallet's launches since yesterday could not be counted on chain"]}
+  ok   a launch already on file and a failed transaction are not read at all, and the run goes on  — {"mode":"live","outcome":"launched","entry":{"time":"2026-09-24T22:00:00Z","venue":"pumpfun","name":"Match Day Cat","symbol":"MDCAT","tagline":"A cat who watches every match from the top of the telly.
+
+TICKERS: NEVER A VERIFIED TOKEN'S, NEVER AN ESTABLISHED CAT COIN'S
+──────────────────────────────────────────────────────────────────
+  ok   BONK, POPCAT, JUP are taken
+  ok   a verified token's name is taken too ("Popcat")
+  ok   an established cat coin's alias is taken ("Shark Cat" / SC)
+  ok   a fresh ticker and name are free
+  ok   no list, no launch: an unreadable list refuses
+  ok   an implausibly short list is refused
+
+THE INVENTION LOOP
+──────────────────
+  ok   a proposal with a field the format lacks is refused
+  ok   a trend that was not listed is refused
+  ok   an unknown kitten is refused
+  ok   an approval that names a broken rule is not an approval
+  ok   nor one that names a rule the format does not have, or whose rules are not a list
+  ok   a proposal the rules refuse is asked for again, with that trend struck off, and the second one stands  — [{"source":"model","coin":{"name":"Trump Cat","symbol":"MDCAT","trend":"tunisia vs uganda"},"refusals":["real_person: \"trump\" in the name"]},{"source":"model","coin":{"name":"Match Day Cat","symbol":"MDCAT"},"review":"approved"}]
+  ok   the model may decline: no coin
+  ok   a model failure is no coin, never a template
+  ok   without a key a dry run makes a template coin, and live refuses to
+
+METADATA
+────────
+  ok   the disclosure: launched automatically by CashCat, a bot of the Cat Intelligence Agency; not affiliated; not financial advice
+  ok   the document has pump.fun's fields and no twitter or telegram
+  ok   a dry run's URI is a placeholder of a real one's length, on StonkFun's gateway form
+  ok   a pinned document that does not read back as sent is refused
+  ok   no Pinata token: refused before any upload
+
+test-bots-cashcat: 73 passed, 0 failed
+

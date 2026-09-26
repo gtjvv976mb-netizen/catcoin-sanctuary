@@ -1,0 +1,176 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Stripenose the Tuxedo Cat",
+   "ticker": "STRPNOSE",
+   "nameLen": 25,
+   "blurbLen": 153,
+   "descLen": 288,
+   "tickerHasGrndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stripenose, a black tuxedo shorthair wit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Stripenose, a black tuxedo shorthair with a thin white stripe down her nose, a white bib and olive-green eyes, greets every neighbour at the garden gate. A cat coin priced in GRND. Not affiliated with Grindr Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Whiskerbib the Tuxedo Cat",
+   "ticker": "WHSKRBIB",
+   "nameLen": 25,
+   "blurbLen": 160,
+   "descLen": 295,
+   "tickerHasGrndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Whiskerbib, a glossy black cat with a br",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Whiskerbib, a glossy black cat with a bright white chest bib, extra-long white whiskers and green-gold eyes, curls up for cuddles on the softest garden cushion. A cat coin priced in GRND. Not affiliated with Grindr Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Doorstep the Tuxedo Cat",
+   "ticker": "DOORSTEP",
+   "nameLen": 23,
+   "blurbLen": 138,
+   "descLen": 273,
+   "tickerHasGrndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Doorstep, a shy but cuddly black-and-whi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [
+    {
+     "symbol": "DOORSTEP",
+     "name": "Doorstep Memes",
+     "id": "5BxCtuhDuL7t4yi1BHqgg83RwY5rAd23ia2nvGfepump"
+    },
+    {
+     "symbol": "DOORSTEP",
+     "name": "Doorstep Memes",
+     "id": "38AviEvgcnzHtrL6J5sVqnBpE3BtGzP85qQrrumtpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Doorstep, a shy but cuddly black-and-white tuxedo cat with a white-striped nose, waits on the garden step to say hello to anyone close by. A cat coin priced in GRND. Not affiliated with Grindr Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

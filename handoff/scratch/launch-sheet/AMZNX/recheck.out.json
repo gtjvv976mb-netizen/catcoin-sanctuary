@@ -1,0 +1,63 @@
+{
+ "name": "Sunmane the Garden Cat",
+ "ticker": "SUNMANE",
+ "description": "Sunmane, a sturdy tawny cat with a fluffy ruff like a little mane, naps in the warmest patch of the garden and pads his rounds at dusk. A cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice.",
+ "nameLen": 22,
+ "tickerLen": 7,
+ "descLen": 245,
+ "storyLen": 135,
+ "endsWithDisclosure": true,
+ "checkProposal_story": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "amazon",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Sunmane, a sturdy tawny cat with a fluff",
+    "field": "tagline"
+   }
+  ]
+ },
+ "stockCatRefusals": [],
+ "tickerFree": {
+  "ok": true,
+  "reasons": []
+ },
+ "jupSearch": {
+  "results": 13,
+  "symbols": [
+   "MACHINE",
+   "Stonkman",
+   "Stonkman",
+   "Stonkman",
+   "Stonkman",
+   "Stonkman",
+   "Stonkman",
+   "JustDance",
+   "LUCAS",
+   "LUCAS",
+   "SCUM",
+   "EVACUATE",
+   "PUMP"
+  ],
+  "verifiedExact": []
+ }
+}

@@ -1,0 +1,400 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Henna the Burnished Red Cat",
+   "ticker": "HENNAPAW",
+   "nameLen": 27,
+   "blurbLen": 137,
+   "descLen": 269,
+   "tickerRegex": true,
+   "hasStockRoot": false,
+   "catMeme": false,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Henna, a sleek burnished red-orange shor",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "description": "Henna, a sleek burnished red-orange shorthair with sea-green eyes, glows like a polished pot as she naps in the late sun beside the pond. A cat coin priced in COPX. Not affiliated with Global X, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "jup_HENNAPAW": {
+    "status": 200,
+    "results": 1,
+    "exactTickerMatches": [],
+    "queryMatches": [],
+    "verifiedSymbols": []
+   },
+   "jup_HENNA": {
+    "status": 200,
+    "results": 20,
+    "exactTickerMatches": [],
+    "queryMatches": [
+     {
+      "symbol": "HENNA",
+      "name": "Henna"
+     }
+    ],
+    "verifiedSymbols": []
+   },
+   "jup_Henna": {
+    "status": 200,
+    "results": 20,
+    "exactTickerMatches": [],
+    "queryMatches": [
+     {
+      "symbol": "HENNA",
+      "name": "Henna"
+     }
+    ],
+    "verifiedSymbols": []
+   }
+  },
+  {
+   "name": "Rustle the Red-Gold Tabby Cat",
+   "ticker": "RUSTLEPAW",
+   "nameLen": 29,
+   "blurbLen": 128,
+   "descLen": 260,
+   "tickerRegex": true,
+   "hasStockRoot": false,
+   "catMeme": false,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Rustle, a red-gold tabby with dark rust-",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "description": "Rustle, a red-gold tabby with dark rust-brown stripes and green eyes, pads through the tall grass and pounces on falling leaves. A cat coin priced in COPX. Not affiliated with Global X, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "jup_RUSTLEPAW": {
+    "status": 200,
+    "results": 0,
+    "exactTickerMatches": [],
+    "queryMatches": [],
+    "verifiedSymbols": []
+   },
+   "jup_RUSTLE": {
+    "status": 200,
+    "results": 20,
+    "exactTickerMatches": [],
+    "queryMatches": [
+     {
+      "symbol": "RUSTLE",
+      "name": "Rustle AI"
+     }
+    ],
+    "verifiedSymbols": []
+   },
+   "jup_Rustle": {
+    "status": 200,
+    "results": 20,
+    "exactTickerMatches": [],
+    "queryMatches": [
+     {
+      "symbol": "RUSTLE",
+      "name": "Rustle AI"
+     }
+    ],
+    "verifiedSymbols": []
+   }
+  },
+  {
+   "name": "Flint the Dark Tortie Cat",
+   "ticker": "FLINTPAW",
+   "nameLen": 25,
+   "blurbLen": 135,
+   "descLen": 267,
+   "tickerRegex": true,
+   "hasStockRoot": false,
+   "catMeme": false,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Flint, a smoky dark tortoiseshell with b",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "description": "Flint, a smoky dark tortoiseshell with bright red-gold flecks like glints in rock and honey-gold eyes, basks on the warm garden stones. A cat coin priced in COPX. Not affiliated with Global X, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "jup_FLINTPAW": {
+    "status": 200,
+    "results": 0,
+    "exactTickerMatches": [],
+    "queryMatches": [],
+    "verifiedSymbols": []
+   },
+   "jup_FLINT": {
+    "status": 200,
+    "results": 20,
+    "exactTickerMatches": [],
+    "queryMatches": [
+     {
+      "symbol": "FLINT",
+      "name": "FLINT TRADE"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flint trade"
+     },
+     {
+      "symbol": "flint",
+      "name": "Flint trade"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flint trade"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flint trade"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flintstone Launchpad"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "FLINT AND STEEL"
+     },
+     {
+      "symbol": "Flint",
+      "name": "Flint"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flint Trade"
+     }
+    ],
+    "verifiedSymbols": []
+   },
+   "jup_Flint": {
+    "status": 200,
+    "results": 20,
+    "exactTickerMatches": [],
+    "queryMatches": [
+     {
+      "symbol": "FLINT",
+      "name": "FLINT TRADE"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flint trade"
+     },
+     {
+      "symbol": "flint",
+      "name": "Flint trade"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flint trade"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flint trade"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flintstone Launchpad"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "FLINT AND STEEL"
+     },
+     {
+      "symbol": "Flint",
+      "name": "Flint"
+     },
+     {
+      "symbol": "FLINT",
+      "name": "Flint Trade"
+     }
+    ],
+    "verifiedSymbols": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,3528 @@
+
+> cat-sanctuary@0.1.0 test
+> node --test "tests/*.test.mjs"
+
+TAP version 13
+# Subtest: every kit in assets/kits/kits.json: a square token PNG <= 2 MB, banners exactly 1500 x 500, local paths, a matching hash
+ok 1 - every kit in assets/kits/kits.json: a square token PNG <= 2 MB, banners exactly 1500 x 500, local paths, a matching hash
+  ---
+  duration_ms: 2146.361433
+  type: 'test'
+  ...
+# Subtest: the launch kit's words: name <= 32, ticker <= 10, lore + proof + not-affiliated line, website is the card URL, X is the proof post or blank
+ok 2 - the launch kit's words: name <= 32, ticker <= 10, lore + proof + not-affiliated line, website is the card URL, X is the proof post or blank
+  ---
+  duration_ms: 382.423554
+  type: 'test'
+  ...
+# Subtest: a famous coin, a launched cat and an example cannot be adopted
+ok 3 - a famous coin, a launched cat and an example cannot be adopted
+  ---
+  duration_ms: 0.25725
+  type: 'test'
+  ...
+# Subtest: kitFiles keeps only this cat's local kit paths and an https pbs.twimg.com photo
+ok 4 - kitFiles keeps only this cat's local kit paths and an https pbs.twimg.com photo
+  ---
+  duration_ms: 0.320824
+  type: 'test'
+  ...
+# Subtest: the Adopt panel: copy buttons for every kit field, real downloads, both launchpads in a new tab, the hand-off note and StonkFun's terms before its button
+ok 5 - the Adopt panel: copy buttons for every kit field, real downloads, both launchpads in a new tab, the hand-off note and StonkFun's terms before its button
+  ---
+  duration_ms: 645.950392
+  type: 'test'
+  ...
+# Subtest: the banner is optional: 'Include banner' hides it, and a plain style is the second choice
+ok 6 - the banner is optional: 'Include banner' hides it, and a plain style is the second choice
+  ---
+  duration_ms: 2.69208
+  type: 'test'
+  ...
+# Subtest: the card's 'Adopt this cat' button opens the panel, and Back returns to the card
+ok 7 - the card's 'Adopt this cat' button opens the panel, and Back returns to the card
+  ---
+  duration_ms: 305.093677
+  type: 'test'
+  ...
+# Subtest: GetStonked: one config entry (data/launchpads.json); its template block always, its button only once an https url is set
+ok 8 - GetStonked: one config entry (data/launchpads.json); its template block always, its button only once an https url is set
+  ---
+  duration_ms: 5.634702
+  type: 'test'
+  ...
+# Subtest: shipped: every adoptable cat passes the rules, with a free ticker no planned cat uses
+ok 9 - shipped: every adoptable cat passes the rules, with a free ticker no planned cat uses
+  ---
+  duration_ms: 18.525678
+  type: 'test'
+  ...
+# Subtest: shipped: every lore caption in data/lore.json belongs to a cat and has its picture
+ok 10 - shipped: every lore caption in data/lore.json belongs to a cat and has its picture
+  ---
+  duration_ms: 3.39118
+  type: 'test'
+  ...
+# Subtest: rules: a lore picture must be the cat's own file with a short caption
+ok 11 - rules: a lore picture must be the cat's own file with a short caption
+  ---
+  duration_ms: 0.422208
+  type: 'test'
+  ...
+# Subtest: shipped: every adoptable cat has an announce record (held until released, then backlog/posted)
+ok 12 - shipped: every adoptable cat has an announce record (held until released, then backlog/posted)
+  ---
+  duration_ms: 0.406484
+  type: 'test'
+  ...
+# Subtest: rules: a bad cat is refused
+ok 13 - rules: a bad cat is refused
+  ---
+  duration_ms: 0.695239
+  type: 'test'
+  ...
+# Subtest: existing coin and tribute lines read as the card shows them
+ok 14 - existing coin and tribute lines read as the card shows them
+  ---
+  duration_ms: 0.220155
+  type: 'test'
+  ...
+# Subtest: build: takes the strongest cats, skips low confidence and unsettled looks, marks portraits pending, holds new cats
+ok 15 - build: takes the strongest cats, skips low confidence and unsettled looks, marks portraits pending, holds new cats
+  ---
+  duration_ms: 5.186467
+  type: 'test'
+  ...
+# Subtest: the card link is the site's own deep link (\#cat=<id>, as assets/ui/main.js reads it)
+ok 16 - the card link is the site's own deep link (\#cat=<id>, as assets/ui/main.js reads it)
+  ---
+  duration_ms: 1.406096
+  type: 'test'
+  ...
+# Subtest: every planned cat drafts to <= 280 characters that pass the content rules, or is held
+ok 17 - every planned cat drafts to <= 280 characters that pass the content rules, or is held
+  ---
+  duration_ms: 1006.659346
+  type: 'test'
+  ...
+# Subtest: the rules refuse price talk, promises, links that are not cited, brands, and overlong posts
+ok 18 - the rules refuse price talk, promises, links that are not cited, brands, and overlong posts
+  ---
+  duration_ms: 3.688753
+  type: 'test'
+  ...
+# Subtest: backlog: the seeded record marks every existing cat backlog, and a run takes new cats first, then 1-2 from the backlog
+ok 19 - backlog: the seeded record marks every existing cat backlog, and a run takes new cats first, then 1-2 from the backlog
+  ---
+  duration_ms: 4.470983
+  type: 'test'
+  ...
+# Subtest: dry run: drafts go to the queue as a preview, nothing is recorded, nothing reaches X
+ok 20 - dry run: drafts go to the queue as a preview, nothing is recorded, nothing reaches X
+  ---
+  duration_ms: 15.226262
+  type: 'test'
+  ...
+# Subtest: missing secrets: no failure, drafts queued with intent links, cats recorded as queued and not queued twice
+ok 21 - missing secrets: no failure, drafts queued with intent links, cats recorded as queued and not queued twice
+  ---
+  duration_ms: 24.111177
+  type: 'test'
+  ...
+# Subtest: posting: at most perRun cats, spaced apart, image + proof reply, ids recorded, never posted twice
+ok 22 - posting: at most perRun cats, spaced apart, image + proof reply, ids recorded, never posted twice
+  ---
+  duration_ms: 383.522433
+  type: 'test'
+  ...
+# Subtest: a cat left 'posting' by a crash is never retried; a refused post is recorded failed and the run stops
+ok 23 - a cat left 'posting' by a crash is never retried; a refused post is recorded failed and the run stops
+  ---
+  duration_ms: 35.818931
+  type: 'test'
+  ...
+# Subtest: OAuth 1.0a header is well formed and deterministic for a fixed nonce and time
+ok 24 - OAuth 1.0a header is well formed and deterministic for a fixed nonce and time
+  ---
+  duration_ms: 1.341264
+  type: 'test'
+  ...
+# Subtest: announce workflow: pinned actions, push on planned.json + every 20 min, contents: write only, X secrets only in the posting step
+ok 25 - announce workflow: pinned actions, push on planned.json + every 20 min, contents: write only, X secrets only in the posting step
+  ---
+  duration_ms: 1.074803
+  type: 'test'
+  ...
+# Subtest: release queue: queued cats are never posted as roster cats, and hold the roster open only if not queued
+ok 26 - release queue: queued cats are never posted as roster cats, and hold the roster open only if not queued
+  ---
+  duration_ms: 8.838653
+  type: 'test'
+  ...
+# Subtest: release: roster empty -> the first approved, ready cat is posted on X, then released with its tweet id; one an hour
+ok 27 - release: roster empty -> the first approved, ready cat is posted on X, then released with its tweet id; one an hour
+  ---
+  duration_ms: 180.599471
+  type: 'test'
+  ...
+# Subtest: release: if X refuses, the cat is not released on the site and is tried again next run
+ok 28 - release: if X refuses, the cat is not released on the site and is tried again next run
+  ---
+  duration_ms: 124.044137
+  type: 'test'
+  ...
+# Subtest: release: not while the roster lasts; held, unapproved or incomplete cats wait; no secrets means no release
+ok 29 - release: not while the roster lasts; held, unapproved or incomplete cats wait; no secrets means no release
+  ---
+  duration_ms: 54.668272
+  type: 'test'
+  ...
+# Subtest: the shipped release queue and releases file are well formed
+ok 30 - the shipped release queue and releases file are well formed
+  ---
+  duration_ms: 1.116995
+  type: 'test'
+  ...
+# Subtest: in-game shot: a second image after the lore photo, a line in the post if it fits, and a failed upload still posts
+ok 31 - in-game shot: a second image after the lore photo, a line in the post if it fits, and a failed upload still posts
+  ---
+  duration_ms: 208.695525
+  type: 'test'
+  ...
+# Subtest: every planned cat still drafts within 280 with the in-game line
+ok 32 - every planned cat still drafts within 280 with the in-game line
+  ---
+  duration_ms: 1150.7756
+  type: 'test'
+  ...
+# Subtest: the real GOOGLx launcher's whole history yields exactly its one launch
+ok 33 - the real GOOGLx launcher's whole history yields exactly its one launch
+  ---
+  duration_ms: 231.905292
+  type: 'test'
+  ...
+# Subtest: a re-run with nothing new reads nothing and writes nothing (idempotent)
+ok 34 - a re-run with nothing new reads nothing and writes nothing (idempotent)
+  ---
+  duration_ms: 86.661879
+  type: 'test'
+  ...
+# Subtest: the cursor: a second run reads only what is newer, and the launch arrives then
+ok 35 - the cursor: a second run reads only what is newer, and the launch arrives then
+  ---
+  duration_ms: 59.565584
+  type: 'test'
+  ...
+# Subtest: a cat is never dropped: an existing cat stays, a new one joins, newest first
+ok 36 - a cat is never dropped: an existing cat stays, a new one joins, newest first
+  ---
+  duration_ms: 107.101089
+  type: 'test'
+  ...
+# Subtest: a collection that no longer validates stops the run and nothing is written
+ok 37 - a collection that no longer validates stops the run and nothing is written
+  ---
+  duration_ms: 64.965449
+  type: 'test'
+  ...
+# Subtest: an RPC that keeps failing part-way writes nothing and leaves the cursor; the next run completes
+ok 38 - an RPC that keeps failing part-way writes nothing and leaves the cursor; the next run completes
+  ---
+  duration_ms: 57.662616
+  type: 'test'
+  ...
+# Subtest: a transaction the RPC cannot give in version 0 is noted as unread, and the cursor moves past it
+ok 39 - a transaction the RPC cannot give in version 0 is noted as unread, and the cursor moves past it
+  ---
+  duration_ms: 39.950303
+  type: 'test'
+  ...
+# Subtest: a real launch the wallet paid for but which is not a sanctuary launch is recorded as refused, with the reason
+ok 40 - a real launch the wallet paid for but which is not a sanctuary launch is recorded as refused, with the reason
+  ---
+  duration_ms: 77.389559
+  type: 'test'
+  ...
+# Subtest: real launches priced in a PreStock and a Backpack stock move in, read back from the chain, newest first
+ok 41 - real launches priced in a PreStock and a Backpack stock move in, read back from the chain, newest first
+  ---
+  duration_ms: 12.45304
+  type: 'test'
+  ...
+# Subtest: the owner's wallet: another wallet's real launch is never counted for it, and its own history is read from its since date
+ok 42 - the owner's wallet: another wallet's real launch is never counted for it, and its own history is read from its since date
+  ---
+  duration_ms: 4.545795
+  type: 'test'
+  ...
+# Subtest: a mint whose metadata does not match is refused; a mint the RPC does not return stops the run
+ok 43 - a mint whose metadata does not match is refused; a mint the RPC does not return stops the run
+  ---
+  duration_ms: 25.844248
+  type: 'test'
+  ...
+# Subtest: since and until bound what is read
+ok 44 - since and until bound what is read
+  ---
+  duration_ms: 8.685877
+  type: 'test'
+  ...
+# Subtest: a per-run budget: the rest is read on the next run
+ok 45 - a per-run budget: the rest is read on the next run
+  ---
+  duration_ms: 50.890618
+  type: 'test'
+  ...
+# Subtest: with no wallet listed, nothing is read and nothing is written
+ok 46 - with no wallet listed, nothing is read and nothing is written
+  ---
+  duration_ms: 0.747972
+  type: 'test'
+  ...
+# Subtest: the shipped data files are canonical and valid, so the first scheduled run changes nothing
+ok 47 - the shipped data files are canonical and valid, so the first scheduled run changes nothing
+  ---
+  duration_ms: 198.714193
+  type: 'test'
+  ...
+# Subtest: bad state or wallet files stop the run with a plain reason
+ok 48 - bad state or wallet files stop the run with a plain reason
+  ---
+  duration_ms: 1.459316
+  type: 'test'
+  ...
+# Subtest: the RPC client refuses a non-https URL and retries a rate limit before giving up
+ok 49 - the RPC client refuses a non-https URL and retries a rate limit before giving up
+  ---
+  duration_ms: 83.621011
+  type: 'test'
+  ...
+# Subtest: the recorded transactions the builder replays are the real ones (json, version 0 or legacy)
+ok 50 - the recorded transactions the builder replays are the real ones (json, version 0 or legacy)
+  ---
+  duration_ms: 0.337438
+  type: 'test'
+  ...
+# Subtest: a flood of transactions naming the wallet does not hold up its launch: the run reads on by time, not a fixed 300
+ok 51 - a flood of transactions naming the wallet does not hold up its launch: the run reads on by time, not a fixed 300
+  ---
+  duration_ms: 1925.213707
+  type: 'test'
+  ...
+# Subtest: more new signatures than a run pages through: the wallet is skipped with a warning (cursor kept, nothing else stops), and a launch listed in data/launches.json is proved at once
+ok 52 - more new signatures than a run pages through: the wallet is skipped with a warning (cursor kept, nothing else stops), and a launch listed in data/launches.json is proved at once
+  ---
+  duration_ms: 1613.42804
+  type: 'test'
+  ...
+# Subtest: listed launches: the file is checked; a listed launch another wallet paid for is refused once and not read again
+ok 53 - listed launches: the file is checked; a listed launch another wallet paid for is refused once and not read again
+  ---
+  duration_ms: 3.690923
+  type: 'test'
+  ...
+# Subtest: a time budget: reading stops when the run's time is up, and the next run carries on from the cursor
+ok 54 - a time budget: reading stops when the run's time is up, and the next run carries on from the cursor
+  ---
+  duration_ms: 19.402995
+  type: 'test'
+  ...
+# Subtest: the RPC's answer must be the transaction asked for, and a launch's signatures must verify, or the run stops and writes nothing
+ok 55 - the RPC's answer must be the transaction asked for, and a launch's signatures must verify, or the run stops and writes nothing
+  ---
+  duration_ms: 10.324932
+  type: 'test'
+  ...
+# Subtest: a version-1 transaction is kept, warned about on every run and read again; once it can be read it is proved
+ok 56 - a version-1 transaction is kept, warned about on every run and read again; once it can be read it is proved
+  ---
+  duration_ms: 22.406359
+  type: 'test'
+  ...
+# Subtest: cat models: index lists only planned cats, adoptable cats and famous coins, with sane dimensions
+ok 57 - cat models: index lists only planned cats, adoptable cats and famous coins, with sane dimensions
+  ---
+  duration_ms: 7.610084
+  type: 'test'
+  ...
+# Subtest: cat models: PATCHPAW.glb is a valid textured GLB under 600 KB
+ok 58 - cat models: PATCHPAW.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.946774
+  type: 'test'
+  ...
+# Subtest: cat models: PATCHPAW-lo.glb is a valid textured GLB under 150 KB
+ok 59 - cat models: PATCHPAW-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.3488
+  type: 'test'
+  ...
+# Subtest: cat models: WHISK100.glb is a valid textured GLB under 800 KB
+ok 60 - cat models: WHISK100.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.747069
+  type: 'test'
+  ...
+# Subtest: cat models: WHISK100-lo.glb is a valid textured GLB under 300 KB
+ok 61 - cat models: WHISK100-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.45064
+  type: 'test'
+  ...
+# Subtest: cat models: INGOTLOAF.glb is a valid textured GLB under 800 KB
+ok 62 - cat models: INGOTLOAF.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.612548
+  type: 'test'
+  ...
+# Subtest: cat models: INGOTLOAF-lo.glb is a valid textured GLB under 300 KB
+ok 63 - cat models: INGOTLOAF-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.404695
+  type: 'test'
+  ...
+# Subtest: cat models: SNOWCURL.glb is a valid textured GLB under 800 KB
+ok 64 - cat models: SNOWCURL.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.717323
+  type: 'test'
+  ...
+# Subtest: cat models: SNOWCURL-lo.glb is a valid textured GLB under 300 KB
+ok 65 - cat models: SNOWCURL-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.459662
+  type: 'test'
+  ...
+# Subtest: cat models: SOCKFOOT.glb is a valid textured GLB under 600 KB
+ok 66 - cat models: SOCKFOOT.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.703561
+  type: 'test'
+  ...
+# Subtest: cat models: SOCKFOOT-lo.glb is a valid textured GLB under 150 KB
+ok 67 - cat models: SOCKFOOT-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.307736
+  type: 'test'
+  ...
+# Subtest: cat models: ROSETTE.glb is a valid textured GLB under 800 KB
+ok 68 - cat models: ROSETTE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.672727
+  type: 'test'
+  ...
+# Subtest: cat models: ROSETTE-lo.glb is a valid textured GLB under 300 KB
+ok 69 - cat models: ROSETTE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 2.796151
+  type: 'test'
+  ...
+# Subtest: cat models: JELLIECAT.glb is a valid textured GLB under 800 KB
+ok 70 - cat models: JELLIECAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.526195
+  type: 'test'
+  ...
+# Subtest: cat models: JELLIECAT-lo.glb is a valid textured GLB under 300 KB
+ok 71 - cat models: JELLIECAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.259076
+  type: 'test'
+  ...
+# Subtest: cat models: MOMOTHECAT.glb is a valid textured GLB under 800 KB
+ok 72 - cat models: MOMOTHECAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.476984
+  type: 'test'
+  ...
+# Subtest: cat models: MOMOTHECAT-lo.glb is a valid textured GLB under 300 KB
+ok 73 - cat models: MOMOTHECAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.242987
+  type: 'test'
+  ...
+# Subtest: cat models: LEOTHELION.glb is a valid textured GLB under 800 KB
+ok 74 - cat models: LEOTHELION.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.617297
+  type: 'test'
+  ...
+# Subtest: cat models: LEOTHELION-lo.glb is a valid textured GLB under 300 KB
+ok 75 - cat models: LEOTHELION-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.229417
+  type: 'test'
+  ...
+# Subtest: cat models: COUCHCAP.glb is a valid textured GLB under 600 KB
+ok 76 - cat models: COUCHCAP.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 3.981756
+  type: 'test'
+  ...
+# Subtest: cat models: COUCHCAP-lo.glb is a valid textured GLB under 150 KB
+ok 77 - cat models: COUCHCAP-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.20592
+  type: 'test'
+  ...
+# Subtest: cat models: MIGGLES.glb is a valid textured GLB under 800 KB
+ok 78 - cat models: MIGGLES.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.522245
+  type: 'test'
+  ...
+# Subtest: cat models: MIGGLES-lo.glb is a valid textured GLB under 300 KB
+ok 79 - cat models: MIGGLES-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 2.576491
+  type: 'test'
+  ...
+# Subtest: cat models: PEWTER.glb is a valid textured GLB under 800 KB
+ok 80 - cat models: PEWTER.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 3.281273
+  type: 'test'
+  ...
+# Subtest: cat models: PEWTER-lo.glb is a valid textured GLB under 300 KB
+ok 81 - cat models: PEWTER-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.301904
+  type: 'test'
+  ...
+# Subtest: cat models: TRINKETCAT.glb is a valid textured GLB under 800 KB
+ok 82 - cat models: TRINKETCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.71524
+  type: 'test'
+  ...
+# Subtest: cat models: TRINKETCAT-lo.glb is a valid textured GLB under 300 KB
+ok 83 - cat models: TRINKETCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.204577
+  type: 'test'
+  ...
+# Subtest: cat models: TUPPENCE.glb is a valid textured GLB under 800 KB
+ok 84 - cat models: TUPPENCE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.508318
+  type: 'test'
+  ...
+# Subtest: cat models: TUPPENCE-lo.glb is a valid textured GLB under 300 KB
+ok 85 - cat models: TUPPENCE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.195916
+  type: 'test'
+  ...
+# Subtest: cat models: WARMSPOT.glb is a valid textured GLB under 800 KB
+ok 86 - cat models: WARMSPOT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.44697
+  type: 'test'
+  ...
+# Subtest: cat models: WARMSPOT-lo.glb is a valid textured GLB under 300 KB
+ok 87 - cat models: WARMSPOT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.24617
+  type: 'test'
+  ...
+# Subtest: cat models: SKEINKIT.glb is a valid textured GLB under 800 KB
+ok 88 - cat models: SKEINKIT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.576769
+  type: 'test'
+  ...
+# Subtest: cat models: SKEINKIT-lo.glb is a valid textured GLB under 300 KB
+ok 89 - cat models: SKEINKIT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 6.113658
+  type: 'test'
+  ...
+# Subtest: cat models: SAVEPAWS.glb is a valid textured GLB under 800 KB
+ok 90 - cat models: SAVEPAWS.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.704168
+  type: 'test'
+  ...
+# Subtest: cat models: SAVEPAWS-lo.glb is a valid textured GLB under 300 KB
+ok 91 - cat models: SAVEPAWS-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.359817
+  type: 'test'
+  ...
+# Subtest: cat models: EVERLOOP.glb is a valid textured GLB under 800 KB
+ok 92 - cat models: EVERLOOP.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.617831
+  type: 'test'
+  ...
+# Subtest: cat models: EVERLOOP-lo.glb is a valid textured GLB under 300 KB
+ok 93 - cat models: EVERLOOP-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.232714
+  type: 'test'
+  ...
+# Subtest: cat models: MILKWEED.glb is a valid textured GLB under 800 KB
+ok 94 - cat models: MILKWEED.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.428262
+  type: 'test'
+  ...
+# Subtest: cat models: MILKWEED-lo.glb is a valid textured GLB under 300 KB
+ok 95 - cat models: MILKWEED-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.187333
+  type: 'test'
+  ...
+# Subtest: cat models: CAMTHECAT.glb is a valid textured GLB under 800 KB
+ok 96 - cat models: CAMTHECAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.481309
+  type: 'test'
+  ...
+# Subtest: cat models: CAMTHECAT-lo.glb is a valid textured GLB under 300 KB
+ok 97 - cat models: CAMTHECAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 2.701945
+  type: 'test'
+  ...
+# Subtest: cat models: OLIVIACAT.glb is a valid textured GLB under 800 KB
+ok 98 - cat models: OLIVIACAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 1.834807
+  type: 'test'
+  ...
+# Subtest: cat models: OLIVIACAT-lo.glb is a valid textured GLB under 300 KB
+ok 99 - cat models: OLIVIACAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.318454
+  type: 'test'
+  ...
+# Subtest: cat models: UPDATECAT.glb is a valid textured GLB under 800 KB
+ok 100 - cat models: UPDATECAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.674977
+  type: 'test'
+  ...
+# Subtest: cat models: UPDATECAT-lo.glb is a valid textured GLB under 300 KB
+ok 101 - cat models: UPDATECAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.409416
+  type: 'test'
+  ...
+# Subtest: cat models: TRILLBY.glb is a valid textured GLB under 800 KB
+ok 102 - cat models: TRILLBY.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.524516
+  type: 'test'
+  ...
+# Subtest: cat models: TRILLBY-lo.glb is a valid textured GLB under 300 KB
+ok 103 - cat models: TRILLBY-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.295974
+  type: 'test'
+  ...
+# Subtest: cat models: LATCHKEY.glb is a valid textured GLB under 800 KB
+ok 104 - cat models: LATCHKEY.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.527244
+  type: 'test'
+  ...
+# Subtest: cat models: LATCHKEY-lo.glb is a valid textured GLB under 300 KB
+ok 105 - cat models: LATCHKEY-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.287704
+  type: 'test'
+  ...
+# Subtest: cat models: MEMOPAW.glb is a valid textured GLB under 600 KB
+ok 106 - cat models: MEMOPAW.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 4.426715
+  type: 'test'
+  ...
+# Subtest: cat models: MEMOPAW-lo.glb is a valid textured GLB under 150 KB
+ok 107 - cat models: MEMOPAW-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.203264
+  type: 'test'
+  ...
+# Subtest: cat models: GIMBALPAW.glb is a valid textured GLB under 600 KB
+ok 108 - cat models: GIMBALPAW.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.416112
+  type: 'test'
+  ...
+# Subtest: cat models: GIMBALPAW-lo.glb is a valid textured GLB under 150 KB
+ok 109 - cat models: GIMBALPAW-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.200572
+  type: 'test'
+  ...
+# Subtest: cat models: CHIK.glb is a valid textured GLB under 600 KB
+ok 110 - cat models: CHIK.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 6.958673
+  type: 'test'
+  ...
+# Subtest: cat models: CHIK-lo.glb is a valid textured GLB under 150 KB
+ok 111 - cat models: CHIK-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.258506
+  type: 'test'
+  ...
+# Subtest: cat models: KEEPSAKE.glb is a valid textured GLB under 600 KB
+ok 112 - cat models: KEEPSAKE.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.262155
+  type: 'test'
+  ...
+# Subtest: cat models: KEEPSAKE-lo.glb is a valid textured GLB under 150 KB
+ok 113 - cat models: KEEPSAKE-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.212515
+  type: 'test'
+  ...
+# Subtest: cat models: PINROW.glb is a valid textured GLB under 600 KB
+ok 114 - cat models: PINROW.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.271017
+  type: 'test'
+  ...
+# Subtest: cat models: PINROW-lo.glb is a valid textured GLB under 150 KB
+ok 115 - cat models: PINROW-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.121918
+  type: 'test'
+  ...
+# Subtest: cat models: COOPERCAT.glb is a valid textured GLB under 600 KB
+ok 116 - cat models: COOPERCAT.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.212655
+  type: 'test'
+  ...
+# Subtest: cat models: COOPERCAT-lo.glb is a valid textured GLB under 150 KB
+ok 117 - cat models: COOPERCAT-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.122382
+  type: 'test'
+  ...
+# Subtest: cat models: SAFFWHISK.glb is a valid textured GLB under 600 KB
+ok 118 - cat models: SAFFWHISK.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.311361
+  type: 'test'
+  ...
+# Subtest: cat models: SAFFWHISK-lo.glb is a valid textured GLB under 150 KB
+ok 119 - cat models: SAFFWHISK-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.150577
+  type: 'test'
+  ...
+# Subtest: cat models: NOTEPAW.glb is a valid textured GLB under 600 KB
+ok 120 - cat models: NOTEPAW.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.255529
+  type: 'test'
+  ...
+# Subtest: cat models: NOTEPAW-lo.glb is a valid textured GLB under 150 KB
+ok 121 - cat models: NOTEPAW-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.128503
+  type: 'test'
+  ...
+# Subtest: cat models: APOTHECAT.glb is a valid textured GLB under 600 KB
+ok 122 - cat models: APOTHECAT.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.286866
+  type: 'test'
+  ...
+# Subtest: cat models: APOTHECAT-lo.glb is a valid textured GLB under 150 KB
+ok 123 - cat models: APOTHECAT-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 0.13008
+  type: 'test'
+  ...
+# Subtest: cat models: COBBLEPAW.glb is a valid textured GLB under 600 KB
+ok 124 - cat models: COBBLEPAW.glb is a valid textured GLB under 600 KB
+  ---
+  duration_ms: 0.239159
+  type: 'test'
+  ...
+# Subtest: cat models: COBBLEPAW-lo.glb is a valid textured GLB under 150 KB
+ok 125 - cat models: COBBLEPAW-lo.glb is a valid textured GLB under 150 KB
+  ---
+  duration_ms: 28.939495
+  type: 'test'
+  ...
+# Subtest: cat models: SCUFFPAW.glb is a valid textured GLB under 800 KB
+ok 126 - cat models: SCUFFPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.456231
+  type: 'test'
+  ...
+# Subtest: cat models: SCUFFPAW-lo.glb is a valid textured GLB under 300 KB
+ok 127 - cat models: SCUFFPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.36502
+  type: 'test'
+  ...
+# Subtest: cat models: KERNELPAW.glb is a valid textured GLB under 800 KB
+ok 128 - cat models: KERNELPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.331376
+  type: 'test'
+  ...
+# Subtest: cat models: KERNELPAW-lo.glb is a valid textured GLB under 300 KB
+ok 129 - cat models: KERNELPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.234424
+  type: 'test'
+  ...
+# Subtest: cat models: TREADPAW.glb is a valid textured GLB under 800 KB
+ok 130 - cat models: TREADPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.298495
+  type: 'test'
+  ...
+# Subtest: cat models: TREADPAW-lo.glb is a valid textured GLB under 300 KB
+ok 131 - cat models: TREADPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.140719
+  type: 'test'
+  ...
+# Subtest: cat models: COWARDLION.glb is a valid textured GLB under 800 KB
+ok 132 - cat models: COWARDLION.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.516749
+  type: 'test'
+  ...
+# Subtest: cat models: COWARDLION-lo.glb is a valid textured GLB under 300 KB
+ok 133 - cat models: COWARDLION-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.209229
+  type: 'test'
+  ...
+# Subtest: cat models: GLINTPAW.glb is a valid textured GLB under 800 KB
+ok 134 - cat models: GLINTPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.200929
+  type: 'test'
+  ...
+# Subtest: cat models: GLINTPAW-lo.glb is a valid textured GLB under 300 KB
+ok 135 - cat models: GLINTPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.108305
+  type: 'test'
+  ...
+# Subtest: cat models: HUBBUB.glb is a valid textured GLB under 800 KB
+ok 136 - cat models: HUBBUB.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.304597
+  type: 'test'
+  ...
+# Subtest: cat models: HUBBUB-lo.glb is a valid textured GLB under 300 KB
+ok 137 - cat models: HUBBUB-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.216848
+  type: 'test'
+  ...
+# Subtest: cat models: BOXWOOD.glb is a valid textured GLB under 800 KB
+ok 138 - cat models: BOXWOOD.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.26136
+  type: 'test'
+  ...
+# Subtest: cat models: BOXWOOD-lo.glb is a valid textured GLB under 300 KB
+ok 139 - cat models: BOXWOOD-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.109138
+  type: 'test'
+  ...
+# Subtest: cat models: LIDNAP.glb is a valid textured GLB under 800 KB
+ok 140 - cat models: LIDNAP.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.338821
+  type: 'test'
+  ...
+# Subtest: cat models: LIDNAP-lo.glb is a valid textured GLB under 300 KB
+ok 141 - cat models: LIDNAP-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.153524
+  type: 'test'
+  ...
+# Subtest: cat models: PAWPOST.glb is a valid textured GLB under 800 KB
+ok 142 - cat models: PAWPOST.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.277333
+  type: 'test'
+  ...
+# Subtest: cat models: PAWPOST-lo.glb is a valid textured GLB under 300 KB
+ok 143 - cat models: PAWPOST-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.112112
+  type: 'test'
+  ...
+# Subtest: cat models: TALLYSPOT.glb is a valid textured GLB under 800 KB
+ok 144 - cat models: TALLYSPOT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.671363
+  type: 'test'
+  ...
+# Subtest: cat models: TALLYSPOT-lo.glb is a valid textured GLB under 300 KB
+ok 145 - cat models: TALLYSPOT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.154993
+  type: 'test'
+  ...
+# Subtest: cat models: VELVETPAW.glb is a valid textured GLB under 800 KB
+ok 146 - cat models: VELVETPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.523451
+  type: 'test'
+  ...
+# Subtest: cat models: VELVETPAW-lo.glb is a valid textured GLB under 300 KB
+ok 147 - cat models: VELVETPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.187267
+  type: 'test'
+  ...
+# Subtest: cat models: MEREDITCAT.glb is a valid textured GLB under 800 KB
+ok 148 - cat models: MEREDITCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.491541
+  type: 'test'
+  ...
+# Subtest: cat models: MEREDITCAT-lo.glb is a valid textured GLB under 300 KB
+ok 149 - cat models: MEREDITCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.099541
+  type: 'test'
+  ...
+# Subtest: cat models: BENBUTTON.glb is a valid textured GLB under 800 KB
+ok 150 - cat models: BENBUTTON.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 1.290471
+  type: 'test'
+  ...
+# Subtest: cat models: BENBUTTON-lo.glb is a valid textured GLB under 300 KB
+ok 151 - cat models: BENBUTTON-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.142923
+  type: 'test'
+  ...
+# Subtest: cat models: LARRY10.glb is a valid textured GLB under 800 KB
+ok 152 - cat models: LARRY10.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.623186
+  type: 'test'
+  ...
+# Subtest: cat models: LARRY10-lo.glb is a valid textured GLB under 300 KB
+ok 153 - cat models: LARRY10-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.198242
+  type: 'test'
+  ...
+# Subtest: cat models: CHOUPETCAT.glb is a valid textured GLB under 800 KB
+ok 154 - cat models: CHOUPETCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.564973
+  type: 'test'
+  ...
+# Subtest: cat models: CHOUPETCAT-lo.glb is a valid textured GLB under 300 KB
+ok 155 - cat models: CHOUPETCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.178184
+  type: 'test'
+  ...
+# Subtest: cat models: MARUBOX.glb is a valid textured GLB under 800 KB
+ok 156 - cat models: MARUBOX.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.536232
+  type: 'test'
+  ...
+# Subtest: cat models: MARUBOX-lo.glb is a valid textured GLB under 300 KB
+ok 157 - cat models: MARUBOX-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.135789
+  type: 'test'
+  ...
+# Subtest: cat models: STREETBOB.glb is a valid textured GLB under 800 KB
+ok 158 - cat models: STREETBOB.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.65006
+  type: 'test'
+  ...
+# Subtest: cat models: STREETBOB-lo.glb is a valid textured GLB under 300 KB
+ok 159 - cat models: STREETBOB-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.189478
+  type: 'test'
+  ...
+# Subtest: cat models: LILBUBCAT.glb is a valid textured GLB under 800 KB
+ok 160 - cat models: LILBUBCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.685081
+  type: 'test'
+  ...
+# Subtest: cat models: LILBUBCAT-lo.glb is a valid textured GLB under 300 KB
+ok 161 - cat models: LILBUBCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.145039
+  type: 'test'
+  ...
+# Subtest: cat models: PUSHEENX.glb is a valid textured GLB under 800 KB
+ok 162 - cat models: PUSHEENX.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 2.982175
+  type: 'test'
+  ...
+# Subtest: cat models: PUSHEENX-lo.glb is a valid textured GLB under 300 KB
+ok 163 - cat models: PUSHEENX-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.258544
+  type: 'test'
+  ...
+# Subtest: cat models: KPURRY.glb is a valid textured GLB under 800 KB
+ok 164 - cat models: KPURRY.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.622302
+  type: 'test'
+  ...
+# Subtest: cat models: KPURRY-lo.glb is a valid textured GLB under 300 KB
+ok 165 - cat models: KPURRY-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.201974
+  type: 'test'
+  ...
+# Subtest: cat models: MEOWTHR.glb is a valid textured GLB under 800 KB
+ok 166 - cat models: MEOWTHR.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.552886
+  type: 'test'
+  ...
+# Subtest: cat models: MEOWTHR-lo.glb is a valid textured GLB under 300 KB
+ok 167 - cat models: MEOWTHR-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.180037
+  type: 'test'
+  ...
+# Subtest: cat models: DELILAHCAT.glb is a valid textured GLB under 800 KB
+ok 168 - cat models: DELILAHCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.582706
+  type: 'test'
+  ...
+# Subtest: cat models: DELILAHCAT-lo.glb is a valid textured GLB under 300 KB
+ok 169 - cat models: DELILAHCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.205467
+  type: 'test'
+  ...
+# Subtest: cat models: LALEO.glb is a valid textured GLB under 800 KB
+ok 170 - cat models: LALEO.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.571568
+  type: 'test'
+  ...
+# Subtest: cat models: LALEO-lo.glb is a valid textured GLB under 300 KB
+ok 171 - cat models: LALEO-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.216754
+  type: 'test'
+  ...
+# Subtest: cat models: WILLOWCAT.glb is a valid textured GLB under 800 KB
+ok 172 - cat models: WILLOWCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 3.544229
+  type: 'test'
+  ...
+# Subtest: cat models: WILLOWCAT-lo.glb is a valid textured GLB under 300 KB
+ok 173 - cat models: WILLOWCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.245328
+  type: 'test'
+  ...
+# Subtest: cat models: GLICAT.glb is a valid textured GLB under 800 KB
+ok 174 - cat models: GLICAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.654616
+  type: 'test'
+  ...
+# Subtest: cat models: GLICAT-lo.glb is a valid textured GLB under 300 KB
+ok 175 - cat models: GLICAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.188879
+  type: 'test'
+  ...
+# Subtest: cat models: TOMBILICAT.glb is a valid textured GLB under 800 KB
+ok 176 - cat models: TOMBILICAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.562832
+  type: 'test'
+  ...
+# Subtest: cat models: TOMBILICAT-lo.glb is a valid textured GLB under 300 KB
+ok 177 - cat models: TOMBILICAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.175363
+  type: 'test'
+  ...
+# Subtest: cat models: STEPANCAT.glb is a valid textured GLB under 800 KB
+ok 178 - cat models: STEPANCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.582758
+  type: 'test'
+  ...
+# Subtest: cat models: STEPANCAT-lo.glb is a valid textured GLB under 300 KB
+ok 179 - cat models: STEPANCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.288565
+  type: 'test'
+  ...
+# Subtest: cat models: BUTTERED.glb is a valid textured GLB under 800 KB
+ok 180 - cat models: BUTTERED.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.674089
+  type: 'test'
+  ...
+# Subtest: cat models: BUTTERED-lo.glb is a valid textured GLB under 300 KB
+ok 181 - cat models: BUTTERED-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.202622
+  type: 'test'
+  ...
+# Subtest: cat models: TAMAEKI.glb is a valid textured GLB under 800 KB
+ok 182 - cat models: TAMAEKI.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.54544
+  type: 'test'
+  ...
+# Subtest: cat models: TAMAEKI-lo.glb is a valid textured GLB under 300 KB
+ok 183 - cat models: TAMAEKI-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 7.523437
+  type: 'test'
+  ...
+# Subtest: cat models: NOSTROMCAT.glb is a valid textured GLB under 800 KB
+ok 184 - cat models: NOSTROMCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.70346
+  type: 'test'
+  ...
+# Subtest: cat models: NOSTROMCAT-lo.glb is a valid textured GLB under 300 KB
+ok 185 - cat models: NOSTROMCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.230446
+  type: 'test'
+  ...
+# Subtest: cat models: FLERKENCAT.glb is a valid textured GLB under 800 KB
+ok 186 - cat models: FLERKENCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.620434
+  type: 'test'
+  ...
+# Subtest: cat models: FLERKENCAT-lo.glb is a valid textured GLB under 300 KB
+ok 187 - cat models: FLERKENCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.179362
+  type: 'test'
+  ...
+# Subtest: cat models: CROOKSHNK.glb is a valid textured GLB under 800 KB
+ok 188 - cat models: CROOKSHNK.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.565361
+  type: 'test'
+  ...
+# Subtest: cat models: CROOKSHNK-lo.glb is a valid textured GLB under 300 KB
+ok 189 - cat models: CROOKSHNK-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.204916
+  type: 'test'
+  ...
+# Subtest: cat models: MARIEAC.glb is a valid textured GLB under 800 KB
+ok 190 - cat models: MARIEAC.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.524106
+  type: 'test'
+  ...
+# Subtest: cat models: MARIEAC-lo.glb is a valid textured GLB under 300 KB
+ok 191 - cat models: MARIEAC-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.289005
+  type: 'test'
+  ...
+# Subtest: cat models: CHESHIRCAT.glb is a valid textured GLB under 800 KB
+ok 192 - cat models: CHESHIRCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.567354
+  type: 'test'
+  ...
+# Subtest: cat models: CHESHIRCAT-lo.glb is a valid textured GLB under 300 KB
+ok 193 - cat models: CHESHIRCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.156991
+  type: 'test'
+  ...
+# Subtest: cat models: SUCCOTASH.glb is a valid textured GLB under 800 KB
+ok 194 - cat models: SUCCOTASH.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.537035
+  type: 'test'
+  ...
+# Subtest: cat models: SUCCOTASH-lo.glb is a valid textured GLB under 300 KB
+ok 195 - cat models: SUCCOTASH-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.277724
+  type: 'test'
+  ...
+# Subtest: cat models: NEKOBUS.glb is a valid textured GLB under 800 KB
+ok 196 - cat models: NEKOBUS.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.604627
+  type: 'test'
+  ...
+# Subtest: cat models: NEKOBUS-lo.glb is a valid textured GLB under 300 KB
+ok 197 - cat models: NEKOBUS-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.300991
+  type: 'test'
+  ...
+# Subtest: cat models: PRISMPAW.glb is a valid textured GLB under 800 KB
+ok 198 - cat models: PRISMPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.619837
+  type: 'test'
+  ...
+# Subtest: cat models: PRISMPAW-lo.glb is a valid textured GLB under 300 KB
+ok 199 - cat models: PRISMPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.195824
+  type: 'test'
+  ...
+# Subtest: cat models: TARTANPAW.glb is a valid textured GLB under 800 KB
+ok 200 - cat models: TARTANPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.420115
+  type: 'test'
+  ...
+# Subtest: cat models: TARTANPAW-lo.glb is a valid textured GLB under 300 KB
+ok 201 - cat models: TARTANPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.382761
+  type: 'test'
+  ...
+# Subtest: cat models: BURLYPAW.glb is a valid textured GLB under 800 KB
+ok 202 - cat models: BURLYPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.766921
+  type: 'test'
+  ...
+# Subtest: cat models: BURLYPAW-lo.glb is a valid textured GLB under 300 KB
+ok 203 - cat models: BURLYPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 10.238275
+  type: 'test'
+  ...
+# Subtest: cat models: SUNSTRETCH.glb is a valid textured GLB under 800 KB
+ok 204 - cat models: SUNSTRETCH.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.902256
+  type: 'test'
+  ...
+# Subtest: cat models: SUNSTRETCH-lo.glb is a valid textured GLB under 300 KB
+ok 205 - cat models: SUNSTRETCH-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.285741
+  type: 'test'
+  ...
+# Subtest: cat models: AMRCAT.glb is a valid textured GLB under 800 KB
+ok 206 - cat models: AMRCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.817164
+  type: 'test'
+  ...
+# Subtest: cat models: AMRCAT-lo.glb is a valid textured GLB under 300 KB
+ok 207 - cat models: AMRCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.315048
+  type: 'test'
+  ...
+# Subtest: cat models: PEPPERCAT.glb is a valid textured GLB under 800 KB
+ok 208 - cat models: PEPPERCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.657593
+  type: 'test'
+  ...
+# Subtest: cat models: PEPPERCAT-lo.glb is a valid textured GLB under 300 KB
+ok 209 - cat models: PEPPERCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.350194
+  type: 'test'
+  ...
+# Subtest: cat models: KIOSKPAW.glb is a valid textured GLB under 800 KB
+ok 210 - cat models: KIOSKPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.754991
+  type: 'test'
+  ...
+# Subtest: cat models: KIOSKPAW-lo.glb is a valid textured GLB under 300 KB
+ok 211 - cat models: KIOSKPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.276535
+  type: 'test'
+  ...
+# Subtest: cat models: SANDSTEP.glb is a valid textured GLB under 800 KB
+ok 212 - cat models: SANDSTEP.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 3.330828
+  type: 'test'
+  ...
+# Subtest: cat models: SANDSTEP-lo.glb is a valid textured GLB under 300 KB
+ok 213 - cat models: SANDSTEP-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.200446
+  type: 'test'
+  ...
+# Subtest: cat models: WAYBILL.glb is a valid textured GLB under 800 KB
+ok 214 - cat models: WAYBILL.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.353042
+  type: 'test'
+  ...
+# Subtest: cat models: WAYBILL-lo.glb is a valid textured GLB under 300 KB
+ok 215 - cat models: WAYBILL-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 5.45344
+  type: 'test'
+  ...
+# Subtest: cat models: WHIRRPAW.glb is a valid textured GLB under 800 KB
+ok 216 - cat models: WHIRRPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.304854
+  type: 'test'
+  ...
+# Subtest: cat models: WHIRRPAW-lo.glb is a valid textured GLB under 300 KB
+ok 217 - cat models: WHIRRPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.135581
+  type: 'test'
+  ...
+# Subtest: cat models: WINDSOCK.glb is a valid textured GLB under 800 KB
+ok 218 - cat models: WINDSOCK.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.325874
+  type: 'test'
+  ...
+# Subtest: cat models: WINDSOCK-lo.glb is a valid textured GLB under 300 KB
+ok 219 - cat models: WINDSOCK-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.124211
+  type: 'test'
+  ...
+# Subtest: cat models: VIGNETPAW.glb is a valid textured GLB under 800 KB
+ok 220 - cat models: VIGNETPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.267986
+  type: 'test'
+  ...
+# Subtest: cat models: VIGNETPAW-lo.glb is a valid textured GLB under 300 KB
+ok 221 - cat models: VIGNETPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.124262
+  type: 'test'
+  ...
+# Subtest: cat models: CANDLEWICK.glb is a valid textured GLB under 800 KB
+ok 222 - cat models: CANDLEWICK.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.374642
+  type: 'test'
+  ...
+# Subtest: cat models: CANDLEWICK-lo.glb is a valid textured GLB under 300 KB
+ok 223 - cat models: CANDLEWICK-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.13783
+  type: 'test'
+  ...
+# Subtest: cat models: TOMRUTGERS.glb is a valid textured GLB under 800 KB
+ok 224 - cat models: TOMRUTGERS.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.432814
+  type: 'test'
+  ...
+# Subtest: cat models: TOMRUTGERS-lo.glb is a valid textured GLB under 300 KB
+ok 225 - cat models: TOMRUTGERS-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.16619
+  type: 'test'
+  ...
+# Subtest: cat models: LACQUER.glb is a valid textured GLB under 800 KB
+ok 226 - cat models: LACQUER.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.456744
+  type: 'test'
+  ...
+# Subtest: cat models: LACQUER-lo.glb is a valid textured GLB under 300 KB
+ok 227 - cat models: LACQUER-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.202711
+  type: 'test'
+  ...
+# Subtest: cat models: RUBYCAT.glb is a valid textured GLB under 800 KB
+ok 228 - cat models: RUBYCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.676054
+  type: 'test'
+  ...
+# Subtest: cat models: RUBYCAT-lo.glb is a valid textured GLB under 300 KB
+ok 229 - cat models: RUBYCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.252139
+  type: 'test'
+  ...
+# Subtest: cat models: SORRELPAW.glb is a valid textured GLB under 800 KB
+ok 230 - cat models: SORRELPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.559507
+  type: 'test'
+  ...
+# Subtest: cat models: SORRELPAW-lo.glb is a valid textured GLB under 300 KB
+ok 231 - cat models: SORRELPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.201882
+  type: 'test'
+  ...
+# Subtest: cat models: SUGARSOOT.glb is a valid textured GLB under 800 KB
+ok 232 - cat models: SUGARSOOT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.535822
+  type: 'test'
+  ...
+# Subtest: cat models: SUGARSOOT-lo.glb is a valid textured GLB under 300 KB
+ok 233 - cat models: SUGARSOOT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.254599
+  type: 'test'
+  ...
+# Subtest: cat models: GRIDDLE.glb is a valid textured GLB under 800 KB
+ok 234 - cat models: GRIDDLE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.459893
+  type: 'test'
+  ...
+# Subtest: cat models: GRIDDLE-lo.glb is a valid textured GLB under 300 KB
+ok 235 - cat models: GRIDDLE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.25056
+  type: 'test'
+  ...
+# Subtest: cat models: ROOKIEPAW.glb is a valid textured GLB under 800 KB
+ok 236 - cat models: ROOKIEPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.534316
+  type: 'test'
+  ...
+# Subtest: cat models: ROOKIEPAW-lo.glb is a valid textured GLB under 300 KB
+ok 237 - cat models: ROOKIEPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.214857
+  type: 'test'
+  ...
+# Subtest: cat models: CORSAGE.glb is a valid textured GLB under 800 KB
+ok 238 - cat models: CORSAGE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 8.584777
+  type: 'test'
+  ...
+# Subtest: cat models: CORSAGE-lo.glb is a valid textured GLB under 300 KB
+ok 239 - cat models: CORSAGE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.341815
+  type: 'test'
+  ...
+# Subtest: cat models: RAFTERPAW.glb is a valid textured GLB under 800 KB
+ok 240 - cat models: RAFTERPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.678013
+  type: 'test'
+  ...
+# Subtest: cat models: RAFTERPAW-lo.glb is a valid textured GLB under 300 KB
+ok 241 - cat models: RAFTERPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.242318
+  type: 'test'
+  ...
+# Subtest: cat models: UMBERPAW.glb is a valid textured GLB under 800 KB
+ok 242 - cat models: UMBERPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.534192
+  type: 'test'
+  ...
+# Subtest: cat models: UMBERPAW-lo.glb is a valid textured GLB under 300 KB
+ok 243 - cat models: UMBERPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.2158
+  type: 'test'
+  ...
+# Subtest: cat models: PUMICE.glb is a valid textured GLB under 800 KB
+ok 244 - cat models: PUMICE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.528406
+  type: 'test'
+  ...
+# Subtest: cat models: PUMICE-lo.glb is a valid textured GLB under 300 KB
+ok 245 - cat models: PUMICE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.226693
+  type: 'test'
+  ...
+# Subtest: cat models: JITTERPAW.glb is a valid textured GLB under 800 KB
+ok 246 - cat models: JITTERPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.839599
+  type: 'test'
+  ...
+# Subtest: cat models: JITTERPAW-lo.glb is a valid textured GLB under 300 KB
+ok 247 - cat models: JITTERPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.223602
+  type: 'test'
+  ...
+# Subtest: cat models: STUBTAIL.glb is a valid textured GLB under 800 KB
+ok 248 - cat models: STUBTAIL.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.71671
+  type: 'test'
+  ...
+# Subtest: cat models: STUBTAIL-lo.glb is a valid textured GLB under 300 KB
+ok 249 - cat models: STUBTAIL-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.262479
+  type: 'test'
+  ...
+# Subtest: cat models: CASENAP.glb is a valid textured GLB under 800 KB
+ok 250 - cat models: CASENAP.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.627052
+  type: 'test'
+  ...
+# Subtest: cat models: CASENAP-lo.glb is a valid textured GLB under 300 KB
+ok 251 - cat models: CASENAP-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.262149
+  type: 'test'
+  ...
+# Subtest: cat models: PAPRIKA.glb is a valid textured GLB under 800 KB
+ok 252 - cat models: PAPRIKA.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.668355
+  type: 'test'
+  ...
+# Subtest: cat models: PAPRIKA-lo.glb is a valid textured GLB under 300 KB
+ok 253 - cat models: PAPRIKA-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.263269
+  type: 'test'
+  ...
+# Subtest: cat models: SNUGPAW.glb is a valid textured GLB under 800 KB
+ok 254 - cat models: SNUGPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.49871
+  type: 'test'
+  ...
+# Subtest: cat models: SNUGPAW-lo.glb is a valid textured GLB under 300 KB
+ok 255 - cat models: SNUGPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 4.413802
+  type: 'test'
+  ...
+# Subtest: cat models: MITTENSCAT.glb is a valid textured GLB under 800 KB
+ok 256 - cat models: MITTENSCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.7258
+  type: 'test'
+  ...
+# Subtest: cat models: MITTENSCAT-lo.glb is a valid textured GLB under 300 KB
+ok 257 - cat models: MITTENSCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.178905
+  type: 'test'
+  ...
+# Subtest: cat models: AMBERDROP.glb is a valid textured GLB under 800 KB
+ok 258 - cat models: AMBERDROP.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 3.528763
+  type: 'test'
+  ...
+# Subtest: cat models: AMBERDROP-lo.glb is a valid textured GLB under 300 KB
+ok 259 - cat models: AMBERDROP-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.989369
+  type: 'test'
+  ...
+# Subtest: cat models: DROWSEPAW.glb is a valid textured GLB under 800 KB
+ok 260 - cat models: DROWSEPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.798173
+  type: 'test'
+  ...
+# Subtest: cat models: DROWSEPAW-lo.glb is a valid textured GLB under 300 KB
+ok 261 - cat models: DROWSEPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.451048
+  type: 'test'
+  ...
+# Subtest: cat models: CURFEWPAW.glb is a valid textured GLB under 800 KB
+ok 262 - cat models: CURFEWPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.574227
+  type: 'test'
+  ...
+# Subtest: cat models: CURFEWPAW-lo.glb is a valid textured GLB under 300 KB
+ok 263 - cat models: CURFEWPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 3.660452
+  type: 'test'
+  ...
+# Subtest: cat models: LICHENPAW.glb is a valid textured GLB under 800 KB
+ok 264 - cat models: LICHENPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.782867
+  type: 'test'
+  ...
+# Subtest: cat models: LICHENPAW-lo.glb is a valid textured GLB under 300 KB
+ok 265 - cat models: LICHENPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.277285
+  type: 'test'
+  ...
+# Subtest: cat models: RUSTLEPAW.glb is a valid textured GLB under 800 KB
+ok 266 - cat models: RUSTLEPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.60175
+  type: 'test'
+  ...
+# Subtest: cat models: RUSTLEPAW-lo.glb is a valid textured GLB under 300 KB
+ok 267 - cat models: RUSTLEPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.283577
+  type: 'test'
+  ...
+# Subtest: cat models: ICICLEPAW.glb is a valid textured GLB under 800 KB
+ok 268 - cat models: ICICLEPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.642618
+  type: 'test'
+  ...
+# Subtest: cat models: ICICLEPAW-lo.glb is a valid textured GLB under 300 KB
+ok 269 - cat models: ICICLEPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.26524
+  type: 'test'
+  ...
+# Subtest: cat models: RIMESTRIPE.glb is a valid textured GLB under 800 KB
+ok 270 - cat models: RIMESTRIPE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.653697
+  type: 'test'
+  ...
+# Subtest: cat models: RIMESTRIPE-lo.glb is a valid textured GLB under 300 KB
+ok 271 - cat models: RIMESTRIPE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.257448
+  type: 'test'
+  ...
+# Subtest: cat models: CABLETAIL.glb is a valid textured GLB under 800 KB
+ok 272 - cat models: CABLETAIL.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.717165
+  type: 'test'
+  ...
+# Subtest: cat models: CABLETAIL-lo.glb is a valid textured GLB under 300 KB
+ok 273 - cat models: CABLETAIL-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.305041
+  type: 'test'
+  ...
+# Subtest: cat models: MILLRACE.glb is a valid textured GLB under 800 KB
+ok 274 - cat models: MILLRACE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.697572
+  type: 'test'
+  ...
+# Subtest: cat models: MILLRACE-lo.glb is a valid textured GLB under 300 KB
+ok 275 - cat models: MILLRACE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.268948
+  type: 'test'
+  ...
+# Subtest: cat models: PARLORPUFF.glb is a valid textured GLB under 800 KB
+ok 276 - cat models: PARLORPUFF.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.712267
+  type: 'test'
+  ...
+# Subtest: cat models: PARLORPUFF-lo.glb is a valid textured GLB under 300 KB
+ok 277 - cat models: PARLORPUFF-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.134067
+  type: 'test'
+  ...
+# Subtest: cat models: SQUINTPAW.glb is a valid textured GLB under 800 KB
+ok 278 - cat models: SQUINTPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.52625
+  type: 'test'
+  ...
+# Subtest: cat models: SQUINTPAW-lo.glb is a valid textured GLB under 300 KB
+ok 279 - cat models: SQUINTPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.221001
+  type: 'test'
+  ...
+# Subtest: cat models: COTTAPAW.glb is a valid textured GLB under 800 KB
+ok 280 - cat models: COTTAPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.420476
+  type: 'test'
+  ...
+# Subtest: cat models: COTTAPAW-lo.glb is a valid textured GLB under 300 KB
+ok 281 - cat models: COTTAPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.257726
+  type: 'test'
+  ...
+# Subtest: cat models: HOVERPAW.glb is a valid textured GLB under 800 KB
+ok 282 - cat models: HOVERPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 6.717087
+  type: 'test'
+  ...
+# Subtest: cat models: HOVERPAW-lo.glb is a valid textured GLB under 300 KB
+ok 283 - cat models: HOVERPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.339372
+  type: 'test'
+  ...
+# Subtest: cat models: HUNCHPAW.glb is a valid textured GLB under 800 KB
+ok 284 - cat models: HUNCHPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 3.634931
+  type: 'test'
+  ...
+# Subtest: cat models: HUNCHPAW-lo.glb is a valid textured GLB under 300 KB
+ok 285 - cat models: HUNCHPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.350343
+  type: 'test'
+  ...
+# Subtest: cat models: SILKSTRIPE.glb is a valid textured GLB under 800 KB
+ok 286 - cat models: SILKSTRIPE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.614472
+  type: 'test'
+  ...
+# Subtest: cat models: SILKSTRIPE-lo.glb is a valid textured GLB under 300 KB
+ok 287 - cat models: SILKSTRIPE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.843242
+  type: 'test'
+  ...
+# Subtest: cat models: KNITPAW.glb is a valid textured GLB under 800 KB
+ok 288 - cat models: KNITPAW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.65285
+  type: 'test'
+  ...
+# Subtest: cat models: KNITPAW-lo.glb is a valid textured GLB under 300 KB
+ok 289 - cat models: KNITPAW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 3.321052
+  type: 'test'
+  ...
+# Subtest: cat models: cate-meme.glb is a valid textured GLB under 800 KB
+ok 290 - cat models: cate-meme.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.731717
+  type: 'test'
+  ...
+# Subtest: cat models: cate-meme-lo.glb is a valid textured GLB under 300 KB
+ok 291 - cat models: cate-meme-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.435266
+  type: 'test'
+  ...
+# Subtest: cat models: anonymous-cat.glb is a valid textured GLB under 800 KB
+ok 292 - cat models: anonymous-cat.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.598748
+  type: 'test'
+  ...
+# Subtest: cat models: anonymous-cat-lo.glb is a valid textured GLB under 300 KB
+ok 293 - cat models: anonymous-cat-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.262009
+  type: 'test'
+  ...
+# Subtest: cat models: popcat.glb is a valid textured GLB under 800 KB
+ok 294 - cat models: popcat.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.586139
+  type: 'test'
+  ...
+# Subtest: cat models: popcat-lo.glb is a valid textured GLB under 300 KB
+ok 295 - cat models: popcat-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.211677
+  type: 'test'
+  ...
+# Subtest: cat models: cat-in-a-dogs-world.glb is a valid textured GLB under 800 KB
+ok 296 - cat models: cat-in-a-dogs-world.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 5.066052
+  type: 'test'
+  ...
+# Subtest: cat models: cat-in-a-dogs-world-lo.glb is a valid textured GLB under 300 KB
+ok 297 - cat models: cat-in-a-dogs-world-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.252929
+  type: 'test'
+  ...
+# Subtest: cat models: catwifhat-2.glb is a valid textured GLB under 800 KB
+ok 298 - cat models: catwifhat-2.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.338252
+  type: 'test'
+  ...
+# Subtest: cat models: catwifhat-2-lo.glb is a valid textured GLB under 300 KB
+ok 299 - cat models: catwifhat-2-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.190722
+  type: 'test'
+  ...
+# Subtest: cat models: pepecat-2.glb is a valid textured GLB under 800 KB
+ok 300 - cat models: pepecat-2.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.194442
+  type: 'test'
+  ...
+# Subtest: cat models: pepecat-2-lo.glb is a valid textured GLB under 300 KB
+ok 301 - cat models: pepecat-2-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.094042
+  type: 'test'
+  ...
+# Subtest: cat models: wen-4.glb is a valid textured GLB under 800 KB
+ok 302 - cat models: wen-4.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 8.552134
+  type: 'test'
+  ...
+# Subtest: cat models: wen-4-lo.glb is a valid textured GLB under 300 KB
+ok 303 - cat models: wen-4-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 1.417486
+  type: 'test'
+  ...
+# Subtest: cat models: tsuki.glb is a valid textured GLB under 800 KB
+ok 304 - cat models: tsuki.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.403551
+  type: 'test'
+  ...
+# Subtest: cat models: tsuki-lo.glb is a valid textured GLB under 300 KB
+ok 305 - cat models: tsuki-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.202967
+  type: 'test'
+  ...
+# Subtest: cat models: hello-kitty-sol.glb is a valid textured GLB under 800 KB
+ok 306 - cat models: hello-kitty-sol.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.321524
+  type: 'test'
+  ...
+# Subtest: cat models: hello-kitty-sol-lo.glb is a valid textured GLB under 300 KB
+ok 307 - cat models: hello-kitty-sol-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.134304
+  type: 'test'
+  ...
+# Subtest: cat models: sillynubcat.glb is a valid textured GLB under 800 KB
+ok 308 - cat models: sillynubcat.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.280488
+  type: 'test'
+  ...
+# Subtest: cat models: sillynubcat-lo.glb is a valid textured GLB under 300 KB
+ok 309 - cat models: sillynubcat-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 2.358982
+  type: 'test'
+  ...
+# Subtest: cat models: michi.glb is a valid textured GLB under 800 KB
+ok 310 - cat models: michi.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.348835
+  type: 'test'
+  ...
+# Subtest: cat models: michi-lo.glb is a valid textured GLB under 300 KB
+ok 311 - cat models: michi-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.24986
+  type: 'test'
+  ...
+# Subtest: cat models: vibing-cat-coin.glb is a valid textured GLB under 800 KB
+ok 312 - cat models: vibing-cat-coin.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.339857
+  type: 'test'
+  ...
+# Subtest: cat models: vibing-cat-coin-lo.glb is a valid textured GLB under 300 KB
+ok 313 - cat models: vibing-cat-coin-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.218693
+  type: 'test'
+  ...
+# Subtest: cat models: catcoin-6.glb is a valid textured GLB under 800 KB
+ok 314 - cat models: catcoin-6.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.321584
+  type: 'test'
+  ...
+# Subtest: cat models: catcoin-6-lo.glb is a valid textured GLB under 300 KB
+ok 315 - cat models: catcoin-6-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.154625
+  type: 'test'
+  ...
+# Subtest: cat models: raydium-cat.glb is a valid textured GLB under 800 KB
+ok 316 - cat models: raydium-cat.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.239688
+  type: 'test'
+  ...
+# Subtest: cat models: raydium-cat-lo.glb is a valid textured GLB under 300 KB
+ok 317 - cat models: raydium-cat-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.121857
+  type: 'test'
+  ...
+# Subtest: cat models: ket-3.glb is a valid textured GLB under 800 KB
+ok 318 - cat models: ket-3.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.226461
+  type: 'test'
+  ...
+# Subtest: cat models: ket-3-lo.glb is a valid textured GLB under 300 KB
+ok 319 - cat models: ket-3-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.145103
+  type: 'test'
+  ...
+# Subtest: cat models: maneki.glb is a valid textured GLB under 800 KB
+ok 320 - cat models: maneki.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.309164
+  type: 'test'
+  ...
+# Subtest: cat models: maneki-lo.glb is a valid textured GLB under 300 KB
+ok 321 - cat models: maneki-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.152744
+  type: 'test'
+  ...
+# Subtest: cat models: gta6cat.glb is a valid textured GLB under 800 KB
+ok 322 - cat models: gta6cat.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.224634
+  type: 'test'
+  ...
+# Subtest: cat models: gta6cat-lo.glb is a valid textured GLB under 300 KB
+ok 323 - cat models: gta6cat-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.117072
+  type: 'test'
+  ...
+# Subtest: cat models: stonk-cats.glb is a valid textured GLB under 800 KB
+ok 324 - cat models: stonk-cats.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.469779
+  type: 'test'
+  ...
+# Subtest: cat models: stonk-cats-lo.glb is a valid textured GLB under 300 KB
+ok 325 - cat models: stonk-cats-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.226846
+  type: 'test'
+  ...
+# Subtest: cat models: hosico-cat.glb is a valid textured GLB under 800 KB
+ok 326 - cat models: hosico-cat.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.171441
+  type: 'test'
+  ...
+# Subtest: cat models: hosico-cat-lo.glb is a valid textured GLB under 300 KB
+ok 327 - cat models: hosico-cat-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.165476
+  type: 'test'
+  ...
+# Subtest: cat models: red-kitten-crew.glb is a valid textured GLB under 800 KB
+ok 328 - cat models: red-kitten-crew.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.34912
+  type: 'test'
+  ...
+# Subtest: cat models: red-kitten-crew-lo.glb is a valid textured GLB under 300 KB
+ok 329 - cat models: red-kitten-crew-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.171927
+  type: 'test'
+  ...
+# Subtest: cat models: leveraged-cat.glb is a valid textured GLB under 800 KB
+ok 330 - cat models: leveraged-cat.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.246438
+  type: 'test'
+  ...
+# Subtest: cat models: leveraged-cat-lo.glb is a valid textured GLB under 300 KB
+ok 331 - cat models: leveraged-cat-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.142957
+  type: 'test'
+  ...
+# Subtest: cat models: BIGGLESCAT.glb is a valid textured GLB under 800 KB
+ok 332 - cat models: BIGGLESCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.262638
+  type: 'test'
+  ...
+# Subtest: cat models: BIGGLESCAT-lo.glb is a valid textured GLB under 300 KB
+ok 333 - cat models: BIGGLESCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 4.442296
+  type: 'test'
+  ...
+# Subtest: cat models: NALACATCAT.glb is a valid textured GLB under 800 KB
+ok 334 - cat models: NALACATCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.405543
+  type: 'test'
+  ...
+# Subtest: cat models: NALACATCAT-lo.glb is a valid textured GLB under 300 KB
+ok 335 - cat models: NALACATCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.179855
+  type: 'test'
+  ...
+# Subtest: cat models: LUNAMOOCAT.glb is a valid textured GLB under 800 KB
+ok 336 - cat models: LUNAMOOCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.322204
+  type: 'test'
+  ...
+# Subtest: cat models: LUNAMOOCAT-lo.glb is a valid textured GLB under 300 KB
+ok 337 - cat models: LUNAMOOCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.2452
+  type: 'test'
+  ...
+# Subtest: cat models: PICKLECCAT.glb is a valid textured GLB under 800 KB
+ok 338 - cat models: PICKLECCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.424437
+  type: 'test'
+  ...
+# Subtest: cat models: PICKLECCAT-lo.glb is a valid textured GLB under 300 KB
+ok 339 - cat models: PICKLECCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.188315
+  type: 'test'
+  ...
+# Subtest: cat models: FELICETCAT.glb is a valid textured GLB under 800 KB
+ok 340 - cat models: FELICETCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.302476
+  type: 'test'
+  ...
+# Subtest: cat models: FELICETCAT-lo.glb is a valid textured GLB under 300 KB
+ok 341 - cat models: FELICETCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.1457
+  type: 'test'
+  ...
+# Subtest: cat models: SABERHACAT.glb is a valid textured GLB under 800 KB
+ok 342 - cat models: SABERHACAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.271508
+  type: 'test'
+  ...
+# Subtest: cat models: SABERHACAT-lo.glb is a valid textured GLB under 300 KB
+ok 343 - cat models: SABERHACAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.154363
+  type: 'test'
+  ...
+# Subtest: cat models: DIPLOMOG.glb is a valid textured GLB under 800 KB
+ok 344 - cat models: DIPLOMOG.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.248841
+  type: 'test'
+  ...
+# Subtest: cat models: DIPLOMOG-lo.glb is a valid textured GLB under 300 KB
+ok 345 - cat models: DIPLOMOG-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.232105
+  type: 'test'
+  ...
+# Subtest: cat models: COLMEOW2.glb is a valid textured GLB under 800 KB
+ok 346 - cat models: COLMEOW2.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.266157
+  type: 'test'
+  ...
+# Subtest: cat models: COLMEOW2-lo.glb is a valid textured GLB under 300 KB
+ok 347 - cat models: COLMEOW2-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 3.395177
+  type: 'test'
+  ...
+# Subtest: cat models: VENUS2F.glb is a valid textured GLB under 800 KB
+ok 348 - cat models: VENUS2F.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.420523
+  type: 'test'
+  ...
+# Subtest: cat models: VENUS2F-lo.glb is a valid textured GLB under 300 KB
+ok 349 - cat models: VENUS2F-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.15792
+  type: 'test'
+  ...
+# Subtest: cat models: CHEETLE.glb is a valid textured GLB under 800 KB
+ok 350 - cat models: CHEETLE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.261877
+  type: 'test'
+  ...
+# Subtest: cat models: CHEETLE-lo.glb is a valid textured GLB under 300 KB
+ok 351 - cat models: CHEETLE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.115414
+  type: 'test'
+  ...
+# Subtest: cat models: TALKTOM.glb is a valid textured GLB under 800 KB
+ok 352 - cat models: TALKTOM.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.301046
+  type: 'test'
+  ...
+# Subtest: cat models: TALKTOM-lo.glb is a valid textured GLB under 300 KB
+ok 353 - cat models: TALKTOM-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.118597
+  type: 'test'
+  ...
+# Subtest: cat models: MRSNORRCAT.glb is a valid textured GLB under 800 KB
+ok 354 - cat models: MRSNORRCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.211081
+  type: 'test'
+  ...
+# Subtest: cat models: MRSNORRCAT-lo.glb is a valid textured GLB under 300 KB
+ok 355 - cat models: MRSNORRCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.101591
+  type: 'test'
+  ...
+# Subtest: cat models: CHURCHCCAT.glb is a valid textured GLB under 800 KB
+ok 356 - cat models: CHURCHCCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.212492
+  type: 'test'
+  ...
+# Subtest: cat models: CHURCHCCAT-lo.glb is a valid textured GLB under 300 KB
+ok 357 - cat models: CHURCHCCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.221777
+  type: 'test'
+  ...
+# Subtest: cat models: THACKERY.glb is a valid textured GLB under 800 KB
+ok 358 - cat models: THACKERY.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.494766
+  type: 'test'
+  ...
+# Subtest: cat models: THACKERY-lo.glb is a valid textured GLB under 300 KB
+ok 359 - cat models: THACKERY-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.214998
+  type: 'test'
+  ...
+# Subtest: cat models: FIGAROCAT.glb is a valid textured GLB under 800 KB
+ok 360 - cat models: FIGAROCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.416339
+  type: 'test'
+  ...
+# Subtest: cat models: FIGAROCAT-lo.glb is a valid textured GLB under 300 KB
+ok 361 - cat models: FIGAROCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.153723
+  type: 'test'
+  ...
+# Subtest: cat models: GUMBALLW.glb is a valid textured GLB under 800 KB
+ok 362 - cat models: GUMBALLW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.289937
+  type: 'test'
+  ...
+# Subtest: cat models: GUMBALLW-lo.glb is a valid textured GLB under 300 KB
+ok 363 - cat models: GUMBALLW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.134888
+  type: 'test'
+  ...
+# Subtest: cat models: FELIX1919.glb is a valid textured GLB under 800 KB
+ok 364 - cat models: FELIX1919.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.214622
+  type: 'test'
+  ...
+# Subtest: cat models: FELIX1919-lo.glb is a valid textured GLB under 300 KB
+ok 365 - cat models: FELIX1919-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.151713
+  type: 'test'
+  ...
+# Subtest: cat models: ARTEMISCAT.glb is a valid textured GLB under 800 KB
+ok 366 - cat models: ARTEMISCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.19098
+  type: 'test'
+  ...
+# Subtest: cat models: ARTEMISCAT-lo.glb is a valid textured GLB under 300 KB
+ok 367 - cat models: ARTEMISCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.091659
+  type: 'test'
+  ...
+# Subtest: cat models: SPRIGATO.glb is a valid textured GLB under 800 KB
+ok 368 - cat models: SPRIGATO.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.307102
+  type: 'test'
+  ...
+# Subtest: cat models: SPRIGATO-lo.glb is a valid textured GLB under 300 KB
+ok 369 - cat models: SPRIGATO-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.086863
+  type: 'test'
+  ...
+# Subtest: cat models: STRAYB12.glb is a valid textured GLB under 800 KB
+ok 370 - cat models: STRAYB12.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.23246
+  type: 'test'
+  ...
+# Subtest: cat models: STRAYB12-lo.glb is a valid textured GLB under 300 KB
+ok 371 - cat models: STRAYB12-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 8.301075
+  type: 'test'
+  ...
+# Subtest: cat models: GENKITTY.glb is a valid textured GLB under 800 KB
+ok 372 - cat models: GENKITTY.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 12.433836
+  type: 'test'
+  ...
+# Subtest: cat models: GENKITTY-lo.glb is a valid textured GLB under 300 KB
+ok 373 - cat models: GENKITTY-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.19569
+  type: 'test'
+  ...
+# Subtest: cat models: OCTOMONA.glb is a valid textured GLB under 800 KB
+ok 374 - cat models: OCTOMONA.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.326636
+  type: 'test'
+  ...
+# Subtest: cat models: OCTOMONA-lo.glb is a valid textured GLB under 300 KB
+ok 375 - cat models: OCTOMONA-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.151674
+  type: 'test'
+  ...
+# Subtest: cat models: SUSHITUNA.glb is a valid textured GLB under 800 KB
+ok 376 - cat models: SUSHITUNA.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.411985
+  type: 'test'
+  ...
+# Subtest: cat models: SUSHITUNA-lo.glb is a valid textured GLB under 300 KB
+ok 377 - cat models: SUSHITUNA-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.128223
+  type: 'test'
+  ...
+# Subtest: cat models: TREMAINE.glb is a valid textured GLB under 800 KB
+ok 378 - cat models: TREMAINE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.283723
+  type: 'test'
+  ...
+# Subtest: cat models: TREMAINE-lo.glb is a valid textured GLB under 300 KB
+ok 379 - cat models: TREMAINE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.147152
+  type: 'test'
+  ...
+# Subtest: cat models: DIDGACAT.glb is a valid textured GLB under 800 KB
+ok 380 - cat models: DIDGACAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.262534
+  type: 'test'
+  ...
+# Subtest: cat models: DIDGACAT-lo.glb is a valid textured GLB under 300 KB
+ok 381 - cat models: DIDGACAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.147713
+  type: 'test'
+  ...
+# Subtest: cat models: GRREAT.glb is a valid textured GLB under 800 KB
+ok 382 - cat models: GRREAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.405466
+  type: 'test'
+  ...
+# Subtest: cat models: GRREAT-lo.glb is a valid textured GLB under 300 KB
+ok 383 - cat models: GRREAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.11786
+  type: 'test'
+  ...
+# Subtest: cat models: COPYCC.glb is a valid textured GLB under 800 KB
+ok 384 - cat models: COPYCC.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.413524
+  type: 'test'
+  ...
+# Subtest: cat models: COPYCC-lo.glb is a valid textured GLB under 300 KB
+ok 385 - cat models: COPYCC-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.105731
+  type: 'test'
+  ...
+# Subtest: cat models: MUSTACHCAT.glb is a valid textured GLB under 800 KB
+ok 386 - cat models: MUSTACHCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 32.617006
+  type: 'test'
+  ...
+# Subtest: cat models: MUSTACHCAT-lo.glb is a valid textured GLB under 300 KB
+ok 387 - cat models: MUSTACHCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 8.210164
+  type: 'test'
+  ...
+# Subtest: cat models: JOCKCAT.glb is a valid textured GLB under 800 KB
+ok 388 - cat models: JOCKCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.441836
+  type: 'test'
+  ...
+# Subtest: cat models: JOCKCAT-lo.glb is a valid textured GLB under 300 KB
+ok 389 - cat models: JOCKCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.133365
+  type: 'test'
+  ...
+# Subtest: cat models: FELIXHUD.glb is a valid textured GLB under 800 KB
+ok 390 - cat models: FELIXHUD.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.210942
+  type: 'test'
+  ...
+# Subtest: cat models: FELIXHUD-lo.glb is a valid textured GLB under 300 KB
+ok 391 - cat models: FELIXHUD-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.130215
+  type: 'test'
+  ...
+# Subtest: cat models: NITAMACAT.glb is a valid textured GLB under 800 KB
+ok 392 - cat models: NITAMACAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.208356
+  type: 'test'
+  ...
+# Subtest: cat models: NITAMACAT-lo.glb is a valid textured GLB under 300 KB
+ok 393 - cat models: NITAMACAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.159165
+  type: 'test'
+  ...
+# Subtest: cat models: BLAZECAT.glb is a valid textured GLB under 800 KB
+ok 394 - cat models: BLAZECAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.476461
+  type: 'test'
+  ...
+# Subtest: cat models: BLAZECAT-lo.glb is a valid textured GLB under 300 KB
+ok 395 - cat models: BLAZECAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.141672
+  type: 'test'
+  ...
+# Subtest: cat models: CHOCOCACAT.glb is a valid textured GLB under 800 KB
+ok 396 - cat models: CHOCOCACAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.450613
+  type: 'test'
+  ...
+# Subtest: cat models: CHOCOCACAT-lo.glb is a valid textured GLB under 300 KB
+ok 397 - cat models: CHOCOCACAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.108769
+  type: 'test'
+  ...
+# Subtest: cat models: UNSINKSAM.glb is a valid textured GLB under 800 KB
+ok 398 - cat models: UNSINKSAM.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.643907
+  type: 'test'
+  ...
+# Subtest: cat models: UNSINKSAM-lo.glb is a valid textured GLB under 300 KB
+ok 399 - cat models: UNSINKSAM-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.166883
+  type: 'test'
+  ...
+# Subtest: cat models: OSCARRI.glb is a valid textured GLB under 800 KB
+ok 400 - cat models: OSCARRI.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.731516
+  type: 'test'
+  ...
+# Subtest: cat models: OSCARRI-lo.glb is a valid textured GLB under 300 KB
+ok 401 - cat models: OSCARRI-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.169434
+  type: 'test'
+  ...
+# Subtest: cat models: COLEMARM.glb is a valid textured GLB under 800 KB
+ok 402 - cat models: COLEMARM.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.434902
+  type: 'test'
+  ...
+# Subtest: cat models: COLEMARM-lo.glb is a valid textured GLB under 300 KB
+ok 403 - cat models: COLEMARM-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.180762
+  type: 'test'
+  ...
+# Subtest: cat models: TREASMOG.glb is a valid textured GLB under 800 KB
+ok 404 - cat models: TREASMOG.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.479585
+  type: 'test'
+  ...
+# Subtest: cat models: TREASMOG-lo.glb is a valid textured GLB under 300 KB
+ok 405 - cat models: TREASMOG-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.182433
+  type: 'test'
+  ...
+# Subtest: cat models: SASSYHB.glb is a valid textured GLB under 800 KB
+ok 406 - cat models: SASSYHB.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.602211
+  type: 'test'
+  ...
+# Subtest: cat models: SASSYHB-lo.glb is a valid textured GLB under 300 KB
+ok 407 - cat models: SASSYHB-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.187414
+  type: 'test'
+  ...
+# Subtest: cat models: BIGFROGGY.glb is a valid textured GLB under 800 KB
+ok 408 - cat models: BIGFROGGY.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.570631
+  type: 'test'
+  ...
+# Subtest: cat models: BIGFROGGY-lo.glb is a valid textured GLB under 300 KB
+ok 409 - cat models: BIGFROGGY-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 1.092301
+  type: 'test'
+  ...
+# Subtest: cat models: MAYORSTUB.glb is a valid textured GLB under 800 KB
+ok 410 - cat models: MAYORSTUB.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 7.358613
+  type: 'test'
+  ...
+# Subtest: cat models: MAYORSTUB-lo.glb is a valid textured GLB under 300 KB
+ok 411 - cat models: MAYORSTUB-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.234943
+  type: 'test'
+  ...
+# Subtest: cat models: FDCW.glb is a valid textured GLB under 800 KB
+ok 412 - cat models: FDCW.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.808508
+  type: 'test'
+  ...
+# Subtest: cat models: FDCW-lo.glb is a valid textured GLB under 300 KB
+ok 413 - cat models: FDCW-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.333995
+  type: 'test'
+  ...
+# Subtest: cat models: SOCKSCACAT.glb is a valid textured GLB under 800 KB
+ok 414 - cat models: SOCKSCACAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.843573
+  type: 'test'
+  ...
+# Subtest: cat models: SOCKSCACAT-lo.glb is a valid textured GLB under 300 KB
+ok 415 - cat models: SOCKSCACAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.237271
+  type: 'test'
+  ...
+# Subtest: cat models: CAITSITH.glb is a valid textured GLB under 800 KB
+ok 416 - cat models: CAITSITH.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.684282
+  type: 'test'
+  ...
+# Subtest: cat models: CAITSITH-lo.glb is a valid textured GLB under 300 KB
+ok 417 - cat models: CAITSITH-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 4.498891
+  type: 'test'
+  ...
+# Subtest: cat models: KURONEKCAT.glb is a valid textured GLB under 800 KB
+ok 418 - cat models: KURONEKCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.700969
+  type: 'test'
+  ...
+# Subtest: cat models: KURONEKCAT-lo.glb is a valid textured GLB under 300 KB
+ok 419 - cat models: KURONEKCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.291721
+  type: 'test'
+  ...
+# Subtest: cat models: MISTO.glb is a valid textured GLB under 800 KB
+ok 420 - cat models: MISTO.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.687202
+  type: 'test'
+  ...
+# Subtest: cat models: MISTO-lo.glb is a valid textured GLB under 300 KB
+ok 421 - cat models: MISTO-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.288262
+  type: 'test'
+  ...
+# Subtest: cat models: SEACAT.glb is a valid textured GLB under 800 KB
+ok 422 - cat models: SEACAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.769548
+  type: 'test'
+  ...
+# Subtest: cat models: SEACAT-lo.glb is a valid textured GLB under 300 KB
+ok 423 - cat models: SEACAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.187475
+  type: 'test'
+  ...
+# Subtest: cat models: SERPOUNCE.glb is a valid textured GLB under 800 KB
+ok 424 - cat models: SERPOUNCE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.696096
+  type: 'test'
+  ...
+# Subtest: cat models: SERPOUNCE-lo.glb is a valid textured GLB under 300 KB
+ok 425 - cat models: SERPOUNCE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 4.407818
+  type: 'test'
+  ...
+# Subtest: cat models: AZRAELCAT.glb is a valid textured GLB under 800 KB
+ok 426 - cat models: AZRAELCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.76866
+  type: 'test'
+  ...
+# Subtest: cat models: AZRAELCAT-lo.glb is a valid textured GLB under 300 KB
+ok 427 - cat models: AZRAELCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.353597
+  type: 'test'
+  ...
+# Subtest: cat models: NERMALCAT.glb is a valid textured GLB under 800 KB
+ok 428 - cat models: NERMALCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.736405
+  type: 'test'
+  ...
+# Subtest: cat models: NERMALCAT-lo.glb is a valid textured GLB under 300 KB
+ok 429 - cat models: NERMALCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.31386
+  type: 'test'
+  ...
+# Subtest: cat models: GROOVYPETE.glb is a valid textured GLB under 800 KB
+ok 430 - cat models: GROOVYPETE.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.681806
+  type: 'test'
+  ...
+# Subtest: cat models: GROOVYPETE-lo.glb is a valid textured GLB under 300 KB
+ok 431 - cat models: GROOVYPETE-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.340398
+  type: 'test'
+  ...
+# Subtest: cat models: CHISWEET.glb is a valid textured GLB under 800 KB
+ok 432 - cat models: CHISWEET.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 4.395599
+  type: 'test'
+  ...
+# Subtest: cat models: CHISWEET-lo.glb is a valid textured GLB under 300 KB
+ok 433 - cat models: CHISWEET-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 1.78662
+  type: 'test'
+  ...
+# Subtest: cat models: PALICO.glb is a valid textured GLB under 800 KB
+ok 434 - cat models: PALICO.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.78495
+  type: 'test'
+  ...
+# Subtest: cat models: PALICO-lo.glb is a valid textured GLB under 300 KB
+ok 435 - cat models: PALICO-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.364658
+  type: 'test'
+  ...
+# Subtest: cat models: ATCHOUMCAT.glb is a valid textured GLB under 800 KB
+ok 436 - cat models: ATCHOUMCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.665808
+  type: 'test'
+  ...
+# Subtest: cat models: ATCHOUMCAT-lo.glb is a valid textured GLB under 300 KB
+ok 437 - cat models: ATCHOUMCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.287307
+  type: 'test'
+  ...
+# Subtest: cat models: SNOWBELCAT.glb is a valid textured GLB under 800 KB
+ok 438 - cat models: SNOWBELCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.637399
+  type: 'test'
+  ...
+# Subtest: cat models: SNOWBELCAT-lo.glb is a valid textured GLB under 300 KB
+ok 439 - cat models: SNOWBELCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.303782
+  type: 'test'
+  ...
+# Subtest: cat models: FINICKY.glb is a valid textured GLB under 800 KB
+ok 440 - cat models: FINICKY.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.754547
+  type: 'test'
+  ...
+# Subtest: cat models: FINICKY-lo.glb is a valid textured GLB under 300 KB
+ok 441 - cat models: FINICKY-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.452665
+  type: 'test'
+  ...
+# Subtest: cat models: NYANKOSEN.glb is a valid textured GLB under 800 KB
+ok 442 - cat models: NYANKOSEN.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.61054
+  type: 'test'
+  ...
+# Subtest: cat models: NYANKOSEN-lo.glb is a valid textured GLB under 300 KB
+ok 443 - cat models: NYANKOSEN-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.418655
+  type: 'test'
+  ...
+# Subtest: cat models: SCRATCHC.glb is a valid textured GLB under 800 KB
+ok 444 - cat models: SCRATCHC.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.707127
+  type: 'test'
+  ...
+# Subtest: cat models: SCRATCHC-lo.glb is a valid textured GLB under 300 KB
+ok 445 - cat models: SCRATCHC-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.325702
+  type: 'test'
+  ...
+# Subtest: cat models: EMPTANG.glb is a valid textured GLB under 800 KB
+ok 446 - cat models: EMPTANG.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.69312
+  type: 'test'
+  ...
+# Subtest: cat models: EMPTANG-lo.glb is a valid textured GLB under 300 KB
+ok 447 - cat models: EMPTANG-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 8.394322
+  type: 'test'
+  ...
+# Subtest: cat models: KITTENPLZ.glb is a valid textured GLB under 800 KB
+ok 448 - cat models: KITTENPLZ.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.844479
+  type: 'test'
+  ...
+# Subtest: cat models: KITTENPLZ-lo.glb is a valid textured GLB under 300 KB
+ok 449 - cat models: KITTENPLZ-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.31263
+  type: 'test'
+  ...
+# Subtest: cat models: FAITHCAT.glb is a valid textured GLB under 800 KB
+ok 450 - cat models: FAITHCAT.glb is a valid textured GLB under 800 KB
+  ---
+  duration_ms: 0.794021
+  type: 'test'
+  ...
+# Subtest: cat models: FAITHCAT-lo.glb is a valid textured GLB under 300 KB
+ok 451 - cat models: FAITHCAT-lo.glb is a valid textured GLB under 300 KB
+  ---
+  duration_ms: 0.245182
+  type: 'test'
+  ...
+# Subtest: cat models: every planned cat with a model file is in the index
+ok 452 - cat models: every planned cat with a model file is in the index
+  ---
+  duration_ms: 1.004764
+  type: 'test'
+  ...
+# Subtest: the discriminators are sha256 of their Anchor names
+ok 453 - the discriminators are sha256 of their Anchor names
+  ---
+  duration_ms: 11.480373
+  type: 'test'
+  ...
+# Subtest: the pinned LaunchLab PDAs re-derive, and a PDA is off the curve while a wallet is on it
+ok 454 - the pinned LaunchLab PDAs re-derive, and a PDA is off the curve while a wallet is on it
+  ---
+  duration_ms: 8.447563
+  type: 'test'
+  ...
+# Subtest: every account of all six real launches re-derives: pool, both vaults and the curve rule
+ok 455 - every account of all six real launches re-derives: pool, both vaults and the curve rule
+  ---
+  duration_ms: 17.619634
+  type: 'test'
+  ...
+# Subtest: base58 round-trips real signatures and addresses
+ok 456 - base58 round-trips real signatures and addresses
+  ---
+  duration_ms: 0.897306
+  type: 'test'
+  ...
+# Subtest: ACCEPTED: the real GMEx launch (legacy, with a dev buy) paid by its wallet
+ok 457 - ACCEPTED: the real GMEx launch (legacy, with a dev buy) paid by its wallet
+  ---
+  duration_ms: 46.792848
+  type: 'test'
+  ...
+# Subtest: ACCEPTED: the real GOOGLx launch, and both pass the read-back of the mint and the global config
+ok 458 - ACCEPTED: the real GOOGLx launch, and both pass the read-back of the mint and the global config
+  ---
+  duration_ms: 16.861168
+  type: 'test'
+  ...
+# Subtest: each real mint's own metadata carries the name and symbol its launch wrote
+ok 459 - each real mint's own metadata carries the name and symbol its launch wrote
+  ---
+  duration_ms: 594.586104
+  type: 'test'
+  ...
+# Subtest: the read-back refuses a mint whose metadata differs, a missing mint, and a config for another stock
+ok 460 - the read-back refuses a mint whose metadata differs, a missing mint, and a config for another stock
+  ---
+  duration_ms: 20.347399
+  type: 'test'
+  ...
+# Subtest: REFUSED: a real launch whose fee payer is not the listed wallet
+ok 461 - REFUSED: a real launch whose fee payer is not the listed wallet
+  ---
+  duration_ms: 3.353622
+  type: 'test'
+  ...
+# Subtest: REFUSED: a real failed transaction of a launch wallet, and a real launch marked as failed
+ok 462 - REFUSED: a real failed transaction of a launch wallet, and a real launch marked as failed
+  ---
+  duration_ms: 6.949591
+  type: 'test'
+  ...
+# Subtest: ACCEPTED: the real launches priced in a PreStock (ANTHROPIC, v0 with a lookup table) and a Backpack stock (IREN), with the read-back
+ok 463 - ACCEPTED: the real launches priced in a PreStock (ANTHROPIC, v0 with a lookup table) and a Backpack stock (IREN), with the read-back
+  ---
+  duration_ms: 17.986477
+  type: 'test'
+  ...
+# Subtest: REFUSED: the two real launches priced in something that is not a stock pair (SOL; a custom token), after passing every other check
+ok 464 - REFUSED: the two real launches priced in something that is not a stock pair (SOL; a custom token), after passing every other check
+  ---
+  duration_ms: 18.916988
+  type: 'test'
+  ...
+# Subtest: REFUSED: the list of stock pairs is what decides; a launch on an allowed pair is refused against a list without it
+ok 465 - REFUSED: the list of stock pairs is what decides; a launch on an allowed pair is refused against a list without it
+  ---
+  duration_ms: 37.876167
+  type: 'test'
+  ...
+# Subtest: REFUSED (hostile): a real launch re-priced, with every account re-derived, in tokens that are not the sanctuary's pairs
+ok 466 - REFUSED (hostile): a real launch re-priced, with every account re-derived, in tokens that are not the sanctuary's pairs
+  ---
+  duration_ms: 40.523253
+  type: 'test'
+  ...
+# Subtest: REFUSED (hostile): an allowed pair's mint put in the quote slot without the pool and vaults that go with it
+ok 467 - REFUSED (hostile): an allowed pair's mint put in the quote slot without the pool and vaults that go with it
+  ---
+  duration_ms: 2.196199
+  type: 'test'
+  ...
+# Subtest: every stock pair is a Token-2022 mint, so a launch priced in one with the classic token program is refused
+ok 468 - every stock pair is a Token-2022 mint, so a launch priced in one with the classic token program is refused
+  ---
+  duration_ms: 6.720385
+  type: 'test'
+  ...
+# Subtest: REFUSED: the wrong platform (a real launch with the platform config swapped, and the curve rule to match)
+ok 469 - REFUSED: the wrong platform (a real launch with the platform config swapped, and the curve rule to match)
+  ---
+  duration_ms: 4.308154
+  type: 'test'
+  ...
+# Subtest: REFUSED: a real launch on StonkFun's reward platform (transfer-taxed), made the way StonkFun's site makes them
+ok 470 - REFUSED: a real launch on StonkFun's reward platform (transfer-taxed), made the way StonkFun's site makes them
+  ---
+  duration_ms: 1.966387
+  type: 'test'
+  ...
+# Subtest: REFUSED: a real pump.fun create, even when its payer is listed
+ok 471 - REFUSED: a real pump.fun create, even when its payer is listed
+  ---
+  duration_ms: 1.646432
+  type: 'test'
+  ...
+# Subtest: REFUSED: instructions that cannot be decoded
+ok 472 - REFUSED: instructions that cannot be decoded
+  ---
+  duration_ms: 4.796949
+  type: 'test'
+  ...
+# Subtest: REFUSED: anything else in the transaction, another LaunchLab variant, a launch made through another program, a newer version
+ok 473 - REFUSED: anything else in the transaction, another LaunchLab variant, a launch made through another program, a newer version
+  ---
+  duration_ms: 21.110057
+  type: 'test'
+  ...
+# Subtest: REFUSED: a launch whose creator is not the wallet, or whose new mint did not sign
+ok 474 - REFUSED: a launch whose creator is not the wallet, or whose new mint did not sign
+  ---
+  duration_ms: 2.029207
+  type: 'test'
+  ...
+# Subtest: the recorded accounts are the ones the fixtures say (capture dates kept)
+ok 475 - the recorded accounts are the ones the fixtures say (capture dates kept)
+  ---
+  duration_ms: 0.271341
+  type: 'test'
+  ...
+# Subtest: every signature of every recorded launch verifies over its rebuilt message (legacy and v0); relabelled or altered, none does
+ok 476 - every signature of every recorded launch verifies over its rebuilt message (legacy and v0); relabelled or altered, none does
+  ---
+  duration_ms: 15.009356
+  type: 'test'
+  ...
+# Subtest: REFUSED (hostile, review 3): the owner loaded from a lookup table as payer, an attacker co-signer as the launch's payer, a status with no err
+ok 477 - REFUSED (hostile, review 3): the owner loaded from a lookup table as payer, an attacker co-signer as the launch's payer, a status with no err
+  ---
+  duration_ms: 5.831524
+  type: 'test'
+  ...
+# Subtest: the 24 xStocks match the official product list, row by row, by mint and symbol
+ok 478 - the 24 xStocks match the official product list, row by row, by mint and symbol
+  ---
+  duration_ms: 1.320643
+  type: 'test'
+  ...
+# Subtest: the 93 stock pairs are StonkFun's own rows (xstock, backpack, prestock, tessera), launchable and LaunchLab-ready, as recorded
+ok 479 - the 93 stock pairs are StonkFun's own rows (xstock, backpack, prestock, tessera), launchable and LaunchLab-ready, as recorded
+  ---
+  duration_ms: 14.626052
+  type: 'test'
+  ...
+# Subtest: each pair's symbol and name are the ones its own mint carries on chain
+ok 480 - each pair's symbol and name are the ones its own mint carries on chain
+  ---
+  duration_ms: 7.094918
+  type: 'test'
+  ...
+# Subtest: the pairs are exactly the planned cats' stocks: every researched symbol has its pair, and no pair is outside the research
+ok 481 - the pairs are exactly the planned cats' stocks: every researched symbol has its pair, and no pair is outside the research
+  ---
+  duration_ms: 4.165388
+  type: 'test'
+  ...
+# Subtest: two real launches validate, come back as clean copies, newest first
+ok 482 - two real launches validate, come back as clean copies, newest first
+  ---
+  duration_ms: 5.285835
+  type: 'test'
+  ...
+# Subtest: an entry's fields are closed
+ok 483 - an entry's fields are closed
+  ---
+  duration_ms: 1.151137
+  type: 'test'
+  ...
+# Subtest: addresses and signatures must be canonical base58 of the right length
+ok 484 - addresses and signatures must be canonical base58 of the right length
+  ---
+  duration_ms: 1.069048
+  type: 'test'
+  ...
+# Subtest: names and symbols: markup, hidden characters and links are refused
+ok 485 - names and symbols: markup, hidden characters and links are refused
+  ---
+  duration_ms: 192.134714
+  type: 'test'
+  ...
+# Subtest: the pair must be one of the stock pairs, symbol and mint together
+ok 486 - the pair must be one of the stock pairs, symbol and mint together
+  ---
+  duration_ms: 1.69684
+  type: 'test'
+  ...
+# Subtest: the payer must be a listed wallet, active at the launch's time
+ok 487 - the payer must be a listed wallet, active at the launch's time
+  ---
+  duration_ms: 5.301368
+  type: 'test'
+  ...
+# Subtest: times: the exact format, a real date, not in the future
+ok 488 - times: the exact format, a real date, not in the future
+  ---
+  duration_ms: 1.539131
+  type: 'test'
+  ...
+# Subtest: duplicates are dropped by mint and by transaction, and the order never depends on the input
+ok 489 - duplicates are dropped by mint and by transaction, and the order never depends on the input
+  ---
+  duration_ms: 1.440573
+  type: 'test'
+  ...
+# Subtest: the collection holds at most MAX_CATS; the oldest past that are refused
+ok 490 - the collection holds at most MAX_CATS; the oldest past that are refused
+  ---
+  duration_ms: 113.517312
+  type: 'test'
+  ...
+# Subtest: a malformed file yields no cats and one shape refusal
+ok 491 - a malformed file yields no cats and one shape refusal
+  ---
+  duration_ms: 0.625008
+  type: 'test'
+  ...
+# Subtest: wallets.json: closed fields, real addresses, plain labels, since before until, no repeats
+ok 492 - wallets.json: closed fields, real addresses, plain labels, since before until, no repeats
+  ---
+  duration_ms: 159.244565
+  type: 'test'
+  ...
+# Subtest: links: Solscan token and transaction, and the StonkFun token page; nothing for a bad entry
+ok 493 - links: Solscan token and transaction, and the StonkFun token page; nothing for a bad entry
+  ---
+  duration_ms: 0.604199
+  type: 'test'
+  ...
+# Subtest: buy links: GMGN and FOMO pages for a mint, in the formats checked on 2026-09-25; none for anything else
+ok 494 - buy links: GMGN and FOMO pages for a mint, in the formats checked on 2026-09-25; none for anything else
+  ---
+  duration_ms: 1.030328
+  type: 'test'
+  ...
+# Subtest: coats: a launched token with no planned cat wears the same coat for the same mint, and every coat is valid
+ok 495 - coats: a launched token with no planned cat wears the same coat for the same mint, and every coat is valid
+  ---
+  duration_ms: 17.246451
+  type: 'test'
+  ...
+# Subtest: prose, links and source dates: what research text may carry
+ok 496 - prose, links and source dates: what research text may carry
+  ---
+  duration_ms: 1.27115
+  type: 'test'
+  ...
+# Subtest: the shipped wallets.json lists the owner's wallet, from 2026-09-25
+ok 497 - the shipped wallets.json lists the owner's wallet, from 2026-09-25
+  ---
+  duration_ms: 0.472645
+  type: 'test'
+  ...
+# Subtest: famous coins: the shipped file is the Hall of Fame only: validates, Solana coins only, every coin once, ids and contracts unique
+ok 498 - famous coins: the shipped file is the Hall of Fame only: validates, Solana coins only, every coin once, ids and contracts unique
+  ---
+  duration_ms: 50.221546
+  type: 'test'
+  ...
+# Subtest: famous coins: every Hall of Fame coin is tier main with a researched profile; the rest are archived, not lost
+ok 499 - famous coins: every Hall of Fame coin is tier main with a researched profile; the rest are archived, not lost
+  ---
+  duration_ms: 7.309658
+  type: 'test'
+  ...
+# Subtest: famous coins: every buy link is the GMGN page for its own contract
+ok 500 - famous coins: every buy link is the GMGN page for its own contract
+  ---
+  duration_ms: 3.943036
+  type: 'test'
+  ...
+# Subtest: famous coins: the rules refuse what is unsafe or unsourced
+ok 501 - famous coins: the rules refuse what is unsafe or unsourced
+  ---
+  duration_ms: 2.484556
+  type: 'test'
+  ...
+# Subtest: famous coins: every Hall of Fame coin has researched lore and a not-affiliated line; the flagged coins' honest warnings stay in the archive
+ok 502 - famous coins: every Hall of Fame coin has researched lore and a not-affiliated line; the flagged coins' honest warnings stay in the archive
+  ---
+  duration_ms: 2.036418
+  type: 'test'
+  ...
+# Subtest: famous coins: market warnings come from the latest figures
+ok 503 - famous coins: market warnings come from the latest figures
+  ---
+  duration_ms: 15.372914
+  type: 'test'
+  ...
+# Subtest: famous coins: every logo is a small WebP on this site, and no logo file is left without its coin
+ok 504 - famous coins: every logo is a small WebP on this site, and no logo file is left without its coin
+  ---
+  duration_ms: 12.622965
+  type: 'test'
+  ...
+# Subtest: famous coins: the daily refresh takes DexScreener's pair figures and CoinGecko's circulating market cap, keeps the rest, and still validates
+ok 505 - famous coins: the daily refresh takes DexScreener's pair figures and CoinGecko's circulating market cap, keeps the rest, and still validates
+  ---
+  duration_ms: 164.379954
+  type: 'test'
+  ...
+# Subtest: famous coins: a model in assets/models/cats/index.json finds its coin by id, contract or a unique symbol
+ok 506 - famous coins: a model in assets/models/cats/index.json finds its coin by id, contract or a unique symbol
+  ---
+  duration_ms: 0.68082
+  type: 'test'
+  ...
+# Subtest: the newest released cat, unless this visitor has seen it or it is stale
+ok 507 - the newest released cat, unless this visitor has seen it or it is stale
+  ---
+  duration_ms: 0.737181
+  type: 'test'
+  ...
+# Subtest: the teaser is the lore caption, else the story's first sentence, one short line
+ok 508 - the teaser is the lore caption, else the story's first sentence, one short line
+  ---
+  duration_ms: 0.371512
+  type: 'test'
+  ...
+# Subtest: the page has the highlight's box, its styles, and main.js wires it (no inline styles or scripts)
+ok 509 - the page has the highlight's box, its styles, and main.js wires it (no inline styles or scripts)
+  ---
+  duration_ms: 1.951458
+  type: 'test'
+  ...
+# Subtest: the page's own scripts include residents.js and collection.js
+ok 510 - the page's own scripts include residents.js and collection.js
+  ---
+  duration_ms: 1.143516
+  type: 'test'
+  ...
+# Subtest: no HTML injection path: no HTML sinks, and innerHTML only ever takes a fixed string
+ok 511 - no HTML injection path: no HTML sinks, and innerHTML only ever takes a fixed string
+  ---
+  duration_ms: 123.28787
+  type: 'test'
+  ...
+# Subtest: no call to another host at run time: fetches and imports are relative, and the page's policy allows only its own origin
+ok 512 - no call to another host at run time: fetches and imports are relative, and the page's policy allows only its own origin
+  ---
+  duration_ms: 19.505056
+  type: 'test'
+  ...
+# Subtest: the residents module fetches only the seven data files, relative to the site
+ok 513 - the residents module fetches only the seven data files, relative to the site
+  ---
+  duration_ms: 2.093664
+  type: 'test'
+  ...
+# Subtest: data/socials.json is valid: https only, allowed hosts, the $CATSANC ticker
+ok 514 - data/socials.json is valid: https only, allowed hosts, the $CATSANC ticker
+  ---
+  duration_ms: 30.756854
+  type: 'test'
+  ...
+# Subtest: social links: only https on an allowed host; empty ones are hidden
+ok 515 - social links: only https on an allowed host; empty ones are hidden
+  ---
+  duration_ms: 10.126226
+  type: 'test'
+  ...
+# Subtest: the About and Socials panels: modal dialogs with a title, a close button and the right content
+ok 516 - the About and Socials panels: modal dialogs with a title, a close button and the right content
+  ---
+  duration_ms: 12.040689
+  type: 'test'
+  ...
+# Subtest: the page has About and Socials pills that open dialogs
+ok 517 - the page has About and Socials pills that open dialogs
+  ---
+  duration_ms: 0.567604
+  type: 'test'
+  ...
+# Subtest: build: sheets + research make data/planned.json and the portraits; the sheets' internal notes are not published
+ok 518 - build: sheets + research make data/planned.json and the portraits; the sheets' internal notes are not published
+  ---
+  duration_ms: 116.534098
+  type: 'test'
+  ...
+# Subtest: build: a re-run writes nothing; a sheet that is not there yet is skipped
+ok 519 - build: a re-run writes nothing; a sheet that is not there yet is skipped
+  ---
+  duration_ms: 86.305955
+  type: 'test'
+  ...
+# Subtest: build: it never drops a planned cat unless told to
+ok 520 - build: it never drops a planned cat unless told to
+  ---
+  duration_ms: 766.300703
+  type: 'test'
+  ...
+# Subtest: build: the pair is the sheet's mint (checked against the symbol), else the symbol's pair; OPENAI and KALSHI by the research's category
+ok 521 - build: the pair is the sheet's mint (checked against the symbol), else the symbol's pair; OPENAI and KALSHI by the research's category
+  ---
+  duration_ms: 1587.587245
+  type: 'test'
+  ...
+# Subtest: build: bad sheets stop the run and write nothing
+ok 522 - build: bad sheets stop the run and write nothing
+  ---
+  duration_ms: 1169.985929
+  type: 'test'
+  ...
+# Subtest: build: a sheet's own coat wins over the look's words
+ok 523 - build: a sheet's own coat wins over the look's words
+  ---
+  duration_ms: 202.16983
+  type: 'test'
+  ...
+# Subtest: build: a portrait that is not a 512 px JPEG is resized (Pillow) to one, with no metadata
+ok 524 - build: a portrait that is not a 512 px JPEG is resized (Pillow) to one, with no metadata
+  ---
+  duration_ms: 1108.489257
+  type: 'test'
+  ...
+# Subtest: rules: every research row and planned cat is checked field by field
+ok 525 - rules: every research row and planned cat is checked field by field
+  ---
+  duration_ms: 316.431946
+  type: 'test'
+  ...
+# Subtest: the shipped data/planned.json: valid, one research row per stock pair, every cat with its 512 px portrait (adoptable cats' portraits too)
+ok 526 - the shipped data/planned.json: valid, one research row per stock pair, every cat with its 512 px portrait (adoptable cats' portraits too)
+  ---
+  duration_ms: 43.894385
+  type: 'test'
+  ...
+# Subtest: the shipped data/planned.json is up to date with the research in data/cats-info.json (else run scripts/build-planned.mjs)
+ok 527 - the shipped data/planned.json is up to date with the research in data/cats-info.json (else run scripts/build-planned.mjs)
+  ---
+  duration_ms: 2.435772
+  type: 'test'
+  ...
+# Subtest: coats from a look's words
+ok 528 - coats from a look's words
+  ---
+  duration_ms: 0.505396
+  type: 'test'
+  ...
+# Subtest: build: a cat whose whyLook says its picture follows or copies a company's cat must carry the fan-tribute line, or the run stops
+ok 529 - build: a cat whose whyLook says its picture follows or copies a company's cat must carry the fan-tribute line, or the run stops
+  ---
+  duration_ms: 135.105247
+  type: 'test'
+  ...
+# Subtest: rules: a planned cat's tribute is the exact line, and its description carries it
+ok 530 - rules: a planned cat's tribute is the exact line, and its description carries it
+  ---
+  duration_ms: 72.195251
+  type: 'test'
+  ...
+# Subtest: build: a cat held in data/held.json is left out with its portrait, and is not counted as dropped
+ok 531 - build: a cat held in data/held.json is left out with its portrait, and is not counted as dropped
+  ---
+  duration_ms: 78.285151
+  type: 'test'
+  ...
+# Subtest: rules: research links are never trading pages; virality dates say what they are; an unconfirmed link is not the company's own
+ok 532 - rules: research links are never trading pages; virality dates say what they are; an unconfirmed link is not the company's own
+  ---
+  duration_ms: 520.679582
+  type: 'test'
+  ...
+# Subtest: proof: every shipped planned cat has a valid proof, X proofs are status posts by their handle, pictures exist and are small WebP
+ok 533 - proof: every shipped planned cat has a valid proof, X proofs are status posts by their handle, pictures exist and are small WebP
+  ---
+  duration_ms: 2.004217
+  type: 'test'
+  ...
+# Subtest: proof: the rules refuse what is not a real post or a recorded source
+ok 534 - proof: the rules refuse what is not a real post or a recorded source
+  ---
+  duration_ms: 0.449184
+  type: 'test'
+  ...
+# Subtest: proof: a bad proof in a sheet stops the build and writes nothing
+ok 535 - proof: a bad proof in a sheet stops the build and writes nothing
+  ---
+  duration_ms: 8.574094
+  type: 'test'
+  ...
+# Subtest: proof: a proof picture whose cat has no proof picture any more is removed
+ok 536 - proof: a proof picture whose cat has no proof picture any more is removed
+  ---
+  duration_ms: 44.66829
+  type: 'test'
+  ...
+# node:fs:440
+#     return binding.readFileUtf8(path, stringToFlags(options.flag));
+#                    ^
+# Error: ENOENT: no such file or directory, open '/home/user/catcoin-sanctuary/assets/promo/media.json'
+#     at Object.readFileSync (node:fs:440:20)
+#     at read (file:///home/user/catcoin-sanctuary/tests/promo.test.mjs:12:35)
+#     at file:///home/user/catcoin-sanctuary/tests/promo.test.mjs:14:15
+#     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+#     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/home/user/catcoin-sanctuary/assets/promo/media.json'
+# }
+# Node.js v22.22.2
+# Subtest: tests/promo.test.mjs
+not ok 12 - tests/promo.test.mjs
+  ---
+  duration_ms: 1131.005206
+  type: 'test'
+  location: '/home/user/catcoin-sanctuary/tests/promo.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: research files exist and parse
+ok 538 - research files exist and parse
+  ---
+  duration_ms: 2.249424
+  type: 'test'
+  ...
+# Subtest: the house is at work within ~6 hours of a scan, resting after
+ok 539 - the house is at work within ~6 hours of a scan, resting after
+  ---
+  duration_ms: 3.935469
+  type: 'test'
+  ...
+# Subtest: cats found this week counts only the last 7 days
+ok 540 - cats found this week counts only the last 7 days
+  ---
+  duration_ms: 0.203024
+  type: 'test'
+  ...
+# Subtest: a candidate needs an X post and a web source, and no big coin
+ok 541 - a candidate needs an X post and a web source, and no big coin
+  ---
+  duration_ms: 1.533167
+  type: 'test'
+  ...
+# Subtest: approving moves a candidate into the adoptable cats, held from X
+ok 542 - approving moves a candidate into the adoptable cats, held from X
+  ---
+  duration_ms: 29.237897
+  type: 'test'
+  ...
+# Subtest: the launches used here are the real ones (mint, pool, signature, time, pair)
+ok 543 - the launches used here are the real ones (mint, pool, signature, time, pair)
+  ---
+  duration_ms: 45.451298
+  type: 'test'
+  ...
+# Subtest: no token yet: every planned cat, not launched, with no mint, no buy link and no explorer link
+ok 544 - no token yet: every planned cat, not launched, with no mint, no buy link and no explorer link
+  ---
+  duration_ms: 95.097877
+  type: 'test'
+  ...
+# Subtest: a launched token takes its planned cat by pair mint and ticker: its token, its buy links, the cat's story and research
+ok 545 - a launched token takes its planned cat by pair mint and ticker: its token, its buy links, the cat's story and research
+  ---
+  duration_ms: 20.504277
+  type: 'test'
+  ...
+# Subtest: the match is by pair mint AND ticker: the same ticker on another pair, or another ticker on the pair, is a token of its own
+ok 546 - the match is by pair mint AND ticker: the same ticker on another pair, or another ticker on the pair, is a token of its own
+  ---
+  duration_ms: 105.455737
+  type: 'test'
+  ...
+# Subtest: a launched token with no planned cat (a PreStock whose sheet is not written yet) still shows, with its stock's research
+ok 547 - a launched token with no planned cat (a PreStock whose sheet is not written yet) still shows, with its stock's research
+  ---
+  duration_ms: 23.55701
+  type: 'test'
+  ...
+# Subtest: ticker case aside; a second launch of the same planned cat shows as a token of its own; launched first, newest first
+ok 548 - ticker case aside; a second launch of the same planned cat shows as a token of its own; launched first, newest first
+  ---
+  duration_ms: 34.001674
+  type: 'test'
+  ...
+# Subtest: buy links appear exactly when a cat is launched, and always name its own mint
+ok 549 - buy links appear exactly when a cat is launched, and always name its own mint
+  ---
+  duration_ms: 16.550553
+  type: 'test'
+  ...
+# Subtest: entries that fail the checks are left out: hostile names, an unlisted payer, a planned cat that tries to carry a mint or a buy link
+ok 550 - entries that fail the checks are left out: hostile names, an unlisted payer, a planned cat that tries to carry a mint or a buy link
+  ---
+  duration_ms: 36.407872
+  type: 'test'
+  ...
+# Subtest: a file that cannot be fetched rejects, so the page never shows a launched cat as not launched
+ok 551 - a file that cannot be fetched rejects, so the page never shows a launched cat as not launched
+  ---
+  duration_ms: 8.975728
+  type: 'test'
+  ...
+# Subtest: mergeResidents works on validated data alone, and changing a card never changes the data
+ok 552 - mergeResidents works on validated data alone, and changing a card never changes the data
+  ---
+  duration_ms: 20.896781
+  type: 'test'
+  ...
+# Subtest: famous cat coins follow the stock cats, each marked famous, with its own buy link and no stock pair
+ok 553 - famous cat coins follow the stock cats, each marked famous, with its own buy link and no stock pair
+  ---
+  duration_ms: 22.163696
+  type: 'test'
+  ...
+# Subtest: a famous coin file that is missing or broken leaves the stock cats as they are
+ok 554 - a famous coin file that is missing or broken leaves the stock cats as they are
+  ---
+  duration_ms: 43.265262
+  type: 'test'
+  ...
+# Subtest: release queue: a queued cat is hidden until it is released; a released one shows
+ok 555 - release queue: a queued cat is hidden until it is released; a released one shows
+  ---
+  duration_ms: 19.351625
+  type: 'test'
+  ...
+# Subtest: nothing the page loads comes from another host
+ok 556 - nothing the page loads comes from another host
+  ---
+  duration_ms: 1500.904874
+  type: 'test'
+  ...
+# Subtest: the page's policy still matches its one inline script (the import map)
+ok 557 - the page's policy still matches its one inline script (the import map)
+  ---
+  duration_ms: 0.908376
+  type: 'test'
+  ...
+# Subtest: every file the page names exists
+ok 558 - every file the page names exists
+  ---
+  duration_ms: 37.068576
+  type: 'test'
+  ...
+# Subtest: the head: title, description, canonical address, sharing picture, icons
+ok 559 - the head: title, description, canonical address, sharing picture, icons
+  ---
+  duration_ms: 7.488834
+  type: 'test'
+  ...
+# Subtest: page weight: the first view stays within budget
+ok 560 - page weight: the first view stays within budget
+  ---
+  duration_ms: 650.792799
+  type: 'test'
+  ...
+# Subtest: every cat's card and list row, from the shipped data: planned cats say "Not launched yet" with nothing to buy; launched ones link GMGN and FOMO for their own mint
+ok 561 - every cat's card and list row, from the shipped data: planned cats say "Not launched yet" with nothing to buy; launched ones link GMGN and FOMO for their own mint
+  ---
+  duration_ms: 1252.598736
+  type: 'test'
+  ...
+# Subtest: a cat drawn like a company's cat says so: its whyLook's company cat comes with the fan-tribute line on its card, and held cats ship no portrait
+ok 562 - a cat drawn like a company's cat says so: its whyLook's company cat comes with the fan-tribute line on its card, and held cats ship no portrait
+  ---
+  duration_ms: 345.921345
+  type: 'test'
+  ...
+# Subtest: buy links only on a launched cat: GMGN and FOMO for its own mint, and nowhere else
+ok 563 - buy links only on a launched cat: GMGN and FOMO for its own mint, and nowhere else
+  ---
+  duration_ms: 162.142645
+  type: 'test'
+  ...
+# Subtest: the page's checks hold whatever the data says
+ok 564 - the page's checks hold whatever the data says
+  ---
+  duration_ms: 38.260907
+  type: 'test'
+  ...
+# Subtest: virality dates say what they are, and year-month dates read as words
+ok 565 - virality dates say what they are, and year-month dates read as words
+  ---
+  duration_ms: 39.734509
+  type: 'test'
+  ...
+# Subtest: every planned cat's card shows its proof: the post's author, handle, words and date, a picture on this site, and a link to the post
+ok 566 - every planned cat's card shows its proof: the post's author, handle, words and date, a picture on this site, and a link to the post
+  ---
+  duration_ms: 93.072414
+  type: 'test'
+  ...
+# Subtest: a famous coin's card: logo, who the cat is, lore, warnings, market cap with its time, chain, contract with a copy button, X and website, its one buy link, and the not-affiliated line
+ok 567 - a famous coin's card: logo, who the cat is, lore, warnings, market cap with its time, chain, contract with a copy button, X and website, its one buy link, and the not-affiliated line
+  ---
+  duration_ms: 48.356029
+  type: 'test'
+  ...
+# Subtest: the finder lists every cat, with filters for adoptable cats and the Hall of Fame
+ok 568 - the finder lists every cat, with filters for adoptable cats and the Hall of Fame
+  ---
+  duration_ms: 47.09471
+  type: 'test'
+  ...
+# Subtest: adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' and the fan-tribute line
+ok 569 - adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' and the fan-tribute line
+  ---
+  duration_ms: 84.787047
+  type: 'test'
+  ...
+# Subtest: lore pictures: every stock cat with a caption in data/lore.json shows its picture and caption on its card, and no other stock cat shows one
+ok 570 - lore pictures: every stock cat with a caption in data/lore.json shows its picture and caption on its card, and no other stock cat shows one
+  ---
+  duration_ms: 100.586218
+  type: 'test'
+  ...
+# Subtest: no name leak: the shipped next-cat.json and every silhouette's name say nothing of the cat
+ok 571 - no name leak: the shipped next-cat.json and every silhouette's name say nothing of the cat
+  ---
+  duration_ms: 21.901654
+  type: 'test'
+  ...
+# Subtest: every hint passes the content rules and names no cat, owner, company or ticker; a leaky one is never used
+ok 572 - every hint passes the content rules and names no cat, owner, company or ticker; a leaky one is never used
+  ---
+  duration_ms: 1090.710164
+  type: 'test'
+  ...
+# Subtest: every upcoming cat has a silhouette and a hint
+ok 573 - every upcoming cat has a silhouette and a hint
+  ---
+  duration_ms: 1.353217
+  type: 'test'
+  ...
+# Subtest: the next cat is always the one the announcer posts next, and the file moves on after each post
+ok 574 - the next cat is always the one the announcer posts next, and the file moves on after each post
+  ---
+  duration_ms: 1108.039868
+  type: 'test'
+  ...
+# Subtest: the order matches pick(): new cats, then retries, then the backlog, then the release queue
+ok 575 - the order matches pick(): new cats, then retries, then the backlog, then the release queue
+  ---
+  duration_ms: 0.43505
+  type: 'test'
+  ...
+# Subtest: after a release the teaser moves on to the following cat in the queue
+ok 576 - after a release the teaser moves on to the following cat in the queue
+  ---
+  duration_ms: 29.355619
+  type: 'test'
+  ...
+# Subtest: the page: a tab, a dialog, the easel; the file is checked before use; no inline styles or scripts
+ok 577 - the page: a tab, a dialog, the easel; the file is checked before use; no inline styles or scripts
+  ---
+  duration_ms: 0.946053
+  type: 'test'
+  ...
+# Subtest: every action is pinned to the full commit SHA of its release
+ok 578 - every action is pinned to the full commit SHA of its release
+  ---
+  duration_ms: 1.42685
+  type: 'test'
+  ...
+# Subtest: pages: deploys on a push to main; nothing by default; the deploy job may write Pages and mint an OIDC token, nothing more, and runs no code of the repository's
+ok 579 - pages: deploys on a push to main; nothing by default; the deploy job may write Pages and mint an OIDC token, nothing more, and runs no code of the repository's
+  ---
+  duration_ms: 0.604252
+  type: 'test'
+  ...
+# Subtest: collection: hourly and by hand, contents: write only, no stored credentials, one optional secret, commits data only when it changed
+ok 580 - collection: hourly and by hand, contents: write only, no stored credentials, one optional secret, commits data only when it changed
+  ---
+  duration_ms: 1.791155
+  type: 'test'
+  ...
+# Subtest: famous coins: daily and by hand, contents: write only, no secrets, builder tests first, commits data/famous.json only when it changed
+ok 581 - famous coins: daily and by hand, contents: write only, no secrets, builder tests first, commits data/famous.json only when it changed
+  ---
+  duration_ms: 0.311837
+  type: 'test'
+  ...
+# Subtest: promo: every 20 minutes and by hand, contents: write only, the four X secrets on the posting step only, its own tests first, commits its state with a rebase retry
+ok 582 - promo: every 20 minutes and by hand, contents: write only, the four X secrets on the posting step only, its own tests first, commits its state with a rebase retry
+  ---
+  duration_ms: 0.360684
+  type: 'test'
+  ...
+1..582
+# tests 582
+# suites 0
+# pass 581
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14456.83758

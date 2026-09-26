@@ -1,0 +1,198 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "real_person",
+    "term": "trump",
+    "field": "description"
+   },
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Marmalade the Town Crier Cat",
+   "ticker": "TOWNCRIER",
+   "nameLen": 28,
+   "blurbLen": 143,
+   "descLen": 296,
+   "tickerHasDjtRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Marmalade, a lean ginger tabby with rust-red stripes and amber eyes, sits on the garden gate and meows the morning's gossip to every passer-by. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Soapbox the Ginger Tabby",
+   "ticker": "SOAPBOX",
+   "nameLen": 24,
+   "blurbLen": 134,
+   "descLen": 287,
+   "tickerHasDjtRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "47",
+      "field": "tagline"
+     }
+    ]
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [
+    {
+     "symbol": "SOAPBOX",
+     "name": "Soapbox Software",
+     "id": "5bHxPpxgYwk637qp6Y4LA1oNdzcSy5hhXGALQu8xpump"
+    },
+    {
+     "symbol": "SOAPBOX",
+     "name": "Pepe crashes his soapbox",
+     "id": "68NxfPCMtYAxNM9ymR6KnJf3X3gDcGhjD41djVNQbwVJ"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Soapbox, a fluffy ginger tabby with a cream chin and copper eyes, hops onto an upturned crate to hold forth at length to the sparrows. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Echo the Noticeboard Cat",
+   "ticker": "PAWPOST",
+   "nameLen": 24,
+   "blurbLen": 139,
+   "descLen": 292,
+   "tickerHasDjtRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 4,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Echo, a stocky ginger tabby with bold swirled stripes and green eyes, presses a paw print onto every note pinned to the garden noticeboard. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

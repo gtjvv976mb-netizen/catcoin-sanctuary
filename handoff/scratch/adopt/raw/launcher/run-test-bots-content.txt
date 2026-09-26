@@ -1,0 +1,166 @@
+
+NORMALIZING
+───────────
+  ok   NFKC, accents, case and look-alike digits: "S3XY Kätzchen" → "sexy katzchen"
+  ok   camelCase compounds split into words
+  ok   a well-formed cat coin passes every rule  — []
+
+REAL PEOPLE
+───────────
+  ok   a famous name: "Trump Cat"
+  ok   glued into a compound: "TrumpCat", "ElonCat"
+  ok   the false friend survives: "Trumpet Cat"
+  ok   a multi-word name: "Taylor Swift" in the tagline
+  ok   "Firstname Lastname" with a common first name: "Michael Jordan"
+  ok   a first name before a cat word is not a person: "Taylor Cat"
+  ok   in the trend itself: "elon musk"
+  ok   a trend that is a person on no list: "kirk herbstreit", "josh allen", "travis scott"
+  ok   the long list is for trends only: "may", "hope" and "will" in CashCat's own tagline still pass
+  ok   a given name before a cat or filler word is no person: the trend "luna cat" passes the person rule
+
+BRANDS, TEAMS, CHARACTERS AND OTHER TOKENS
+──────────────────────────────────────────
+  ok   "Nike Cat"
+  ok   "Hello Kitty Coin"
+  ok   "Garfield Cat"
+  ok   "Grumpy Cat Coin"
+  ok   "Popcat Two"
+  ok   "Solana Cat"
+  ok   "Yankees Cat"
+  ok   "White Sox Kitty"
+  ok   the trend "white sox" is dropped
+
+BRANDS SPELT WITH A CAPITAL INSIDE, OR AN APOSTROPHE
+────────────────────────────────────────────────────
+  ok   "SpaceX Cat" is refused as a brand  — [{"rule":"brand","term":"spacex","field":"name"}]
+  ok   "McDonald's Cat" is refused as a brand  — [{"rule":"brand","term":"mcdonalds","field":"name"}]
+  ok   "McDonald’s Cat" is refused as a brand  — [{"rule":"brand","term":"mcdonalds","field":"name"},{"rule":"name_format","term":"McDonald’s Cat","field":"name"}]
+  ok   "OpenAI Cat" is refused as a brand  — [{"rule":"brand","term":"openai","field":"name"}]
+  ok   "JPMorgan Cat" is refused as a brand  — [{"rule":"brand","term":"jpmorgan","field":"name"}]
+  ok   …and so is the same brand in a tagline or a ticker
+  ok   the false friends still pass: "Cat Intelligence", "Cat Intelligence Agency", "Trumpet Cat", "DoomCat"
+  ok   the apostrophe is dropped only for the whole-word reading: "The cat's hot take" still passes
+  ok   checkTerms holds a caller's own list to the same matching: a pair's name in a coin's name is found by rule, term and field
+  ok   …glued, spelt with look-alikes, or with a capital inside
+  ok   …and an empty list, or an empty term, refuses nothing
+
+ENDORSEMENT AND OFFICIAL CLAIMS
+───────────────────────────────
+  ok   "The official cat of autumn."
+  ok   "A verified kitty for the season."
+  ok   "The real cat everyone waited for."
+  ok   "Our partner cat for the fall."
+  ok   glued: "OfficialCat"
+
+TRAGEDY, MINORS, SEX, HATE, IDENTITY, PROMISES
+──────────────────────────────────────────────
+  ok   tragedy in a tagline
+  ok   minors
+  ok   sexual, spelled with look-alikes: "S3xy Kitty"
+  ok   hate, in plain text: "1488"
+  ok   identity: a coin named for a group of people
+  ok   financial promise
+  ok   slurs are kept as salted hashes only: 37 of them, 20 hex characters each
+  ok   a word whose salted hash is on the list is refused as hate, glued or not (probed with an invented word)
+
+EVASIONS: LOOK-ALIKE LETTERS, HIDDEN CHARACTERS, SPACED LETTERS, SPLIT WORDS
+────────────────────────────────────────────────────────────────────────────
+  ok   Cyrillic look-alikes are read as the Latin letters they imitate: "Тrump Cat", "Trumр Cat"
+  ok   Latin small capitals too: "ᴛʀᴜᴍᴘ Cat"
+  ok   an invisible character inside a word does not split it: a zero-width space, a soft hyphen
+  ok   letters spelt out one by one: "M.U.S.K. Cat", "T R U M P Cat"
+  ok   a listed word split in two: "Cat Girl"
+  ok   a nickname ending: "Trumpy Cat", "Musky Cat"
+  ok   the false friends still pass: "Trumpet Cat", "Taylor Cat", a possessive before "hot", "wary", "teeny", "it is is"
+  ok   CashCat's own name and tagline are Latin letters only: "Кот Cat" is refused
+
+MORE PEOPLE, EXTREMISTS, TRAGEDIES, CONFLICTS AND CLAIMS
+────────────────────────────────────────────────────────
+  ok   "Charlie Kirk Cat": a common short first name before a surname
+  ok   extremist groups: "Hamas Cat", "Taliban Kitty", "Jihadi Cat"
+  ok   "9/11" and "assassin"
+  ok   a country at war reads as taking a side: "Gaza Cat", "Ukraine Cat"
+  ok   more ways to claim to be the real thing: "Oficial Cat", "authentic", "genuine", "legit"
+
+NO LINKS IN WHAT THE SITE PRINTS
+────────────────────────────────
+  ok   a web address in a stranger's name or ticker is not printed
+  ok   nor in CashCat's own tagline
+  ok   a plain cat name with a full stop still prints
+
+FORMATS, AND IT MUST BE A CAT
+─────────────────────────────
+  ok   ticker: 2 to 10 of A-Z and 0-9
+  ok   name: 3 to 32 printable characters
+  ok   tagline: 10 to 160 characters
+  ok   a name with no cat in it is refused: "Pickle Coin"
+  ok   cat words count glued: "Purrfect Pickle", "Kittycorn", "Nekomancer"
+
+THE TREND GATE ON THE RECORDED ANSWERS
+──────────────────────────────────────
+  ok   the recorded Google Trends RSS parses: 8 items, each with a title and its headlines  — politics | tim tebow | costco stock | white sox | white sox standings | tunisia vs uganda | falcons vs packers | alejandro tosti caddie cliff ellis split
+  ok   CoinGecko gives categories as topics, never its coins
+  ok   every dropped trend names its rule  — politics: politics; tim tebow: real_person; costco stock: brand; white sox: brand; white sox standings: brand; falcons vs packers: brand; alejandro tosti caddie cliff ellis split: real_person; Echo Launchpad: real_person
+  ok   the headlines can drop a harmless-looking title (as "hawker hunter" was, on the day's first read)
+  ok   a person in a headline does not doom a harmless trend; tragedy does
+
+POPCAT: FIT TO PRINT
+────────────────────
+  ok   a plain cat coin prints
+  ok   a hateful, sexual or person-named one does not
+  ok   a promise in a stranger's name is not Popcat's to refuse (financial_promise is CashCat's rule)
+
+CAT DETECTION
+─────────────
+  ok   cat: "green cat" / GrenCAT  — {"isCat":true,"field":"name","word":"cat"}
+  ok   cat: "DOOMCAT" / $DOOMCAT  — {"isCat":true,"field":"name","word":"doomcat"}
+  ok   cat: "Shark Cat" / SC  — {"isCat":true,"field":"name","word":"cat"}
+  ok   cat: "catwifhat" / CWIF  — {"isCat":true,"field":"name","word":"catwifhat"}
+  ok   cat: "The Toad Cat" / TOAD  — {"isCat":true,"field":"name","word":"cat"}
+  ok   cat: "Meow Run" / MR  — {"isCat":true,"field":"name","word":"meow"}
+  ok   cat: "Neko Island" / NEKO  — {"isCat":true,"field":"name","word":"neko"}
+  ok   cat: "nyan nyan" / NN  — {"isCat":true,"field":"name","word":"nyan"}
+  ok   cat: "Purrfect Day" / PFD  — {"isCat":true,"field":"name","word":"purrfect"}
+  ok   cat: "Tomcat" / TOM  — {"isCat":true,"field":"name","word":"tomcat"}
+  ok   cat: "Kitten Club" / KC  — {"isCat":true,"field":"name","word":"kitten"}
+  ok   cat: "cat in a dogs world" / MEW  — {"isCat":true,"field":"name","word":"cat"}
+  ok   cat: "zzz" / MEW  — {"isCat":true,"field":"symbol","word":"mew"}
+  ok   cat: "Bobcat Energy" / BOB  — {"isCat":true,"field":"name","word":"bobcat"}
+  ok   cat: "Pussycat" / PCAT  — {"isCat":true,"field":"name","word":"pussycat"}
+  ok   not a cat: "catch"
+  ok   not a cat: "catcher"
+  ok   not a cat: "cattle"
+  ok   not a cat: "education"
+  ok   not a cat: "category"
+  ok   not a cat: "location"
+  ok   not a cat: "vacation"
+  ok   not a cat: "catalyst"
+  ok   not a cat: "caterpillar"
+  ok   not a cat: "catering"
+  ok   not a cat: "catfish"
+  ok   not a cat: "catwalk"
+  ok   not a cat: "scatter"
+  ok   not a cat: "concatenate"
+  ok   not a cat: "delicate"
+  ok   not a cat: "duplicate"
+  ok   not a cat: "certificate"
+  ok   not a cat: "polecat"
+  ok   not a cat: "muscat"
+  ok   not a cat: "catholic"
+  ok   not a cat: "cathedral"
+  ok   not a cat: "catastrophe"
+  ok   not a cat: "catalog"
+  ok   not a cat: "catan"
+  ok   not a cat: "catsup"
+  ok   not a cat: "communicate"
+  ok   not a cat: "sophisticated"
+  ok   not a cat: "indicate"
+  ok   the ticker alone is enough: name "Zoom", ticker SHARKCAT
+  ok   one cat word in a description is not enough
+  ok   two different ones are
+  ok   CAT_WORDS includes the obvious ones
+  ok   the recorded cat coins read as cats (Asset Cat, cosmic cat protocol)  — Asset Cat: name, cosmic cat protocol : name
+  ok   the recorded create_v2 samples decode to names the detector can read
+
+test-bots-content: 124 passed, 0 failed
+

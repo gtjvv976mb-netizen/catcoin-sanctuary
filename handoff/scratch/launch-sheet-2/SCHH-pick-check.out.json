@@ -1,0 +1,224 @@
+{
+ "disclosure": "A cat coin priced in SCHH. Not affiliated with Schwab Asset Management, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "disclosureLen": 146,
+ "disclosure_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "id": "orig",
+   "name": "Lintel the Peach-Patch Cat",
+   "ticker": "LINTELPAW",
+   "blurb": "Lintel, a slim grey tabby-and-white cat with a faint peach patch on one hip, stretches out across every doorstep in the garden.",
+   "description": "Lintel, a slim grey tabby-and-white cat with a faint peach patch on one hip, stretches out across every doorstep in the garden. A cat coin priced in SCHH. Not affiliated with Schwab Asset Management, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "nameLen": 26,
+   "descLen": 274,
+   "blurbLen": 127,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lintel, a slim grey tabby-and-white cat ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   }
+  },
+  {
+   "id": "fixed",
+   "name": "Lintel the Peach-Patch Cat",
+   "ticker": "LINTELPAW",
+   "blurb": "Lintel, a slim grey tabby-and-white cat with green-gold eyes and a faint peach hip patch, naps on the beam over the garden door.",
+   "description": "Lintel, a slim grey tabby-and-white cat with green-gold eyes and a faint peach hip patch, naps on the beam over the garden door. A cat coin priced in SCHH. Not affiliated with Schwab Asset Management, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "nameLen": 26,
+   "descLen": 275,
+   "blurbLen": 128,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lintel, a slim grey tabby-and-white cat ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   }
+  }
+ ],
+ "jupiter": {
+  "LINTELPAW": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "nearSymbols": [],
+   "verifiedMatch": false
+  },
+  "LINTEL": {
+   "status": 200,
+   "results": 20,
+   "symbolMatches": [],
+   "nearSymbols": [
+    {
+     "symbol": "POOFCOIN",
+     "name": "Lutonomous Lintelligence"
+    },
+    {
+     "symbol": "LI",
+     "name": "low \r\nintelligence"
+    },
+    {
+     "symbol": "LOWIQ",
+     "name": "low intelligent Trump Supporter"
+    },
+    {
+     "symbol": "LIM",
+     "name": "Low Intelligence Meme"
+    },
+    {
+     "symbol": "LIM",
+     "name": "Low Intelligence Memes"
+    },
+    {
+     "symbol": "LIM",
+     "name": "Low Intelligence Meme"
+    },
+    {
+     "symbol": "LIM",
+     "name": "Low Intelligence Meme"
+    },
+    {
+     "symbol": "LIM",
+     "name": "Low Intelligence Meme"
+    }
+   ],
+   "verifiedMatch": false
+  },
+  "Lintel the Peach-Patch Cat": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "nearSymbols": [],
+   "verifiedMatch": false
+  }
+ }
+}

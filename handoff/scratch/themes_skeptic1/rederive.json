@@ -1,0 +1,962 @@
+{
+ "classifier": "themes-v4 2026-09-25",
+ "listings": {
+  "newest": {
+   "pageFiles": 34,
+   "okOffsets": 22,
+   "rows": 1050,
+   "unique": 1016
+  },
+  "graduated": {
+   "pageFiles": 43,
+   "okOffsets": 22,
+   "rows": 1050,
+   "unique": 1047,
+   "notComplete": 0
+  }
+ },
+ "gtPoolsFromRaw": 1047,
+ "graduates": {
+  "n": 1047,
+  "missingPoolTime": 0,
+  "real": 858,
+  "realWithPoolTime": 858,
+  "instant": 625,
+  "instantShare": 0.7284382284382285,
+  "floorDumped": 641,
+  "gradMinOver60": 33,
+  "gradMinKnown": 1047,
+  "realGradMinOver60": 18,
+  "negativeGradMin": 0,
+  "quoteMints": {
+   "11111111111111111111111111111111": 1013,
+   "BPxxfRCXkUVhig4HS1Lh7kZqV6SPJhzfEk4x6fVBjPCy": 2,
+   "9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump": 1,
+   "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v": 13,
+   "A7bdiYdS5GjqGFtxf17ppRHtDKPkkRqbKtR27dxvQXaS": 1,
+   "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn": 8,
+   "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump": 3,
+   "CARDSccUMFKoPRZxt5vt3ksUbxEFEcnZ3H2pd3dKxYjp": 1,
+   "HiMSSzzwkZkrXJ4PGVJRdtfLaANeAztjjcgk5Dxe7Lwx": 2,
+   "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb": 1,
+   "RENzhrJQgmAnfcLhU1U5XwAMc6TC15UA6jCbPBaasnj": 1,
+   "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh": 1
+  },
+  "shareNameSymbolWithAnother": 466,
+  "shareNameOnlyWithAnother": 484,
+  "shareSymbolOnlyWithAnother": 520
+ },
+ "instantByTheme": {
+  "cat": "29/38 = 76.3%",
+  "dog": "18/23 = 78.3%",
+  "frog": "11/16 = 68.8%",
+  "other-animal": "21/36 = 58.3%",
+  "ai": "57/61 = 93.4%",
+  "political": "9/9 = 100.0%",
+  "celebrity": "17/17 = 100.0%",
+  "anime": "7/10 = 70.0%",
+  "brand": "129/131 = 98.5%",
+  "food": "1/1 = 100.0%",
+  "crude": "15/21 = 71.4%",
+  "internet-meme": "12/14 = 85.7%",
+  "crypto-finance": "110/138 = 79.7%",
+  "none": "189/343 = 55.1%"
+ },
+ "rowA": {
+  "ageH1RowsTotal": 2127,
+  "uniqueMints": 2127,
+  "dupP": 0,
+  "dupL": 0,
+  "used": 2088,
+  "excluded": {
+   "notInLaunches": 0,
+   "gone": 0,
+   "nullAth": 39,
+   "athBeforeCreate": 0,
+   "over5MUnconfirmed": [],
+   "over5MConfirmed": [
+    [
+     "Backpack",
+     31992151,
+     32029638
+    ],
+    [
+     "VSOF",
+     650106747,
+     650861008
+    ],
+    [
+     "VSOF",
+     230652035,
+     230800100
+    ],
+    [
+     "VSOF",
+     187721170,
+     187913778
+    ],
+    [
+     "LESGO",
+     9255256,
+     9265669
+    ],
+    [
+     "WOTF",
+     29754651,
+     29780415
+    ]
+   ]
+  },
+  "createdWindow": [
+   "2026-09-25T09:40:31.000Z",
+   "2026-09-25T11:28:15.000Z"
+  ],
+  "readAgeMin": {
+   "min": "60.00",
+   "p01": "60.02",
+   "p50": "60.97",
+   "p99": "66.36",
+   "max": "70.84",
+   "over68": 3,
+   "over70": 2,
+   "under60": 0
+  },
+  "all": {
+   "cat": {
+    "n": 185,
+    "10k": 33,
+    "20k": 12,
+    "50k": 6,
+    "100k": 3
+   },
+   "dog": {
+    "n": 74,
+    "10k": 6,
+    "20k": 3,
+    "50k": 0,
+    "100k": 0
+   },
+   "frog": {
+    "n": 23,
+    "10k": 5,
+    "20k": 4,
+    "50k": 4,
+    "100k": 3
+   },
+   "other-animal": {
+    "n": 184,
+    "10k": 21,
+    "20k": 4,
+    "50k": 1,
+    "100k": 0
+   },
+   "ai": {
+    "n": 18,
+    "10k": 6,
+    "20k": 5,
+    "50k": 4,
+    "100k": 4
+   },
+   "political": {
+    "n": 17,
+    "10k": 0,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "celebrity": {
+    "n": 135,
+    "10k": 1,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "anime": {
+    "n": 17,
+    "10k": 3,
+    "20k": 2,
+    "50k": 1,
+    "100k": 1
+   },
+   "brand": {
+    "n": 46,
+    "10k": 12,
+    "20k": 9,
+    "50k": 8,
+    "100k": 8
+   },
+   "food": {
+    "n": 45,
+    "10k": 3,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "crude": {
+    "n": 27,
+    "10k": 2,
+    "20k": 2,
+    "50k": 1,
+    "100k": 0
+   },
+   "internet-meme": {
+    "n": 62,
+    "10k": 7,
+    "20k": 4,
+    "50k": 2,
+    "100k": 2
+   },
+   "crypto-finance": {
+    "n": 342,
+    "10k": 29,
+    "20k": 16,
+    "50k": 8,
+    "100k": 8
+   },
+   "none": {
+    "n": 913,
+    "10k": 98,
+    "20k": 49,
+    "50k": 16,
+    "100k": 12
+   },
+   "ALL": {
+    "n": 2088,
+    "10k": 226,
+    "20k": 111,
+    "50k": 51,
+    "100k": 41
+   }
+  },
+  "exclInstant": {
+   "cat": {
+    "n": 182,
+    "10k": 30,
+    "20k": 9,
+    "50k": 3,
+    "100k": 1
+   },
+   "dog": {
+    "n": 74,
+    "10k": 6,
+    "20k": 3,
+    "50k": 0,
+    "100k": 0
+   },
+   "frog": {
+    "n": 19,
+    "10k": 1,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "other-animal": {
+    "n": 184,
+    "10k": 21,
+    "20k": 4,
+    "50k": 1,
+    "100k": 0
+   },
+   "ai": {
+    "n": 14,
+    "10k": 2,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "political": {
+    "n": 17,
+    "10k": 0,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "celebrity": {
+    "n": 135,
+    "10k": 1,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "anime": {
+    "n": 16,
+    "10k": 2,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "brand": {
+    "n": 38,
+    "10k": 4,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "food": {
+    "n": 45,
+    "10k": 3,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "crude": {
+    "n": 26,
+    "10k": 1,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "internet-meme": {
+    "n": 61,
+    "10k": 6,
+    "20k": 3,
+    "50k": 1,
+    "100k": 1
+   },
+   "crypto-finance": {
+    "n": 335,
+    "10k": 22,
+    "20k": 9,
+    "50k": 1,
+    "100k": 1
+   },
+   "none": {
+    "n": 902,
+    "10k": 87,
+    "20k": 38,
+    "50k": 5,
+    "100k": 2
+   },
+   "ALL": {
+    "n": 2048,
+    "10k": 186,
+    "20k": 71,
+    "50k": 11,
+    "100k": 5
+   }
+  },
+  "firstOfName": {
+   "cat": {
+    "n": 61,
+    "10k": 8,
+    "20k": 5,
+    "50k": 2,
+    "100k": 1
+   },
+   "dog": {
+    "n": 49,
+    "10k": 4,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "frog": {
+    "n": 16,
+    "10k": 4,
+    "20k": 4,
+    "50k": 4,
+    "100k": 3
+   },
+   "other-animal": {
+    "n": 76,
+    "10k": 8,
+    "20k": 3,
+    "50k": 1,
+    "100k": 0
+   },
+   "ai": {
+    "n": 17,
+    "10k": 5,
+    "20k": 4,
+    "50k": 4,
+    "100k": 4
+   },
+   "political": {
+    "n": 13,
+    "10k": 0,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "celebrity": {
+    "n": 19,
+    "10k": 0,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "anime": {
+    "n": 15,
+    "10k": 2,
+    "20k": 1,
+    "50k": 1,
+    "100k": 1
+   },
+   "brand": {
+    "n": 26,
+    "10k": 9,
+    "20k": 7,
+    "50k": 6,
+    "100k": 6
+   },
+   "food": {
+    "n": 20,
+    "10k": 2,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "crude": {
+    "n": 23,
+    "10k": 2,
+    "20k": 2,
+    "50k": 1,
+    "100k": 0
+   },
+   "internet-meme": {
+    "n": 15,
+    "10k": 2,
+    "20k": 2,
+    "50k": 1,
+    "100k": 1
+   },
+   "crypto-finance": {
+    "n": 148,
+    "10k": 19,
+    "20k": 10,
+    "50k": 6,
+    "100k": 6
+   },
+   "none": {
+    "n": 558,
+    "10k": 62,
+    "20k": 25,
+    "50k": 10,
+    "100k": 8
+   },
+   "ALL": {
+    "n": 1056,
+    "10k": 127,
+    "20k": 65,
+    "50k": 36,
+    "100k": 30
+   }
+  },
+  "rawAthNoSpotRule": {
+   "cat": {
+    "n": 185,
+    "10k": 33,
+    "20k": 12,
+    "50k": 6,
+    "100k": 3
+   },
+   "dog": {
+    "n": 74,
+    "10k": 6,
+    "20k": 3,
+    "50k": 0,
+    "100k": 0
+   },
+   "frog": {
+    "n": 23,
+    "10k": 5,
+    "20k": 4,
+    "50k": 4,
+    "100k": 3
+   },
+   "other-animal": {
+    "n": 184,
+    "10k": 21,
+    "20k": 4,
+    "50k": 1,
+    "100k": 0
+   },
+   "ai": {
+    "n": 18,
+    "10k": 6,
+    "20k": 5,
+    "50k": 4,
+    "100k": 4
+   },
+   "political": {
+    "n": 17,
+    "10k": 0,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "celebrity": {
+    "n": 135,
+    "10k": 1,
+    "20k": 0,
+    "50k": 0,
+    "100k": 0
+   },
+   "anime": {
+    "n": 17,
+    "10k": 3,
+    "20k": 2,
+    "50k": 1,
+    "100k": 1
+   },
+   "brand": {
+    "n": 46,
+    "10k": 12,
+    "20k": 9,
+    "50k": 8,
+    "100k": 8
+   },
+   "food": {
+    "n": 45,
+    "10k": 3,
+    "20k": 1,
+    "50k": 0,
+    "100k": 0
+   },
+   "crude": {
+    "n": 27,
+    "10k": 2,
+    "20k": 2,
+    "50k": 1,
+    "100k": 0
+   },
+   "internet-meme": {
+    "n": 62,
+    "10k": 7,
+    "20k": 4,
+    "50k": 2,
+    "100k": 2
+   },
+   "crypto-finance": {
+    "n": 342,
+    "10k": 29,
+    "20k": 16,
+    "50k": 8,
+    "100k": 8
+   },
+   "none": {
+    "n": 913,
+    "10k": 98,
+    "20k": 49,
+    "50k": 16,
+    "100k": 12
+   },
+   "ALL": {
+    "n": 2088,
+    "10k": 226,
+    "20k": 111,
+    "50k": 51,
+    "100k": 41
+   }
+  },
+  "catVsRest10k": "33/185 vs rest 193/1903 = 10.14%",
+  "wilson": {
+   "cat": [
+    "13.0-24.0",
+    "3.7-11.0",
+    "1.5-6.9"
+   ],
+   "dog": [
+    "3.8-16.6",
+    "1.4-11.3",
+    "0.0-4.9"
+   ],
+   "other-animal": [
+    "7.6-16.8",
+    "0.8-5.5",
+    "0.1-3.0"
+   ],
+   "brand": [
+    "15.6-40.3",
+    "10.7-33.2",
+    "9.1-30.7"
+   ]
+  },
+  "miau": {
+   "launchesInA": 38,
+   "hit10k": 11,
+   "exactNameMIAU": 38,
+   "exactHit": 11,
+   "themes": [
+    "cat"
+   ]
+  },
+  "spidey": {
+   "launchesInA": 20,
+   "hit10k": 4,
+   "themes": [
+    "cat"
+   ]
+  }
+ },
+ "universe": {
+  "n": 3315,
+  "window": [
+   "2026-09-25T09:40:31.000Z",
+   "2026-09-25T12:28:15.000Z"
+  ],
+  "hours": "2.796",
+  "byTheme": {
+   "cat": 263,
+   "dog": 176,
+   "frog": 35,
+   "other-animal": 268,
+   "ai": 33,
+   "political": 34,
+   "celebrity": 142,
+   "anime": 21,
+   "brand": 61,
+   "food": 69,
+   "crude": 40,
+   "internet-meme": 98,
+   "crypto-finance": 492,
+   "none": 1583
+  },
+  "ansem": 110,
+  "ansemExactWord": 108,
+  "backpack": 183,
+  "backpackExactWord": 176,
+  "miau": 38
+ },
+ "cohortVsChain": {
+  "overlap": [
+   "2026-09-25T09:40:31.000Z",
+   "2026-09-25T10:47:44.000Z"
+  ],
+  "chain": 1497,
+  "cohort": 1482,
+  "buckets": [
+   "09:40 chain 180 cohort 179",
+   "09:50 chain 178 cohort 178",
+   "10:00 chain 166 cohort 164",
+   "10:10 chain 173 cohort 172",
+   "10:20 chain 285 cohort 281",
+   "10:30 chain 297 cohort 295",
+   "10:40 chain 216 cohort 211"
+  ],
+  "sigUnique": "40000/40000"
+ },
+ "rowB": {
+  "window": [
+   "2026-09-24T12:00:00.000Z",
+   "2026-09-25T10:35:33.000Z"
+  ],
+  "hours": "22.593",
+  "chainCreates": 33042,
+  "ratio": 0.9903,
+  "LB": 32721,
+  "sampleN": 549,
+  "sampleNoMint": 3,
+  "strata": 23,
+  "hourMismatch": 0,
+  "nEff": "513.9",
+  "sumNhVsChain": "33042 vs 33042",
+  "graduatesInWindow": 994,
+  "realInWindow": 814,
+  "byTheme": {
+   "cat": {
+    "sampleK": 39,
+    "share": 6.84,
+    "shareUnweighted": 7.1,
+    "estLaunches": 2238,
+    "complete": 62,
+    "30k": "38 (1.70%)",
+    "100k": "29 (1.30%)",
+    "200k": "22 (0.98%)",
+    "500k": "10 (0.45%)",
+    "1M": "4 (0.18%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "5 (0.22%)",
+    "1M_exclInstant": 0
+   },
+   "dog": {
+    "sampleK": 23,
+    "share": 4.59,
+    "shareUnweighted": 4.19,
+    "estLaunches": 1503,
+    "complete": 28,
+    "30k": "22 (1.46%)",
+    "100k": "12 (0.80%)",
+    "200k": "9 (0.60%)",
+    "500k": "6 (0.40%)",
+    "1M": "2 (0.13%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "1 (0.07%)",
+    "1M_exclInstant": 0
+   },
+   "frog": {
+    "sampleK": 6,
+    "share": 0.94,
+    "shareUnweighted": 1.09,
+    "estLaunches": 306,
+    "complete": 14,
+    "30k": "12 (3.92%)",
+    "100k": "7 (2.28%)",
+    "200k": "4 (1.31%)",
+    "500k": "4 (1.31%)",
+    "1M": "1 (0.33%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "0 (0.00%)",
+    "1M_exclInstant": 0
+   },
+   "other-animal": {
+    "sampleK": 31,
+    "share": 5.74,
+    "shareUnweighted": 5.65,
+    "estLaunches": 1878,
+    "complete": 39,
+    "30k": "34 (1.81%)",
+    "100k": "15 (0.80%)",
+    "200k": "13 (0.69%)",
+    "500k": "8 (0.43%)",
+    "1M": "1 (0.05%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "2 (0.11%)",
+    "1M_exclInstant": 0
+   },
+   "ai": {
+    "sampleK": 16,
+    "share": 2.84,
+    "shareUnweighted": 2.91,
+    "estLaunches": 929,
+    "complete": 68,
+    "30k": "61 (6.56%)",
+    "100k": "55 (5.92%)",
+    "200k": "54 (5.81%)",
+    "500k": "44 (4.74%)",
+    "1M": "18 (1.94%)",
+    "10M": "1 (0.11%)",
+    "100M": "1 (0.11%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "0 (0.00%)",
+    "1M_exclInstant": 0
+   },
+   "political": {
+    "sampleK": 7,
+    "share": 1.4,
+    "shareUnweighted": 1.28,
+    "estLaunches": 459,
+    "complete": 9,
+    "30k": "8 (1.74%)",
+    "100k": "7 (1.53%)",
+    "200k": "7 (1.53%)",
+    "500k": "6 (1.31%)",
+    "1M": "4 (0.87%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "0 (0.00%)",
+    "1M_exclInstant": 0
+   },
+   "celebrity": {
+    "sampleK": 10,
+    "share": 1.46,
+    "shareUnweighted": 1.82,
+    "estLaunches": 477,
+    "complete": 20,
+    "30k": "17 (3.56%)",
+    "100k": "15 (3.14%)",
+    "200k": "14 (2.93%)",
+    "500k": "12 (2.52%)",
+    "1M": "5 (1.05%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "0 (0.00%)",
+    "1M_exclInstant": 0
+   },
+   "anime": {
+    "sampleK": 6,
+    "share": 1.01,
+    "shareUnweighted": 1.09,
+    "estLaunches": 330,
+    "complete": 12,
+    "30k": "10 (3.03%)",
+    "100k": "8 (2.42%)",
+    "200k": "7 (2.12%)",
+    "500k": "6 (1.82%)",
+    "1M": "4 (1.21%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "1 (0.30%)",
+    "1M_exclInstant": 0
+   },
+   "brand": {
+    "sampleK": 13,
+    "share": 2.28,
+    "shareUnweighted": 2.37,
+    "estLaunches": 747,
+    "complete": 120,
+    "30k": "120 (16.06%)",
+    "100k": "119 (15.93%)",
+    "200k": "118 (15.79%)",
+    "500k": "98 (13.12%)",
+    "1M": "46 (6.16%)",
+    "10M": "1 (0.13%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "2 (0.27%)",
+    "1M_exclInstant": 0
+   },
+   "food": {
+    "sampleK": 11,
+    "share": 1.84,
+    "shareUnweighted": 2,
+    "estLaunches": 601,
+    "complete": 9,
+    "30k": "1 (0.17%)",
+    "100k": "1 (0.17%)",
+    "200k": "0 (0.00%)",
+    "500k": "0 (0.00%)",
+    "1M": "0 (0.00%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "0 (0.00%)",
+    "1M_exclInstant": 0
+   },
+   "crude": {
+    "sampleK": 14,
+    "share": 2.9,
+    "shareUnweighted": 2.55,
+    "estLaunches": 948,
+    "complete": 25,
+    "30k": "20 (2.11%)",
+    "100k": "13 (1.37%)",
+    "200k": "10 (1.06%)",
+    "500k": "5 (0.53%)",
+    "1M": "2 (0.21%)",
+    "10M": "1 (0.11%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "1 (0.11%)",
+    "1M_exclInstant": 0
+   },
+   "internet-meme": {
+    "sampleK": 14,
+    "share": 2.42,
+    "shareUnweighted": 2.55,
+    "estLaunches": 793,
+    "complete": 15,
+    "30k": "13 (1.64%)",
+    "100k": "7 (0.88%)",
+    "200k": "4 (0.50%)",
+    "500k": "3 (0.38%)",
+    "1M": "2 (0.25%)",
+    "10M": "0 (0.00%)",
+    "100M": "0 (0.00%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "1 (0.13%)",
+    "1M_exclInstant": 0
+   },
+   "crypto-finance": {
+    "sampleK": 59,
+    "share": 11.15,
+    "shareUnweighted": 10.75,
+    "estLaunches": 3650,
+    "complete": 150,
+    "30k": "131 (3.59%)",
+    "100k": "99 (2.71%)",
+    "200k": "87 (2.38%)",
+    "500k": "68 (1.86%)",
+    "1M": "43 (1.18%)",
+    "10M": "17 (0.47%)",
+    "100M": "7 (0.19%)",
+    "1000M": "2 (0.05%)",
+    "100k_exclInstant": "7 (0.19%)",
+    "1M_exclInstant": 1
+   },
+   "none": {
+    "sampleK": 300,
+    "share": 54.59,
+    "shareUnweighted": 54.64,
+    "estLaunches": 17862,
+    "complete": 423,
+    "30k": "327 (1.83%)",
+    "100k": "192 (1.07%)",
+    "200k": "126 (0.71%)",
+    "500k": "92 (0.52%)",
+    "1M": "56 (0.31%)",
+    "10M": "24 (0.13%)",
+    "100M": "10 (0.06%)",
+    "1000M": "0 (0.00%)",
+    "100k_exclInstant": "46 (0.26%)",
+    "1M_exclInstant": 1
+   },
+   "ALL": {
+    "sampleK": 549,
+    "share": 100,
+    "shareUnweighted": 100,
+    "estLaunches": 32721,
+    "complete": 994,
+    "30k": "814 (2.49%)",
+    "100k": "579 (1.77%)",
+    "200k": "475 (1.45%)",
+    "500k": "362 (1.11%)",
+    "1M": "188 (0.57%)",
+    "10M": "44 (0.13%)",
+    "100M": "18 (0.06%)",
+    "1000M": "2 (0.01%)",
+    "100k_exclInstant": "66 (0.20%)",
+    "1M_exclInstant": 2
+   }
+  },
+  "allCompleteRate": "3.04%",
+  "realRate": "2.49%",
+  "over10M": [
+   "American Reserved Oil Supply (AROS) 2026-09-25T01:04 ath $2252.2M theme crypto-finance instant true",
+   "United States Dividend Fund (USDF) 2026-09-25T03:49 ath $1305.9M theme crypto-finance instant true",
+   "American Reserved Oil Supply (AROS) 2026-09-24T15:53 ath $703.1M theme crypto-finance instant true",
+   "American Reserved Oil Supply (AROS) 2026-09-25T00:26 ath $685.7M theme crypto-finance instant true",
+   "AROS (AROS) 2026-09-25T07:12 ath $667.7M theme none instant true",
+   "AROS (AROS) 2026-09-24T13:02 ath $546.1M theme none instant true",
+   "VSOF (VSOF) 2026-09-24T16:55 ath $486.6M theme none instant true",
+   "WSOS (WSOS) 2026-09-25T09:07 ath $396.5M theme none instant true",
+   "NTDA (NTDA) 2026-09-24T16:10 ath $302.6M theme none instant true",
+   "WOTF (WOTF) 2026-09-24T16:45 ath $300.4M theme none instant true",
+   "WSOS   (WSOS  ) 2026-09-25T06:52 ath $249.9M theme none instant true",
+   "Jean Phil (JEANPHIL) 2026-09-25T05:19 ath $236.3M theme none instant true",
+   "AROS (AROS) 2026-09-24T23:35 ath $216.8M theme none instant true",
+   "World AI Fund (WAIF) 2026-09-24T17:02 ath $192.6M theme ai instant true",
+   "World Strategic Oil SupplyToken (WSOS) 2026-09-25T02:41 ath $186.5M theme crypto-finance instant true",
+   "World Strategic Oil SupplyToken (WSOS  ) 2026-09-24T13:20 ath $148.5M theme crypto-finance instant true",
+   "United States Dividend Fund (USDF) 2026-09-25T08:04 ath $117.4M theme crypto-finance instant true",
+   "WWR (WWR) 2026-09-24T14:15 ath $102.3M theme none instant true",
+   "WWR (WWR) 2026-09-24T17:55 ath $91.4M theme none instant true",
+   "WWR (WWR) 2026-09-24T14:09 ath $88.3M theme none instant true",
+   "VSOF (VSOF) 2026-09-24T23:26 ath $87.7M theme none instant true",
+   "World Water Reserve (WWR) 2026-09-24T12:31 ath $86.3M theme crypto-finance instant true",
+   "USDF (USDF) 2026-09-25T00:03 ath $85.8M theme none instant true",
+   "LESGO (GO) 2026-09-24T20:24 ath $67.7M theme none instant true",
+   "IMU (IMU) 2026-09-25T06:48 ath $43.4M theme none instant true",
+   "Holdoween (Holdoween) 2026-09-24T19:21 ath $34.9M theme none instant true",
+   "American Reserved Oil Supply (AROS) 2026-09-24T13:30 ath $34.2M theme crypto-finance instant true",
+   "Xpress Bridge Currency (XBC) 2026-09-25T03:00 ath $32.1M theme crypto-finance instant true",
+   "Backpack (BP) 2026-09-25T10:29 ath $32.0M theme crypto-finance instant true",
+   "FUEF (FUEF) 2026-09-24T15:05 ath $31.7M theme none instant true",
+   "HOLDOWEEN (Holdoween) 2026-09-24T20:44 ath $28.9M theme none instant true",
+   "GoCollect (COLLECT) 2026-09-25T06:45 ath $24.2M theme none instant true",
+   "TrendTrader Pro (TTP) 2026-09-25T07:14 ath $18.1M theme crypto-finance instant true",
+   "GTA6 (GTA 6 Coin) 2026-09-24T13:21 ath $18.1M theme brand instant true",
+   "AROS (AROS) 2026-09-25T05:40 ath $15.5M theme none instant true",
+   "Digital American Water Supply (DAWS) 2026-09-24T17:07 ath $15.2M theme none instant true",
+   "United States Dividend Fund (USDF) 2026-09-25T05:48 ath $13.9M theme crypto-finance instant true",
+   "TTP (TTP) 2026-09-25T03:02 ath $12.7M theme none instant true",
+   "American Reserved Oil Supply (AROS) 2026-09-24T17:07 ath $12.5M theme crypto-finance instant true",
+   "World Strategic Oil Supply (WSOS) 2026-09-25T01:29 ath $12.4M theme crypto-finance instant true",
+   "Dildo (DLDO) 2026-09-25T02:58 ath $12.3M theme none instant true",
+   "goon (goon) 2026-09-24T18:07 ath $12.1M theme crude instant true",
+   "United States Dividend Fund (USDF) 2026-09-24T16:13 ath $11.1M theme crypto-finance instant true",
+   "American Reserved Oil Supply (AROS) 2026-09-24T16:40 ath $10.5M theme crypto-finance instant true"
+  ]
+ }
+}

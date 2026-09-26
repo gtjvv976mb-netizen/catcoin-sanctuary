@@ -1,0 +1,46 @@
+{
+ "adopt-full-min": {
+  "bytes": 432376,
+  "pullsExecutor": [
+   "entry-sizing.mjs",
+   "trade-policy.mjs",
+   "strategy.mjs",
+   "snipe-curve.mjs",
+   "sol-usd-oracle.mjs",
+   "snipe-venue.mjs",
+   "network-fee-budget.mjs",
+   "token2022.mjs",
+   "snipe-entry.mjs",
+   "snipe-shadow.mjs",
+   "snipe-book.mjs",
+   "snipe-policy.mjs",
+   "snipe-socials.mjs",
+   "snipe-lane.mjs",
+   "snipe-venue-pumpfun.mjs"
+  ],
+  "pullsPumpfun": true,
+  "pullsConfig": true
+ },
+ "stonkfun-only-min": {
+  "bytes": 336059,
+  "pullsExecutor": [
+   "entry-sizing.mjs",
+   "trade-policy.mjs",
+   "strategy.mjs",
+   "snipe-curve.mjs",
+   "sol-usd-oracle.mjs",
+   "snipe-venue.mjs",
+   "network-fee-budget.mjs",
+   "token2022.mjs",
+   "snipe-entry.mjs",
+   "snipe-shadow.mjs",
+   "snipe-book.mjs",
+   "snipe-policy.mjs",
+   "snipe-socials.mjs",
+   "snipe-lane.mjs",
+   "snipe-venue-pumpfun.mjs"
+  ],
+  "pullsPumpfun": false,
+  "pullsConfig": true
+ }
+}

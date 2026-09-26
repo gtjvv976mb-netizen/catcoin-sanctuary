@@ -1,0 +1,317 @@
+[
+ {
+  "ticker": "FIRSTBOWL",
+  "name": "Firstbowl the Cream Cat",
+  "nameLen": 23,
+  "tickerLen": 9,
+  "descLen": 266,
+  "blurbLen": 149,
+  "endsWithDisclosure": true,
+  "checkProposal_blurbAsTagline": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Firstbowl, a chunky cream-and-white shor",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeTicker": false,
+  "containsStockRoot": false,
+  "jupStatus": 200,
+  "jupResults": 14,
+  "jupSymbolsReturned": [
+   "BOWL",
+   "lightning",
+   "BITBOWL",
+   "BITBOWL",
+   "BITBOWL",
+   "BITBOWL",
+   "EAGEL",
+   "EAGEL",
+   "BITBOWL",
+   "SEAL",
+   "GameCoin",
+   "TICKET",
+   "VIBE",
+   "GoBills"
+  ],
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false
+ },
+ {
+  "ticker": "EVERLOOP",
+  "name": "Everloop the Sleepy Cat",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "descLen": 266,
+  "blurbLen": 149,
+  "endsWithDisclosure": true,
+  "checkProposal_blurbAsTagline": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Everloop, a round silver tabby, curls in",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeTicker": false,
+  "containsStockRoot": false,
+  "jupStatus": 200,
+  "jupResults": 7,
+  "jupSymbolsReturned": [
+   "LEVERLOOP",
+   "LEVERLOOP",
+   "Smile",
+   "hello",
+   "Freedom",
+   "Freedom",
+   "T E G"
+  ],
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false
+ },
+ {
+  "ticker": "LADDERCAT",
+  "name": "Rung the Ladder Cat",
+  "nameLen": 19,
+  "tickerLen": 9,
+  "descLen": 269,
+  "blurbLen": 152,
+  "endsWithDisclosure": true,
+  "checkProposal_blurbAsTagline": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Rung, a brown tabby with white socks, cl",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeTicker": false,
+  "containsStockRoot": false,
+  "jupStatus": 200,
+  "jupResults": 4,
+  "jupSymbolsReturned": [
+   "Xcat",
+   "LADA",
+   "USDC",
+   "LEADCAT"
+  ],
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false
+ },
+ {
+  "control": "POPCAT",
+  "status": 200,
+  "verifiedSymbolMatch": true
+ }
+]

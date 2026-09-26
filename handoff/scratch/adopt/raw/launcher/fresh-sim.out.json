@@ -1,0 +1,320 @@
+{
+ "ranAt": "2026-09-25T17:47:10.863Z",
+ "payer": "FFWtrEQ4B4PKQoVuHYzZq8FabGkVatYzDpEVHsK5rrhF",
+ "uri": "https://gateway.irys.xyz/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+ "results": [
+  {
+   "label": "xStock SPYx, sheet row 1",
+   "coin": {
+    "name": "Patchpaw the Calico",
+    "symbol": "PATCHPAW"
+   },
+   "plan": {
+    "quote": {
+     "symbol": "SPYx",
+     "mint": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+     "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "name": "SP500 xStock"
+    },
+    "globalConfig": "B7ctMMdGvy46Am56myTtzfkNzt9kWZVTNGM2BWrJ9adg",
+    "curveRule": "QYZp1YzqEHU67ngXphF9LAkxkxWGvpWEv3rXh4yDbWA",
+    "platformConfig": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+    "raiseRaw": "1326281432",
+    "cpmmCreatorFeeOn": 0,
+    "platform": {
+     "feeRate": "10000",
+     "creatorFeeRate": "0"
+    },
+    "marketCap": {
+     "startUsd": 3380.877099939922,
+     "graduationUsd": 49678.02285743762
+    },
+    "pricedAt": "2026-09-25T17:46:34.932Z"
+   },
+   "preSignCheck": "passed",
+   "txBytes": 867,
+   "mint": "GDUXCJTEL61oF39MMmS4yJjVjWAtwc2fG2yc26b2p9VF",
+   "pool": "8XPXrzwE5myb1WTXmjpTK5oeKKe9wB9Ntxm5PfbgzE1X",
+   "sim": {
+    "err": null,
+    "unitsConsumed": 100845,
+    "payerBefore": 257171760,
+    "payerAfter": 248548660,
+    "logsOfInterest": [
+     "Program log: Instruction: InitializeWithToken2022",
+     "Program log: Instruction: InitializeAccount3",
+     "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3572 of 225458 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 626 of 195342 compute units",
+     "Program log: MetadataPointerInstruction::Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 925 of 188861 compute units",
+     "Program log: Instruction: InitializeMint2",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1772 of 186552 compute units",
+     "Program log: TokenMetadataInstruction: Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3395 of 179241 compute units",
+     "Program log: Instruction: InitializeAccount3",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2108 of 170467 compute units",
+     "Program log: Instruction: MintTo",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1707 of 155793 compute units",
+     "Program log: Instruction: SetAuthority",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1044 of 152419 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 100545 of 249700 compute units"
+    ]
+   },
+   "simCheck": {
+    "spentLamports": 8623100,
+    "units": 100845
+   }
+  },
+  {
+   "label": "xStock TSLAx, sheet row 4",
+   "coin": {
+    "name": "Snowcurl the Shade Cat",
+    "symbol": "SNOWCURL"
+   },
+   "plan": {
+    "quote": {
+     "symbol": "TSLAx",
+     "mint": "XsDoVfqeBukxuZHWhdvWHBhgEHjGNst4MLodqsJHzoB",
+     "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "name": "Tesla xStock"
+    },
+    "globalConfig": "Fny7wPYnkeR5AU285YLSJv9giQUbxDA2DpXQAinTe2nR",
+    "curveRule": "AcKayBxwULBxcRvoRXD9JUqvxhNJCGxcRsiYbcUaN6KT",
+    "platformConfig": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+    "raiseRaw": "2759785183",
+    "cpmmCreatorFeeOn": 0,
+    "platform": {
+     "feeRate": "10000",
+     "creatorFeeRate": "0"
+    },
+    "marketCap": {
+     "startUsd": 3380.8771051738822,
+     "graduationUsd": 49678.02284906136
+    },
+    "pricedAt": "2026-09-25T17:46:36.759Z"
+   },
+   "preSignCheck": "passed",
+   "txBytes": 870,
+   "mint": "HgEYYbp21mEpVmRew6TrP2HZVN7XaUYdRcUDKTeZjHaa",
+   "pool": "4je35pK2gKU2Jyw2NteE1FNARA6jHt2N6z4Rsf6Dby2g",
+   "sim": {
+    "err": null,
+    "unitsConsumed": 105719,
+    "payerBefore": 257171760,
+    "payerAfter": 248533420,
+    "logsOfInterest": [
+     "Program log: Instruction: InitializeWithToken2022",
+     "Program log: Instruction: InitializeAccount3",
+     "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3572 of 222226 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 626 of 192085 compute units",
+     "Program log: MetadataPointerInstruction::Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 925 of 185600 compute units",
+     "Program log: Instruction: InitializeMint2",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1772 of 183291 compute units",
+     "Program log: TokenMetadataInstruction: Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3473 of 175980 compute units",
+     "Program log: Instruction: InitializeAccount3",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2108 of 167128 compute units",
+     "Program log: Instruction: MintTo",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1707 of 150919 compute units",
+     "Program log: Instruction: SetAuthority",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1044 of 147545 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 105419 of 249700 compute units"
+    ]
+   },
+   "simCheck": {
+    "spentLamports": 8638340,
+    "units": 105719
+   }
+  },
+  {
+   "label": "prestock ANTHROPIC (outside the repo's list; passed as a one-row quoteList)",
+   "coin": {
+    "name": "Test Prestock Cat",
+    "symbol": "TESTCAT"
+   },
+   "plan": {
+    "quote": {
+     "symbol": "ANTHROPIC",
+     "mint": "Pren1FvFX6J3E4kXhJuCiAD5aDmGEb7qJRncwA8Lkhw",
+     "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "name": "ANTHROPIC"
+    },
+    "globalConfig": "BAaaPFw56GwxoFUEUPvNWmWpeTNATC2dxorbmigfDnhX",
+    "curveRule": "Aew2FoY9UPjKGgkuDrDMb238fH2pU8XuZRHmXwuRsiQB",
+    "platformConfig": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+    "raiseRaw": "9846007460",
+    "cpmmCreatorFeeOn": 0,
+    "platform": {
+     "feeRate": "10000",
+     "creatorFeeRate": "0"
+    },
+    "marketCap": {
+     "startUsd": 3380.8771052209177,
+     "graduationUsd": 49678.0228544673
+    },
+    "pricedAt": "2026-09-25T17:46:37.292Z"
+   },
+   "preSignCheck": "passed",
+   "txBytes": 864,
+   "mint": "6D2u1KL8wb6qGfjcxarsqrWL1Kw89JMGZjiWg4sHjnzY",
+   "pool": "Fmd7Gm6H5Lg9gzqLtsrn3BCC7BUkpK1bMKe1S74PEa6e",
+   "sim": {
+    "err": null,
+    "unitsConsumed": 100394,
+    "payerBefore": 257171760,
+    "payerAfter": 248502940,
+    "logsOfInterest": [
+     "Program log: Instruction: InitializeWithToken2022",
+     "Program log: Instruction: InitializeAccount3",
+     "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 4048 of 225026 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 626 of 197458 compute units",
+     "Program log: MetadataPointerInstruction::Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 925 of 190980 compute units",
+     "Program log: Instruction: InitializeMint2",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1772 of 188671 compute units",
+     "Program log: TokenMetadataInstruction: Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3372 of 181360 compute units",
+     "Program log: Instruction: InitializeAccount3",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2108 of 172609 compute units",
+     "Program log: Instruction: MintTo",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1707 of 156244 compute units",
+     "Program log: Instruction: SetAuthority",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1044 of 152870 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 100094 of 249700 compute units"
+    ]
+   },
+   "simCheck": {
+    "spentLamports": 8668820,
+    "units": 100394
+   }
+  },
+  {
+   "label": "Backpack MU, Token-2022 (outside the repo's list)",
+   "coin": {
+    "name": "Test Backpack Cat",
+    "symbol": "TESTCAT"
+   },
+   "plan": {
+    "quote": {
+     "symbol": "MU",
+     "mint": "MUxEsUKSMACyw5fZf68wxf5FLnZVhtU9CwH8uNNGay1",
+     "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "name": "Micron"
+    },
+    "globalConfig": "CKVcp3iWp1Gs3oe1ZvEMfJESTrMN6yRPu9XDi1r3RU6v",
+    "curveRule": "6u8nALk3LNcoAuY3A5WjscmDXR16a23y5sh7SZXwADVQ",
+    "platformConfig": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+    "raiseRaw": "9486116",
+    "cpmmCreatorFeeOn": 0,
+    "platform": {
+     "feeRate": "10000",
+     "creatorFeeRate": "0"
+    },
+    "marketCap": {
+     "startUsd": 3380.876754168561,
+     "graduationUsd": 49678.02060524128
+    },
+    "pricedAt": "2026-09-25T17:46:35.379Z"
+   },
+   "preSignCheck": "passed",
+   "txBytes": 864,
+   "mint": "BG3rrhU7LnrDgd7zstMqYq7vaogiAZzJrncKURkDXV8C",
+   "pool": "4kVLDbRifNc4VpLzZHV2oKcSQUnhw5ZmGPNSia9aaUh3",
+   "sim": {
+    "err": null,
+    "unitsConsumed": 97422,
+    "payerBefore": 257171760,
+    "payerAfter": 248563900,
+    "logsOfInterest": [
+     "Program log: Instruction: InitializeWithToken2022",
+     "Program log: Instruction: InitializeAccount3",
+     "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3572 of 228345 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 626 of 199753 compute units",
+     "Program log: MetadataPointerInstruction::Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 925 of 193275 compute units",
+     "Program log: Instruction: InitializeMint2",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1772 of 190966 compute units",
+     "Program log: TokenMetadataInstruction: Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3372 of 183655 compute units",
+     "Program log: Instruction: InitializeAccount3",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2108 of 174904 compute units",
+     "Program log: Instruction: MintTo",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1707 of 159216 compute units",
+     "Program log: Instruction: SetAuthority",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1044 of 155842 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 97122 of 249700 compute units"
+    ]
+   },
+   "simCheck": {
+    "spentLamports": 8607860,
+    "units": 97422
+   }
+  },
+  {
+   "label": "Backpack PSG, classic SPL Token (outside the repo's list)",
+   "coin": {
+    "name": "Test Backpack Cat",
+    "symbol": "TESTCAT"
+   },
+   "plan": {
+    "quote": {
+     "symbol": "PSG",
+     "mint": "5eyib4qghYGHNh7VvxSFGYLFJSanjq9hug9fR52kksnm",
+     "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+     "name": "PSG"
+    },
+    "globalConfig": "7aLxKSMHKpx3TMKVPqvWc3zcMAaUZEwPziFnQTX7zV1G",
+    "curveRule": "9XTF4d4ff8D1dzfifyw41eRFvnFUMYMZTH174kVKTSQf",
+    "platformConfig": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+    "raiseRaw": "21914832672735",
+    "cpmmCreatorFeeOn": 0,
+    "platform": {
+     "feeRate": "10000",
+     "creatorFeeRate": "0"
+    },
+    "marketCap": {
+     "startUsd": 3380.8771056143887,
+     "graduationUsd": 49678.02285403148
+    },
+    "pricedAt": "2026-09-25T17:46:37.729Z"
+   },
+   "preSignCheck": "passed",
+   "txBytes": 896,
+   "mint": "5jyvug2uYdY9tRaUtchmiKYFiNPNBHoc5DbSEvh7BSJE",
+   "pool": "6e4nnsHtxPpjce9u6766f26BRdkgtLgxH4EjW2mARbXe",
+   "sim": {
+    "err": null,
+    "unitsConsumed": 91482,
+    "payerBefore": 257171760,
+    "payerAfter": 248614700,
+    "logsOfInterest": [
+     "Program log: Instruction: InitializeWithToken2022",
+     "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 233 of 226689 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 626 of 205946 compute units",
+     "Program log: MetadataPointerInstruction::Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 925 of 199468 compute units",
+     "Program log: Instruction: InitializeMint2",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1772 of 197159 compute units",
+     "Program log: TokenMetadataInstruction: Initialize",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3372 of 189848 compute units",
+     "Program log: Instruction: InitializeAccount3",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2108 of 181097 compute units",
+     "Program log: Instruction: MintTo",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1707 of 165184 compute units",
+     "Program log: Instruction: SetAuthority",
+     "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1044 of 161810 compute units",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 91182 of 249700 compute units"
+    ]
+   },
+   "simCheck": {
+    "spentLamports": 8557060,
+    "units": 91482
+   }
+  }
+ ]
+}

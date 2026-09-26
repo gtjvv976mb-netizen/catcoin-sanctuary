@@ -1,0 +1,344 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclosureLen": 141,
+ "pick": {
+  "name": "Satchel the Ginger-Point Cat",
+  "ticker": "CASENAP",
+  "nameLen": 28,
+  "blurbLen": 143,
+  "descLen": 285,
+  "descOk": false,
+  "nameOk": true,
+  "tickerFormat": true,
+  "tickerHasStockRoot": false,
+  "memeTicker": false,
+  "endsWithDisclosure": true,
+  "checkProposal_blurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Satchel, a small cream cat with a ginger",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_description": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jup": {
+   "status": 200,
+   "results": 4,
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "description": "Satchel, a small cream cat with a ginger face, ears, paws and tail and blue eyes, naps inside an old soft carrying case by the greenhouse door. A cat coin priced in FWDI. Not affiliated with Forward Industries, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+ },
+ "drafts": [
+  {
+   "name": "Strongbox the Blue Cat",
+   "ticker": "STRONGBOX",
+   "nameLen": 22,
+   "blurbLen": 138,
+   "descLen": 280,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Strongbox, a stocky solid blue-grey cat ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Strongbox, a stocky solid blue-grey cat with round copper eyes, sits square on the old garden chest all day and will not budge for anyone. A cat coin priced in FWDI. Not affiliated with Forward Industries, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tally the Golden Tabby Cat",
+   "ticker": "TALLYPAW",
+   "nameLen": 26,
+   "blurbLen": 134,
+   "descLen": 276,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tally, a round golden tabby with cream p",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 2,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Tally, a round golden tabby with cream paws and gold eyes, stacks garden pebbles into neat piles each morning and naps by the tallest. A cat coin priced in FWDI. Not affiliated with Forward Industries, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Satchel the Tortie Cat",
+   "ticker": "CASENAP",
+   "nameLen": 22,
+   "blurbLen": 133,
+   "descLen": 275,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Satchel, a small black, ginger and cream",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 4,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Satchel, a small black, ginger and cream tortoiseshell cat with yellow eyes, naps curled up inside an old carrying case on the porch. A cat coin priced in FWDI. Not affiliated with Forward Industries, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "pickCoat": {
+  "base": "#F3E7D3",
+  "second": "#D97E3A",
+  "pattern": "point",
+  "eyes": "#79B4E3"
+ },
+ "pickLook": "A normal four-legged, small, short-haired house cat: cream body with ginger points (face mask, ears, paws and tail) and blue eyes, wearing nothing. It naps inside an open, soft-sided carrying case by the greenhouse door, a nod to the company's carrying-case business (discontinued, per its FY2025 10-K)."
+}

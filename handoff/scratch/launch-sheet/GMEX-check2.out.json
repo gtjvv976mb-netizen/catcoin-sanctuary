@@ -1,0 +1,191 @@
+[
+ {
+  "name": "Save Point the Tabby",
+  "ticker": "SAVEPAWS",
+  "nameLen": 20,
+  "tickerLen": 8,
+  "blurbLen": 147,
+  "descLen": 258,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 1,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Save Point, a small brown striped tabby with a cream chest and muzzle, finds the warmest stone in the garden and naps on it until the sun moves on. A cat coin priced in GMEx. Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Player Two the Kitten",
+  "ticker": "PLAYERTWO",
+  "nameLen": 21,
+  "tickerLen": 9,
+  "blurbLen": 158,
+  "descLen": 269,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 2,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Player Two, a brown striped tabby kitten with a cream-white bib, trots after anyone in the garden and taps their ankle with a soft paw: surely it is her turn. A cat coin priced in GMEx. Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Little Yowl the Tabby",
+  "ticker": "LILYOWL",
+  "nameLen": 21,
+  "tickerLen": 7,
+  "blurbLen": 154,
+  "descLen": 265,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Little Yowl, a tiny brown striped tabby with a pale cream chest, has the biggest voice in the garden and uses it at dawn, at supper and when a leaf moves. A cat coin priced in GMEx. Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice."
+ }
+]

@@ -1,0 +1,327 @@
+[
+ {
+  "name": "Jellie",
+  "ticker": "JELLIE",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Jellie",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 3,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [
+    "Minecraft Cat"
+   ],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Momo",
+  "ticker": "MOMO",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Momo",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": false,
+   "reasons": [
+    "$MOMO is the ticker of the verified token Momo (G4zwEA9NSd3nMBbEj31MMPq2853Brx2oGsKzex3ebonk)",
+    "\"Momo\" is the name of the verified token $MOMO (G4zwEA9NSd3nMBbEj31MMPq2853Brx2oGsKzex3ebonk)"
+   ]
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 14,
+   "verifiedSameSymbol": 1,
+   "verifiedNames": [
+    "Momo"
+   ]
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [
+    "momo",
+    "MomoCoin",
+    "Momo",
+    "Momo",
+    "momo",
+    "Momo",
+    "Momo",
+    "Momo",
+    "MOMO",
+    "Momo",
+    "Momo",
+    "MOMO",
+    "Momo",
+    "MOMO",
+    "MOMO",
+    "MomoCoin",
+    "Momocoin",
+    "MinecraftInu",
+    "Moon Doge",
+    "MoonDoge",
+    "Momo",
+    "MOMO the cat"
+   ],
+   "nameStatus": 200,
+   "sameName": [
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO",
+    "MOMO"
+   ]
+  }
+ },
+ {
+  "name": "Leo",
+  "ticker": "LEO",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Leo",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": false,
+   "reasons": [
+    "$LEO is the ticker of the verified token Leo (8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm)",
+    "\"Leo\" is the name of the verified token $LEO (8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm)"
+   ]
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 2,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [
+    "LEOPHIL",
+    "Leonardo DiStonkio"
+   ],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Mister Miggles",
+  "ticker": "MIGGLES",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Mister Miggles",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 17,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Cam the Cat",
+  "ticker": "CAMTHECAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 3,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Olivia Benson",
+  "ticker": "OLIVIA",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "real_person",
+     "term": "olivia benson",
+     "field": "name"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Olivia Benson",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "real_person",
+     "term": "olivia benson",
+     "field": "name"
+    }
+   ]
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": false,
+   "reasons": [
+    "$OLIVIA is the ticker of the verified token AIGOV (2fdtCHuvyLcD2q86XZGFmYbDux9ZbbUgMmFhzChqmoon)"
+   ]
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 16,
+   "verifiedSameSymbol": 1,
+   "verifiedNames": [
+    "AIGOV"
+   ]
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [
+    "Saved By Chatgpt",
+    "Saved By Chatgpt",
+    "Saved By Chatgpt",
+    "Saved By Chatgpt",
+    "Saved By AI",
+    "Saved By ChatGPT",
+    "Saved By AI",
+    "Woman Saved By ChatGPT",
+    "The Hype Girl",
+    "Saved By Chatgpt"
+   ],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ }
+]

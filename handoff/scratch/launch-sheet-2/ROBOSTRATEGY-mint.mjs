@@ -1,0 +1,3 @@
+const r = await fetch("https://api.mainnet-beta.solana.com", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "getAccountInfo", params: ["BoTx8y9ynfdxf5ZjWtCoBVkff52qKA82ysaLU8ZM6d8T", { encoding: "jsonParsed" }] }) });
+const j = await r.json(); const v = j.result?.value; const info = v?.data?.parsed?.info;
+console.log(JSON.stringify({ owner: v?.owner, decimals: info?.decimals, mintAuthority: info?.mintAuthority, freezeAuthority: info?.freezeAuthority, extensions: (info?.extensions ?? []).map(e => ({ extension: e.extension, state: ["tokenMetadata"].includes(e.extension) ? { name: e.state?.name, symbol: e.state?.symbol } : e.state })) }, null, 1));

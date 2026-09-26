@@ -1,0 +1,114 @@
+{
+ "lengths": {
+  "name": 24,
+  "blurb": 150,
+  "description": 277
+ },
+ "checkProposal": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Knit, a plush pale ash-grey tabby with a",
+    "field": "tagline"
+   }
+  ]
+ },
+ "sp_probe": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "x",
+    "term": "S&P",
+    "field": "blurb"
+   }
+  ]
+ },
+ "sp_norm": "s p",
+ "sp_probe_words": [
+  [
+   "Knit, a plush pale ash-grey tabby",
+   true
+  ],
+  [
+   "with a soft woolly coat",
+   true
+  ],
+  [
+   "and faint ribbed stripes, pads",
+   false
+  ],
+  [
+   "between the flowerpots",
+   true
+  ],
+  [
+   "so carefully that none ever tips over.",
+   true
+  ]
+ ],
+ "description": "Knit, a plush pale ash-grey tabby with a soft woolly coat and faint ribbed stripes, pads between the flowerpots so carefully that none ever tips over. A cat coin priced in FIGUREAI. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice."
+}

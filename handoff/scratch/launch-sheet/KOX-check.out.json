@@ -1,0 +1,342 @@
+[
+ {
+  "name": "Sherbet the Garden Kitten",
+  "ticker": "SHERBET",
+  "nameLen": 25,
+  "tickerLen": 7,
+  "blurbLen": 157,
+  "descLen": 280,
+  "discLen": 122,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 20,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Sherbet is a tiny fluffy cream-and-ginger kitten with round copper eyes. She bats at bubbles in the birdbath, sneezes when they burst, then naps in the moss. A cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Tumble the Kitten",
+  "ticker": "TUMBLEKIT",
+  "nameLen": 17,
+  "tickerLen": 9,
+  "blurbLen": 153,
+  "descLen": 276,
+  "discLen": 122,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Tumble is a small silver tabby kitten with four white socks. Wherever she naps in the garden, more kittens pile in beside her until the flower bed purrs. A cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Tiptop the Kitten",
+  "ticker": "TIPTOPKIT",
+  "nameLen": 17,
+  "tickerLen": 9,
+  "blurbLen": 155,
+  "descLen": 278,
+  "discLen": 122,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Tiptop is a little black kitten with a white star on her chest. She climbs to the top of every cuddle pile and garden wall, then squeaks to be lifted down. A cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Tumble the Kitten",
+  "ticker": "TUMBLES",
+  "nameLen": 17,
+  "tickerLen": 7,
+  "blurbLen": 153,
+  "descLen": 276,
+  "discLen": 122,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 20,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Tumble is a small silver tabby kitten with four white socks. Wherever she naps in the garden, more kittens pile in beside her until the flower bed purrs. A cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Tiptop the Kitten",
+  "ticker": "TIPTOPS",
+  "nameLen": 17,
+  "tickerLen": 7,
+  "blurbLen": 155,
+  "descLen": 278,
+  "discLen": 122,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 2,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Tiptop is a little black kitten with a white star on her chest. She climbs to the top of every cuddle pile and garden wall, then squeaks to be lifted down. A cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice."
+ }
+]

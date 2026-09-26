@@ -1,0 +1,120 @@
+{
+ "name": "Windsock the Ginger Tabby Cat",
+ "ticker": "WINDSOCK",
+ "nameLen": 29,
+ "blurbLen": 134,
+ "descLen": 278,
+ "lookLen": 250,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "endsWithDisclaimer": true,
+ "coatValid": true,
+ "baseHsl": {
+  "h": 0.078,
+  "s": 0.65,
+  "l": 0.575
+ },
+ "gardenGingerModel": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Windsock, a ginger tabby with a white ch",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_disclaimerOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_disclaimer_only": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "BOEING",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 2,
+  "hits": [
+   "DOGWIFSOCK / Dog wif a nice red SOCK",
+   "Marines / What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I'm the top sniper in the entire US armed forces. You are nothing to me but just another target."
+  ],
+  "symbolMatches": [],
+  "verifiedMatch": false
+ },
+ "description": "Windsock, a ginger tabby with a white chest, white paws and a striped orange tail, sits by the gate to watch which way the wind blows. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

@@ -1,0 +1,47 @@
+{
+ "epoch": 1042,
+ "slotIndex": 276498,
+ "slotsInEpoch": 432000,
+ "oPAiAikWTaFj9RYoRFD35ccfwhnMcB3ThgBZRHSkjTZ": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "ext": [
+   {
+    "transferFeeConfig": {
+     "older": "20bps@987",
+     "newer": "20bps@987"
+    }
+   },
+   "metadataPointer",
+   "tokenMetadata"
+  ]
+ },
+ "PreweJYECqtQwBtpxHL171nL2K6umo692gTm7Q3rpgF": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "ext": [
+   "permanentDelegate",
+   {
+    "defaultAccountState": {
+     "accountState": "initialized"
+    }
+   },
+   {
+    "transferFeeConfig": {
+     "older": "100bps@1039",
+     "newer": "300bps@1043"
+    }
+   },
+   "confidentialTransferMint",
+   "confidentialTransferFeeConfig",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "metadataPointer",
+   {
+    "pausableConfig": {
+     "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+     "paused": false
+    }
+   },
+   "tokenMetadata"
+  ]
+ }
+}

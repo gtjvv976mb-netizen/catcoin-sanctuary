@@ -1,0 +1,64 @@
+
+THE MANIFEST
+────────────
+  ok   manifest v3  — v3
+  ok   a module service worker, so the engine's ESM imports load  — {"service_worker":"background.js","type":"module"}
+  ok   Chrome 116+, where websocket activity keeps a worker alive  — 116
+  ok   permissions are storage, alarms and notifications only  — storage, alarms, notifications
+  ok   never tabs
+  ok   never scripting
+  ok   never cookies
+  ok   never webRequest
+  ok   never webRequestBlocking
+  ok   never declarativeNetRequest
+  ok   never history
+  ok   never clipboardRead
+  ok   never debugger
+  ok   never nativeMessaging
+  ok   never management
+  ok   never proxy
+  ok   no optional permissions
+  ok   host permissions are https and wss only — the RPC the user pastes  — https://*/*, wss://*/*
+  ok   no http host permission (an RPC key over plain http is a leak)
+  ok   exactly one content script  — 1
+  ok   it matches the console pages only  — https://catintelligenceagency.com/console/*, https://www.catintelligenceagency.com/console/*, https://gtjvv976mb-netizen.github.io/Cat-Intelligence-Agency/console/*, https://claudedotcompany.com/hawk*, https://www.claudedotcompany.com/hawk*, http://localhost:4949/console/*, http://127.0.0.1:4949/console/*
+  ok   never <all_urls> or a wildcard host
+  ok   top frame only
+  ok   it loads content.js only  — ["content.js"]
+  ok   the injected script is the only web-accessible resource  — [{"resources":["injected.js"],"matches":["https://catintelligenceagency.com/*","https://www.catintelligenceagency.com/*","https://gtjvv976mb-netizen.github.io/*","https://claudedotcompany.com/*","https://www.claudedotcompany.com/*","http://localhost:4949/*","http://127.0.0.1:4949/*"]}]
+  ok   and only to the console origins  — https://catintelligenceagency.com/*, https://www.catintelligenceagency.com/*, https://gtjvv976mb-netizen.github.io/*, https://claudedotcompany.com/*, https://www.claudedotcompany.com/*, http://localhost:4949/*, http://127.0.0.1:4949/*
+  ok   the default console URL is one the content script matches  — https://catintelligenceagency.com/console/
+  ok   no externally_connectable — no other site or extension may message the worker
+  ok   the icons are the agency's own mark (Crying Cat's face from the $CIA coin), at 32, 128 and 512  — {"32":"icons/cia-32.png","128":"icons/cia-128.png","512":"icons/cia-512.png"}
+  ok   the description does not claim the extension never holds a key (on autopilot it holds one)  — Five cats: CoinMarketCat (AI trading), Snipurr (sniper), Popcat (cat-coin scanner), CashCat (coin launcher), Crying Cat (rug check)
+  ok   the name is Cat Intelligence Agency, the short name and the toolbar title agree  — Cat Intelligence Agency / Cat Intel
+  ok   the description names all five cats and what each does: CoinMarketCat, Snipurr, Popcat, CashCat, Crying Cat  — Five cats: CoinMarketCat (AI trading), Snipurr (sniper), Popcat (cat-coin scanner), CashCat (coin launcher), Crying Cat (rug check)
+  ok   …and never uses the agency's initials for itself (only $CIA, the coin, uses them)
+  ok   …and claims nothing it cannot keep: no returns, no 24/7, no leverage
+  ok   the description fits Chrome's 132-character limit  — 131 characters
+  ok   the store kit's short description is the manifest's description, character for character, and its count is right  — "Five cats: CoinMarketCat (AI trading), Snipurr (sniper), Popcat (cat-coin scanner), CashCat (coin launcher), Crying Cat (rug check)"
+
+THE FIRST-RUN SETUP PAGE
+────────────────────────
+  ok   the build bundles the setup page's script  — "welcome/welcome.mjs"
+  ok   the build copies welcome.html and welcome.css  — src/welcome/welcome.html → welcome.html, src/welcome/welcome.css → welcome.css
+  ok   welcome.html loads welcome.js and welcome.css by their built names
+  ok   welcome.html shows the agency's icon and names the five cats, each with its sprite
+  ok   welcome.html loads nothing from the network (an extension page: its own files only)
+  ok   the setup page is not web-accessible: no web page can frame or open it
+  ok   no permission was added for it (tabs.create of an extension page needs none)
+  ok   the worker opens the setup page from onInstalled, and only when the reason is "install"  — if (details?.reason === "install") { | try { Promise.resolve(chrome.tabs.create({ url: chrome.runtime.getURL(WELCOME_PAGE) })).catch(() => {}); } catch { /* no tabs API: the popup links it */ }
+  ok   …and never from onStartup
+
+EVERY HOST PERMISSION, JUSTIFIED
+────────────────────────────────
+  ok   every host permission the manifest asks for has a reason, and no reason is for one it does not ask for  — https://*/*, wss://*/*
+  FAIL the README gives each reason, word for word
+  ok   every fixed host the cats call is listed with who calls it and why  — 13 hosts
+  FAIL …and the README's table of hosts lists each
+  FAIL …word for word: the host, who calls it and why, as one row of that table  — gateway.pinata.cloud, uploads.pinata.cloud, www.stonkfun.xyz
+  ok   the stock cats call StonkFun's API, listed as CoinMarketCat's
+  ok   no permission was added for the three new cats: still storage, alarms and notifications  — storage, alarms, notifications
+
+49 passed, 3 failed
+

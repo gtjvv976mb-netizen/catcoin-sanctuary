@@ -1,0 +1,468 @@
+{
+ "sheet1Exists": true,
+ "siblingCount": 65,
+ "coins": [
+  {
+   "id": "RINGLET",
+   "name": "Ringlet the Lime-Eyed Cat",
+   "ticker": "RINGLET",
+   "nameLen": 25,
+   "blurbLen": 141,
+   "descLen": 277,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Ringlet, a sleek black cat with bright l",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "DNUT",
+      "field": "disclosure"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "memeTicker": false,
+   "siblingClash": [
+    {
+     "src": "DRAM-pick.json",
+     "ticker": "PINROW",
+     "name": "Pinrow the Copper-Eyed Cat"
+    }
+   ],
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "anyVerifiedInResults": []
+   },
+   "description": "Ringlet, a sleek black cat with bright lime-green eyes and a small white muzzle, naps curled in a perfect round ring on the warm garden step. A cat coin priced in DNUT. Not affiliated with Krispy Kreme, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "SUGARSOOT",
+   "name": "Sugarsoot the Sparkle-Black Cat",
+   "ticker": "SUGARSOOT",
+   "nameLen": 31,
+   "blurbLen": 139,
+   "descLen": 275,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sugarsoot, a fluffy black cat whose coat",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "DNUT",
+      "field": "disclosure"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "memeTicker": false,
+   "siblingClash": [],
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "anyVerifiedInResults": []
+   },
+   "description": "Sugarsoot, a fluffy black cat whose coat glints like sugar in the sun, with lime-green eyes and a white chin, sniffs the sweet morning air. A cat coin priced in DNUT. Not affiliated with Krispy Kreme, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "SUGARSOOT-fix",
+   "name": "Sugarsoot the Sparkle-Black Cat",
+   "ticker": "SUGARSOOT",
+   "nameLen": 31,
+   "blurbLen": 153,
+   "descLen": 289,
+   "descOk": false,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sugarsoot, a short-haired black cat whos",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "DNUT",
+      "field": "disclosure"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "memeTicker": false,
+   "siblingClash": [],
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "anyVerifiedInResults": []
+   },
+   "description": "Sugarsoot, a short-haired black cat whose coat glints like sugar in the sun, with lime-green eyes and a small white muzzle, sniffs the sweet morning air. A cat coin priced in DNUT. Not affiliated with Krispy Kreme, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "DUSKGLAZE",
+   "name": "Duskglaze the Black Cat",
+   "ticker": "DUSKGLAZE",
+   "nameLen": 23,
+   "blurbLen": 139,
+   "descLen": 275,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Duskglaze, a velvet-black shorthair with",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "DNUT",
+      "field": "disclosure"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "memeTicker": false,
+   "siblingClash": [],
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "anyVerifiedInResults": []
+   },
+   "description": "Duskglaze, a velvet-black shorthair with big lime-green eyes, a white muzzle and long white whiskers, strolls the garden path each evening. A cat coin priced in DNUT. Not affiliated with Krispy Kreme, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

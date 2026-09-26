@@ -1,0 +1,24 @@
+HTTP/1.1 200 Connection Established
+
+HTTP/2 200 
+accept-ranges: bytes
+access-control-allow-origin: *
+age: 9949
+cache-control: public, max-age=0, must-revalidate
+content-disposition: inline; filename="launch"
+content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://plugin.jup.ag https://*.jup.ag https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' https:; connect-src 'self' https: wss:; frame-src https://jup.ag https://*.jup.ag https://www.googletagmanager.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; report-uri /api/csp-report
+content-type: text/html; charset=utf-8
+date: Fri, 25 Sep 2026 17:39:36 GMT
+etag: "4cb4cabd67ba57f7d7d3b45c4cf2bce8"
+last-modified: Fri, 25 Sep 2026 14:53:47 GMT
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=()
+referrer-policy: strict-origin-when-cross-origin
+server: Vercel
+strict-transport-security: max-age=63072000
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-matched-path: /launch
+x-vercel-cache: HIT
+x-vercel-id: iad1::t5597-1790357976541-6526d9b9cd85
+content-length: 19331
+

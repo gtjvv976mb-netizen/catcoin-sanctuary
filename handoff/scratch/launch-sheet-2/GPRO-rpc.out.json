@@ -1,0 +1,50 @@
+{
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "name": "GoPro - Backpack Securities",
+ "extensions": [
+  {
+   "extension": "metadataPointer"
+  },
+  {
+   "extension": "permanentDelegate",
+   "state": {
+    "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+   }
+  },
+  {
+   "extension": "defaultAccountState",
+   "state": {
+    "accountState": "initialized"
+   }
+  },
+  {
+   "extension": "pausableConfig",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "paused": false
+   }
+  },
+  {
+   "extension": "confidentialTransferMint"
+  },
+  {
+   "extension": "transferHook",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "programId": null
+   }
+  },
+  {
+   "extension": "scaledUiAmountConfig",
+   "state": {
+    "authority": "DfQxrp1uSZG6pk8BNfU7aeVQmTxTy7tuM8zdVe3h9K4z",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "extension": "tokenMetadata"
+  }
+ ]
+}

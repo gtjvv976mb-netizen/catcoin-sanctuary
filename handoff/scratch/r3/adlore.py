@@ -1,0 +1,80 @@
+import json,re
+L={
+'BIGGLESCAT':("The hairless Sphynx cat sitting on a plush velvet chair in a sleek 1960s-style villain's lair with a big control panel behind, looking smug.","Mr. Bigglesworth perched in the villain's lair, as smug as ever."),
+'NALACATCAT':("The cat posing on a cosy sofa in front of a ring light and a phone on a tripod, like a star on a photo shoot.","Nala striking a pose for the camera, the most-followed cat on Instagram."),
+'LUNAMOOCAT':("The black cat with the golden crescent on her forehead sitting on a girl's bedroom windowsill at night, keeping watch under a starry sky.","Luna keeping watch from the windowsill, her golden crescent shining."),
+'PICKLECCAT':("The cat curled up contentedly on a person's lap on a sofa, only the lap and a hand visible, no face.","Pickle claiming a lap, the move that made her family keep her."),
+'FELICETCAT':("The cat sitting calmly in a small padded 1960s space capsule harness in a vintage laboratory, retro instruments behind.","Félicette in her flight harness, the only cat ever sent into space (1963)."),
+'SABERHACAT':("The glossy black cat sitting on a kitchen counter with a sarcastic, knowing look, a witch's spellbook open beside him.","Salem on the kitchen counter, ready with a sarcastic one-liner."),
+'MAYORSTUB':("The orange tabby cat with a stub tail sitting on the counter of a small wooden general store in a snowy Alaskan town, like a mayor at his desk.","Mayor Stubbs at his post in the general store in Talkeetna, Alaska."),
+'FDCW':("The Siamese cat sitting on a desk beside a typewriter and a stack of physics papers with equations on a chalkboard behind.","F.D.C. Willard at the typewriter, the only cat co-author of a physics paper."),
+'SOCKSCACAT':("The tuxedo cat sitting on top of a wooden press-room podium, looking out over rows of empty chairs.","Socks at the press-room podium, First Cat of the White House."),
+'DIPLOMOG':("The black-and-white tuxedo cat sitting on the steps of a grand London government building with a black door.","Palmerston, Chief Mouser, on the Foreign Office steps."),
+'SNOWBALCAT':("The black cat curled up in a round wicker cat bed in a cosy suburban kitchen.","Snowball II napping in his basket at home."),
+'COLMEOW2':("The long-haired Himalayan-Persian cat with an enormous flowing coat and a fierce scowl, sitting on a rug.","Colonel Meow, record-long fur and the famous scowl."),
+'VENUS2F':("The cat with the face split half black and half orange tabby sitting on a porch, looking straight at the camera with one green and one blue eye.","Venus showing off her two-faced look and her two different eyes."),
+'CHEETLE':("The cheetah wearing dark sunglasses and small sneakers lounging coolly on a rock, orange cheese-puff dust on its paws.","Chester Cheetah, too cool, with Cheetle on his paws."),
+'TALKTOM':("The grey tabby cat sitting in front of a smartphone, mouth open mid-meow as if repeating what it heard.","Talking Tom, caught mid-meow, repeating everything you say."),
+'MRSNORRCAT':("The scrawny grey-brown long-haired cat with glowing red-orange eyes prowling a dim stone castle corridor lit by torches.","Mrs Norris patrolling a castle corridor at night."),
+'CHURCHCCAT':("The long-haired grey-brown Maine Coon cat sitting on a misty country road at dusk with a spooky old wooden sign behind.","Church on the misty road at dusk, back and not quite the same."),
+'THACKERY':("The sleek black cat with bright green eyes sitting on an old stone wall in a Salem graveyard under autumn trees at dusk.","Thackery Binx keeping watch in Salem, forever a black cat."),
+'FIGAROCAT':("The tuxedo kitten sitting on a wooden workbench in an old woodcarver's workshop full of clocks and toys.","Figaro in Geppetto's workshop among the clocks."),
+'GUMBALLW':("The blue-grey cat in a small grey sweater sitting at a school desk with books, looking mischievous.","Gumball at his school desk, up to something."),
+'FELIX1919':("The black cat with the white face mask grinning next to a little black doctor's bag, in a black-and-white 1920s street scene.","Felix the Cat with his bag of tricks, a star since 1919."),
+'ARTEMISCAT':("The white cat with a golden crescent on his forehead sitting next to a small rocket model on a desk, looking up at a starry sky through the window.","Artemis beside a model rocket, looking up at the stars."),
+'SPRIGATO':("The small green cat with a leaf-shaped face marking sitting in a sunny meadow of flowers, looking playful.","Sprigatito, the capricious Grass Cat, playing in a meadow."),
+'STRAYB12':("The orange tabby cat wearing a small drone backpack walking along a rain-slicked neon-lit alley in a futuristic city.","The stray and B-12 exploring the neon city."),
+'GENKITTY':("The chubby black-and-white cat with green-gold eyes and a smug smile sitting on a shelf surrounded by colourful kitten figurines.","Genesis, CryptoKitty #1, looking smug among the other kitties."),
+'OCTOMONA':("The black cat with octopus tentacles sitting on a desk next to a laptop, curious big eyes.","Mona the Octocat keeping an eye on the code."),
+'SUSHITUNA':("The two Savannah cats with spotted golden coats lounging together on a modern sofa in a sunny living room.","Sushi and Tuna, the Savannah brothers, lounging at home."),
+'TREMAINE':("The plump black-and-grey cat with a white chest and a sly grin sitting on a velvet cushion in an old château hallway.","Lucifer on his velvet cushion, plotting."),
+'PUSSBOOCAT':("The orange tabby cat in a feathered cavalier hat and little boots standing on a sunny Spanish village rooftop.","Puss in Boots striking a pose on the rooftops."),
+'DIDGACAT':("The tortoiseshell cat riding a skateboard along a sunny seaside path in Australia.","Didga skateboarding, the record-breaking trick cat."),
+'GRREAT':("The orange tiger with black stripes and a red bandana sitting next to a big bowl of cereal flakes on a kitchen table.","Tony the Tiger with his breakfast: 'They're Gr-r-reat!'"),
+'COPYCC':("The white-and-tabby cat sitting on a laboratory table beside a microscope in a university lab.","CC at Texas A&M, the world's first cloned pet (2001)."),
+'MUSTACHCAT':("The grey long-haired cat with a white mustache marking sitting in a cosy coffee shop by a window.","Hamilton the Hipster Cat and his famous mustache."),
+'JOCKCAT':("The marmalade cat with white bib and socks sitting in a sunny English country-house study with leather armchairs and a garden view.","Jock at Chartwell, where a marmalade cat has always lived since."),
+'FELIXHUD':("The black-and-white cat in a small orange high-vis vest sitting on a railway station platform beside a train.","Felix on duty at Huddersfield station in her high-vis vest."),
+'NITAMACAT':("The calico cat in a small navy stationmaster cap sitting at the ticket gate of a small rural Japanese train station.","Nitama, stationmaster of Kishi Station, at the ticket gate."),
+'BLAZECAT':("The lavender cat with a red gem on her forehead sitting on a palace balcony at sunset with small magical flames flickering nearby.","Blaze the Cat, the fire princess, on her palace balcony."),
+'CHOCOCACAT':("The black cat with big dark eyes and a small blue scarf sitting on a stack of books in a cosy reading nook.","Chococat reading up on the latest news in his nook."),
+'UNSINKSAM':("The black-and-white cat sitting on a floating wooden plank on a calm sea at dawn, a warship's silhouette far away.","Unsinkable Sam, who survived three sinkings in 1941."),
+'OSCARRI':("The grey-brown tabby-and-white cat curled up at the foot of a neatly made bed in a warm nursing-home room.","Oscar keeping gentle company at Steere House."),
+'COLEMARM':("The black cat and the orange tabby cat sitting side by side on a sunny Florida porch.","Cole and Marmalade, the rescue duo, side by side."),
+'TREASMOG':("The black cat with a small white chest patch and red collar sitting on a table in a grand government office with bookshelves.","Gladstone, Chief Mouser to HM Treasury, at his desk."),
+'MISTO':("The slim black-and-white cat leaping gracefully on a theatre stage under a spotlight, glitter in the air.","Mr. Mistoffelees, the original conjuring cat, taking the stage."),
+'SASSYHB':("The Himalayan cat with a long cream coat walking along a mountain trail in the Sierra Nevada forest.","Sassy on the long trail home through the Sierra Nevada."),
+'BIGFROGGY':("The big purple cat sitting by a jungle pond holding a fishing rod, a small green frog sitting beside him.","Big the Cat fishing with his friend Froggy."),
+'CAITSITH':("The black-and-white cat in a small red cape and gold crown sitting on top of a giant plush white creature at a colourful fairground.","Cait Sith riding his giant moogle at the Gold Saucer."),
+'SEACAT':("The black-and-white cat sitting on the deck of a navy ship on a river, a medal ribbon hanging from his neck.","Simon of HMS Amethyst, the only cat awarded the Dickin Medal."),
+'KURONEKCAT':("A black mother cat carefully carrying a small black kitten by the scruff along a quiet Japanese street.","Kuroneko carrying her kitten with care, Yamato's promise since 1957."),
+'SERPOUNCE':("The small black-and-white kitten sitting on a velvet cushion in a medieval stone castle chamber.","Ser Pounce on his royal cushion in the castle."),
+'AZRAELCAT':("The scrawny ginger cat with a torn ear crouching in a forest clearing near small mushroom houses, hunting.","Azrael on the prowl near the mushroom houses."),
+'NERMALCAT':("The small grey kitten with big eyes sitting in an open cardboard shipping box, looking cute.","Nermal, the world's cutest kitten, about to be posted away again."),
+'GROOVYPETE':("The blue-grey cat wearing small white shoes walking down a sunny sidewalk, stepping near a puddle.","Pete the Cat grooving along in his white shoes."),
+'CHISWEET':("The grey-and-white tabby kitten sitting on a tatami mat in a cosy Japanese apartment.","Chi at home with the Yamada family."),
+'PALICO':("The calico cat in light leather armour sitting on a mossy rock in a wild green valley.","A Palico ready for the hunt."),
+'ATCHOUMCAT':("The shaggy Persian cat with a wild beard sitting on a windowsill with a piercing stare.","Atchoum, hairy not scary."),
+'SNOWBELCAT':("The fluffy white Persian cat lounging on the back of a sofa in a New York family living room.","Snowbell, the Littles' white Persian, at home."),
+'FINICKY':("The large orange tabby cat sitting next to a food bowl, looking unimpressed.","Morris the Cat, famously finicky, since 1969."),
+'NYANKOSEN':("The round white cat with red markings sitting on a wooden porch of an old Japanese country house among summer trees.","Nyanko-sensei guarding his friend in the countryside."),
+'SCRATCHC':("The orange cat sitting on a desk next to a laptop with colourful code blocks on the screen.","Scratch Cat, helping kids learn to code."),
+'EMPTANG':("The calico Persian cat sitting on a sunlit window seat in a country farmhouse kitchen.","Empress Tang at home on the farm."),
+'KITTENPLZ':("The small brown tabby kitten sitting in a tiny do-rag on a car seat, looking adorable.","Keanu, the kitten everyone wanted back."),
+'FAITHCAT':("The grey-and-white tabby cat sheltering protectively in an old church basement beside a small black-and-white kitten.","Faith and her kitten Panda, safe in the church basement (1940)."),
+'TRIMCAT':("The black cat with white chest star and paws sitting on the rail of an old sailing ship at sea.","Trim, ship's cat of Matthew Flinders, on the voyage around Australia."),
+'TUBBSCAT':("The very round white cat sitting beside an empty food bowl in a cosy Japanese garden.","Tubbs, having emptied the food bowl again."),
+'SGTTIBBS':("The orange-and-cream tabby cat peeking through a gap in an old barn door at night.","Sergeant Tibbs finding the stolen puppies at Hell Hall."),
+}
+meta=json.load(open('ad/meta.json'))
+R=[]
+for i,m in sorted(meta.items()):
+    t=m['ticker']; scene,cap=L[t]
+    assert len(cap)<=200 and not re.search(r'\bmoon\b',cap,re.I),t
+    R.append({'index':int(i)-9000+12000,'params':{'model':'gpt_image_2_5','quality':'medium','aspect_ratio':'3:2','prompt':f"Realistic candid photograph, wide landscape shot. The same animal as in the reference photo, with the same coat, markings, eyes and any outfit. The scene: {scene} Natural light, shallow depth of field. No human faces, no text, no logos.",'medias':[{'role':'image_references','value':None}]},'t':t})
+j=json.load(open('jobs.json'))
+for r in R: r['params']['medias'][0]['value']=j[str(r['index']-12000+9000)]
+json.dump({r['t']:L[r['t']][1] for r in R},open('adcaps.json','w'),indent=0)
+for r in R: del r['t']
+for k in range(0,len(R),12): json.dump(R[k:k+12],open(f'al{k//12}.json','w'),separators=(',',':'))
+print(len(R))

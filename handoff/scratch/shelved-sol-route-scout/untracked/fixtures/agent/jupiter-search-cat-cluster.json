@@ -1,0 +1,133 @@
+{
+ "note": "GET https://lite-api.jup.ag/tokens/v2/search?query=AgavbLZybMxhDsjR2i3d48vCnzThpGZfZ9osFdkQ8eGz,GCXVUyF78tCko4JS3d4wXpjHoNNMW22mTcEXnL4hpump,FE9LVt68GdduUHiXXrPqHZ91ehKMpZGTa3Kb3bdNpump — live answer, three cat-named Token-2022 coins that are NOT verified, each reporting millions of dollars of \"liquidity\" against a few thousand of market cap and a handful of holders; rows whole but for their icons and social links; nothing else edited.",
+ "capturedAt": "2026-09-25T12:58:37.173Z",
+ "source": "https://lite-api.jup.ag/tokens/v2/search?query=AgavbLZybMxhDsjR2i3d48vCnzThpGZfZ9osFdkQ8eGz,GCXVUyF78tCko4JS3d4wXpjHoNNMW22mTcEXnL4hpump,FE9LVt68GdduUHiXXrPqHZ91ehKMpZGTa3Kb3bdNpump",
+ "status": 200,
+ "rows": [
+  {
+   "id": "AgavbLZybMxhDsjR2i3d48vCnzThpGZfZ9osFdkQ8eGz",
+   "name": "DEADCAT",
+   "symbol": "Neko",
+   "decimals": 6,
+   "dev": "HXuuXP9ZNn7WGaKKqiAcX5473TeyXb91afB7mKkRvCF8",
+   "circSupply": 1000000000,
+   "totalSupply": 1000000000,
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchpad": "pump.fun",
+   "holderCount": 1,
+   "fdv": 4520.3584370421295,
+   "mcap": 4520.3584370421295,
+   "usdPrice": 0.0000045203584370421296,
+   "priceBlockId": 449232155,
+   "liquidity": 2573084.820781663,
+   "stats6h": {
+    "volumeChange": -100
+   },
+   "stats24h": {
+    "priceChange": 0.07482102328362464,
+    "holderChange": -50,
+    "liquidityChange": 0.06906920700401827,
+    "buyVolume": 161.4372020425695,
+    "sellVolume": 161.5579910090982,
+    "numBuys": 1,
+    "numSells": 1,
+    "numTraders": 1
+   },
+   "firstPool": {
+    "id": "AgavbLZybMxhDsjR2i3d48vCnzThpGZfZ9osFdkQ8eGz",
+    "createdAt": "2026-09-18T19:52:12Z"
+   },
+   "audit": {
+    "mintAuthorityDisabled": true,
+    "freezeAuthorityDisabled": true,
+    "topHoldersPercentage": 3.574008416793,
+    "devMigrations": 22,
+    "devMints": 3953
+   },
+   "organicScore": 0,
+   "organicScoreLabel": "low",
+   "tags": [
+    "unknown",
+    "token-2022"
+   ],
+   "createdAt": "2026-09-18T19:52:12Z",
+   "updatedAt": "2026-09-22T09:31:55.112586609Z"
+  },
+  {
+   "id": "GCXVUyF78tCko4JS3d4wXpjHoNNMW22mTcEXnL4hpump",
+   "name": "Catcoin",
+   "symbol": "OGCAT",
+   "decimals": 6,
+   "dev": "9RPmiwU4LrYHBcD2UA3PSHmy9yCmqB8buoJpzgmfAGAz",
+   "circSupply": 1000000000,
+   "totalSupply": 1000000000,
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchpad": "pump.fun",
+   "holderCount": 3,
+   "fdv": 4363.726709190405,
+   "mcap": 4363.726709190405,
+   "usdPrice": 0.000004363726709190405,
+   "priceBlockId": 449229855,
+   "liquidity": 2568786.6413530214,
+   "firstPool": {
+    "id": "GCXVUyF78tCko4JS3d4wXpjHoNNMW22mTcEXnL4hpump",
+    "createdAt": "2026-09-16T22:08:36Z"
+   },
+   "audit": {
+    "mintAuthorityDisabled": true,
+    "freezeAuthorityDisabled": true,
+    "topHoldersPercentage": 0.0017855921994000001,
+    "devMints": 1
+   },
+   "organicScore": 0,
+   "organicScoreLabel": "low",
+   "tags": [
+    "unknown",
+    "token-2022"
+   ],
+   "createdAt": "2026-09-16T22:08:36Z",
+   "updatedAt": "2026-09-24T19:31:10.611757408Z"
+  },
+  {
+   "id": "FE9LVt68GdduUHiXXrPqHZ91ehKMpZGTa3Kb3bdNpump",
+   "name": "Sailor Meow",
+   "symbol": "$SMEOW",
+   "decimals": 6,
+   "dev": "6xxipzpu7mUPmHCZ2cEakNtQYQunXET5raeR7a1Cn4K",
+   "circSupply": 1000000000,
+   "totalSupply": 1000000000,
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchpad": "pump.fun",
+   "holderCount": 2,
+   "fdv": 4335.534548146345,
+   "mcap": 4335.534548146345,
+   "usdPrice": 0.000004335534548146344,
+   "priceBlockId": 450121035,
+   "liquidity": 2534152.703074646,
+   "stats24h": {
+    "buyVolume": 34.167520214880405,
+    "numBuys": 1,
+    "numTraders": 1,
+    "numNetBuyers": 1
+   },
+   "firstPool": {
+    "id": "FE9LVt68GdduUHiXXrPqHZ91ehKMpZGTa3Kb3bdNpump",
+    "createdAt": "2026-09-24T19:17:49Z"
+   },
+   "audit": {
+    "mintAuthorityDisabled": true,
+    "freezeAuthorityDisabled": true,
+    "devBalancePercentage": 0.7880809121793,
+    "devMints": 88
+   },
+   "organicScore": 0,
+   "organicScoreLabel": "low",
+   "tags": [
+    "unknown",
+    "token-2022"
+   ],
+   "createdAt": "2026-09-24T19:17:49Z",
+   "updatedAt": "2026-09-25T07:32:24.832675779Z"
+  }
+ ]
+}

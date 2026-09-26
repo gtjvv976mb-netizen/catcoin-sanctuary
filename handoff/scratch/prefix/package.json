@@ -1,0 +1,30 @@
+{
+  "name": "cat-intelligence-agency",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Cat Intelligence Agency: pixel-kitten agents that investigate the crypto market on X, the $CIA memecoin site, the agency's CashCat and Popcat bots, and the Cat Intelligence Agency extension, five cats in one Chrome extension: CoinMarketCat (AI trading), Snipurr (sniper), Popcat (cat-coin scanner), CashCat (coin launcher) and Crying Cat (rug check). CoinMarketCat trades Solana spot tokens from a strategy you write in plain English. On a schedule you choose it asks a model, with your own Anthropic API key, what to do about the tokens you list; deterministic code then applies your limits (per-token cap, exposure, stop loss, take profit, daily drawdown, trades per day, slippage), which the model cannot change. Paper by default; live from an autopilot wallet you fund and unlock. Spot only, no leverage, and it runs only while Chrome is open. CoinMarketCat is not affiliated with CoinMarketCap.",
+  "engines": {
+    "node": ">=22.13 <25"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "test": "node scripts/test-all.mjs",
+    "package": "node scripts/package.mjs",
+    "verify-download": "node scripts/verify-download.mjs",
+    "sync": "node scripts/sync-executor.mjs --from ../Claude-Company",
+    "check-upstream": "node scripts/sync-executor.mjs --check"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.9"
+  },
+  "dependencies": {
+    "@solana/web3.js": "1.98.4",
+    "bs58": "4.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gtjvv976mb-netizen/Cat-Intelligence-Agency"
+  }
+}

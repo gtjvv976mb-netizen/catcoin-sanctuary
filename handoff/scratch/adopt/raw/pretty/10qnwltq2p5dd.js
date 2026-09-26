@@ -1,0 +1,342 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([
+  "object" == typeof document ? document.currentScript : void 0,
+  11666,
+  (e) => {
+    "use strict";
+    var t = e.i(80447),
+      s = e.i(99161);
+    e.s([
+      "CodeBlock",
+      0,
+      function ({ label: e, children: i, dense: n = !1 }) {
+        let [a, o] = (0, s.useState)(!1);
+        return (0, t.jsxs)("figure", {
+          className: "overflow-hidden rounded-lg border border-line bg-well",
+          children: [
+            (0, t.jsxs)("figcaption", {
+              className:
+                "flex items-center justify-between border-b border-line px-4 py-1.5",
+              children: [
+                (0, t.jsx)("span", {
+                  className: "font-mono text-[11px] text-ink-dim",
+                  children: e,
+                }),
+                (0, t.jsx)("button", {
+                  type: "button",
+                  onClick: () => {
+                    navigator.clipboard?.writeText(i).then(() => {
+                      (o(!0), setTimeout(() => o(!1), 1600));
+                    });
+                  },
+                  className:
+                    "text-[11px] text-ink-dim transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-accent-bright focus-visible:outline-hidden",
+                  children: a ? "Copied" : "Copy",
+                }),
+              ],
+            }),
+            (0, t.jsx)("pre", {
+              className: `overflow-x-auto p-4 font-mono text-xs text-ink-mid ${n ? "leading-5" : "leading-6"}`,
+              children: (0, t.jsx)("code", { children: i }),
+            }),
+          ],
+        });
+      },
+    ]);
+  },
+  3377,
+  (e) => {
+    "use strict";
+    var t = e.i(80447),
+      s = e.i(11666),
+      i = e.i(54316),
+      n = e.i(99161),
+      a = e.i(72139);
+    let o = "text-sm leading-6 text-ink-dim",
+      r = "stonkfun-integrator-password";
+    function l({ text: e }) {
+      let s = [];
+      return (
+        e.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).forEach((e, i) => {
+          e.startsWith("`") && e.endsWith("`")
+            ? s.push(
+                (0, t.jsx)(
+                  "code",
+                  {
+                    className:
+                      "rounded-sm bg-well px-1.5 py-0.5 font-mono text-xs text-ink",
+                    children: e.slice(1, -1),
+                  },
+                  i,
+                ),
+              )
+            : e.startsWith("**") && e.endsWith("**")
+              ? s.push(
+                  (0, t.jsx)(
+                    "strong",
+                    {
+                      className: "font-medium text-ink",
+                      children: e.slice(2, -2),
+                    },
+                    i,
+                  ),
+                )
+              : e && s.push(e);
+        }),
+        (0, t.jsx)(t.Fragment, { children: s })
+      );
+    }
+    e.s([
+      "default",
+      0,
+      function () {
+        let [e, c] = (0, n.useState)(""),
+          [d, m] = (0, n.useState)(null),
+          [u, x] = (0, n.useState)(null),
+          [h, p] = (0, n.useState)(!1),
+          f = (0, n.useCallback)(async (e) => {
+            if (e) {
+              (p(!0), x(null));
+              try {
+                let t = await fetch("/api/integrators-docs", {
+                    method: "POST",
+                    headers: { "x-integrator-password": e },
+                  }),
+                  s = await t.json().catch(() => ({}));
+                if (!t.ok) throw Error(s.error ?? "Could not unlock the docs.");
+                try {
+                  window.sessionStorage.setItem(r, e);
+                } catch {}
+                m(s.sections);
+              } catch (e) {
+                x(
+                  e instanceof Error ? e.message : "Could not unlock the docs.",
+                );
+              } finally {
+                p(!1);
+              }
+            }
+          }, []);
+        return (
+          (0, n.useEffect)(() => {
+            try {
+              let e = window.sessionStorage.getItem(r);
+              e && f(e);
+            } catch {}
+          }, [f]),
+          (0, t.jsxs)(a.default, {
+            children: [
+              (0, t.jsxs)(i.default, {
+                children: [
+                  (0, t.jsx)("title", { children: "Integrators — StonkFun" }),
+                  (0, t.jsx)("meta", { name: "robots", content: "noindex" }),
+                ],
+              }),
+              (0, t.jsxs)("div", {
+                className: "mx-auto w-full max-w-3xl px-4 pt-10 pb-24",
+                children: [
+                  !d &&
+                    (0, t.jsxs)("form", {
+                      className: "mt-8 max-w-sm",
+                      onSubmit: (t) => {
+                        (t.preventDefault(), f(e.trim()));
+                      },
+                      children: [
+                        (0, t.jsx)("label", {
+                          className:
+                            "mb-1.5 block text-sm font-medium text-ink-mid",
+                          children: "Integrator password",
+                        }),
+                        (0, t.jsx)("input", {
+                          type: "password",
+                          value: e,
+                          onChange: (e) => c(e.target.value),
+                          autoComplete: "off",
+                          className:
+                            "block w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink outline-hidden focus:border-accent/60",
+                        }),
+                        (0, t.jsx)("button", {
+                          type: "submit",
+                          disabled: h || !e.trim(),
+                          className:
+                            "mt-3 rounded-lg border border-accent/40 bg-accent/10 px-4 py-2 text-sm font-medium text-ink-mid transition-colors hover:bg-accent/15 disabled:opacity-50",
+                          children: h ? "Checking…" : "View the docs",
+                        }),
+                        u &&
+                          (0, t.jsx)("p", {
+                            className: "mt-3 text-sm text-rose-300",
+                            children: u,
+                          }),
+                      ],
+                    }),
+                  d &&
+                    (0, t.jsxs)(t.Fragment, {
+                      children: [
+                        (0, t.jsx)("h1", {
+                          className:
+                            "text-2xl font-semibold tracking-[-0.02em] text-ink",
+                          children: "Integrator documentation",
+                        }),
+                        (0, t.jsx)("div", {
+                          className: "mt-10 space-y-12",
+                          children: d.map((e) =>
+                            (0, t.jsxs)(
+                              "section",
+                              {
+                                children: [
+                                  (0, t.jsx)("h2", {
+                                    id: e.id,
+                                    className:
+                                      "scroll-mt-24 text-lg font-semibold tracking-[-0.02em] text-ink",
+                                    children: e.heading,
+                                  }),
+                                  e.paragraphs.map((e, s) =>
+                                    (0, t.jsx)(
+                                      "p",
+                                      {
+                                        className: `mt-3 max-w-2xl ${o}`,
+                                        children: (0, t.jsx)(l, { text: e }),
+                                      },
+                                      s,
+                                    ),
+                                  ),
+                                  e.bullets &&
+                                    (0, t.jsx)("ul", {
+                                      className: `mt-3 max-w-2xl list-disc space-y-1.5 pl-5 ${o}`,
+                                      children: e.bullets.map((e, s) =>
+                                        (0, t.jsx)(
+                                          "li",
+                                          {
+                                            children: (0, t.jsx)(l, {
+                                              text: e,
+                                            }),
+                                          },
+                                          s,
+                                        ),
+                                      ),
+                                    }),
+                                  e.code &&
+                                    (0, t.jsx)("div", {
+                                      className: "mt-4",
+                                      children: (0, t.jsx)(s.CodeBlock, {
+                                        dense: !0,
+                                        label: e.code.label,
+                                        children: e.code.content,
+                                      }),
+                                    }),
+                                  e.warning &&
+                                    (0, t.jsxs)("div", {
+                                      className:
+                                        "mt-5 border-l-2 border-amber-300/60 pl-4",
+                                      children: [
+                                        (0, t.jsx)("h3", {
+                                          className:
+                                            "text-sm font-medium text-amber-200",
+                                          children: e.warning.heading,
+                                        }),
+                                        (0, t.jsx)("p", {
+                                          className: `mt-1.5 max-w-2xl ${o}`,
+                                          children: (0, t.jsx)(l, {
+                                            text: e.warning.body,
+                                          }),
+                                        }),
+                                      ],
+                                    }),
+                                ],
+                              },
+                              e.id,
+                            ),
+                          ),
+                        }),
+                      ],
+                    }),
+                ],
+              }),
+            ],
+          })
+        );
+      },
+    ]);
+  },
+  34242,
+  (e, t, s) => {
+    let i = "/integrators";
+    ((window.__NEXT_P = window.__NEXT_P || []).push([i, () => e.r(3377)]),
+      t.hot &&
+        t.hot.dispose(function () {
+          window.__NEXT_P.push([i]);
+        }));
+  },
+  74756,
+  (e) => {
+    e.v((e) => Promise.resolve().then(() => e(90478)));
+  },
+  13049,
+  (e) => {
+    e.v((t) =>
+      Promise.all(
+        ["static/immutable/chunks/3wuaga8x8hnte.js"].map((t) => e.l(t)),
+      ).then(() => t(30782)),
+    );
+  },
+  33830,
+  (e) => {
+    e.v((t) =>
+      Promise.all(
+        ["static/immutable/chunks/13h6vf7yjn65l.js"].map((t) => e.l(t)),
+      ).then(() => t(98801)),
+    );
+  },
+  85602,
+  (e, t, s) => {
+    "use strict";
+    (e.i(8733),
+      Object.defineProperty(s, "__esModule", { value: !0 }),
+      Object.defineProperty(s, "ImageConfigContext", {
+        enumerable: !0,
+        get: function () {
+          return a;
+        },
+      }));
+    let i = e.r(80763)._(e.r(99161)),
+      n = e.r(16720),
+      a = i.default.createContext(n.imageConfigDefault);
+  },
+  16720,
+  (e, t, s) => {
+    "use strict";
+    Object.defineProperty(s, "__esModule", { value: !0 });
+    var i = {
+      VALID_LOADERS: function () {
+        return a;
+      },
+      imageConfigDefault: function () {
+        return o;
+      },
+    };
+    for (var n in i) Object.defineProperty(s, n, { enumerable: !0, get: i[n] });
+    let a = ["default", "imgix", "cloudinary", "akamai", "custom"],
+      o = {
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+        imageSizes: [32, 48, 64, 96, 128, 256, 384],
+        path: "/_next/image",
+        loader: "default",
+        loaderFile: "",
+        domains: [],
+        disableStaticImages: !1,
+        minimumCacheTTL: 14400,
+        formats: ["image/webp"],
+        maximumDiskCacheSize: void 0,
+        maximumRedirects: 3,
+        maximumResponseBody: 5e7,
+        dangerouslyAllowLocalIP: !1,
+        dangerouslyAllowSVG: !1,
+        contentSecurityPolicy: "script-src 'none'; frame-src 'none'; sandbox;",
+        contentDispositionType: "attachment",
+        localPatterns: void 0,
+        remotePatterns: [],
+        qualities: [75],
+        unoptimized: !1,
+        customCacheHandler: !1,
+      };
+  },
+]);

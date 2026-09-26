@@ -1,0 +1,177 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Jowls the Grey Tomcat",
+   "ticker": "JOWLS",
+   "nameLen": 21,
+   "blurbLen": 166,
+   "descLen": 306,
+   "tickerHasJnjRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "tagline_format",
+      "term": "Jowls, a big round-cheeked grey tomcat w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Jowls, a big round-cheeked grey tomcat w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 4,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Jowls, a big round-cheeked grey tomcat with small ears, sleepy half-shut eyes and a thick neck ruff, sits so still on the garden wall he looks like an old photograph. A cat coin priced in JNJ. Not affiliated with Johnson & Johnson, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Sepia the Plush Grey Cat",
+   "ticker": "SEPIAPAW",
+   "nameLen": 24,
+   "blurbLen": 155,
+   "descLen": 295,
+   "tickerHasJnjRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sepia, a heavy-set plush grey shorthair ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sepia, a heavy-set plush grey shorthair with wide jowls and faint ghost stripes on his cheeks, naps between old leather almanacs on the potting-shed shelf. A cat coin priced in JNJ. Not affiliated with Johnson & Johnson, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Pestle the Shelf Cat",
+   "ticker": "PESTLE",
+   "nameLen": 20,
+   "blurbLen": 164,
+   "descLen": 304,
+   "tickerHasJnjRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "tagline_format",
+      "term": "Pestle, a stocky slate-grey tomcat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Pestle, a stocky slate-grey tomcat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Pestle, a stocky slate-grey tomcat with a broad face, a deep ruffled chest and slow-blinking eyes, keeps watch from a high shelf of stone mortars in the greenhouse. A cat coin priced in JNJ. Not affiliated with Johnson & Johnson, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

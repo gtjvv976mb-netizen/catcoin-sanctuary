@@ -1,0 +1,22 @@
+section("MINE: the wallet's future coin-account address pre-funded by an outsider");
+for (const [label, token] of [["hop KITTY", KITTY], ["direct POPCAT", POPCAT]]) {
+  for (const prefund of [0n, 650_240n]) {
+    const { w, r, AUTO, held } = await liveRig({ spec: { universe: [POPCAT, KITTY] } });
+    const ata = w.chain.ataOf(AUTO, token);
+    if (prefund) w.chain.st.lamports.set(ata, prefund);
+    const pre = await w.chain.rpc.getMultipleAccounts([ata]);
+    const lamBefore = w.chain.st.lamports.get(AUTO), usdcBefore = held(USDC);
+    w.decisions.push({ rationale: "buy", actions: [buy(token, 15, "trend")] });
+    await r.tick();
+    const refusal = journalOf(r, "refusal")[0], fill = journalOf(r, "fill")[0];
+    console.log(`  ${label} prefund=${prefund}: ata pre-read owner=${pre.accounts[0]?.owner ?? "null"} lamports=${pre.accounts[0]?.lamports ?? "-"}`);
+    console.log(`    fill=${fill ? `yes usd=${fill.usd}` : "no"} refusal=${refusal ? `${refusal.clause} (${refusal.from})` : "-"} status=${r.status().status}`);
+    if (refusal) console.log(`    msg: ${refusal.message}`);
+    console.log(`    sent=${w.chain.st.sent.size} walletLamportsMoved=${lamBefore - w.chain.st.lamports.get(AUTO)} usdcMoved=${usdcBefore - held(USDC)} ataIsToken=${w.chain.st.tokens.has(ata)}`);
+    if (prefund && !fill) {
+      w.decisions.push({ rationale: "buy again", actions: [buy(token, 10, "trend")] });
+      await r.runNow(); await r.tick();
+      console.log(`    2nd attempt: refusal=${journalOf(r, "refusal")[0]?.clause}; sent=${w.chain.st.sent.size}; ataIsToken=${w.chain.st.tokens.has(ata)}`);
+    }
+  }
+}

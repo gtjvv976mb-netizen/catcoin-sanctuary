@@ -1,0 +1,11 @@
+source 200 41363 "ler,\" as well as \"Jaguar,\" which is the successor to AMD's popular \"Bobcat\" core. In 2012, AMD plans"
+rpc https://api.mainnet-beta.solana.com 200 TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb [{"ext":"metadataPointer"},{"ext":"permanentDelegate"},{"ext":"defaultAccountState"},{"ext":"pausableConfig"},{"ext":"confidentialTransferMint"},{"ext":"transferHook"},{"ext":"scaledUiAmountConfig"},{"ext":"tokenMetadata"}]
+transferFeeConfig null
+metadataPointer {"authority":"2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a","metadataAddress":"AMD8XwJXgQ9WV45Wyj9yFLejxzf2J6VM1PJY8bJEjeES"}
+permanentDelegate {"delegate":"2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"}
+defaultAccountState {"accountState":"initialized"}
+pausableConfig {"authority":"2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a","paused":false}
+confidentialTransferMint {"auditorElgamalPubkey":null,"authority":"2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a","autoApproveNewAccounts":false}
+transferHook {"authority":"2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a","programId":null}
+scaledUiAmountConfig {"authority":"ByQt1hrWaQBAgQr4jpxuYSnJsYnM8nr4rX6gZrVTzz94","multiplier":"1","newMultiplier":"1","newMultiplierEffectiveTimestamp":0}
+freezeAuthority 2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a mintAuthority ByQt1hrWaQBAgQr4jpxuYSnJsYnM8nr4rX6gZrVTzz94

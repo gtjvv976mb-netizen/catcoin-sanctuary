@@ -1,0 +1,229 @@
+[
+ {
+  "name": "Pewter the Garden Tabby",
+  "ticker": "PEWTER",
+  "nameLen": 23,
+  "tickerLen": 6,
+  "blurbLen": 158,
+  "descLen": 271,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 20,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Pewter, a silver-grey tabby with dark stripes on her cheeks, a white chin and a pink nose, naps on the warm garden steps and pads after the sun all afternoon. A cat coin priced in HOODx. Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Drizzle the Silver Tabby",
+  "ticker": "DRIZZLE",
+  "nameLen": 24,
+  "tickerLen": 7,
+  "blurbLen": 155,
+  "descLen": 268,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 20,
+  "jupSymbolMatches": [
+   {
+    "symbol": "DRIZZLE",
+    "name": "TRIPPY DRIZZLE DEGEN ",
+    "id": "7Q9avpfM1RM9yAD65GrjWEM78F45KQwfED2TJRQrpump"
+   },
+   {
+    "symbol": "DRIZZLE",
+    "name": "The Drizzle",
+    "id": "Hg2uXoRmi9aDkeAYfpLGVQtcoGyj2zF1NaduAqA3pump"
+   },
+   {
+    "symbol": "DRIZZLE",
+    "name": "DRIZZLE.EXE",
+    "id": "3jadNsT3VNVkCs4vDfkQPAYRwA8g3Mr7AoUpQcSBpump"
+   },
+   {
+    "symbol": "DRIZZLE",
+    "name": "Drizzle",
+    "id": "CJ7YC2iLqtrqnXci9fHPtXi8P5enFHwXn1kJfyyWpump"
+   },
+   {
+    "symbol": "DRIZZLE",
+    "name": "The Drizzler",
+    "id": "AUNWzYRXNaFgViVUkeyA5HLqa17xmQEWjvmNLHHFpump"
+   }
+  ],
+  "jupVerifiedMatch": false,
+  "description": "Drizzle, a pale grey striped cat with a snowy muzzle and pink ears, watches the rain from under the rhubarb leaves, then tiptoes out to sniff the wet mint. A cat coin priced in HOODx. Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Tinsel the Twinkly Tabby",
+  "ticker": "TINSEL",
+  "nameLen": 24,
+  "tickerLen": 6,
+  "blurbLen": 150,
+  "descLen": 263,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 20,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Tinsel, a sleek silver tabby with grey paws, a white chin and bright pink ears, chases glinting dewdrops across the lawn and purrs like a tiny kettle. A cat coin priced in HOODx. Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice."
+ }
+]

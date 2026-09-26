@@ -1,0 +1,195 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Sunstretch the Red Tabby Cat",
+   "ticker": "SUNSTRETCH",
+   "nameLen": 28,
+   "blurbLen": 134,
+   "descLen": 277,
+   "tickerHasLuluRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sunstretch, a red-orange tabby with bold",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LULU",
+      "field": "description"
+     }
+    ]
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 3,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sunstretch, a red-orange tabby with bold black stripes and copper eyes, starts each day with one long stretch on the warm garden path. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Russet the Striped Cat",
+   "ticker": "RUSSETLAP",
+   "nameLen": 22,
+   "blurbLen": 133,
+   "descLen": 276,
+   "tickerHasLuluRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Russet, a deep rust-red tabby with dark ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LULU",
+      "field": "description"
+     }
+    ]
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Russet, a deep rust-red tabby with dark brown stripes and green eyes, trots easy laps around the flower beds, then naps in the shade. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Wiggle the Ginger Tabby Cat",
+   "ticker": "WIGGLEPAW",
+   "nameLen": 27,
+   "blurbLen": 134,
+   "descLen": 277,
+   "tickerHasLuluRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Wiggle, a ginger tabby with wide dark st",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LULU",
+      "field": "description"
+     }
+    ]
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Wiggle, a ginger tabby with wide dark stripes and a cream chest, crouches and wiggles before every pounce at the swaying garden grass. A cat coin priced in LULU. Not affiliated with lululemon athletica, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

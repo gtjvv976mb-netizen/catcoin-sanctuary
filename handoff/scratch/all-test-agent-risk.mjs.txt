@@ -1,0 +1,101 @@
+
+1. THE DAY: UTC, AND ONLY UTC
+─────────────────────────────
+  ok   utcDay is the UTC calendar day
+  ok   a first ledger starts at the vault's value, no trades, not tripped
+  ok   the same UTC day returns the same ledger: trades and the breaker carry
+  ok   UTC midnight starts a new ledger: the breaker resets, the count resets, the day starts at the vault now
+  ok   …and a local midnight that is not UTC's resets nothing
+
+2. THE VAULT, VALUED
+────────────────────
+  ok   unitsOf divides raw by 10^decimals exactly
+  ok   a priced position is valued at this tick's price
+  ok   an unpriced one with a last price is valued at it, and named stale
+  ok   …one never priced at its cost, and named unpriced — never a guess
+  ok   equity is the settlement plus the positions; exposure is positions over equity
+
+3. THE PROTECTIONS: STOP LOSS AND TAKE PROFIT, AT THEIR EDGES
+─────────────────────────────────────────────────────────────
+  ok   at exactly −8% the stop loss fires  — [["POPCAT","stop_loss",-8],["KITTY","take_profit",15]]
+  ok   at exactly +15% the take profit fires
+  ok   …and a flat position is left alone
+  ok   a cent inside either edge fires nothing  — []
+  ok   a position with no price this tick is not judged, and says so (price_missing)
+  ok   every exit reason is a named one
+  ok   the entry is the average cost: 20 bought for $30 is $1.50, so $1.38 is −8% and stops
+
+4. THE DAILY DRAWDOWN BREAKER
+─────────────────────────────
+  ok   4% down against a 5% limit: not tripped
+  ok   at exactly 5% the breaker trips, once, stamped with the time
+  ok   …'stop entries' sells nothing by itself
+  ok   recovering the same UTC day does not untrip it
+  ok   a buy after the trip is refused at drawdown_breaker, naming UTC midnight
+  ok   …but a sell is still allowed: it only takes risk off
+  ok   with 'liquidate' the trip sells every position (drawdown_liquidate)
+  ok   …and a position that also hit its stop leaves once, at stop_loss
+  ok   after UTC midnight the breaker is reset and the same buy goes through
+  ok   a day that started at $0 never divides by zero or trips
+
+5. WHAT THE MODEL MAY NAME
+──────────────────────────
+  ok   an action that is not buy, sell or hold is refused at action_unknown (withdraw, set_limit, garbage)
+  ok   a token outside the universe is refused at not_in_universe
+  ok   the settlement token is refused at settlement_not_tradable
+  ok   a second action for one mint in one tick is refused at duplicate_mint
+  ok   …and the first one still goes through
+  ok   hold is recorded as a hold, and orders nothing
+
+6. BUYS: GATES, THEN CLAMPS, IN ORDER
+─────────────────────────────────────
+  ok   a buy the model rates under the 0.6 floor is refused at below_min_confidence; one at the floor goes
+  ok   …and a floor of 0 turns it off
+  ok   …a sell is never held to it: taking risk off needs no conviction
+  ok   paused: no buys (paused)
+  ok   a vault under $50 buys nothing (vault_below_minimum)
+  ok   the fourth trade of a four-a-day agent was the last (trades_per_day)
+  ok   a token with no price cannot be sized against its caps (price_missing)
+  ok   a buy with no amount, or a negative one, is refused (size_missing)
+  ok   a $9.99 buy is under the $10 minimum trade (below_min_trade)
+  ok   …and exactly $10 goes through
+  ok   $100 asked is clamped to the $30 per-token cap
+  ok   holding $15, the per-token cap leaves $15
+  ok   holding $25 of a $30 cap, $5 is left: refused at position_cap, not bought
+  ok   $50 in tokens of a $100 vault at a 60% cap leaves $10: clamped to exactly $10
+  ok   $56 of $100 in tokens leaves $4 under the exposure cap: refused at exposure_cap
+  ok   with $8 of settlement left the buy is refused at settlement_short  — settlement_short
+  ok   …and with $14.50 left the buy is clamped to $14.50 by it
+  ok   three $30 buys in a $100 vault at 60%: $30, $30, then refused — the pending buys count against the cap
+  ok   a buy is rounded down to the cent
+  ok   with two of four trades made, two buys go and the third is refused at trades_per_day
+
+7. SELLS
+────────
+  ok   selling what is not held is refused (no_position)
+  ok   half of 100 POPCAT is exactly 50,000,000 raw
+  ok   a fraction of 1 sells the whole raw balance
+  ok   a partial sell worth $5 is under the minimum (below_min_trade)
+  ok   …but a whole $5 position may always be sold
+  ok   a partial sell with no price is refused (price_missing); the whole position is not
+  ok   a fraction of 0 or above 1 is refused (size_missing)
+  ok   sells are planned before buys: with one trade left, the sell takes it
+  ok   paused, a sell still plans (a pause stops entries, not exits)
+  ok   a sell's proceeds are not spent by a buy in the same tick (settlement_short)
+
+8. NOTHING THE MODEL SENDS IS A LIMIT
+─────────────────────────────────────
+  ok   a proposal carrying limits is sized by the spec's limits alone: $1,000 asked, $30 per token  — 30,30
+  ok   …and the second is still held to the 60% exposure cap
+  ok   the spec is unchanged and frozen after planning
+  ok   …a write to it throws in strict mode and changes nothing
+  ok   the protections read the spec too: a −50% position stops whatever any proposal said
+  ok   the minimum trade and the minimum vault are the fixed $10 and $50, not dials
+
+9. EVERY CLAUSE WAS PRODUCED
+────────────────────────────
+  ok   every refusal clause in RISK_CLAUSES appeared above, by name  — 16 clauses
+  ok   no clause appeared that RISK_CLAUSES does not list  — none
+
+71 passed, 0 failed
+

@@ -1,0 +1,10 @@
+const r = await fetch("https://developer.nvidia.com/blog/ai-cat-chaser-jetson-tx1-caffe/", { headers: { "user-agent": "Mozilla/5.0" } });
+const html = await r.text();
+console.log(r.status, html.length);
+import fs from "node:fs";
+fs.writeFileSync("NVDAX-blog.html", html);
+const imgs = [...html.matchAll(/<img[^>]*>/g)].map(m => m[0]).filter(s => /cat|sprink|lawn|yard|figure|wp-content/i.test(s));
+console.log(imgs.slice(0, 40).join("\n"));
+const text = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+const i = text.indexOf("Cat Chaser");
+console.log(text.slice(i, i + 6000));

@@ -1,0 +1,60 @@
+status 200 len 21796
+| Copyright (C) Marvell International Ltd. and its affiliates
+| Marvell copyright notice above.
+| Redistribution and use in source and binary forms, with or without modification,
+| *   Redistributions of source code must retain the above copyright notice,
+| *   Redistributions in binary form must reproduce the above copyright
+| THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+| DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+| #define MV_BOBCAT2_DEV_ID		(0xFC00)
+| #define MV_LION2_DEV_ID			(0x8000)
+| #define MV_ALLEYCAT3_DEV_ID		(0xF400)
+{
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "extensions": [
+  {
+   "extension": "metadataPointer"
+  },
+  {
+   "extension": "permanentDelegate",
+   "state": {
+    "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+   }
+  },
+  {
+   "extension": "defaultAccountState",
+   "state": {
+    "accountState": "initialized"
+   }
+  },
+  {
+   "extension": "pausableConfig",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "paused": false
+   }
+  },
+  {
+   "extension": "confidentialTransferMint"
+  },
+  {
+   "extension": "transferHook",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "programId": null
+   }
+  },
+  {
+   "extension": "scaledUiAmountConfig",
+   "state": {
+    "authority": "DNq6CnSdUr6SQ5SPgxK8Qsdom6fuUDZJ5zgbDsqPMaDJ",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "extension": "tokenMetadata"
+  }
+ ]
+}

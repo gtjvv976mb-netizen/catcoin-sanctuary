@@ -1,0 +1,194 @@
+{
+ "disclosureOnly_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclosureOnly_checkTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "SPHR",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Tousle the Curly-Ruff Cat",
+   "ticker": "TOUSLE",
+   "nameLen": 25,
+   "blurbLen": 128,
+   "descLen": 276,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeBanned": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tousle, a tawny-gold cat with a thick cu",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "anyVerified": [],
+    "verifiedMatch": false
+   },
+   "description": "Tousle, a tawny-gold cat with a thick curly russet ruff and honey eyes, lounges in the white garden flowers like it's her stage. A cat coin priced in SPHR. Not affiliated with Sphere Entertainment Co., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Dusky the Russet Ruff Cat",
+   "ticker": "DUSKRUFF",
+   "nameLen": 25,
+   "blurbLen": 132,
+   "descLen": 280,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeBanned": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Dusky, a fluffy ginger-tan cat with a de",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "anyVerified": [],
+    "verifiedMatch": false
+   },
+   "description": "Dusky, a fluffy ginger-tan cat with a deep russet ruff, cream chin and gold eyes, curls up under the lit arbor for the firefly show. A cat coin priced in SPHR. Not affiliated with Sphere Entertainment Co., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

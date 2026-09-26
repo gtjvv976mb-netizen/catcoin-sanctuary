@@ -1,0 +1,560 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Barcode the Silver Mackerel Cat",
+   "ticker": "BARCODE",
+   "nameLen": 31,
+   "blurbLen": 138,
+   "descLen": 282,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Barcode, a silver mackerel tabby with ti",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "BARCODE",
+     "name": "BARCODE",
+     "id": "2V5Ake6zzeQiEyDjJXfiiq58nzBbo57K2cScwHM5code"
+    },
+    {
+     "symbol": "BARCODE",
+     "name": "BARCODE",
+     "id": "F6o9LGb7aaVU4EiSYVsVMG3Ds53yWhaUERWjGnkocode"
+    },
+    {
+     "symbol": "BARCODE",
+     "name": "barcode",
+     "id": "5WektoPGD5rGjd61GVqksyeLiUWjhfBkCvmAtdwfpump"
+    },
+    {
+     "symbol": "Barcode",
+     "name": "Barcode-Coin",
+     "id": "HPioK5t93UppJNt7RHusYbBF1xycJtxoHB4MmnfhsMyh"
+    },
+    {
+     "symbol": "BARCODE",
+     "name": "barcode coin",
+     "id": "GQrDGJskQc4TUq9xZDboAEYKbWncGuS32evTgefLpump"
+    },
+    {
+     "symbol": "Barcode",
+     "name": "The Barcode",
+     "id": "7S3wNAaxGhPYragqjf6vnsqTvohnA1XWDNjqVsF7pump"
+    },
+    {
+     "symbol": "BARCODE",
+     "name": "バーコードヘアカット",
+     "id": "3PbVSvw1yas37xHWqH4mn27NCSTDFVJZPmP5HPePpump"
+    },
+    {
+     "symbol": "BARCODE",
+     "name": "バーコードヘアカット",
+     "id": "9mX78mTfQwUT8GUkgd1amwvWzKnRELMcxtWyNPkEpump"
+    },
+    {
+     "symbol": "BARCODE",
+     "name": "ヘアカット",
+     "id": "6tWRbdyyqaP954xxbG7StGBJmcMkRJAvJfaR8VSjpump"
+    },
+    {
+     "symbol": "BARCODE",
+     "name": "Barcode",
+     "id": "Frjz6f3B8vw4Gpaabe5T42LiF6xafDHUQRwjqGxpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Barcode, a silver mackerel tabby with tight, even black stripes and a white chin, sits so still on the gatepost you could almost scan her. A cat coin priced in UPS. Not affiliated with United Parcel Service, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Waybill the Label-Bib Cat",
+   "ticker": "WAYBILL",
+   "nameLen": 25,
+   "blurbLen": 138,
+   "descLen": 282,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Waybill, a slate-grey cat with a neat sq",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Waybill, a slate-grey cat with a neat square white bib like a shipping label and four white socks, waits by the garden gate every morning. A cat coin priced in UPS. Not affiliated with United Parcel Service, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Cushion the Bubble-Wrap Cat",
+   "ticker": "CUSHION",
+   "nameLen": 27,
+   "blurbLen": 129,
+   "descLen": 273,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cushion, a round, fluffy pale-silver lon",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "Cushion",
+     "name": "Comfy in my cushion",
+     "id": "AMGQkYxDHfC15ECJrj24SCPBdEeSpwD4Xch5j98jpump"
+    },
+    {
+     "symbol": "cushion",
+     "name": "the whoopie cushion",
+     "id": "FvSWUqEJMV6JGQAPA6SNLtoYtYZhd1vvZ2REkbc4pump"
+    },
+    {
+     "symbol": "cushion",
+     "name": "comfy in my cushion",
+     "id": "9XMuTPtiQjMS1QXYwo2cjxyTWxD9Sv7WE9pjAHmspump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Cushion, a round, fluffy pale-silver longhair as soft and puffy as bubble wrap, curls up in any empty box left out in the garden. A cat coin priced in UPS. Not affiliated with United Parcel Service, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "SCANPAW",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in UPS. Not affiliated with United Parcel Service, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "LABELBIB",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in UPS. Not affiliated with United Parcel Service, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "WRAPPAW",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 16,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in UPS. Not affiliated with United Parcel Service, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "PUFFWRAP",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in UPS. Not affiliated with United Parcel Service, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+[
+ {
+  "name": "Two Cats For A Dog",
+  "symbol": "TWOFORDOG",
+  "nameLen": 18,
+  "symbolLen": 9,
+  "bodyLen": 153,
+  "descLen": 276,
+  "tickerRe": true,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "sample": []
+  },
+  "description": "From a shareholder-letter joke about buying a dog with two cats. She is one of the two: a white calico, one ginger ear, one black. She never met the dog. A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice."
+ }
+]

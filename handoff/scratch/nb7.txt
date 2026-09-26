@@ -1,0 +1,271 @@
+=================== GRND
+- Underlying: Grindr Inc. (NYSE: GRND)
+## Cat research pass (2026-09-25)
+
+Tooling note: the session's WebSearch budget was used up (200/200), so searches ran through Google News RSS
+(news.google.com/rss/search, article links decoded), Brave Search via WebFetch (one query succeeded, the rest got 429),
+the Grindr Zendesk help-centre API, and direct fetches.
+
+### Queries run
+- GNews: Grindr cat; Grindr cat mascot; Grindr mascot; Grindr "Hello Kitty"; Grindr "office cat"; Grindr kitten;
+  George Arison cat; Grindr tiger OR lion OR jaguar OR panther; Grindr logo mask; Grindr meme cat; Grindr "cat" campaign;
+  Joel Simkhai cat; "Grindr" "cat person"
+- Brave (WebFetch): site:grindr.com cat  [worked]; Grindr official instagram OR twitter cat post [429]
+- Zendesk API: help.grindr.com/api/v2/help_center/articles/search.json?query=cat
+
+### Findings
+No cat mascot, no cat logo, and no cat IP collaboration found. The logo is Grindr's "mask" icon, not an animal.
+No big-cat mascot, logo or codename found. Collaborations found are Madonna (2026), Netflix "69 Questions" (2022),
+and MISTR (2023); none involve a cat.
+
+OFFICIAL (weak: text mentions and a profile tag, not a cat post or mascot):
+1. Grindr Help Center, "My Tags Glossary" (article created 2022-02-24, updated 2026-09-25), fetched via Zendesk API
+   https://help.grindr.com/hc/en-us/articles/4483168490131-My-Tags-Glossary
+   Verbatim: "Catperson" / ": Is a cat owner or is someone who loves cats." (next to "Dogperson"). This is an official in-app profile tag.
+2. Grindr blog, "Gay Furry Comics: 14 to Try" (Mar 26, 2024) https://www.grindr.com/blog/gay-furry-comics
+   Adult text: "11. My One And Only Cat ... Loner Yeoul adopts a cute white cat named Baeksu..." (describes a manga, not a Grindr character)
+3. Grindr blog, "Famous Gay Fashion Designers" (Nov 03, 2023) https://www.grindr.com/blog/gay-fashion-designers
+   Mentions Karl Lagerfeld's "fluffy white cat called Choupette" (a third party's cat).
+   Other blog posts that mention cats in passing (Brave snippets): what-is-a-femboy ("cat ears"), where-to-meet-men (cat named "Pinot Grigio"),
+   cuffing-season-meaning, karaoke-songs, solo-polyamory, thirst-trap-poses.
+
+FAN / COMMUNITY:
+4. "Ruby" the missing tuxedo cat, Brighton, March 2023. A friend of owner Erin Johansen put Ruby on his own Grindr profile.
+   The Argus, 2023-03-23: https://www.theargus.co.uk/news/23407591.brighton-pet-owner-uses-grindr-tinder-find-missing-cat/
+   ("Erin Johansen's black-and-white tuxedo cat Ruby went missing..."; the profile "said the cat was 'a bottom' who was 'looking for dates and relationships'")
+   Manchester Evening News, 2023-03-22: https://www.manchestereveningnews.co.uk/news/uk-news/heartbroken-woman-uses-tinder-grindr-26535145
+   Express, 2023-03-27: https://www.express.co.uk/news/uk/1751595/missing-cat-found-profile-dating-apps (headline: "Missing cat found after desperate owner puts her profile on dating apps")
+   None of the three articles has any statement or post from Grindr the company.
+
+EXECUTIVES: none found. George Arison (CEO) and Joel Simkhai (founder): no cat results.
+=================== MGM
+- Underlying: MGM Resorts International (NYSE: MGM)
+## Cat research (2026-09-25)
+
+Tooling: WebSearch budget exhausted (200/200) for the session, so searches ran through Google News RSS
+(helper b4w/gq.py; links decoded with tools/gdecode.py), Wikipedia API extracts (wp.sh), WebFetch, and curl for
+MGM's own Cision sites (investors.mgmresorts.com, newsroom.mgmresorts.com), which WebFetch refuses but curl can fetch.
+Raw query output: stockcats/b4w/mgm_gn1.txt, mgm_gn2.txt.
+
+### Queries run (Google News RSS)
+MGM Resorts lion logo; MGM Grand lion habitat; MGM Resorts cat; MGM Resorts Hello Kitty; MGM Resorts lioness logo;
+MGM Resorts "lion" logo; MGM Resorts cat mascot; MGM Resorts office cat; "Hello Kitty Cafe" Las Vegas "The Park";
+MGM Grand Hello Kitty; Bill Hornbuckle cat; MGM Resorts kitten; MGM Grand "Leo" lion statue;
+MGM Resorts "Pusheen" OR "Garfield" OR "Grumpy Cat"; "MGM Resorts" "Leo the Lion"; "MGM Resorts" new logo lion;
+"MGM Resorts" cats adoption shelter; "MGM Resorts" "cat cafe" (0 results); Bellagio cat; "MGM Grand" lion habitat closes;
+"MGM Resorts" Siegfried Roy tigers Mirage; BetMGM lion; "MGM Resorts" "Hello Kitty"; "Hornbuckle" MGM CEO dog OR cat pet.
+MGM newsroom keyword search (newsroom.mgmresorts.com/index.php?s=20295&keywords=...): "Hello Kitty" (0), "kitten" (0),
+"cats" (hits are Doja Cat / Stray Cats concerts + the Bellagio mummies release), "lion" (mostly "million" matches).
+
+### Findings
+1. BIG CAT, OFFICIAL, CORPORATE LOGO/MASCOT - "Leo the Lion" is MGM Resorts' logo.
+   - PR Newswire release issued by MGM Resorts International, "LAS VEGAS, March 8, 2019":
+     https://www.prnewswire.com/news-releases/mgm-resorts-celebrates-womens-history-month-with-lioness-logo-transformation-300809419.html
+     Verbatim (WebFetch): MGM Resorts "temporarily transforms the company's iconic Leo the lion logo into Leona the lioness to
+     recognize Women's History Month" ... "You can see Leona firsthand by visiting MGM Resorts International's social media channels".
+   - news3lv.com, Mar 3, 2019: https://news3lv.com/news/local/mgm-resorts-changes-iconic-mascot-in-honor-of-womens-history-month
+     Headline "MGM Resorts changes iconic mascot in honor of Women's History Month". Verbatim: "Leo the Lion will be temporarily
+     replaced by Leona the Lioness, who looks very similar to Leo minus the gender-specific mane." "Leona will be showcased across
+     MGM Resorts social media profiles as well as the company's website."
+   - Boston Herald, Apr 5, 2019 (headline from search result only; page not fetchable): "Red Sox and MGM Resorts reveal "Lion"
+     logo advertisement on Green Monster".
+2. BIG CAT, OFFICIAL, FLAGSHIP PROPERTY - MGM Grand Las Vegas lion facade/statue and live lion habitat.
+   - Wikipedia "MGM Grand Las Vegas" (lead only): original facade "a giant lion head ... Measuring 88 feet in height, the lion was a
+     cartoon-like version of MGM's logo, Leo the Lion"; demolished from May 13, 1997 and replaced by a lion statue; "An indoor lion
+     habitat opened at the resort as a free attraction on July 1, 1999." ... "more than 40 lions who were rotated out".
+   - Casino.org, Corey Levitan, "VEGAS MYTHS RE-BUSTED: Guests Once Entered MGM Grand Through the Gold Lion's Mouth" (page shows
+     Dec 19, 2025, orig. Oct 7, 2022; Google News dated it Mar 3, 2026):
+     https://www.casino.org/news/vegas-myths-busted-guests-once-entered-the-mgm-grand-through-the-mouth-of-its-gold-lion/
+     Replacement lion statue installed 1998, "reportedly the second-largest bronze statue in the world", 45 ft, 50 tons;
+     "Leo was the name of the original MGM Grand lion"; current statue called "Grand Lion".
+   - Las Vegas Sun, Dec 28, 2011 (headline, search result): "MGM Grand's lion habitat to close Jan. 31"; Jan 31, 2012 (headline):
+     "Photos of MGM Grand lions, on display at casino habitat for the last time today". (lasvegassun.com returned 402 to WebFetch.)
+3. BIG CAT, OFFICIAL PRESS RELEASE (historic, divested property) - Siegfried & Roy tigers at The Mirage (MGM-owned 2000-2022).
+   - MGM Resorts investor site (fetched with curl): https://investors.mgmresorts.com/2015-09-11-Siegfried-Roy-Welcome-Four-Tiger-Cubs-To-Their-Home-At-The-Mirage
+     "LAS VEGAS, Sept. 11, 2015 /PRNewswire/ -- Siegfried & Roy will introduce the world to the newest additions to their animal
+     family when four six-week-old tiger cubs make their first appearance at Siegfried & Roy's Secret Garden and Dolphin Habitat at
+     The Mirage" ... "Liberty, a pure white female; Maharani, a striped-white female; Hirah, a striped-golden female and Justice, a
+     light golden boy." ... "The Mirage is a wholly owned subsidiary of MGM Resorts International (NYSE: MGM)." Source line says
+     "SOURCE Siegfried & Roy" (posted on MGM's IR site).
+   - Wikipedia "The Mirage": Secret Garden opened Nov 13, 1996 with "Bengal tigers, white tigers, white lions, a snow leopard, a
+     panther"; Hard Rock took over operations Dec 19, 2022 and closed the attractions.
+4. BIG CAT, OFFICIAL NEWSROOM (2026) - Bellagio Conservatory "Paradise" summer display.
+   - https://newsroom.mgmresorts.com/press-releases?item=122939 (curl), "LAS VEGAS (June 23, 2026)": "In the North Bed, tigers wrapped
+     in florals ... a magnificent 22-foot tiger lounges peacefully amid the foliage" ... "an energetic tiger cub" ... "The East Bed
+     celebrates connection ... through a majestic lion and playful cub".
+5. Minor DOMESTIC-CAT mentions (official newsroom, not a mascot):
+   - https://newsroom.mgmresorts.com/press-releases?item=122794 "LAS VEGAS (February 10, 2026) - Bellagio Gallery of Fine Art ...
+     Soulful Creatures: Animal Mummies in Ancient Egypt, on display February 13 through September 13, 2026" (with Brooklyn Museum).
+     Verbatim: "From cats, dogs and birds to snakes and crocodiles, animal mummies were deeply woven into the spiritual fabric of
+     ancient Egypt." Mentions Sekhmet and Bastet.
+6. HELLO KITTY - venue/tenant links, NOT an MGM Resorts licensing deal:
+   - Las Vegas Review-Journal (Neon), Nov 14, 2025: https://neon.reviewjournal.com/dining-out/new-hello-kitty-cafe-coming-to-the-las-vegas-strip-3324290/
+     lists existing Las Vegas Hello Kitty Cafes: "The Park (opened July 2019) - located between New York-New York and Park MGM"
+     (The Park is MGM's outdoor district) and Fashion Show mall (July 2022); new one at Forum Shops at Caesars (Caesars, not MGM).
+   - NBC Los Angeles, Jul 9, 2022: https://www.nbclosangeles.com/the-scene/hello-kitty-cafe-opens-in-las-vegas/2934333/
+     "A sister pop-up concept opened at The Park MGM LV in 2019".
+   - Eater Vegas Jul 8, 2019 headline (search result; site blocks WebFetch): "Hello Kitty Mini Cafe Pop-Up Debuts on the Strip on
+     Friday"; URL slug .../hello-kitty-cafe-mini-cafe-pop-up-opens-park-mgm-july-2019.
+   - FOX5 Vegas, Apr 3, 2026: https://www.fox5vegas.com/2026/04/03/bruno-mars-brings-hello-kitty-collab-las-vegas-pop-up-during-tour-stop/
+     Bruno Mars x Hello Kitty merch pop-up at "Mandalay Bay, 3950 S Las Vegas Blvd." (an MGM property), April 9-11, 2026; the
+     article does not say MGM organized it (the collab is Bruno Mars x Sanrio).
+7. EXECUTIVE: nothing found for CEO Bill Hornbuckle and a cat. The "Kirk-Hornbuckle Scholarship" hit (Cornell vet school) honors
+   Dr. William E. Hornbuckle, a veterinarian - unrelated (https://www.vet.cornell.edu/alumni/alumni-association/kirk-hornbuckle-scholarship).
+8. Not the same company: MGM Studios / Amazon MGM (film studio, owner of the original Leo the Lion film logo) is a separate company.
+
+### Verdict
+big_cat_official - Leo the Lion is MGM Resorts' own logo/mascot (company press release 2019). Suggested cat name: "Leo".
+Secondary: Leona the Lioness (2019), MGM Grand lion habitat 1999-2012, Mirage tigers 2015 release, Bellagio 2026 tiger display,
+Hello Kitty Cafe tenant at The Park (2019) and Bruno Mars x Hello Kitty pop-up at Mandalay Bay (2026).
+=================== DNUT
+- Underlying: Krispy Kreme, Inc. (Nasdaq: DNUT)
+## Cat research (2026-09-25)
+
+Tooling: WebSearch budget exhausted (200/200); searches via Google News RSS (b4w/gq.py, links decoded with tools/gdecode.py),
+pages opened with WebFetch. Business Wire, People, Bake Magazine, PennLive, Rappler, Spot.ph, 9News block WebFetch/curl (403/402).
+Raw query output: stockcats/b4w/dnut_gn1.txt, dnut_gn2.txt, dnut_gn3.txt.
+
+### Queries run (Google News RSS)
+Krispy Kreme Hello Kitty; Krispy Kreme cat; Krispy Kreme cat doughnut; Krispy Kreme Garfield; Krispy Kreme Pusheen (0);
+Krispy Kreme Doraemon; Krispy Kreme mascot; Krispy Kreme Sanrio; Krispy Kreme Grumpy Cat; Krispy Kreme lion OR tiger OR panther
+doughnut; "Scaredy Cat" Krispy Kreme; Krispy Kreme "black cat" doughnut; Krispy Kreme Halloween cat doughnut 2025;
+Krispy Kreme Masters of the Universe Cringer; Krispy Kreme Pokemon Meowth; Krispy Kreme Japan Hello Kitty; Krispy Kreme UK Hello
+Kitty; Krispy Kreme office cat; Josh Charlesworth cat (CEO); Krispy Kreme "Puss in Boots" OR "Aristocats" OR "Cheshire";
+Krispy Kreme Kuromi; Krispy Kreme Chiikawa; Krispy Kreme "Hello Kitty" doughnuts 2025; Japanese-language queries (0 results);
+"Abra Cat Dabra" Krispy Kreme; Krispy Kreme Philippines franchise owner; Krispy Kreme Friday the 13th black cat.
+
+### Findings
+1. OFFICIAL CAT PRODUCT (US, Krispy Kreme's own Halloween "Krispy Skreme" line) - black-cat doughnuts:
+   a. "Abra Cat Dabra Doughnut", Halloween 2021 (witch-themed collection, US).
+      - foodsided.com, Oct 11, 2021: https://foodsided.com/2021/10/11/krispy-kreme-adds-four-new-halloween-doughnuts/
+        Four doughnuts: Abra Cat Dabra, Enchanted Cauldron, Bewitched Broomstick, Spooky Sprinkle. Verbatim: "Although people can be
+        wary of crossing paths with a black cat, this doughnut is one that everyone will want on the plate."
+      - Tinybeans, Oct 12, 2021: https://tinybeans.com/krispy-kreme-halloween-21/ - verbatim: "an original glazed donut that looks
+        like the classic black cat, including sugar fondant eyes".
+      - Also listed in results: TODAY.com Oct 11, 2021; Hypebeast Oct 13, 2021 "Krispy Kreme Morphs into "Krispy Skreme" With New
+        Halloween Donuts"; USA Today Oct 23, 2021 (headlines only).
+   b. "Scaredy Cat Doughnut", Halloween 2022 ("Haunted House Collection").
+      - Mashed, (Google News date Jan 23, 2023; page date given as Oct 11, 2022):
+        https://www.mashed.com/1049421/we-tried-krispy-kremes-spook-tacular-doughnuts-heres-how-it-went/
+        Verbatim: "The Scaredy Cat doughnut is nothing to be afraid of; enjoy a delicious doughnut filled with the signature Krispy
+        Kreme cream filling, dipped in purple icing, decorated with green frosting and chocolate icing, and topped with a chocolate
+        cat piece." Collection: Spooky Spider, Scaredy Cat, Boo Batter, Neon Orange Sprinkle.
+      - Foodgressing, Oct 19, 2022: https://foodgressing.com/krispy-kreme-halloween-donuts-2022-haunted-house-collection/
+        Verbatim: "A doughnut filled with delicious KREME(TM), dipped in purple icing and decorated with green frosting and chocolate
+        icing, topped with a chocolate cat piece."
+      - Bake Magazine Oct 11, 2022 headline "Krispy Kreme introduces Haunted House Collection for October" (403, not opened).
+   c. Krispy Kreme Japan "Black Cat Choco" and "Black Cat Mummy Choco" Halloween doughnuts, 2022.
+      - SoraNews24, Dale Roll, Sep 21, 2022: https://soranews24.com/2022/09/21/krispy-kreme-japans-new-scary-cute-halloween-donuts-get-us-in-the-spooky-spirit/
+        Verbatim: "The Black Cat Choco (334 yen) is super cute! Decorated with the innocent face of a cat, this donut is..."
+      - (Not Krispy Kreme: SoraNews24 Sep 19, 2025 "Japan's black cat Halloween donuts..." is Mister Donut's "Black Thunder Cat".)
+2. COLLABORATION (licensed cat IP) - Hello Kitty 50th anniversary doughnuts, Krispy Kreme Philippines, Aug 2024.
+   - Philstar.com, Kathleen A. Llemit, Aug 6, 2024:
+     https://www.philstar.com/lifestyle/food-and-leisure/2024/08/06/2374937/hello-kitty-50th-anniversary-doughnuts-revealed
+     Verbatim (WebFetch): "Sanrio and Krispy Kreme collaborated to introduce the limited-edition Hello Kitty 50th anniversary
+     doughnuts"; available "until September 15"; doughnuts: Hello Kitty, Kuromi, Cinnamoroll, Pochacco, My Melody, Pompompurin.
+   - Spot.ph, Jul 26, 2024 headline (403, not opened): "PSA: There's a Hello Kitty-Themed Krispy Kreme Shop at This Mall"
+     (URL slug: krispy-kreme-hello-kitty-themed-shop-mall-of-asia).
+   - Caveat: this is the Philippines market; I did not verify whether that market is company-owned or franchised.
+   - No US/UK/Japan Krispy Kreme x Hello Kitty found.
+3. BIG CAT - Masters of the Universe collection (US), May 26, 2026, includes the "Cringer Claw Cookie Dough Doughnut"
+   (Cringer = He-Man's tiger, a.k.a. Battle Cat).
+   - Dexerto, May 26, 2026: https://www.dexerto.com/food/krispy-kreme-reveals-masters-of-the-universe-doughnuts-with-he-man-skeletor-flavors-3368322/
+     Launch "at participating Krispy Kreme locations across the United States beginning May 26"; quote from "Alison Holder, Chief
+     Brand and Product Officer at Krispy Kreme".
+   - Tasting Table, Jenny Kellerhals Keogh, May 28, 2026: https://www.tastingtable.com/2182767/krispy-kreme-masters-of-the-universe-review/
+     Verbatim: "The colors and pattern are meant to mimic those of He-Man's tiger companion, Cringer."
+   - Business Wire release May 26, 2026 (headline from search; 403): "BY THE POWER OF GRAYSKULL AND KRISPY KREME(R): We're Entering a
+     New Era of Doughnut Deliciousness with the All-New Masters of the Universe Collection".
+4. Checked and NOT cat: Pokemon collection (Aug 13, 2026, US; SA version Aug 2026) - Pikachu, Jigglypuff, Charmander (+ Poke Ball per
+   htxt.co.za Aug 24, 2026 https://htxt.co.za/2026/08/we-tasted-all-the-krispy-kreme-pokemon-doughnuts-sold-in-south-africa/);
+   no Meowth found (the US release lists five Pokemon; I could not open it to see the other two). Kit Kat collab (Apr 2024) is
+   name only. Friday-the-13th "Lucky Friday" deals: TODAY.com Sep 13, 2024 mentions "even if a black cat crosses your path" (copy,
+   not a cat product). Dog doughnut range (Aug 2023) is dogs.
+5. Mascot: Krispy Kreme has no cat mascot found. CEO Josh Charlesworth: no cat posts found. No office cat found.
+
+### Verdict
+official_cat_character_or_product - Krispy Kreme (US) sold its own black-cat doughnuts: "Abra Cat Dabra" (Halloween 2021) and
+"Scaredy Cat" (Halloween 2022). Secondary: Hello Kitty 50th doughnuts with Sanrio (Krispy Kreme Philippines, Aug 2024),
+Krispy Kreme Japan "Black Cat Choco" (2022), Cringer (tiger) doughnut (US, May 2026).
+=================== WEN
+- Underlying: The Wendy's Company (Nasdaq: WEN)
+## Cat research (2026-09-25)
+
+Tooling: WebSearch budget exhausted (200/200); searches via Google News RSS (b4w/gq.py, links decoded with tools/gdecode.py),
+pages opened with WebFetch, wendys.com fetched with curl. Allrecipes, Norwich Bulletin, Patriot Ledger, irwendys.com news list
+blocked (402/403). Raw query output: stockcats/b4w/wen_gn1.txt, wen_gn2.txt, wen_gn3.txt.
+
+### Queries run (Google News RSS)
+Wendy's Hello Kitty; Wendy's cat; Wendy's Twitter cat; Wendy's Garfield; Wendy's cat mascot; Wendy's Pusheen OR Doraemon OR
+"Grumpy Cat"; Wendy's Frosty cat; Wendy's kitten; Wendy's lion OR tiger OR jaguar; Wendy's office cat; Wendy's Sanrio;
+Wendy's Garfield Movie; "Purrrma Frost"; "Purrma Frost"; Frosty Frights cat; Wendy's Frosty Frights 2024 toys; Wendy's Frosty
+Frights 2026; Wendy's Halloween black cat; Wendy's Frosty Frights 2025 irwendys; Wendy's kids meal cat toy; Wendy's "Puss in
+Boots" OR "Secret Life of Pets" OR "Pink Panther"; Wendy's Philippines Hello Kitty; Wendy's tweet cat meme; Kirk Tanner cat (0);
+Wendy's "cat" social media post; Wendy's Thundercats; Wendy's "Doja Cat".
+
+### Findings
+1. OFFICIAL CAT CHARACTER (kids' meal toy) - "Purrrma Frost", one of Wendy's own 2025 "Frosty Frights" Halloween toy characters.
+   - Wendy's official blog, "Wendy's 2025 Frosty Frights and Boo! Books" (Sep 4, 2025):
+     https://www.wendys.com/blog/wendys-frosty-frights-kids-meal-toys-and-boo-books-are-coming-back
+     Verbatim (curl): "With spooky-fun characters like The Yummy, Chilly Gilly, Ice Patch, Captain Coldsnap, Meltin and Purrrma Frost
+     - fans can collect up to 12 toy characters (inclusive of 6 special, "bright fright" variants)!"
+     The Wendy's page itself does not describe Purrrma Frost as a cat.
+   - All Hallows Geek, Sep 2, 2025: https://www.allhallowsgeek.com/wendys-frosty-frights-are-back-with-12-new-collectible-toys/
+     Verbatim: "Purrma Frost - The coolest kitty on the block." (spelled with two r's there).
+   - Bleeding Cool, Tyler Roberts, Sep 15, 2025 lists "Purrrma Frost" (no description).
+   - Not in the 2024 line (IR release Sep 3, 2024: Franken Frosty, Frosty Bite, Coolie Ghoulie, Brrr Beast, Cold Spell, Junior -
+     https://www.irwendys.com/news/news-details/2024/A-Frosty-Fright-Wendys-New-Kids-Meal-Celebrates-Spooky-and-Sweet-Halloween-Icons/default.aspx)
+     and not in the 2026 line (PR Newswire, "Wendy's is Serving Up a Frightfully Fun Halloween with Boo! Books and Frosty Frights":
+     Numb Chuck, Sir Choc-O-Lot, E.A.T., Cold Foot, Shiver Wing, Taranchilla -
+     https://www.prnewswire.com/news-releases/wendys-is-serving-up-a-frightfully-fun-halloween-with-boo-books-and-frosty-frights-302868252.html).
+2. Checked, no cat: DC kids' meal (Mar 25, 2026, https://www.wendys.com/blog/wendys-DC-Rides-Kids-Meal - Batman, Superman, Wonder
+   Woman, Flash, Green Lantern, Supergirl + 6 villains; no Catwoman/Streaky); Sonic kids' meal (Jul 2026).
+3. No Hello Kitty/Sanrio, Garfield, Pusheen, Doraemon, Grumpy Cat collaboration found. No lion/tiger mascot or logo (mascot is the
+   girl "Wendy"). No office cat found. No CEO cat posts found (Kirk Tanner search: 0 results).
+4. Social media: Wendy's X account is famous for roasts/memes, but no specific cat post was found in news coverage (X not fetchable).
+5. Noise: "Wendy the Sand Cat" (Erie zoo, Feb 2026) is an unrelated zoo animal named Wendy; "Kittens take Wendy's parking lot
+   hostage" (wtrf.com, May 26, 2025) is a local rescue at a Wendy's lot, not the company.
+
+### Verdict
+official_cat_character_or_product (weak/minor) - "Purrrma Frost", a cat-styled Frosty character among Wendy's 2025 Frosty Frights
+kids' meal toys. No cat mascot, no cat IP collaboration found.
+=================== DKNG
+- Underlying: DraftKings Inc. (Nasdaq: DKNG)
+## Cat research (2026-09-25)
+
+Tooling: WebSearch budget exhausted (200/200); searches via Google News RSS (b4w/gq.py, links decoded with tools/gdecode.py),
+pages opened with WebFetch and curl (dknetwork.draftkings.com). Raw output: stockcats/b4w/dkng_gn1..4.txt.
+
+### Queries run (Google News RSS)
+DraftKings cat; DraftKings cat mascot (0); DraftKings Hello Kitty; DraftKings lion OR tiger OR jaguar OR panther mascot;
+DraftKings office cat; Jason Robins cat; DraftKings cat ad commercial; DraftKings Casino cat slot; DraftKings "Grumpy Cat" OR
+Garfield OR Pusheen; DraftKings logo crown; DraftKings "Fat Cat" (0); DraftKings Predictions cat; DraftKings Casino "Kitty Glitter";
+DraftKings Casino "Lucky Cat" OR "Cat Wilde" OR "Cats"; DraftKings "cat" dknetwork; DraftKings "tiger" slot DraftKings Casino
+exclusive; DraftKings Casino "Wild Cats" OR "Kitty" exclusive game; DraftKings Jackpocket cat; DraftKings tweet cat; DraftKings
+Sportsbook commercial cat; "Jason Robins" DraftKings pet; DraftKings Golden Nugget lion; DraftKings "Roaring Kitty" (0);
+DraftKings "Miss Kitty"; Barstool Sports DraftKings partnership; "Big Cat" Barstool DraftKings.
+Most "cat" hits are CFL "Tiger-Cats" betting previews, Caterpillar (CAT) market roundups, or DK Network TV/movie articles.
+
+### Findings
+1. No cat mascot, no cat character, no Hello Kitty/Garfield/other cat-IP collaboration, no big-cat logo or mascot found.
+   DraftKings' brand mark is a crown (loyalty currency "Crown Cash", Aug 2026 - e.g. Casino.org Aug 14, 2026 headline
+   "DraftKings Putting Dollar Value on Rewards Points with Crown Cash").
+2. OFFICIAL-OWNED MEDIA POSTED A CAT (weak) - DraftKings Network (dknetwork.draftkings.com, DraftKings' own editorial site):
+   "Kate McKinnon wrangles a cat and Hellman's mayonnaise in Super Bowl commercial", Grace McDermott, Feb 11, 2024:
+   https://dknetwork.draftkings.com/2024/02/11/kate-mckinnon-wrangles-a-cat-and-hellmans-mayonnaise-in-super-bowl-commercial/
+   Verbatim (WebFetch): "the aforementioned cat becomes famous for meowing 'mayo,' prompting a worldwide mayonnaise craze."
+   The ad is Hellmann's (Unilever); DraftKings only reported on it.
+3. THIRD-PARTY CAT/BIG-CAT SLOTS listed by DraftKings Casino (not DraftKings IP), from DK Network monthly new-game lists (curl):
+   - https://dknetwork.draftkings.com/2024/06/10/new-game-releases-for-draftkings-casino-in-may-2024/ - "Miss Kitty" (Anaxi, ONT;
+     Pariplay, MI), "Lion Carnival", "5 Lion Festival", "Jaguar Princess", "Lightning Lion".
+   - https://dknetwork.draftkings.com/2024/12/17/new-game-releases-for-draftkings-casino-in-november-2024/ - "Cat Wilde and the
+     Pyramids of Dead" and "Cat Wilde and the Lost Chapter" (Play'n GO), "Miss Kitty"/"Miss Kitty Gold" (Anaxi), "Silver Lioness 4x",
+     "50 Lions", "Rising Tiger".
+4. NAME ONLY / COMMUNITY: DraftKings signed a multi-year deal with Barstool Sports (Feb 2024; Sportico Feb 12, 2024 headline
+   "Barstool, DraftKings Deal Launches Minutes After Super Bowl Ends"); Barstool's "Big Cat" (Dan Katz) is a human nickname, not a cat (headline-level evidence only, not opened).
+5. EXECUTIVE: nothing found for CEO/co-founder Jason Robins and a cat. No office cat found.
+
+### Verdict
+official_account_posted_cat (weak) - only a DraftKings Network news post about a cat in someone else's Super Bowl ad (Feb 11, 2024)
+and third-party cat-themed slot titles on DraftKings Casino. Effectively no DraftKings cat mascot. Name suggestion if needed: none
+official; "Miss Kitty" is a third-party slot title (vendor listed as Anaxi) only.

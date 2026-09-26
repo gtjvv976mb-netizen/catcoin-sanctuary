@@ -1,0 +1,89 @@
+{
+ "name": "Amberdrop the Tortie Cat",
+ "ticker": "AMBERDROP",
+ "nameLen": 24,
+ "blurbLen": 123,
+ "descLen": 278,
+ "endsWithDisc": true,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Amberdrop, a glossy black tortoiseshell ",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_disclaimer_only": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "USO",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 0,
+  "symbolMatches": [],
+  "verifiedMatch": false
+ },
+ "description": "Amberdrop, a glossy black tortoiseshell shorthair with honey-gold patches and green-gold eyes, dozes in the sunny herb bed. A cat coin priced in USO. Not affiliated with United States Oil Fund, LP, USCF, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A normal four-legged, sleek shorthair tortoiseshell house cat: mostly glossy jet-black with honey-gold patches, and green-gold eyes. It wears nothing. The look is taken from the business, not from any real cat."
+}

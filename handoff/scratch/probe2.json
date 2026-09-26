@@ -1,0 +1,1356 @@
+{
+ "at": "2026-09-25T10:21:00.272Z",
+ "note": "GET https://api.jup.ag/swap/v1/quote, $10 in, slippageBps 100, onlyDirectRoutes true, restrictIntermediateTokens true, instructionVersion V2 — the agent's own quote settings",
+ "rows": [
+  {
+   "symbol": "MEW",
+   "mint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+   "liq": 10582427,
+   "vol24h": 430206,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "POPCAT",
+   "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+   "liq": 4990286,
+   "vol24h": 776670,
+   "usdc": {
+    "status": 200,
+    "impactPct": 0.384,
+    "err": null,
+    "labels": "Raydium"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "ZCAT",
+   "mint": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
+   "liq": 676213,
+   "vol24h": 3551754,
+   "usdc": {
+    "status": 200,
+    "impactPct": 3.161,
+    "err": null,
+    "labels": "Meteora DLMM"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "NEARKAT",
+   "mint": "6UtY9iTZMQQ5QZVrbzFnNaJntV7oySm9k97mvwnuZcxr",
+   "liq": 446589,
+   "vol24h": 683108,
+   "usdc": {
+    "status": 200,
+    "impactPct": 7.864,
+    "err": null,
+    "labels": "Meteora DLMM"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "PURR",
+   "mint": "8RNUw4N655VSrZKuhGdywhbSMDTrheguFPfxbpE2NZHQ",
+   "liq": 255994,
+   "vol24h": 1097221,
+   "usdc": {
+    "status": 200,
+    "impactPct": 4.001,
+    "err": null,
+    "labels": "Meteora DLMM"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "KITTY",
+   "mint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+   "liq": 220702,
+   "vol24h": 153435,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "SC",
+   "mint": "6D7NaB2xsLd7cauWu1wKk6KBsJohJmP2qZH9GEfVi5Ui",
+   "liq": 200967,
+   "vol24h": 3177,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "LEVERCAT",
+   "mint": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
+   "liq": 175030,
+   "vol24h": 206353,
+   "usdc": {
+    "status": 200,
+    "impactPct": 7.414,
+    "err": null,
+    "labels": "Meteora DLMM"
+   },
+   "usdt": {
+    "status": 200,
+    "impactPct": 93.622,
+    "err": null,
+    "labels": "Meteora DAMM v2"
+   }
+  },
+  {
+   "symbol": "PEPECAT",
+   "mint": "CRAMvzDsSpXYsFpcoDr6vFLJMBeftez1E7277xwPpump",
+   "liq": 168281,
+   "vol24h": 2703,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "RKC",
+   "mint": "7HgfXftRBBqsYtAEYcqjGLQrNJLL6Tww9ek4rE3Apump",
+   "liq": 152016,
+   "vol24h": 23462,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "MASK",
+   "mint": "6MQpbiTC2YcogidTmKqMLK82qvE9z5QEm7EP3AEDpump",
+   "liq": 121056,
+   "vol24h": 2613,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "STONKCATS",
+   "mint": "9h5AzEQzYu9CV5K6uLtFRMD1KcbxZSFNxZEgBTNfw5Na",
+   "liq": 90448,
+   "vol24h": 409663,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "VIBECOIN",
+   "mint": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
+   "liq": 84957,
+   "vol24h": 6709,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "OIIAOIIA",
+   "mint": "VaxZxmFXV8tmsd72hUn22ex6GFzZ5uq9DVJ5wA5pump",
+   "liq": 81710,
+   "vol24h": 1643,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CATCOIN",
+   "mint": "9i3NFMa9pqR3suCUhyX3nQE1dy6i5wXafDtppUxYpump",
+   "liq": 80427,
+   "vol24h": 13499,
+   "usdc": {
+    "status": 200,
+    "impactPct": 88.9,
+    "err": null,
+    "labels": "Meteora DAMM v2"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "RAYCAT",
+   "mint": "CFNRDaxFcvRwRSNnA5cHrCCr6AHhk9dNkHWpRUjNupFL",
+   "liq": 65787,
+   "vol24h": 623549,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "GIKO",
+   "mint": "3WPep4ufaToK1aS5s8BL9inzeUrt4DYaQCiic6ZkkC1U",
+   "liq": 61955,
+   "vol24h": 1269,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "LQC",
+   "mint": "HKv9jA7VREs68BA3PZMREiwuQKzfLUjr9azgrzbNpump",
+   "liq": 55822,
+   "vol24h": 358,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "Hobbes",
+   "mint": "6n7Janary9fqzxKaJVrhL9TG2F61VbAtwUMu1YZscaQS",
+   "liq": 55277,
+   "vol24h": 572,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "NYAN",
+   "mint": "9BVn3Y8tPghbnGuuuxoj2mGekqgSQV1M7nALF7brpump",
+   "liq": 54440,
+   "vol24h": 15618,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "JUPCAT",
+   "mint": "AaEhFTX4naHSWSXz9TVe5QgLbtSLT8ZqYJGZzDDcoroh",
+   "liq": 53149,
+   "vol24h": 87213,
+   "usdc": {
+    "status": 200,
+    "impactPct": 35.661,
+    "err": null,
+    "labels": "Meteora DLMM"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "WYAC",
+   "mint": "BEgBsVSKJSxreiCE1XmWWq8arnwit7xDqQXSWYgay9xP",
+   "liq": 49301,
+   "vol24h": 3940,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "VIBE",
+   "mint": "DFVeSFxNohR5CVuReaXSz6rGuJ62LsKhxFpWsDbbjups",
+   "liq": 46506,
+   "vol24h": 1,
+   "usdc": {
+    "status": 200,
+    "impactPct": 1.027,
+    "err": null,
+    "labels": "Meteora DAMM v2"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "meowl",
+   "mint": "8ryRQD6jWfxnSdvvVbQ8Tzwo1NgGP7w1X1nQPpb4pump",
+   "liq": 42635,
+   "vol24h": 14016,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CANDLE",
+   "mint": "6iFUKWGDksVvmnSYJUGYnsu168xstni8xJkTF7QrpPAu",
+   "liq": 42440,
+   "vol24h": 1,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "KWIF",
+   "mint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+   "liq": 42435,
+   "vol24h": 7866,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CATVAX",
+   "mint": "EVDoPXkWNRMc7fQirg7emNdc17KNqsCyzVi4mWPmDvni",
+   "liq": 38284,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "drooling",
+   "mint": "B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump",
+   "liq": 37915,
+   "vol24h": 15659,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "COK",
+   "mint": "Dnb9dLSXxAarXVexehzeH8W8nFmLMNJSuGoaddZSwtog",
+   "liq": 37490,
+   "vol24h": 2312,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "BINGUS",
+   "mint": "AQuuQ4xktyzGBFnbKHnYsXHxsKVQetAoiPeCEG97NUJw",
+   "liq": 37230,
+   "vol24h": 36,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "BARSIK",
+   "mint": "7ZqzGzTNg5tjK1CHTBdGFHyKjBtXdfvAobuGgdt4pump",
+   "liq": 34171,
+   "vol24h": 289,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "PAJAMAS",
+   "mint": "FvER7SsvY5GqAMawf7Qfb5MnUUmDdbPNPg4nCa4zHoLw",
+   "liq": 33828,
+   "vol24h": 99,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "BITCAT",
+   "mint": "4j9bDg7iWNah1Qa61rrqwWZMtEdqV3fV56SzyhfNpump",
+   "liq": 33003,
+   "vol24h": 58,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "bop",
+   "mint": "F5hqdbykXuksp8P78CAZenSvpPShAYKrP2U2MiZMdgFN",
+   "liq": 32921,
+   "vol24h": 108,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "Hosico",
+   "mint": "9wK8yN6iz1ie5kEJkvZCTxyN1x5sTdNfx8yeMY8Ebonk",
+   "liq": 31608,
+   "vol24h": 5909,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "Fartcat",
+   "mint": "3dk9CNre8tmv6bbNXd5F6dgkNnEzsyQ7sPhVT8kKpump",
+   "liq": 30261,
+   "vol24h": 310,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "BAG",
+   "mint": "D8r8XTuCrUhLheWeGXSwC3G92RhASficV3YA7B2XWcLv",
+   "liq": 29653,
+   "vol24h": 533,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "VIBE",
+   "mint": "8tSeXYSXzFvaDX1nbWrEFFaFuPHuWqpzksKYxQPvpump",
+   "liq": 28977,
+   "vol24h": 452,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CATTY",
+   "mint": "Ag9TVNiyh2dDbVAzf1fZj6rjPLRTCLGXQzEDwWuZjupx",
+   "liq": 28976,
+   "vol24h": 0,
+   "usdc": {
+    "status": 200,
+    "impactPct": 1.064,
+    "err": null,
+    "labels": "Meteora DAMM v2"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "GRUMPY",
+   "mint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+   "liq": 28574,
+   "vol24h": 1550,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "ELGATO",
+   "mint": "F47vvwFYuLioQsqEVAjqdY6Yihc8wVRiUcfHGcBR9XUs",
+   "liq": 28485,
+   "vol24h": 203,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "SOLCAT",
+   "mint": "HmJDgky11u77hpBss6D8sjNpYPD5B6fWgSVDj58jpump",
+   "liq": 28386,
+   "vol24h": 17262,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "ChiefPussy",
+   "mint": "DRtvTCzfiKGhCVREmBbZdN9sB8PHeq9KdRZ3VmFhpump",
+   "liq": 28217,
+   "vol24h": 340,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "LNGCAT",
+   "mint": "9pYxF6BZPN98D3DQHt8nqGsudTmLHhy9PT5yDopjUXJd",
+   "liq": 25315,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CATWIF",
+   "mint": "5pYB12kEhfhSFXJjZ7JtyqDpt6uUqhsF6iu6Ee9spump",
+   "liq": 25213,
+   "vol24h": 1418,
+   "usdc": {
+    "status": 200,
+    "impactPct": 2.409,
+    "err": null,
+    "labels": "Pump.fun Amm"
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CNC",
+   "mint": "cncjfnwyLnUdPAiB8cPULZ6kFNRWu4kzRt2dfLMdx8X",
+   "liq": 24734,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CHADCAT",
+   "mint": "EvPUFsBikS1B3GpbmVvUWAc4DXaBXD4zLDER9SVSEF27",
+   "liq": 23496,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "KHAI",
+   "mint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+   "liq": 22699,
+   "vol24h": 184,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "dubcat",
+   "mint": "7woCERDM7WV4XaBLfdGwvHBX3EJHQqp8XjArrgSFKkpL",
+   "liq": 22351,
+   "vol24h": 139,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "BCAT",
+   "mint": "7bQsj9DciGXs6cTkhB3D1WbcEjuMpmD7amQRWjEVBpu",
+   "liq": 22174,
+   "vol24h": 10,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "WAWA",
+   "mint": "8Sk2EJ9oo25b7Mmf4qd5gJw6z3738AXvAbkuSSpQpump",
+   "liq": 21861,
+   "vol24h": 4,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "ELIZABETH",
+   "mint": "DiiTPZdpd9t3XorHiuZUu4E1FoSaQ7uGN4q9YkQupump",
+   "liq": 19352,
+   "vol24h": 1215,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "NCAT",
+   "mint": "82Rc22mnyHrmBGwj15rhYhFzVrU3bgFkjNtV3iHjpump",
+   "liq": 19282,
+   "vol24h": 1177,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "SOLANA",
+   "mint": "fESbUKjuMY6jzDH9VP8cy4p3pu2q5W2rK2XghVfNseP",
+   "liq": 19272,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "KIKI",
+   "mint": "HhCLbkW6FwhriTkk81W8tYstsRCLUu6Y7Je1SQjVpump",
+   "liq": 18181,
+   "vol24h": 7,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "xencat",
+   "mint": "7UN8WkBumTUCofVPXCPjNWQ6msQhzrg9tFQRP48Nmw5V",
+   "liq": 18126,
+   "vol24h": 54,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CATOSHI",
+   "mint": "HrZh7koZFedTSHng4bVmhULwejpmVdSKUYxaf2N5im1b",
+   "liq": 17840,
+   "vol24h": 3772,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CATGF",
+   "mint": "GVwpWU5PtJFHS1mH35sHmsRN1XWUwRV3Qo94h5Lepump",
+   "liq": 17563,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "Kieth",
+   "mint": "Ffs23XgzXViCtB4Hhb9K1tHMi42RDbaaN8xVvP7YCggm",
+   "liq": 17194,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "KEYCAT",
+   "mint": "9pPE1q9EW1bMQWbHmffrzUCfRr7S82UoxNUFfA6mAZC6",
+   "liq": 17182,
+   "vol24h": 109,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "DJCAT",
+   "mint": "A5gVj5j16U4vCTMXQYYrhkmWgx6gej4nAeZRNQMLUAfy",
+   "liq": 17040,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "DREAM",
+   "mint": "33q5Kax2piZ6mwyuxbEn8cbWD9XzTZ9Bkykfj4emuNBd",
+   "liq": 16690,
+   "vol24h": 585,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "INBRED",
+   "mint": "EjzzyCSiLqjFDprpZj8e1zjXmcTG5HPGFRSEoWcJWHh9",
+   "liq": 16055,
+   "vol24h": 48,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CATCOIN",
+   "mint": "5gTPspC2ricuGWiYQ4Ghausg8fsq7uCrGgSVACatcoin",
+   "liq": 15500,
+   "vol24h": 1067,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "LOAFCAT",
+   "mint": "LoafdJ3WSAvsrx3zppSGKA6sRvL9GrRrU1iRV7HkLkm",
+   "liq": 13407,
+   "vol24h": 26,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "VCAT",
+   "mint": "VP9UaBXLM4KYRvyjisu65rz8BU5xNAbewU7LVmyU2x4",
+   "liq": 13265,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "HELIA",
+   "mint": "FZnSMd1hPu5MVgttmtfDZUPN5gcuexvrh3CB67UuQshb",
+   "liq": 12815,
+   "vol24h": 376,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "CATBAT",
+   "mint": "mo7mapMrCsyci5w1td1wgrKPtNeCfjfkKi96DknWi5N",
+   "liq": 12717,
+   "vol24h": 17,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "MOONCAT",
+   "mint": "5uqf5kAFH1b9XzQs3QsZjczs4pERxr7dJ5FM4Bznpump",
+   "liq": 12209,
+   "vol24h": 389,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "$CWIF",
+   "mint": "7atgF8KQo4wJrD5ATGX7t1V2zVvykPJbFfNeVf1icFv1",
+   "liq": 12009,
+   "vol24h": 559,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "NYAN",
+   "mint": "CMx7yon2cLzHcXqgHsKJhuU3MmME6noWLQk2rAycBAGS",
+   "liq": 11974,
+   "vol24h": 339,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "SOLCAT",
+   "mint": "E99fN4tCRb1tQphXK1DU7prXji6hMzxETyPNJro19Fwz",
+   "liq": 11390,
+   "vol24h": 99,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "BatCat",
+   "mint": "HCkhfdDNF2dqMxxtL51AzgWU26MBNkUkEzGAHtqkpump",
+   "liq": 11147,
+   "vol24h": 389,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "TREEINCAT",
+   "mint": "5AzTQ5zUuWUNGetxaRpo9DK9w8FQXoPjn5a4ZXMMmoon",
+   "liq": 11075,
+   "vol24h": 108,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  },
+  {
+   "symbol": "BENJI",
+   "mint": "CPjDhhBpwEsLygNuczKcNwBPgMeni1xLomD48x51MyYU",
+   "liq": 10485,
+   "vol24h": 0,
+   "usdc": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   },
+   "usdt": {
+    "status": 400,
+    "impactPct": null,
+    "err": "NO_ROUTES_FOUND",
+    "labels": ""
+   }
+  }
+ ]
+}

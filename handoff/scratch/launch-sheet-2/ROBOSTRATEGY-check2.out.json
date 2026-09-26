@@ -1,0 +1,134 @@
+{
+ "results": [
+  {
+   "name": "Sprocket the Steel-Grey Cat",
+   "ticker": "SPROCKPAW",
+   "nameLen": 27,
+   "tickerLen": 9,
+   "blurbLen": 150,
+   "descLen": 279,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sprocket, a sleek steel-grey shorthair with copper eyes, walks the garden in neat, even steps and sits by the same rose at the same time each morning. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Gearpaw the Helper Cat",
+   "ticker": "GEARPAW",
+   "nameLen": 22,
+   "tickerLen": 7,
+   "blurbLen": 142,
+   "descLen": 271,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 6,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Gearpaw, a gunmetal and white tuxedo cat with green eyes, copies whatever the gardener does, patting the soil and nudging pots into tidy rows. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Rivet the Silver-Point Cat",
+   "ticker": "RIVETPAW",
+   "nameLen": 26,
+   "tickerLen": 8,
+   "blurbLen": 145,
+   "descLen": 274,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Rivet, a pale silver cat with steel-grey ears, paws and tail and ice-blue eyes, naps by the tool shed with a low, steady purr like a small motor. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "ext": {}
+}

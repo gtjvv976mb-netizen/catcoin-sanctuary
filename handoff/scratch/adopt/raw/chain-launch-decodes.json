@@ -1,0 +1,1631 @@
+{
+ "readAt": "2026-09-25T17:46:40.022Z",
+ "rpc": "https://api.mainnet-beta.solana.com",
+ "results": [
+  {
+   "label": "RoxAI NVDAX irys (form?)",
+   "mint": "FbDVeqD87Wyp5bBj5nEqGtq5A3LEEwShomPS1nVfZufz",
+   "signature": "2dnvjQoBjwai4rhBZ4cqyZtM97NGC9Qsu89oP5P8VQJuuZwHB4RVYVkDCh2PKzvWSgzU8BgeXkhuKwFFcn1ND6Zc",
+   "slot": 450421989,
+   "blockTime": 1790357878,
+   "signaturesScanned": 1059,
+   "version": "legacy",
+   "feePayer": "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+   "signers": [
+    "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+    "FbDVeqD87Wyp5bBj5nEqGtq5A3LEEwShomPS1nVfZufz"
+   ],
+   "fee": 40000,
+   "err": null,
+   "computeUnitsConsumed": 188170,
+   "payerLamportsDelta": -11607160,
+   "addressTableLookups": [],
+   "instructions": [
+    {
+     "program": "ComputeBudget111111111111111111111111111111",
+     "programName": "ComputeBudget",
+     "dataHex": "02c0270900",
+     "accounts": [],
+     "decoded": {
+      "op": "SetComputeUnitLimit",
+      "units": 600000
+     }
+    },
+    {
+     "program": "ComputeBudget111111111111111111111111111111",
+     "programName": "ComputeBudget",
+     "dataHex": "0350c3000000000000",
+     "accounts": [],
+     "decoded": {
+      "op": "SetComputeUnitPrice",
+      "microLamports": "50000"
+     }
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "25be7ede2c9aab110605000000526f78414903000000524f584500000068747470733a2f2f676174657761792e697279732e78797a2f476761457669544d6853386b73653538627863635a46677735476f524231615358535643443169593862456b000080c6a47e8d03000078c5fb51d10200afde830f0100000001000000000000000000000000000000000000000000000000000000000000000000000000",
+     "accounts": [
+      "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+      "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+      "2NuVPU5ViAyQsZamVfJ1vU6Cp77WSzret4LtNTMiWFQ4",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "5XAQjsPx6nhwjHDirEz9MVFgSj1tEaxEQ2mBjjDBBYxV",
+      "FbDVeqD87Wyp5bBj5nEqGtq5A3LEEwShomPS1nVfZufz",
+      "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh",
+      "HeAE92rz8JfsMYxUi5yzGScU88zVASdYmzRtoNh6jKZE",
+      "DK1BCiuDCPwHT8Svaxn2nRF6pezJtWBXA793JN4WS2Kx",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "11111111111111111111111111111111",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "9MHtkhfnaBGgUPxThD67t1GYbYY7urggGvsat3AXWe9g"
+     ],
+     "decoded": {
+      "decimals": 6,
+      "name": "RoxAI",
+      "symbol": "ROX",
+      "uri": "https://gateway.irys.xyz/GgaEviTMhS8kse58bxccZFgw5GoRB1aSXSVCD1iY8bEk",
+      "curveVariant": 0,
+      "supply": "1000000000000000",
+      "totalSellA": "793100000000000",
+      "totalFundRaisingB": "4555267759",
+      "migrateType": 1,
+      "vesting": {
+       "totalLocked": "0",
+       "cliff": "0",
+       "unlock": "0"
+      },
+      "ammFeeOn": 0,
+      "transferFeeTag": 0,
+      "trailingBytesHex": "0000000000000000000000",
+      "trailingLen": 11
+     },
+     "namedAccounts": [
+      {
+       "name": "payer",
+       "pubkey": "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "creator",
+       "pubkey": "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "global_config",
+       "pubkey": "2NuVPU5ViAyQsZamVfJ1vU6Cp77WSzret4LtNTMiWFQ4",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "platform_config",
+       "pubkey": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "authority",
+       "pubkey": "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "pool_state",
+       "pubkey": "5XAQjsPx6nhwjHDirEz9MVFgSj1tEaxEQ2mBjjDBBYxV",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_mint",
+       "pubkey": "FbDVeqD87Wyp5bBj5nEqGtq5A3LEEwShomPS1nVfZufz",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "quote_mint",
+       "pubkey": "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "base_vault",
+       "pubkey": "HeAE92rz8JfsMYxUi5yzGScU88zVASdYmzRtoNh6jKZE",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "quote_vault",
+       "pubkey": "DK1BCiuDCPwHT8Svaxn2nRF6pezJtWBXA793JN4WS2Kx",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "quote_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "system_program",
+       "pubkey": "11111111111111111111111111111111",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "event_authority",
+       "pubkey": "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "program",
+       "pubkey": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "extra_15",
+       "pubkey": "9MHtkhfnaBGgUPxThD67t1GYbYY7urggGvsat3AXWe9g",
+       "isSigner": false,
+       "isWritable": false
+      }
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+      "82UgwL9LstjXgtTubqJvm4uLyDpsWe4efagz5jgahgw1",
+      "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+      "FbDVeqD87Wyp5bBj5nEqGtq5A3LEEwShomPS1nVfZufz",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+      "DXSY5pbktcfX4MBRyzjwokJ4aiEgMkVv6dkDousJ1B6B",
+      "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+      "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "faea0d7bd59c13ecee368c010000000001000000000000000000000000000000",
+     "accounts": [
+      "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "2NuVPU5ViAyQsZamVfJ1vU6Cp77WSzret4LtNTMiWFQ4",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "5XAQjsPx6nhwjHDirEz9MVFgSj1tEaxEQ2mBjjDBBYxV",
+      "82UgwL9LstjXgtTubqJvm4uLyDpsWe4efagz5jgahgw1",
+      "DXSY5pbktcfX4MBRyzjwokJ4aiEgMkVv6dkDousJ1B6B",
+      "HeAE92rz8JfsMYxUi5yzGScU88zVASdYmzRtoNh6jKZE",
+      "DK1BCiuDCPwHT8Svaxn2nRF6pezJtWBXA793JN4WS2Kx",
+      "FbDVeqD87Wyp5bBj5nEqGtq5A3LEEwShomPS1nVfZufz",
+      "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "11111111111111111111111111111111",
+      "FKREvMp4rLfBHu5edVF7bek4REhzunNsbVrKKW2aqpqE",
+      "G7kjspBcTHKu6y1TsTQbTcjHWfQetWsKcmDMuWcdBzFY"
+     ]
+    }
+   ],
+   "innerProgramsSeen": [
+    "System",
+    "Token-2022",
+    "LaunchLab"
+   ],
+   "logsHead": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program log: Instruction: InitializeMint2",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: MintTo",
+    "Program log: Instruction: SetAuthority",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Initialize the associated token account",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: BuyExactIn",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: Instruction: SetAuthority",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  {
+   "label": "The Best Part Is No Part SPCXX irys",
+   "mint": "HkHSWEaQaELAYKvG6AbGNJehwpqFTjoacfPgTNpGJUmz",
+   "signature": "3vGueqjBTTJhBACpMmqTzi2VsGjNpRcnqcs4uJ75Y5SgECmq5r2Ls7HyLtbA5FG1uASJrNQiwRnpNXg2KFdvGss9",
+   "slot": 450420747,
+   "blockTime": 1790357544,
+   "signaturesScanned": 221,
+   "version": "legacy",
+   "feePayer": "JBmpA9xrFgDSmmCxbYPFTbdnbQ9h2LJgqXF7sBig47v1",
+   "signers": [
+    "JBmpA9xrFgDSmmCxbYPFTbdnbQ9h2LJgqXF7sBig47v1",
+    "HkHSWEaQaELAYKvG6AbGNJehwpqFTjoacfPgTNpGJUmz"
+   ],
+   "fee": 40000,
+   "err": null,
+   "computeUnitsConsumed": 98317,
+   "payerLamportsDelta": -8665840,
+   "addressTableLookups": [],
+   "instructions": [
+    {
+     "program": "ComputeBudget111111111111111111111111111111",
+     "programName": "ComputeBudget",
+     "dataHex": "02c0270900",
+     "accounts": [],
+     "decoded": {
+      "op": "SetComputeUnitLimit",
+      "units": 600000
+     }
+    },
+    {
+     "program": "ComputeBudget111111111111111111111111111111",
+     "programName": "ComputeBudget",
+     "dataHex": "0350c3000000000000",
+     "accounts": [],
+     "decoded": {
+      "op": "SetComputeUnitPrice",
+      "microLamports": "50000"
+     }
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "25be7ede2c9aab11061800000054686520426573742050617274204973204e6f2050617274060000004e4f504152544500000068747470733a2f2f676174657761792e697279732e78797a2f41516972576f6e336b594c6467546638466765514e5766797a674c4e6277704272786154566841346e657151000080c6a47e8d03000078c5fb51d102007272cf990100000001000000000000000000000000000000000000000000000000000000000000000000000000",
+     "accounts": [
+      "JBmpA9xrFgDSmmCxbYPFTbdnbQ9h2LJgqXF7sBig47v1",
+      "JBmpA9xrFgDSmmCxbYPFTbdnbQ9h2LJgqXF7sBig47v1",
+      "9mfQRzhyaACD49VhrSwCWKjrHVLcNfhxSdhg2hDSwCd8",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "GvcWiQ7oiS7KQzRgd6d5HFwFuCEgTUefuJPvjQ6tXceP",
+      "HkHSWEaQaELAYKvG6AbGNJehwpqFTjoacfPgTNpGJUmz",
+      "Xs3oZwbHvqis4NYcf4YKWmEia2eC84wSiVrcYcTqpH8",
+      "Bz2Y9gkcW8PXGuwrZyjZvXF4V8tQJzW4dp7x1J9NYdRu",
+      "9wa4qJchA7nPyicTPzbus5dMKfDSwauoE4eWoFmWQFwb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "11111111111111111111111111111111",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "BanUAzETBuqRciYoak2mLL3BVLZLBY35fvNAAor871a1"
+     ],
+     "decoded": {
+      "decimals": 6,
+      "name": "The Best Part Is No Part",
+      "symbol": "NOPART",
+      "uri": "https://gateway.irys.xyz/AQirWon3kYLdgTf8FgeQNWfyzgLNbwpBrxaTVhA4neqQ",
+      "curveVariant": 0,
+      "supply": "1000000000000000",
+      "totalSellA": "793100000000000",
+      "totalFundRaisingB": "6875476594",
+      "migrateType": 1,
+      "vesting": {
+       "totalLocked": "0",
+       "cliff": "0",
+       "unlock": "0"
+      },
+      "ammFeeOn": 0,
+      "transferFeeTag": 0,
+      "trailingBytesHex": "0000000000000000000000",
+      "trailingLen": 11
+     },
+     "namedAccounts": [
+      {
+       "name": "payer",
+       "pubkey": "JBmpA9xrFgDSmmCxbYPFTbdnbQ9h2LJgqXF7sBig47v1",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "creator",
+       "pubkey": "JBmpA9xrFgDSmmCxbYPFTbdnbQ9h2LJgqXF7sBig47v1",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "global_config",
+       "pubkey": "9mfQRzhyaACD49VhrSwCWKjrHVLcNfhxSdhg2hDSwCd8",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "platform_config",
+       "pubkey": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "authority",
+       "pubkey": "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "pool_state",
+       "pubkey": "GvcWiQ7oiS7KQzRgd6d5HFwFuCEgTUefuJPvjQ6tXceP",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_mint",
+       "pubkey": "HkHSWEaQaELAYKvG6AbGNJehwpqFTjoacfPgTNpGJUmz",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "quote_mint",
+       "pubkey": "Xs3oZwbHvqis4NYcf4YKWmEia2eC84wSiVrcYcTqpH8",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "base_vault",
+       "pubkey": "Bz2Y9gkcW8PXGuwrZyjZvXF4V8tQJzW4dp7x1J9NYdRu",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "quote_vault",
+       "pubkey": "9wa4qJchA7nPyicTPzbus5dMKfDSwauoE4eWoFmWQFwb",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "quote_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "system_program",
+       "pubkey": "11111111111111111111111111111111",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "event_authority",
+       "pubkey": "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "program",
+       "pubkey": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "extra_15",
+       "pubkey": "BanUAzETBuqRciYoak2mLL3BVLZLBY35fvNAAor871a1",
+       "isSigner": false,
+       "isWritable": false
+      }
+     ]
+    }
+   ],
+   "innerProgramsSeen": [
+    "System",
+    "Token-2022",
+    "LaunchLab"
+   ],
+   "logsHead": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program log: Instruction: InitializeMint2",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: MintTo",
+    "Program log: Instruction: SetAuthority"
+   ]
+  },
+  {
+   "label": "test SPYX irys",
+   "mint": "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5",
+   "signature": "EkKE99vAVRNXwTYiEccAqiC4ShCoCGCfPFBjGgzBCRd3nv75E2VU3JiPM9yQd9YyBgsxFSDqXKxE85HRqJF8AUD",
+   "slot": 450416570,
+   "blockTime": 1790356418,
+   "signaturesScanned": 240,
+   "version": "legacy",
+   "feePayer": "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+   "signers": [
+    "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+    "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5"
+   ],
+   "fee": 40000,
+   "err": null,
+   "computeUnitsConsumed": 202532,
+   "payerLamportsDelta": -11617320,
+   "addressTableLookups": [],
+   "instructions": [
+    {
+     "program": "ComputeBudget111111111111111111111111111111",
+     "programName": "ComputeBudget",
+     "dataHex": "02c0270900",
+     "accounts": [],
+     "decoded": {
+      "op": "SetComputeUnitLimit",
+      "units": 600000
+     }
+    },
+    {
+     "program": "ComputeBudget111111111111111111111111111111",
+     "programName": "ComputeBudget",
+     "dataHex": "0350c3000000000000",
+     "accounts": [],
+     "decoded": {
+      "op": "SetComputeUnitPrice",
+      "microLamports": "50000"
+     }
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "25be7ede2c9aab11060400000074657374060000004e4f4e534f4c4500000068747470733a2f2f676174657761792e697279732e78797a2f356d45486432446b486869714c396345583543456a3548737a6f78434b516846463661436455584173474446000080c6a47e8d03000078c5fb51d102000539444f0000000001000000000000000000000000000000000000000000000000000000000000000000000000",
+     "accounts": [
+      "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+      "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+      "B7ctMMdGvy46Am56myTtzfkNzt9kWZVTNGM2BWrJ9adg",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "5J2KdXmhTsZYWp4873CpnMetZogdpUsK13ia73rwZQ2G",
+      "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5",
+      "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+      "H1YVqs7Y3CjEo6k8SmR1nd64uo1iro6BMcZhokAceWDg",
+      "EpnqXz4MAm58F3W4DunjTeHNrUUBaU9oMrmrgv26sPxG",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "11111111111111111111111111111111",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "QYZp1YzqEHU67ngXphF9LAkxkxWGvpWEv3rXh4yDbWA"
+     ],
+     "decoded": {
+      "decimals": 6,
+      "name": "test",
+      "symbol": "NONSOL",
+      "uri": "https://gateway.irys.xyz/5mEHd2DkHhiqL9cEX5CEj5HszoxCKQhFF6aCdUXAsGDF",
+      "curveVariant": 0,
+      "supply": "1000000000000000",
+      "totalSellA": "793100000000000",
+      "totalFundRaisingB": "1329871109",
+      "migrateType": 1,
+      "vesting": {
+       "totalLocked": "0",
+       "cliff": "0",
+       "unlock": "0"
+      },
+      "ammFeeOn": 0,
+      "transferFeeTag": 0,
+      "trailingBytesHex": "0000000000000000000000",
+      "trailingLen": 11
+     },
+     "namedAccounts": [
+      {
+       "name": "payer",
+       "pubkey": "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "creator",
+       "pubkey": "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "global_config",
+       "pubkey": "B7ctMMdGvy46Am56myTtzfkNzt9kWZVTNGM2BWrJ9adg",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "platform_config",
+       "pubkey": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "authority",
+       "pubkey": "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "pool_state",
+       "pubkey": "5J2KdXmhTsZYWp4873CpnMetZogdpUsK13ia73rwZQ2G",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_mint",
+       "pubkey": "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "quote_mint",
+       "pubkey": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "base_vault",
+       "pubkey": "H1YVqs7Y3CjEo6k8SmR1nd64uo1iro6BMcZhokAceWDg",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "quote_vault",
+       "pubkey": "EpnqXz4MAm58F3W4DunjTeHNrUUBaU9oMrmrgv26sPxG",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "quote_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "system_program",
+       "pubkey": "11111111111111111111111111111111",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "event_authority",
+       "pubkey": "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "program",
+       "pubkey": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "extra_15",
+       "pubkey": "QYZp1YzqEHU67ngXphF9LAkxkxWGvpWEv3rXh4yDbWA",
+       "isSigner": false,
+       "isWritable": false
+      }
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+      "53YjNrjwm1C4fokJPzz56pxNkgdNXxffFMb4huSuCMry",
+      "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+      "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+      "8AC1jAagY1rD1Se2XfBPcTPbYYLqVgHdxWkcJBrtn3nX",
+      "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+      "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "faea0d7bd59c13ec5a3b00000000000001000000000000000000000000000000",
+     "accounts": [
+      "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "B7ctMMdGvy46Am56myTtzfkNzt9kWZVTNGM2BWrJ9adg",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "5J2KdXmhTsZYWp4873CpnMetZogdpUsK13ia73rwZQ2G",
+      "53YjNrjwm1C4fokJPzz56pxNkgdNXxffFMb4huSuCMry",
+      "8AC1jAagY1rD1Se2XfBPcTPbYYLqVgHdxWkcJBrtn3nX",
+      "H1YVqs7Y3CjEo6k8SmR1nd64uo1iro6BMcZhokAceWDg",
+      "EpnqXz4MAm58F3W4DunjTeHNrUUBaU9oMrmrgv26sPxG",
+      "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5",
+      "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "11111111111111111111111111111111",
+      "F68CZpdXTVnQUMaRyuRFpfAddeVZgmtF3ickD7fBwW57",
+      "6UteF7QWM1BSeodRHPeDh8aTzyiP4W5QWRLVrKhCZkqN"
+     ]
+    }
+   ],
+   "innerProgramsSeen": [
+    "System",
+    "Token-2022",
+    "LaunchLab"
+   ],
+   "logsHead": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program log: Instruction: InitializeMint2",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: MintTo",
+    "Program log: Instruction: SetAuthority",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Initialize the associated token account",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: BuyExactIn",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: Instruction: SetAuthority",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  {
+   "label": "Comfy Panda METAX catbox (3rd party?)",
+   "mint": "4FvUTZNAgEwDUbuLYfB4vpZForeCcyaYT26mTqchLCRc",
+   "signature": "5RfEZ834n4dZUk47QSqPsqopyPGWakLLQu9HZCzjuKyDWvt6QbYVLzJSWnPBgysNUFbCCXVCqud1bMCxj13eAotD",
+   "slot": 450422298,
+   "blockTime": 1790357962,
+   "signaturesScanned": 117,
+   "version": "legacy",
+   "feePayer": "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+   "signers": [
+    "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+    "4FvUTZNAgEwDUbuLYfB4vpZForeCcyaYT26mTqchLCRc"
+   ],
+   "fee": 40000,
+   "err": null,
+   "computeUnitsConsumed": 204062,
+   "payerLamportsDelta": -11495400,
+   "addressTableLookups": [],
+   "instructions": [
+    {
+     "program": "ComputeBudget111111111111111111111111111111",
+     "programName": "ComputeBudget",
+     "dataHex": "02c0270900",
+     "accounts": [],
+     "decoded": {
+      "op": "SetComputeUnitLimit",
+      "units": 600000
+     }
+    },
+    {
+     "program": "ComputeBudget111111111111111111111111111111",
+     "programName": "ComputeBudget",
+     "dataHex": "0350c3000000000000",
+     "accounts": [],
+     "decoded": {
+      "op": "SetComputeUnitPrice",
+      "microLamports": "50000"
+     }
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "25be7ede2c9aab11060b000000436f6d66792050616e646108000000434f4d4650414e442400000068747470733a2f2f66696c65732e636174626f782e6d6f652f6e73676c62342e6a736f6e000080c6a47e8d03000078c5fb51d102006d0a63510000000001000000000000000000000000000000000000000000000000000000000000000000000000",
+     "accounts": [
+      "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+      "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+      "G9NjYUD96DfCBUnduDHoZ7TCRrvdG41GLUkuoRch6qFC",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "4V4X7jaxvCwnf1p35sGG9MU6gFRT1eKxNLan9GrTkeWu",
+      "4FvUTZNAgEwDUbuLYfB4vpZForeCcyaYT26mTqchLCRc",
+      "Xsa62P5mvPszXL1krVUnU5ar38bBSVcWAB6fmPCo5Zu",
+      "77WUbzeDyRuHTY9ws3SskvRbtFSbAs1HUkDuPJfmFp9w",
+      "B6ViqzeTAuCJE6gPDnW8Cj9jQM1a3iPY749SWkuVbAcC",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "11111111111111111111111111111111",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "AnMz1XoEdvanqxRhPTGPJpLjPRMi37SgKZCrLcUC1h8d"
+     ],
+     "decoded": {
+      "decimals": 6,
+      "name": "Comfy Panda",
+      "symbol": "COMFPAND",
+      "uri": "https://files.catbox.moe/nsglb4.json",
+      "curveVariant": 0,
+      "supply": "1000000000000000",
+      "totalSellA": "793100000000000",
+      "totalFundRaisingB": "1365445229",
+      "migrateType": 1,
+      "vesting": {
+       "totalLocked": "0",
+       "cliff": "0",
+       "unlock": "0"
+      },
+      "ammFeeOn": 0,
+      "transferFeeTag": 0,
+      "trailingBytesHex": "0000000000000000000000",
+      "trailingLen": 11
+     },
+     "namedAccounts": [
+      {
+       "name": "payer",
+       "pubkey": "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "creator",
+       "pubkey": "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "global_config",
+       "pubkey": "G9NjYUD96DfCBUnduDHoZ7TCRrvdG41GLUkuoRch6qFC",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "platform_config",
+       "pubkey": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "authority",
+       "pubkey": "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "pool_state",
+       "pubkey": "4V4X7jaxvCwnf1p35sGG9MU6gFRT1eKxNLan9GrTkeWu",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_mint",
+       "pubkey": "4FvUTZNAgEwDUbuLYfB4vpZForeCcyaYT26mTqchLCRc",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "quote_mint",
+       "pubkey": "Xsa62P5mvPszXL1krVUnU5ar38bBSVcWAB6fmPCo5Zu",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "base_vault",
+       "pubkey": "77WUbzeDyRuHTY9ws3SskvRbtFSbAs1HUkDuPJfmFp9w",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "quote_vault",
+       "pubkey": "B6ViqzeTAuCJE6gPDnW8Cj9jQM1a3iPY749SWkuVbAcC",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "quote_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "system_program",
+       "pubkey": "11111111111111111111111111111111",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "event_authority",
+       "pubkey": "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "program",
+       "pubkey": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "extra_15",
+       "pubkey": "AnMz1XoEdvanqxRhPTGPJpLjPRMi37SgKZCrLcUC1h8d",
+       "isSigner": false,
+       "isWritable": false
+      }
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+      "7Zq5ePZipHhn1XYXdB15ygammnGxi6XHVTj4rjHNWC5F",
+      "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+      "4FvUTZNAgEwDUbuLYfB4vpZForeCcyaYT26mTqchLCRc",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+      "HqxdWkuV6P658ho8gPMCpDzLzydtYjCXLcYm3hNXnou2",
+      "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+      "Xsa62P5mvPszXL1krVUnU5ar38bBSVcWAB6fmPCo5Zu",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "faea0d7bd59c13ec8af42c0000000000c1751b28cc0500000000000000000000",
+     "accounts": [
+      "TdYefJt97QftpagTVcMjq4bTUyGV1oHzk4YnFtciQfW",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "G9NjYUD96DfCBUnduDHoZ7TCRrvdG41GLUkuoRch6qFC",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "4V4X7jaxvCwnf1p35sGG9MU6gFRT1eKxNLan9GrTkeWu",
+      "7Zq5ePZipHhn1XYXdB15ygammnGxi6XHVTj4rjHNWC5F",
+      "HqxdWkuV6P658ho8gPMCpDzLzydtYjCXLcYm3hNXnou2",
+      "77WUbzeDyRuHTY9ws3SskvRbtFSbAs1HUkDuPJfmFp9w",
+      "B6ViqzeTAuCJE6gPDnW8Cj9jQM1a3iPY749SWkuVbAcC",
+      "4FvUTZNAgEwDUbuLYfB4vpZForeCcyaYT26mTqchLCRc",
+      "Xsa62P5mvPszXL1krVUnU5ar38bBSVcWAB6fmPCo5Zu",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "11111111111111111111111111111111",
+      "C8DqrMwRny8DNXfX9vECqLtU7KYBiiK4y1VBWekY9rew",
+      "GTTwTWRXEfwtanmX4gyBwdtH8tw5w2ph5NNA4rhw75WE"
+     ]
+    }
+   ],
+   "innerProgramsSeen": [
+    "System",
+    "Token-2022",
+    "LaunchLab"
+   ],
+   "logsHead": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program log: Instruction: InitializeMint2",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: MintTo",
+    "Program log: Instruction: SetAuthority",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Initialize the associated token account",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: BuyExactIn",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: Instruction: SetAuthority",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  {
+   "label": "yippee MSFTX uxento (3rd party?)",
+   "mint": "CuAoNRcSSwBDWVwfngbAfygvXnDEKJ3XJSPs8kMTSTNK",
+   "signature": "zL5q74Xw2FkfKne9YiKSMd2dAJXxx6H7aEJ3LhvSRbTckmVeoQnSss6GFCGruH59Kb329pzewUFd62icfq5ub9P",
+   "slot": 450410713,
+   "blockTime": 1790354852,
+   "signaturesScanned": 2376,
+   "version": 1,
+   "feePayer": "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+   "signers": [
+    "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+    "CuAoNRcSSwBDWVwfngbAfygvXnDEKJ3XJSPs8kMTSTNK"
+   ],
+   "fee": 1010000,
+   "err": null,
+   "computeUnitsConsumed": 334251,
+   "payerLamportsDelta": -962470636,
+   "addressTableLookups": [],
+   "instructions": [
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "DZy1YwwSGxjC4L6yRFg5YgRBwhYApGPXt6X4Ru7TMtVc",
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "So11111111111111111111111111111111111111112",
+      "11111111111111111111111111111111",
+      "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+     ]
+    },
+    {
+     "program": "11111111111111111111111111111111",
+     "programName": "System",
+     "dataHex": "0200000000ca9a3b00000000",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "DZy1YwwSGxjC4L6yRFg5YgRBwhYApGPXt6X4Ru7TMtVc"
+     ],
+     "decoded": {
+      "op": "Transfer",
+      "lamports": "1000000000",
+      "from": "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "to": "DZy1YwwSGxjC4L6yRFg5YgRBwhYApGPXt6X4Ru7TMtVc"
+     }
+    },
+    {
+     "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+     "programName": "SPL Token",
+     "dataHex": "11",
+     "accounts": [
+      "DZy1YwwSGxjC4L6yRFg5YgRBwhYApGPXt6X4Ru7TMtVc"
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "8ocf5uJUmvEiR3giGhSW1QDvPmECCFhkJ4HTgLH6oygX",
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "11111111111111111111111111111111",
+      "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "8eXRuzLS7XY6QXqusd5uHFwBVuQ6t5ftMYmsbfU48XAE",
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "XspzcW1PRtgf6Wj92HCiZdjzKCyFekVD8P5Ueh3dRMX",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+     "programName": null,
+     "dataHex": "2b04ed0b1ac91e623734d30600000000dccb113b00000000513b010001000000000000000000000000",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "3h2e43PunVA5K34vwKCLHWhZF4aZpyaC9RmxvshGAQpL",
+      "3ucNos4NbumPLZNWztqGHNFFgkHeRMBQAVemeeomsUxv",
+      "DZy1YwwSGxjC4L6yRFg5YgRBwhYApGPXt6X4Ru7TMtVc",
+      "8ocf5uJUmvEiR3giGhSW1QDvPmECCFhkJ4HTgLH6oygX",
+      "4ct7br2vTPzfdmY3S5HLtTxcGSBfn6pnw98hsS6v359A",
+      "5it83u57VRrVgc51oNV19TTmAJuffPx5GtGwQr7gQNUo",
+      "3Y695CuQ8AP4anbwAqiEBeQF9KxqHFr8piEwvw3UePnQ",
+      "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",
+      "So11111111111111111111111111111111111111112",
+      "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "DWCDrwhGsFj8Qq1LqXjFed1mB16CMHswM2176YAkC482",
+      "7W9ek6XnUEHPJQ1KCAa9rJbgFAtNRuwiuPKRXzVJVXvx",
+      "GamghVsuRYt6yuHQyapXxx6wXYNvRTKiVUpr9FimGLKK"
+     ]
+    },
+    {
+     "program": "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+     "programName": null,
+     "dataHex": "2b04ed0b1ac91e62669a3f01000000003734d306000000009a57694ea91a5c84b1c4feff0000000000",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "DrdecJVzkaRsf1TQu1g7iFncaokikVTHqpzPjenjRySY",
+      "D6bRhQUcR9B7bPbbqgxpE17MjyUjBtr8hHQCcJoHrrv1",
+      "8ocf5uJUmvEiR3giGhSW1QDvPmECCFhkJ4HTgLH6oygX",
+      "8eXRuzLS7XY6QXqusd5uHFwBVuQ6t5ftMYmsbfU48XAE",
+      "EcptmyX43M5M6PF7inLbwRuLKNKZnKLfp26G9TMosj4M",
+      "Djw4PRPBZ9BzYjCBokJRkiVH7QoMujjYvLqgx2CACTX",
+      "5gmNT8ZMydTA7yFyXWXAUCvKJaKDvY3s6JSZQ63wmVe6",
+      "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr",
+      "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "XspzcW1PRtgf6Wj92HCiZdjzKCyFekVD8P5Ueh3dRMX",
+      "G1sosxu8xZReVtm7mtZ8SmZNkp3JCfV2DXNDhCAMcqgn",
+      "9STukLLj95jyBywxoQ8EGQ7nUszNcsLgNM9diAbyjqcr",
+      "71VnnQWDKjAV9EdYURTnoM93gv4139aFVbnQ3DfGJNrp"
+     ]
+    },
+    {
+     "program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+     "programName": "SPL Token",
+     "dataHex": "09",
+     "accounts": [
+      "DZy1YwwSGxjC4L6yRFg5YgRBwhYApGPXt6X4Ru7TMtVc",
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk"
+     ]
+    },
+    {
+     "program": "11111111111111111111111111111111",
+     "programName": "System",
+     "dataHex": "02000000c0c62d0000000000",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "moonXwpKwoVkMegt5Bc776cSW793X1irL5hHV1vJ3JA"
+     ],
+     "decoded": {
+      "op": "Transfer",
+      "lamports": "3000000",
+      "from": "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "to": "moonXwpKwoVkMegt5Bc776cSW793X1irL5hHV1vJ3JA"
+     }
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "25be7ede2c9aab110606000000796970706565060000005949505045454000000068747470733a2f2f6d6574612e7578656e746f2e696f2f646174612f30646663383961642d363130352d343334322d623162662d393932626565366431386230000080c6a47e8d03000078c5fb51d10200948f4c760000000001000000000000000000000000000000000000000000000000000000000000000000000000",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "G9uCP4DwMDzMxQCQ38TnNGbVaoiAY2pP1BWd7rev1LmS",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "HJ92yNGSANpwWHdcUXXtZMy3dKgMCsKPYN8RToDYDo54",
+      "CuAoNRcSSwBDWVwfngbAfygvXnDEKJ3XJSPs8kMTSTNK",
+      "XspzcW1PRtgf6Wj92HCiZdjzKCyFekVD8P5Ueh3dRMX",
+      "B8bCe3betvmKuSgu4XnqEqUvEjeYUU9d9Bw2763ajzFM",
+      "9PXYkRTsV19KYPZYohoYBm5GwWu4nwFNy5X5iK2tQZxa",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "11111111111111111111111111111111",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "AfS1PY5fpaEnrZsn8tEH354f98kzJUFNu8ttMyXJJw67"
+     ],
+     "decoded": {
+      "decimals": 6,
+      "name": "yippee",
+      "symbol": "YIPPEE",
+      "uri": "https://meta.uxento.io/data/0dfc89ad-6105-4342-b1bf-992bee6d18b0",
+      "curveVariant": 0,
+      "supply": "1000000000000000",
+      "totalSellA": "793100000000000",
+      "totalFundRaisingB": "1984728980",
+      "migrateType": 1,
+      "vesting": {
+       "totalLocked": "0",
+       "cliff": "0",
+       "unlock": "0"
+      },
+      "ammFeeOn": 0,
+      "transferFeeTag": 0,
+      "trailingBytesHex": "0000000000000000000000",
+      "trailingLen": 11
+     },
+     "namedAccounts": [
+      {
+       "name": "payer",
+       "pubkey": "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "creator",
+       "pubkey": "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "global_config",
+       "pubkey": "G9uCP4DwMDzMxQCQ38TnNGbVaoiAY2pP1BWd7rev1LmS",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "platform_config",
+       "pubkey": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "authority",
+       "pubkey": "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "pool_state",
+       "pubkey": "HJ92yNGSANpwWHdcUXXtZMy3dKgMCsKPYN8RToDYDo54",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_mint",
+       "pubkey": "CuAoNRcSSwBDWVwfngbAfygvXnDEKJ3XJSPs8kMTSTNK",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "quote_mint",
+       "pubkey": "XspzcW1PRtgf6Wj92HCiZdjzKCyFekVD8P5Ueh3dRMX",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "base_vault",
+       "pubkey": "B8bCe3betvmKuSgu4XnqEqUvEjeYUU9d9Bw2763ajzFM",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "quote_vault",
+       "pubkey": "9PXYkRTsV19KYPZYohoYBm5GwWu4nwFNy5X5iK2tQZxa",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "quote_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "system_program",
+       "pubkey": "11111111111111111111111111111111",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "event_authority",
+       "pubkey": "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "program",
+       "pubkey": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "extra_15",
+       "pubkey": "AfS1PY5fpaEnrZsn8tEH354f98kzJUFNu8ttMyXJJw67",
+       "isSigner": false,
+       "isWritable": false
+      }
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "8fYicwkoXBAuNgz4fUhyw6vkWEYRyoVTRaSSePntsVDh",
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "CuAoNRcSSwBDWVwfngbAfygvXnDEKJ3XJSPs8kMTSTNK",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "8eXRuzLS7XY6QXqusd5uHFwBVuQ6t5ftMYmsbfU48XAE",
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "XspzcW1PRtgf6Wj92HCiZdjzKCyFekVD8P5Ueh3dRMX",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "faea0d7bd59c13ec669a3f010000000000000000000000000000000000000000",
+     "accounts": [
+      "3oBC8qSnqxU8rMuv5vddtArCmBUU5WZu7xMx9bSsdqPk",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "G9uCP4DwMDzMxQCQ38TnNGbVaoiAY2pP1BWd7rev1LmS",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "HJ92yNGSANpwWHdcUXXtZMy3dKgMCsKPYN8RToDYDo54",
+      "8fYicwkoXBAuNgz4fUhyw6vkWEYRyoVTRaSSePntsVDh",
+      "8eXRuzLS7XY6QXqusd5uHFwBVuQ6t5ftMYmsbfU48XAE",
+      "B8bCe3betvmKuSgu4XnqEqUvEjeYUU9d9Bw2763ajzFM",
+      "9PXYkRTsV19KYPZYohoYBm5GwWu4nwFNy5X5iK2tQZxa",
+      "CuAoNRcSSwBDWVwfngbAfygvXnDEKJ3XJSPs8kMTSTNK",
+      "XspzcW1PRtgf6Wj92HCiZdjzKCyFekVD8P5Ueh3dRMX",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "11111111111111111111111111111111",
+      "6AnL5J4nXBAj5FieoKVD3pxQ4hifqCURVsvpQmrnTdSV",
+      "6dsLsh9jzx2Ggoo9y98VEs3fXBWVRFeWBBJwe2mXgsg6"
+     ]
+    }
+   ],
+   "innerProgramsSeen": [
+    "SPL Token",
+    "System",
+    "Token-2022",
+    "LaunchLab"
+   ],
+   "logsHead": [
+    "Program log: CreateIdempotent",
+    "Program log: Initialize the associated token account",
+    "Program log: CreateIdempotent",
+    "Program log: Initialize the associated token account",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Initialize the associated token account",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: Instruction: SwapV2",
+    "Program log: Instruction: SwapV2",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program log: Instruction: InitializeMint2",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: MintTo",
+    "Program log: Instruction: SetAuthority",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Initialize the associated token account",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: BuyExactIn",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  {
+   "label": "Artificial Grok Investor SPCXX j7tracker (3rd party?)",
+   "mint": "2yxMaqRx3Ago77ysgmMvveLWMvToWTodEMPf3EcBmvcG",
+   "signature": "z9u5QuugFCp6W9w2tysWcGzc5HDEAwknG8WSdGAfwZTKyvwgL2VT2GjFF2KeTvVKaALxtJsBheHPtp48P2SQ16S",
+   "slot": 450415375,
+   "blockTime": 1790356101,
+   "signaturesScanned": 4747,
+   "version": 1,
+   "feePayer": "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+   "signers": [
+    "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+    "2yxMaqRx3Ago77ysgmMvveLWMvToWTodEMPf3EcBmvcG"
+   ],
+   "fee": 1010000,
+   "err": null,
+   "computeUnitsConsumed": 268837,
+   "payerLamportsDelta": -15767400,
+   "addressTableLookups": [],
+   "instructions": [
+    {
+     "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "programName": "LaunchLab",
+     "dataHex": "25be7ede2c9aab1106180000004172746966696369616c2047726f6b20496e766573746f72030000004147493c00000068747470733a2f2f6d657461646174612e6a37747261636b65722e696f2f6d657461646174612f326335383931646164343033343535632e6a736f6e000080c6a47e8d03000078c5fb51d102000705609e0100000001000000000000000000000000000000000000000000000000000000000000000000000000",
+     "accounts": [
+      "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+      "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+      "9mfQRzhyaACD49VhrSwCWKjrHVLcNfhxSdhg2hDSwCd8",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "88xPEzPULFbv7jZoAcU2oRGNdvtdoZWW8v7A5y11d5Ke",
+      "2yxMaqRx3Ago77ysgmMvveLWMvToWTodEMPf3EcBmvcG",
+      "Xs3oZwbHvqis4NYcf4YKWmEia2eC84wSiVrcYcTqpH8",
+      "GFHQiaX23ayhuWBWUJSBzN9w4nm6ehzJ1wQ1pr7LBLEW",
+      "C8ZzLWE4WDaWH3xQc2mVcbDkwWk7pPtpWv8KjYE4KjJL",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "11111111111111111111111111111111",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "BanUAzETBuqRciYoak2mLL3BVLZLBY35fvNAAor871a1"
+     ],
+     "decoded": {
+      "decimals": 6,
+      "name": "Artificial Grok Investor",
+      "symbol": "AGI",
+      "uri": "https://metadata.j7tracker.io/metadata/2c5891dad403455c.json",
+      "curveVariant": 0,
+      "supply": "1000000000000000",
+      "totalSellA": "793100000000000",
+      "totalFundRaisingB": "6952060167",
+      "migrateType": 1,
+      "vesting": {
+       "totalLocked": "0",
+       "cliff": "0",
+       "unlock": "0"
+      },
+      "ammFeeOn": 0,
+      "transferFeeTag": 0,
+      "trailingBytesHex": "0000000000000000000000",
+      "trailingLen": 11
+     },
+     "namedAccounts": [
+      {
+       "name": "payer",
+       "pubkey": "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "creator",
+       "pubkey": "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "global_config",
+       "pubkey": "9mfQRzhyaACD49VhrSwCWKjrHVLcNfhxSdhg2hDSwCd8",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "platform_config",
+       "pubkey": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "authority",
+       "pubkey": "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "pool_state",
+       "pubkey": "88xPEzPULFbv7jZoAcU2oRGNdvtdoZWW8v7A5y11d5Ke",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_mint",
+       "pubkey": "2yxMaqRx3Ago77ysgmMvveLWMvToWTodEMPf3EcBmvcG",
+       "isSigner": true,
+       "isWritable": true
+      },
+      {
+       "name": "quote_mint",
+       "pubkey": "Xs3oZwbHvqis4NYcf4YKWmEia2eC84wSiVrcYcTqpH8",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "base_vault",
+       "pubkey": "GFHQiaX23ayhuWBWUJSBzN9w4nm6ehzJ1wQ1pr7LBLEW",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "quote_vault",
+       "pubkey": "C8ZzLWE4WDaWH3xQc2mVcbDkwWk7pPtpWv8KjYE4KjJL",
+       "isSigner": false,
+       "isWritable": true
+      },
+      {
+       "name": "base_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "quote_token_program",
+       "pubkey": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "system_program",
+       "pubkey": "11111111111111111111111111111111",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "event_authority",
+       "pubkey": "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "program",
+       "pubkey": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+       "isSigner": false,
+       "isWritable": false
+      },
+      {
+       "name": "extra_15",
+       "pubkey": "BanUAzETBuqRciYoak2mLL3BVLZLBY35fvNAAor871a1",
+       "isSigner": false,
+       "isWritable": false
+      }
+     ]
+    },
+    {
+     "program": "J7pourVwqP1VtRNBiFNqbdGxwkx7ta2LHAURURRRJqmd",
+     "programName": null,
+     "dataHex": "e84b2c916a0f33d70300000014086d09c60a",
+     "accounts": [
+      "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+      "DeY5LDUe5Xmk9deV32P8BPgzK1hinr5EQ1r4QrtxTkm9",
+      "Xs3oZwbHvqis4NYcf4YKWmEia2eC84wSiVrcYcTqpH8",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+      "11111111111111111111111111111111",
+      "F3TRaL8eztKtXC96xeSmmtFq7szYrG36XY3b27HRBA9M",
+      "8z8wStrRVeX9o9z8LAwzVDSqq5HA3EeW35iQUJCbGPt5",
+      "3uHwUamFxgPBDW1qjXPrtR6g5qSZdywxqPhGE5p2A5Tq",
+      "7dGWvUtufCc7Y3AN4KNb4MjBmPcKkxWQBazHSaRMz2x8",
+      "ECbDPBRCEAWcewgVw9DDqeAuRZKx2NTQhtS5aTCEgH8n",
+      "9HzPoQNTtJmqaH8cctQGvjMiW4ZSn5kYBLM72JpbX522"
+     ]
+    },
+    {
+     "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+     "programName": "AssociatedToken",
+     "dataHex": "01",
+     "accounts": [
+      "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+      "Aoqz8WWpbXE7uypErec7DkLcgX61zXDRp971W32JkLnH",
+      "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+      "2yxMaqRx3Ago77ysgmMvveLWMvToWTodEMPf3EcBmvcG",
+      "11111111111111111111111111111111",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    },
+    {
+     "program": "J7pourVwqP1VtRNBiFNqbdGxwkx7ta2LHAURURRRJqmd",
+     "programName": null,
+     "dataHex": "3e71a40cd95b16e70100000000000000000000000000000000000000",
+     "accounts": [
+      "3HkV7u12sRpApdaaNX5zioV5gXzyh3PPSxbbh71sjQ2K",
+      "WLHv2UAZm6z4KyaaELi5pjdbJh6RESMva1Rnn8pJVVh",
+      "9mfQRzhyaACD49VhrSwCWKjrHVLcNfhxSdhg2hDSwCd8",
+      "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+      "88xPEzPULFbv7jZoAcU2oRGNdvtdoZWW8v7A5y11d5Ke",
+      "Aoqz8WWpbXE7uypErec7DkLcgX61zXDRp971W32JkLnH",
+      "DeY5LDUe5Xmk9deV32P8BPgzK1hinr5EQ1r4QrtxTkm9",
+      "GFHQiaX23ayhuWBWUJSBzN9w4nm6ehzJ1wQ1pr7LBLEW",
+      "C8ZzLWE4WDaWH3xQc2mVcbDkwWk7pPtpWv8KjYE4KjJL",
+      "2yxMaqRx3Ago77ysgmMvveLWMvToWTodEMPf3EcBmvcG",
+      "Xs3oZwbHvqis4NYcf4YKWmEia2eC84wSiVrcYcTqpH8",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSejeQGpwkr",
+      "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+      "11111111111111111111111111111111",
+      "2YSWJ1VBH9W9WGMB3LMVuqfWKGs7q8AEkqvfj5TueToo",
+      "B5zq3ksYa21LmwyFqmkpYcVP8mWnj3qXzSXGpo9VXk5"
+     ]
+    }
+   ],
+   "innerProgramsSeen": [
+    "System",
+    "Token-2022",
+    "LaunchLab",
+    "AssociatedToken"
+   ],
+   "logsHead": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program log: Instruction: InitializeMint2",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: MintTo",
+    "Program log: Instruction: SetAuthority",
+    "Program log: Instruction: SplitSupply",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Initialize the associated token account",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: Instruction: TransferChecked",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Initialize the associated token account",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time",
+    "Program log: Instruction: TransferChecked",
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Initialize the associated token account",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Warning: Mint has a permanent delegate, so tokens in this account may be seized at any time"
+   ]
+  }
+ ]
+}

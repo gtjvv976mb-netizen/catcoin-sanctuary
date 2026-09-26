@@ -1,0 +1,36 @@
+
+CHECKOUT AND PUSH
+─────────────────
+  ok   a branch that does not exist yet is started as an orphan
+  ok   the first push creates floor-data with only the listed file (and its README)
+  ok   main is untouched
+  ok   nothing new to commit: changed=false
+  ok   an existing branch is cloned
+  ok   two bots pushing at once both land: the second fetches, rebases and pushes again
+  ok   each commit says which bot made it, as the floor bot
+  ok   Popcat's memory alone is committed, but is no change to the site: no deploy
+
+A DRY RUN COMMITS NOTHING
+─────────────────────────
+  ok   a run that wrote no data file commits nothing and starts no floor-data branch, even the first time
+
+THE REMOTE AND ITS TOKEN
+────────────────────────
+  ok   the remote is the Actions repository, or FLOOR_DATA_REMOTE
+  ok   the token travels as a per-command HTTP header, never in a URL or the git config
+
+THE DEPLOY'S OVERLAY
+────────────────────
+  ok   no floor-data yet: main's empty copies are kept
+  ok   the API is asked for each file on floor-data, with the job token
+  ok   valid data is written over site/assets: Popcat's coins, and its pick with them
+  ok   one entry that does not validate never stops the deploy: it is left out and named, the entries that pass are published  — WARNING launches.json: left out — entry 1 skipped: "time" must be YYYY-MM-DDThh:mm:ssZ | launches.json: 1 entries overlaid from floor-data; 1 left out | callouts.json: not on floor-data yet; keeping main's copy
+  ok   what is written passes the site's own check with no problem at all (test-bots-data.mjs runs next)
+  ok   a callout or a pick on a CashCat coin is left out, never published
+  ok   a file that is not the right shape at all fails the deploy, rather than publish an empty floor
+  ok   an API that keeps failing fails the deploy instead of publishing an empty floor
+  ok   a transient API error is retried, and the deploy goes on
+  ok   fetchDataFile answers null for a missing file
+
+test-bots-floor-data: 21 passed, 0 failed
+

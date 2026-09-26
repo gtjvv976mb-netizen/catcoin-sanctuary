@@ -1,0 +1,133 @@
+[
+ {
+  "ticker": "TRINKETCAT",
+  "name": "Trinket the Tortie Cat",
+  "lens": {
+   "name": 22,
+   "ticker": 10,
+   "desc": 270,
+   "tagline": 137
+  },
+  "tickerFormat": true,
+  "disclosureExact": true,
+  "jupiter": {
+   "results": 0,
+   "symbolMatches": [],
+   "verifiedCollision": false
+  },
+  "copycat": null,
+  "checkProposal_fullDescription": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Trinket, a round fluffy tortoiseshell, a",
+    "field": "tagline"
+   }
+  ],
+  "checkProposal_taglineOnly": [],
+  "stockCatRefusals": [],
+  "lookTerms": []
+ },
+ {
+  "ticker": "COFFERCAT",
+  "name": "Coffer the Vault Cat",
+  "lens": {
+   "name": 20,
+   "ticker": 9,
+   "desc": 257,
+   "tagline": 124
+  },
+  "tickerFormat": true,
+  "disclosureExact": true,
+  "jupiter": {
+   "results": 0,
+   "symbolMatches": [],
+   "verifiedCollision": false
+  },
+  "copycat": null,
+  "checkProposal_fullDescription": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Coffer, a stocky slate-grey shorthair wi",
+    "field": "tagline"
+   }
+  ],
+  "checkProposal_taglineOnly": [],
+  "stockCatRefusals": [
+   "launch_claim: \"locked\" in the tagline (a stock cat claims nothing about the stock or its launch)"
+  ],
+  "lookTerms": []
+ },
+ {
+  "ticker": "TALLYCAT",
+  "name": "Tally the Tabby",
+  "lens": {
+   "name": 15,
+   "ticker": 8,
+   "desc": 271,
+   "tagline": 138
+  },
+  "tickerFormat": true,
+  "disclosureExact": true,
+  "jupiter": {
+   "results": 20,
+   "symbolMatches": [],
+   "verifiedCollision": false
+  },
+  "copycat": null,
+  "checkProposal_fullDescription": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Tally, a silver tabby with eye rings lik",
+    "field": "tagline"
+   }
+  ],
+  "checkProposal_taglineOnly": [],
+  "stockCatRefusals": [],
+  "lookTerms": []
+ }
+]

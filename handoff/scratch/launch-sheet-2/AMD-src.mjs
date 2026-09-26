@@ -1,0 +1,10 @@
+const url = "https://ir.amd.com/news-events/press-releases/detail/251/amd-strategy-transformation-brings-agile-delivery-of-industry-leading-ip-to-the-market";
+const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0" } });
+const h = await r.text();
+const t = h.replace(/<script[\s\S]*?<\/script>/g, " ").replace(/<style[\s\S]*?<\/style>/g, " ").replace(/<[^>]+>/g, " ").replace(/&[a-z#0-9]+;/g, " ").replace(/\s+/g, " ");
+console.log("status", r.status, "len", h.length);
+const title = (h.match(/<title>([\s\S]*?)<\/title>/) || [])[1];
+console.log("title:", title && title.trim());
+const date = t.match(/(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}, \d{4}/);
+console.log("date:", date && date[0]);
+for (const m of t.matchAll(/.{0,300}(Jaguar|Bobcat|Puma|Lynx).{0,300}/gi)) console.log("---\n" + m[0]);

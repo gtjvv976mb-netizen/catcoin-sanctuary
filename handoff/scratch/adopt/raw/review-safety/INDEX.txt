@@ -1,0 +1,13 @@
+Evidence for the wallet/transaction-safety review of adopt/SPEC.md (2026-09-25 ~19:20-19:35 UTC). Read-only; nothing signed or sent.
+feed-injection-sim.mjs/.out.json   simulateTransaction (sigVerify:false, replaceRecentBlockhash:true, payer = owner's PUBLIC address): txs that merely mention the SPYx curve-rule address succeed (err null, 150 CU)
+solana-docs-getsignaturesforaddress.html  Solana RPC docs: "signatures for transactions that reference the supplied address in accountKeys"
+publicnode-default-commitment.txt  getSlot default vs confirmed on publicnode (default = finalized, ~31 slots behind); sent from Node with a forged Origin header
+curve-rule feed trades: see ../spec/curve-rule-feed-probe.out.json (BuyExactIn / Trade / SwapV2 inside creation txs)
+wsapp-1.1.1-registry.json, wsapp-1.1.1.tgz  @wallet-standard/app 1.1.1: tarball sha512 == registry integrity; lib/esm/wallets.js sha256 36155c77...ed97 == ../spec/wsapp-1.1.1-wallets.js
+_noble_curves_1.9.7.json, _noble_hashes_1.8.0.json, _noble_ed25519_latest.json, noble-ed25519-3.2.0.tgz, ned/package/index.js  noble metadata; ed25519 3.2.0 = one zero-import ESM file with npm provenance
+cia-web3js-closure.txt  @solana/web3.js 1.98.4 transitive closure in CIA's lockfile (50 packages; install scripts: bufferutil, utf-8-validate)
+osv-web3js-1.95.6.json  OSV: GHSA-jcxm-7wvp-g6p5 / CVE-2024-54134, @solana/web3.js hijacked to exfiltrate private keys (Dec 2024)
+turbo-sdk-latest.json   @ardrive/turbo-sdk 2.1.0 dependencies (includes @solana/web3.js ^1.95.5, ethers, viem, axios, arbundles)
+site-collection.yml.copy-1929Z, site-pages.yml.copy-1929Z, site-excerpts.txt  site workflows/tests/CSP as of 19:29 UTC (tree is being rebuilt)
+site-headers.txt        live response headers of https://catcoinsanctuary.com/ (no X-Frame-Options, no CSP header)
+phantom-lighthouse.md   Phantom docs: submitted transactions "may be augmented with Lighthouse assertion instructions"

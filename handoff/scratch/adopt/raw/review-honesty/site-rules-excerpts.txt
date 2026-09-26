@@ -1,0 +1,39 @@
+# /home/user/cat-sanctuary/index.html lines 66-80 (read 2026-09-25T19:40:17Z)
+<footer class="foot">
+  <button type="button" class="foot-toggle" id="foot-toggle" aria-expanded="false" aria-controls="foot-more">
+    <span class="foot-long">Memecoins with no intrinsic value · not financial advice · not affiliated with StonkFun or any company</span>
+    <span class="foot-short">Not financial advice · not affiliated</span>
+    <span class="foot-more-label">Disclaimers</span>
+  </button>
+  <div class="foot-more" id="foot-more" hidden>
+    <p>Every cat here is a memecoin, or a plan for one. A memecoin has no intrinsic value and no expectation of profit. Nothing on this site is financial advice.</p>
+    <p>A cat is <b>not launched yet</b> until the sanctuary's keeper launches it on StonkFun from the sanctuary's own wallet and the hourly check finds that launch on Solana. Until then it is not a token, and there is nothing to buy. Buy links appear on a card only after that.</p>
+    <p>A planned cat's ticker is only a plan. Any token under that name that you find before the cat launches is not this cat: only the mint shown on its card after launch is.</p>
+    <p>Cat Sanctuary is not affiliated with StonkFun, with the issuers of the tokenised stocks, or with any company whose stock a cat is paired with. A company's own cat or mascot may be described on a card, with its source, but it is never a coin's picture or name.</p>
+    <p>Every fact, figure and link on a card comes from a source that was opened and dated. Where there is none, the card says "Not measured".</p>
+    <p>Cat Sanctuary is not an animal charity. No real cats live here, and it does not take donations.</p>
+    <p>Made with three.js (MIT). Type: Gluten, Figtree and DM Mono, under the SIL Open Font License.</p>
+  </div>
+
+# README.md lines 20-27
+- **where to buy it**: GMGN.ai and FOMO, shown only once the cat has launched.
+
+Every card ends with a disclaimer: the coin is not affiliated with the company or with StonkFun,
+has no intrinsic value, and is not financial advice. A company's cat or mascot may be *described*
+on a card, with its source. It is never used as a coin's picture or name (see "Held cats" below).
+A planned cat's ticker is shown without a `$` and with a warning: any token under that name found
+before launch is not this cat.
+
+
+# assets/ui/card.js lines 58-62, 276-279
+}
+
+/** The ticker as a card shows it: a cashtag only for a launched token. A planned cat's ticker is
+    only a plan, and a token found under it elsewhere is not this cat. */
+export function tickerLabel(r) {
+      buy.append(el("p", "card-none", "Nothing to buy yet."));
+      buy.append(el("p", "card-note", "Links to the token on GMGN.ai and FOMO appear here once this cat has launched."));
+      if (r.ticker && !r.example) buy.append(el("p", "card-note card-warn", `Any token called ${r.ticker} that you find before launch is not this cat. Only the mint shown on this card after launch is.`));
+    }
+
+# data/planned.json: 16 cats; held tickers absent (HARRUMPH PEWTER SNOWCURL MOATCAT COUCHCAP WARMSPOT SOCKFOOT HALFSMILE)

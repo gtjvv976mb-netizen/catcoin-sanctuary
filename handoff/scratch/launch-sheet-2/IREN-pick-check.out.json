@@ -1,0 +1,120 @@
+{
+ "pick": {
+  "name": "Millrace the Blue-Grey Cat",
+  "ticker": "MILLRACE",
+  "blurb": "Millrace, a plush blue-grey tabby with rippling darker stripes and pale green eyes, sits by the garden stream watching the water turn the little wooden wheel."
+ },
+ "description": "Millrace, a plush blue-grey tabby with rippling darker stripes and pale green eyes, sits by the garden stream watching the water turn the little wooden wheel. A cat coin priced in IREN. Not affiliated with IREN Limited, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "nameLen": 26,
+ "blurbLen": 158,
+ "descLen": 294,
+ "tickerFormat": true,
+ "tickerHasRoot": false,
+ "endsWithDisclosure": true,
+ "checkProposal": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Millrace, a plush blue-grey tabby with r",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_blurbOnly": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup_MILLRACE": {
+  "status": 200,
+  "results": 8,
+  "symbolMatches": [],
+  "nameMatches": [],
+  "verifiedAny": []
+ },
+ "jup_Millrace": {
+  "status": 200,
+  "results": 8,
+  "symbolMatches": [],
+  "nameMatches": [],
+  "verifiedAny": []
+ },
+ "uniquenessClashes": [],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "hasTransferFee": false,
+  "paused": false,
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "7jdrGaAgoAzJfNzLJctbqCzeZKVFeXg9wXGUTPAgBdp3"
+ },
+ "pair": {
+  "mint": "RENzhrJQgmAnfcLhU1U5XwAMc6TC15UA6jCbPBaasnj",
+  "symbol": "IREN",
+  "name": "IREN",
+  "decimals": 6,
+  "logoUrl": "/api/asset/quote-logo/RENzhrJQgmAnfcLhU1U5XwAMc6TC15UA6jCbPBaasnj?v=a8db988d",
+  "category": "backpack",
+  "categoryLabel": "Sunrise",
+  "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "launchable": true,
+  "symbolAmbiguous": false,
+  "launchLabReady": true
+ }
+}

@@ -1,0 +1,271 @@
+[
+ {
+  "name": "Save Point the Tabby",
+  "ticker": "SAVEPAWS",
+  "lengths": {
+   "name": 20,
+   "ticker": 8,
+   "description": 258,
+   "blurb": 147
+  },
+  "lengthOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "tickerVsRoot": {
+   "containsGME": false,
+   "startsWithG": false
+  },
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBlurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=SAVEPAWS",
+   "status": 200,
+   "results": 1,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/GMEX-jup-SAVEPAWS.json",
+   "all": [
+    {
+     "symbol": "pawtism",
+     "name": "please be patient i have pawtism",
+     "isVerified": null,
+     "id": "6aCRbHg8sueBRLYup8FYKgzPHC2P1UQzho1YHtv5pump"
+    }
+   ],
+   "symbolMatches": [],
+   "verifiedCollision": false
+  }
+ },
+ {
+  "name": "Player Two the Kitten",
+  "ticker": "PLAYERTWO",
+  "lengths": {
+   "name": 21,
+   "ticker": 9,
+   "description": 269,
+   "blurb": 158
+  },
+  "lengthOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "tickerVsRoot": {
+   "containsGME": false,
+   "startsWithG": false
+  },
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBlurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=PLAYERTWO",
+   "status": 200,
+   "results": 2,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/GMEX-jup-PLAYERTWO.json",
+   "all": [
+    {
+     "symbol": "P2",
+     "name": "Player Two",
+     "isVerified": null,
+     "id": "EM6TkBYbT5V72XhYqPjuL3JwrB5nF6yTam5xREDNpump"
+    },
+    {
+     "symbol": "PLD",
+     "name": "Pump Layer Two⠀",
+     "isVerified": null,
+     "id": "AGTQxdN7oxiwT5GeePcNX9pU3RXhbsYAcZSbmFPypump"
+    }
+   ],
+   "symbolMatches": [],
+   "verifiedCollision": false
+  }
+ },
+ {
+  "name": "Little Yowl the Tabby",
+  "ticker": "LILYOWL",
+  "lengths": {
+   "name": 21,
+   "ticker": 7,
+   "description": 265,
+   "blurb": 154
+  },
+  "lengthOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "tickerVsRoot": {
+   "containsGME": false,
+   "startsWithG": false
+  },
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBlurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "gamestop",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=LILYOWL",
+   "status": 200,
+   "results": 0,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/GMEX-jup-LILYOWL.json",
+   "all": [],
+   "symbolMatches": [],
+   "verifiedCollision": false
+  }
+ }
+]

@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Jowls the Grey Tomcat",
+   "ticker": "JOWLS",
+   "nameLen": 21,
+   "blurbLen": 133,
+   "descLen": 273,
+   "tickerHasJnjRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Jowls, a big round-cheeked grey tomcat w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 4,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Jowls, a big round-cheeked grey tomcat with sleepy half-shut eyes and a thick ruff, sits as still as an old photo on the garden wall. A cat coin priced in JNJ. Not affiliated with Johnson & Johnson, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Sepia the Plush Grey Cat",
+   "ticker": "SEPIAPAW",
+   "nameLen": 24,
+   "blurbLen": 126,
+   "descLen": 266,
+   "tickerHasJnjRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sepia, a heavy-set plush grey shorthair ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sepia, a heavy-set plush grey shorthair with wide jowls and faint ghost stripes on his cheeks, naps on the potting-shed shelf. A cat coin priced in JNJ. Not affiliated with Johnson & Johnson, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Pestle the Shelf Cat",
+   "ticker": "PESTLE",
+   "nameLen": 20,
+   "blurbLen": 132,
+   "descLen": 272,
+   "tickerHasJnjRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Pestle, a stocky slate-grey tomcat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Pestle, a stocky slate-grey tomcat with a broad face and a deep ruffled chest, keeps watch over the stone mortars in the greenhouse. A cat coin priced in JNJ. Not affiliated with Johnson & Johnson, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

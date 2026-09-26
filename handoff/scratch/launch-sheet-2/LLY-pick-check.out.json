@@ -1,0 +1,283 @@
+{
+ "plannedCount": 35,
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Pipette the Lab-White Cat",
+   "ticker": "PIPETTE",
+   "nameLen": 25,
+   "blurbLen": 131,
+   "descLen": 275,
+   "description": "Pipette, a spotless all-white shorthair with pale blue eyes and pink paws, keeps the greenhouse tidy and naps on the potting bench. A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "tickerFormat": true,
+   "tickerHasRoot": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Pipette",
+      "field": "name"
+     },
+     {
+      "rule": "stock",
+      "term": "Pipette",
+      "field": "symbol"
+     },
+     {
+      "rule": "stock",
+      "term": "Pipette",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LLY",
+      "field": "description"
+     }
+    ]
+   },
+   "memeTicker": false,
+   "plannedDuplicate": [],
+   "otherDraftsWithTicker": [
+    "MRNA-coins.json"
+   ],
+   "jupStatus": 200,
+   "jupResults": 9,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupTop": [
+    "STUDIOVENT / Pipehitter.eth 😮‍💨 💨 / verified=undefined",
+    "PIPES / PIPES THE KITTEN RESCUED / verified=undefined",
+    "PIPI / Pipi The Little Brother / verified=undefined",
+    "PIPHEAVEN / PIP The Tiktok #1 Viral Penguin / verified=undefined",
+    "POTUS / Pimp Of The United States / verified=undefined"
+   ],
+   "jupNameQuery": {
+    "q": "Pipette",
+    "results": 9,
+    "verifiedSymbolOrName": []
+   }
+  },
+  {
+   "name": "Capsule the Two-Tone Cat",
+   "ticker": "TWOTONE",
+   "nameLen": 24,
+   "blurbLen": 133,
+   "descLen": 277,
+   "description": "Capsule, a sleek bicolor cat, crisp white up front and warm butterscotch behind, curls into a neat oval on the sunny stepping stones. A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "tickerFormat": true,
+   "tickerHasRoot": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LLY",
+      "field": "description"
+     }
+    ]
+   },
+   "memeTicker": false,
+   "plannedDuplicate": [],
+   "otherDraftsWithTicker": [],
+   "jupStatus": 200,
+   "jupResults": 13,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupTop": [
+    "TwoToneCat / Narnia / verified=undefined",
+    "VENUS / Two Toned Cat / verified=undefined",
+    "TONY-TWO-TONE / Tony-two-tone / verified=undefined",
+    "2500 / Two thousand five hundred  / verified=undefined",
+    "2000 / Two Thousand Rice / verified=undefined"
+   ],
+   "jupNameQuery": {
+    "q": "Capsule",
+    "results": 20,
+    "verifiedSymbolOrName": []
+   }
+  },
+  {
+   "name": "Sage the Apothecary Cat",
+   "ticker": "APOTHECAT",
+   "nameLen": 23,
+   "blurbLen": 126,
+   "descLen": 270,
+   "description": "Sage, a smoky sage-grey mackerel tabby with olive eyes, dozes among old glass jars and pots of thyme in the garden's herb bed. A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "tickerFormat": true,
+   "tickerHasRoot": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LLY",
+      "field": "description"
+     }
+    ]
+   },
+   "memeTicker": false,
+   "plannedDuplicate": [],
+   "otherDraftsWithTicker": [],
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupTop": [
+    "Tapioca / Tapioca The Pirate Cat / verified=undefined"
+   ],
+   "jupNameQuery": {
+    "q": "Sage",
+    "results": 20,
+    "verifiedSymbolOrName": [
+     "SGE.GBx / Sage xStock"
+    ]
+   }
+  }
+ ],
+ "mint": {
+  "slot": 450425280,
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": null,
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "transferHook": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "programId": null
+  }
+ },
+ "wiki": {
+  "error": "SyntaxError: Unexpected token 'Y', \"You are ma\"... is not valid JSON"
+ }
+}

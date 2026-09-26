@@ -1,0 +1,85 @@
+
+1. THE PARSERS, ON THE RECORDED ANSWERS
+───────────────────────────────────────
+  ok   the recorded DexScreener answer is the live one: HTTP 200, cached 30 s, one pair per major
+  ok   JitoSOL: price, 1 h and 24 h change, volume and liquidity read as the answer gave them  — $153.16 · 2.75% 24 h · orca/USDC
+  ok   JUP: price, 1 h and 24 h change, volume and liquidity read as the answer gave them  — $0.3044 · 5.68% 24 h · orca/SOL
+  ok   JTO: price, 1 h and 24 h change, volume and liquidity read as the answer gave them  — $0.5004 · 8.11% 24 h · raydium/SOL
+  ok   PYTH: price, 1 h and 24 h change, volume and liquidity read as the answer gave them  — $0.06825 · 8.98% 24 h · orca/SOL
+  ok   RAY: price, 1 h and 24 h change, volume and liquidity read as the answer gave them  — $2.19 · 4.63% 24 h · raydium/SOL
+  ok   Bonk: price, 1 h and 24 h change, volume and liquidity read as the answer gave them  — $0.000003712 · 5.79% 24 h · orca/SOL
+  ok   $WIF: price, 1 h and 24 h change, volume and liquidity read as the answer gave them  — $0.2376 · 4.09% 24 h · raydium/SOL
+  ok   cbBTC: price, 1 h and 24 h change, volume and liquidity read as the answer gave them  — $84642.97 · 0.29% 24 h · orca/USDC
+  ok   of two pairs for one mint, the deeper one is used
+  ok   a pair where the mint is the QUOTE side does not price it (it prices the other token)
+  ok   the recorded GeckoTerminal answer: 100 fifteen-minute candles, newest first as sent
+  ok   parsed oldest first, in milliseconds, every one kept
+  ok   a malformed row (a non-number, high under low, a negative close, a non-array) is dropped; a repeated time is kept once  — [{"t":1000,"o":1,"h":1,"l":1,"c":1,"v":1}]
+  ok   an answer without a candle list is no candles, not an error
+  ok   Jupiter's price answer: every major priced, an absent mint null
+
+1b. THE CAT COINS IT TRADES, PRICED FROM THEIR OWN RECORDED ANSWER
+──────────────────────────────────────────────────────────────────
+  ok   the recording is of the six preset cat coins
+  ok   MEW: priced, with its liquidity and 24 h volume  — $0.0004999 · liquidity $10305960
+  ok   POPCAT: priced, with its liquidity and 24 h volume  — $0.05766 · liquidity $4251627
+  ok   KITTY: priced, with its liquidity and 24 h volume  — $0.003815 · liquidity $381300
+  ok   GRUMPY: priced, with its liquidity and 24 h volume  — $0.00002348 · liquidity $57023
+  ok   KWIF: priced, with its liquidity and 24 h volume  — $0.0002619 · liquidity $83367
+  ok   KHAI: priced, with its liquidity and 24 h volume  — $0.001773 · liquidity $44851
+
+2. MISSING IS MISSING
+─────────────────────
+  ok   an unparseable price, an absent 1 h change, volume and liquidity are null — not zero, not carried
+  ok   a mint the answer did not mention is present with every figure null
+  ok   a zero or negative price is not a price
+  ok   finiteOrNull: numbers and numeric strings pass; '', null, true, NaN do not
+
+3. THE INDICATORS
+─────────────────
+  ok   EMA(3) of 1..5 seeded with the mean of the first three: 4
+  ok   EMA with fewer values than its period is null
+  ok   RSI of a series that only rises is 100; only falls, 0
+  ok   RSI of an even zigzag over exactly 15 closes is 50
+  ok   RSI with 14 closes is null (it needs period + 1)
+  ok   RSI of a flat series is 50, not a division by zero
+  ok   RSI carries Wilder's smoothing past the seed: 59.375  — 59.375000
+  ok   pctChange over 1 bar: 100 → 110 is +10%
+  ok   on the live JUP candles: 100 bars, the last close is the newest row's
+  ok   …the 1 h return is the newest close over the one four rows back  — 1.034%
+  ok   …the 24 h return is the newest close over the one 96 rows back  — 5.449%
+  ok   …RSI in range, both EMAs, a trend named  — RSI 59.22, ema20_above_ema50
+  ok   …and the same candles give the same numbers twice
+  ok   30 bars: no EMA(50), no 24 h return — null, not a shorter-window stand-in
+
+4. ONE REQUEST PRICES THE UNIVERSE; CANDLES ONLY WHEN ASKED
+───────────────────────────────────────────────────────────
+  ok   one DexScreener request, every mint in it, comma-separated
+  ok   every major priced from it
+  ok   a snapshot without candles asks GeckoTerminal nothing
+  ok   with candles: one GeckoTerminal request for JUP's pool — 15-minute bars, 100 of them, in USD, for the JUP side  — https://api.geckoterminal.com/api/v2/networks/solana/pools/C1MgLojNLWBKADvu9BHdtgzz1oZX4dZ5zGdGcgvvW8Wz/ohlcv/minute?aggregate=15&limit=100&currency=usd&token=JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN
+  ok   …and the snapshot carries the indicators, nothing missing  — []
+  ok   candles are kept: a second snapshot inside fifteen minutes does not ask again
+  ok   …and after fifteen minutes it does
+  ok   eight pools' candles are asked one at a time, at least 2.1 s apart  — 2100, 2100, 2100, 2100, 2100, 2100, 2100
+  ok   two DexScreener reads are at least 1.1 s apart
+
+5. A 429 RESTS THE HOST
+───────────────────────
+  ok   the recorded 429 (retry-after: 0) is a rate limit, named, and the other token is not asked this tick
+  ok   …the tokens say their indicators are missing
+  ok   a retry-after of 0 is not a promise: the host rests a full minute  — 60000 ms
+  ok   while resting it is asked nothing, and the reason is said
+  ok   a second 429 doubles the rest to two minutes
+  ok   a success clears the rest and the candles arrive
+  ok   with no network the snapshot still answers: every price null, every token saying so
+
+6. JUPITER PRICES WHAT DEXSCREENER DID NOT
+──────────────────────────────────────────
+  ok   the one mint DexScreener left out is asked of Jupiter, alone
+  ok   …and priced from Jupiter's answer, marked as such; the rest stay DexScreener's
+  ok   …its 24 h change and liquidity stay null: only the price is taken from the fallback
+  ok   when DexScreener prices everything, Jupiter is not asked
+
+61 passed, 0 failed
+

@@ -1,0 +1,2732 @@
+{
+ "runAt": "2026-09-25T16:44:47.669Z",
+ "verifiedListSize": 3694,
+ "coins": [
+  {
+   "pair": "SPYx",
+   "name": "Patchpaw the Calico",
+   "ticker": "PATCHPAW",
+   "changed": [
+    "look only: 'no spider, no ship' -> 'no emblem of any kind' (naming the issuer's spider in a picture prompt invites the generator to draw one; checkTerms flagged 'spider')"
+   ],
+   "lengths": {
+    "name": 19,
+    "ticker": 8,
+    "description": 270,
+    "story": 155
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: SPYx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=PATCHPAW",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Patchpaw",
+    "status": 200,
+    "results": 0,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "QQQx",
+   "name": "Hundred Whisker Cat",
+   "ticker": "WHISK100",
+   "changed": [
+    "coat silver-grey -> chocolate-brown (too many grey cats; Harrumph is also a fluffy grey long-hair)",
+    "story: 'cat said to have' -> 'cat with' (the repo's matcher compacts 'cat s...' into the SPCXx mascot 'Cat 5'); trimmed to fit"
+   ],
+   "lengths": {
+    "name": 19,
+    "ticker": 8,
+    "description": 272,
+    "story": 154
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: QQQx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=WHISK100",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Hundred Whisker Cat",
+    "status": 200,
+    "results": 0,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "GLDx",
+   "name": "Ingot the Loaf Cat",
+   "ticker": "INGOTLOAF",
+   "changed": [
+    "look only: 'small rounded gold bar' -> 'small rounded ingot' ('GOLD' is the pair's own StonkFun name)"
+   ],
+   "lengths": {
+    "name": 18,
+    "ticker": 9,
+    "description": 269,
+    "story": 117
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: GLDx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=INGOTLOAF",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Ingot",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 9,
+    "verified": 0,
+    "rows": [
+     "Ingot | Iron Ingot | verified=false",
+     "Ingot | Copper Ingot | verified=false",
+     "INGOT | MINECRAFT GOLD | verified=false",
+     "INGOT | Stranglewood Ingot | verified=false",
+     "INGOT | Ingot | verified=false",
+     "Ingot | Gold Ingot | verified=false"
+    ]
+   }
+  },
+  {
+   "pair": "TSLAx",
+   "name": "Snowcurl the Shade Cat",
+   "ticker": "SNOWCURL",
+   "changed": [
+    "name 'Snowcurl the Garden Cat' -> 'Snowcurl the Shade Cat' (three picks were '... the Garden Cat')"
+   ],
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 272,
+    "story": 157
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "tesla",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "tesla",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: TSLAx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=SNOWCURL",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Snowcurl",
+    "status": 200,
+    "results": 0,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "NVDAx",
+   "name": "Sockfoot the Morning Cat",
+   "ticker": "SOCKFOOT",
+   "changed": [
+    "name 'Sockfoot the Garden Tabby' -> 'Sockfoot the Morning Cat'",
+    "story ending 'sniffs the flowers, then naps on warm stones' -> 'tail held high, the first cat up' (Patchpaw sniffs the flower beds; Save Point napped on a warm stone)"
+   ],
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "description": 275,
+    "story": 153
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nvidia",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nvidia",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: NVDAx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=SOCKFOOT",
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Sockfoot",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "AAPLx",
+   "name": "Rosette the Climbing Cat",
+   "ticker": "ROSETTE",
+   "changed": [
+    "name 'Rosette the Garden Cat' -> 'Rosette the Climbing Cat'",
+    "story: pond and 'flops in the sun' -> climbs the old oak and dozes on a branch (Moat Cat owns the pond; Milkweed flops in the sun)",
+    "look: 'round amber eyes' -> 'round golden eyes' (checkFields reads 'amber eyes' as a person's name, real_person)"
+   ],
+   "lengths": {
+    "name": 24,
+    "ticker": 7,
+    "description": 265,
+    "story": 151
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "apple",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "apple",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: AAPLx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=ROSETTE",
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Rosette",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "MSFTx",
+   "name": "Halfsmile Cat",
+   "ticker": "HALFSMILE",
+   "changed": [
+    "story: 'Loves laps, slow blinks and loud purrs' -> sits on the garden bench and grins at passers-by (Harrumph climbs into laps; Porchlight slow-blinks)",
+    "'half-smile' in story and look -> 'crooked grin' (the simulated AMZNx row lists the brand 'Smile')"
+   ],
+   "lengths": {
+    "name": 13,
+    "ticker": 9,
+    "description": 276,
+    "story": 151
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "microsoft",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "microsoft",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: MSFTx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=HALFSMILE",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Halfsmile Cat",
+    "status": 200,
+    "results": 0,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "GOOGLx",
+   "name": "Porchlight the Dusk Cat",
+   "ticker": "PORCHLIGHT",
+   "changed": [],
+   "lengths": {
+    "name": 23,
+    "ticker": 10,
+    "description": 274,
+    "story": 156
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "alphabet",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "alphabet",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: GOOGLx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=PORCHLIGHT",
+    "status": 200,
+    "results": 2,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Porchlight",
+    "status": 200,
+    "results": 2,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "AMZNx",
+   "name": "Sunmane the Sundial Cat",
+   "ticker": "SUNMANE",
+   "changed": [
+    "name 'Sunmane the Garden Cat' -> 'Sunmane the Sundial Cat'",
+    "story: 'naps in the warmest patch ... pads his rounds at dusk' -> sits on the old sundial and follows the sun (four other picks napped in a warm spot)",
+    "look: 'Amber eyes' -> 'Warm golden eyes' (real_person 'amber eyes'); 'roar pose' -> 'open-mouthed pose' (own-stock term 'roar'); 'cat sitting' rephrased (compacts to 'Cat 5')"
+   ],
+   "lengths": {
+    "name": 23,
+    "ticker": 7,
+    "description": 244,
+    "story": 134
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: AMZNx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=SUNMANE",
+    "status": 200,
+    "results": 13,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Sunmane",
+    "status": 200,
+    "results": 13,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "METAx",
+   "name": "Couch Captain Cat",
+   "ticker": "COUCHCAP",
+   "changed": [],
+   "lengths": {
+    "name": 17,
+    "ticker": 8,
+    "description": 274,
+    "story": 150
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "meta",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "meta",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: METAx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=COUCHCAP",
+    "status": 200,
+    "results": 2,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Couch Captain Cat",
+    "status": 200,
+    "results": 0,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "COINx",
+   "name": "Harrumph the Pouty Cat",
+   "ticker": "HARRUMPH",
+   "changed": [
+    "look only: dropped 'just like the original' (an artist reading the look cannot know which original)"
+   ],
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 271,
+    "story": 159
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: COINx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=HARRUMPH",
+    "status": 200,
+    "results": 10,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Harrumph",
+    "status": 200,
+    "results": 10,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "HOODx",
+   "name": "Pewter the Catmint Cat",
+   "ticker": "PEWTER",
+   "changed": [
+    "name 'Pewter the Garden Tabby' -> 'Pewter the Catmint Cat'",
+    "story: 'naps on the warm garden steps' -> rolls in the catmint (Ingot already loafs on the warm garden steps)"
+   ],
+   "lengths": {
+    "name": 22,
+    "ticker": 6,
+    "description": 273,
+    "story": 160
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "robinhood",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "robinhood",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: HOODx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=PEWTER",
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Pewter",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "MSTRx",
+   "name": "Trinket the Tortie Cat",
+   "ticker": "TRINKETCAT",
+   "changed": [
+    "pile moved from 'under the garden shed' to 'behind the rain barrel' (Latchkey's strongbox is in the shed)",
+    "look: 'no coins' -> 'no markings' (COIN is COINx's root)"
+   ],
+   "lengths": {
+    "name": 22,
+    "ticker": 10,
+    "description": 271,
+    "story": 138
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: MSTRx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=TRINKETCAT",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Trinket",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 14,
+    "verified": 0,
+    "rows": [
+     "TRINKET | Trinket | verified=false",
+     "Trinket | The mini Horse | verified=false",
+     "TRINKET | Trinket | verified=false",
+     "trinket | Trinket The Puppet | verified=false",
+     "Trinket | The mini Horse | verified=false",
+     "Trinket | The mini Horse | verified=false"
+    ]
+   }
+  },
+  {
+   "pair": "CRCLx",
+   "name": "Tuppence the Tweed Cat",
+   "ticker": "TUPPENCE",
+   "changed": [
+    "coat silver tabby -> solid blue-grey with copper eyes (the coat was made up; five picks were silver or grey tabbies)",
+    "story: path stroll and bees -> tea-table crumbs (Sockfoot walks the path; Rosette watched the bees)",
+    "look: 'cat, sitting' rephrased (compacts to the SPCXx mascot term 'Cat 5')"
+   ],
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 247,
+    "story": 137
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: CRCLx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=TUPPENCE",
+    "status": 200,
+    "results": 3,
+    "sameSymbol": 1,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": [
+     "TUPPENCE | Tuppence | HnU8E8dza4kx7PPd5ZC7HAxqeD5UATvdbkrD5DNHpump | verified=false"
+    ]
+   },
+   "jupiterName": {
+    "query": "Tuppence",
+    "status": 200,
+    "results": 3,
+    "exactNameOrSymbol": 1,
+    "verified": 0,
+    "rows": [
+     "TUPPENCE | Tuppence | verified=false"
+    ]
+   }
+  },
+  {
+   "pair": "SPCXx",
+   "name": "Warmspot the Tuxedo Cat",
+   "ticker": "WARMSPOT",
+   "changed": [],
+   "lengths": {
+    "name": 23,
+    "ticker": 8,
+    "description": 264,
+    "story": 154
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "spacex",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "spacex",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: SPCXx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=WARMSPOT",
+    "status": 200,
+    "results": 1,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Warmspot",
+    "status": 200,
+    "results": 1,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "PLTRx",
+   "name": "Skein the Yarn Kitten",
+   "ticker": "SKEINKIT",
+   "changed": [],
+   "lengths": {
+    "name": 21,
+    "ticker": 8,
+    "description": 272,
+    "story": 142
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: PLTRx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=SKEINKIT",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Skein",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 1,
+    "verified": 0,
+    "rows": [
+     "SKEIN | Skein Privacy | verified=false"
+    ]
+   }
+  },
+  {
+   "pair": "GMEx",
+   "name": "Save Point the Tabby",
+   "ticker": "SAVEPAWS",
+   "changed": [
+    "story and pose: 'finds the warmest stone ... naps on it until the sun moves on' -> taps the same stepping stone before every adventure (Warmspot's whole story is finding the one warm spot)",
+    "look: 'No headband' -> 'nothing on its head or around its neck' (same guard, without the persona word)"
+   ],
+   "lengths": {
+    "name": 20,
+    "ticker": 8,
+    "description": 264,
+    "story": 153
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "gamestop",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "gamestop",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: GMEx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=SAVEPAWS",
+    "status": 200,
+    "results": 1,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Save Point",
+    "status": 200,
+    "results": 0,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "STRCx",
+   "name": "Everloop the Sleepy Cat",
+   "ticker": "EVERLOOP",
+   "changed": [
+    "coat 'round silver tabby' -> 'soft blue-cream' (made-up coat; too many silver tabbies)",
+    "look: 'closed circle' -> 'closed ring' (Circle is CRCLx's name)"
+   ],
+   "lengths": {
+    "name": 23,
+    "ticker": 8,
+    "description": 267,
+    "story": 150
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: STRCx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=EVERLOOP",
+    "status": 200,
+    "results": 7,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Everloop",
+    "status": 200,
+    "results": 7,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "MCDx",
+   "name": "Milkweed the Meadow Cat",
+   "ticker": "MILKWEED",
+   "changed": [
+    "'one gold eye' -> 'one green eye' in story and look: the repo's stockCatRefusals refuses 'gold' in any stock cat's tagline (other_pair GOLD, GLDx's name)"
+   ],
+   "lengths": {
+    "name": 23,
+    "ticker": 8,
+    "description": 271,
+    "story": 158
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "mcdonalds",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "mcdonalds",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: MCDx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=MILKWEED",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Milkweed",
+    "status": 200,
+    "results": 0,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "BRK.Bx",
+   "name": "Moat Cat",
+   "ticker": "MOATCAT",
+   "changed": [
+    "look only: 'house cat. She is mostly white' -> 'house cat, mostly white' ('cat. She' compacts to 'Cat 5')"
+   ],
+   "lengths": {
+    "name": 8,
+    "ticker": 7,
+    "description": 270,
+    "story": 147
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: BRK.Bx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=MOATCAT",
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Moat Cat",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "KOx",
+   "name": "Tumble the Kitten",
+   "ticker": "TUMBLES",
+   "changed": [
+    "coat 'silver tabby with four white socks' -> 'ginger tabby with a white chin' (made-up coat; Sockfoot's four white paws come from its real cat)",
+    "'flower bed' -> 'garden hammock' (Patchpaw owns the flower beds)"
+   ],
+   "lengths": {
+    "name": 17,
+    "ticker": 7,
+    "description": 268,
+    "story": 145
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coca cola",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coca cola",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Kittens",
+      "field": "story"
+     },
+     {
+      "rule": "stock",
+      "term": "Kittens",
+      "field": "look"
+     }
+    ]
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: KOx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=TUMBLES",
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Tumble",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 6,
+    "verified": 0,
+    "rows": [
+     "TUMBLE | TUMBLE | verified=false",
+     "TM | TUMBLE | verified=false",
+     "TUMBLE | TUMBLE | verified=false",
+     "tumble | tumbler pigeon | verified=false",
+     "TUMBLE | John Daly Tumble | verified=false",
+     "TUMBLE | Tumbling Down | verified=false"
+    ]
+   }
+  },
+  {
+   "pair": "INTCx",
+   "name": "Bracken the Fern Cat",
+   "ticker": "BRACKEN",
+   "changed": [
+    "name 'Bracken the Tabby Cat' -> 'Bracken the Fern Cat' ('Save Point the Tabby' is also a Tabby name)",
+    "story ending 'then naps on the warm garden wall' -> 'has never once caught one' (Harrumph owns the garden wall)",
+    "look: 'amber-green eyes' -> 'yellow-green eyes' (real_person 'amber green'); 'house cat, sturdy' rephrased ('Cat 5' compaction); added 'creeps low through tall garden ferns'"
+   ],
+   "lengths": {
+    "name": 20,
+    "ticker": 7,
+    "description": 253,
+    "story": 144
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "intel",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "intel",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: INTCx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=BRACKEN",
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Bracken",
+    "status": 200,
+    "results": 20,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "VIDAx",
+   "name": "Trillby the Chirping Cat",
+   "ticker": "TRILLBY",
+   "changed": [
+    "coat 'cream-and-ginger' -> colourpoint (cream with dark brown points, blue eyes): Siamese-type cats are the famously talkative ones, and the set had no pointed cat",
+    "'from bench to flower bed' -> 'around the garden'"
+   ],
+   "lengths": {
+    "name": 24,
+    "ticker": 7,
+    "description": 262,
+    "story": 147
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: VIDAx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=TRILLBY",
+    "status": 200,
+    "results": 2,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Trillby",
+    "status": 200,
+    "results": 2,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  },
+  {
+   "pair": "DFDVx",
+   "name": "Latchkey the Vault Cat",
+   "ticker": "LATCHKEY",
+   "changed": [
+    "coat 'brown mackerel tabby with four white socks' -> 'ginger-and-white' (made-up coat; three other brown tabbies and Sockfoot's socks)",
+    "pose 'naps curled' -> 'dozes upright' (Everloop and Tumble already sleep curled)",
+    "look: 'coin symbols' -> 'symbols' (COIN is COINx's root)"
+   ],
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 264,
+    "story": 138
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "disclosureShape": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_look_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals_allRows": [],
+   "stockCatRefusals_shippedNotes": [
+    "pair_terms_missing: DFDVx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+   ],
+   "copycatOf": null,
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "disclosureHitsOnlyFromDisclosure": true,
+   "jupiterTicker": {
+    "url": "https://lite-api.jup.ag/tokens/v2/search?query=LATCHKEY",
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "sameSymbolRows": []
+   },
+   "jupiterName": {
+    "query": "Latchkey",
+    "status": 200,
+    "results": 0,
+    "exactNameOrSymbol": 0,
+    "verified": 0,
+    "rows": []
+   }
+  }
+ ],
+ "collection": {
+  "dupTickers": [],
+  "dupNames": [],
+  "nearTickers": [],
+  "nearCallNames": [],
+  "sharedEpithets": {
+   "(no 'the')": [
+    "Hundred Whisker Cat",
+    "Halfsmile Cat",
+    "Couch Captain Cat",
+    "Moat Cat"
+   ]
+  },
+  "storyPhrases": {
+   "warm": [
+    "INGOTLOAF",
+    "WARMSPOT"
+   ],
+   "naps": [
+    "COUCHCAP",
+    "EVERLOOP",
+    "TUMBLES"
+   ],
+   "sun": [
+    "SUNMANE",
+    "MILKWEED"
+   ],
+   "stone": [
+    "SAVEPAWS"
+   ],
+   "step": [
+    "PORCHLIGHT"
+   ],
+   "steps": [
+    "INGOTLOAF"
+   ],
+   "wall": [
+    "HARRUMPH"
+   ],
+   "bench": [
+    "HALFSMILE"
+   ],
+   "pond": [
+    "MOATCAT"
+   ],
+   "flower bed": [
+    "PATCHPAW"
+   ],
+   "shed": [
+    "LATCHKEY"
+   ],
+   "lap": [
+    "HARRUMPH"
+   ],
+   "dusk": [
+    "BRACKEN"
+   ],
+   "morning": [
+    "WHISK100",
+    "HARRUMPH"
+   ],
+   "evening": [
+    "COUCHCAP"
+   ],
+   "flops": [
+    "MILKWEED"
+   ],
+   "pads": [
+    "PATCHPAW"
+   ],
+   "just in case": [
+    "SAVEPAWS"
+   ],
+   "four white": [
+    "SOCKFOOT"
+   ],
+   "socks": [
+    "SOCKFOOT"
+   ]
+  },
+  "crossSheet2": [
+   "SAVEPAWS \"Save Point the Tabby\" ~ TTWO-coins.json: SAVEPAW \"Savepoint the Silver Cat\"",
+   "TUMBLES \"Tumble the Kitten\" ~ SKHY-coins.json: BUBBLEHAT \"Bubble the Helmet Cat\""
+  ]
+ }
+}

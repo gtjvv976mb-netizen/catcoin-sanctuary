@@ -1,0 +1,1 @@
+for (const q of ["ALLNIGHT","CABLETAIL","RACKNAP"]) { const r = await fetch(`https://lite-api.jup.ag/tokens/v2/search?query=${q}`); const a = await r.json(); console.log(q, a.slice(0,20).map(t=>`${t.symbol}|${t.name}|v=${t.isVerified}`).join("  ;  ")); }

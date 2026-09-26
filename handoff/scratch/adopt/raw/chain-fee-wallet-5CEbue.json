@@ -1,0 +1,345 @@
+{
+ "wallet": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+ "readAt": "2026-09-25T17:51:24.445Z",
+ "txs": [
+  {
+   "signature": "54CMnu69k1SFQQ7L7gEJrdtBfNDNmmvt58ZDjpq8QD8pzAqn7V2eppTnMJtAgNuNLCX1ZJuZUAYpqxDt3zwUigx",
+   "blockTime": 1790358683,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "spl-associated-token-account",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
+     "delta": "-357059996714"
+    },
+    {
+     "owner": "458aGtmE9UzRhA94hz743NyRv8p7zxNbjcgxV1m8Ukre",
+     "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
+     "delta": "357059996714"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent"
+   ]
+  },
+  {
+   "signature": "bmUVXQ1mb44c7rFY7bf4BBYYaPRdXXajPnLEWF38MtpZkm2tHETd9kU35iqkvBXRCxHKrwxBrmobTNYVEwSm7tk",
+   "blockTime": 1790358683,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "spl-token"
+   ],
+   "types": [
+    "burnChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
+     "delta": "-535589995070"
+    }
+   ],
+   "logs": []
+  },
+  {
+   "signature": "4aQqKAkaLrVnCAMt6WxqcDSWoS6BcogZH4X5HgSJq15vyNYyzK1okS23XYPwSqkegUyeJdDG7GJVY5jre4mNqe6i",
+   "blockTime": 1790358674,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "spl-associated-token-account",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "56XVRVAsgWv6ADaxzoNnbL38LMoWKM5WiSAhrAWUbd2p",
+     "mint": "XsoBhf2ufR8fTyNSjqfU71DYGaE6Z3SUGAidpzriAA4",
+     "delta": "-4518030"
+    },
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "XsoBhf2ufR8fTyNSjqfU71DYGaE6Z3SUGAidpzriAA4",
+     "delta": "4518030"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: ClaimPlatformFeeFromVault",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  {
+   "signature": "4kd5dcdnfgqcJY6ot2R1Bu3LvXsCs3yFdBYo8ZwCgZA3U2PtWVCqodBkWeq3V3H9XVxvfF8pkdgiynb1ZGzx2DZe",
+   "blockTime": 1790358670,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "system",
+    "ComputeBudget111111111111111111111111111111"
+   ],
+   "types": [
+    "transfer"
+   ],
+   "tokenDeltas": [],
+   "logs": []
+  },
+  {
+   "signature": "5bFSuszNbSfJ52KTzSUeRm4gZS5ikqB4CoNPstcD7iTaF3CQhpgUBmDQM2tH4h8W2ZuXfHTfjL4u42LTXn9Kpr7D",
+   "blockTime": 1790358669,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "spl-associated-token-account",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "7M3gDRgozcumFsiTeXwjB8cYxpg7Q9R7rH7rkw2Fpump",
+     "delta": "898916371"
+    },
+    {
+     "owner": "56XVRVAsgWv6ADaxzoNnbL38LMoWKM5WiSAhrAWUbd2p",
+     "mint": "7M3gDRgozcumFsiTeXwjB8cYxpg7Q9R7rH7rkw2Fpump",
+     "delta": "-898916371"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: ClaimPlatformFeeFromVault"
+   ]
+  },
+  {
+   "signature": "2CAAHeqiJQJHqm4yti8PnNh9tbpkXocvFvSJijvapPrG86G9PeVxy7yzf332qtKbFzWYRXEt1BySnpCrV6TtN3X1",
+   "blockTime": 1790358667,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "spl-associated-token-account",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "72QvBVwpxqmheEPfaCwWSWqEFsUy3rhWt6JhQBMNTwD1",
+     "delta": "24392029451"
+    },
+    {
+     "owner": "56XVRVAsgWv6ADaxzoNnbL38LMoWKM5WiSAhrAWUbd2p",
+     "mint": "72QvBVwpxqmheEPfaCwWSWqEFsUy3rhWt6JhQBMNTwD1",
+     "delta": "-24392029451"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: ClaimPlatformFeeFromVault"
+   ]
+  },
+  {
+   "signature": "3Zxtkacah9Mkz4xVFwgzuA7PnGDZzrwPYh5FqpWBbmfdB6GrecctdQ11WUEmz6EUmoA5zxYmgtW8sFeU69U6Drt6",
+   "blockTime": 1790358666,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "spl-associated-token-account",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc",
+     "delta": "35260806"
+    },
+    {
+     "owner": "56XVRVAsgWv6ADaxzoNnbL38LMoWKM5WiSAhrAWUbd2p",
+     "mint": "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc",
+     "delta": "-35260806"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: ClaimPlatformFeeFromVault",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  {
+   "signature": "49gHMirHVF7KbPYPNfCGS7EEXRBWZAzLgqwNyEL6mr5jzzS2q4s3EN2PKoUG7ehhK2jz1DgdS4aHfQWEyvo5cGdB",
+   "blockTime": 1790358664,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "spl-associated-token-account",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "TTWofwAge91oFhZs7kpQdyrVRkmevgM88xijGvQFbKo",
+     "delta": "67609"
+    },
+    {
+     "owner": "56XVRVAsgWv6ADaxzoNnbL38LMoWKM5WiSAhrAWUbd2p",
+     "mint": "TTWofwAge91oFhZs7kpQdyrVRkmevgM88xijGvQFbKo",
+     "delta": "-67609"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: ClaimPlatformFeeFromVault",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  {
+   "signature": "eP6qcSK2HgVgbdtSZYuV8zSD5UWhQ97uKD1wh7b1NHeDsNRMvUXosGaZNcymSm2PYyr9ZzyDWUZCwYAwUe6VUaj",
+   "blockTime": 1790358664,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "spl-associated-token-account",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "56XVRVAsgWv6ADaxzoNnbL38LMoWKM5WiSAhrAWUbd2p",
+     "mint": "72yxYmhLgDGwdyi2b9GjDynBB6VuG3kDxNKqDbzXh5bi",
+     "delta": "-4646042078"
+    },
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "72yxYmhLgDGwdyi2b9GjDynBB6VuG3kDxNKqDbzXh5bi",
+     "delta": "4506660815"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: ClaimPlatformFeeFromVault",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  {
+   "signature": "29V6fwT8p5FLusisFm8atVvvtXmM329X75hD6LdtsevzSjoNnxzSTGXCLtR8z9BwTGpvc7keQFy4qvQeXidgsM1q",
+   "blockTime": 1790358663,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "system",
+    "ComputeBudget111111111111111111111111111111"
+   ],
+   "types": [
+    "transfer"
+   ],
+   "tokenDeltas": [],
+   "logs": []
+  },
+  {
+   "signature": "5nRhehScYMAo9cBebpU6h7NjUNNuCsY5DdcyYF4bazdyRdhe913fwRQLayEd4Qj2Bx6MsNKMFKR2MFYC83EPZXQY",
+   "blockTime": 1790358663,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "spl-associated-token-account",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "56XVRVAsgWv6ADaxzoNnbL38LMoWKM5WiSAhrAWUbd2p",
+     "mint": "4sWNB8zGWHkh6UnmwiEtzNxL4XrN7uK9tosbESbJFfVs",
+     "delta": "-95200213"
+    },
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "4sWNB8zGWHkh6UnmwiEtzNxL4XrN7uK9tosbESbJFfVs",
+     "delta": "95200213"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: ClaimPlatformFeeFromVault"
+   ]
+  },
+  {
+   "signature": "2zwJzZnxKHLw9qCnoceXEyFVMSEPG7cDQVAbGKrHzW1sy7isG3uaoDREPWq34ypTb8nbH6RLMRNpkNVqRXJnhH3i",
+   "blockTime": 1790358662,
+   "feePayer": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "spl-associated-token-account",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "spl-token"
+   ],
+   "types": [
+    "createIdempotent",
+    "transferChecked"
+   ],
+   "tokenDeltas": [
+    {
+     "owner": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+     "mint": "WXMRyRZhsa19ety5erZhHg4N3xj3EVN92u94422teJp",
+     "delta": "10709573697"
+    },
+    {
+     "owner": "56XVRVAsgWv6ADaxzoNnbL38LMoWKM5WiSAhrAWUbd2p",
+     "mint": "WXMRyRZhsa19ety5erZhHg4N3xj3EVN92u94422teJp",
+     "delta": "-10709573697"
+    }
+   ],
+   "logs": [
+    "Program log: CreateIdempotent",
+    "Program log: Instruction: ClaimPlatformFeeFromVault"
+   ]
+  }
+ ]
+}

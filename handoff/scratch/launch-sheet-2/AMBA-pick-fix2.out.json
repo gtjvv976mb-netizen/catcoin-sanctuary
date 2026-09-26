@@ -1,0 +1,127 @@
+{
+ "name": "Vignette the Seal-Point Cat",
+ "ticker": "VIGNETTE",
+ "nameLen": 27,
+ "blurbLen": 145,
+ "descLen": 278,
+ "descBytes": 278,
+ "endsWithDisclaimer": true,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Vignette, a cream seal-point cat with a ",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "VIGNETTE": {
+   "status": 200,
+   "results": 6,
+   "top": [
+    "Vignette|REAL NAME OF VINE|verified=undefined",
+    "Vignettes|Virtual Vignettes|verified=undefined",
+    "VIGNETTE|First Prometheus AI Song |verified=undefined",
+    "JAMES|Virginia Suicide Time Traveller|verified=undefined",
+    "OVER|Only Virgins Enter Retirement|verified=undefined"
+   ],
+   "symbolMatches": [
+    {
+     "name": "REAL NAME OF VINE",
+     "id": "HDvnmJ3Fk37BBDzLeQuGnqTF3ZGenwkCnUvXCcWopump"
+    },
+    {
+     "name": "First Prometheus AI Song ",
+     "id": "DQWPAAtrXFZChsj3yvaZorvS5icHmTTW5XCLHMibpump"
+    }
+   ],
+   "verifiedMatch": false
+  },
+  "VIGNEPAW": {
+   "status": 200,
+   "results": 0,
+   "top": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "Vignette": {
+   "status": 200,
+   "results": 6,
+   "top": [
+    "Vignette|REAL NAME OF VINE|verified=undefined",
+    "Vignettes|Virtual Vignettes|verified=undefined",
+    "VIGNETTE|First Prometheus AI Song |verified=undefined",
+    "JAMES|Virginia Suicide Time Traveller|verified=undefined",
+    "OVER|Only Virgins Enter Retirement|verified=undefined"
+   ],
+   "symbolMatches": [
+    {
+     "name": "REAL NAME OF VINE",
+     "id": "HDvnmJ3Fk37BBDzLeQuGnqTF3ZGenwkCnUvXCcWopump"
+    },
+    {
+     "name": "First Prometheus AI Song ",
+     "id": "DQWPAAtrXFZChsj3yvaZorvS5icHmTTW5XCLHMibpump"
+    }
+   ],
+   "verifiedMatch": false
+  }
+ },
+ "description": "Vignette, a cream seal-point cat with a dark brown mask, ears, paws and tail, gazes from the porch step with wide sky-blue eyes and a slow blink. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A normal four-legged cream cat with seal-point colouring: a dark brown mask, ears, paws and tail, and wide sky-blue eyes. It is based on camera image processing, where a vignette is the darker edge around a bright picture, like dark points around a pale coat. It wears nothing."
+}

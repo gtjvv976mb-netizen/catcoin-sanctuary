@@ -1,0 +1,99 @@
+status 200 len 57762
+title: Introducing Figure 03
+- Figure 03 is designed for Helix, the home, and the world at scale.
+- To realize this vision, our engineering and design teams completed a ground-up hardware and software redesign to ship Figure 03 for: Helix: Figure 03 features a completely redesigned sensory suite and hand system which is purpose-built to enable Helix - Figure's proprietary vision-language-action AI.
+- The home: Figure 03 has several new features, including soft goods, wireless charging, improved audio system for voice reasoning, and battery safety advancements that make it safer and easier to use in a home environment.
+- These advancements are essential for intelligent navigation and precise manipulation in complex, cluttered spaces such as homes.
+- Each hand now integrates an embedded palm camera with a wide field of view and low-latency sensing, which offers redundant, close-range visual feedback during grasps.
+- The Figure 03 hands represent a major leap in compliant and tactile design.
+- Softer, more adaptive fingertips increase surface contact area, enabling more stable grasps across objects of varied shapes and sizes.
+- After surveying existing market options, Figure found that current tactile sensors had inherent limitations that could not withstand real-world use.
+- This led to the internal development of our first-generation tactile sensor, guided by three principles: extreme durability, long-term reliability, and high-fidelity sensing.
+- Each fingertip sensor can detect forces as small as three grams of pressure - sensitive enough to register the weight of a paperclip resting on your finger.
+- Designed for the Home To operate effectively in the home, a robot must work seamlessly alongside people in their daily environments.
+- With this in mind, Figure 03 introduces several design improvements focused on safety.
+- It features strategically placed multi-density foam to protect against pinch points, and is covered in soft textiles rather than hard machined parts.
+- Figure 03 also has 9% less mass and significantly less volume than Figure 02, making it easier to maneuver through household spaces.
+- The Figure 03 battery pushes the bounds for robot battery safety and incorporates multiple layers of protection against abuse or malfunction, including safeguards at the Battery Management System (BMS), cell, interconnect, and pack levels.
+- Beyond safety, Figure 03 is designed for everyday usability.
+- The soft goods are fully washable and can be removed or replaced without tools, allowing quick and easy swaps.
+- The robot can also be customized with various clothing options, including garments made from cut-resistant and durable materials.
+- Continuing our vision for a fully autonomous, wire-free system, Figure 03 is capable of wireless inductive charging alongside wireless data offload.
+- Charging coils in the robot’s feet allow it to simply step onto a wireless stand and charge at 2 kW.
+- In a home setting, this means the robot can automatically dock and recharge itself as needed throughout the day.
+- Designed for the World at Scale Figure’s focus on the home market in no way detracts from the potential of Figure 03 for the commercial market.
+- By solving for the variability and intractability of the home, Figure is developing a truly general-purpose product that can do the widest possible range of tasks in the workforce.
+- The changes to the hands highlighted above (added compliance, fingertip surface area, tactile sensing) enable better and more stable grasps across an array of objects such as small pieces of sheet metal and deformable poly bags.
+- Thanks to inductive charging, Figure 03 is capable of near-continuous operation as long as it can step onto a charging mat for a certain period of time during the use case.
+- The fast wireless data offload also means that the robot can offload seamlessly during shift breaks just by returning to the dock.
+- By uniting advanced perception and tactile intelligence with home-safe design and mass-manufacturing readiness, Figure has built a platform capable of learning, adapting, and working across both domestic and commercial settings.
+- Designed for Helix, the home, and the world at scale, Figure 03 establishes the foundation for true general-purpose robotics - one capable of transforming how people live and work.
+datePublished: null
+date: October 09, 2025
+{
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "extensions": [
+  {
+   "extension": "permanentDelegate",
+   "state": {
+    "delegate": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc"
+   }
+  },
+  {
+   "extension": "defaultAccountState"
+  },
+  {
+   "extension": "transferFeeConfig",
+   "state": {
+    "newerTransferFee": {
+     "epoch": 1043,
+     "maximumFee": 18446744073709552000,
+     "transferFeeBasisPoints": 300
+    },
+    "olderTransferFee": {
+     "epoch": 1039,
+     "maximumFee": 18446744073709552000,
+     "transferFeeBasisPoints": 100
+    },
+    "transferFeeConfigAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "withdrawWithheldAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "withheldAmount": 306969828
+   }
+  },
+  {
+   "extension": "confidentialTransferMint"
+  },
+  {
+   "extension": "confidentialTransferFeeConfig"
+  },
+  {
+   "extension": "transferHook",
+   "state": {
+    "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "programId": null
+   }
+  },
+  {
+   "extension": "scaledUiAmountConfig",
+   "state": {
+    "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "extension": "metadataPointer"
+  },
+  {
+   "extension": "pausableConfig",
+   "state": {
+    "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "paused": false
+   }
+  },
+  {
+   "extension": "tokenMetadata"
+  }
+ ]
+}

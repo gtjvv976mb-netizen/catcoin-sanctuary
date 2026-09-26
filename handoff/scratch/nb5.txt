@@ -1,0 +1,308 @@
+=================== HIMS
+- Underlying: Hims & Hers Health, Inc. (NYSE: HIMS)
+## Cat research (research pass, 2026-09-25)
+
+Tooling note: WebSearch budget exhausted (200/200). Searches via Google News RSS (links decoded to publisher URLs),
+DuckDuckGo HTML (intermittently CAPTCHA-blocked), direct curl. Raw logs: scratchpad/stockcats/tools/hims_raw.txt,
+batch4_out.txt.
+
+Queries (Google News RSS): "Hims & Hers" cat mascot (0 items) | "Hims & Hers" "cat" (hits are "copycat" drug stories,
+Caterpillar CAT ticker, "Weight Loss Drugs for Cats" unrelated) | "Andrew Dudum" cat | "Hims & Hers" "Hello Kitty" (0) |
+"Hims & Hers" lion OR tiger OR panther OR jaguar (no big-cat hits) | "Hims & Hers" pets OR "pet health" | "Hims" commercial
+cat | "Hers" ad "cat" telehealth | "Hims & Hers" Garfield OR Pusheen OR "Grumpy Cat" (0). DDG: "Hims & Hers" cat -> only
+quote pages (Yahoo Finance, StockAnalysis, TradingView, MarketWatch).
+
+Official sources checked:
+- news.hims.com/sitemap.xml (84 newsroom URLs): no slug with cat/kitty/pet/animal/lion/tiger/panther/jaguar/leopard/
+  mascot (only substring noise: "advocating", "certificates", "communications", "cultural").
+- www.hims.com / forhers.com sitemaps: Cloudflare challenge, not readable.
+- Wikipedia raw text "Hims_&_Hers_Health" and "Andrew_Dudum": 0 hits for cat|kitten|kitty|feline|lion|tiger|jaguar|
+  panther|leopard|mascot|pets.
+- Super Bowl ads (2025 "obesity" spot, 2026): coverage (Variety Jan 28 2025, fetched
+  https://variety.com/2025/tv/news/hims-hers-super-bowl-commercial-obesity-1236287348/) - only cat mention is Nissan's
+  "Cat's in the Cradle" song in an unrelated historical ad reference.
+
+Adjacent, NOT a cat and NOT Hims official:
+- Golden Child (fresh DOG food), launched Apr 2026 out of Atomic's venture studio; co-founders include Hims & Hers
+  co-founders Jack Abraham and Hilary Coles and ex-Hims exec Quentin Lacornerie (Refresh Miami, Apr 28 2026,
+  https://refreshmiami.com/news/miamis-latest-startup-wants-your-dog-to-eat-better-than-you-do-and-it-just-raised-37m/,
+  fetched). Dogs only; separate company.
+- Google News item "On-demand pet care - VML" (Jan 4 2024) matched "Andrew Dudum" cat, but the page
+  (https://www.vml.com/insight/on-demand-pet-care) is JS-rendered/403 and could not be verified; no cat claim made.
+
+Verdict: none_found. No Hims & Hers cat mascot, cat post, cat-IP collab, big-cat logo, or CEO (Andrew Dudum) cat found.
+Logo is a wordmark. X/Instagram feeds not directly readable, so a one-off cat post cannot be ruled out.
+
+Addendum (DDG batch, 2026-09-25):
+- "Hims & Hers" instagram cat -> only "copycat Wegovy pill" news (Fortune/CNBC/Inc/Reuters, Feb 2026) + hims Facebook
+  page. "Andrew Dudum" cat -> DDG CAPTCHA (blocked). "Hims & Hers" "Hello Kitty" -> no results.
+- "forhers" cat -> a YouTube channel "forhers" (@forhers6807, channelId UCAuEBWzpFHIN86RT6i7Cf-w, 2 subscribers, ~6 yrs
+  old) with garbled auto-titled clips, e.g. "Ask Hers: Is skiing normal while using cat ears? | Hers" (15 views,
+  https://www.youtube.com/watch?v=hGBAqzuwzdA). Not verified as the official Hers channel, nonsense title, no cat content
+  shown -> disregarded. Also an unrelated Pakistani store "Forhers.pk" selling "cat eyes" jewelry.
+=================== LULU
+- Underlying: lululemon athletica inc. (Nasdaq: LULU)
+## Cat research (research pass, 2026-09-25)
+
+Tooling note: WebSearch budget exhausted (200/200). Searches via Google News RSS (news.google.com/rss/search, links
+decoded to publisher URLs), DuckDuckGo HTML (intermittently CAPTCHA-blocked), and direct curl of pages. Raw logs:
+scratchpad/stockcats/tools/lulu_raw.txt and batch4_out.txt.
+
+Queries run (Google News RSS): lululemon cat | lululemon "Hello Kitty" | lululemon "Year of the Tiger" collection |
+lululemon mascot | lululemon store cat | lululemon tiger OR lion OR panther OR leopard collection | lululemon kitten |
+"Chip Wilson" cat | "Calvin McDonald" cat | "Heidi O'Neill" lululemon cat | lululemon Disney collection Marie OR Figaro OR
+"Cheshire Cat" | lululemon Garfield OR Pusheen OR Sanrio OR Doraemon. DDG: lululemon cat instagram (+ batch queries).
+
+### BIG CAT (official product)
+- Lunar New Year 2022 "Year of the Tiger" collection. Popsugar, Jan 25 2022
+  (https://www.popsugar.com/fitness/lululemon-lunar-new-year-collection-2022-48693678, fetched): "to celebrate the Year of
+  the Tiger, Lululemon has released a new collection filled with, you guessed it, tiger-print activewear"; items include
+  "Lululemon Lunar New Year Align Reversible Bra ($58) and ... Align High-Rise Pant ($118) ... It's got a red tiger print to
+  go with the Year of the Tiger", "Lunar New Year Energy Longline Bra ($68)". Also listed by Entertainment Tonight, Jan 25
+  2022 ("10 Collections That Celebrate Lunar New Year from Tory Burch, Lululemon and More", Google News result title).
+  Wayback CDX for the official shop page could not be reached (connection reset).
+- Leopard-print drop, spring 2026. Daily Beast "The Looker", updated Apr 08 2026
+  (https://thelooker.thedailybeast.com/lululemon-animal-print-collection-shop-leopard-styles, fetched): "Lululemon's New
+  Animal Print Collection Proves Leopard Is a Neutral ... The drop features two takes on the traditional leopard print: a
+  classic brown colorway and a cooler, grey-black iteration". Pattern only, not a character.
+- Logo: lululemon's logo is a stylized "A"/omega-like mark - not an animal. No big-cat mascot or codename found.
+
+### COLLABORATION
+- Only Disney collab found is Mickey/Minnie (Daily Bulletin, Dec 19 2025: "Last year, Disney and Lululemon launched a
+  limited-edition collection featuring Mickey Mouse and Minnie Mouse graphics"). No cat characters.
+- Hello Kitty / Sanrio / Garfield / Pusheen / Doraemon: no lululemon collab found (Google News results only incidental).
+  Also 2026 "lululemon and artist Geoff McFetridge" limited collection (corporate newsroom) - not cat.
+
+### Official newsroom / Wikipedia
+- corporate.lululemon.com/sitemap.xml (77 URLs) and newsroom listing pages (our-stories, press-releases): no
+  cat/kitty/tiger/lion/leopard/mascot slugs or text hits.
+- Wikipedia raw text Lululemon, Chip_Wilson: 0 hits for cat|kitten|kitty|feline|lion|tiger|jaguar|panther|leopard|mascot.
+
+### EXECUTIVE PERSONAL
+- No evidence that founder Chip Wilson, ex-CEO Calvin McDonald, or CEO Heidi O'Neill are known for posting cats
+  (Google News "Chip Wilson" cat / "Calvin McDonald" cat returned only unrelated business stories).
+
+### FAN / COMMUNITY (not official)
+- X account "lemon cat" @lululemoncat (via api.fxtwitter.com: bio "just a lulu lemon | powered by @lululemon", joined
+  Sep 10 2026, 11 followers). DDG snippet (verbatim): "lemon cat @lululemoncat Sep 16 just a lulu lemon powered by @
+  lululemon ca: 8QAXLnnQUnXr7L2y4mkrPKdNhGvYCR92MpQME4Vcpump" - a pump.fun cat memecoin riffing on the brand; unaffiliated.
+- Instagram fan/pet accounts: @lululemoncat (8 posts), @lululemonthekitty ("Lululemon the Cat", a pet named Lululemon).
+- Ambassador post: Instagram reel by Hannah Frankson, Jan 24 2025 (DDG snippet verbatim): "My current fave lululemon comfy
+  casual lewk vs my fave sport lewk Cat's just for added cuteness 😻 @lululemon #lululemonambassador". Ambassador, not the
+  brand account.
+- Canoe, Aug 7 2026 (https://canoe.com/life/fashion/lululemon-big-ass-bag-reactions): a customer review of the "Big-Ass
+  Bag" joked it held "a week's [worth] of clothes and shoes inside as well as my cat" - a customer, not lululemon.
+
+Addendum (DDG batch, 2026-09-25): lululemon "lululemon" official cat post -> @lululemoncat X (fan memecoin, "Joined
+September 2026"), official @lululemon IG/TikTok/FB/X profile pages (no cat in snippets), fan YouTube/TikTok "lululemon
+cat" videos. lululemon "Hello Kitty" -> no results. "Calvin McDonald" lululemon cat -> LinkedIn (now CEO at The Wella
+Company), departure coverage (stepped down Jan 31 2026), his Jan 29 2026 Instagram farewell post - no cat.
+
+Verdict: big_cat_official (weak for a cat-coin pairing). The only official feline tie is the 2022 Lunar New Year "Year
+of the Tiger" tiger-print collection (plus 2026 leopard-print drops). No cat mascot, no cat-IP collab, no confirmed
+official cat post, no executive cat. Community: the unaffiliated "lemon cat" (@lululemoncat) pump.fun memecoin.
+=================== PFIZER
+- Underlying: Pfizer Inc. (NYSE: PFE)
+## Cat research (2026-09-25)
+
+Method note: WebSearch budget for the session was exhausted (200/200) before this pass, so no general web
+searches. I crawled Pfizer's OFFICIAL site directly and grepped the text, plus Wikipedia. archive.org is not
+reachable from this environment (WebFetch refuses it; curl gets connection reset), so legacy Pfizer Animal
+Health web pages (pfizerah.com, animalhealth.pfizer.com) could NOT be checked.
+
+### Sources crawled / queries run
+- pfizer.com/newsroom/press-releases?page=0..123 -> index of 1,480 press releases (03.03.2011 - 09.22.2026);
+  ALL 1,480 releases downloaded and grepped. Plus every non-careers page in https://www.pfizer.com/sitemap.xml
+  (~370 pages: stories, behind-the-science, responsibility, products, partners).
+- Grep terms: cat|cats|feline|kitten|kitty|Hello Kitty|Sanrio|Garfield|Pusheen|meow|tiger|lion|leopard|panther|
+  jaguar|cheetah|cougar|puma|mascot; titles also grepped for animal health|companion animal|veterinar|Revolution|
+  Convenia|Zoetis|pet|dog.
+- pfizer.com/search?keys=cat -> JS-rendered, returned "0 search results" server-side (unhelpful).
+- Wikipedia: Pfizer, Zoetis, Selamectin, Cefovecin, Albert Bourla.
+- EMA Convenia EPAR page (no MAH history shown; old PDFs discontinued).
+
+### Results
+- NO cat mascot, no cat character, no cat post found on pfizer.com (2011-2026 press releases + site pages).
+- Only incidental text hits:
+  - "It's a constant cat-and-mouse game" (idiom) - pfizer.com/news/behind-the-science/combating-rise-online-counterfeit-medicines
+  - "Mix medicines with ... coffee grounds, dirt, or cat litter" - pfizer.com/products/medicine-safety/tips/at-home
+- NAME ONLY / third-party big-cat names (not Pfizer branding):
+  - "Pfizer Announces Licensing Agreement With Puma Biotechnology, Inc." (Oct 05, 2011) - partner company name.
+  - Venture-portfolio page: a portfolio company's "lead product, Jaguar" (PCR system) - third-party product name.
+  - "Lions Clubs International Foundation" - trachoma programme partner.
+- Wikipedia Pfizer article: no cat/feline/mascot/lion/tiger mentions; logo is the Pfizer wordmark/helix (2021).
+
+### Historical feline link (Pfizer Animal Health, spun off as Zoetis 2012-2013) - NOT a mascot
+- Wikipedia Zoetis: Pfizer Animal Health renamed Zoetis June 2012; IPO Feb 2013; "Pfizer divested itself of its
+  remaining shares in Zoetis" by June 2013. Product list includes Convenia and Revolution.
+- Wikipedia Cefovecin: "licensed for treatment of skin infections in cats and dogs. It is marketed by Zoetis under
+  the trade name Convenia." ... "approved for use in the United States in June 2008." Its references include a
+  Pfizer-hosted label: animalhealth.pfizer.com/sites/pahweb/us/en/products/pdf/Convenia%20PI.pdf (dead now; 502).
+- Wikipedia Selamectin: "sold under the brand name Revolution ... used on dogs and cats" (now Zoetis).
+- Pfizer press release 07.07.2011 "Pfizer To Explore Strategic Alternatives For Its Animal Health And Nutrition
+  Businesses": Animal Health products "prevent and treat disease in livestock and companion animals".
+  -> So Pfizer once sold cat medicines, but that business (and any cat marketing) now belongs to Zoetis (NYSE: ZTS).
+
+### COLLABORATION (cat IP) - none found (no Hello Kitty/Sanrio/Garfield/Pusheen/Doraemon hits in 1,850 pages).
+### EXECUTIVE PERSONAL - Albert Bourla: nothing found (Wikipedia: no cats/pets). Social accounts not checkable.
+
+### Verdict
+none_found (no cat mascot or cat post found). Weak historical link: Pfizer Animal Health's feline medicines
+(Convenia, Revolution) before the 2013 Zoetis spin-off. Big-cat hits are name-only third parties (Puma Biotechnology,
+a "Jaguar" PCR product, Lions Clubs).
+=================== RIVN
+- Underlying: Rivian Automotive, Inc. (Nasdaq: RIVN)
+## Cat research (2026-09-25)
+
+Method note: WebSearch budget for the session was exhausted (200/200) before this pass, so no general web
+searches. I crawled Rivian's OFFICIAL site via its sitemaps and grepped page text, plus Wikipedia.
+
+### Sources crawled / queries run
+- https://rivian.com/sitemap.xml + https://rivian.com/root/sitemap.xml -> 2,074 URLs; downloaded all 1,010
+  /stories/, /newsroom/, /support/, /spaces/, /events/ pages and grepped text + image alt text for
+  cat|cats|kitty|kitten|kitties|feline|meow|Hello Kitty|Sanrio|Garfield|Pusheen|Doraemon|tiger|lion|leopard|panther|
+  jaguar|cheetah|cougar|puma|lynx|bobcat|mountain lion|mascot|easter egg|yeti.
+- Wikipedia: RJ Scaringe (no cats/pets/mascot mentioned).
+- gear.rivian.com (Gear Shop) could not be reached (proxy 502) - not checked.
+
+### OFFICIAL findings
+1. Rivian Stories, "National Pet Day - Fur-ever appreciating our animal companions", April 13, 2026
+   (datePublished 2026-04-13T20:11:12Z): https://rivian.com/stories/pet-day-rivian-2026
+   Official image alt text: "Six pets ride in a car for National Pet Day. Nash, a dog in a cowboy hat, sits in the
+   driver's seat. ... Lucky, a parrot, perches on the steering wheel. Gizmo, a dog, peeks out the window.
+   Pepper, a cat, sits on the headrest."  -> Rivian officially posted a cat named PEPPER.
+2. Rivian Stories, "Celebrating National Pet Day - A fluff piece on some favorite Rivian pets", April 11, 2025:
+   https://rivian.com/stories/pet-day-rivian-2025
+   Quote: "More than 60 percent of current Rivian owners have at least one dog—not to mention all of the cats,
+   turtles, birds, lizards, horses and a host of other creatures". (Featured owner quotes are about dogs/horses;
+   collage alt mentions pets "Benny", "Leia", "Miso", "Churro", "Yuzu" without species for all.)
+3. Rivian Stories, "New Software: Pet Comfort", June 30, 2022: https://rivian.com/stories/software-update-pet-comfort
+   Pet Comfort mode (paw icon); "our Gear Guard character will also pop up in the center display". Generic pets.
+
+### Mascot (not a cat)
+- Rivian's Gear Guard character is a YETI: "The Gear Guard yeti even makes its appearance on the small screen."
+  (https://rivian.com/stories/software-update-rivian-apple-watch-app-2026, Feb 19, 2026). Not a cat.
+
+### BIG CAT
+- None official. Only trail place-names in stories ("Baby Lion's Back" in Moab; "Tiger Road" near Breckenridge).
+  No big-cat logo, mascot, trim or codename found.
+
+### COLLABORATION (cat IP)
+- None found (no Hello Kitty/Sanrio/Garfield/Pusheen etc. on any crawled Rivian page).
+
+### EXECUTIVE PERSONAL
+- RJ Scaringe: nothing found about a cat (Wikipedia, Rivian pages). Not verified on X (cannot fetch).
+
+### Verdict
+official_account_posted_cat - Rivian's official National Pet Day story (Apr 13, 2026) shows "Pepper, a cat" in an R-vehicle.
+No cat mascot (mascot = Gear Guard yeti).
+=================== SHOP
+- Underlying: Shopify Inc. (Nasdaq/TSX: SHOP)
+## Cat research (2026-09-25)
+
+Method note: WebSearch budget for the session was exhausted (200/200) before this pass, so no general web
+searches. I crawled Shopify's OFFICIAL sites via their sitemaps and grepped the text, plus Wikipedia.
+
+### Sources crawled / queries run
+- https://www.shopify.com/sitemaps_list.xml -> sitemap_news.xml (527 newsroom URLs, ALL downloaded & grepped),
+  sitemap_blog.xml (6,532 blog URLs, URL-slug grep), sitemap.xml (557), case-studies.xml (602 case studies),
+  stock-photos categories.xml.
+- Grep terms: cat|cats|kitty|kitten|feline|meow|Hello Kitty|Sanrio|Garfield|Pusheen|Doraemon|Grumpy Cat|Nyan|
+  tiger|lion|leopard|panther|jaguar|cheetah|cougar|mascot.
+- Wikipedia: Tobias Lutke (no cats/pets/mascot mentioned; married to Fiona McKean, three children).
+- Checked whether cat-IP brand stores run on Shopify (HTTP headers / page source).
+
+### OFFICIAL findings (all weak - no mascot)
+1. Shopify newsroom, "2021 was Shopify's biggest year ever. 2022: let's go!", datePublished 2022-02-16:
+   https://www.shopify.com/news/2021-was-shopify-s-biggest-year-ever-2022-let-s-go
+   Quote: "Okayyy, we'll let the cat out of the shopping bag. 😼 🛍" (cat idiom + cat emoji in an official post).
+2. Shopify blog, "How to Open a Cat Cafe in 11 Steps", by Shopify Staff, Jul 27, 2025:
+   https://www.shopify.com/blog/how-to-open-a-cat-cafe  ("For cat lovers, stumbling upon a friendly calico, spunky
+   orange tabby, or chatty Siamese ...").
+3. Shopify blog, Kitty Poo Club merchant story (undated in page grab): https://www.shopify.com/blog/kitty-poo-club-facebook-video
+   ("Chad Kauffman is the co-founder of Kitty Poo Club, a company that ships disposable cat litter boxes").
+4. Shopify's Burst free stock-photo site has a Cats collection: https://www.shopify.com/stock-photos/cat
+   (title "Cat Stock Photos: Free HD Pictures of Cats and Cute Kittens").
+5. Shopify newsroom "Black Friday in 3D: Welcome to the Shopify mothership" (2024-11-29) mentions a "Shoppy mascot
+   bobblehead" in the Live Globe cockpit. Nothing says Shoppy is a cat; I could not find a description of Shoppy.
+   Treat as NOT a cat.
+
+### COLLABORATION (cat IP) - merchant relationships only, NOT collaborations
+- https://www.sanrio.com/ (Sanrio North America, Hello Kitty's owner) response header "powered-by: Shopify" and
+  page source `Shopify.shop = "sanrio-na.myshopify.com"` (checked 2026-09-25).
+- https://pusheen.com/ (Pusheen shop) header "powered-by: Shopify", `Shopify.shop = "heychickadee.myshopify.com"`.
+- No Shopify case study, newsroom post or co-branded campaign with Sanrio/Hello Kitty/Pusheen found (case-studies
+  sitemap and newsroom grep: zero hits). So these are just Shopify customers.
+
+### BIG CAT
+- None. Only idiom hits ("lion's share" in two BFCM news posts). No big-cat logo, mascot or codename found.
+
+### EXECUTIVE PERSONAL
+- Tobi Lutke: nothing found about a cat (Wikipedia; newsroom). Not verified on X (cannot fetch).
+
+### Verdict
+official_account_posted_cat (weak: cat emoji/idiom in a 2022 newsroom post, a cat-cafe blog guide, Burst cat photos).
+No cat mascot, no cat-IP collaboration (Sanrio NA and Pusheen merely run their stores on Shopify).
+=================== SNAP
+- Underlying: Snap Inc. (NYSE: SNAP)
+## Cat research (2026-09-25)
+
+Method note: the session's WebSearch budget was already exhausted (200/200) when this pass started, so no
+general web searches were possible. Instead I crawled Snap's OFFICIAL sites directly (sitemaps -> every page,
+then grepped the article text), plus Wikipedia and TechCrunch's own site API.
+
+### Sources crawled / queries run
+- newsroom.snap.com sitemap-1.xml + sitemap-2.xml -> 503 English articles downloaded and grepped for
+  cat|cats|kitty|kitten|feline|meow|Hello Kitty|Sanrio|Garfield|Pusheen|Doraemon|tiger|lion|leopard|panther|jaguar|cheetah.
+- www.snap.com sitemaps (11,646 URLs; mostly legal/privacy/brand pages) -> no cat URLs.
+- developers.snap.com sitemap (2,453 URLs) -> grep for cat/pet -> Lens Studio "Pet" template pages.
+- Wikipedia: Snapchat (mascot = Ghostface Chillah, a ghost; no cat), Evan Spiegel (no cats/pets mentioned).
+- TechCrunch WP API site searches: "snapchat cat lenses", "lenses for cats", "snapchat cats", "snapchat pets".
+- Tried to find the original 2017/2018 "Lenses for cats" press coverage by URL guessing (404s) - not verified.
+
+### OFFICIAL findings
+1. Lens Studio "Pet" template / "Cats and Dogs Tracking" (official Snap developer docs)
+   - https://developers.snap.com/lens-studio/features/ar-tracking/world/world-templates/pet (fetched 2026-09-25)
+   - https://developers.snap.com/lens-studio/4.55.1/references/templates/object/pet
+   - Quote: "The Pet Tracking lets you create Lenses that add content to Cat or Dog faces." ...
+     "The Cat tracking type will only apply to cats." ... "select + -> Object Tracking -> Cats and Dogs Tracking".
+   - i.e. Snap ships official cat-face-tracking AR tech. (Page undated; 4.55.1 docs are the Lens Studio 4.x line.)
+2. newsroom.snap.com/halloween2022 - "Celebrate spooky season with new Lenses, Bitmoji features, and more", Oct 25, 2022:
+   "whether you're a cat or dog person, transform your furry friend into a ghost with the help of Spooky Pet."
+   Also "five new Bitmoji costumes, including a cat burglar, a devil catsuit, ...".
+3. newsroom.snap.com/2024-in-a-snap - "2024 in a Snap", Dec 09, 2024: top purchasable Bitmoji fashion of 2024
+   includes "Plush Cat Slippers".
+4. newsroom.snap.com/early-insights-on-my-ai - "Early Insights on My AI" (May 31 / Jun 11, 2023): "Over 25 million
+   conversations about pets- with 12 million conversations about dogs and 7.5 million about cats".
+5. newsroom.snap.com/lens-fest-2021 - Dec 07, 2021: "take care of your very own pet called Rocket Cat by Wabisabi"
+   (a third-party creator's Lens showcased by Snap).
+6. TechCrunch 2024-07-02 (Aisha Malik) https://techcrunch.com/2024/07/02/snapchats-latest-features-help-users-personalize-their-accounts/
+   "Subscribers can now also have their pet appear alongside their Bitmoji in chats." (Bitmoji pets; species not stated.)
+   TechCrunch 2024-12-11 lists "AI Bitmoji Pets" as a Snapchat+ perk.
+
+### BIG CAT (official)
+- newsroom.snap.com/sendchinatownlove-lunarnewyear-2022 - "Happy LunAR New Year", Feb 02, 2022: "ring in the Year of
+  the Tiger with a new Lens that uses Snapchat's signature Sky Segmentation technology to paint the sky with a
+  watercolor tiger jumping through the clouds".
+- newsroom.snap.com/wallis-annenberg-wildlife-crossing-lens - Oct 18, 2022: AR Lens explaining how "the mountain lion
+  'P-22' crossed the 101 freeway", with "realistic 3D models of mountain lions".
+- (Not relevant: "Three Lions" = England FA branding in fa-brings-england-fans-closer-to-action-snapchat;
+  "Cannes Lions" festival; "Leopard USA" = a production company.)
+
+### EXECUTIVE PERSONAL
+- Snap's official leadership page for CMO Grace Kao: https://newsroom.snap.com/company/leadership/grace-kao
+  Quote: "Grace has a master's degree in Communications from Stanford University and resides in San Francisco,
+  California with her husband, two children and cat." (Cat not named; no photo found.)
+- Evan Spiegel / Bobby Murphy: nothing found about cats (Wikipedia; newsroom).
+
+### COLLABORATION (cat IP)
+- No Hello Kitty / Sanrio / Garfield / Pusheen / Doraemon / Grumpy Cat item found anywhere in the 503 newsroom articles.
+  (Not claiming none exist in-app; just none in Snap's official newsroom.)
+
+### Mascot
+- Snapchat mascot is the ghost "Ghostface Chillah" (Wikipedia: "a mascot designed by Brown, 'Ghostface Chillah'").
+  Not a cat.
+
+### Verdict
+official_account_posted_cat (Snap officially builds cat-face-tracking Lenses and has posted cat-themed Lenses /
+Bitmoji items; no cat mascot). Secondary: big-cat Lenses (tiger 2022, mountain lion P-22 2022); CMO bio mentions her cat.

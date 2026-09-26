@@ -1,0 +1,13 @@
+import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+const p = await b.newPage({ viewport: { width: 1280, height: 820 } });
+const log = [];
+p.on('request', (r) => log.push(['req', r.url().replace('http://localhost:8931/', ''), r.resourceType()]));
+p.on('requestfinished', async (r) => { const res = await r.response(); log.push(['done', r.url().replace('http://localhost:8931/', ''), res?.status()]); });
+p.on('requestfailed', (r) => log.push(['FAIL', r.url().replace('http://localhost:8931/', ''), r.failure()?.errorText]));
+p.on('console', (m) => log.push(['console', m.type(), m.text().slice(0, 200)]));
+await p.goto('http://localhost:8931/index.html');
+await p.waitForFunction(() => document.getElementById('stage').dataset.ready, null, { timeout: 120000 });
+await p.waitForTimeout(1500);
+for (const l of log) if (!/^(req)$/.test(l[0]) || /glb/.test(l[1])) console.log(l.join('  '));
+await b.close();

@@ -1,0 +1,352 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclosureTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "AMBA",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Gloam the Night-Eyed Cat",
+   "ticker": "GLOAMEYE",
+   "nameLen": 24,
+   "blurbLen": 138,
+   "descLen": 271,
+   "descBytes": 271,
+   "nonAscii": [],
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Gloam, a sleek charcoal-black shorthair ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "all": [
+     "ANGEL|No Angel don't blame yourself|v=undefined"
+    ],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Gloam, a sleek charcoal-black shorthair with big round green eyes that catch the porch light, keeps watch over the dark garden until dawn. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Iris the Seal-Point Cat",
+   "ticker": "IRISPAW",
+   "nameLen": 23,
+   "blurbLen": 146,
+   "descLen": 279,
+   "descBytes": 279,
+   "nonAscii": [],
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Iris, a cream seal-point cat with a dark",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "all": [
+     "ISS|Internation Sender Spawner|v=undefined"
+    ],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Iris, a cream seal-point cat with a dark brown mask, ears, paws and tail, gazes out from the porch step with wide sky-blue eyes and blinks slowly. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Etchline the Silver Tabby Cat",
+   "ticker": "ETCHLINE",
+   "nameLen": 29,
+   "blurbLen": 143,
+   "descLen": 276,
+   "descBytes": 276,
+   "nonAscii": [],
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Etchline, a slim silver tabby with fine,",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 3,
+    "all": [
+     "UTCL|Under the Crush Linens|v=undefined",
+     "ESSENTIALS|QuarterZipMatchaLinkedIn|v=undefined",
+     "BALDLION|Thelionacceptsreceedinghairline|v=undefined"
+    ],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Etchline, a slim silver tabby with fine, straight charcoal stripes and copper eyes, sits on the garden fence and follows every passing bicycle. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "Dbdw7YxBphEKhguSA6Z77H6wCjxHkP7LqpBqkq5msVd5",
+  "extensions": [
+   {
+    "extension": "metadataPointer",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "metadataAddress": "AMBAHqGPjjtJaHPPSuvPu2mPCJdkGZpmhHQa5pkXbxrM"
+    }
+   },
+   {
+    "extension": "permanentDelegate",
+    "state": {
+     "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+    }
+   },
+   {
+    "extension": "defaultAccountState",
+    "state": {
+     "accountState": "initialized"
+    }
+   },
+   {
+    "extension": "pausableConfig",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "paused": false
+    }
+   },
+   {
+    "extension": "confidentialTransferMint",
+    "state": {
+     "auditorElgamalPubkey": null,
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "autoApproveNewAccounts": false
+    }
+   },
+   {
+    "extension": "transferHook",
+    "state": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "programId": null
+    }
+   },
+   {
+    "extension": "scaledUiAmountConfig",
+    "state": {
+     "authority": "Dbdw7YxBphEKhguSA6Z77H6wCjxHkP7LqpBqkq5msVd5",
+     "multiplier": "1",
+     "newMultiplier": "1",
+     "newMultiplierEffectiveTimestamp": 0
+    }
+   },
+   {
+    "extension": "tokenMetadata",
+    "name": "Ambarella, Inc. Ordinary Shares - Backpack Securities",
+    "symbol": "AMBA"
+   }
+  ],
+  "hasTransferFee": false
+ }
+}

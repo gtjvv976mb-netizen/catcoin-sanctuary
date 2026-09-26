@@ -1,0 +1,183 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Beadline the Silver-Spotted Cat",
+   "ticker": "BEADLINE",
+   "nameLen": 31,
+   "blurbLen": 162,
+   "descLen": 290,
+   "tickerHasIonRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "tagline_format",
+      "term": "Beadline, a pale silver shorthair with a",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Beadline, a pale silver shorthair with a",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 9,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Beadline, a pale silver shorthair with a neat row of small round slate-blue spots down her back, naps on the cool flagstones and hops from stone to stone at dusk. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Rime the Blue-Point Cat",
+   "ticker": "RIMEPOINT",
+   "nameLen": 23,
+   "blurbLen": 162,
+   "descLen": 290,
+   "tickerHasIonRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "tagline_format",
+      "term": "Rime, an ice-white cat with slate-blue e",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Rime, an ice-white cat with slate-blue e",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 9,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Rime, an ice-white cat with slate-blue ears, mask, paws and tail and bright blue eyes, picks the coolest shady stone and sits so still that moths land beside him. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Flicker the Slate-Blue Cat",
+   "ticker": "DOTCHASE",
+   "nameLen": 26,
+   "blurbLen": 163,
+   "descLen": 291,
+   "tickerHasIonRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "tagline_format",
+      "term": "Flicker, a sleek slate-blue shorthair wi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Flicker, a sleek slate-blue shorthair wi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 5,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Flicker, a sleek slate-blue shorthair with pale green eyes, chases the little dancing dot of light across the garden wall every evening and never quite catches it. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

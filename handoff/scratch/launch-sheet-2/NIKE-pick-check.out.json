@@ -1,0 +1,381 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "nike",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclosureStockTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "NIKE",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Cinder the Matte-Coat Cat",
+   "ticker": "CINDERLAP",
+   "nameLen": 25,
+   "blurbLen": 144,
+   "descLen": 278,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cinder, a lean, long-legged jet-black sh",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "exactSymbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupRoots": {
+    "CINDER": {
+     "status": 200,
+     "results": 20,
+     "exactSymbolMatches": [
+      {
+       "symbol": "CINDER",
+       "name": "CINDERMAN",
+       "id": "EthqzCymkrXyoTaMbGCmrcpV9Vd1BHKDCJAHxoYppump",
+       "holders": 1,
+       "mcap": 3159.7616519205185
+      },
+      {
+       "symbol": "CINDER",
+       "name": "CINDERMAN",
+       "id": "U4QRYmbzKHWrPRc75PjPGcPzKnC47Lvf3eaJwgFpump",
+       "holders": 1,
+       "mcap": 3162.777579285362
+      },
+      {
+       "symbol": "Cinder",
+       "name": "Cinderkid",
+       "id": "3zWovsRXmFBM3yeAQiGK6o9TCU1pAVx4HyZzZ1EZpump",
+       "holders": 1,
+       "mcap": 3159.3031460646307
+      },
+      {
+       "symbol": "CINDER",
+       "name": "Cinder",
+       "id": "BhY1sMQC4DzqHGjPaaXzZNdbLMQnWMmtV4qS2aq4pump",
+       "holders": 1,
+       "mcap": 3304.0105897372177
+      },
+      {
+       "symbol": "CINDER",
+       "name": "Cinder",
+       "id": "9J9FbjuPSXyY2imYCXJaEKkZaaYwPe83ke8p3fUypump",
+       "holders": 1,
+       "mcap": 3297.993981765581
+      },
+      {
+       "symbol": "CINDER",
+       "name": "Cinderella Coyote",
+       "id": "9fTiGqUZj5vRhKZkhoHnhqZNaBV8zVh5j3D6Vy4U5SAT",
+       "holders": 1,
+       "mcap": 2962.7509672948922
+      },
+      {
+       "symbol": "CINDER",
+       "name": "CINDERMAN",
+       "id": "5GEeqKarhoMs88db6W33bGaMCEdQv2Ufr14SuLEupump",
+       "holders": 4,
+       "mcap": 2832.0416712415167
+      },
+      {
+       "symbol": "CINDER",
+       "name": "CINDERMAN",
+       "id": "EoByH36fcKea2pXsNyzEukCS2ad7xVk7ZwEUTNUHpump",
+       "holders": 2,
+       "mcap": 21549.85880424603
+      },
+      {
+       "symbol": "CINDER",
+       "name": "CINDERMAN",
+       "id": "Fh2yqfHGfSAsPVzKihRDDBQD6ue9m4RVojwgmf58pump",
+       "holders": 1,
+       "mcap": 2028.3236499488762
+      }
+     ],
+     "verifiedMatch": false
+    }
+   },
+   "description": "Cinder, a lean, long-legged jet-black shorthair with graphite-grey whisker tips and honey-gold eyes, runs dusk laps on the garden's cinder path. A cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Soot the Graphite-Smoke Cat",
+   "ticker": "SOOTSTEP",
+   "nameLen": 27,
+   "blurbLen": 144,
+   "descLen": 278,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Soot, a sleek black smoke cat whose velv",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 4,
+    "exactSymbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupRoots": {
+    "SOOT": {
+     "status": 200,
+     "results": 20,
+     "exactSymbolMatches": [],
+     "verifiedMatch": false
+    }
+   },
+   "description": "Soot, a sleek black smoke cat whose velvety coat shows a graphite-grey undercoat when she stretches, hops from stepping stone to stepping stone. A cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tread the Soft-Step Cat",
+   "ticker": "TREADPAW",
+   "nameLen": 23,
+   "blurbLen": 144,
+   "descLen": 278,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tread, a wiry jet-black shorthair with a",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nike",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "exactSymbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupRoots": {
+    "TREAD": {
+     "status": 200,
+     "results": 20,
+     "exactSymbolMatches": [
+      {
+       "symbol": "TREAD",
+       "name": "Token Treadmill",
+       "id": "EzjLDnUVexceLGSqtq2bpV5yrR2zwj8TSAPVrfHjpump",
+       "holders": 1,
+       "mcap": 3424.4244323926273
+      },
+      {
+       "symbol": "TREAD",
+       "name": "Dont Tread On Me",
+       "id": "AGpDZnqbtqd1YJtXotzkP9wznMn7MBFTZ9UXVdLoRuJ4",
+       "holders": 1,
+       "mcap": 3268.3202643905674
+      },
+      {
+       "symbol": "TREAD",
+       "name": "Dont tread on my GPU",
+       "id": "DT67XNUqY2DTZ1cLR7MZvWa5ydwdDUyy8BHFz5Vpump",
+       "holders": 1,
+       "mcap": 3955.874235467908
+      }
+     ],
+     "verifiedMatch": false
+    }
+   },
+   "description": "Tread, a wiry jet-black shorthair with a soft matte coat, graphite-grey paw pads and gold eyes, pads silent circuits of the garden pond at dawn. A cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "name": "Inkcap the Round Garden Cat",
+ "ticker": "INKCAP",
+ "nameLen": 27,
+ "blurbLen": 141,
+ "descLen": 273,
+ "lookLen": 289,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "endsWithDisclaimer": true,
+ "coatValid": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Inkcap, a round cream-white cat with a c",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_disclaimer_only": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "PFIZER",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 8,
+  "hits": [
+   "Link Cap",
+   "Link Cap",
+   "LEWOWINK",
+   "FRANK",
+   "RIP FRANK",
+   "CLICKED",
+   "PCA",
+   "PCPC"
+  ],
+  "symbolMatches": [],
+  "verifiedMatch": false
+ },
+ "description": "Inkcap, a round cream-white cat with a charcoal cap between pink ears, charcoal back patches and olive-gold eyes, dozes by the mushroom ring. A cat coin priced in PFIZER. Not affiliated with Pfizer, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

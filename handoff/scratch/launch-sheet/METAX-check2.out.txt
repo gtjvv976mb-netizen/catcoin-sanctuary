@@ -1,0 +1,14 @@
+== Pawse Button Tabby PAUSEPAW | name len 18 | symbol len 8 | body len 145 | desc len 269 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"meta","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 0 | same-symbol 0 | same-symbol verified 0 
+ DESC: One paw on the pause button, one eye on you. A tufty-eared brown tabby who stops the film whenever it is time for snacks, laps or chin scratches. A cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.
+== Pawse Button Tabby PAWSEBTN | name len 18 | symbol len 8 | body len 145 | desc len 269 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"meta","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 0 | same-symbol 0 | same-symbol verified 0 
+ DESC: One paw on the pause button, one eye on you. A tufty-eared brown tabby who stops the film whenever it is time for snacks, laps or chin scratches. A cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.

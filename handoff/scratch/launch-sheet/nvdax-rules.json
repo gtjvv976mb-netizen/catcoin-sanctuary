@@ -1,0 +1,215 @@
+[
+ {
+  "name": "Dewdrop the Sunrise Cat",
+  "ticker": "DEWDROP",
+  "nameLen": 23,
+  "tickerLen": 7,
+  "descLen": 276,
+  "lookLen": 192,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposalFullDesc": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "nvidia",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Dewdrop is a lean grey tabby with a whit",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFull": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "nvidia",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsStoryLook": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms": {
+   "ok": true,
+   "violations": []
+  }
+ },
+ {
+  "name": "Sockfoot the Garden Tabby",
+  "ticker": "SOCKFOOT",
+  "nameLen": 25,
+  "tickerLen": 8,
+  "descLen": 276,
+  "lookLen": 224,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposalFullDesc": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "nvidia",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Sockfoot is a grey tabby in four white s",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFull": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "nvidia",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsStoryLook": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms": {
+   "ok": true,
+   "violations": []
+  }
+ },
+ {
+  "name": "Splashdash the Lawn Cat",
+  "ticker": "SPLASHDASH",
+  "nameLen": 23,
+  "tickerLen": 10,
+  "descLen": 267,
+  "lookLen": 193,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposalFullDesc": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "nvidia",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Splashdash is a sleek grey tabby with a ",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFull": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "nvidia",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFieldsStoryLook": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms": {
+   "ok": true,
+   "violations": []
+  }
+ }
+]

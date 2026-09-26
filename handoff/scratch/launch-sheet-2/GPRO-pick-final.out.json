@@ -1,0 +1,223 @@
+{
+ "discLen": 134,
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Scuff the Tabby-and-White Cat",
+   "ticker": "SCUFFPAW",
+   "blurb": "Scuff, a sturdy brown tabby with a white nose stripe, white chest and white paws, zooms down a sloping Cat Sanctuary path and slides to a halt.",
+   "nameLen": 29,
+   "blurbLen": 143,
+   "descLen": 278,
+   "endsWithDisc": true,
+   "tickerFmt": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_full": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_SCUFFPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jup_Scuff": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Scuff, a sturdy brown tabby with a white nose stripe, white chest and white paws, zooms down a sloping Cat Sanctuary path and slides to a halt. A cat coin priced in GPRO. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Scuff the Tabby-and-White Cat",
+   "ticker": "SCUFFPAW",
+   "blurb": "Scuff, a sturdy brown tabby with a white nose stripe, white chest and white paws, zooms down the sloping path in the Cat Sanctuary and slides to a halt.",
+   "nameLen": 29,
+   "blurbLen": 152,
+   "descLen": 287,
+   "endsWithDisc": true,
+   "tickerFmt": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_full": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_SCUFFPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jup_Scuff": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Scuff, a sturdy brown tabby with a white nose stripe, white chest and white paws, zooms down the sloping path in the Cat Sanctuary and slides to a halt. A cat coin priced in GPRO. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Thistle the White-Socked Cat",
+   "ticker": "THISTLEPAW",
+   "blurb": "Thistle, a dark-striped brown tabby with a snowy bib and white socks, walks the Cat Sanctuary wall and leans down to peer right at you.",
+   "nameLen": 28,
+   "blurbLen": 135,
+   "descLen": 270,
+   "endsWithDisc": true,
+   "tickerFmt": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_full": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_THISTLEPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jup_Thistle": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "THISTLE",
+      "name": "THISTLE",
+      "id": "BiGCrevWi6qeJRo2Le3VaL4MysUTQ42PuVsZR9gVpump"
+     },
+     {
+      "symbol": "Thistle",
+      "name": "Claude Capybara",
+      "id": "2bAGqvV7dWwF5QvWoPNhsjwTjxnCcU8hRJR9RxaKpump"
+     },
+     {
+      "symbol": "THISTLE",
+      "name": "thistle.gg",
+      "id": "DnxogqAig94GZmsPMgPL9xcUvPCSfjpkrcoCKLGppump"
+     },
+     {
+      "symbol": "Thistle",
+      "name": "Thistle",
+      "id": "DyNwBWcJTArJgT2gwAmnfcjvkDPhdM74dwFf1Fgcpump"
+     }
+    ],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Thistle, a dark-striped brown tabby with a snowy bib and white socks, walks the Cat Sanctuary wall and leans down to peer right at you. A cat coin priced in GPRO. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

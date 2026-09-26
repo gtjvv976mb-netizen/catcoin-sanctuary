@@ -1,0 +1,265 @@
+[
+ {
+  "control": "POPCAT",
+  "status": 200,
+  "n": 20,
+  "verifiedPOPCAT": 1
+ },
+ {
+  "name": "Latchkey the Vault Cat",
+  "ticker": "LATCHKEY",
+  "lengths": {
+   "name": 22,
+   "ticker": 8,
+   "description": 277,
+   "tagline": 151
+  },
+  "withinLimits": true,
+  "tickerFormat": true,
+  "endsWithDisclosure": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_description": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_look": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "memeTicker": false,
+  "confusableWithRoot": false,
+  "jup": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "allSymbols": [],
+   "verifiedCollision": false
+  },
+  "jupName": {
+   "query": "Latchkey",
+   "results": 0,
+   "hits": []
+  }
+ },
+ {
+  "name": "Stashpaw the Hoarding Cat",
+  "ticker": "STASHPAW",
+  "lengths": {
+   "name": 25,
+   "ticker": 8,
+   "description": 277,
+   "tagline": 151
+  },
+  "withinLimits": true,
+  "tickerFormat": true,
+  "endsWithDisclosure": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_description": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_look": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "memeTicker": false,
+  "confusableWithRoot": false,
+  "jup": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "allSymbols": [],
+   "verifiedCollision": false
+  },
+  "jupName": {
+   "query": "Stashpaw",
+   "results": 0,
+   "hits": []
+  }
+ },
+ {
+  "name": "Doorstop the Guard Cat",
+  "ticker": "DOORSTOP",
+  "lengths": {
+   "name": 22,
+   "ticker": 8,
+   "description": 279,
+   "tagline": 153
+  },
+  "withinLimits": true,
+  "tickerFormat": true,
+  "endsWithDisclosure": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_description": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_look": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "memeTicker": false,
+  "confusableWithRoot": false,
+  "jup": {
+   "status": 200,
+   "results": 3,
+   "symbolMatches": [],
+   "allSymbols": [
+    "DOOR",
+    "Door",
+    "Dolores"
+   ],
+   "verifiedCollision": false
+  },
+  "jupName": {
+   "query": "Doorstop",
+   "results": 3,
+   "hits": [
+    "DOOR / DOORSTOP",
+    "Door / One Door Closes Another Opens",
+    "Dolores / Dolores the Baby Aquilops"
+   ]
+  }
+ }
+]

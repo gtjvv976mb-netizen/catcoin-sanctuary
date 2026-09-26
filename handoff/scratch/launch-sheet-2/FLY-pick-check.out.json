@@ -1,0 +1,401 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "disclosure"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "disclosure"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "disclosure"
+   }
+  ]
+ },
+ "disclosureTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "FLY",
+    "field": "disclosure"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Pumice the Moon-Dust Cat",
+   "ticker": "PUMICE",
+   "nameLen": 24,
+   "blurbLen": 132,
+   "descLen": 272,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclosure": true,
+   "coatOk": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Pumice, a pale ash-grey shorthair with h",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupNameWord": {
+    "query": "Pumice",
+    "status": 200,
+    "results": 20,
+    "symbolOrNameHits": []
+   },
+   "description": "Pumice, a pale ash-grey shorthair with honey-gold eyes, rolls in the dry garden path and leaves soft grey paw prints on every stone. A cat coin priced in FLY. Not affiliated with Firefly Aerospace, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Plume the Liftoff Cat",
+   "ticker": "LIFTPAW",
+   "nameLen": 21,
+   "blurbLen": 132,
+   "descLen": 272,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclosure": true,
+   "coatOk": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Plume, a white cat with a smoky grey bac",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 2,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupNameWord": {
+    "query": "Plume",
+    "status": 200,
+    "results": 20,
+    "symbolOrNameHits": [
+     {
+      "symbol": "PLUME",
+      "name": "PLUME",
+      "mcap": 3048.4526159306342,
+      "id": "2cvhqiLetmM15z8hG4rm3YekFR3iALDmQjJ2A9AKpump"
+     },
+     {
+      "symbol": "PLUME",
+      "name": "Plume",
+      "mcap": 3984.8733158395,
+      "id": "3BhNgeigWD5vRpgsmLYAk3uw8HTQQ23kxKy8spWdpump"
+     },
+     {
+      "symbol": "Plume",
+      "name": "Plume",
+      "id": "55MYL5J8nAbCG3iAd8BExc11bEDq5hvpmVUDFh1ipump"
+     },
+     {
+      "symbol": "Plume",
+      "name": "The Anthropic Quant",
+      "id": "5HSdBptEPiM8MW3FpqYMwcpFEEtZwBUvzWjLu9uBpump"
+     },
+     {
+      "symbol": "PLUME",
+      "name": "Plume was here",
+      "id": "7LiWjgmke9Zcdo7zCQbxSEz8GcXXspWbxwJLo3vXpump"
+     },
+     {
+      "symbol": "PLUME",
+      "name": "The cage is all I know",
+      "mcap": 2152.3136525235445,
+      "id": "17nBnwH36wMAShWg3Gh1fMbJZ4obAdehtf6HYb4pump"
+     },
+     {
+      "symbol": "Plume",
+      "name": "The Anthropic Quant",
+      "id": "FyXqy4zJBBrGELouqsmYpcb2NbfsAguLvTvznekNpump"
+     },
+     {
+      "symbol": "Plume",
+      "name": "The Anthropic Quant",
+      "id": "4fYiVFhBMcVmcepcDjTNvz8AWD4R9jRv33jvbD3mpump"
+     },
+     {
+      "symbol": "Plume",
+      "name": "The Anthropic Quant",
+      "id": "A7KEE6Sk69ysejbcnPqUkubf1kRhf9bZfGyQnWTWpump"
+     },
+     {
+      "symbol": "PLUME",
+      "name": "Plume Was Here",
+      "id": "9BkLAJcisHhbL2L6YFvpvhBRqRZLfV7D4DGjnB33pump"
+     },
+     {
+      "symbol": "Plume",
+      "name": "THIS NOT GOOD AF???",
+      "id": "Dbo6mcpkTf6dktY9rWqmPr5UwNRK1ojcienvwKogpump"
+     },
+     {
+      "symbol": "Plume",
+      "name": "The Anthropic Quant",
+      "id": "2FNNvNuhEtdKZ4KvAQ7KeSJxT8gMuWEcC3HeRvGjpump"
+     }
+    ]
+   },
+   "description": "Plume, a white cat with a smoky grey back and copper eyes, shoots straight up the garden tree whenever someone counts down from ten. A cat coin priced in FLY. Not affiliated with Firefly Aerospace, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Crater the Moon-Spotted Cat",
+   "ticker": "CRATERPAW",
+   "nameLen": 27,
+   "blurbLen": 130,
+   "descLen": 270,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclosure": true,
+   "coatOk": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Crater, a silver spotted tabby with roun",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 2,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupNameWord": {
+    "query": "Crater",
+    "status": 200,
+    "results": 20,
+    "symbolOrNameHits": [
+     {
+      "symbol": "CRATER",
+      "name": "Asshole",
+      "mcap": 3308.1680694650613,
+      "id": "7NEKynvtj2fk7DHXz2Y7tTSkZigQeDwPepqbQhhhSS91"
+     },
+     {
+      "symbol": "CRATER",
+      "name": "Tyler The Crater",
+      "mcap": 3194.7865502152013,
+      "id": "5q1CVjZ5Eph73CZMoriEhmRY2sL8PPz1TjvACKXJpump"
+     },
+     {
+      "symbol": "CRATER",
+      "name": "CRATERKING",
+      "mcap": 3140.320371194983,
+      "id": "2xQC9kizrobwkyKRFC2a7VLdj4wHeHmpXpdbbc5ipump"
+     },
+     {
+      "symbol": "CRATER",
+      "name": "Tyler The Crater",
+      "mcap": 2960.6417159094754,
+      "id": "6Kgbw3RxLNZpuFfhCeZbwSmyPP4f4JqzpeiR5Hvppump"
+     },
+     {
+      "symbol": "CRATER",
+      "name": "Tyler the Crater",
+      "mcap": 2986.4933738773325,
+      "id": "HkWzEcHe4xexbGvqKLQx5oPZ5e7t2PkK2vdp9QHQpump"
+     },
+     {
+      "symbol": "CRATER",
+      "name": "CRATERCASH",
+      "mcap": 2.9764927150802047,
+      "id": "4RMV53jEW4YxuVJcR2nEuJdRihhPmuKfbumN78rRpump"
+     },
+     {
+      "symbol": "Crater",
+      "name": "Space Anus",
+      "id": "J1MZ1sKb6E53igByAZc8BcSb4Ny9KhZXKhRJGSW4pump"
+     }
+    ]
+   },
+   "description": "Crater, a silver spotted tabby with round charcoal spots and green eyes, naps in the sandbox all day and sits up tall at moonrise. A cat coin priced in FLY. Not affiliated with Firefly Aerospace, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

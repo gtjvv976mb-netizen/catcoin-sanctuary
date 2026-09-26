@@ -1,0 +1,100 @@
+{
+ "name": "Jowls the Big Grey Cat",
+ "ticker": "JOWLS",
+ "nameLen": 22,
+ "blurbLen": 138,
+ "descLen": 278,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "endsWithDisclosure": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Jowls, a heavy round-cheeked grey shorth",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_descriptionMinusDisclosure": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 4,
+  "returned": [
+   {
+    "symbol": "$JLS",
+    "name": "Jaow Live Sess"
+   },
+   {
+    "symbol": "JPOW",
+    "name": "Jerome Powell stole Christmas"
+   },
+   {
+    "symbol": "KAJOW",
+    "name": "kajoWnOLos"
+   },
+   {
+    "symbol": "Girlfriend",
+    "name": "jijo wallet never disappoints"
+   }
+  ],
+  "symbolMatches": 0,
+  "verifiedMatch": false
+ },
+ "description": "Jowls, a heavy round-cheeked grey shorthair with sleepy half-shut eyes and a thick ruff, sits as still as an old photo on the garden wall. A cat coin priced in JNJ. Not affiliated with Johnson & Johnson, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

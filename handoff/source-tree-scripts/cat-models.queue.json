@@ -1,0 +1,54 @@
+{
+ "updated": "2026-09-26",
+ "pipeline": "gpt_image_2_5 standing 3/4 reference (from the cat picture / coin logo) -> 4 gpt_image_2_5 views from that reference (front, left = head pointing left, back, right) -> hunyuan3d_v3_image_to_3d with the 4 views in order front,left,back,right, default face count (15 credits; custom face_count costs 19) -> make-cat-models.py with hd:true, si 0.04, si_lo 0.01, tex 2048 q78, tex_lo 256. 2026-09-26 run: references remade from site portraits/coin logos (old ref_jobs are on another account); pass \"sa\": true when the HD copy stays over budget.",
+ "credits_per_cat": 16.25,
+ "remaining": [
+  {
+   "id": "solana-6kNNgyrdvjkRC8eRGQqx5sLfZG2jTmg3NCFmkX2hYP4j",
+   "symbol": "SOMETHING",
+   "name": "SOMETHING THE CAT",
+   "kind": "famous-61",
+   "marketCapUsd": 1488014,
+   "imageUrl": null,
+   "coingeckoId": "something-the-cat",
+   "profile": "something-the-cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6D7NaB2xsLd7cauWu1wKk6KBsJohJmP2qZH9GEfVi5Ui",
+   "symbol": "SC",
+   "name": "Shark Cat",
+   "kind": "famous-61",
+   "marketCapUsd": 1192831,
+   "imageUrl": null,
+   "coingeckoId": "shark-cat",
+   "profile": "shark-cat",
+   "ownerPick": false
+  },
+  {
+   "id": "solana-6MQpbiTC2YcogidTmKqMLK82qvE9z5QEm7EP3AEDpump",
+   "symbol": "MASK",
+   "name": "catwifmask",
+   "kind": "famous-61",
+   "marketCapUsd": 1126477,
+   "imageUrl": null,
+   "coingeckoId": "catwifmask",
+   "profile": "catwifmask",
+   "ownerPick": false
+  }
+ ],
+ "redo_tripo_at_end": [
+  "MEMOPAW",
+  "GIMBALPAW",
+  "CHIK",
+  "KEEPSAKE",
+  "PINROW",
+  "COOPERCAT",
+  "SAFFWHISK",
+  "NOTEPAW",
+  "APOTHECAT",
+  "COBBLEPAW"
+ ],
+ "note": "Owner 2026-09-26: famous coins Solana only; ring coins removed (Hall of Fame only)",
+ "note_2026_09_26_run3": "RKC and LEVERCAT got HD models. SOMETHING, SC and MASK are no longer in data/famous.json (see scripts/archive/famous-removed.json), so no card uses a model for them; they stay here only in case they return."
+}

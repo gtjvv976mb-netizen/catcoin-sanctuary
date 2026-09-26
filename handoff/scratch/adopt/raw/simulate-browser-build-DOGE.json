@@ -1,0 +1,45 @@
+{
+ "simulatedAt": "2026-09-25T17:55:31.368Z",
+ "payer": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+ "payerLamports": 1903904327,
+ "pricing": {
+  "configId": "E4RpUdyhYkbcr2TtvryW2DaiP5AtQ6Bm1XdhEriUXL7H",
+  "platform": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+  "curveRule": "BPHwoFkTTV3RUiisM82LDnjt5XFQWFqU2bu5PC3cqCHb",
+  "raise": "10570151400424",
+  "observedAt": "2026-09-25T17:54:33.967Z"
+ },
+ "results": [
+  {
+   "id": "A_correct_shape_DOGE",
+   "note": "published shape, quote DOGE (TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA)",
+   "mint": "BmiMkshkDuXXa1M81CmH6RSHFe6osNm2SowoRDyb6KaS",
+   "pool": "9ZrkLuNTKgv9FLaCfZrLMgf32WMp2fNCkGEEih9e7zTq",
+   "txBytes": 864,
+   "err": null,
+   "unitsConsumed": 88499,
+   "payerBefore": 1903904327,
+   "payerAfter": 1895441207,
+   "payerCostLamports": 8463120,
+   "logs": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 233 of 579803 compute units",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 626 of 559380 compute units",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 925 of 553096 compute units",
+    "Program log: Instruction: InitializeMint2",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1772 of 550787 compute units",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 3446 of 543476 compute units",
+    "Program log: Instruction: InitializeAccount3",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 2108 of 534651 compute units",
+    "Program log: Instruction: MintTo",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1707 of 518167 compute units",
+    "Program log: Instruction: SetAuthority",
+    "Program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb consumed 1044 of 514793 compute units",
+    "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj consumed 88349 of 599850 compute units"
+   ],
+   "transactionBase64": "AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgALECIW56HAksG3SnSvfA7hSf3qGpxvsWfuLXvX4xGKootMoAkwOA5p+QRicWxk3qfIvV72P0EG6qfFU9ykR0JoLwM3tQoVbT8tDbq3E+Jx1lEEpubflRzwAqgToeG7SpVy0n9IVKvkSSa11Z9m2pznbl8+nLPeb2fc4JWiTzQmnkvYlLz+gw65etcPiiWBlxbUb5Oi8gzEgRC8XAOt/buG5/UAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIHuZs13eKOS57e6X5J12OXtaSgyT+v0nTHhqAGjt1vL++lKMlvP5Ejv100IRrXD7IbY7JAMxJhYFPZr31ITdyaSs58zW9IYc5EiUQm7/b/pbi82QYIat77t/M83fnH/gMGRm/lIRcy/+ytunLDm+e8jOW7xfcSayxDmzpAAAAAviYvC4G9U9HvJWMrrpm65vQ2YZ5TQ1C+xnCAkvUQT2TCCLwixpWRhl7Er7pfCiMcwrgSufi/uHr8rTlsJgJl2AUEO5VNyibh75G1LE+Pia+Kb1rIxiFW8XHPDyGsUckiBt324ddloZPZy+FGzut5rBy0he1fWzeROoz1hX7/AKkG3fbh7nWP3hhCXbzkbM3athr8TYO5DSf+vfko2KGL/AeDqBUmIQ+UoOjoTSCHADs6QmDSnOedrP4hpOp3H6YoSnzLsaND1MVCibBjSTvMsUaaxyYv826hBKEyA2pjEd8CCQAFAsAnCQAMEAAACwcPAwEKBAIODQUGDAieASW+ft4smqsRBhgAAABTb2NrZm9vdCB0aGUgTW9ybmluZyBDYXQIAAAAU09DS0ZPT1QrAAAAaHR0cHM6Ly9jYXRjb2luc2FuY3R1YXJ5LmNvbS9raXRzL1RFU1QuanNvbgAAgMakfo0DAAB4xftR0QIA6JMeDp0JAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+ ]
+}

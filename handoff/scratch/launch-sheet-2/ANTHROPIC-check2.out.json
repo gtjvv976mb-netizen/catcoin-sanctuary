@@ -1,0 +1,198 @@
+{
+ "results": [
+  {
+   "name": "Cotta the Terracotta Cat",
+   "ticker": "COTTAPAW",
+   "nameLen": 24,
+   "tickerLen": 8,
+   "blurbLen": 141,
+   "descLen": 258,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Cotta, a sleek terracotta-orange cat with golden eyes, sits by the garden bench all day and gives a slow blink to anyone hard at work nearby. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Nudge the Ginger Cat",
+   "ticker": "NUDGEPAW",
+   "nameLen": 20,
+   "tickerLen": 8,
+   "blurbLen": 140,
+   "descLen": 257,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Nudge, a brick-orange cat with round copper eyes, taps pebbles off the potting bench one paw at a time, then sits back looking very pleased. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Ember the Loaf Cat",
+   "ticker": "EMBERLOAF",
+   "nameLen": 18,
+   "tickerLen": 9,
+   "blurbLen": 150,
+   "descLen": 267,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "anthropic",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Ember, a solid ginger cat the colour of warm clay, curls into a tidy loaf on the sunny wall, twitches her tail in her dreams and purrs at every hello. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "ext": {
+  "Pren1FvFX6J3E4kXhJuCiAD5aDmGEb7qJRncwA8Lkhw": {
+   "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "extensions": [
+    {
+     "extension": "permanentDelegate"
+    },
+    {
+     "extension": "defaultAccountState"
+    },
+    {
+     "extension": "transferFeeConfig",
+     "state": {
+      "older": {
+       "epoch": 1039,
+       "maximumFee": 18446744073709552000,
+       "transferFeeBasisPoints": 100
+      },
+      "newer": {
+       "epoch": 1043,
+       "maximumFee": 18446744073709552000,
+       "transferFeeBasisPoints": 300
+      }
+     }
+    },
+    {
+     "extension": "confidentialTransferMint"
+    },
+    {
+     "extension": "confidentialTransferFeeConfig"
+    },
+    {
+     "extension": "transferHook"
+    },
+    {
+     "extension": "scaledUiAmountConfig"
+    },
+    {
+     "extension": "metadataPointer"
+    },
+    {
+     "extension": "pausableConfig"
+    },
+    {
+     "extension": "tokenMetadata"
+    }
+   ]
+  },
+  "jup": [
+   {
+    "symbol": "ANTHROPIC",
+    "name": "Anthropic PreStocks",
+    "tags": [
+     "verified",
+     "stocks",
+     "rwa",
+     "prestocks",
+     "token-2022"
+    ],
+    "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+    "isVerified": true
+   }
+  ]
+ }
+}
+EPOCH {"absoluteSlot":450403140,"blockHeight":428443024,"epoch":1042,"slotIndex":259140,"slotsInEpoch":432000,"transactionCount":552535590342}

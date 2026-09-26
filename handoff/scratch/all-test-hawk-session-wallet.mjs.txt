@@ -1,0 +1,139 @@
+
+1. CREATE: THE PASSPHRASE FLOOR, THE BLOB, AND A STABLE PUBLIC KEY
+──────────────────────────────────────────────────────────────────
+  ok   a keystore needs its stores
+  ok   a keystore needs SubtleCrypto
+  ok   before create: exists() is false and publicKey() is null
+  ok   a passphrase under 12 characters is refused by name  — the passphrase must be at least 12 characters
+  ok   nothing was written by the refusal
+(node:25706) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok   create returns a public key that is one  — ETnUzNv8di459xeYor7WvFcVqdGmZqvSqWrU8oYVwwuD
+  ok   exists() is true and publicKey() reads it without a passphrase
+  ok   the blob sits under the named storage key, and only that key  — coinmarketcat:session-wallet
+  ok   the blob is v1, PBKDF2-SHA256 at 600,000 iterations, AES-GCM  — {"v":1,"kdf":{"name":"PBKDF2","hash":"SHA-256","iterations":600000,"salt":"…"},"cipher":{"name":"AES-GCM","iv":"…"}}
+  ok   the salt is 16 random bytes and the nonce 12
+  ok   the ciphertext is 64 bytes plus the 16-byte GCM tag  — 80 bytes
+  ok   the blob carries the public key in the clear and the creation time
+  ok   the blob does not contain the passphrase
+  ok   create leaves the session store empty
+  ok   a second keystore over the same storage reports the same public key
+  ok   a second create over an existing keystore is refused  — a session wallet already exists (ETnU…wwuD); sweep it, then replace it with its current passphrase
+  ok   the refusal changed nothing
+  ok   a blob this version did not write is refused, not guessed at  — the stored keystore is not one this version wrote
+
+2. UNLOCK, LOCK, EXPIRY: THE SECRET LIVES IN SESSION ONLY, AND ONLY FOR A WHILE
+───────────────────────────────────────────────────────────────────────────────
+  ok   a wrong passphrase fails as "wrong passphrase"  — wrong passphrase
+  ok   …and not as WebCrypto's OperationError  — SessionWalletError
+  ok   a wrong passphrase leaves the session empty
+  ok   unlock returns the public key and an expiry eight hours out  — expires 1758728800000
+  ok   isUnlocked() is true, and the synchronous snapshot agrees
+  ok   the session store holds exactly one entry, the secret's  — coinmarketcat:session-secret
+  ok   the entry is { secretKey, publicKey, expiresAt } and nothing else
+  ok   the secret is 64 bytes whose last 32 are the public key
+  ok   the plaintext is nowhere in storage
+  ok   lock removes it: isUnlocked() false, session empty, snapshot locked
+  ok   a zero ttl is refused  — ttlMs must be a positive number of milliseconds
+  ok   at 999ms of a 1s ttl it is still unlocked
+  ok   the snapshot judges expiry against the clock, synchronously
+  ok   past the ttl it reports locked and the entry is gone  — session entries 0
+  ok   a fresh keystore knows nothing until it reads
+  ok   refresh() reads the blob and the live session entry  — {"loaded":true,"publicKey":"ETnUzNv8di459xeYor7WvFcVqdGmZqvSqWrU8oYVwwuD","unlocked":true,"expiresAt":1758728801001}
+
+3. REPLACE NEEDS THE CURRENT PASSPHRASE; A CHANGED PASSPHRASE RE-SEALS THE SAME KEY
+───────────────────────────────────────────────────────────────────────────────────
+  ok   replace without the current passphrase is refused  — replacing the session wallet needs its current passphrase
+  ok   replace with a wrong current passphrase is refused as wrong passphrase  — wrong passphrase
+  ok   neither refusal touched the blob
+  ok   changePassphrase with the wrong current passphrase is refused  — wrong passphrase
+  ok   changePassphrase to a short passphrase is refused  — the passphrase must be at least 12 characters
+  ok   the key is the same key
+  ok   the blob was re-sealed under a fresh salt, nonce and ciphertext
+  ok   the old passphrase no longer unlocks  — wrong passphrase
+  ok   the new passphrase does, to the same public key
+  ok   replace with the current passphrase makes a new wallet and names the old one  — ETnUzNv8di459xeYor7WvFcVqdGmZqvSqWrU8oYVwwuD → 7eHMynz9kfHoYtqhhrAxRXdCwA13jEtCYzH42wv8Gb67
+  ok   the old wallet's unlocked secret was dropped with it
+  ok   the blob now carries the new public key
+
+4. EXPORT: THE BASE58 PHANTOM IMPORTS, SO FUNDS ARE NEVER STRANDED
+──────────────────────────────────────────────────────────────────
+  ok   export with the wrong passphrase is refused  — wrong passphrase
+  ok   the export is base58 of 64 bytes  — 88 chars → 64 bytes
+  ok   its last 32 bytes are the public key
+  ok   @solana/web3.js rebuilds the same wallet from it
+  ok   neither the export nor its base64 is in storage
+  ok   export does not unlock
+
+5. THE SIGNER: THE ENGINE'S BRIDGE, ANSWERED BY THE SESSION WALLET
+──────────────────────────────────────────────────────────────────
+  ok   a signer needs a keystore made here
+  ok   the signer has the bridge's shape
+  ok   locked: isReady() false, wallet() still the address  — 7eHMynz9kfHoYtqhhrAxRXdCwA13jEtCYzH42wv8Gb67
+  ok   locked: signTransaction throws no_wallet and says to unlock  — the session wallet is locked — unlock it with your passphrase
+  ok   unlocked: isReady() true, wallet() is the session wallet
+  ok   the result is { signedBase64 } and nothing else
+  ok   the signature is present  — 3AbXmht6rF3MmPYk2ivicXMLjXZgTHQuWZcK1MHSsgZ6X511uRsYkUvXLMJBvJzHoSZcRyfnpNSDioMnTHa8fQkN
+  ok   the message is byte-identical to the one asked for (the engine's own check)
+  ok   the fee payer of the message is the session wallet, as Keypair spells it
+  ok   ed25519 verifies the signature over the message under the session public key
+  ok   …and not under another key
+  ok   …and not over a changed message
+  ok   the secret is not in the result
+  ok   a request for another wallet throws wallet_mismatch  — the lane is armed for 5z8T…qBrw but the session wallet is 7eHM…Gb67
+  ok   a transaction that does not name the session wallet as a signer throws wallet_mismatch  — the transaction names 5z8T…qBrw as signer, not the session wallet 7eHM…Gb67
+  ok   bytes that are not a transaction throw provider, not a raw error  — the session wallet could not read the transaction: Reached end of buffer unexpectedly
+  ok   a sweep signs the same way
+  ok   past the ttl isReady() is false without any async read
+  ok   …and signTransaction throws no_wallet, having removed the entry
+  ok   after lock() it throws no_wallet again
+
+6. THE BUILDERS: FUND, SWEEP, AND THE TOKEN SWEEP
+─────────────────────────────────────────────────
+  ok   fund refuses zero lamports  — the funding amount must be more than zero lamports
+  ok   fund refuses negative lamports  — the funding amount must be more than zero lamports
+  ok   fund refuses a non-integer amount  — the funding amount must be an integer number of lamports
+  ok   fund refuses from === to  — a transfer from 5z8T…qBrw to itself moves nothing
+  ok   fund refuses an address that is not one  — "phantom" is not a public key
+  ok   fund needs a blockhash  — a recent blockhash is required
+  ok   fund is budget, price, then one system transfer  — ComputeBudget111111111111111111111111111111 ComputeBudget111111111111111111111111111111 11111111111111111111111111111111
+  ok   the transfer is instruction 2 for exactly the lamports  — 500000000 lamports
+  ok   from Phantom (signer, writable) to the session wallet (writable)
+  ok   Phantom pays, and the blockhash is the one given
+  ok   the result names purpose, amount and a summary in SOL  — FUND the autopilot wallet 7eHM…Gb67 with 0.5 SOL
+  ok   the rent floor is the chain's minimum for an empty account  — 890880
+  ok   sweepableLamports takes rent and fee off the balance
+  ok   a balance at rent plus fee sweeps nothing
+  ok   sweep refuses zero, saying the balance is at rent  — nothing to sweep: after the rent-exempt minimum (890880 lamports) and the fee, the balance is at rent
+  ok   sweep refuses a negative amount the same way  — nothing to sweep: after the rent-exempt minimum (890880 lamports) and the fee, the balance is at rent
+  ok   sweep refuses from === to  — a transfer from 7eHM…Gb67 to itself moves nothing
+  ok   sweep is a system transfer from the session wallet to Phantom
+  ok   for exactly the amount the caller computed  — SWEEP 0.99910412 SOL from the autopilot wallet 7eHM…Gb67 to 5z8T…qBrw
+  ok   classic: budget, price, ATA create, transfer  — ComputeBudget111111111111111111111111111111 ComputeBudget111111111111111111111111111111 ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+  ok   classic: the create is idempotent (data [1]) for Phantom's ATA under this token program
+  ok   classic: the transfer is SPL TransferChecked (12) with the u64 amount LE and the mint's decimals  — 12,20,26,153,190,28,0,0,0,8
+  ok   classic: never the plain Transfer (3) that Token-2022 refuses on a pausable or hooked account
+  ok   classic: source ATA writable, the mint read-only, destination ATA writable, owner signer
+  ok   classic: the result names both ATAs and the program
+  ok   Token-2022: budget, price, ATA create, transfer  — ComputeBudget111111111111111111111111111111 ComputeBudget111111111111111111111111111111 ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+  ok   Token-2022: the create is idempotent (data [1]) for Phantom's ATA under this token program
+  ok   Token-2022: the transfer is SPL TransferChecked (12) with the u64 amount LE and the mint's decimals  — 12,20,26,153,190,28,0,0,0,8
+  ok   Token-2022: never the plain Transfer (3) that Token-2022 refuses on a pausable or hooked account
+  ok   Token-2022: source ATA writable, the mint read-only, destination ATA writable, owner signer
+  ok   Token-2022: the result names both ATAs and the program
+  ok   a transfer-hook mint is refused  — a Token-2022 mint with a transfer hook needs the hook's extra accounts; this builder does not resolve them
+  ok   a token program that is neither is refused  — "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL" is neither the token program nor Token-2022
+  ok   a zero token amount is refused  — the token amount must be more than zero
+  ok   a token sweep to oneself is refused  — a transfer from 7eHM…Gb67 to itself moves nothing
+  ok   a token sweep without the mint's decimals is refused (TransferChecked needs them)  — TransferChecked needs the mint's decimals (0..18), got undefined
+  ok   the live xStock account carries PausableAccount (27) and TransferHookAccount (15): a plain Transfer out of it is refused  — 179 bytes, extensions 7,27,15
+  ok   closeSource appends CloseAccount (9) on the emptied source, its rent to the autopilot wallet  — SWEEP 0.05 GLDx from the autopilot wallet 7eHM…Gb67 to 5z8T…qBrw, closing the emptied account
+  ok   the summary names the amount in the stock's own units  — SWEEP 0.05 GLDx from the autopilot wallet 7eHM…Gb67 to 5z8T…qBrw, closing the emptied account
+  ok   a stock fund is Phantom paying, creating the autopilot wallet's Token-2022 account, TransferChecked in  — FUND the autopilot wallet 7eHM…Gb67 with 0.01 GLDx
+  ok   …with purpose fund_token and a summary in GLDx  — FUND the autopilot wallet 7eHM…Gb67 with 0.01 GLDx
+  ok   empty accounts close in one transaction, each CloseAccount's rent to the autopilot wallet  — CLOSE 3 empty token accounts of the autopilot wallet 7eHM…Gb67; their rent returns to it
+  ok   closing nothing is refused  — no empty token accounts to close
+  ok   more than 8 closes in one transaction is refused  — at most 8 accounts per transaction, got 9
+
+116 passed, 0 failed
+

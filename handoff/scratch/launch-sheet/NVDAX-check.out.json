@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Dewdrop the Sunrise Cat",
+    "symbol": "DEWDROP",
+    "nameLen": 23,
+    "bodyLen": 154,
+    "descLen": 276,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "nvidia",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "description": "Dewdrop is a lean grey tabby with a white chin, white bib and four white socks. Each sunrise she tiptoes over the wet lawn, leaving paw prints in the dew. A cat coin priced in NVDAx. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+    "name": "Sockfoot the Garden Tabby",
+    "symbol": "SOCKFOOT",
+    "nameLen": 25,
+    "bodyLen": 154,
+    "descLen": 276,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "nvidia",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "description": "Sockfoot is a grey tabby in four white socks and a white bib. At first light he strolls the garden path, sniffs each flower bed, then naps on warm stones. A cat coin priced in NVDAx. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+    "name": "Splashdash the Lawn Cat",
+    "symbol": "SPLASHDASH",
+    "nameLen": 23,
+    "bodyLen": 145,
+    "descLen": 267,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "nvidia",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "description": "Splashdash is a sleek grey tabby with a white muzzle and snowy paws. When the sprinklers pop up she darts off, shakes dry and trots back to purr. A cat coin priced in NVDAx. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice."
+  }
+]

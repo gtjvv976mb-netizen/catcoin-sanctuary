@@ -1,0 +1,108 @@
+
+THE SHIMS AGREE WITH WHAT THEY REPLACE
+─────────────────────────────────────
+  ok   WSOL matches the executor's literal  — So11111111111111111111111111111111111111112
+  ok   ATA_PROGRAM matches the executor's literal  — ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL
+  ok   associatedTokenAddress derives the same address  — 3MUsDAGU96xqb8WF2FhhNTpQnqqSShfBv8bJ2emWqCfZ
+  ok   sha256 hex matches node:crypto
+  ok   chained updates match too
+  ok   an algorithm other than sha256 is refused by name  — createHash shim: only sha256 is available in the browser bundle, not md5
+
+THE BUILD
+─────────
+(node:25132) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+  ../../../tmp/hawk-dist-aToyzY/background.js    1.5mb ⚠️
+  ../../../tmp/hawk-dist-aToyzY/options.js     773.2kb
+  ../../../tmp/hawk-dist-aToyzY/welcome.js     732.4kb
+  ../../../tmp/hawk-dist-aToyzY/injected.js    581.3kb
+  ../../../tmp/hawk-dist-aToyzY/popup.js       148.6kb
+  ../../../tmp/hawk-dist-aToyzY/content.js      72.3kb
+
+⚡ Done in 278ms
+  ok   the build succeeds  — 0 errors, 0 warnings
+  ok   background.js exists  — 1486 KB
+  ok   background.js: no node: specifier survived
+  ok   background.js: no require() of a package survived
+  ok   content.js exists  — 72 KB
+  ok   content.js: no node: specifier survived
+  ok   content.js: no require() of a package survived
+  ok   injected.js exists  — 581 KB
+  ok   injected.js: no node: specifier survived
+  ok   injected.js: no require() of a package survived
+  ok   popup.js exists  — 149 KB
+  ok   popup.js: no node: specifier survived
+  ok   popup.js: no require() of a package survived
+  ok   options.js exists  — 773 KB
+  ok   options.js: no node: specifier survived
+  ok   options.js: no require() of a package survived
+  ok   welcome.js exists  — 732 KB
+  ok   welcome.js: no node: specifier survived
+  ok   welcome.js: no require() of a package survived
+  ok   manifest.json was copied
+  ok   popup.html was copied
+  ok   popup.css was copied
+  ok   options.html was copied
+  ok   welcome.html was copied
+  ok   welcome.css was copied
+  ok   icons/cia-32.png was copied
+  ok   icons/cia-128.png was copied
+  ok   icons/cia-512.png was copied
+  ok   the five cats' sprites are the brand kit's, byte for byte
+  ok   CashCat's eight kittens, their measured signs, and Press Start 2P with its licence are the bot's, byte for byte
+  ok   no coinmarketcat-named icon is shipped any more: the extension's icons are the agency's
+  ok   the whole build is under 12 MB  — 10.74 MB
+  ok   …of which CashCat's art is under 7 MB  — 6.37 MB
+  ok   background.js is under 2 MB  — 1486 KB
+  ok   popup.js is under 0.4 MB  — 149 KB
+  ok   options.js is under 1.2 MB  — 773 KB
+  ok   welcome.js is under 1.2 MB  — 732 KB
+  ok   content.js is under 0.2 MB  — 72 KB
+  ok   injected.js is under 1 MB  — 581 KB
+  ok   every static file the build names exists in the repository
+  ok   manifest names a built file: background.js
+  ok   manifest names a built file: content.js
+  ok   manifest names a built file: injected.js
+  ok   manifest names a built file: popup.html
+  ok   manifest names a built file: options.html
+  ok   popup.html loads popup.js and popup.css by the built names
+  ok   options.html loads options.js
+  ok   welcome.html, the first-run setup page, loads welcome.js and welcome.css by the built names
+  ok   …and the icon it shows was copied beside it
+  ok   the popup's tabs show each cat's sprite from the build
+
+THE BUNDLE EVALUATES, AND DECIDES LIKE THE EXECUTOR
+──────────────────────────────────────────────────
+  ok   the engine library bundle builds  — 0 errors
+  ok   the engine bundle evaluates in Node
+  ok   the bundled engine reports the record beside the switch  — record 58 trades; 1 warnings
+  ok   the bundled policy carries the record's 1.5x take and the 90s stall  — {"stopFrac":0.2,"armBreakevenAtFrictionX":1.15,"armTrailAtFrictionX":1.3,"fallbackFrictionX":1.2222,"trailFrac":0.25,"timeStopMs":180000,"stallMs":90000,"stallAtX":1,"confirmWindow":3,"liquidityFloorFrac":0.1,"takeAtEntryX":1.5}
+  ok   the bundled engine carries the xStock venue, off by default, watching the built-in list  — {"venue":"jupiter-xstock","enabled":false}
+  ok   …and its tick is a no-op while it is off
+  ok   a stale notice is refused at notice_stale by the bundled contract  — notice_stale: notice is 600007ms old against a 30000ms bound
+  ok   …and the executor's own contract agrees on the gate  — executor notice_stale, bundle notice_stale
+  ok   the bundled engine reads a listed stock's mint on the curve's own read  — [4]
+  ok   …and the bundled describeMint reads the live GLDx bytes: Token-2022, 8 decimals, unpaused, symbol GLDx  — {"d":8,"p":false,"s":"GLDx"}
+  ok   …and the launch gets past quote_not_sol, sized in GLDx (refused later, for the base mint the probe did not serve)  — mint_refused: no mint account was supplied — the kill set cannot be read, and unverified is no
+
+THE AGENT, BUNDLED, DECIDES LIKE ITS SOURCE
+──────────────────────────────────────────
+  ok   the agent's modules bundle  — 0 errors
+  ok   the bundled limits clamp, refuse and stop exactly as the source does  — {"orders":[{"side":"buy","mint":"7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr","usd":25,"askedUsd":100,"reason":"x","con
+  ok   the bundled preset is the verified one, SOL still refused
+  ok   the bundled runner builds
+  ok   the worker bundle carries the agent: its runner, its brain's origin, its market's hosts
+  ok   the popup bundle drives the agent through its own messages
+  ok   the worker bundle carries the three new cats: Popcat's checks, Crying Cat's report, CashCat's launch and its content rules
+  ok   the popup bundle drives them through their own messages, and never names a key's storage
+
+THE CATS, BUNDLED, DECIDE LIKE THEIR SOURCE
+──────────────────────────────────────────
+  ok   the content rules, the draft desk, Crying Cat and the logo layout bundle for the browser (no fs, no node: import)  — 0 errors
+  ok   the bundled trend check refuses exactly what the bot's does, the long given-name list included
+  ok   …and the proposal rules too, the salted slur hashes included (the node:crypto shim's sha256)
+  ok   the bundled Crying Cat reads a pasted input exactly as its source does
+
+79 passed, 0 failed
+

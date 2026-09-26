@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Currant the Garden Cat",
+    "symbol": "CURRANT",
+    "nameLen": 22,
+    "bodyLen": 156,
+    "descLen": 274,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "description": "Currant is a sleek, solid black cat with a glossy coat. She naps in the shade of the berry bushes and pads out at dusk to greet everyone at the garden gate. A cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+    "name": "Licorice the Hammock Cat",
+    "symbol": "LICORICE",
+    "nameLen": 24,
+    "bodyLen": 154,
+    "descLen": 272,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "description": "Licorice is a solid black cat, soft as velvet from nose to tail. He claims the sunniest hammock in the garden, stretches out long and purrs until sundown. A cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+    "name": "Porchlight the Dusk Cat",
+    "symbol": "PORCHLIGHT",
+    "nameLen": 23,
+    "bodyLen": 153,
+    "descLen": 271,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "description": "Porchlight is a solid black cat with a shiny coat and two bright eyes. When the garden lanterns glow, she sits on the porch step and slowly blinks hello. A cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice."
+  }
+]

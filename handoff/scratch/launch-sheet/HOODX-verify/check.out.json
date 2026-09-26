@@ -1,0 +1,215 @@
+[
+ {
+  "name": "Pewter the Garden Tabby",
+  "ticker": "PEWTER",
+  "lengths": {
+   "name": 23,
+   "ticker": 6,
+   "description": 271,
+   "body": 158
+  },
+  "limitsOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "confusableWithHOOD": false,
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_body": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=PEWTER",
+   "status": 200,
+   "results": 20,
+   "symbolMatches": [],
+   "verifiedSymbolMatch": false,
+   "anyVerifiedInResults": []
+  }
+ },
+ {
+  "name": "Drizzle the Silver Tabby",
+  "ticker": "DRIZZLE",
+  "lengths": {
+   "name": 24,
+   "ticker": 7,
+   "description": 268,
+   "body": 155
+  },
+  "limitsOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "confusableWithHOOD": false,
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_body": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=DRIZZLE",
+   "status": 200,
+   "results": 20,
+   "symbolMatches": [
+    {
+     "symbol": "DRIZZLE",
+     "name": "TRIPPY DRIZZLE DEGEN ",
+     "isVerified": null,
+     "mcap": 3650,
+     "id": "7Q9avpfM1RM9yAD65GrjWEM78F45KQwfED2TJRQrpump"
+    },
+    {
+     "symbol": "DRIZZLE",
+     "name": "The Drizzle",
+     "isVerified": null,
+     "mcap": 0,
+     "id": "Hg2uXoRmi9aDkeAYfpLGVQtcoGyj2zF1NaduAqA3pump"
+    },
+    {
+     "symbol": "DRIZZLE",
+     "name": "DRIZZLE.EXE",
+     "isVerified": null,
+     "mcap": 0,
+     "id": "3jadNsT3VNVkCs4vDfkQPAYRwA8g3Mr7AoUpQcSBpump"
+    },
+    {
+     "symbol": "DRIZZLE",
+     "name": "Drizzle",
+     "isVerified": null,
+     "mcap": 0,
+     "id": "CJ7YC2iLqtrqnXci9fHPtXi8P5enFHwXn1kJfyyWpump"
+    },
+    {
+     "symbol": "DRIZZLE",
+     "name": "The Drizzler",
+     "isVerified": null,
+     "mcap": 0,
+     "id": "AUNWzYRXNaFgViVUkeyA5HLqa17xmQEWjvmNLHHFpump"
+    }
+   ],
+   "verifiedSymbolMatch": false,
+   "anyVerifiedInResults": []
+  }
+ },
+ {
+  "name": "Tinsel the Twinkly Tabby",
+  "ticker": "TINSEL",
+  "lengths": {
+   "name": 24,
+   "ticker": 6,
+   "description": 263,
+   "body": 150
+  },
+  "limitsOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "confusableWithHOOD": false,
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_body": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "robinhood",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=TINSEL",
+   "status": 200,
+   "results": 20,
+   "symbolMatches": [],
+   "verifiedSymbolMatch": false,
+   "anyVerifiedInResults": []
+  }
+ }
+]

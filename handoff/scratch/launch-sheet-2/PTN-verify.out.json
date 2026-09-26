@@ -1,0 +1,129 @@
+{
+ "disclaimerOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "d"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "d"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "d"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "ticker": "MOTTLE",
+   "nameLen": 21,
+   "blurbLen": 137,
+   "descLen": 280,
+   "tickerFmt": true,
+   "proposal": {
+    "ok": true,
+    "violations": []
+   },
+   "lookFields": {
+    "ok": true,
+    "violations": []
+   },
+   "stockTerms": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "MC1R",
+      "field": "look"
+     }
+    ]
+   },
+   "endsWith": true,
+   "display": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "n": 20,
+    "sym": []
+   }
+  },
+  {
+   "ticker": "UMBERPAW",
+   "nameLen": 24,
+   "blurbLen": 137,
+   "descLen": 280,
+   "tickerFmt": true,
+   "proposal": {
+    "ok": true,
+    "violations": []
+   },
+   "lookFields": {
+    "ok": true,
+    "violations": []
+   },
+   "stockTerms": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "melanocortin",
+      "field": "look"
+     }
+    ]
+   },
+   "endsWith": true,
+   "display": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "n": 0,
+    "sym": []
+   }
+  },
+  {
+   "ticker": "SPRIGPAW",
+   "nameLen": 24,
+   "blurbLen": 136,
+   "descLen": 279,
+   "tickerFmt": true,
+   "proposal": {
+    "ok": true,
+    "violations": []
+   },
+   "lookFields": {
+    "ok": true,
+    "violations": []
+   },
+   "stockTerms": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "MC4R",
+      "field": "look"
+     }
+    ]
+   },
+   "endsWith": true,
+   "display": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "n": 0,
+    "sym": []
+   }
+  }
+ ]
+}

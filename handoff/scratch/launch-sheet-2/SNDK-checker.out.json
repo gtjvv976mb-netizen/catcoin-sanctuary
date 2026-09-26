@@ -1,0 +1,282 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Stash the Cloud-White Cat",
+   "ticker": "STASHCAT",
+   "nameLen": 25,
+   "blurbLen": 132,
+   "descLen": 275,
+   "endsWithDisclosure": true,
+   "tickerFormat": true,
+   "tickerIsStockOrRoot": false,
+   "memeTicker": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stash, a fluffy cloud-white longhair wit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "SNDK",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 6,
+    "symbolMatches": [],
+    "sample": [
+     "USCC|united states cash cat|undefined",
+     "☉|this similar to cashcat ngl|undefined",
+     "☉|this similar to cashcat ngl|undefined",
+     "CAT|Frustrated Turkish Cat|undefined",
+     "Cashcat|Justice For Cashcat|undefined",
+     "CASHDOG|Cashdog paired to Cashcat|undefined"
+    ],
+    "verifiedMatch": false
+   },
+   "description": "Stash, a fluffy cloud-white longhair with a flat round face and faint silver ear tips, hides lost garden toys under the porch swing. A cat coin priced in SNDK. Not affiliated with Sandisk Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Keepsake the Silver-Tipped Cat",
+   "ticker": "KEEPSAKE",
+   "nameLen": 30,
+   "blurbLen": 132,
+   "descLen": 275,
+   "endsWithDisclosure": true,
+   "tickerFormat": true,
+   "tickerIsStockOrRoot": false,
+   "memeTicker": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Keepsake, a silver-tipped white longhair",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "SNDK",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "sample": [],
+    "verifiedMatch": false
+   },
+   "description": "Keepsake, a silver-tipped white longhair with dark-rimmed eyes, naps on a red blanket by the lamp and remembers every lap she knows. A cat coin priced in SNDK. Not affiliated with Sandisk Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Cache the Snowball Cat",
+   "ticker": "CACHEPAW",
+   "nameLen": 22,
+   "blurbLen": 134,
+   "descLen": 277,
+   "endsWithDisclosure": true,
+   "tickerFormat": true,
+   "tickerIsStockOrRoot": false,
+   "memeTicker": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cache, a round snowball of white fur wit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Snowball",
+      "field": "name"
+     },
+     {
+      "rule": "stock",
+      "term": "SNDK",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "sample": [],
+    "verifiedMatch": false
+   },
+   "description": "Cache, a round snowball of white fur with a flat little face and pale grey ear tips, tucks treats in flowerpots and always finds them. A cat coin priced in SNDK. Not affiliated with Sandisk Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

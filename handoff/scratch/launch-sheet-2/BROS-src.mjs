@@ -1,0 +1,10 @@
+const u = "https://www.dutchbros.com/news-events/dutch-bros-october-sticker-drop/";
+const r = await fetch(u, { headers: { "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36" } });
+const h = await r.text();
+console.log("status", r.status, "len", h.length);
+const text = h.replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&#x27;|&#39;|&#8217;|&rsquo;/g, "'").replace(/&amp;/g, "&").replace(/&nbsp;/g, " ").replace(/\s+/g, " ");
+const i = text.search(/sticker/i); console.log("TEXT:", text.slice(Math.max(0,i-600), i+1500));
+const imgs = [...h.matchAll(/<img[^>]*>/gi)].map(x => x[0]).filter(x => /cat|sticker|beanie|alt="[^"]{10,}/i.test(x)).slice(0, 12);
+imgs.forEach(x => console.log(" *", x.slice(0, 600)));
+const og = h.match(/<meta[^>]+property="og:image"[^>]*>/i); console.log("og:", og && og[0]);
+const dp = h.match(/"datePublished"\s*:\s*"[^"]+"/); console.log(dp && dp[0]);

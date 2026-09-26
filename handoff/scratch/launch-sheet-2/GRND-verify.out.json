@@ -1,0 +1,201 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Stripenose the Tuxedo Cat",
+   "ticker": "STRPNOSE",
+   "nameLen": 25,
+   "blurbLen": 142,
+   "descLen": 277,
+   "tickerFmt": true,
+   "tickerRoot": false,
+   "meme": false,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposalFull": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stripenose, a black tuxedo shorthair wit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFieldsBlurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "n": 0,
+    "symMatches": [],
+    "sample": []
+   },
+   "description": "Stripenose, a black tuxedo shorthair with a thin white nose stripe, white bib and olive-green eyes, greets every neighbour at the garden gate. A cat coin priced in GRND. Not affiliated with Grindr Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Whiskerbib the Tuxedo Cat",
+   "ticker": "WHSKRBIB",
+   "nameLen": 25,
+   "blurbLen": 137,
+   "descLen": 272,
+   "tickerFmt": true,
+   "tickerRoot": false,
+   "meme": false,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposalFull": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Whiskerbib, a glossy black cat with a wh",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFieldsBlurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "n": 0,
+    "symMatches": [],
+    "sample": []
+   },
+   "description": "Whiskerbib, a glossy black cat with a white chest bib, extra-long white whiskers and green-gold eyes, naps on the softest garden cushion. A cat coin priced in GRND. Not affiliated with Grindr Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Porchwave the Tuxedo Cat",
+   "ticker": "PORCHWAVE",
+   "nameLen": 24,
+   "blurbLen": 135,
+   "descLen": 270,
+   "tickerFmt": true,
+   "tickerRoot": false,
+   "meme": false,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposalFull": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Porchwave, a shy, cuddly black-and-white",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFieldsBlurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "n": 0,
+    "symMatches": [],
+    "sample": []
+   },
+   "description": "Porchwave, a shy, cuddly black-and-white tuxedo cat with a white-striped nose, sits on the garden step to say hello to anyone close by. A cat coin priced in GRND. Not affiliated with Grindr Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

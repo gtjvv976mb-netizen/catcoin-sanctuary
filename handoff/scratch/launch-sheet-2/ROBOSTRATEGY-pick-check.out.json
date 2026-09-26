@@ -1,0 +1,313 @@
+[
+ {
+  "id": "A",
+  "name": "Sprocket the Steel-Grey Cat",
+  "ticker": "SPROCKPAW",
+  "nameLength": 27,
+  "blurbLength": 150,
+  "descriptionLength": 279,
+  "description": "Sprocket, a sleek steel-grey shorthair with copper eyes, walks the garden in neat, even steps and sits by the same rose at the same time each morning. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "notStockTickerOrRoot": true,
+  "knownCatMeme": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_blurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclaimerOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jup": {
+   "status": 200,
+   "results": 0,
+   "symbols": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  }
+ },
+ {
+  "id": "B",
+  "name": "Gearpaw the Helper Cat",
+  "ticker": "GEARPAW",
+  "nameLength": 22,
+  "blurbLength": 142,
+  "descriptionLength": 271,
+  "description": "Gearpaw, a gunmetal and white tuxedo cat with green eyes, copies whatever the gardener does, patting the soil and nudging pots into tidy rows. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "notStockTickerOrRoot": true,
+  "knownCatMeme": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_blurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclaimerOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jup": {
+   "status": 200,
+   "results": 6,
+   "symbols": [
+    "Fritz",
+    "Fritz",
+    "Fritz",
+    "Fritz",
+    "Fritz",
+    "SHENGNEKO"
+   ],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  }
+ },
+ {
+  "id": "C",
+  "name": "Rivet the Silver-Point Cat",
+  "ticker": "RIVETPAW",
+  "nameLength": 26,
+  "blurbLength": 145,
+  "descriptionLength": 274,
+  "description": "Rivet, a pale silver cat with steel-grey ears, paws and tail and ice-blue eyes, naps by the tool shed with a low, steady purr like a small motor. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "notStockTickerOrRoot": true,
+  "knownCatMeme": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_blurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclaimerOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jup": {
+   "status": 200,
+   "results": 0,
+   "symbols": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  }
+ },
+ {
+  "id": "P",
+  "name": "Gimbal the Helper Cat",
+  "ticker": "GIMBALPAW",
+  "nameLength": 21,
+  "blurbLength": 137,
+  "descriptionLength": 266,
+  "description": "Gimbal, a gunmetal and white tuxedo cat with green eyes, copies the sanctuary gardener, patting the soil and nudging pots into tidy rows. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "notStockTickerOrRoot": true,
+  "knownCatMeme": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_blurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclaimerOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jup": {
+   "status": 200,
+   "results": 0,
+   "symbols": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  }
+ }
+]

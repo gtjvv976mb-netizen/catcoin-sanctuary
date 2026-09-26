@@ -1,0 +1,58 @@
+# copied 2026-09-25T19:29:16Z from /home/user/cat-sanctuary (tree being rebuilt; excerpts frozen here)
+## .github/workflows/pages.yml (deploy job steps)
+27:permissions: {}
+33:    permissions:
+34:      contents: read
+60:    permissions:
+61:      contents: read
+74:      - run: npm ci
+75:      - run: npm test
+82:    permissions:
+83:      contents: read
+84:      pages: write
+85:      id-token: write
+101:          rsync -a \
+## .github/workflows/collection.yml
+33:      contents: write
+42:      - run: npm ci
+52:          git add -- 'data/*.json'
+## package-lock.json packages
+['']
+## tests/page.test.mjs
+function scripts(dir) {
+  const out = [];
+  for (const e of fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true })) {
+    const rel = path.join(dir, e.name);
+    if (e.isDirectory()) { if (e.name !== "vendor") out.push(...scripts(rel)); } else if (/\.m?js$/.test(e.name)) out.push(rel);
+  }
+  return out;
+}
+const PAGE_SCRIPTS = scripts("assets");
+const read = (rel) => fs.readFileSync(path.join(ROOT, rel), "utf8");
+const INDEX = read("index.html");
+const inline = [...INDEX.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+test("no HTML injection path: no HTML sinks, and innerHTML only ever takes a fixed string", () => {
+  for (const rel of PAGE_SCRIPTS) {
+    const text = read(rel);
+    for (const sink of [/\.outerHTML\s*=/, /insertAdjacentHTML\s*\(/, /document\.write(ln)?\s*\(/, /\bsrcdoc\b/, /new\s+DOMParser\b/, /createContextualFragment\s*\(/, /\beval\s*\(/, /new\s+Function\s*\(/, /setHTMLUnsafe\s*\(/]) {
+      assert.ok(!sink.test(text), `${rel}: ${sink}`);
+    }
+    for (const m of text.matchAll(/\.innerHTML\s*(\+?=)\s*([^;\n]*)/g)) {
+      const [, op, value] = m;
+      assert.equal(op, "=", `${rel}: innerHTML +=`);
+      assert.match(value.trim(), /^(['"])(?:(?!\1)[^\\$]|\\.)*\1$/, `${rel}: innerHTML is set from something other than a fixed string: ${value.slice(0, 60)}`);
+    }
+  }
+  for (const s of inline) assert.ok(!/innerHTML|insertAdjacentHTML|document\.write/.test(s), "an inline script writes HTML");
+  const csp = INDEX.match(/http-equiv="Content-Security-Policy"\s+content="([^"]+)"/)?.[1];
+  assert.ok(csp, "index.html sets a Content-Security-Policy");
+## index.html CSP
+6:<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-3kZD4ZAPZsRCoLXPVo5bZzPDZU3gH58pyGwR+hWYG3E='; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'none'">
+## assets/ui/card.js link()
+function link(href, text, cls) {
+  const a = el("a", cls, text);
+  a.href = href;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  return a;
+}

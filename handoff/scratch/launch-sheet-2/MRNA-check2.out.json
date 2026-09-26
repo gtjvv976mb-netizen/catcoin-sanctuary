@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Courier the Ribbon Tabby",
+   "ticker": "NOTEPAW",
+   "nameLen": 24,
+   "blurbLen": 146,
+   "descLen": 277,
+   "tickerHasRootOrMod": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Courier, a silver tabby with looping rib",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 7,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Courier, a silver tabby with looping ribbon-like swirls on each flank, carries folded notes from the potting shed to the pond and never drops one. A cat coin priced in MRNA. Not affiliated with Moderna, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Pipette the White Cat",
+   "ticker": "PIPETTE",
+   "nameLen": 21,
+   "blurbLen": 135,
+   "descLen": 266,
+   "tickerHasRootOrMod": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Pipette, a crisp snow-white cat with pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 9,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Pipette, a crisp snow-white cat with pale blue eyes, keeps the greenhouse bench spotless and laps her water one careful drop at a time. A cat coin priced in MRNA. Not affiliated with Moderna, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Suds the Cream Cat",
+   "ticker": "SUDSPAW",
+   "nameLen": 18,
+   "blurbLen": 129,
+   "descLen": 260,
+   "tickerHasRootOrMod": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Suds, a round cream-and-white cat with g",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Suds, a round cream-and-white cat with gold eyes, chases soap bubbles by the pond and cups each one so gently that it never pops. A cat coin priced in MRNA. Not affiliated with Moderna, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

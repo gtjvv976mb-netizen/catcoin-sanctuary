@@ -1,0 +1,163 @@
+{
+ "checkedAt": "2026-09-25T20:14:46.971Z",
+ "verifiedListSize": 3698,
+ "out": [
+  {
+   "k": "ARM",
+   "name": "Rimestripe the Blue Tabby Cat",
+   "ticker": "RIMESTRIPE",
+   "changed": [],
+   "lengths": {
+    "name": 29,
+    "blurb": 134,
+    "description": 269
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "tickerIsPairSymbol": false,
+   "ownRootInTicker": [],
+   "otherXstockRootInTicker": [],
+   "disclosure": {
+    "endsRight": true,
+    "pairSym": "ARM",
+    "pairListed": true,
+    "pairLaunchable": [
+     [
+      "ARMbSB1MBRQrY6PNMao1HdQ431VafC6JRJCsGZ2Yv3iJ",
+      "backpack",
+      true,
+      true,
+      "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+     ]
+    ]
+   },
+   "officialWord": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionHitsAllFromDisclosure": true,
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Rimestripe, a lean pale silver-blue tabb",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_own": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Stripe",
+      "field": "blurb"
+     },
+     {
+      "rule": "stock",
+      "term": "Stripe",
+      "field": "look"
+     }
+    ]
+   },
+   "ownTermCount": 48,
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Blue",
+      "field": "name"
+     },
+     {
+      "rule": "other_pair",
+      "term": "Blue",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   }
+  }
+ ]
+}

@@ -1,0 +1,59 @@
+
+THE PLANNED LAUNCHES PASS
+─────────────────────────
+  ok   pump.fun
+  ok   pump.fun paired with SPYx
+  ok   StonkFun
+
+HOSTILE LAUNCHES ARE REFUSED BEFORE SIGNING
+───────────────────────────────────────────
+  ok   a System transfer out of the wallet added → instructions
+  ok   a transfer instead of the create → signers (the new mint is not among them)
+  ok   a token transfer (SPL Token instruction) added → instructions
+  ok   a memo added → instructions
+  ok   another fee payer → fee_payer
+  ok   a third signer → signers
+  ok   three compute-budget instructions → compute_budget
+  ok   a priority price over the cap → compute_budget
+  ok   a compute limit over 1.4M → compute_budget
+  ok   a swapped account (the curve's token account) → accounts
+  ok   another creator in the arguments → creator
+  ok   mayhem mode set → options
+  ok   a custom creator fee → options
+  ok   another coin's name or URI → coin
+  ok   the right create for another mint → signers
+  ok   a StonkFun instruction on a pump.fun launch → program
+  ok   StonkFun's reward (taxed) platform → accounts
+  ok   another raise → raise
+  ok   a transfer fee switched on → transfer_fee
+  ok   vesting → vesting
+  ok   the curve rule left off → accounts
+  ok   a System transfer beside it → instructions
+  ok   a plan that itself names the reward platform, with the accounts to match → platform
+
+THE EXTENSION'S OWN v0 STONKFUN LAUNCH (a stock cat), AS SIMULATED ON MAINNET ON 2026-09-25
+───────────────────────────────────────────────────────────────────────────────────────────
+  ok   SPYx: a v0 message with no lookup table, signed by exactly the payer and the new mint, passes the check
+  ok   SPYx: …and its simulation succeeded, logged InitializeWithToken2022 and spent inside the StonkFun budget  — 8673900 lamports, 98272 units
+  ok   SPYx: the same instructions through an address lookup table → lookup_tables
+  ok   PLTRx: a v0 message with no lookup table, signed by exactly the payer and the new mint, passes the check
+  ok   PLTRx: …and its simulation succeeded, logged InitializeWithToken2022 and spent inside the StonkFun budget  — 8673900 lamports, 92704 units
+  ok   PLTRx: the same instructions through an address lookup table → lookup_tables
+
+THE CREATOR-FEE CLAIM
+─────────────────────
+  ok   the claim for CashCat's own vault passes
+  ok   a claim for someone else's vault → accounts
+  ok   a claim with a transfer beside it → instructions
+
+THE SIMULATION
+──────────────
+  ok   a successful simulation inside the budget passes
+  ok   a failed simulation → simulation
+  ok   a spend over the budget → spend
+  ok   a launch that pays the wallet → spend
+  ok   the program did not log the create → simulation
+  ok   an unknown post-state → simulation
+
+test-bots-txcheck: 41 passed, 0 failed
+

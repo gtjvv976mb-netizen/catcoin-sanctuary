@@ -1,0 +1,190 @@
+
+1. CONFIG: OFF BY DEFAULT, FENCED, AND NAMED IN THE ARM SENTENCE WHEN ON
+────────────────────────────────────────────────────────────────────────
+  ok   the xStock venue is off by default, and the lane itself starts off
+  ok   the default feeds are the two documented ones; the undocumented one is opt-in
+  ok   the dials default to a 30 s poll, a 5 min age bound, the executor's 300 bps slippage, two marked rows
+  ok   feeds arrive as text from a form and are split and checked
+  ok   an unknown feed is refused by name
+  ok   the venue on with no feed is refused
+  ok   a slippage cap over 1000 bps is refused
+  ok   a poll faster than 15 s is refused
+  ok   more than five marked rows is refused (each mark is a Jupiter request)
+  ok   the built-in list is fifteen official xStock addresses, each starting Xs
+  ok   …and agrees with every stock the setup page offers
+  ok   …including METAx, whose address GeckoTerminal's own page carried
+  ok   the focus list is the listed stocks when any is listed
+  ok   …and the built-in list, unlisted, when none is
+  ok   with the venue off the arm sentence is byte-for-byte the executor's
+  ok   with it on the sentence names the venue, so a sentence typed before does not arm it
+  ok   a sentence typed without the venue does not arm a lane with the venue on  — live_ack_typed
+  ok   the checklist warns, in words, what is unmeasured and who builds the transaction
+  ok   the gate list is ordered and complete
+
+2. THE FEED PARSERS, ON THE CAPTURED LIVE PAGES
+───────────────────────────────────────────────
+  ok   the GeckoTerminal page parses to one pool shape (one pool was trimmed from the capture)  — 19 pools
+  ok   exactly one pool on the page pairs with an xStock: cap / METAx  — cap / METAx
+  ok   …and it is a pump.fun curve, which this venue leaves to the pump.fun lane
+  ok   its token symbol came from the page's included tokens
+  ok   the DexScreener page for GLDx parses to its 30 Solana pairs  — 30
+  ok   GAYMF / GLDx is a launch, GLDx as its quote
+  ok   GLDx / USDC and GLDx / SOL are markets in the stock, not launches
+  ok   GLDx / SPCXx is two stocks, not a launch
+  ok   BATO / GLDx, the newest, is a pump.fun curve
+  ok   …while graduated pump pools are ordinary pools here
+  ok   the gems feed's shape (quote mint beside the pool) parses too
+  ok   a 429 body is not a page: the parser refuses it
+
+3. THE POLLER: BACKOFF, DEDUPE, THE HORIZON
+───────────────────────────────────────────
+  ok   a 429 with retry-after 0 rests the feed a minute, not zero seconds  — 60000 ms
+  ok   DexScreener answered for both watched stocks
+  ok   only the pools inside the horizon are handed over: BATO / GLDx, minutes old  — BATO / GLDx 136s
+  ok   the other 29 were seen and counted, not handed over  — 29
+  ok   every candidate carries its source, its first sight and its age
+  ok   a resting feed is not asked again
+  ok   the same pool is never handed over twice
+  ok   after the rest the feed is asked again, and its METAx pool is found  — cap / METAx
+  ok   a 5xx rests the feed on the error floor  — 30000
+  ok   a second failure doubles the rest  — 60000
+  ok   nothing but the two feeds was asked
+
+4. THE JUPITER CLIENT: HALF A REQUEST A SECOND, AND NAMED FAILURES
+──────────────────────────────────────────────────────────────────
+(node:25729) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok   two requests are at least 2.1 s apart (keyless: 0.5 a second)  — 2100 ms
+  ok   the quote goes to api.jup.ag/swap/v1 and asks for direct routes, exact-in and the V2 instruction  — https://api.jup.ag/swap/v1/quote?inputMint=Xsv9hRk1z5ystj9MhnA7Lq4vjSsLwzL2nxrwmwtD3re&outputMint=74sHNXtVDHZVw4ADktjGFHPzNycV8iHvfHLPp6QZPdT4&amount=1000000&slippageBps=300&swapMode=ExactIn&onlyDirectRoutes=true&restrictIntermediateTokens=true&instructionVersion=V2
+  ok   a background mark with no free slot is skipped, not queued
+  ok   the live TOKEN_NOT_TRADABLE answer is `no_route`  — The token DEfTxiRZwwJxm95ZiupBwCVmvX5hA36Bk4kd4hPJpump is not tradable (TOKEN_NOT_TRADABLE)
+  ok   a 429 is `rate_limited` and rests the client until the reset  — 39900 ms
+  ok   …during which even a mark is skipped
+
+5. THE QUOTE AND THE TRANSACTION, CHECKED ON THE LIVE BYTES
+───────────────────────────────────────────────────────────
+  ok   the live buy quote passes: one direct hop on the discovered Raydium pool
+  ok   its minimum output is the quoted output less 300 bps, rounded up as /swap/v1 does
+  ok   its impact reads as a fraction: 0.0126 is 1.26%
+  ok   a quote for another input amount is refused
+  ok   a quote for another output mint is refused
+  ok   a quote whose slippage is over the cap is refused
+  ok   a quote with a platform fee is refused
+  ok   a minimum output that is not the slippage off the quote is refused
+  ok   an impact over the cap is refused by name
+  ok   a route through a third token is refused: only direct routes
+  ok   the live buy transaction passes: route_v2, exactly the 1,000,000 raw GLDx ticket, one account created
+  ok   …its lookup table resolved from the RPC's copy, not Jupiter's word
+  ok   the live sell transaction passes, the GLDx account created idempotently for the proceeds
+  ok   the same bytes for any other wallet are refused: the signer is not the wallet
+  ok   rebuilt unchanged, the live transaction still passes (the edit harness is honest)
+  ok   spending from another account (a victim's GLDx account as the source) is refused
+  ok   sending the output to another account is refused
+  ok   changing the amount in the route is refused
+  ok   a slippage in the route other than the quote's is refused
+  ok   a positive-slippage fee in the route is refused
+  ok   another output mint is refused
+  ok   a System transfer out of the wallet is refused
+  ok   a token instruction at the top level is refused
+  ok   an account created for a third mint is refused
+  ok   a second route is refused
+  ok   another fee payer is refused
+  ok   a priority fee over the lane's budget is refused
+  ok   a lookup table the RPC does not have is refused
+  ok   a 'lookup table' not owned by the lookup-table program is refused
+
+6. OBSERVE: POOLS FOUND, WITH SOURCE AND AGE, AND EACH REFUSAL NAMED
+────────────────────────────────────────────────────────────────────
+  ok   with the venue off, a tick asks nothing of any host  — 0 requests
+  ok   the pools pairing a token with GLDx were found and recorded, each with its source and its age  — 8 candidates
+  ok   a pump.fun curve is left to the pump.fun lane, by name
+  ok   GLDx against SOL is refused: no new token to buy
+  ok   GLDx against another stock is refused the same way
+  ok   a pool first seen seven minutes after its creation is refused at notice_stale  — first seen 7m after it was created, against a 5m bound
+  ok   the live GAYMF mint is refused by the executor's audit: its TransferFee extension
+  ok   a token whose mint authority is live is refused
+  ok   a pool Jupiter cannot price is refused at no_route, with Jupiter's own code  — Jupiter cannot price GLDx → Hkzm…ztoL on a direct route: The token HkzmqrYrqgjU4i1C9xaD9J3eLAGKQfzH8Ur1Eym7ztoL is not tradable (TOKEN_NOT_TRADABLE)
+  ok   the pool that clears opens a would-have row, marked at once by a round trip  — cleared — would have paid 0.01 GLDx (the canary) for 9973010384 base; an immediate round trip marks 0.995x
+  ok   the would-have row is in the new venue's book, sized in GLDx at the canary  — 1000000 raw GLDx for 9973010384
+  ok   the audit runs on the new token and never on the stock: GLDx itself would fail it (PermanentDelegate), yet its pool cleared
+  ok   observe signed nothing and sent nothing
+  ok   every request went to the feeds and Jupiter only  — api.dexscreener.com, api.jup.ag
+  ok   with no stock listed the built-in list is watched, and a GLDx pool is refused at stock_not_listed
+  ok   …the DexScreener feed was asked for each of the fifteen
+
+7. ARMED ON PHANTOM: WAIT, FOLLOW-THROUGH, BUY THROUGH JUPITER, SELL THROUGH JUPITER
+────────────────────────────────────────────────────────────────────────────────────
+  ok   the lane is armed on the sentence that names the venue
+  ok   first sight: a would-have row, and Phantom is asked nothing yet
+  ok   five seconds in: still watching, not bought
+  ok   after the wait, still above its would-have fill: ONE Phantom window, for the buy  — xStock venue: CAT / GLDx (raydium CPMM): cleared — would have paid 0.01 GLDx, marks 0.995x at once; watching 10s before asking Phantom | xStock venue: the GLDx canary for this venue was read back off the chain (sig 52uYWT2bnbpWtct536uTHW45w7PTBLXQnSy3Ar68LY38zf6gJWBZ4vXaEnVHgVTnBXm6YTd7KKeJFUimXpeK6cwN): later GLDx buys here may use the full 0.05 GLDx ticket | xStock venue: live 4ph8…UTQc: ENTERED through Jupiter — 7978726595 base for 0.01 GLDx (the canary), plus 1585647 lamports of fee and rent in SOL, sig 52uYWT2bnbpWtct536uTHW45w7PTBLXQnSy3Ar68LY38zf6gJWBZ4vXaEnVHgVTnBXm6YTd7KKeJFUimXpeK6cwN
+  ok   what Phantom was asked to sign is Jupiter's transaction for this wallet, unaltered
+  ok   it was checked and simulated before the window opened
+  ok   the buy landed and the position is live in GLDx, the fill read from the chain  — 7978726595 base for 1000000 raw GLDx
+  ok   exactly the canary ticket left the wallet's GLDx account
+  ok   the tokens are in the wallet's own account
+  ok   GLDx is charged to its own day, the SOL fee and rent to the SOL day  — [{"at":1790252808400,"sol":0.001585647,"kind":"entry","quoteMint":"Xsv9hRk1z5ystj9MhnA7Lq4vjSsLwzL2nxrwmwtD3re","quoteRaw":"1000000","quoteDecimals":8}]
+  ok   the venue's canary for GLDx is proven by the read-back fill
+  ok   the pool's candidate row says it was bought
+  ok   the take fires and is one more Phantom window, the sell  — xStock venue: CAT / GLDx (raydium CPMM): cleared — would have paid 0.01 GLDx, marks 0.995x at once; watching 10s before asking Phantom | xStock venue: the GLDx canary for this venue was read back off the chain (sig 52uYWT2bnbpWtct536uTHW45w7PTBLXQnSy3Ar68LY38zf6gJWBZ4vXaEnVHgVTnBXm6YTd7KKeJFUimXpeK6cwN): later GLDx buys here may use the full 0.05 GLDx ticket
+  ok   the close is booked in GLDx, tagged with the venue and the pool  — 0.00691511 GLDx, fees 0.001682854 SOL
+  ok   the position is gone from the book
+  ok   nothing here asked for a signature any other way
+  ok   a pool that marks under its would-have fill after the wait is not bought  — not bought: marked 0.894x after 13s — nobody followed
+
+8. HOSTILE JUPITER: REFUSED BEFORE ANYTHING IS SIGNED
+─────────────────────────────────────────────────────
+  ok   a Jupiter transaction that spends from another account is refused at transaction_refused, and Phantom is never asked  — transaction_refused: route_accounts: route_v2 source token account is 2SCXgPKriUGtvdFTATBfNqscx6KnYgN8KJY6zvh63FuZ, not 8Ts9BVrGS9X
+  ok   a Jupiter transaction that changes the amount is refused at transaction_refused, and Phantom is never asked  — transaction_refused: route_mismatch: the instruction spends 1000001, not the ticket's 1000000
+  ok   a Jupiter transaction that sends the tokens elsewhere is refused at transaction_refused, and Phantom is never asked  — transaction_refused: account_create: an account create is paid by 5CkEubfMzRjctboWFSCLzGXkf4Y1WUgZsdxJxuMKTCT9 or owned by 63YuTT1H
+  ok   a Jupiter transaction that buys another token is refused at transaction_refused, and Phantom is never asked  — transaction_refused: account_create: an account create for 74sHNXtVDHZVw4ADktjGFHPzNycV8iHvfHLPp6QZPdT4, which is neither side of t
+  ok   a Jupiter transaction that adds a SOL transfer out of the wallet is refused at transaction_refused, and Phantom is never asked  — transaction_refused: program_not_allowed: the transaction calls 11111111111111111111111111111111, which a Xsv9hRk1z5ystj9MhnA7Lq4vj
+  ok   a Jupiter transaction that names another fee payer and signer is refused at transaction_refused, and Phantom is never asked  — transaction_refused: signers: the transaction's signers are 63YuTT1H8X4pQQPMvZfYEH9CW5hwffhVUAoYTHXy4jc3, 5CkEubfMzRjctboWFSCLzGXkf
+  ok   a Jupiter transaction that creates an account for a third mint is refused at transaction_refused, and Phantom is never asked  — transaction_refused: account_create: an account create for EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v, which is neither side of t
+  ok   a Jupiter transaction that bids a priority fee over the budget is refused at transaction_refused, and Phantom is never asked  — transaction_refused: priority_fee_over_budget: the compute budget implies a 922068 lamport priority fee, over the 92207 this lane a
+  ok   a Jupiter transaction that hides another account behind a lookup table is refused at transaction_refused, and Phantom is never asked  — transaction_refused: route_accounts: route_v2 source token account is 2SCXgPKriUGtvdFTATBfNqscx6KnYgN8KJY6zvh63FuZ, not 8Ts9BVrGS9X
+  ok   a Jupiter transaction that names a lookup table the RPC does not have is refused at transaction_refused, and Phantom is never asked  — transaction_refused: lookup_table_unavailable: lookup table CaRiT653TCPnUU8vjHzHhYaNpMi9GW1DwzUvTwHnaCWM was not found on this RPC
+  ok   a swap whose pool drains SOL inside the swap (only the simulation shows it) is refused at simulation_refused, before signing  — simulation_refused: the buy would spend 51585647 lamports of SOL; a GLDx-quoted buy pays SOL for the network fee and rent only (caps 2000000
+  ok   a swap whose pool plants a delegate on the wallet's GLDx account is refused at transaction_refused, before signing  — transaction_refused: custody: after the simulation the GLDx account has a delegate (63YuTT1H8X4pQQPMvZfYEH9CW5hwffhVUAoYTHXy4jc3)
+  ok   a quote that hops through a third token is refused at first sight, by name
+
+9. BUDGETS: THE CANARY, THE FULL TICKET, THE DAY CAPS, THE WALLET
+─────────────────────────────────────────────────────────────────
+  ok   the first live buy in GLDx is the canary: 0.01 GLDx  — 1000000
+  ok   once proven, the next is the full ticket: 0.05 GLDx  — 5000000
+  ok   the GLDx day is at its 0.06 cap: the next pool is refused at daily_capacity  — this 0.05 GLDx ticket would take the GLDx day to 0.11 GLDx against a 0.06 GLDx cap
+  ok   …and forgetting a row does not give the day back
+  ok   a buy whose SOL fee and rent would break the SOL day is refused at daily_capacity_sol  — this buy pays up to 0.002136 SOL of network fee and rent, which would take the SOL day to 0.002136 against a 0.002 SOL cap
+  ok   a wallet holding less GLDx than the ticket is refused at quote_balance_short, nothing asked  — the wallet holds 0.005 GLDx, under the 0.01 GLDx this buy pays — nothing was asked of Phantom
+
+9b. A BUY THAT CANNOT BE READ BACK BLOCKS THE STOCK; A DECLINED BUY IS NEVER RE-ASKED
+─────────────────────────────────────────────────────────────────────────────────────
+  ok   a buy that was sent and cannot be read back blocks GLDx in this venue, loudly  — its outcome could not be read (buy 55yDi2bbii14mYoiU5pT7gKTJMZJrkywD3rts8JzWZsiRLGS6ht53Eh2YBUZfV89A9E7offWKUzRerxiohW9XEyy confirmed but could not be read back)
+  ok   …the day is charged as if the ticket was spent
+  ok   the next GLDx pool is refused at stock_canary_blocked, naming the signature to check
+  ok   clearing the pump.fun lane's block does not clear this venue's
+  ok   clearing this venue's block does
+  ok   after the block is cleared the next buy is a canary again, and a declined window buys nothing
+  ok   …and a declined buy is never asked again
+
+10. AUTOPILOT: THE AUTOPILOT WALLET SIGNS THE JUPITER BUY
+─────────────────────────────────────────────────────────
+  ok   armed on autopilot, with the venue named in the sentence
+  ok   the autopilot wallet bought through Jupiter, and Phantom was asked nothing  — xStock venue: AUTO / GLDx (raydium CPMM): cleared — would have paid 0.01 GLDx, marks 0.995x at once; watching 10s before the autopilot wallet signs | xStock venue: the GLDx canary for this venue was read back off the chain (sig 37WwhYLEcpTTQQ2EiSLFNXUGTEkYNJSqNC3pPo8fyghhnarJmavzba9qydBFQ7H4nBhZAQD6ZqJ7GcYTmLpXJEeq): later GLDx buys here may use the full 0.05 GLDx ticket | xStock venue: live 2Dp1…4Mau: ENTERED through Jupiter — 7978726595 base for 0.01 GLDx (the canary), plus 1585647 lamports of fee and rent in SOL, signed by the autopilot wallet, sig 37WwhYLEcpTTQQ2EiSLFNXUGTEkYNJSqNC3pPo8fyghhnarJmavzba9qydBFQ7H4nBhZAQD6ZqJ7GcYTmLpXJEeq
+  ok   the bytes that reached the chain carry the autopilot key's signature over Jupiter's message
+  ok   no log line or notification names a secret
+  ok   nothing this venue sent over the network carries the key or the passphrase — only the wallet's public key  — 7 requests scanned
+  ok   …and the engine's stored state holds neither
+
+11. THE PUMP.FUN LANE, UNCHANGED; ONE MINT, ONE BOOK; HELD POSITIONS OUTLIVE THE SWITCH
+───────────────────────────────────────────────────────────────────────────────────────
+  ok   venue off: the pump.fun notice went through the pump.fun contract and nowhere else  — curve_unreadable: no bonding curve was supplied for this mint
+  ok   venue on: the pump.fun notice went through the pump.fun contract and nowhere else  — curve_unreadable: no bonding curve was supplied for this mint
+  ok   …and was refused at the same gate either way  — curve_unreadable / curve_unreadable
+  ok   a mint the pump.fun book holds is refused here at already_holding
+  ok   bought, and the live row is in the one open list the popup, the console and the sweep's refusal read
+  ok   with the venue switched off, no pool is polled, and the held position still sells on its take  — xStock venue: HOLD / GLDx (raydium CPMM): cleared — would have paid 0.01 GLDx, marks 0.995x at once; watching 10s before asking Phantom | xStock venue: the GLDx canary for this venue was read back off the chain (sig 5mA4PjoizwqAzSgDyLfsomPnMDVqqF1nGeXaaki5wUGFTMLrvDwMhyxXhwQ2kjuWcSafhi3cKAnoLSGmNb73Wxkh): later GLDx buys here may use the full 0.05 GLDx ticket
+  ok   …and switching it off disarmed the lane: the sentence named the venue
+
+149 passed, 0 failed
+

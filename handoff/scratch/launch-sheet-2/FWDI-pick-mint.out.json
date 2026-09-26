@@ -1,0 +1,67 @@
+{
+ "status": 200,
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "decimals": 6,
+ "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+ "mintAuthority": "9yCM9pZHhefojiTqLm1cDbQZFaKR1YvZU4KPWzW3rdbc",
+ "extensions": [
+  {
+   "ext": "metadataPointer",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "metadataAddress": "FWDtiB5fXHdVAewPqvHPL2dh4aBC1C6GacQbePoQXKjz"
+   }
+  },
+  {
+   "ext": "permanentDelegate",
+   "state": {
+    "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+   }
+  },
+  {
+   "ext": "defaultAccountState",
+   "state": {
+    "accountState": "initialized"
+   }
+  },
+  {
+   "ext": "pausableConfig",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "paused": false
+   }
+  },
+  {
+   "ext": "confidentialTransferMint",
+   "state": {
+    "auditorElgamalPubkey": null,
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "autoApproveNewAccounts": false
+   }
+  },
+  {
+   "ext": "transferHook",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "programId": null
+   }
+  },
+  {
+   "ext": "scaledUiAmountConfig",
+   "state": {
+    "authority": "9yCM9pZHhefojiTqLm1cDbQZFaKR1YvZU4KPWzW3rdbc",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "ext": "tokenMetadata",
+   "state": {
+    "name": "Forward Industries, Inc. - Backpack Securities",
+    "symbol": "FWDI"
+   }
+  }
+ ],
+ "hasTransferFee": false
+}

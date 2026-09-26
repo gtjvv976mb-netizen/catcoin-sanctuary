@@ -1,0 +1,103 @@
+{
+ "name": "Kernel the Butter-Patch Cat",
+ "ticker": "KERNELPAW",
+ "nameLen": 27,
+ "blurbLen": 132,
+ "descLen": 272,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "endsWithDisclaimer": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Kernel, a fluffy cream-white cat with bu",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_disclaimer_only": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "AMC",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 0,
+  "symbolMatches": [],
+  "verifiedMatch": false
+ },
+ "kernelCatToken": [
+  {
+   "name": "Kernel Cat",
+   "symbol": "KERNEL",
+   "holderCount": 1,
+   "mcap": 3318.675496051896,
+   "liquidity": 3541.5293797619124,
+   "organicScore": 0,
+   "tags": [
+    "unknown",
+    "token-2022"
+   ],
+   "createdAt": "2026-09-22T18:45:03Z"
+  }
+ ],
+ "description": "Kernel, a fluffy cream-white cat with butter-yellow patches and honey-gold eyes, naps in a buttery patch of sun on the garden bench. A cat coin priced in AMC. Not affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

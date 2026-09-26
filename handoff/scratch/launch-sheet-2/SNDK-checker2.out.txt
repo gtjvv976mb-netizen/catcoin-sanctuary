@@ -1,0 +1,10 @@
+checkTerms name/symbol/blurb: {"ok":true,"violations":[]}
+checkProposal: {"ok":true,"violations":[]}
+jup KEEPSAKE 200 0 []
+jup keepsake 200 0 []
+owner TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb extensions ["metadataPointer","permanentDelegate","defaultAccountState","pausableConfig","confidentialTransferMint","transferHook","scaledUiAmountConfig","tokenMetadata"]
+transferFeeConfig null
+pausable {"authority":"2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a","paused":false}
+transferHook {"authority":"2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a","programId":null}
+permanentDelegate {"delegate":"2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"}
+defaultAccountState {"accountState":"initialized"}

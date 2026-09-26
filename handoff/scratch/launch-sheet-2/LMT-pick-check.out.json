@@ -1,0 +1,378 @@
+{
+ "disclosureAlone": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "pair": {
+  "mint": "LMT3i1BHgixFqPUgcyteJhnEz2dpy9i3cYy4pi9BoeV",
+  "symbol": "LMT",
+  "name": "LMT",
+  "decimals": 6,
+  "logoUrl": "/api/asset/quote-logo/LMT3i1BHgixFqPUgcyteJhnEz2dpy9i3cYy4pi9BoeV?v=62a05a75",
+  "category": "backpack",
+  "categoryLabel": "Sunrise",
+  "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "launchable": true,
+  "symbolAmbiguous": false,
+  "launchLabReady": true
+ },
+ "chain": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "mintAuthority": "5h1SwcGk1FBqxbuwp2p4VfwWvtFkNbo1c9SYKDWu3Que",
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": null,
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "permanentDelegate": {
+   "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+  },
+  "transferHook": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "programId": null
+  },
+  "defaultAccountState": {
+   "accountState": "initialized"
+  },
+  "tokenMetadata": {
+   "name": "Lockheed Martin - Backpack Securities",
+   "symbol": "LMT"
+  }
+ },
+ "results": [
+  {
+   "tag": "draft1",
+   "name": "Velvet the Shadow-Spot Cat",
+   "ticker": "VELVETPAW",
+   "nameLen": 26,
+   "blurbLen": 138,
+   "descLen": 276,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Velvet, a sleek glossy-black shorthair w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_VELVETPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedAny": []
+   },
+   "jup_VELVET": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "VELVET",
+      "name": "Velvet Poker",
+      "id": "SHraZnmpbcPxcSJXxoP8cwB1AYVMLVEgMTSCB14pump"
+     },
+     {
+      "symbol": "VELVET",
+      "name": "Velvet Factory",
+      "id": "Hx74cnHK7Cgoz22cAUVFwn2oyGPMpQW1hycd79onpump"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "description": "Velvet, a sleek glossy-black shorthair whose coat shows faint darker rosettes in bright sun, watches the lily pond with round golden eyes. A cat coin priced in LMT. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "tag": "draft2",
+   "name": "Soot the Long-Tailed Black Cat",
+   "ticker": "SOOTTAIL",
+   "nameLen": 30,
+   "blurbLen": 142,
+   "descLen": 280,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Soot, a lean long-legged black cat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_SOOTTAIL": {
+    "status": 200,
+    "results": 5,
+    "symbolMatches": [],
+    "verifiedAny": []
+   },
+   "jup_SOOT": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedAny": []
+   },
+   "description": "Soot, a lean long-legged black cat with a rope-long tail, a glossy coat and pale green-gold eyes, stretches along the warm stone path at noon. A cat coin priced in LMT. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "tag": "draft3",
+   "name": "Cinder the Sun-Glint Black Cat",
+   "ticker": "CINDERPAW",
+   "nameLen": 30,
+   "blurbLen": 135,
+   "descLen": 273,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cinder, a sturdy coal-black cat whose fu",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_CINDERPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedAny": []
+   },
+   "jup_CINDER": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "CINDER",
+      "name": "CINDERMAN",
+      "id": "EthqzCymkrXyoTaMbGCmrcpV9Vd1BHKDCJAHxoYppump"
+     },
+     {
+      "symbol": "CINDER",
+      "name": "CINDERMAN",
+      "id": "U4QRYmbzKHWrPRc75PjPGcPzKnC47Lvf3eaJwgFpump"
+     },
+     {
+      "symbol": "Cinder",
+      "name": "Cinderkid",
+      "id": "3zWovsRXmFBM3yeAQiGK6o9TCU1pAVx4HyZzZ1EZpump"
+     },
+     {
+      "symbol": "CINDER",
+      "name": "Cinder",
+      "id": "BhY1sMQC4DzqHGjPaaXzZNdbLMQnWMmtV4qS2aq4pump"
+     },
+     {
+      "symbol": "CINDER",
+      "name": "Cinder",
+      "id": "9J9FbjuPSXyY2imYCXJaEKkZaaYwPe83ke8p3fUypump"
+     },
+     {
+      "symbol": "CINDER",
+      "name": "Cinderella Coyote",
+      "id": "9fTiGqUZj5vRhKZkhoHnhqZNaBV8zVh5j3D6Vy4U5SAT"
+     },
+     {
+      "symbol": "CINDER",
+      "name": "CINDERMAN",
+      "id": "5GEeqKarhoMs88db6W33bGaMCEdQv2Ufr14SuLEupump"
+     },
+     {
+      "symbol": "CINDER",
+      "name": "CINDERMAN",
+      "id": "EoByH36fcKea2pXsNyzEukCS2ad7xVk7ZwEUTNUHpump"
+     },
+     {
+      "symbol": "CINDER",
+      "name": "CINDERMAN",
+      "id": "Fh2yqfHGfSAsPVzKihRDDBQD6ue9m4RVojwgmf58pump"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "description": "Cinder, a sturdy coal-black cat whose fur glints faint rust-brown in the sun, dozes under the fern fronds with copper eyes half closed. A cat coin priced in LMT. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

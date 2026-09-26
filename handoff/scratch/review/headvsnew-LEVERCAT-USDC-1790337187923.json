@@ -1,0 +1,103 @@
+{
+ "capturedAt": "2026-09-25T11:53:04.246Z",
+ "coin": "LEVERCAT",
+ "settle": "USDC",
+ "amountRaw": "12621540366",
+ "HEAD (direct only)": {
+  "quote": {
+   "inputMint": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
+   "inAmount": "12621540366",
+   "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+   "outAmount": "22957958",
+   "otherAmountThreshold": "22728379",
+   "swapMode": "ExactIn",
+   "slippageBps": 100,
+   "platformFee": null,
+   "priceImpactPct": "0.0174885061486677491268242867",
+   "routePlan": [
+    {
+     "swapInfo": {
+      "ammKey": "H1Co8NfSf6zqLyjfnXUrVCu27cyLruFxTijZnoaiyczd",
+      "label": "Meteora DLMM",
+      "inputMint": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
+      "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "inAmount": "12621540366",
+      "outAmount": "22957958",
+      "updateContextSlot": "450344797"
+     },
+     "percent": null,
+     "bps": 10000
+    }
+   ],
+   "contextSlot": 450344816,
+   "timeTaken": 0.000209965,
+   "swapUsdValue": "22.95600059183639204888",
+   "mostReliableAmmsQuoteReport": {
+    "info": {
+     "42JnUXw5N9ftMkbM1tMzJw2tnzqs1U9RxWBk5LzNv4gD": "Not used RG: Full, contains ALT: true",
+     "BZtgQEyS6eXUXicYPHecYQ7PybqodXQMvkjUbP4R8mUU": "Not used RG: FullLiquidIntermediate, contains ALT: true"
+    }
+   },
+   "longtailMarketQuoteReport": null,
+   "useIncurredSlippageForQuoting": null,
+   "useRewards": null,
+   "otherRoutePlans": null,
+   "loadedLongtailToken": false,
+   "instructionVersion": "V2",
+   "transactionVersion": 0,
+   "additionalIntermediateTokens": [
+    "CehKYf8jXN2E6dx4aLkekQZ6TGPLihcGkkaWj8PDVmJK"
+   ]
+  },
+  "swapTransaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQADB0jAG1BZAFRV2dywxrzs3LT7Wy6rwamoK1c5K6qkDwTmFE5WVD2fYZdxKMVe6DeKpfNziRM5mVGWqJHL/3s5hoGTbQjTnB2AxCiRQbxGi7ncxUr2odblt4qWKeoLUEffLN7E3kRk8Ll8XsOf5Ir4ISzHf+0ZUtqBSXSNVE5iS+sAAwZGb+UhFzL/7K26csOb57yM5bvF9xJrLEObOkAAAAAEedVb8jHAbu50xW7OaBUH/bGy3qP0jlECsc2iVrwTj7Q/+if11/ZKdMCbHylYed5LCas238ndUUsyGqezjOXou6m7RD29AODhpDb19XBKOXoevCEphHEsxwHeDwxN4BsDBAAFAsBcFQAEAAkDgosAAAAAAAAFHQACAw8RDg0FBgUICwgHCgIDDxEJCAAODQwQCAEFK7tk+swxxK8UDmxN8AIAAACGT14BAAAAAGQAAAAAAAEAAABLAAAAABAnAAEB2e4SJdS7ARDCHY2ZEWZlvzPuraPyNjVLmt17d2ZOgfAFYYdehmIGYAwSX4VN"
+ },
+ "working tree (solHop)": {
+  "quote": {
+   "inputMint": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
+   "inAmount": "12621540366",
+   "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+   "outAmount": "22957958",
+   "otherAmountThreshold": "22728379",
+   "swapMode": "ExactIn",
+   "slippageBps": 100,
+   "platformFee": null,
+   "priceImpactPct": "0.0174885061486677491268242867",
+   "routePlan": [
+    {
+     "swapInfo": {
+      "ammKey": "H1Co8NfSf6zqLyjfnXUrVCu27cyLruFxTijZnoaiyczd",
+      "label": "Meteora DLMM",
+      "inputMint": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
+      "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "inAmount": "12621540366",
+      "outAmount": "22957958",
+      "updateContextSlot": "450344797"
+     },
+     "percent": null,
+     "bps": 10000
+    }
+   ],
+   "contextSlot": 450344821,
+   "timeTaken": 0.000423571,
+   "swapUsdValue": "22.95600059183639204888",
+   "mostReliableAmmsQuoteReport": {
+    "info": {
+     "BZtgQEyS6eXUXicYPHecYQ7PybqodXQMvkjUbP4R8mUU": "Not used RG: FullLiquidIntermediate, contains ALT: true",
+     "42JnUXw5N9ftMkbM1tMzJw2tnzqs1U9RxWBk5LzNv4gD": "189232402"
+    }
+   },
+   "longtailMarketQuoteReport": null,
+   "useIncurredSlippageForQuoting": null,
+   "useRewards": null,
+   "otherRoutePlans": null,
+   "loadedLongtailToken": false,
+   "instructionVersion": "V2",
+   "transactionVersion": 0,
+   "additionalIntermediateTokens": [
+    "CehKYf8jXN2E6dx4aLkekQZ6TGPLihcGkkaWj8PDVmJK",
+    "4sWNB8zGWHkh6UnmwiEtzNxL4XrN7uK9tosbESbJFfVs"
+   ]
+  },
+  "swapTransaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQADB0jAG1BZAFRV2dywxrzs3LT7Wy6rwamoK1c5K6qkDwTmFE5WVD2fYZdxKMVe6DeKpfNziRM5mVGWqJHL/3s5hoGTbQjTnB2AxCiRQbxGi7ncxUr2odblt4qWKeoLUEffLN7E3kRk8Ll8XsOf5Ir4ISzHf+0ZUtqBSXSNVE5iS+sAAwZGb+UhFzL/7K26csOb57yM5bvF9xJrLEObOkAAAAAEedVb8jHAbu50xW7OaBUH/bGy3qP0jlECsc2iVrwTj7Q/+if11/ZKdMCbHylYed5LCas238ndUUsyGqezjOXo911i4qiIsluU+TxXfybCqJSlOmoBwMUGGWs/mzTGkssDBAAFAsBcFQAEAAkDgosAAAAAAAAFHQACAw8RDg0FBgUICwgHCgIDDxEJCAAODQwQCAEFK7tk+swxxK8UDmxN8AIAAACGT14BAAAAAGQAAAAAAAEAAABLAAAAABAnAAEB2e4SJdS7ARDCHY2ZEWZlvzPuraPyNjVLmt17d2ZOgfAFYYdehmIGYAwSX4VN"
+ }
+}

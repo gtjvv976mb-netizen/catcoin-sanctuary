@@ -1,0 +1,979 @@
+{
+ "summary": {
+  "rows": 24,
+  "launchlabLimitsFail": [],
+  "checkProposalFail": [],
+  "descriptionFieldFail": [
+   "PATCHPAW: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "WHISK100: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "INGOTLOAF: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "SNOWCURL: brand:tesla, endorsement:affiliated, financial_promise:financial advice",
+   "SOCKFOOT: brand:nvidia, endorsement:affiliated, financial_promise:financial advice",
+   "ROSETTE: brand:apple, endorsement:affiliated, financial_promise:financial advice",
+   "HALFSMILE: brand:microsoft, endorsement:affiliated, financial_promise:financial advice",
+   "PORCHLIGHT: brand:alphabet, endorsement:affiliated, financial_promise:financial advice",
+   "SUNMANE: brand:amazon, endorsement:affiliated, financial_promise:financial advice",
+   "COUCHCAP: brand:meta, endorsement:affiliated, financial_promise:financial advice",
+   "HARRUMPH: brand:coinbase, endorsement:affiliated, financial_promise:financial advice",
+   "PEWTER: brand:robinhood, endorsement:affiliated, financial_promise:financial advice",
+   "TRINKETCAT: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "TUPPENCE: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "WARMSPOT: brand:spacex, endorsement:affiliated, financial_promise:financial advice",
+   "SKEINKIT: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "SAVEPAWS: brand:gamestop, endorsement:affiliated, financial_promise:financial advice",
+   "EVERLOOP: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "MILKWEED: brand:mcdonalds, endorsement:affiliated, financial_promise:financial advice",
+   "MOATCAT: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "TUMBLES: brand:coca cola, endorsement:affiliated, financial_promise:financial advice",
+   "BRACKEN: brand:intel, endorsement:affiliated, financial_promise:financial advice",
+   "TRILLBY: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice",
+   "LATCHKEY: brand:stonkfun, endorsement:affiliated, financial_promise:financial advice"
+  ],
+  "launchClaimInDescription": [],
+  "tickerTaken": [],
+  "siteFail": [],
+  "refusedAsShipped": 24,
+  "asShippedClauses": [
+   "pair_terms_missing"
+  ],
+  "placeholderRowRefusals": []
+ },
+ "rows": [
+  {
+   "order": 1,
+   "xstock": "SPYx",
+   "name": "Patchpaw the Calico",
+   "ticker": "PATCHPAW",
+   "pairKnown": true,
+   "bytes": {
+    "name": 19,
+    "ticker": 8,
+    "story": 155,
+    "description": 270
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with SPYx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund SPYx tracks, SPYx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Patchpaw the Calico",
+    "symbol": "PATCHPAW",
+    "description": "Patchpaw is a little calico whose coat is a quilt of many small patches, no two alike. She pads through every flower bed in the garden and sniffs each one. — Not financial advice. A cat coin paired on StonkFun with SPYx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund SPYx tracks, SPYx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 377,
+   "sheetDisclosure": "A cat coin priced in SPYx. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 2,
+   "xstock": "QQQx",
+   "name": "Hundred Whisker Cat",
+   "ticker": "WHISK100",
+   "pairKnown": true,
+   "bytes": {
+    "name": 19,
+    "ticker": 8,
+    "story": 154,
+    "description": 272
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with QQQx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund QQQx tracks, QQQx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Hundred Whisker Cat",
+    "symbol": "WHISK100",
+    "description": "A fluffy chocolate-brown cat with a hundred white whiskers, one for each name in its basket. Each morning it tries to count them and loses track at forty. — Not financial advice. A cat coin paired on StonkFun with QQQx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund QQQx tracks, QQQx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 376,
+   "sheetDisclosure": "A cat coin priced in QQQx. Not affiliated with Invesco, Nasdaq or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 3,
+   "xstock": "GLDx",
+   "name": "Ingot the Loaf Cat",
+   "ticker": "INGOTLOAF",
+   "pairKnown": true,
+   "bytes": {
+    "name": 18,
+    "ticker": 9,
+    "story": 117,
+    "description": 269
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with GLDx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund GLDx tracks, GLDx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Ingot the Loaf Cat",
+    "symbol": "INGOTLOAF",
+    "description": "Ingot, a sleek honey-golden cat, tucks in her paws and loafs on the warm garden steps, shaped just like a little bar. — Not financial advice. A cat coin paired on StonkFun with GLDx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund GLDx tracks, GLDx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 339,
+   "sheetDisclosure": "A cat coin priced in GLDx. Not affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 4,
+   "xstock": "TSLAx",
+   "name": "Snowcurl the Shade Cat",
+   "ticker": "SNOWCURL",
+   "pairKnown": true,
+   "bytes": {
+    "name": 22,
+    "ticker": 8,
+    "story": 157,
+    "description": 272
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:tesla",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with TSLAx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund TSLAx tracks, TSLAx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Snowcurl the Shade Cat",
+    "symbol": "SNOWCURL",
+    "description": "Snowcurl is a sleek white cat with her tail held high and curled at the tip. On hot days she finds cool shade, lifts a paw to wash her face and waits calmly. — Not financial advice. A cat coin paired on StonkFun with TSLAx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund TSLAx tracks, TSLAx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 382,
+   "sheetDisclosure": "A cat coin priced in TSLAx. Not affiliated with Tesla, Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 5,
+   "xstock": "NVDAx",
+   "name": "Sockfoot the Morning Cat",
+   "ticker": "SOCKFOOT",
+   "pairKnown": true,
+   "bytes": {
+    "name": 24,
+    "ticker": 8,
+    "story": 153,
+    "description": 275
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:nvidia",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with NVDAx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund NVDAx tracks, NVDAx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Sockfoot the Morning Cat",
+    "symbol": "SOCKFOOT",
+    "description": "Sockfoot is a grey tabby with a white bib and four white paws like socks. At first light he walks the edge of the lawn, tail held high, the first cat up. — Not financial advice. A cat coin paired on StonkFun with NVDAx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund NVDAx tracks, NVDAx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 378,
+   "sheetDisclosure": "A cat coin priced in NVDAx. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 6,
+   "xstock": "AAPLx",
+   "name": "Rosette the Climbing Cat",
+   "ticker": "ROSETTE",
+   "pairKnown": true,
+   "bytes": {
+    "name": 24,
+    "ticker": 7,
+    "story": 151,
+    "description": 265
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:apple",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with AAPLx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund AAPLx tracks, AAPLx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Rosette the Climbing Cat",
+    "symbol": "ROSETTE",
+    "description": "Rosette is a stocky golden-tan cat dappled with black rosette spots. She climbs the old oak by the lawn and dozes along a low branch, one paw dangling. — Not financial advice. A cat coin paired on StonkFun with AAPLx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund AAPLx tracks, AAPLx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 376,
+   "sheetDisclosure": "A cat coin priced in AAPLx. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 7,
+   "xstock": "MSFTx",
+   "name": "Halfsmile Cat",
+   "ticker": "HALFSMILE",
+   "pairKnown": true,
+   "bytes": {
+    "name": 13,
+    "ticker": 9,
+    "story": 151,
+    "description": 276
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:microsoft",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with MSFTx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund MSFTx tracks, MSFTx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Halfsmile Cat",
+    "symbol": "HALFSMILE",
+    "description": "A grey-and-white cat with grey-green eyes and a crooked grin that looks cross until you see she is pleased. She grins at all who pass her garden bench. — Not financial advice. A cat coin paired on StonkFun with MSFTx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund MSFTx tracks, MSFTx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 376,
+   "sheetDisclosure": "A cat coin priced in MSFTx. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 8,
+   "xstock": "GOOGLx",
+   "name": "Porchlight the Dusk Cat",
+   "ticker": "PORCHLIGHT",
+   "pairKnown": true,
+   "bytes": {
+    "name": 23,
+    "ticker": 10,
+    "story": 156,
+    "description": 274
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:alphabet",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with GOOGLx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund GOOGLx tracks, GOOGLx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Porchlight the Dusk Cat",
+    "symbol": "PORCHLIGHT",
+    "description": "Porchlight is a solid black cat with a shiny coat and bright yellow eyes. When the garden lanterns glow, she sits on the porch step and slowly blinks hello. — Not financial advice. A cat coin paired on StonkFun with GOOGLx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund GOOGLx tracks, GOOGLx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 384,
+   "sheetDisclosure": "A cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 9,
+   "xstock": "AMZNx",
+   "name": "Sunmane the Sundial Cat",
+   "ticker": "SUNMANE",
+   "pairKnown": true,
+   "bytes": {
+    "name": 23,
+    "ticker": 7,
+    "story": 134,
+    "description": 244
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:amazon",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with AMZNx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund AMZNx tracks, AMZNx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Sunmane the Sundial Cat",
+    "symbol": "SUNMANE",
+    "description": "Sunmane, a sturdy tawny cat with a fluffy ruff like a little mane, sits on the old sundial all day and turns slowly to follow the sun. — Not financial advice. A cat coin paired on StonkFun with AMZNx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund AMZNx tracks, AMZNx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 359,
+   "sheetDisclosure": "A cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 10,
+   "xstock": "METAx",
+   "name": "Couch Captain Cat",
+   "ticker": "COUCHCAP",
+   "pairKnown": true,
+   "bytes": {
+    "name": 17,
+    "ticker": 8,
+    "story": 150,
+    "description": 274
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:meta",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with METAx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund METAx tracks, METAx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Couch Captain Cat",
+    "symbol": "COUCHCAP",
+    "description": "A fluffy brown tabby with golden eyes who claims the sofa every evening, remote in paw, picks the show for the whole house and naps before the ending. — Not financial advice. A cat coin paired on StonkFun with METAx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund METAx tracks, METAx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 375,
+   "sheetDisclosure": "A cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 11,
+   "xstock": "COINx",
+   "name": "Harrumph the Pouty Cat",
+   "ticker": "HARRUMPH",
+   "pairKnown": true,
+   "bytes": {
+    "name": 22,
+    "ticker": 8,
+    "story": 159,
+    "description": 271
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:coinbase",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with COINx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund COINx tracks, COINx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Harrumph the Pouty Cat",
+    "symbol": "HARRUMPH",
+    "description": "Harrumph, a fluffy grey long-haired cat with a flat face and a grumpy pout, glares at pigeons from the garden wall all morning, then climbs into a lap to purr. — Not financial advice. A cat coin paired on StonkFun with COINx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund COINx tracks, COINx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 384,
+   "sheetDisclosure": "A cat coin priced in COINx. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 12,
+   "xstock": "HOODx",
+   "name": "Pewter the Catmint Cat",
+   "ticker": "PEWTER",
+   "pairKnown": true,
+   "bytes": {
+    "name": 22,
+    "ticker": 6,
+    "story": 160,
+    "description": 273
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:robinhood",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with HOODx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund HOODx tracks, HOODx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Pewter the Catmint Cat",
+    "symbol": "PEWTER",
+    "description": "Pewter, a silver-grey tabby with dark stripes on her cheeks, a white chin and a pink nose, rolls in the catmint patch each afternoon until she is happily dizzy. — Not financial advice. A cat coin paired on StonkFun with HOODx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund HOODx tracks, HOODx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 385,
+   "sheetDisclosure": "A cat coin priced in HOODx. Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 13,
+   "xstock": "MSTRx",
+   "name": "Trinket the Tortie Cat",
+   "ticker": "TRINKETCAT",
+   "pairKnown": true,
+   "bytes": {
+    "name": 22,
+    "ticker": 10,
+    "story": 138,
+    "description": 271
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with MSTRx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund MSTRx tracks, MSTRx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Trinket the Tortie Cat",
+    "symbol": "TRINKETCAT",
+    "description": "Trinket, a round fluffy tortoiseshell, adds one shiny pebble a day to her secret pile behind the rain barrel and has never given one back. — Not financial advice. A cat coin paired on StonkFun with MSTRx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund MSTRx tracks, MSTRx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 363,
+   "sheetDisclosure": "A cat coin priced in MSTRx. Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 14,
+   "xstock": "CRCLx",
+   "name": "Tuppence the Tweed Cat",
+   "ticker": "TUPPENCE",
+   "pairKnown": true,
+   "bytes": {
+    "name": 22,
+    "ticker": 8,
+    "story": 137,
+    "description": 247
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with CRCLx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund CRCLx tracks, CRCLx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Tuppence the Tweed Cat",
+    "symbol": "TUPPENCE",
+    "description": "Tuppence, a tubby blue-grey cat in a flat tweed cap, waddles to the garden tea table at four o'clock sharp and waits politely for crumbs. — Not financial advice. A cat coin paired on StonkFun with CRCLx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund CRCLx tracks, CRCLx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 362,
+   "sheetDisclosure": "A cat coin priced in CRCLx. Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 15,
+   "xstock": "SPCXx",
+   "name": "Warmspot the Tuxedo Cat",
+   "ticker": "WARMSPOT",
+   "pairKnown": true,
+   "bytes": {
+    "name": 23,
+    "ticker": 8,
+    "story": 154,
+    "description": 264
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:spacex",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with SPCXx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund SPCXx tracks, SPCXx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Warmspot the Tuxedo Cat",
+    "symbol": "WARMSPOT",
+    "description": "Warmspot, a black-and-white tuxedo cat with a white stripe down her nose and a white chin, always finds the one warm spot in a snowy garden, and keeps it. — Not financial advice. A cat coin paired on StonkFun with SPCXx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund SPCXx tracks, SPCXx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 379,
+   "sheetDisclosure": "A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 16,
+   "xstock": "PLTRx",
+   "name": "Skein the Yarn Kitten",
+   "ticker": "SKEINKIT",
+   "pairKnown": true,
+   "bytes": {
+    "name": 21,
+    "ticker": 8,
+    "story": 142,
+    "description": 272
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with PLTRx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund PLTRx tracks, PLTRx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Skein the Yarn Kitten",
+    "symbol": "SKEINKIT",
+    "description": "Skein, a fluffy cream kitten with a pink nose, strings red yarn from post to post until every flower pot in the garden is tied to every other. — Not financial advice. A cat coin paired on StonkFun with PLTRx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund PLTRx tracks, PLTRx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 367,
+   "sheetDisclosure": "A cat coin priced in PLTRx. Not affiliated with Palantir Technologies Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 17,
+   "xstock": "GMEx",
+   "name": "Save Point the Tabby",
+   "ticker": "SAVEPAWS",
+   "pairKnown": true,
+   "bytes": {
+    "name": 20,
+    "ticker": 8,
+    "story": 153,
+    "description": 264
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:gamestop",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with GMEx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund GMEx tracks, GMEx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Save Point the Tabby",
+    "symbol": "SAVEPAWS",
+    "description": "Save Point, a small brown striped tabby with a cream chest and muzzle, taps the same flat stepping stone with a paw before every adventure, just in case. — Not financial advice. A cat coin paired on StonkFun with GMEx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund GMEx tracks, GMEx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 375,
+   "sheetDisclosure": "A cat coin priced in GMEx. Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 18,
+   "xstock": "STRCx",
+   "name": "Everloop the Sleepy Cat",
+   "ticker": "EVERLOOP",
+   "pairKnown": true,
+   "bytes": {
+    "name": 23,
+    "ticker": 8,
+    "story": 150,
+    "description": 267
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with STRCx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund STRCx tracks, STRCx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Everloop the Sleepy Cat",
+    "symbol": "EVERLOOP",
+    "description": "Everloop, a soft blue-cream cat, curls into a perfect ring with her nose tucked in her tail and naps in the garden as if the afternoon will never end. — Not financial advice. A cat coin paired on StonkFun with STRCx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund STRCx tracks, STRCx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 375,
+   "sheetDisclosure": "A cat coin priced in STRCx. Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 19,
+   "xstock": "MCDx",
+   "name": "Milkweed the Meadow Cat",
+   "ticker": "MILKWEED",
+   "pairKnown": true,
+   "bytes": {
+    "name": 23,
+    "ticker": 8,
+    "story": 158,
+    "description": 271
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:mcdonalds",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with MCDx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund MCDx tracks, MCDx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Milkweed the Meadow Cat",
+    "symbol": "MILKWEED",
+    "description": "Milkweed, a fluffy white cat with one blue eye and one green eye, pounces on drifting seed fluff in the long grass, then flops in the sun like a fallen cloud. — Not financial advice. A cat coin paired on StonkFun with MCDx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund MCDx tracks, MCDx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 380,
+   "sheetDisclosure": "A cat coin priced in MCDx. Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 20,
+   "xstock": "BRK.Bx",
+   "name": "Moat Cat",
+   "ticker": "MOATCAT",
+   "pairKnown": true,
+   "bytes": {
+    "name": 8,
+    "ticker": 7,
+    "story": 147,
+    "description": 270
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with BRK.Bx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund BRK.Bx tracks, BRK.Bx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Moat Cat",
+    "symbol": "MOATCAT",
+    "description": "A white calico with one ginger ear and one black ear. She sits by the garden pond as if it were her moat and lets nothing cross it but butterflies. — Not financial advice. A cat coin paired on StonkFun with BRK.Bx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund BRK.Bx tracks, BRK.Bx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 375,
+   "sheetDisclosure": "A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 21,
+   "xstock": "KOx",
+   "name": "Tumble the Kitten",
+   "ticker": "TUMBLES",
+   "pairKnown": true,
+   "bytes": {
+    "name": 17,
+    "ticker": 7,
+    "story": 145,
+    "description": 268
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:coca cola",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with KOx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund KOx tracks, KOx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Tumble the Kitten",
+    "symbol": "TUMBLES",
+    "description": "Tumble is a small ginger tabby kitten with a white chin. Wherever she naps, more kittens pile in beside her until the whole garden hammock purrs. — Not financial advice. A cat coin paired on StonkFun with KOx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund KOx tracks, KOx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 364,
+   "sheetDisclosure": "A cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 22,
+   "xstock": "INTCx",
+   "name": "Bracken the Fern Cat",
+   "ticker": "BRACKEN",
+   "pairKnown": true,
+   "bytes": {
+    "name": 20,
+    "ticker": 7,
+    "story": 144,
+    "description": 253
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:intel",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with INTCx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund INTCx tracks, INTCx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Bracken the Fern Cat",
+    "symbol": "BRACKEN",
+    "description": "Bracken, a sturdy grey-brown striped tabby with a thick black-ringed tail, stalks moths through the ferns at dusk and has never once caught one. — Not financial advice. A cat coin paired on StonkFun with INTCx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund INTCx tracks, INTCx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 369,
+   "sheetDisclosure": "A cat coin priced in INTCx. Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 23,
+   "xstock": "VIDAx",
+   "name": "Trillby the Chirping Cat",
+   "ticker": "TRILLBY",
+   "pairKnown": true,
+   "bytes": {
+    "name": 24,
+    "ticker": 7,
+    "story": 147,
+    "description": 262
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with VIDAx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund VIDAx tracks, VIDAx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Trillby the Chirping Cat",
+    "symbol": "TRILLBY",
+    "description": "Trillby, a slim cream cat with dark brown points and bright blue eyes, chirps back whenever anyone speaks and follows every chat around the garden. — Not financial advice. A cat coin paired on StonkFun with VIDAx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund VIDAx tracks, VIDAx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 372,
+   "sheetDisclosure": "A cat coin priced in VIDAx. Not affiliated with Vida Global or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "order": 24,
+   "xstock": "DFDVx",
+   "name": "Latchkey the Vault Cat",
+   "ticker": "LATCHKEY",
+   "pairKnown": true,
+   "bytes": {
+    "name": 22,
+    "ticker": 8,
+    "story": 138,
+    "description": 264
+   },
+   "launchlabLimitsOk": true,
+   "detectCat": true,
+   "checkProposal": [],
+   "checkFieldsDescription": [
+    "brand:stonkfun",
+    "endorsement:affiliated",
+    "financial_promise:financial advice"
+   ],
+   "launchClaimsInDescription": [],
+   "tickerFree": [],
+   "site": [],
+   "stockCatRefusals_asShipped": [
+    "pair_terms_missing"
+   ],
+   "stockCatRefusals_placeholderRows": [],
+   "repoPairDisclosure": "Not financial advice. A cat coin paired on StonkFun with DFDVx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund DFDVx tracks, DFDVx's issuer, or StonkFun.",
+   "repoDocument": {
+    "name": "Latchkey the Vault Cat",
+    "symbol": "LATCHKEY",
+    "description": "Latchkey, a sturdy ginger-and-white cat, dozes upright on a little iron-banded strongbox in the garden shed, one paw on the old brass key. — Not financial advice. A cat coin paired on StonkFun with DFDVx, a tokenised stock: it is not the stock, and is not affiliated with, endorsed by or connected to the company or fund DFDVx tracks, DFDVx's issuer, or StonkFun.",
+    "image": "https://example.invalid/img.png",
+    "showName": true,
+    "createdOn": "https://www.stonkfun.xyz"
+   },
+   "repoDescriptionLength": 363,
+   "sheetDisclosure": "A cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

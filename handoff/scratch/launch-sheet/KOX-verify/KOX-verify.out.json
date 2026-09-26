@@ -1,0 +1,523 @@
+[
+ {
+  "name": "Sherbet the Garden Kitten",
+  "ticker": "SHERBET",
+  "lengths": {
+   "name": 25,
+   "ticker": 7,
+   "description": 280,
+   "blurb": 157
+  },
+  "lengthOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "tickerVsRoot": {
+   "containsKO": false,
+   "startsWithK": false,
+   "containsCOLA": false
+  },
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBlurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=SHERBET",
+   "status": 200,
+   "results": 20,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/KOX-verify/KOX-jup-SHERBET.json",
+   "all": [
+    {
+     "symbol": "sHerbert",
+     "name": "Shielded Herbert",
+     "isVerified": null
+    },
+    {
+     "symbol": "SHERBERT",
+     "name": "Sherbert The Tree",
+     "isVerified": null
+    },
+    {
+     "symbol": "Sherbert",
+     "name": "Sherbert The Tree",
+     "isVerified": null
+    },
+    {
+     "symbol": "SHERBERT",
+     "name": "Sherbert the Tree",
+     "isVerified": null
+    },
+    {
+     "symbol": "SHERBERT",
+     "name": "Sherbert The Tree",
+     "isVerified": null
+    },
+    {
+     "symbol": "SHERBERT",
+     "name": "Sherbert The Tree",
+     "isVerified": null
+    },
+    {
+     "symbol": "SHERBERT",
+     "name": "Sherbert the Tree",
+     "isVerified": null
+    },
+    {
+     "symbol": "OMNIUS",
+     "name": "Skynet by Frank Herbert DUNE",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "it's abt her being first jailed ",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "it's abt her being first jailed ",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "it's abt her being first jailed ",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "it's abt her being first jailed ",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "it's abt her being first jailed ",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "it's abt her being first jailed ",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "it's abt her being first jailed ",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "it's abt her being first jailed ",
+     "isVerified": null
+    },
+    {
+     "symbol": "SHOWER",
+     "name": "Last Shower Before GTA 6",
+     "isVerified": null
+    },
+    {
+     "symbol": "shabbat",
+     "name": "SHABBAT MONSTER beats his wife",
+     "isVerified": null
+    },
+    {
+     "symbol": "wifebeater",
+     "name": "SHABBAT MONSTER beats his wife",
+     "isVerified": null
+    },
+    {
+     "symbol": "WYND",
+     "name": "ITS ABT HER BEING FIRST JAILED",
+     "isVerified": null
+    }
+   ],
+   "symbolMatches": [],
+   "verifiedCollision": false
+  },
+  "jupiterNameSearch": {
+   "query": "Sherbet",
+   "status": 200,
+   "results": 20,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/KOX-verify/KOX-jup-name-Sherbet.json",
+   "verified": [],
+   "exactSymbolBase": []
+  }
+ },
+ {
+  "name": "Tumble the Kitten",
+  "ticker": "TUMBLES",
+  "lengths": {
+   "name": 17,
+   "ticker": 7,
+   "description": 276,
+   "blurb": 153
+  },
+  "lengthOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "tickerVsRoot": {
+   "containsKO": false,
+   "startsWithK": false,
+   "containsCOLA": false
+  },
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBlurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "stock",
+     "term": "Kittens",
+     "field": "tagline"
+    }
+   ]
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=TUMBLES",
+   "status": 200,
+   "results": 20,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/KOX-verify/KOX-jup-TUMBLES.json",
+   "all": [
+    {
+     "symbol": "KokSok",
+     "name": "The Humble Sock",
+     "isVerified": null
+    },
+    {
+     "symbol": "$THMB",
+     "name": "Thumbsless Coin",
+     "isVerified": null
+    },
+    {
+     "symbol": "STONK",
+     "name": "Stumble Stonks",
+     "isVerified": null
+    },
+    {
+     "symbol": "STONK",
+     "name": "Stumble Stonks",
+     "isVerified": null
+    },
+    {
+     "symbol": "STONK",
+     "name": "Stumble Stonks",
+     "isVerified": null
+    },
+    {
+     "symbol": "STUMBLE",
+     "name": "Stumble Stonk",
+     "isVerified": null
+    },
+    {
+     "symbol": "STONK",
+     "name": "Stumble Stonks",
+     "isVerified": null
+    },
+    {
+     "symbol": "STONK",
+     "name": "Stumble Stonks",
+     "isVerified": null
+    },
+    {
+     "symbol": "8",
+     "name": "with the humble is wisdom",
+     "isVerified": null
+    },
+    {
+     "symbol": "Humbled",
+     "name": "The Humbled Ostrich",
+     "isVerified": null
+    },
+    {
+     "symbol": "ClumsyBaby",
+     "name": "Baby stumbles and falls",
+     "isVerified": null
+    },
+    {
+     "symbol": "GOOSE",
+     "name": "The Humbled Goose",
+     "isVerified": null
+    },
+    {
+     "symbol": "TRUMPBLUE",
+     "name": "TRUMP BLUE BUTT CHEESE ON SOLANA",
+     "isVerified": null
+    },
+    {
+     "symbol": "Koolasuch",
+     "name": "The Humble Koolasuchus",
+     "isVerified": null
+    },
+    {
+     "symbol": "OPPORTUNITY",
+     "name": "Don't Fumble This",
+     "isVerified": null
+    },
+    {
+     "symbol": "OPPORTUNITY",
+     "name": "Don't Fumble This",
+     "isVerified": null
+    },
+    {
+     "symbol": "OPPORTUNITY",
+     "name": "Don't Fumble This",
+     "isVerified": null
+    },
+    {
+     "symbol": "OPPORTUNITY",
+     "name": "Don't Fumble This",
+     "isVerified": null
+    },
+    {
+     "symbol": "FUMBLE",
+     "name": "Don't Fumble This Coin",
+     "isVerified": null
+    },
+    {
+     "symbol": "TNUT",
+     "name": "Little Thumbelina The Squirrel",
+     "isVerified": null
+    }
+   ],
+   "symbolMatches": [],
+   "verifiedCollision": false
+  },
+  "jupiterNameSearch": {
+   "query": "Tumble",
+   "status": 200,
+   "results": 20,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/KOX-verify/KOX-jup-name-Tumble.json",
+   "verified": [],
+   "exactSymbolBase": [
+    {
+     "symbol": "TUMBLE",
+     "name": "TUMBLE"
+    },
+    {
+     "symbol": "TUMBLE",
+     "name": "TUMBLE"
+    },
+    {
+     "symbol": "tumble",
+     "name": "tumbler pigeon"
+    },
+    {
+     "symbol": "TUMBLE",
+     "name": "John Daly Tumble"
+    },
+    {
+     "symbol": "TUMBLE",
+     "name": "Tumbling Down"
+    }
+   ]
+  }
+ },
+ {
+  "name": "Tiptop the Kitten",
+  "ticker": "TIPTOPS",
+  "lengths": {
+   "name": 17,
+   "ticker": 7,
+   "description": 278,
+   "blurb": 155
+  },
+  "lengthOk": true,
+  "endsWithDisclosure": true,
+  "tickerFormat": true,
+  "tickerVsRoot": {
+   "containsKO": false,
+   "startsWithK": false,
+   "containsCOLA": false
+  },
+  "memeTicker": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBlurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "coca cola",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=TIPTOPS",
+   "status": 200,
+   "results": 2,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/KOX-verify/KOX-jup-TIPTOPS.json",
+   "all": [
+    {
+     "symbol": "POPEMOBILE",
+     "name": "LAST TRIP TO PUMPSWAP",
+     "isVerified": null
+    },
+    {
+     "symbol": "Finalboss",
+     "name": "TripaTropaTralalaLirilaTungSahur",
+     "isVerified": null
+    }
+   ],
+   "symbolMatches": [],
+   "verifiedCollision": false
+  },
+  "jupiterNameSearch": {
+   "query": "Tiptop",
+   "status": 200,
+   "results": 20,
+   "rawFile": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/KOX-verify/KOX-jup-name-Tiptop.json",
+   "verified": [],
+   "exactSymbolBase": [
+    {
+     "symbol": "TIPTOP",
+     "name": "TipTop"
+    }
+   ]
+  }
+ }
+]

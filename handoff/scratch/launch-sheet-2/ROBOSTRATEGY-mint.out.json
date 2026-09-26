@@ -1,0 +1,65 @@
+{
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "decimals": 6,
+ "mintAuthority": "HcSDK8nSoSft3VMP2d8ASnXnzDJnnY4Ak2xkhBtHgQ4H",
+ "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+ "extensions": [
+  {
+   "extension": "metadataPointer",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "metadataAddress": "BoTx8y9ynfdxf5ZjWtCoBVkff52qKA82ysaLU8ZM6d8T"
+   }
+  },
+  {
+   "extension": "permanentDelegate",
+   "state": {
+    "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+   }
+  },
+  {
+   "extension": "defaultAccountState",
+   "state": {
+    "accountState": "initialized"
+   }
+  },
+  {
+   "extension": "pausableConfig",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "paused": false
+   }
+  },
+  {
+   "extension": "confidentialTransferMint",
+   "state": {
+    "auditorElgamalPubkey": null,
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "autoApproveNewAccounts": false
+   }
+  },
+  {
+   "extension": "transferHook",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "programId": null
+   }
+  },
+  {
+   "extension": "scaledUiAmountConfig",
+   "state": {
+    "authority": "HcSDK8nSoSft3VMP2d8ASnXnzDJnnY4Ak2xkhBtHgQ4H",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "extension": "tokenMetadata",
+   "state": {
+    "name": "RoboStrategy - Backpack Securities",
+    "symbol": "BOT"
+   }
+  }
+ ]
+}

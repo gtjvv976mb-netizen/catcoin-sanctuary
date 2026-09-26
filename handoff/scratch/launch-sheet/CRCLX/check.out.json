@@ -1,0 +1,239 @@
+{
+ "pair": {
+  "symbol": "CRCLx",
+  "root": "CRCL",
+  "stonkfun": "CRCLX",
+  "stonkfunName": "CIRCLE",
+  "name": "Circle xStock",
+  "mint": "XsueG8BtpquVJX9LVLLEGuViXUungE6WmK5YZ3p3bd1"
+ },
+ "verifiedList": {
+  "status": 200,
+  "size": 3694,
+  "fetchedAt": "2026-09-25T16:15:22.632Z"
+ },
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Doughball the Bowler Cat",
+   "ticker": "DOUGHBALL",
+   "lengths": {
+    "name": 24,
+    "ticker": 9,
+    "description": 267,
+    "story": 157
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "endsWithDisclosure": true,
+   "checkProposal_story": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_storyOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "containsStockRoot": [],
+   "otherXstockRootsInTicker": [],
+   "memeTickerHit": [],
+   "jupiterSearch": {
+    "status": 200,
+    "results": 0,
+    "exactSymbol": [],
+    "verifiedExact": 0
+   },
+   "verifiedListNear": [
+    "BALL|POWERBALL"
+   ],
+   "verifiedListNameNear": []
+  },
+  {
+   "name": "Tuppence the Tweed Cat",
+   "ticker": "TUPPENCE",
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 255,
+    "story": 145
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "endsWithDisclosure": true,
+   "checkProposal_story": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_storyOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "containsStockRoot": [],
+   "otherXstockRootsInTicker": [],
+   "memeTickerHit": [],
+   "jupiterSearch": {
+    "status": 200,
+    "results": 3,
+    "exactSymbol": [
+     {
+      "symbol": "TUPPENCE",
+      "name": "Tuppence",
+      "id": "HnU8E8dza4kx7PPd5ZC7HAxqeD5UATvdbkrD5DNHpump",
+      "isVerified": null,
+      "tags": [
+       "unknown",
+       "token-2022"
+      ],
+      "holderCount": 1,
+      "mcap": 3290.2189111058833,
+      "liquidity": 3479.459443687075
+     }
+    ],
+    "verifiedExact": 0
+   },
+   "verifiedListNear": [],
+   "verifiedListNameNear": []
+  },
+  {
+   "name": "Porridge the Sun Hat Cat",
+   "ticker": "PORRIDGE",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "description": 256,
+    "story": 146
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "endsWithDisclosure": true,
+   "checkProposal_story": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_storyOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "containsStockRoot": [],
+   "otherXstockRootsInTicker": [],
+   "memeTickerHit": [],
+   "jupiterSearch": {
+    "status": 200,
+    "results": 15,
+    "exactSymbol": [],
+    "verifiedExact": 0
+   },
+   "verifiedListNear": [],
+   "verifiedListNameNear": []
+  }
+ ]
+}

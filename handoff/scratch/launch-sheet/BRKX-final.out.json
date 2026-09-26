@@ -1,0 +1,212 @@
+[
+ {
+  "name": "Moat Cat",
+  "symbol": "MOATCAT",
+  "nameLen": 8,
+  "symbolLen": 7,
+  "bodyLen": 147,
+  "descLen": 270,
+  "tickerRe": true,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "sample": []
+  },
+  "description": "A white calico with one ginger ear and one black ear. She sits by the garden pond as if it were her moat and lets nothing cross it but butterflies. A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Slow Purr",
+  "symbol": "SLOWPURR",
+  "nameLen": 9,
+  "symbolLen": 8,
+  "bodyLen": 151,
+  "descLen": 274,
+  "tickerRe": true,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "sample": []
+  },
+  "description": "A white calico with a ginger ear, a black ear and a black patch on her side. She picked one sunny spot years ago and has found no reason to move since. A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Two Cats For A Dog",
+  "symbol": "TWOFORDOG",
+  "nameLen": 18,
+  "symbolLen": 9,
+  "bodyLen": 158,
+  "descLen": 281,
+  "tickerRe": true,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "sample": []
+  },
+  "description": "From an old shareholder-letter joke about buying a dog with two cats. She is one of the two: a white calico, one ginger ear, one black. She never met the dog. A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice."
+ }
+]

@@ -1,0 +1,380 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "discLen": 139,
+ "results": [
+  {
+   "pick": false,
+   "name": "Kernel the Butter-Patch Cat",
+   "ticker": "KERNELPAW",
+   "nameLen": 27,
+   "blurbLen": 130,
+   "descLen": 270,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Kernel, a fluffy cream-white cat with bu",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupAnyVerifiedInResults": []
+  },
+  {
+   "pick": true,
+   "name": "Kernel the Butter-Patch Cat",
+   "ticker": "KERNELPAW",
+   "nameLen": 27,
+   "blurbLen": 142,
+   "descLen": 282,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Kernel, a fluffy cream-white cat with bu",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Popcorn",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupAnyVerifiedInResults": []
+  },
+  {
+   "pick": false,
+   "name": "Matinee the Velvet-Black Cat",
+   "ticker": "MATINEE",
+   "nameLen": 28,
+   "blurbLen": 127,
+   "descLen": 267,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Matinee, a sleek jet-black shorthair wit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupAnyVerifiedInResults": []
+  },
+  {
+   "pick": false,
+   "name": "Reeltail the Silver Tabby Cat",
+   "ticker": "REELTAIL",
+   "nameLen": 29,
+   "blurbLen": 137,
+   "descLen": 277,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeClash": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Reeltail, a silver tabby with a long tai",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedSymbolMatch": false,
+   "jupAnyVerifiedInResults": []
+  }
+ ],
+ "extra": {
+  "KERNEL": {
+   "status": 200,
+   "n": 20,
+   "symbolMatches": [
+    {
+     "name": "Kernel Cat",
+     "id": "5xRNjAf8LRY4QjwunrV9eRLpyknpYn7UkvbwtuGpGKNN"
+    },
+    {
+     "name": "Kernel Lens",
+     "id": "Av8Pr8eP4RpD9iMKMhFS4oRuY5LqDFmcer38ZrAcmZ77"
+    },
+    {
+     "name": "Kernel AI",
+     "id": "2bSK6LQTtUgWbRFKdZp1x9AoYjFKqYzF6aE2XfUvpump"
+    },
+    {
+     "name": "Kernel DePIN",
+     "id": "CPUhV4VooUTnsh8KgzZ4LYkDocUcyqA9ECfULUnj8yLd"
+    },
+    {
+     "name": "The Kernel",
+     "id": "7U9tr72P8NTS38L7JAbCMwn6DKBCQQoet1g7nLJKpump"
+    },
+    {
+     "name": "KERNEL DAO",
+     "id": "BGXciGUSri15Wb21M9JmHr4qjLQ9Gdhe9gmUQ1Cqpump"
+    }
+   ]
+  },
+  "KERNELCAT": {
+   "status": 200,
+   "n": 2,
+   "symbolMatches": []
+  }
+ }
+}

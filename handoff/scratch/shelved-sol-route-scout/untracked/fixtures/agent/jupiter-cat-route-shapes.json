@@ -1,0 +1,1839 @@
+{
+  "note": "Which routes Jupiter answers for the six preset cat coins, 25 USDC in and that answer's output back out, asked five ways the same morning: direct only (onlyDirectRoutes=true), and with onlyDirectRoutes=false and restrictIntermediateTokens=true at maxAccounts 20, 24, 28 and 32. Jupiter's quote takes no parameter that names the intermediate token; maxAccounts is what keeps the route short, and the check before signing is what holds it to SOL. What came back: direct, only POPCAT has a route (both ways); every other coin answered NO_ROUTES_FOUND. At maxAccounts 24 all twelve answers were one hop through SOL (POPCAT's too, for slightly more out than its direct pool). At 32 two answers took two intermediates (KWIF's buy through USDT and SOL; GRUMPY's sell through SOL and a third token); at 20 KITTY had no route either way. So the agent asks at maxAccounts 24. Each row keeps the route plan (labels, pools, mints, bps), the amounts and priceImpactPct as answered; `shape` and `intermediates` were derived from the route plan by the recording script. USDT, asked the same way minutes later (usdt: 25 USDT in, buys only, direct and at maxAccounts 24; its own capturedAt): no preset coin had a direct USDT route, POPCAT included, and all six came back one hop through SOL at maxAccounts 24.",
+  "capturedAt": "2026-09-25T11:13:32.959Z",
+  "source": "GET https://lite-api.jup.ag/swap/v1/quote",
+  "query": {
+    "common": {
+      "slippageBps": "100",
+      "swapMode": "ExactIn",
+      "instructionVersion": "V2"
+    },
+    "buyAmount": "25000000 (25 USDC)",
+    "sellAmount": "the first buy answer's outAmount",
+    "asks": {
+      "direct": {
+        "onlyDirectRoutes": "true",
+        "restrictIntermediateTokens": "true"
+      },
+      "maxAccounts20": {
+        "onlyDirectRoutes": "false",
+        "restrictIntermediateTokens": "true",
+        "maxAccounts": "20"
+      },
+      "maxAccounts24": {
+        "onlyDirectRoutes": "false",
+        "restrictIntermediateTokens": "true",
+        "maxAccounts": "24"
+      },
+      "maxAccounts28": {
+        "onlyDirectRoutes": "false",
+        "restrictIntermediateTokens": "true",
+        "maxAccounts": "28"
+      },
+      "maxAccounts32": {
+        "onlyDirectRoutes": "false",
+        "restrictIntermediateTokens": "true",
+        "maxAccounts": "32"
+      }
+    }
+  },
+  "rows": [
+    {
+      "symbol": "MEW",
+      "side": "buy",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "MEW",
+      "side": "buy",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "4833258771",
+      "priceImpactPct": "0",
+      "contextSlot": 450335676,
+      "routePlan": [
+        {
+          "label": "TesseraV",
+          "ammKey": "FLckHLGMJy5gEoXWwcE68Nprde1D4araK4TGLw4pQq2n",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "MEW",
+      "side": "buy",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "4834505107",
+      "priceImpactPct": "0",
+      "contextSlot": 450335681,
+      "routePlan": [
+        {
+          "label": "BisonFi",
+          "ammKey": "8FnX3xo2yYw3EUE6w3nQA4GfXGS9wpK6oj3veJpbFzLo",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "MEW",
+      "side": "buy",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "4833723198",
+      "priceImpactPct": "0",
+      "contextSlot": 450335686,
+      "routePlan": [
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "MEW",
+      "side": "buy",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "4833853776",
+      "priceImpactPct": "0",
+      "contextSlot": 450335690,
+      "routePlan": [
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "MEW",
+      "side": "sell",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "MEW",
+      "side": "sell",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "4833258771",
+      "outAmount": "24871939",
+      "priceImpactPct": "0.0053209073866966385562973452",
+      "contextSlot": 450335700,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+          "inputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "GoonFi V2",
+          "ammKey": "GMCJvYGf5Ex2ARiMquaBDqU6iKM8uiEQkB8jCnoNfHpC",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "MEW",
+      "side": "sell",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "4833258771",
+      "outAmount": "24871423",
+      "priceImpactPct": "0.0053415432692383440716777484",
+      "contextSlot": 450335704,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+          "inputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "HumidiFi",
+          "ammKey": "8sKQHfjNhvmAw94PhfvfMcytmqW6jmxvwieYyzXCCPu",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "MEW",
+      "side": "sell",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "4833258771",
+      "outAmount": "24875563",
+      "priceImpactPct": "0.0051759763046595440064163737",
+      "contextSlot": 450335709,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+          "inputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Flux",
+          "ammKey": "F3ds62W3NNEBQrwi2ZFy2vX3xu5fxL6f7VMtRdmKjoCv",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "MEW",
+      "side": "sell",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "4833258771",
+      "outAmount": "24876654",
+      "priceImpactPct": "0.0051323450103707829264163352",
+      "contextSlot": 450335713,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+          "inputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "BisonFi",
+          "ammKey": "8FnX3xo2yYw3EUE6w3nQA4GfXGS9wpK6oj3veJpbFzLo",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "buy",
+      "ask": "direct",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "424694881952",
+      "priceImpactPct": "0.0010361302354585335967615971",
+      "contextSlot": 450335718,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "HBS7a3br8GMMWuqVa7VB3SMFa7xVi1tSFdoF5w4ZZ3kS",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [],
+      "shape": "direct"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "buy",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "424912467717",
+      "priceImpactPct": "0.0005243267571330173222301893",
+      "contextSlot": 450335722,
+      "routePlan": [
+        {
+          "label": "BisonFi",
+          "ammKey": "8FnX3xo2yYw3EUE6w3nQA4GfXGS9wpK6oj3veJpbFzLo",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "FRhB8L7Y9Qq41qZXYLtC2nw8An1RJfLLxRF2x9RwLLMo",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "buy",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "424724725364",
+      "priceImpactPct": "0.0009659328028888916797292675",
+      "contextSlot": 450335727,
+      "routePlan": [
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "FRhB8L7Y9Qq41qZXYLtC2nw8An1RJfLLxRF2x9RwLLMo",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "buy",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "424765962165",
+      "priceImpactPct": "0.0008689359327727922748113351",
+      "contextSlot": 450335731,
+      "routePlan": [
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "FRhB8L7Y9Qq41qZXYLtC2nw8An1RJfLLxRF2x9RwLLMo",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "buy",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "424730453216",
+      "priceImpactPct": "0.0009524597956959176124960216",
+      "contextSlot": 450335736,
+      "routePlan": [
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "FRhB8L7Y9Qq41qZXYLtC2nw8An1RJfLLxRF2x9RwLLMo",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "sell",
+      "ask": "direct",
+      "status": 200,
+      "inAmount": "424694881952",
+      "outAmount": "24871479",
+      "priceImpactPct": "0.004108967189683204250738735",
+      "contextSlot": 450335740,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "HBS7a3br8GMMWuqVa7VB3SMFa7xVi1tSFdoF5w4ZZ3kS",
+          "inputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [],
+      "shape": "direct"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "sell",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "424694881952",
+      "outAmount": "24914077",
+      "priceImpactPct": "0.0024032798754847251468090076",
+      "contextSlot": 450335745,
+      "routePlan": [
+        {
+          "label": "Whirlpool",
+          "ammKey": "AHTTzwf3GmVMJdxWM8v2MSxyjZj8rQR6hyAC3g9477Yj",
+          "inputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Flux",
+          "ammKey": "82RLfDeEAoYtx3rwZF7igAQC1nGsBBvAMkygB5mcJojZ",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "sell",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "424694881952",
+      "outAmount": "24927243",
+      "priceImpactPct": "0.0018760936418883784666282763",
+      "contextSlot": 450335749,
+      "routePlan": [
+        {
+          "label": "Whirlpool",
+          "ammKey": "AHTTzwf3GmVMJdxWM8v2MSxyjZj8rQR6hyAC3g9477Yj",
+          "inputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Flux",
+          "ammKey": "F3ds62W3NNEBQrwi2ZFy2vX3xu5fxL6f7VMtRdmKjoCv",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "sell",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "424694881952",
+      "outAmount": "24924307",
+      "priceImpactPct": "0.0019936554512335762376301468",
+      "contextSlot": 450335754,
+      "routePlan": [
+        {
+          "label": "Whirlpool",
+          "ammKey": "AHTTzwf3GmVMJdxWM8v2MSxyjZj8rQR6hyAC3g9477Yj",
+          "inputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Flux",
+          "ammKey": "82RLfDeEAoYtx3rwZF7igAQC1nGsBBvAMkygB5mcJojZ",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "POPCAT",
+      "side": "sell",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "424694881952",
+      "outAmount": "24931053",
+      "priceImpactPct": "0.0017235355718593581984003722",
+      "contextSlot": 450335759,
+      "routePlan": [
+        {
+          "label": "Whirlpool",
+          "ammKey": "AHTTzwf3GmVMJdxWM8v2MSxyjZj8rQR6hyAC3g9477Yj",
+          "inputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Flux",
+          "ammKey": "F3ds62W3NNEBQrwi2ZFy2vX3xu5fxL6f7VMtRdmKjoCv",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "buy",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "buy",
+      "ask": "maxAccounts20",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "buy",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "6435354103350",
+      "priceImpactPct": "0.0007836805035669610094493609",
+      "contextSlot": 450335772,
+      "routePlan": [
+        {
+          "label": "Whirlpool",
+          "ammKey": "83v8iPyZihDEjDdY8RdZddyZNyUtXngz69Lgo9Kt5d6d",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium CP",
+          "ammKey": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "buy",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "6438121101615",
+      "priceImpactPct": "0.0003540491611413669158081585",
+      "contextSlot": 450335777,
+      "routePlan": [
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium CP",
+          "ammKey": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "buy",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "6437376539017",
+      "priceImpactPct": "0.0004696572670606628066767192",
+      "contextSlot": 450335782,
+      "routePlan": [
+        {
+          "label": "TesseraV",
+          "ammKey": "FLckHLGMJy5gEoXWwcE68Nprde1D4araK4TGLw4pQq2n",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium CP",
+          "ammKey": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "sell",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "sell",
+      "ask": "maxAccounts20",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "sell",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "6435354103350",
+      "outAmount": "24842455",
+      "priceImpactPct": "0.005522447330738113855291289",
+      "contextSlot": 450335795,
+      "routePlan": [
+        {
+          "label": "Raydium CP",
+          "ammKey": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
+          "inputMint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "TesseraV",
+          "ammKey": "FLckHLGMJy5gEoXWwcE68Nprde1D4araK4TGLw4pQq2n",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "sell",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "6435354103350",
+      "outAmount": "24847097",
+      "priceImpactPct": "0.0053366217028164485579008444",
+      "contextSlot": 450335799,
+      "routePlan": [
+        {
+          "label": "Raydium CP",
+          "ammKey": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
+          "inputMint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "HumidiFi",
+          "ammKey": "8sKQHfjNhvmAw94PhfvfMcytmqW6jmxvwieYyzXCCPu",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KITTY",
+      "side": "sell",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "6435354103350",
+      "outAmount": "24844058",
+      "priceImpactPct": "0.0054582770417337128488895478",
+      "contextSlot": 450335804,
+      "routePlan": [
+        {
+          "label": "Raydium CP",
+          "ammKey": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
+          "inputMint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Flux",
+          "ammKey": "F3ds62W3NNEBQrwi2ZFy2vX3xu5fxL6f7VMtRdmKjoCv",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "buy",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "buy",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "1010003854014847",
+      "priceImpactPct": "0.050343663017371099011701627",
+      "contextSlot": 450335813,
+      "routePlan": [
+        {
+          "label": "BisonFi",
+          "ammKey": "8FnX3xo2yYw3EUE6w3nQA4GfXGS9wpK6oj3veJpbFzLo",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "buy",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "1010077582843261",
+      "priceImpactPct": "0.0502743394708882449353368457",
+      "contextSlot": 450335817,
+      "routePlan": [
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "buy",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "1010806221335050",
+      "priceImpactPct": "0.049589236975143988746832527",
+      "contextSlot": 450335822,
+      "routePlan": [
+        {
+          "label": "HumidiFi",
+          "ammKey": "8sKQHfjNhvmAw94PhfvfMcytmqW6jmxvwieYyzXCCPu",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "buy",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "1010593881750894",
+      "priceImpactPct": "0.0497888893139785664873240301",
+      "contextSlot": 450335826,
+      "routePlan": [
+        {
+          "label": "Quantum",
+          "ammKey": "7wXtGayssQRekJYop299FoJZmcD7fvRW6NUwLk3r6VWM",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "sell",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "sell",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "1010003854014847",
+      "outAmount": "24815073",
+      "priceImpactPct": "0",
+      "contextSlot": 450335835,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+          "inputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Whirlpool",
+          "ammKey": "7qbRF6YsyGuLUVs6Y1q64bdVrfe4ZcUUz1JRdoVNUJnm",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "sell",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "1010003854014847",
+      "outAmount": "24818680",
+      "priceImpactPct": "0",
+      "contextSlot": 450335839,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+          "inputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Quantum",
+          "ammKey": "7wXtGayssQRekJYop299FoJZmcD7fvRW6NUwLk3r6VWM",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "sell",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "1010003854014847",
+      "outAmount": "24802101",
+      "priceImpactPct": "0",
+      "contextSlot": 450335844,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+          "inputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "GRUMPY",
+      "side": "sell",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "1010003854014847",
+      "outAmount": "24801093",
+      "priceImpactPct": "0",
+      "contextSlot": 450335848,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+          "inputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Whirlpool",
+          "ammKey": "9Vh6fqJjDkqSTZ8bDXseVxGb2yQEMkEhhtte2anQCHSf",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+          "bps": 10000
+        },
+        {
+          "label": "AlphaQ",
+          "ammKey": "FVz9gveEdRw2fqkZFLCXxpZErS4mBQvwKwQeForLUyW6",
+          "inputMint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112",
+        "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo"
+      ],
+      "shape": "2 intermediate(s)"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "buy",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "buy",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "91814634408",
+      "priceImpactPct": "0.0460557266839621923630334634",
+      "contextSlot": 450335857,
+      "routePlan": [
+        {
+          "label": "Quantum",
+          "ammKey": "8R5qdXKMn2KcfHBy9rEpi43KScHewqvRAcpFyqoL3wap",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "buy",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "91805180443",
+      "priceImpactPct": "0.0461539523734726921168288184",
+      "contextSlot": 450335862,
+      "routePlan": [
+        {
+          "label": "Quantum",
+          "ammKey": "8R5qdXKMn2KcfHBy9rEpi43KScHewqvRAcpFyqoL3wap",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "buy",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "91847213927",
+      "priceImpactPct": "0.0457172289512441817264101464",
+      "contextSlot": 450335866,
+      "routePlan": [
+        {
+          "label": "BisonFi",
+          "ammKey": "8FnX3xo2yYw3EUE6w3nQA4GfXGS9wpK6oj3veJpbFzLo",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "buy",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "91853311335",
+      "priceImpactPct": "0.0456538775314931209510861515",
+      "contextSlot": 450335871,
+      "routePlan": [
+        {
+          "label": "SolFi V2",
+          "ammKey": "FkEB6uvyzuoaGpgs4yRtFtxC4WJxhejNFbUkj5R6wR32",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+          "bps": 10000
+        },
+        {
+          "label": "GoonFi V2",
+          "ammKey": "4rJggoVMajEUtipev1XhSMjESYk8Zibz6CDHPtUe1mem",
+          "inputMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "2 intermediate(s)"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "sell",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "sell",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "91814634408",
+      "outAmount": "24835200",
+      "priceImpactPct": "0",
+      "contextSlot": 450335880,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+          "inputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Flux",
+          "ammKey": "F3ds62W3NNEBQrwi2ZFy2vX3xu5fxL6f7VMtRdmKjoCv",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "sell",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "91814634408",
+      "outAmount": "24841524",
+      "priceImpactPct": "0",
+      "contextSlot": 450335884,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+          "inputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Quantum",
+          "ammKey": "7wXtGayssQRekJYop299FoJZmcD7fvRW6NUwLk3r6VWM",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "sell",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "91814634408",
+      "outAmount": "24838929",
+      "priceImpactPct": "0",
+      "contextSlot": 450335889,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+          "inputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KWIF",
+      "side": "sell",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "91814634408",
+      "outAmount": "24841492",
+      "priceImpactPct": "0",
+      "contextSlot": 450335893,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+          "inputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "buy",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "buy",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "1358777323063",
+      "priceImpactPct": "0.0239579665640424376170572504",
+      "contextSlot": 450335902,
+      "routePlan": [
+        {
+          "label": "TesseraV",
+          "ammKey": "FLckHLGMJy5gEoXWwcE68Nprde1D4araK4TGLw4pQq2n",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "buy",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "1359145341516",
+      "priceImpactPct": "0.023693610165748748310623844",
+      "contextSlot": 450335908,
+      "routePlan": [
+        {
+          "label": "Kipseli",
+          "ammKey": "7yD7gfXv49SFxhx9uTc11dEd7Nj98rGWeYMdZJgheZbG",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "buy",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "1359174149862",
+      "priceImpactPct": "0.0236729164463787622323544451",
+      "contextSlot": 450335912,
+      "routePlan": [
+        {
+          "label": "BisonFi",
+          "ammKey": "8FnX3xo2yYw3EUE6w3nQA4GfXGS9wpK6oj3veJpbFzLo",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "buy",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "25000000",
+      "outAmount": "1359332701701",
+      "priceImpactPct": "0.0235590248934981763731729793",
+      "contextSlot": 450335917,
+      "routePlan": [
+        {
+          "label": "HumidiFi",
+          "ammKey": "8sKQHfjNhvmAw94PhfvfMcytmqW6jmxvwieYyzXCCPu",
+          "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Raydium",
+          "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "sell",
+      "ask": "direct",
+      "status": 400,
+      "errorCode": "NO_ROUTES_FOUND",
+      "error": "No routes found",
+      "shape": "no route"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "sell",
+      "ask": "maxAccounts20",
+      "status": 200,
+      "inAmount": "1358777323063",
+      "outAmount": "24810029",
+      "priceImpactPct": "0",
+      "contextSlot": 450335926,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+          "inputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "Flux",
+          "ammKey": "82RLfDeEAoYtx3rwZF7igAQC1nGsBBvAMkygB5mcJojZ",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "sell",
+      "ask": "maxAccounts24",
+      "status": 200,
+      "inAmount": "1358777323063",
+      "outAmount": "24811891",
+      "priceImpactPct": "0",
+      "contextSlot": 450335931,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+          "inputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "HumidiFi",
+          "ammKey": "8sKQHfjNhvmAw94PhfvfMcytmqW6jmxvwieYyzXCCPu",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "sell",
+      "ask": "maxAccounts28",
+      "status": 200,
+      "inAmount": "1358777323063",
+      "outAmount": "24811849",
+      "priceImpactPct": "0",
+      "contextSlot": 450335934,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+          "inputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "BisonFi",
+          "ammKey": "8FnX3xo2yYw3EUE6w3nQA4GfXGS9wpK6oj3veJpbFzLo",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    },
+    {
+      "symbol": "KHAI",
+      "side": "sell",
+      "ask": "maxAccounts32",
+      "status": 200,
+      "inAmount": "1358777323063",
+      "outAmount": "24816134",
+      "priceImpactPct": "0",
+      "contextSlot": 450335938,
+      "routePlan": [
+        {
+          "label": "Raydium",
+          "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+          "inputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+          "outputMint": "So11111111111111111111111111111111111111112",
+          "bps": 10000
+        },
+        {
+          "label": "TesseraV",
+          "ammKey": "FLckHLGMJy5gEoXWwcE68Nprde1D4araK4TGLw4pQq2n",
+          "inputMint": "So11111111111111111111111111111111111111112",
+          "outputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "bps": 10000
+        }
+      ],
+      "intermediates": [
+        "So11111111111111111111111111111111111111112"
+      ],
+      "shape": "one hop through SOL"
+    }
+  ],
+  "usdt": {
+    "capturedAt": "2026-09-25T11:32:43.349Z",
+    "rows": [
+      {
+        "symbol": "MEW",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "direct",
+        "status": 400,
+        "errorCode": "NO_ROUTES_FOUND",
+        "error": "No routes found",
+        "shape": "no route"
+      },
+      {
+        "symbol": "MEW",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "maxAccounts24",
+        "status": 200,
+        "inAmount": "25000000",
+        "outAmount": "4861250370",
+        "priceImpactPct": "0",
+        "contextSlot": 450340199,
+        "routePlan": [
+          {
+            "label": "GoonFi V2",
+            "ammKey": "4rJggoVMajEUtipev1XhSMjESYk8Zibz6CDHPtUe1mem",
+            "inputMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+            "outputMint": "So11111111111111111111111111111111111111112",
+            "bps": 10000
+          },
+          {
+            "label": "Raydium",
+            "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+            "inputMint": "So11111111111111111111111111111111111111112",
+            "outputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+            "bps": 10000
+          }
+        ],
+        "intermediates": [
+          "So11111111111111111111111111111111111111112"
+        ],
+        "shape": "one hop through SOL"
+      },
+      {
+        "symbol": "POPCAT",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "direct",
+        "status": 400,
+        "errorCode": "NO_ROUTES_FOUND",
+        "error": "No routes found",
+        "shape": "no route"
+      },
+      {
+        "symbol": "POPCAT",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "maxAccounts24",
+        "status": 200,
+        "inAmount": "25000000",
+        "outAmount": "425307597970",
+        "priceImpactPct": "0.0030252538948342564067932266",
+        "contextSlot": 450340209,
+        "routePlan": [
+          {
+            "label": "PancakeSwap",
+            "ammKey": "22HUWiJaTNph96KQTKZVy2wg8KzfCems5nyW7E5H5J6w",
+            "inputMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+            "outputMint": "So11111111111111111111111111111111111111112",
+            "bps": 10000
+          },
+          {
+            "label": "Whirlpool",
+            "ammKey": "AHTTzwf3GmVMJdxWM8v2MSxyjZj8rQR6hyAC3g9477Yj",
+            "inputMint": "So11111111111111111111111111111111111111112",
+            "outputMint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
+            "bps": 10000
+          }
+        ],
+        "intermediates": [
+          "So11111111111111111111111111111111111111112"
+        ],
+        "shape": "one hop through SOL"
+      },
+      {
+        "symbol": "KITTY",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "direct",
+        "status": 400,
+        "errorCode": "NO_ROUTES_FOUND",
+        "error": "No routes found",
+        "shape": "no route"
+      },
+      {
+        "symbol": "KITTY",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "maxAccounts24",
+        "status": 200,
+        "inAmount": "25000000",
+        "outAmount": "6486711809780",
+        "priceImpactPct": "0.0027638662210581209960397448",
+        "contextSlot": 450340217,
+        "routePlan": [
+          {
+            "label": "Whirlpool",
+            "ammKey": "FwewVm8u6tFPGewAyHmWAqad9hmF7mvqxK4mJ7iNqqGC",
+            "inputMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+            "outputMint": "So11111111111111111111111111111111111111112",
+            "bps": 10000
+          },
+          {
+            "label": "Raydium CP",
+            "ammKey": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
+            "inputMint": "So11111111111111111111111111111111111111112",
+            "outputMint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+            "bps": 10000
+          }
+        ],
+        "intermediates": [
+          "So11111111111111111111111111111111111111112"
+        ],
+        "shape": "one hop through SOL"
+      },
+      {
+        "symbol": "GRUMPY",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "direct",
+        "status": 400,
+        "errorCode": "NO_ROUTES_FOUND",
+        "error": "No routes found",
+        "shape": "no route"
+      },
+      {
+        "symbol": "GRUMPY",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "maxAccounts24",
+        "status": 200,
+        "inAmount": "25000000",
+        "outAmount": "1017883092572527",
+        "priceImpactPct": "0.0429044018217299213585909548",
+        "contextSlot": 450340227,
+        "routePlan": [
+          {
+            "label": "PancakeSwap",
+            "ammKey": "22HUWiJaTNph96KQTKZVy2wg8KzfCems5nyW7E5H5J6w",
+            "inputMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+            "outputMint": "So11111111111111111111111111111111111111112",
+            "bps": 10000
+          },
+          {
+            "label": "Raydium",
+            "ammKey": "73YKMEJ3yV6H1eym4ULtTqqwxJDZ2N96Wud6j3rJa7ki",
+            "inputMint": "So11111111111111111111111111111111111111112",
+            "outputMint": "GRUmPYbiTpq9ZPy5LAqBMMze7kErf5dEX2i9qYfwoSmR",
+            "bps": 10000
+          }
+        ],
+        "intermediates": [
+          "So11111111111111111111111111111111111111112"
+        ],
+        "shape": "one hop through SOL"
+      },
+      {
+        "symbol": "KWIF",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "direct",
+        "status": 400,
+        "errorCode": "NO_ROUTES_FOUND",
+        "error": "No routes found",
+        "shape": "no route"
+      },
+      {
+        "symbol": "KWIF",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "maxAccounts24",
+        "status": 200,
+        "inAmount": "25000000",
+        "outAmount": "92311195133",
+        "priceImpactPct": "0",
+        "contextSlot": 450340235,
+        "routePlan": [
+          {
+            "label": "Raydium CLMM",
+            "ammKey": "3nMFwZXwY1s1M5s8vYAHqd4wGs4iSxXE4LRoUMMYqEgF",
+            "inputMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+            "outputMint": "So11111111111111111111111111111111111111112",
+            "bps": 10000
+          },
+          {
+            "label": "Raydium",
+            "ammKey": "HYEiWNG5s6SxU3x5t5AAD12VsCsxajM7svL84VFhcffR",
+            "inputMint": "So11111111111111111111111111111111111111112",
+            "outputMint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt",
+            "bps": 10000
+          }
+        ],
+        "intermediates": [
+          "So11111111111111111111111111111111111111112"
+        ],
+        "shape": "one hop through SOL"
+      },
+      {
+        "symbol": "KHAI",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "direct",
+        "status": 400,
+        "errorCode": "NO_ROUTES_FOUND",
+        "error": "No routes found",
+        "shape": "no route"
+      },
+      {
+        "symbol": "KHAI",
+        "side": "buy",
+        "settlement": "USDT",
+        "ask": "maxAccounts24",
+        "status": 200,
+        "inAmount": "25000000",
+        "outAmount": "1365965525765",
+        "priceImpactPct": "0.018792436826473488507289668",
+        "contextSlot": 450340243,
+        "routePlan": [
+          {
+            "label": "Scorch",
+            "ammKey": "GUoa6mRgTyoE8NgXEyLnYXMWdS71KrcXG2nnx9u41Fmd",
+            "inputMint": "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
+            "outputMint": "So11111111111111111111111111111111111111112",
+            "bps": 10000
+          },
+          {
+            "label": "Raydium",
+            "ammKey": "ECbK6PSMZ5yQaUYBocsXaVrax2fWADw2ijTqLGPtt9sC",
+            "inputMint": "So11111111111111111111111111111111111111112",
+            "outputMint": "3TWgDvYBL2YPET2LxnWAwsMeoA8aL4DutNuwat2pKCjC",
+            "bps": 10000
+          }
+        ],
+        "intermediates": [
+          "So11111111111111111111111111111111111111112"
+        ],
+        "shape": "one hop through SOL"
+      }
+    ]
+  }
+}

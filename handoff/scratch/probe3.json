@@ -1,0 +1,110 @@
+{
+ "at": "2026-09-25T10:30:44.118Z",
+ "note": "$25 USDC in, restrictIntermediateTokens true, multi-hop allowed",
+ "rows": [
+  {
+   "symbol": "POPCAT",
+   "status": 200,
+   "impactPct": 0,
+   "err": null,
+   "hops": 2,
+   "via": "GoonFi V2>Whirlpool"
+  },
+  {
+   "symbol": "ZCAT",
+   "status": 200,
+   "impactPct": 3.737,
+   "err": null,
+   "hops": 2,
+   "via": "Kipseli>Manifest"
+  },
+  {
+   "symbol": "NEARKAT",
+   "status": 200,
+   "impactPct": 3.64,
+   "err": null,
+   "hops": 2,
+   "via": "Flux>Meteora DLMM"
+  },
+  {
+   "symbol": "PURR",
+   "status": 200,
+   "impactPct": 3.205,
+   "err": null,
+   "hops": 2,
+   "via": "TesseraV>Raydium CLMM"
+  },
+  {
+   "symbol": "KITTY",
+   "status": 200,
+   "impactPct": 1.366,
+   "err": null,
+   "hops": 3,
+   "via": "HumidiFi>Whirlpool>Raydium CP"
+  },
+  {
+   "symbol": "LEVERCAT",
+   "status": 200,
+   "impactPct": 7.499,
+   "err": null,
+   "hops": 2,
+   "via": "Kipseli>Meteora DLMM"
+  },
+  {
+   "symbol": "RKC",
+   "status": 200,
+   "impactPct": 0.613,
+   "err": null,
+   "hops": 2,
+   "via": "Flux>Meteora DLMM"
+  },
+  {
+   "symbol": "RAYCAT",
+   "status": 200,
+   "impactPct": 8.017,
+   "err": null,
+   "hops": 3,
+   "via": "Kipseli>Raydium CLMM>Raydium CLMM"
+  },
+  {
+   "symbol": "NYAN",
+   "status": 200,
+   "impactPct": 2.745,
+   "err": null,
+   "hops": 2,
+   "via": "Flux>Pump.fun Amm"
+  },
+  {
+   "symbol": "JUPCAT",
+   "status": 200,
+   "impactPct": 3.382,
+   "err": null,
+   "hops": 3,
+   "via": "Kipseli>Whirlpool>Raydium CP"
+  },
+  {
+   "symbol": "drooling",
+   "status": 200,
+   "impactPct": 1.692,
+   "err": null,
+   "hops": 2,
+   "via": "Kipseli>Pump.fun Amm"
+  },
+  {
+   "symbol": "SOLCAT",
+   "status": 200,
+   "impactPct": 3.182,
+   "err": null,
+   "hops": 2,
+   "via": "Kipseli>Pump.fun Amm"
+  },
+  {
+   "symbol": "MEW",
+   "status": 200,
+   "impactPct": 1.086,
+   "err": null,
+   "hops": 2,
+   "via": "BisonFi>Raydium"
+  }
+ ]
+}

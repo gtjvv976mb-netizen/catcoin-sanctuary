@@ -1,0 +1,260 @@
+=================== DJT
+- Underlying: Trump Media & Technology Group Corp. (Nasdaq: DJT)
+## Cat research (2026-09-25)
+
+Tooling note: WebSearch budget exhausted; used Google News RSS (links decoded), Wikipedia API, curl + WebFetch of publisher pages.
+
+### Queries run
+- Google News RSS: '"Trump Media" cat' (only unrelated cat stories / Trump Media business news); '"Truth Social" Trump posts AI image cat';
+  "Trump Truth Social cats ducks AI image Springfield"; '"Trump Media" mascot' (nothing); '"Truth Social" mascot' (only Trump posts about school
+  mascots, e.g. Massapequa Chiefs); '"Devin Nunes" cat' (nothing about a cat; surfaced CEO change); '"Trump Media" "Hello Kitty"' (nothing relevant);
+  "Trump Truth Social post lion AI image"; '"Truth Social" account cat meme official' (nothing from an official TMTG/Truth Social brand account).
+- Wikipedia API: Trump_Media_&_Technology_Group, Truth_Social -> no cat/big-cat/mascot words. Useful context lines:
+  "It runs the Truth Social social-media platform and is majority-owned by the Donald J. Trump Revocable Trust."
+  "Founded by Andy Litinsky and Wes Moss in 2021, it went public on March 26, 2024, after merging with Digital World Acquisition Corp."
+  "Trump left as chairman of TMTG" (July 2022 Sarasota Herald-Tribune report); "in April 2026, Nunes was replaced with interim CEO Kevin McGurn";
+  "Boris Epshteyn was appointed chairman effective April 30" (2026).
+- abc6onyourside.com (WSYX), 2026-04-22 (WebFetch https://abc6onyourside.com/news/nation-world/trump-media-replaces-devin-nunes-as-ceo-amid-stock-price-drop-truth-social-election):
+  "Digital media executive Kevin McGurn has taken over TMTG from the former California GOP congressman."
+
+### Findings
+1. Donald Trump (majority owner via his revocable trust, TMTG's namesake and former chairman) posted AI cat images on Truth Social, TMTG's own platform,
+   during the Springfield "eating the cats" episode, Sept 2024:
+   - Salon, 2024-09-10 (curl-fetched https://www.salon.com/2024/09/10/shares-anti-haitian-cat-memes-ahead-of-first-presidential-debate/):
+     "Trump let thinking computers do his bigotry for him, sharing two bizarre, AI-generated images to Truth Social that referenced the growing
+     right-wing meme. The first showed an orange tabby cat holding a rifle in a black-and-red MAGA hat. The second showed Trump flying on a private
+     plane stuffed with ducks and cats." (verified verbatim via curl; datePublished 2024-09-11T00:22Z = evening of 2024-09-10 US time).
+   - NBC News, 2024-09-14 (curl-fetched https://www.nbcnews.com/tech/misinformation/ai-images-cats-ducks-powered-pet-eating-rumor-mill-rcna171065):
+     "Trump himself ended up posting several of the AI images to his feed on his social media app Truth Social on Tuesday and Thursday. They included
+     an image of Trump sitting in a private jet, surrounded by animals."
+   - Newsweek 2024-09-10 headline (not body-verified): "Donald Trump Cat Photos Flood Internet After Migrant Pet-Eating Claims".
+   - Context: tied to a debunked, widely criticised false claim about Haitian immigrants eating pets - reputationally sensitive.
+2. Big cat: Trump shared on Truth Social an AI music video showing him riding a lion.
+   - Salon, 2026-06-06 (curl-fetched https://www.salon.com/2026/06/06/trumps-hero-image-includes-lions-camels-and-motorcycles/): "President Donald Trump
+     shared an AI-generated music video on Truth Social this week that depicts him riding a lion through the jungle, planting a flag on the moon ..."
+   - The Independent, 2026-06-06 (curl-fetched https://www.independent.co.uk/news/world/americas/us-politics/trump-d-day-post-ai-obama-library-b2991121.html):
+     headline "Trump marks D-Day with AI video of him riding a lion ..."; video "featured clips of the president riding a lion".
+3. No official TMTG / Truth Social mascot (cat or otherwise), no cat-IP collaboration, no company big-cat logo/codename, no office cat found.
+   No cat posts found for CEOs Devin Nunes (to Apr 2026) or Kevin McGurn (interim CEO from Apr 2026).
+
+### Verdict
+executive_personal_cat (qualified): Trump is the controlling shareholder/namesake and ex-chairman, not a current officer; the cat images were posted on his
+personal @realDonaldTrump feed on the company's platform. Confidence high that the posts happened; medium on the "executive" label.
+=================== IBM
+- Underlying: International Business Machines Corporation (NYSE: IBM)
+## Cat research (2026-09-25)
+
+Tooling note: WebSearch budget exhausted; used Google News RSS (links decoded), Bing News RSS, Wikipedia API/WebFetch, curl + WebFetch.
+
+### Queries run
+- Google News RSS: "IBM cat brain simulation 2009"; 'IBM "cat" mascot' (0); 'IBM "Hello Kitty"' (only unrelated); "IBM office cat" (nothing relevant);
+  '"Arvind Krishna" cat' (nothing about a pet cat); "Informix Cheetah IBM" (0); "Informix Panther IBM 11.70" (0);
+  "IBM codename cheetah OR panther OR jaguar OR lynx OR puma OR tiger" (only an unrelated RHEL story); "IBM commercial cat ad" (nothing);
+  'IBM "National Cat Day"' (0); '"Red Hat" cat mascot' (nothing re Red Hat Inc.); "IBM Markram cat brain hoax".
+- Bing News RSS: "Informix Cheetah" (10 hits, below); "Informix Panther" / "IBM Informix 11.70 Panther" (0 -> Panther codename NOT confirmed, not claimed).
+- Wikipedia: Informix, IBM, Arvind_Krishna -> no cat/big-cat/mascot words. WebFetch of List_of_computer_technology_code_names: no IBM/Red Hat/Informix
+  cat codenames listed (Cheetah/Panther/Jaguar there are Apple Mac OS X).
+- IBM Redbook SG24-7465 (Informix Dynamic Server 11) PDF downloaded and text-searched: no "Cheetah" string.
+- Could not open IBM's own 2009 press release (www-03.ibm.com/press/us/en/pressrelease/28842.wss: TLS failure; archive.org: 429/blocked).
+
+### Findings
+1. IBM Research "cat-scale" brain simulation (official IBM announcement, SC09, 2009-11-18):
+   - Phys.org, 2009-11-18 (WebFetch https://phys.org/news/2009-11-based-insights-brain-closer-reality.html, text of the IBM Research announcement):
+     "Scientists, at IBM Research - Almaden, in collaboration with colleagues from Lawrence Berkeley National Lab, have performed the first near real-time
+     cortical simulation of the brain that exceeds the scale of a cat cortex and contains 1 billion spiking neurons and 10 trillion individual learning synapses."
+   - IEEE Spectrum, "IBM Unveils a New Brain Simulator", Sally Adee, 2009-11-18 (curl https://spectrum.ieee.org/ibm-unveils-a-new-brain-simulator):
+     "Scientists and engineers at IBM's Almaden Research Center ... announced today at the Supercomputing Conference (SC09) ... the largest brain simulation
+     to date ... The number of neurons and synapses in the simulation exceed those in a cat's brain".
+   - IEEE Spectrum, "Cat Fight Brews Over Cat Brain", 2009-11-23 (curl https://spectrum.ieee.org/blue-brain-project-leader-angry-about-cat-brain):
+     "Last week, IBM announced that they had simulated a brain with the number of neurons and synapses present in a cat's brain." Blue Brain's Henry Markram
+     called it "a hoax and a PR stunt" - so the "cat brain" claim was disputed.
+   - Forbes headline 2009-11-18 (Google News, not body-verified): "IBM's Cat-Brain Breakthrough".
+2. Big cat: IBM's own codename "Cheetah" for Informix Dynamic Server 11 (2006-2007), and "Cheetah 2" (IDS 11.50, 2008). Announced by Arvind Krishna,
+   now IBM Chairman & CEO:
+   - CRN, "IBM To Unleash Cheetah, The Next Informix IDS Release", 2006-09-24 (WebFetch https://www.crn.com/news/channel-programs/193004835/ibm-to-unleash-cheetah-the-next-informix-ids-release):
+     "The next release, code-named Cheetah, is due to beta this spring and will feature record-level locking ... said Arvind Krishna, vice president of
+     database servers for IBM Software's Information Management Group, Somers, N.Y."
+   - Bing News RSS snippets (verbatim): Computing.co.uk 2007-06-13 "Informix Dynamic Server (IDS) 11, codenamed Cheetah, is ..."; InformationWeek 2007-06-12
+     "IBM Unleashes 'Cheetah' Database"; InfoWorld 2007-02-15 "IBM sets Cheetah into beta"; iTnews 2008-04-30 "its Informix Dynamic Server database,
+     code-named 'Cheetah 2'".
+3. No IBM cat mascot, no Hello Kitty/other cat-IP collaboration, no office cat, no CEO pet-cat posts found. Red Hat (IBM subsidiary) mascot is Shadowman
+   (not a cat); nothing cat-related found for it.
+
+### Verdict
+official_account_posted_cat (qualified): IBM officially announced a "cat cortex"-scale brain simulation (2009). Plus big-cat codename "Cheetah" (Informix IDS 11,
+2006-2008) announced by current CEO Arvind Krishna. Confidence medium (no cat mascot; the cat link is a research claim + a big-cat codename).
+- Also tried IBM newsroom keyword search (newsroom.ibm.com/search?keywords=cat, /announcements?keywords=...): search is JavaScript-driven; keyword
+  filter ignored by the server, so no official-newsroom keyword results could be obtained.
+=================== LMT
+- Underlying: Lockheed Martin Corporation (NYSE: LMT)
+## Cat research (2026-09-25)
+
+Tooling note: WebSearch budget exhausted; used Google News RSS (links decoded), Bing News RSS, Lockheed Martin's own newsroom search
+(news.lockheedmartin.com/news-releases?keywords=<k>&l=50, fetched with curl), Wikipedia API/WebFetch, curl + WebFetch.
+
+### Queries run
+- Google News RSS: '"Lockheed Martin" cat mascot' (only unrelated: U-2/SR-71 squadron-mascot anecdote, unrelated cats); '"Lockheed Martin" cat' (business news,
+  "Red Cat" drone company - a different company); "Lockheed Martin Sniper Pantera"; "F-35 nickname Panther pilots"; '"Lockheed Martin" "Hello Kitty"' (nothing relevant);
+  '"Lockheed Martin" office cat' (nothing); '"Jim Taiclet" cat' (nothing); '"PANTERA" "Lockheed Martin" prnewswire OR ...' (0).
+- Bing News RSS: "Sniper PANTERA Lockheed Martin" (Sniper news, no cat); "PANTERA targeting pod" (0).
+- LM newsroom keyword search (official site) for: cat, cats, kitten, tiger, lion, jaguar, cheetah, lynx, puma, cougar, leopard, panther, wildcat, mascot,
+  hello kitty, feline, pantera. Results: kitten/lion/cheetah/panther/wildcat/hello kitty/feline = 0; cat/cats = USAF 41st Airlift Sqn "Black Cats"
+  (customer unit nickname), "Honeywell/Cat Logistics" (Caterpillar), a "CATS" contract acronym; tiger = HELLFIRE on Eurocopter Tiger helicopter (Airbus's
+  product) + LM's own "TIGER Eyes(TM)" sensor suite; puma = AeroVironment RQ-20 Puma payload / "PUMA" software acronym; cougar = Cougar Helicopters
+  (a customer); leopard = Leopard tank simulators (for Greece); lynx = no cat context; mascot = Philadelphia Eagles charity item; pantera = PANTERA pod.
+- Wikipedia: Lockheed_Martin, James_Taiclet -> no cat/big-cat/mascot words. Skunk_Works: "The name 'Skunk Works' and the skunk design are now registered
+  trademarks of the Lockheed Martin Corporation." (skunk, not a cat). Sniper_Advanced_Targeting_Pod (WebFetch): "Further variants are the Sniper Extended
+  Range (XR), as well as the PANTERA export derivative of the Sniper XR."
+- LM Sniper product page (WebFetch https://www.lockheedmartin.com/en-us/products/sniper.html): no PANTERA / cat mention today.
+
+### Findings
+1. PANTERA(TM) (Italian/Spanish/Portuguese for "panther") - Lockheed Martin's trademarked export name for the Sniper XR advanced targeting pod.
+   - Official LM press release, 2004-11-15 (WebFetch https://news.lockheedmartin.com/2004-11-15-Norway-Orders-Additional-Lockheed-Martin-PANTERA-Advanced-Targeting-Pods):
+     title "Norway Orders Additional Lockheed Martin PANTERA Advanced Targeting Pods"; "The Royal Norwegian Air Force (RNoAF) has exercised its option to
+     purchase additional Lockheed Martin PANTERA(TM) advanced targeting pods (ATPs) with accompanying spares and support."
+   - LM newsroom listing snippet 2004-11-03: "Lockheed Martin's Sniper(R) XR(TM)/PANTERA(TM) advanced targeting pod (ATP) data downlink capability was
+     successfully flight tested on a Norwegian mid-life upgrade F-16 ..."
+   - Still in use: Zona Militar headline 2025-12-11 (page 403; Google News headline): "Ukrainian Air Force F-16 fighters are already using the
+     Sniper/PANTERA targeting pod in combat".
+   - Caveat: a product name meaning "panther"; no panther logo/mascot verified.
+2. TIGER Eyes(TM) - LM's trademarked electro-optical sensor suite for the Korean F-15K.
+   - Official LM press release, 2002-08-06 (WebFetch https://news.lockheedmartin.com/2002-08-06-Lockheed-Martin-Wins-163-Million-Order-for-TIGER-Eyes-TM-Sensor-Suite-for-Korean-F-15K-Aircraft):
+     "Lockheed Martin Wins $163 Million Order for TIGER Eyes(TM) Sensor Suite for Korean F-15K Aircraft"; "The advanced electro-optical suite, an evolution of
+     combat-proven LANTIRN and U.S. Navy IRST technology ..."
+3. F-35 "Panther" nickname (UNOFFICIAL; given by US Air Force pilots, not by Lockheed Martin):
+   - The War Zone, 2018-05-17 (curl https://www.twz.com/20914/the-f-35-has-a-new-nickname-given-to-it-by-the-usafs-most-elite-pilots): Nellis AFB 99th Air
+     Base Wing Public Affairs email: "The panther patch that you're inquiring about is an F-35 Weapons School patch that the students wear. Pilots in F-35
+     community are referring to the jet as 'Panther'. As always, the official name of the jet is still F-35 Lightning II." Patch reads "Panther Tamer".
+   - Popular Mechanics, 2018-05-21 (curl https://www.popularmechanics.com/military/aviation/a20789594/the-f-35s-new-much-better-nickname-is-panther/):
+     "U.S. Air Force pilots have nicknamed the F-35A fighter the 'Panther.'"
+4. No domestic-cat mascot, no office cat, no Hello Kitty/other cat-IP collaboration, no CEO (Jim Taiclet) cat posts found. Company mascot-like symbol is the
+   Skunk Works skunk (not a cat).
+
+### Verdict
+big_cat_official: LM's own trademarked product names PANTERA(TM) (= panther; Sniper XR export pod, 2004-) and TIGER Eyes(TM) (F-15K sensor suite, 2002);
+plus the unofficial USAF "Panther" nickname for LM's F-35 (2018). Confidence high that these exist; no domestic cat found.
+=================== QUBT
+- Underlying: Quantum Computing Inc. (Nasdaq: QUBT)
+## Cat research (research pass, 2026-09-25)
+
+Tooling note: WebSearch budget for the session was exhausted (200/200) when this pass began, so searches were run via
+DuckDuckGo HTML (html.duckduckgo.com) and Bing through curl; pages fetched with curl. Raw search output saved at
+scratchpad/stockcats/tools/qubt_raw.txt.
+
+Queries run (DDG unless noted):
+- "Quantum Computing Inc" cat -> only corporate site, quote pages. No cat.
+- "Quantum Computing Inc" cat mascot (Bing) -> generic "quantum" dictionary pages; nothing.
+- "QCi" "Quantum Computing Inc" Schrodinger cat -> corporate pages, postquantum.com profile, NHanced Q2-2026 PR. No cat.
+- QUBT Schrödinger cat quantum computing inc -> only generic physics "cat qubit" articles (AWS/Alice&Bob research, Wikipedia
+  "Cat qubit quantum computer"), which are NOT QCi. QCi is a photonics/entropy-quantum-computing company; it does not
+  market cat qubits.
+- "Quantum Computing Inc" mascot -> brandfetch/companieslogo logo pages, LinkedIn, Instagram @qciquantum; no mascot.
+- "QUBT" cat meme -> no results.
+- "Quantum Computing Inc" CEO Yuping Huang cat -> LinkedIn, governance page, Dec 17 2025 PR confirming Huang as CEO
+  (effective Jan 1 2026; interim since Apr 11 2025). Nothing about a cat.
+- "Quantum Computing Inc" "Hello Kitty" -> no results.
+- "Quantum Computing Inc" lion OR tiger OR jaguar OR panther OR leopard -> quote pages; a PR about acquiring
+  "Luminar Semiconductor" (not a cat). No big-cat mascot/codename.
+- "@QciQuantum" cat; QCi quantum "Schrödinger's cat" tweet -> no results.
+
+Official site check (curl, 2026-09-25):
+- https://quantumcomputinginc.com/ and /company: grep for cat|kitten|kitty|feline|lion|tiger|jaguar|panther|leopard|puma|
+  cheetah|mascot|schrodinger -> 0 hits.
+- https://quantumcomputinginc.com/sitemap.xml: 2,755 URLs (281 news/press/blog). No slug containing cat/kitten/feline/
+  big-cat words or "schrodinger" (only substring noise like "communication", "application"). Product names: Dirac-1/3,
+  Qatalyst, Mukai, NeuraWave, uQRNG, Entangled Photon Source, Vibrometer, InstaTune laser; defense "Project Trust/Decide/
+  Perceive/Protect". None are cats/big cats.
+- Wikipedia: no standalone article for QCi found via the API search.
+
+Verdict: none_found. No official cat mascot, no cat post found, no cat-IP collab, no big-cat logo/codename, CEO
+(Yuping Huang) not known for cat posts. Its X/Instagram feeds could not be read directly (X not fetchable), so a one-off
+cat post cannot be ruled out, but nothing surfaced in search. Loose thematic hook only: "Schrödinger's cat" is the
+classic quantum-mechanics cat, but QCi itself has no documented use of it.
+
+Addendum (DDG batch, 2026-09-25): "Quantum Computing Inc" cat -> DDG CAPTCHA (blocked). "QCi" quantum cat post -> hits
+are "QCI-CAT" (https://qci-cat.at/), Austria's EuroQCI quantum-communication research consortium (AIT, SBA Research,
+X-Net, dacoso) - NOT Quantum Computing Inc.; "CAT" there is an acronym. Name-only coincidence, not a QCi cat.
+=================== RBLX
+- Underlying: Roblox Corporation (NYSE: RBLX)
+## Cat research (research pass, 2026-09-25)
+
+Tooling note: WebSearch budget exhausted (200/200); searches via DuckDuckGo HTML + Bing through curl (DDG began serving a
+bot CAPTCHA part-way through, so some later DDG queries show "NO RESULTS" = blocked, not a true empty result). Primary
+evidence below comes from Roblox's OWN public APIs (catalog.roblox.com, economy.roblox.com), which return the creator of
+each item. Creator "Roblox" (user Id 1, verified) = the official account of Roblox Corporation. Raw search log:
+scratchpad/stockcats/tools/rblx_raw.txt.
+
+### OFFICIAL: cat items published by the official "Roblox" account (creator Id 1)
+Queried https://catalog.roblox.com/v1/search/items/details?Keyword=cat&CreatorName=Roblox&CreatorType=User (and
+Keyword=kitty): 30+ cat items created by Roblox itself. Verified individually via economy/catalog APIs (2026-09-25):
+- "Business Cat" shoulder accessory, asset 121389389. API: Creator Roblox (Id 1); Created 2013-07-03; description
+  "I need that TPS report, right meow!". https://economy.roblox.com/v2/assets/121389389/details
+  Fandom wiki (roblox.fandom.com/wiki/Catalog:Business_Cat_(shoulder_accessory), via fandom API): "was purchased 653,884
+  times before going limited" (went limited July 13, 2022); based on the Business Cat internet meme; YouTuber DenisDaily
+  nicknamed it "Sir Meows A Lot"; on Oct 8 2019 Roblox awarded it to everyone who followed DenisDaily.
+- "Business Cat" hat, asset 136758455, Creator Roblox, Created 2013-11-27 (fandom says published Nov 23 2013), "Get in my
+  office, right meow!"; fandom gallery: a Business Cat Roblox toy (Celebrity Collection Series 1).
+- "Cat Mascot" bundle 662, creator Roblox (catalog API), torso asset created 2020-09-29; fandom: published March 1, 2021;
+  description "Some cat suits are for sneaking in. This one is for standing out. Get this exclusive item when you redeem a
+  code from a Roblox toy!" (redeem code from the Adopt Me: Backyard BBQ Roblox toy).
+  https://catalog.roblox.com/v1/bundles/662/details
+- "Cats...IN SPACE: Sergeant Tabbs" bundle 375, creator Roblox, torso created 2018-10-26 (fandom: published Oct 26 2018,
+  Black Friday 2018; 600 Robux) - "He won't be able to land on his feet in space." Part of a Roblox-original "CATS...IN
+  SPACE" Rthro line with named cat characters: "Medic Lily" bundle 465 (torso created 2019-03-08; "Now a part of Sgt.
+  Tabbs' crew, Lily never thought she would have the opportunity to study the anatomy of her fellow cat comrades") and
+  "Commander Laika" bundle 445.
+- "Blue Collar Cat" bundle 182, creator Roblox, torso created 2014-02-14 (fandom: published Feb 19 2014, Presidents' Day
+  2014 sale) - "Someone's got a case of the Mondays...." (fandom: possible Garfield reference).
+- "Grey Cat Tail" asset 170892848, creator Roblox, created 2014-08-08: "Celebrating World Cat Day in style with your very
+  own cat tail."
+- "Kitty Ears" asset 1374269, creator Roblox, created 2008-01-29: "MY EARS. LET ME SHOW YOU THEM."
+- "Cuddly Cat" asset 319656339 (2015-11-14) "Attack doge has nothing on him! This trusty cat will follow you around...".
+- Others by Roblox: Cat Burglar, Chicken Cat, Samurai Cat, Cat as a Hat, Cheshire Cat, Rocket Cat, Magic Broom Black Cat,
+  Spooky Shoulder Black Cat, Order of the Black Cat Pauldrons, Cat O' Lantern, 8-Bit Tabby Cat ("Pop tart and rainbow not
+  included" - Nyan Cat nod), Krazy Kitty, New Years Kitty, Kitty Monster, etc.
+- NOT official: bundle 2667 "Cat" (search hit roblox.com/bundles/2667/Cat) is by UGC creator "Clockset" (catalog API).
+
+### COLLABORATION (cat IP): Hello Kitty / Sanrio
+- Sanrio press release, Los Angeles, April 26, 2022 (fetched https://www.sanrio.com/pages/sanrio-creates-its-own-immersive-
+  world-my-hello-kitty-cafe-on-roblox): "Today, Sanrio debuts its own virtual "My Hello Kitty Cafe" on Roblox ... created in
+  partnership with the game development studio Rock Panda". This is Sanrio's experience ON the platform (built by Rock
+  Panda), not a Roblox Corp-licensed product; the release contains Roblox boilerplate only.
+- Roblox's own account created a "Hello Kitty Top Hat" (asset 114702108643191; API Creator Roblox Id 1; Created
+  2024-12-18; "A supercute Hello Kitty hat perfect for any occasion!"); fandom: never on sale, only owner is Roblox,
+  18,294 favorites as of Oct 11 2025. Shows official Hello Kitty tie-in work but it was never released.
+- CBR (search snippet, verbatim): "Officially licensed from Sanrio, Cinnamoroll and his friends debuted on Roblox in a new
+  release by Rock Panda Games. Titled Cinnamoroll Cloud Land" (Cinnamoroll is a puppy, not a cat).
+- Garfield / Doraemon / Pusheen / Sanrio keyword searches of Roblox-created catalog items: 0 results.
+
+### BIG CAT
+- No lion/tiger/jaguar/panther mascot, logo or codename for Roblox Corp. Roblox-created catalog items include "Tiger Hat",
+  "The Great Lion", "Lion" bundle (Aslan quote), "Nice Kitty" ("Just about the sweetest tiger you'll ever meet!") - just
+  catalog items. Newsroom slug hit "cannes-lions" = the Cannes Lions ad festival, not a mascot.
+
+### Newsroom / Wikipedia
+- about.roblox.com/sitemap-news.xml (7,848 URLs incl. translations; 327 English): no slug with cat/kitty/kitten/sanrio/
+  garfield/pusheen/doraemon/meow/mascot; only "cannes-lions".
+- Wikipedia raw text for Roblox, Roblox_Corporation, David_Baszucki: 0 hits for cat|kitten|kitty|feline|lion|tiger|
+  jaguar|panther|leopard|mascot|sanrio.
+
+### EXECUTIVE / FAN / COMMUNITY
+- DDG "Baszucki cat": only fan memes - Tenor GIF "Cat David Baszucki" (tenor.com/view/cat-david-baszucki-roblox-roblox-
+  dance-gif-2960644278774344528), Pinterest "I TURNED DAVID BAZUKIEH into a cat boy" (Jul 30 2026). No evidence CEO David
+  Baszucki posts his own cat.
+- X post by @PetaIS0L, 2026-09-23 (via api.fxtwitter.com): "ROBLOX EMPLOYEE'S CAT DIED AND HE JUST PUT HIM IN THE GAME /
+  ALREADY HAS 50K SALES ON ROBLOX", quoting @nickjupiters (2026-09-23): "My cat passed away a year ago ... I decided to
+  make this UGC, inspired by her ... it is by far my best selling item and has over 50k favorites." @nickjupiters' bio:
+  "Head of Ops & Producer @exclusible ... UGC Creator 1.5M+ Sales" -> he is a UGC creator at studio Exclusible, NOT a
+  Roblox Corporation employee. Community item, not official.
+- Many fan/UGC cat accounts (e.g. x.com/Roblox_Cat_lol) - community.
+
+Verdict: official_cat_character_or_product. Roblox Corporation's official account has published dozens of cat avatar
+items since 2008, headlined by the meme-based "Business Cat" (653,884 sold) and a Roblox-original "Cats...IN SPACE" cast
+(Sergeant Tabbs, Medic Lily). Roblox has no single corporate cat mascot. Suggested cat name: "Business Cat" (or "Sergeant
+Tabbs").
+
+Addendum (DDG batch, 2026-09-25): Roblox "Business Cat" official -> official catalog page
+https://www.roblox.com/pl/catalog/121389389/Business-Cat (also curl of https://www.roblox.com/catalog/121389389/Business-Cat
+returns <title>Business Cat - Roblox</title>; https://www.roblox.com/bundles/375/... returns "Cats...IN SPACE: Sergeant
+Tabbs"), Rolimon's, metablox.gg ("introduced on July 3, 2013 ... 653,884 purchases before it transitioned to a limited
+item on July 13, 2022"). "Baszucki" "my cat" -> nothing about a cat.

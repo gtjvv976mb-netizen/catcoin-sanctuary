@@ -1,0 +1,10 @@
+const url = "https://www.theargus.co.uk/news/23407591.brighton-pet-owner-uses-grindr-tinder-find-missing-cat/";
+const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36", "accept": "text/html" } });
+const t = await r.text();
+console.log("status", r.status, "len", t.length);
+const title = t.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
+console.log("title:", title?.trim());
+const og = [...t.matchAll(/<meta[^>]+(?:property|name)="(og:description|description|og:title|article:published_time|og:image)"[^>]+content="([^"]*)"/gi)].map(m => m[1] + ": " + m[2]);
+console.log(og.join("\n"));
+const text = t.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<style[\s\S]*?<\/style>/gi, "").replace(/<[^>]+>/g, " ").replace(/&[a-z#0-9]+;/gi, " ").replace(/\s+/g, " ");
+for (const m of text.matchAll(/[^.]*(tuxedo|black|white|Ruby|cat|Grindr|collar|eyes|fur)[^.]*\./gi)) console.log("-", m[0].trim().slice(0, 300));

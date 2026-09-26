@@ -1,0 +1,39 @@
+[
+ {
+  "name": "Update Cat",
+  "ticker": "UPDATECAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 4,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ }
+]

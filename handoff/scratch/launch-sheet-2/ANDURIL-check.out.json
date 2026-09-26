@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Tassel the Tufted-Ear Cat",
+   "ticker": "TASSELCAT",
+   "nameLen": 25,
+   "blurbLen": 136,
+   "descLen": 271,
+   "tickerHasAndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tassel, a tawny-gold spotted shorthair w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Tassel, a tawny-gold spotted shorthair with black-tipped ear tufts and a short bobbed tail, chases falling leaves along the garden wall. A cat coin priced in ANDURIL. Not affiliated with Anduril Industries, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Sleet the Frost-Grey Cat",
+   "ticker": "SLEETRUFF",
+   "nameLen": 24,
+   "blurbLen": 132,
+   "descLen": 267,
+   "tickerHasAndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sleet, a silver-grey cat with faint dark",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sleet, a silver-grey cat with faint dark spots, a fluffy cheek ruff and big furry paws, pads across the frosty lawn without a sound. A cat coin priced in ANDURIL. Not affiliated with Anduril Industries, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Haybale the Bobtail Cat",
+   "ticker": "HAYBALE",
+   "nameLen": 23,
+   "blurbLen": 135,
+   "descLen": 270,
+   "tickerHasAndRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Haybale, a sandy-buff cat with dark-spot",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 14,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Haybale, a sandy-buff cat with dark-spotted legs, a white belly and a stubby black-tipped tail, naps on top of the garden gate at dusk. A cat coin priced in ANDURIL. Not affiliated with Anduril Industries, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

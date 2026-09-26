@@ -1,0 +1,152 @@
+
+1. THE SETTINGS AND THEIR FENCES
+────────────────────────────────
+  ok   defaults: no dev buy, no "made with CashCat" line, the first model the key lists, auto mode off at 2 a day, 0.05 SOL minimum, every 12 hours
+  ok   a dev buy up to 0.05 SOL is taken; above it, below zero or not a number is refused by name, never clamped
+  ok   auto mode: 1 or 2 a day, never 3; a minimum balance of at least 0.02 SOL; a schedule from the listed hours
+  ok   a model is an id the key lists, or empty: no identifier is written into the code
+  ok   changing a cap the arm sentence names disarms auto mode; changing the dev buy does not touch it (auto never buys)
+
+2. DRAFTS REFUSED BY THE CONTENT RULES, EACH BY NAME
+────────────────────────────────────────────────────
+(node:24841) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok   a cat coin of your own passes the rules (no key saved: the rules alone judge it)
+  ok   refused: a real person's name  — real_person: "elon" in the name
+  ok   refused: a brand  — brand: "nike" in the name
+  ok   refused: a topic that is a tragedy  — topic, tragedy: "earthquake" | tragedy: "earthquake" in the trend
+  ok   refused: a topic that is a person on the long given-name list only (checkTrend)  — topic, real_person: "kirk herbstreit"
+  ok   refused: a financial promise  — financial_promise: "guaranteed" in the tagline
+  ok   refused: a verified token's ticker (Jupiter's list)  — $JUP is the ticker of the verified token Jupiter (JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN)
+  ok   refused: an established cat coin's name  — "Shark Cat" is the name of the verified token $SC (6D7NaB2xsLd7cauWu1wKk6KBsJohJmP2qZH9GEfVi5Ui) | it would copy the established cat coin Shark Cat ($SC)
+  ok   refused: a web address in the name  — link: "catcoin.xyz" in the name
+  ok   refused: letters of another alphabet in the name  — name_format: "Кот Cat" in the name
+  ok   refused: a name with no cat in it  — not_cat: "Rainy Day Dog" in the name
+  ok   refused: a ticker that is not 2 to 10 of A–Z and 0–9  — ticker_format: 2 to 10 of A-Z and 0-9 | ticker_format: "RAIN$" in the symbol | the site would refuse it: "symbol" must be 2 to 10 of A-Z and 0-9
+  ok   refused: no topic (it is written into the disclosure)  — topic: name the topic the coin riffs on (it is written into its disclosure) | the site would refuse it: "trend title" is empty
+  ok   refused: something about minors  — minors: "kid" in the tagline
+  ok   a typed draft is cleaned: spaces collapsed, the ticker upper-cased without its $, a kitten and background picked from the ticker
+  ok   with a key saved, the model reviews every draft too, and its refusal is named  — model review: It reads as a brand. (brand_or_trademark)
+  ok   …and its approval is recorded: judged by the rules and the model
+  ok   …with the user's persona: it is their coin, not the agency's
+  ok   an "approve" that names a rule is not an approval
+
+3. DRAFTING FROM A TREND: THE MODEL PICKED AT RUN TIME
+──────────────────────────────────────────────────────
+  ok   a trend draft: the trends read and filtered by checkTrend, a proposal and a separate review, both through the key  — []
+  ok   the model is the first GET /v1/models lists (no identifier in the code)
+  ok   …and the key travels in one header to the Anthropic API only
+  ok   the proposal was asked with the user's persona
+  ok   a model the owner chose is used when the key lists it
+  ok   a chosen model the key does not list is no draft, never a silent substitute
+  ok   without a key there is no trend draft
+  ok   a proposal the rules refuse is not drafted, and the refusal is named
+
+4. THE LOGO: THE LAYOUT, AND THE BOT'S PICTURE DRAWN BY THE EXTENSION
+─────────────────────────────────────────────────────────────────────
+  ok   every ticker from 2 to 10 characters fits inside every kitten's sign (Press Start 2P is 8·s pixels a character)
+  ok   …at a whole multiple of the font's 8-pixel grid
+  ok   the build copies the eight kittens, their signs and the font byte for byte from bots/cashcat/art
+  ok   $RAINCAT on the ginger kitten: the extension's logo is the bot's, pixel for pixel, 1024 × 1024
+  ok   …its sign measured from the pixels exactly as recorded in signs.json
+  ok   $MEOW on the tuxedo kitten: the extension's logo is the bot's, pixel for pixel, 1024 × 1024
+  ok   …its sign measured from the pixels exactly as recorded in signs.json
+  ok   $ABCDEFGHIJ on the sphynx kitten: the extension's logo is the bot's, pixel for pixel, 1024 × 1024
+  ok   …its sign measured from the pixels exactly as recorded in signs.json
+  ok   art whose sign does not measure as recorded is refused, never drawn over
+  ok   an unknown kitten or a ticker outside the format is refused before anything is drawn
+  ok   the font drawn is the bundled Press Start 2P, registered under its own family
+
+5. THE LAUNCH: CHECKED, SIMULATED, PINNED, SIGNED BY THE MINT AND THE AUTOPILOT WALLET, SENT ONCE
+─────────────────────────────────────────────────────────────────────────────────────────────────
+  ok   "Check the launch" runs every check and the recorded simulation, and pins, signs and sends nothing  — {"spend":0.0055497}
+  ok   …and shows no dev buy by default, and the disclosure the coin will carry
+  ok   the tab says where its coins go, and where the stock cats are
+  ok   a launch without the ticker typed to confirm it is refused
+  ok   one transaction was sent, and no dev buy (0 by default)
+  ok   it is a v0 transaction with no lookup table, signed by exactly the autopilot wallet and the new mint, both signatures verified by the chain
+  ok   Phantom was never asked
+  ok   the bytes sent pass the bot's own pre-sign check: the planned signers, programs, accounts and create_v2 arguments, the pinned URI  — true
+  ok   …create_v2 names this coin, the autopilot wallet as creator, and no mayhem, cashback, holder reward or creator fee
+  ok   the logo and the document were pinned through Pinata with the key, the document read back before its URI was used
+  ok   the description ends "Not financial advice. Not affiliated with [topic]." and never claims the agency  — A cat watching the rain from a warm windowsill. — Not financial advice. Not affiliated with rainy weather.
+  ok   the journal records the launch: its mint, signature, topic and what it cost, read back from the chain
+  ok   the only links it gives are the coin on pump.fun and the launch on Solscan
+  ok   the journal names the venue, pump.fun, and carries no stock cat's fields (pair, pool)
+  ok   …the document says it was created on pump.fun, as before
+  ok   a launch whose outcome is not known blocks the next one until the user checks it
+  ok   …and is released once the user marks it checked
+  ok   "Made with CashCat." is added only when the user ticks it
+  ok   refused before any signature: the simulation fails — and nothing is pinned for it (simulation_refused)  — ""
+  ok   refused before any signature: the simulation spends more than the 0.015 SOL launch budget (simulation_refused)  — ""
+  ok   refused before any signature: the RPC gives no blockhash (rpc)  — ""
+  ok   refused before any signature: the autopilot wallet is locked (autopilot_locked)  — ""
+  ok   refused before any signature: no Pinata key is saved (no_pinata)  — ""
+  ok   refused before any signature: no RPC is set (no_rpc)  — ""
+  ok   refused before any signature: the wallet holds less than the launch budget and the rent floor (balance)  — ""
+  ok   refused before any signature: a draft the rules refuse, however it reached the launch button
+  ok   a launch that failed on chain is journaled as failed, with its signature, and does not count against the day
+  ok   the check reads a v0 message: the plain create passes
+  ok   a v0 message that loads an account from a lookup table is refused (lookup_tables)
+  ok   another coin's name is refused (coin)
+  ok   a second instruction is refused (instructions)
+
+6. THE MINT'S KEY: MADE, USED ONCE AND DROPPED IN session-wallet.mjs; NOTHING LEFT IN STORAGE
+─────────────────────────────────────────────────────────────────────────────────────────────
+  ok   after the launch no mint key is held
+  ok   nothing in the tab's storage is key-shaped: no 64-number array, and every 64-byte base58 string is a transaction signature  — 2 signature(s)
+  ok   newMint gives out an address, and only the address: its JSON is a count
+  ok   signAsMint adds the mint's signature in its own slot and leaves the payer's empty
+  ok   …once: the key is dropped, and a second use is refused (no_mint)
+  ok   it signs only a transaction whose signers are exactly the payer and this mint (bad_signers), and drops the key anyway
+  ok   a key older than ten minutes is dropped unused
+  ok   at most four launches' keys are held at once
+  ok   the tab never constructs a key: it asks the worker's mintKeys for an address and a signature
+
+7. THE DEV BUY: NONE BY DEFAULT, AT MOST 0.05 SOL, CHECKED, MANUAL ONLY
+───────────────────────────────────────────────────────────────────────
+  ok   with a dev buy set, it is a second transaction after the launch landed
+  ok   …that passes the bot's dev-buy check: the wallet's own account for this mint, one buy_v2 spending at most the dev buy  — true
+  ok   …signed by the autopilot wallet alone
+  ok   …and shown in the journal beside the launch
+
+8. AUTO MODE: ARMED BY A SENTENCE, CAPPED, NO DEV BUY, NEVER A BUY OR A SELL
+────────────────────────────────────────────────────────────────────────────
+  ok   the sentence names the wallet and every cap, in words, and says nothing will ask
+  ok   a sentence that is not byte for byte the one printed does not arm it
+  ok   with the checklist not green (no API key for the trend drafts) it does not arm
+  ok   the exact sentence with every item green arms it; the first run is ten minutes later
+  ok   before it is due, a tick does nothing
+  ok   when due, it drafts from a trend, the model reviews it, and it launches one coin from the autopilot wallet
+  ok   …with no dev buy, whatever the manual setting says
+  ok   …journaled with its mint, signature and trend
+  ok   the next tick before its hours are up does nothing
+  ok   twelve hours on, a second launch
+  ok   a third the same UTC day is refused at the day's cap, journaled, and nothing is sent
+  ok   …and the refusal stays in the journal
+  ok   every transaction auto mode sent is a create: it never bought or sold a coin it launched
+  ok   the next day, under the minimum balance plus one launch's budget, it is refused (balance) and nothing is sent
+  ok   changing a cap disarms it
+  ok   a locked autopilot wallet is refused at the tick (autopilot_locked), and nothing is sent
+  ok   a draft the model refuses is no coin that run (no_coin), and nothing is sent
+  ok   a sentence armed for another wallet disarms at the next tick
+
+9. A DISARM WINS: NO TICK OVERWRITES IT, AND A RUN IN FLIGHT SIGNS NOTHING AFTER IT
+───────────────────────────────────────────────────────────────────────────────────
+  ok   a disarm and a due tick at the same moment: the disarm stands, and nothing is launched  — {"tick":"off","sent":0}
+  ok   a cap changed at the moment of a due tick: the new cap is kept, auto mode is off, and nothing is launched  — {"tick":"off","every":24,"on":false}
+  ok   disarmed while a run is drafting: the run stops before anything is pinned or signed (disarmed), and it stays off  — {"clause":"disarmed","sent":0}
+
+10. THE JOURNAL NEVER FORGETS A LAUNCH THAT STILL BLOCKS OR COUNTS
+──────────────────────────────────────────────────────────────────
+  ok   after two hundred refusals the launch with no known outcome is still in the journal, and still blocks the next (unresolved)  — 202 entries
+  ok   …and today's launches still count against the day's cap
+  ok   …while the refusals themselves are trimmed to the journal's size
+
+11. SNIPURR NEVER TRADES A COIN YOUR OWN WALLET CREATED
+───────────────────────────────────────────────────────
+  ok   a new pump.fun coin whose creator is the autopilot wallet (a CashCat launch) is refused at its own gate (own_coin), and no position is opened for it  — {"entered":false,"refusedAt":"own_coin"}
+  ok   …and so is one whose notice names no creator, when its bonding curve records the autopilot wallet as the creator  — {"entered":false,"refusedAt":"own_coin"}
+
+test-cats-cashcat: 114 passed, 0 failed
+

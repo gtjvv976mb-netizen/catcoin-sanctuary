@@ -1,0 +1,287 @@
+[
+ {
+  "name": "Burly the Amber-and-White Cat",
+  "ticker": "BURLYPAW",
+  "nameLen": 29,
+  "blurbLen": 147,
+  "descLen": 289,
+  "tickerFormat": true,
+  "tickerHasStockRoot": false,
+  "endsWithDisclaimer": true,
+  "checkProposal_blurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Burly, a stocky, muscular amber-and-whit",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_description": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_blurb_look": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "real_person",
+     "term": "amber orange",
+     "field": "look"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_disclaimer_only": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "stock",
+     "term": "HIMS",
+     "field": "disclaimer"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jup": {
+   "status": 200,
+   "results": 1,
+   "symbolMatches": [],
+   "verifiedMatch": false,
+   "nearSymbols": [
+    "Butterfly"
+   ]
+  },
+  "description": "Burly, a stocky, muscular amber-and-white shorthair with a broad white chest, white paws and green eyes, meets the weekly delivery box at the gate. A cat coin priced in HIMS. Not affiliated with Hims & Hers Health, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Burly the Amber-and-White Cat",
+  "ticker": "BURLY",
+  "nameLen": 29,
+  "blurbLen": 1,
+  "descLen": 143,
+  "tickerFormat": true,
+  "tickerHasStockRoot": false,
+  "endsWithDisclaimer": true,
+  "checkProposal_blurb": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "x",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkProposal_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_description": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_blurb_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_disclaimer_only": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "stock",
+     "term": "HIMS",
+     "field": "disclaimer"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jup": {
+   "status": 200,
+   "results": 20,
+   "symbolMatches": [],
+   "verifiedMatch": false,
+   "nearSymbols": [
+    "burlybears",
+    "BRLY",
+    "BULL",
+    "burrrfly",
+    "Buggerly",
+    "$BFT",
+    "EARLY",
+    "beef"
+   ]
+  },
+  "description": "x A cat coin priced in HIMS. Not affiliated with Hims & Hers Health, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Parcel the Amber-and-White Cat",
+  "ticker": "PARCELPAW",
+  "nameLen": 30,
+  "blurbLen": 134,
+  "descLen": 276,
+  "tickerFormat": true,
+  "tickerHasStockRoot": false,
+  "endsWithDisclaimer": true,
+  "checkProposal_blurb": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Parcel, a sturdy amber-and-white shortha",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_description": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_blurb_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_disclaimer_only": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "stock",
+     "term": "HIMS",
+     "field": "disclaimer"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "jup": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "verifiedMatch": false,
+   "nearSymbols": []
+  },
+  "description": "Parcel, a sturdy amber-and-white shorthair with a white chest and white paws, waits by the garden gate each week for the delivery box. A cat coin priced in HIMS. Not affiliated with Hims & Hers Health, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+ }
+]

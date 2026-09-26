@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Tallpaw the Tabby Cat",
+   "ticker": "TALLPAW",
+   "nameLen": 21,
+   "blurbLen": 130,
+   "descLen": 271,
+   "tickerHasRumRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tallpaw, a fluffy brown tabby with a whi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 5,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Tallpaw, a fluffy brown tabby with a white bib, white front legs and pale green eyes, rises on her hind legs to see over everyone. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Hearthbib the Fluffy Cat",
+   "ticker": "HEARTHBIB",
+   "nameLen": 24,
+   "blurbLen": 138,
+   "descLen": 279,
+   "tickerHasRumRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hearthbib, a long-haired brown tabby wit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Hearthbib, a long-haired brown tabby with a snowy chest, white socks and tufted ears, dozes by the stone hearth and sits up at each creak. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Stilts the Upright Cat",
+   "ticker": "STILTPAW",
+   "nameLen": 22,
+   "blurbLen": 135,
+   "descLen": 276,
+   "tickerHasRumRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stilts, a slim brown tabby with a white ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Stilts, a slim brown tabby with a white nose blaze and white forepaws, stands straight up on her back legs when the tall grass rustles. A cat coin priced in RUM. Not affiliated with RUM Group (Rumble), Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

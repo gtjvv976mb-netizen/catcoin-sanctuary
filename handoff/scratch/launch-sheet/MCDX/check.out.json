@@ -1,0 +1,277 @@
+[
+ {
+  "name": "Milkweed the Meadow Cat",
+  "ticker": "MILKWEED",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "descLen": 270,
+  "blurbLen": 157,
+  "endsWithDisclosure": true,
+  "checkProposal_blurbAsTagline": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Milkweed, a fluffy white cat with one bl",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkFields_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "tickerContainsRoot": false,
+  "memeTicker": false,
+  "jupUrl": "https://lite-api.jup.ag/tokens/v2/search?query=MILKWEED",
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedSymbolMatch": false,
+  "jupAnyVerifiedInResults": []
+ },
+ {
+  "name": "Snowdrop the Garden Cat",
+  "ticker": "SNOWDROP",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "descLen": 267,
+  "blurbLen": 154,
+  "endsWithDisclosure": true,
+  "checkProposal_blurbAsTagline": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Snowdrop, a sleek white cat with pale gr",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkFields_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "tickerContainsRoot": false,
+  "memeTicker": false,
+  "jupUrl": "https://lite-api.jup.ag/tokens/v2/search?query=SNOWDROP",
+  "jupStatus": 200,
+  "jupResults": 4,
+  "jupSymbolMatches": [
+   {
+    "symbol": "Snowdrop",
+    "name": "The Nietzschean Penguin",
+    "isVerified": null,
+    "id": "qW1DDiiYzmELfRNsRgftRLdUKPzKguh3qsV1x61pump"
+   },
+   {
+    "symbol": "Snowdrop",
+    "name": "Snowdrop",
+    "isVerified": null,
+    "id": "HSsNsCuQXeECMiMuNPyvVR4YhSBNitnZSpRxfoE5pump"
+   },
+   {
+    "symbol": "Snowdrop",
+    "name": "The Nietzschean Penguin",
+    "isVerified": null,
+    "id": "6aLRRqzg2PGYwZAhgVddqHxjTXt4bZ6xeq3kzBvFpump"
+   },
+   {
+    "symbol": "SNOWDROP",
+    "name": "スノードロップ",
+    "isVerified": null,
+    "id": "5EEhT5DLZPVJpHxR1F3rQpfG78ajr5E1fxU8Sd4apump"
+   }
+  ],
+  "jupVerifiedSymbolMatch": false,
+  "jupAnyVerifiedInResults": []
+ },
+ {
+  "name": "Meringue the Porch Cat",
+  "ticker": "MERINGUE",
+  "nameLen": 22,
+  "tickerLen": 8,
+  "descLen": 270,
+  "blurbLen": 157,
+  "endsWithDisclosure": true,
+  "checkProposal_blurbAsTagline": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Meringue, a soft all-white cat with sky-",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_disclosure": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "mcdonalds",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkFields_look": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "tickerContainsRoot": false,
+  "memeTicker": false,
+  "jupUrl": "https://lite-api.jup.ag/tokens/v2/search?query=MERINGUE",
+  "jupStatus": 200,
+  "jupResults": 12,
+  "jupSymbolMatches": [
+   {
+    "symbol": "Meringue",
+    "name": "メレンゲフィギュア",
+    "isVerified": null,
+    "id": "9sYXFmH85HQw8nZKdnjUUZToW3MQcJ22yQtE17niLXZX"
+   },
+   {
+    "symbol": "Meringue",
+    "name": "メレンゲフィギュア",
+    "isVerified": null,
+    "id": "5BQvnQLZ2aK7AjzAbzBPj9sScx2kAECW5WQMdkrF1x9y"
+   }
+  ],
+  "jupVerifiedSymbolMatch": false,
+  "jupAnyVerifiedInResults": []
+ }
+]

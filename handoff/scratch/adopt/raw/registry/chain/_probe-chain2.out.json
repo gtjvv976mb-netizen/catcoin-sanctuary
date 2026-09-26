@@ -1,0 +1,291 @@
+{
+ "r": {
+  "poolHistory": {
+   "n": 239,
+   "oldest": {
+    "blockTime": 1790356418,
+    "confirmationStatus": "finalized",
+    "err": null,
+    "memo": null,
+    "signature": "EkKE99vAVRNXwTYiEccAqiC4ShCoCGCfPFBjGgzBCRd3nv75E2VU3JiPM9yQd9YyBgsxFSDqXKxE85HRqJF8AUD",
+    "slot": 450416570,
+    "transactionIndex": 721
+   },
+   "newest": {
+    "blockTime": 1790356914,
+    "confirmationStatus": "finalized",
+    "err": null,
+    "memo": null,
+    "signature": "63SbXhSNGwdJZEcPTunhdE3AY5KLBtwE5AhscyY5w9F8tj48uhKf7H83mkRXMvcBQ4fYZSK88AsEbZtWfAgDEUpq",
+    "slot": 450418418,
+    "transactionIndex": 860
+   }
+  },
+  "creationTx": {
+   "slot": 450416570,
+   "blockTime": 1790356418,
+   "version": "legacy",
+   "feePayer": "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+   "err": null,
+   "programs": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "logs": [
+    "Program log: Instruction: InitializeWithToken2022",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: MetadataPointerInstruction::Initialize",
+    "Program log: Instruction: InitializeMint2",
+    "Program log: TokenMetadataInstruction: Initialize",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: MintTo",
+    "Program log: Instruction: SetAuthority",
+    "Program log: Instruction: GetAccountDataSize",
+    "Program log: Instruction: InitializeImmutableOwner",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: BuyExactIn",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: TransferChecked",
+    "Program log: Instruction: InitializeAccount3",
+    "Program log: Instruction: SetAuthority",
+    "Program log: Instruction: TransferChecked"
+   ]
+  },
+  "block": {
+   "slot": 450416570,
+   "blockTime": 1790356418,
+   "nTx": 1622,
+   "indexOfCreation": 721,
+   "blockhash": "2c1zkupUH55eKyms5QFhYSUApGnJd6HSDFnb7YPRFPNS",
+   "bytes": 147474
+  },
+  "oldest5": [
+   {
+    "slot": 450416572,
+    "sig": "2vgLWA2m1mhX",
+    "err": true
+   },
+   {
+    "slot": 450416572,
+    "sig": "3QWjinqEjdGx",
+    "err": true
+   },
+   {
+    "slot": 450416572,
+    "sig": "Mg1YrrkVB4ZN",
+    "err": true
+   },
+   {
+    "slot": 450416572,
+    "sig": "257VrD9Z66gz",
+    "err": true
+   },
+   {
+    "slot": 450416570,
+    "sig": "EkKE99vAVRNX",
+    "err": false
+   }
+  ],
+  "mintLayouts": {
+   "n": 100,
+   "layouts": {
+    "18@166,19@234": 100
+   },
+   "updateAuthorityIsLaunchLab": 100,
+   "avgBytes": 407,
+   "sample": [
+    {
+     "mint": "CZ3Jju2XEP7mskDM9a7psSZw3dGQkpzRHiQA86ihdsFu",
+     "size": 399,
+     "name": "hodler",
+     "symbol": "HODLER",
+     "uri": "https://gateway.irys.xyz/FLUQhrKg3zMEBicwYsRa9fC3zYEPr7N64CuP45ek9WY6",
+     "nameLenOffset": 302
+    },
+    {
+     "mint": "345BmW3JWTuLUfiYHyDeSkGtH9eZN6T1yzuHTHae4eZe",
+     "size": 439,
+     "name": "InuDex",
+     "symbol": "INUDEX",
+     "uri": "https://chubby-amethyst-finch.myfilebase.com/ipfs/bafkreihcqobz726jznthfy5a3hj2yuxkvvxepnuyiwujpf4gfcdhel4gaa",
+     "nameLenOffset": 302
+    },
+    {
+     "mint": "JDhKzEuMfAe8h7Kpg11jDn2r6ggu9XVH3hKkNmjP2gSy",
+     "size": 412,
+     "name": "File Index",
+     "symbol": "FILE",
+     "uri": "https://ipfs.io/ipfs/bafkreicj3ky4672uhnqc2um7ec3rvbbgbvmwxcy4mon24wpsa72rqdzpy4",
+     "nameLenOffset": 302
+    },
+    {
+     "mint": "2h94R5ym8JNCdeHF2wqdqECt3UL9gnvexFZR42omvvos",
+     "size": 399,
+     "name": "REKT",
+     "symbol": "REKT MAN",
+     "uri": "https://gateway.irys.xyz/6RvHrA7SwmvGZxECQCGGf74u6Y4gvjsvEsxKD2AHvQfN",
+     "nameLenOffset": 302
+    },
+    {
+     "mint": "25JYGjvGoiTYtWVyQ1cTDdArTZNMcRiFzJiGu9QUtPhw",
+     "size": 414,
+     "name": "Alvin The Stock Trader",
+     "symbol": "ALVIN",
+     "uri": "https://gateway.irys.xyz/EfSgcjdqWcyRBnTu8A4yZjqBdZZ2jRBdqzZbzd4S8wb5",
+     "nameLenOffset": 302
+    },
+    {
+     "mint": "5YjemUuKw9Uu9f5Z5TaXiBWxsQSPsdieApbr6J7kJXZV",
+     "size": 414,
+     "name": "the basket",
+     "symbol": "basket",
+     "uri": "https://ipfs.io/ipfs/bafkreigyhlw6x4uej273yccqxmeti3yxn3cwstss52ef6hw5mebwnwqxtu",
+     "nameLenOffset": 302
+    },
+    {
+     "mint": "Hw9hFKbq6b7k8ZiStpLHuowsvJYKQ1ZgDwGy2T4oaT6m",
+     "size": 414,
+     "name": "believe in something",
+     "symbol": "BELIEVE",
+     "uri": "https://gateway.irys.xyz/Cr9uTufFVzxe2ERxBxzLhRyhpTDDPA1sKPEQHrU2CBZ9",
+     "nameLenOffset": 302
+    },
+    {
+     "mint": "H3vXEyey9UzvR9Xe96Fwy7D2s8Jmz3ZMR1dMpGbBoN6t",
+     "size": 386,
+     "name": "This is Bob",
+     "symbol": "bob",
+     "uri": "https://metadata.j7tracker.io/metadata/a7a2Gk4af6.json",
+     "nameLenOffset": 302
+    },
+    {
+     "mint": "DqwR6ocU48XpiqqDfbuctKxawUJG9zvEeCwv7DmwZZwX",
+     "name": "Market Cat",
+     "symbol": "MARKETCAT",
+     "uri": "https://gateway.irys.xyz/59nGkLEq5orB4hmjCWWCuvtHg7WVVR1U7cx4wr9vrRzy"
+    },
+    {
+     "mint": "46V3tkGnuQ1VmuWotukq7bubsSzwKUYrjFTxwPa81WRd",
+     "name": "CATSPYX",
+     "symbol": "CATSPYX",
+     "uri": "https://gateway.irys.xyz/F4WxxHQdWmSjt5yic6Hc3oemjuPaYNdkLtgyt2e7ooZe"
+    },
+    {
+     "mint": "34Bt2sVqKNMAevB4hWFwHGoq8S8V7AhaTgB8CwCQkXyh",
+     "name": "Vcat",
+     "symbol": "VCAT",
+     "uri": "https://gateway.irys.xyz/GULTbns4wyrT92xc8WdgnEgLHVH8v8dXNd85cvsEU96C"
+    },
+    {
+     "mint": "DjBUJWFDZPovyNPVjD3UA51VfHMh8YsFyYEXXFk1PiJA",
+     "name": "Cats and Dogs 500",
+     "symbol": "C&D500",
+     "uri": "https://chubby-amethyst-finch.myfilebase.com/ipfs/bafkreig6lpdufuf2e7yoyxrcdy6wy44u4jw3rymr6uzfm5g3oga3iuyznu"
+    },
+    {
+     "mint": "8V6k1KhzMkakUYSL3t5bpD5HXy5WKh9R62Pf6CYKKuAr",
+     "name": "BNBCAT",
+     "symbol": "BNBCAT",
+     "uri": "https://gateway.irys.xyz/mjY9y4nFnTctPvYbj8EUKTP1RLP2x8NYT7PA55AGVv8"
+    }
+   ]
+  },
+  "gpaAllStandard": {
+   "count": 31415,
+   "ms": 1330,
+   "distinctQuotes": 364,
+   "top": [
+    [
+     "So11111111111111111111111111111111111111112",
+     7367
+    ],
+    [
+     "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",
+     3657
+    ],
+    [
+     "A7bdiYdS5GjqGFtxf17ppRHtDKPkkRqbKtR27dxvQXaS",
+     1924
+    ],
+    [
+     "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh",
+     1129
+    ],
+    [
+     "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+     785
+    ],
+    [
+     "Xs3oZwbHvqis4NYcf4YKWmEia2eC84wSiVrcYcTqpH8",
+     635
+    ],
+    [
+     "98sMhvDwXj1RQi5c5Mndm3vPe9cBqPrbLaufMXFNMh5g",
+     533
+    ],
+    [
+     "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp",
+     517
+    ],
+    [
+     "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn",
+     510
+    ],
+    [
+     "XsvNBAYkrDRNhA7wPHQfX3ZUXZyZLdnCQDfHZ56bzpg",
+     467
+    ],
+    [
+     "CARDSccUMFKoPRZxt5vt3ksUbxEFEcnZ3H2pd3dKxYjp",
+     452
+    ],
+    [
+     "Pren1FvFX6J3E4kXhJuCiAD5aDmGEb7qJRncwA8Lkhw",
+     402
+    ]
+   ],
+   "bytesJson": 9925358
+  }
+ },
+ "log": [
+  {
+   "at": "2026-09-25T18:06:14.499Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 578,
+   "bytes": 61331
+  },
+  {
+   "at": "2026-09-25T18:06:14.579Z",
+   "method": "getTransaction",
+   "status": 200,
+   "ms": 58,
+   "bytes": 15584
+  },
+  {
+   "at": "2026-09-25T18:06:15.357Z",
+   "method": "getBlock",
+   "status": 200,
+   "ms": 236,
+   "bytes": 147509
+  },
+  {
+   "at": "2026-09-25T18:06:15.782Z",
+   "method": "getMultipleAccounts",
+   "status": 200,
+   "ms": 59,
+   "bytes": 70460
+  },
+  {
+   "at": "2026-09-25T18:06:16.849Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 525,
+   "bytes": 9925392
+  }
+ ]
+}

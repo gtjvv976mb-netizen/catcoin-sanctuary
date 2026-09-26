@@ -1,0 +1,16 @@
+import fs from "fs";
+const url = "https://nebius.com/blog/posts/introducing-text-to-image-ai-studio";
+const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0" } });
+const t = await r.text();
+console.log("status", r.status, "len", t.length);
+const title = t.match(/<title[^>]*>([^<]*)<\/title>/i); console.log("title:", title && title[1]);
+for (const m of t.matchAll(/"date(Published|Modified)"\s*:\s*"([^"]+)"/g)) console.log(m[1], m[2]);
+const txt = t.replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/\s+/g," ");
+for (const m of txt.matchAll(/.{0,200}(tiger|Tiger|\bcat\b|Persian).{0,200}/g)) console.log("-", m[0]);
+for (const m of t.matchAll(/https:\/\/assets\.nebius\.com\/assets\/[^"'\s)]*tiger[^"'\s)]*/g)) console.log("img:", m[0]);
+const alt = t.match(/alt="([^"]*tiger[^"]*)"/i); console.log("alt:", alt && alt[1]);
+const img = "https://assets.nebius.com/assets/50e3aaa6-572d-4acb-90f4-8935e6d8a0c9/tiger.jpg";
+const ri = await fetch(img, { headers: { "user-agent": "Mozilla/5.0" } });
+const buf = Buffer.from(await ri.arrayBuffer());
+console.log("img status", ri.status, ri.headers.get("content-type"), buf.length);
+fs.writeFileSync("NBIS-src.jpg", buf);

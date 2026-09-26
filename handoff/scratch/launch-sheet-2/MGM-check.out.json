@@ -1,0 +1,253 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Saffron the Tawny Cat",
+   "ticker": "SAFFRON",
+   "nameLen": 21,
+   "blurbLen": 125,
+   "descLen": 273,
+   "tickerHasMgmRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Saffron, a tawny-gold shorthair with a c",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "Saffron",
+     "name": "Saffron",
+     "id": "Gw2oWWgvCvSA5mbyudusoXGRMJNbdiZk2N6fFppApump"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "Saffron",
+     "id": "Cnpowpb65b5mVm5TP7DXf4uRuLQNRdXzexsz1zUepump"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "SAFFRON ",
+     "id": "GcYBveaBg1dqu8oaHyqKyE565dTqenpDw3rfZf1Epump"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "Baby Red Panda",
+     "id": "BWeCExEGteR8VL4bacWmFh8CG1qGjBFCdkFrxrUwpump"
+    },
+    {
+     "symbol": "Saffron",
+     "name": "Saffron",
+     "id": "ioUgSHBz5aMNLjfj8mfJrE9z7g2wnozzm4c6uJjpump"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "Saffron Coin",
+     "id": "HnreDjf4ZtW6GVntUn5487vzHDVh7Kngcqgi3Q53pump"
+    },
+    {
+     "symbol": "Saffron",
+     "name": "Saffron the Opossum",
+     "id": "Dtd6X4iLXh46RejdK2wNZUHVb1naZeYX5Rg43Td1pump"
+    },
+    {
+     "symbol": "Saffron",
+     "name": "Saffron",
+     "id": "CYX2SoGr6AL7i48T3mFY6jN2Hn9srW9a5TL9EnA9pump"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "Saffron Coin",
+     "id": "CWKZB5HFVBCAgxFw8wucVyh1EF35CAf7ahNiSW8Lpump"
+    },
+    {
+     "symbol": "SAFFRON",
+     "name": "Saffron Coin",
+     "id": "7SpsrseJejVZ48H81GQU4anCY8zBae8ZrNgFowdNpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Saffron, a tawny-gold shorthair with a cream chin, amber eyes and a dark tip on her tail, sunbathes on the warm garden steps. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Sorrel the Sand-Gold Cat",
+   "ticker": "SORRELPAW",
+   "nameLen": 24,
+   "blurbLen": 127,
+   "descLen": 275,
+   "tickerHasMgmRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sorrel, a sleek sand-gold cat with a pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Sorrel, a sleek sand-gold cat with a pale cream belly and dark-backed ears, pads quietly through the tall garden grass at dusk. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Marigold the Ruffled Cat",
+   "ticker": "MARIGOLD",
+   "nameLen": 24,
+   "blurbLen": 126,
+   "descLen": 274,
+   "tickerHasMgmRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Marigold, a fluffy bronze-gold longhair ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 8,
+   "jupSymbolMatches": [
+    {
+     "symbol": "MARIGOLD",
+     "name": "Marigold",
+     "id": "HQk1MVWqrPFRqFgPbmBQFsytXdXtq31h5UBXLBudpump"
+    },
+    {
+     "symbol": "MARIGOLD",
+     "name": "I Escaped Fauci",
+     "id": "87UitoDEmpWEvSKeDz5zXJEAWg7AeP3kurRPa2DNpump"
+    },
+    {
+     "symbol": "MARIGOLD",
+     "name": "I Escaped Fauci",
+     "id": "FXkU2cTVQU26CarPEJ5SiiRu67Yxu3brYShmxYS3pump"
+    },
+    {
+     "symbol": "MARIGOLD",
+     "name": "Marigold",
+     "id": "Br96ppNztrvtAu1a6dQPDp9jhVEteMKVeeSTBFbTpump"
+    },
+    {
+     "symbol": "MARIGOLD",
+     "name": "I Escaped Fauci",
+     "id": "5sE6FbcjJETWu6hLe4wBWTwGXGtKfh7gnQhqha2Cbtkc"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Marigold, a fluffy bronze-gold longhair with a thick ruff round her neck and faint bands on her tail, dozes in the flower bed. A cat coin priced in MGM. Not affiliated with MGM Resorts International, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

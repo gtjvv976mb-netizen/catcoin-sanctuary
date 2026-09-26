@@ -1,0 +1,205 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "neuralink",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Silk the Pinstripe Cat",
+   "ticker": "SILKSTRIPE",
+   "nameLen": 22,
+   "tickerLen": 10,
+   "blurbLen": 143,
+   "descLen": 271,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Silk, a sleek silver tabby with hair-thin charcoal pinstripes and a white chin, slips between the fence rails so neatly she never bends a leaf. A cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Hush the Quiet Grey Cat",
+   "ticker": "HUSHPAW",
+   "nameLen": 23,
+   "tickerLen": 7,
+   "blurbLen": 139,
+   "descLen": 267,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Hush, a smooth blue-grey shorthair with pale gold eyes, sits so still in the lavender that you forget she is there until she blinks at you. A cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Lilac the Sunstone Cat",
+   "ticker": "LILACNAP",
+   "nameLen": 22,
+   "tickerLen": 8,
+   "blurbLen": 146,
+   "descLen": 274,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Lilac, a cream cat with pinkish-grey ears, face and paws, recharges with a nap on a warm round stepping stone, then wakes up ready to chase moths. A cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "ext": {
+  "PrekqLJvJ3qVdXmBGDiexvwUTF4rLFDa6HWS4HJbw9S": {
+   "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "extensions": [
+    {
+     "extension": "permanentDelegate"
+    },
+    {
+     "extension": "defaultAccountState"
+    },
+    {
+     "extension": "transferFeeConfig",
+     "state": {
+      "older": {
+       "epoch": 1039,
+       "maximumFee": 18446744073709552000,
+       "transferFeeBasisPoints": 100
+      },
+      "newer": {
+       "epoch": 1043,
+       "maximumFee": 18446744073709552000,
+       "transferFeeBasisPoints": 300
+      }
+     }
+    },
+    {
+     "extension": "confidentialTransferMint"
+    },
+    {
+     "extension": "confidentialTransferFeeConfig"
+    },
+    {
+     "extension": "transferHook"
+    },
+    {
+     "extension": "scaledUiAmountConfig"
+    },
+    {
+     "extension": "metadataPointer"
+    },
+    {
+     "extension": "pausableConfig"
+    },
+    {
+     "extension": "tokenMetadata"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,162 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Milk Run Tabby",
+   "ticker": "MILKRUN",
+   "nameLen": 14,
+   "blurbLen": 148,
+   "descLen": 279,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "A stocky brown-grey tabby with gold eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "A stocky brown-grey tabby with gold eyes and a stern frown pads through the sanctuary gate with a milk bottle and a warm loaf, then naps on a bench. A cat coin priced in KALSHI. Not affiliated with Kalshi, Tessera, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Squint the Sundial Tabby",
+   "ticker": "SUNSQUINT",
+   "nameLen": 24,
+   "blurbLen": 149,
+   "descLen": 280,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Squint, a broad brown-grey tabby with st",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Squint, a broad brown-grey tabby with striped brows and gold eyes, frowns at the clouds from the sanctuary sundial each dawn, weighing rain or shine. A cat coin priced in KALSHI. Not affiliated with Kalshi, Tessera, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Breadloaf the Tabby",
+   "ticker": "BREADLOAF",
+   "nameLen": 19,
+   "blurbLen": 147,
+   "descLen": 278,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Breadloaf, a stout brown-grey tabby with",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Breadloaf, a stout brown-grey tabby with dark stripes, a cream chin and a stern gold stare, sits tucked up like a loaf by the sanctuary bread oven. A cat coin priced in KALSHI. Not affiliated with Kalshi, Tessera, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

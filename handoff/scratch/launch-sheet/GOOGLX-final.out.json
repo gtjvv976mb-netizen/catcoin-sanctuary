@@ -1,0 +1,48 @@
+{
+  "name": "Porchlight the Dusk Cat",
+  "ticker": "PORCHLIGHT",
+  "description": "Porchlight is a solid black cat with a shiny coat and bright yellow eyes. When the garden lanterns glow, she sits on the porch step and slowly blinks hello. A cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice.",
+  "lengths": {
+    "name": 23,
+    "ticker": 10,
+    "description": 274
+  },
+  "tickerFormat": true,
+  "endsWithDisclosure": true,
+  "checkProposal": {
+    "ok": true,
+    "violations": []
+  },
+  "displaySafe": {
+    "ok": true,
+    "violations": []
+  },
+  "checkFieldsFull": {
+    "ok": false,
+    "violations": [
+      {
+        "rule": "brand",
+        "term": "alphabet",
+        "field": "description"
+      },
+      {
+        "rule": "endorsement",
+        "term": "affiliated",
+        "field": "description"
+      },
+      {
+        "rule": "financial_promise",
+        "term": "financial advice",
+        "field": "description"
+      }
+    ]
+  },
+  "checkFieldsBody": {
+    "ok": true,
+    "violations": []
+  },
+  "checkTermsStock": {
+    "ok": true,
+    "violations": []
+  }
+}

@@ -1,0 +1,153 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "coinbase",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Harrumph the Pouty Cat",
+   "ticker": "HARRUMPH",
+   "nameLen": 22,
+   "tickerLen": 8,
+   "blurbLen": 159,
+   "descLen": 271,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 10,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Harrumph, a fluffy grey long-haired cat with a flat face and a grumpy pout, glares at pigeons from the garden wall all morning, then climbs into a lap to purr. A cat coin priced in COINx. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Thistledown the Cloud Cat",
+   "ticker": "THISTLECAT",
+   "nameLen": 25,
+   "tickerLen": 10,
+   "blurbLen": 152,
+   "descLen": 264,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 4,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Thistledown, a round puff of soft grey fur with a squashed little face and tufted ears, drifts between the lavender rows like a seed head on the breeze. A cat coin priced in COINx. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Bramble the Blep Cat",
+   "ticker": "BRAMBLECAT",
+   "nameLen": 20,
+   "tickerLen": 10,
+   "blurbLen": 157,
+   "descLen": 269,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Bramble, a scruffy grey long-haired cat with a squashed face, blue-green eyes and the pink tip of his tongue always showing, naps under the blackberry canes. A cat coin priced in COINx. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

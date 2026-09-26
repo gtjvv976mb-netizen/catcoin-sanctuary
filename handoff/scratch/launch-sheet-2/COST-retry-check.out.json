@@ -1,0 +1,390 @@
+{
+ "disclaimer": "A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "disclaimerOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "costco",
+    "field": "disclaimer"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "disclaimer"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "candidates": [
+  {
+   "name": "Carton the Cardboard-Tan Cat",
+   "ticker": "CARTONPAW",
+   "nameLen": 28,
+   "blurbLen": 139,
+   "descLen": 279,
+   "asciiOnly": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Carton, a big broad-chested cat with a c",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupiter": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "anyVerifiedInResults": [],
+    "top": [
+     "CONRAD | Conrad The Immortal Diamond Paws"
+    ]
+   }
+  },
+  {
+   "name": "Stacks the Cardboard-Tan Cat",
+   "ticker": "STACKPAW",
+   "nameLen": 28,
+   "blurbLen": 139,
+   "descLen": 279,
+   "asciiOnly": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stacks, a big broad-chested cat with a c",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "look"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "cryptoBrand",
+      "term": "Stacks",
+      "field": "name"
+     },
+     {
+      "rule": "cryptoBrand",
+      "term": "Stacks",
+      "field": "blurb"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "anyVerifiedInResults": [],
+    "top": []
+   }
+  },
+  {
+   "name": "Roastie the Golden-Crust Cat",
+   "ticker": "ROASTPAW",
+   "nameLen": 28,
+   "blurbLen": 137,
+   "descLen": 277,
+   "asciiOnly": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Roastie, a plump shorthair with a glossy",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "anyVerifiedInResults": [],
+    "top": []
+   }
+  },
+  {
+   "name": "Toastbun the Long Ginger Cat",
+   "ticker": "TOASTBUN",
+   "nameLen": 28,
+   "blurbLen": 130,
+   "descLen": 270,
+   "asciiOnly": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Toastbun, a long, low ginger tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupiter": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "anyVerifiedInResults": [],
+    "top": [
+     "WOC | send og not coasty bundled "
+    ]
+   }
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": false,
+  "paused": false,
+  "transferHookProgram": null,
+  "permanentDelegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "HSoK14XcYifGGuHyBi5DVctoK77VbNXs2Je4Znmz6owC"
+ }
+}

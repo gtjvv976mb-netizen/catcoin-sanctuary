@@ -1,0 +1,106 @@
+RULE {
+ "bump": 250,
+ "version": 1,
+ "platformConfig": "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7",
+ "globalConfig": "B7ctMMdGvy46Am56myTtzfkNzt9kWZVTNGM2BWrJ9adg",
+ "epoch": "1027",
+ "groups": [
+  {
+   "groupId": 0,
+   "epoch": "1027",
+   "constraints": [
+    {
+     "field": 0,
+     "op": 0,
+     "value": "0"
+    },
+    {
+     "field": 1,
+     "op": 0,
+     "value": "1"
+    },
+    {
+     "field": 2,
+     "op": 0,
+     "value": "0"
+    },
+    {
+     "field": 3,
+     "op": 0,
+     "value": "1000000000000000"
+    },
+    {
+     "field": 4,
+     "op": 0,
+     "value": "793100000000000"
+    },
+    {
+     "field": 6,
+     "op": 0,
+     "value": "0"
+    },
+    {
+     "field": 7,
+     "op": 0,
+     "value": "0"
+    },
+    {
+     "field": 8,
+     "op": 0,
+     "value": "0"
+    },
+    {
+     "field": 9,
+     "op": 0,
+     "value": "1"
+    },
+    {
+     "field": 10,
+     "op": 0,
+     "value": "0"
+    }
+   ]
+  }
+ ]
+}
+PLATFORM std {
+ "epoch": "1028",
+ "platformFeeWallet": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+ "platformNftWallet": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+ "platformScale": "1000000",
+ "creatorScale": "0",
+ "burnScale": "0",
+ "feeRate": "10000",
+ "name": "StonkFun",
+ "web": "https://www.stonkfun.xyz",
+ "img": "https://www.stonkfun.xyz/stonkfun-logo.png",
+ "cpswapConfig": "CRRS5ieQmBrZjWhcj99JuGrT5tyuWDaGAXLXLFjbAtjQ",
+ "creatorFeeRate": "0",
+ "transferFeeExtensionAuth": "5KXDF6QnqhBj72hDtJNkkpFaQVUfbFXNybMsp3DiK6tD",
+ "platformVestingWallet": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+ "platformVestingScale": "0",
+ "platformCpCreator": "5CEbueQnq1Ym2uSSx2xXds3jQAqT1BDnkA59RZobSPAG",
+ "restrictGlobalConfig": 0,
+ "restrictCurveParam": 1,
+ "curveRuleManager": "2pMi1Sr8vnAR2GPKMHJsmgFY8Hc4cUVbmG5ARxLsRrvp"
+}
+GLOBALCONFIG SPYx {
+ "epoch": "1021",
+ "curveType": 0,
+ "index": 0,
+ "migrateFee": "0",
+ "tradeFeeRate": "2500",
+ "maxShareFeeRate": "0",
+ "minBaseSupply": "10000000",
+ "maxLockRate": "999999",
+ "minBaseSellRate": "1",
+ "minBaseMigrateRate": "150000",
+ "minQuoteFundRaising": "1",
+ "quoteMint": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+ "protocolFeeOwner": "rayvTLcCMDs7P5tgpuoNA6ZYeLERegeCphdqLSgdKms",
+ "migrateFeeOwner": "rayHQtJKrtvqUs3HnhDW9RKubHRbu87eESKEYD5xosa",
+ "migrateToAmmWallet": "RAYzrepoBdjSFg7MZj2vy4XBSv2azKRXC72ztUMZMJB",
+ "migrateToCpswapWallet": "RAYpQbFNq9i3mu6cKpTKKRwwHFDeK5AuZz8xvxUrCgw"
+}
+(node:20962) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)

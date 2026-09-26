@@ -1,0 +1,96 @@
+{
+ "name": "Vignette the Seal-Point Cat",
+ "ticker": "VIGNETPAW",
+ "nameLen": 27,
+ "blurbLen": 145,
+ "descLen": 278,
+ "descBytes": 278,
+ "endsWithDisclaimer": true,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Vignette, a cream seal-point cat with a ",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "VIGNETPAW": {
+   "status": 200,
+   "results": 0,
+   "top": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "VIGNET": {
+   "status": 200,
+   "results": 20,
+   "top": [
+    "Vignette|REAL NAME OF VINE|verified=undefined",
+    "Vignettes|Virtual Vignettes|verified=undefined",
+    "VIGNETTE|First Prometheus AI Song |verified=undefined",
+    "VT|Vigilante Token|verified=undefined",
+    "VEGAN|Virgin Eat Gay's Anal|verified=undefined"
+   ],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  }
+ },
+ "description": "Vignette, a cream seal-point cat with a dark brown mask, ears, paws and tail, gazes from the porch step with wide sky-blue eyes and a slow blink. A cat coin priced in AMBA. Not affiliated with Ambarella, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A normal four-legged cream cat with seal-point colouring: a dark brown mask, ears, paws and tail, and wide sky-blue eyes. It is based on camera image processing, where a vignette is the darker edge around a bright picture, like dark points around a pale coat. It wears nothing."
+}

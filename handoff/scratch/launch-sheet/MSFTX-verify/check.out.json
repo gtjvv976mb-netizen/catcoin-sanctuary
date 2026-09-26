@@ -1,0 +1,311 @@
+[
+ {
+  "name": "Pebble the Garden Cat",
+  "ticker": "PEBBLECAT",
+  "lengths": {
+   "name": 21,
+   "ticker": 9,
+   "description": 253,
+   "nameOk": true,
+   "tickerOk": true,
+   "descOk": true
+  },
+  "endsWithDisclosure": true,
+  "bodyLen": 128,
+  "tickerRegex": true,
+  "tickerVsRoot": {
+   "equalsRoot": false,
+   "containsMSFT": false
+  },
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBodyLook": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "microsoft",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "microsoft",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": [
+   {
+    "query": "PEBBLECAT",
+    "status": 200,
+    "results": 2,
+    "allSymbols": [
+     "PEBBLE/Pebble the Cat/v=undefined",
+     "PEBBLE/Pebble the Cat/v=undefined"
+    ],
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "savedTo": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/MSFTX-verify/jup-PEBBLECAT.json"
+   },
+   {
+    "query": "PEBBLE",
+    "status": 200,
+    "results": 20,
+    "allSymbols": [
+     "PEBBLEPETS/Pebble Pets/v=undefined",
+     "PEB/PEBBLE/v=undefined",
+     "PEBBLE/Pebble/v=undefined",
+     "$PEBBLE/The Pebble/v=undefined",
+     "Pebble/Chris Rock/v=undefined",
+     "PEBB/Pebbles/v=undefined",
+     "Pebbles/Chris Rock /v=undefined",
+     "Pebbles/Chris Rock /v=undefined",
+     "PEBBLE/Dwayne The  Pebble /v=undefined",
+     "PPX/Prism Pebble Exchange/v=undefined",
+     "Pebble/Pebble/v=undefined",
+     "PEBBLE/Pebble the Seal/v=undefined",
+     "PEBBLES/pebbles/v=undefined",
+     "fudpebbl/fuddy pebbles/v=undefined",
+     "PEBL/Desk Pebble/v=undefined",
+     "DROPEB/Drowsy Pebble/v=undefined",
+     "PEBBLEPETS/Pebble Pets/v=undefined",
+     "PEBBLE/PEBBLE/v=undefined",
+     "DUSPEB/Dusty Pebble/v=undefined",
+     "COBPEB/Cobalt Pebble/v=undefined"
+    ],
+    "sameSymbol": 6,
+    "sameSymbolVerified": 0,
+    "savedTo": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/MSFTX-verify/jup-PEBBLE.json"
+   }
+  ]
+ },
+ {
+  "name": "Fogwhisker Cat",
+  "ticker": "FOGWHISK",
+  "lengths": {
+   "name": 14,
+   "ticker": 8,
+   "description": 258,
+   "nameOk": true,
+   "tickerOk": true,
+   "descOk": true
+  },
+  "endsWithDisclosure": true,
+  "bodyLen": 133,
+  "tickerRegex": true,
+  "tickerVsRoot": {
+   "equalsRoot": false,
+   "containsMSFT": false
+  },
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBodyLook": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "microsoft",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "microsoft",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": [
+   {
+    "query": "FOGWHISK",
+    "status": 200,
+    "results": 0,
+    "allSymbols": [],
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "savedTo": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/MSFTX-verify/jup-FOGWHISK.json"
+   },
+   {
+    "query": "FOGWHISKER",
+    "status": 200,
+    "results": 0,
+    "allSymbols": [],
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "savedTo": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/MSFTX-verify/jup-FOGWHISKER.json"
+   }
+  ]
+ },
+ {
+  "name": "Halfsmile Cat",
+  "ticker": "HALFSMILE",
+  "lengths": {
+   "name": 13,
+   "ticker": 9,
+   "description": 276,
+   "nameOk": true,
+   "tickerOk": true,
+   "descOk": true
+  },
+  "endsWithDisclosure": true,
+  "bodyLen": 151,
+  "tickerRegex": true,
+  "tickerVsRoot": {
+   "equalsRoot": false,
+   "containsMSFT": false
+  },
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBodyLook": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "microsoft",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "microsoft",
+     "field": "disclosure"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclosure"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclosure"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "stock",
+     "term": "Grumpy",
+     "field": "look"
+    }
+   ]
+  },
+  "jupiter": [
+   {
+    "query": "HALFSMILE",
+    "status": 200,
+    "results": 0,
+    "allSymbols": [],
+    "sameSymbol": 0,
+    "sameSymbolVerified": 0,
+    "savedTo": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/MSFTX-verify/jup-HALFSMILE.json"
+   }
+  ]
+ }
+]

@@ -1,0 +1,165 @@
+START 21088 END 45597
+=`    logo,
+  }),
+});`;e.s(["__N_SSP",0,!0,"default",0,function({devBuyEnabled:e,v3Enabled:i,airdropEnabled:j,launchlabEnabled:N,legacyLaunchEnabled:v}){let[T,S]=(0,s.useState)("Data"),[q,P]=(0,s.useState)(p.PLATFORM_URL);(0,s.useEffect)(()=>P(window.location.origin),[]);let[L,E]=(0,s.useState)(x[0].id),O=(0,s.useMemo)(()=>({launchlab:N,legacyLaunch:v}),[N,v]),R=(0,s.useMemo)(()=>x.filter(e=>!("feature"in e)||O[e.feature]),[O]);(0,s.useEffect)(()=>{let e=R.map(({id:e})=>document.getElementById(e)).filter(e=>null!==e),t=()=>{let t=x[0].id;for(let a of e)a.getBoundingClientRect().top<=104&&(t=a.id);E(t)};return t(),window.addEventListener("scroll",t,{passive:!0}),()=>window.removeEventListener("scroll",t)},[R]);let A=(0,s.useMemo)(()=>{var t;let a;return(t={devBuy:e,v3:i,airdrop:j,launchlab:N,legacyLaunch:v},a=e=>(!e.feature||t[e.feature])&&(!e.absentFeature||!t[e.absentFeature]),l.filter(e=>!e.feature||t[e.feature]).map(e=>e.params?.some(e=>!a(e))?{...e,params:e.params.filter(a)}:e)).filter(e=>e.group===T)},[T,e,i,j,N,v]);return u.PUBLIC_API_ENABLED?(0,t.jsxs)(r.default,{containerClassName:"max-w-5xl",children:[(0,t.jsxs)(n.default,{children:[(0,t.jsx)("title",{children:"Developer API · StonkFun"}),(0,t.jsx)("meta",{name:"description",content:"Launch tokens and read market data programmatically on StonkFun. Non-custodial, open, and no API key required."})]}),(0,t.jsxs)("div",{className:"lg:flex lg:gap-12",children:[(0,t.jsxs)("main",{className:"max-w-3xl min-w-0 flex-1",children:[(0,t.jsxs)("header",{className:"border-b border-line pb-8",children:[(0,t.jsx)("h1",{className:"text-2xl font-bold tracking-[-0.035em] text-ink",children:"Developer API"}),(0,t.jsx)("p",{className:`mt-3 max-w-2xl ${y}`,children:"Read market data and launch tokens over plain HTTP. There is no API key and nothing to sign up for: a launch is authorised by your own wallet's signature on the fee payment, which is stronger proof than any key we could issue. So we don't issue one."}),(0,t.jsx)("p",{className:`mt-3 max-w-2xl ${y}`,children:"Non-custodial throughout. We never ask for, accept or store a private key; you sign the launch fee locally, and no endpoint will sign on your behalf or make the platform wallet sign anything you supply."}),(0,t.jsxs)("p",{className:"mt-4 text-sm text-ink-dim",children:["Base URL ",(0,t.jsx)("code",{className:f,children:o})]})]}),(0,t.jsxs)("div",{className:"space-y-14 pt-10",children:[(0,t.jsxs)("section",{children:[(0,t.jsx)(b,{id:"quickstart",children:"Quickstart"}),(0,t.jsx)("p",{className:`mt-2 max-w-2xl ${y}`,children:"Every endpoint is open behind a per-minute rate limit per IP address. Start from a terminal:"}),(0,t.jsx)("div",{className:"mt-4",children:(0,t.jsx)(a.CodeBlock,{label:"terminal",children:`# No key, no signup, no plan. Just call it.
+curl ${q}${o}/tokens?sort=newest
+
+# Launching is the same — what authorises it is your own
+# signature on the launch fee, not a token we hand you.
+curl ${q}${o}/pairs?launchable=true`})})]}),v&&(0,t.jsxs)("section",{children:[(0,t.jsx)(b,{id:"launching",children:"Launching a token"}),(0,t.jsxs)("p",{className:`mt-2 max-w-2xl ${y}`,children:["Two calls. ",(0,t.jsx)("code",{className:f,children:"/launches/prepare"})," returns an unsigned payment transaction; you sign it with the creator's wallet and hand it to ",(0,t.jsx)("code",{className:f,children:"/launches/submit"}),". First, pick a mode:"]}),(0,t.jsxs)("div",{className:"mt-6 grid gap-x-10 gap-y-6 sm:grid-cols-2",children:[(0,t.jsxs)("div",{children:[(0,t.jsxs)("h3",{className:"text-sm font-medium text-ink",children:["Fee coin"," ",(0,t.jsx)("code",{className:"ml-1 font-mono text-xs text-ink-mid",children:'mode: "standard"'})]}),(0,t.jsxs)("p",{className:`mt-1.5 ${y}`,children:["Trades on a 1% pool by default: fees split 50/50, so creator fees are approximately 0.5% of every trade. Add the optional"," ",(0,t.jsx)("code",{className:"font-mono text-xs text-ink-mid",children:'feeTier: "2%"'})," ","tag to open a 2% pool instead — creator fees are approximately 1.5% of every trade and the platform still keeps about 0.5%. Either way the creator claims from the token page, or over this API — see"," ",(0,t.jsx)("a",{href:"#claiming",className:"text-ink-mid hover:text-ink",children:"Claiming fees"}),"."]})]}),(0,t.jsxs)("div",{children:[(0,t.jsxs)("h3",{className:"text-sm font-medium text-ink",children:["Reward coin"," ",(0,t.jsx)("code",{className:"ml-1 font-mono text-xs text-ink-mid",children:'mode: "reward"'})]}),(0,t.jsxs)("p",{className:`mt-1.5 ${y}`,children:[i?`Trades on a 1% pool and carries a transfer tax paid straight to
+                         holders — 1% by default, or 3% by choice at launch — automatically, in
+                         the token it is paired against, on every transfer, on any venue. No
+                         creator fee position.`:`Trades on a 4% pool and pays 85% of trading fees straight to holders,
+                         automatically, in the token it is paired against. No creator fee
+                         position.`,!u.REWARD_LAUNCHES_ENABLED&&(0,t.jsx)("span",{className:"mt-1 block text-amber-200/80",children:"Currently paused on this deployment."})]})]})]}),(0,t.jsx)("h3",{className:"mt-8 text-sm font-medium text-ink",children:"Raydium pairs — what you launch against"}),(0,t.jsxs)("p",{className:`mt-1.5 max-w-2xl ${y}`,children:["Every token is priced against another token: tokenized stocks (xStocks), pre-IPO stocks (PreStocks), currencies, leveraged tokens, SOL, or a custom mint. Fetch the current list from ",(0,t.jsx)("code",{className:f,children:"GET /pairs"})," and pass one as"," ",(0,t.jsx)("code",{className:f,children:"quoteMint"}),"."]}),j&&(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)("h3",{className:"mt-8 text-sm font-medium text-ink",children:"Airdrop to the quote token's holders"}),(0,t.jsxs)("p",{className:`mt-1.5 max-w-2xl ${y}`,children:["On a reward launch you can hold back up to ",50,"% of supply and drop it on the holders of the token you are pairing against. Pass"," ",(0,t.jsx)("code",{className:f,children:"airdropPercent"})," to"," ",(0,t.jsx)("code",{className:f,children:"/prepare"}),", optionally with"," ",(0,t.jsx)("code",{className:f,children:"airdropTier"})," (",(0,t.jsx)("code",{className:f,children:"top100"})," through"," ",(0,t.jsx)("code",{className:f,children:"top5000"}),", default"," ",(0,t.jsx)("code",{className:f,children:"top100"}),"). Every field is optional; omit them and the launch is byte-for-byte the one you get today."]}),(0,t.jsxs)("p",{className:`mt-3 max-w-2xl ${y}`,children:["The recipient list is snapshotted and frozen by that"," ",(0,t.jsx)("code",{className:f,children:"/prepare"})," call, before your mint exists. That ordering is the point: nobody can see the new token and buy the quote token to get into the drop, and nothing afterwards can redirect it. Exchange, custody and treasury wallets are removed, as is any account owned by a program — a liquidity pool or vault cannot sign, so tokens sent there are burnt in practice. Removals are backfilled by the next holder down, so you receive the tier you paid for."]}),(0,t.jsxs)("p",{className:`mt-3 max-w-2xl ${y}`,children:["The response's ",(0,t.jsx)("code",{className:f,children:"airdrop"})," object gives the recipient count and the extra fee before you sign; that fee is already included in ",(0,t.jsx)("code",{className:f,children:"payment.lamports"}),". The carve-out is minted into escrow inside the same atomic bundle as the mint and the pool, so supply is committed the moment the token exists — but delivery itself lands shortly after, since hundreds of transfers cannot fit in one bundle. Read ",(0,t.jsxs)("code",{className:f,children:["/tokens/","{mint}","/airdrop"]})," ","to see what a token launched with."]}),(0,t.jsxs)("p",{className:`mt-3 max-w-2xl ${y}`,children:["One consequence worth pricing in: the pool is seeded with less base token, so it is thinner. The starting market cap is unchanged, but a given buy moves the price further — including your own dev buy, whose cost"," ",(0,t.jsx)("code",{className:f,children:"/prepare"})," already accounts for."]})]}),(0,t.jsx)("h3",{className:"mt-8 text-sm font-medium text-ink",children:"Dev buy, if you want one"}),(0,t.jsxs)("p",{className:`mt-1.5 max-w-2xl ${y}`,children:["You can buy up to 50% of the supply as the pool's literal first trade. Pass"," ",(0,t.jsx)("code",{className:f,children:"devBuyPercent"})," (a supply share, max 50) or"," ",(0,t.jsx)("code",{className:f,children:"devBuySol"})," (a SOL amount), never both, to"," ",(0,t.jsx)("code",{className:f,children:"/prepare"}),". The SOL cost, curve price plus the pool's trading fee, rides in the same payment transaction as the launch fee."]}),(0,t.jsxs)("p",{className:`mt-3 max-w-2xl ${y}`,children:["The buy is submitted in the same atomic bundle as the transaction that makes the pool tradeable, designed so it cannot be front-run: either the pool opens with your buy already filled, or nothing happens and the launch retries. The response's ",(0,t.jsx)("code",{className:f,children:"devBuy"})," object carries the target token amount and the exact lamports before you sign anything; being a real swap, the executed fill can vary slightly from the target. The fill is transferred to the creator wallet the moment the pool is live.",!e&&(0,t.jsx)("span",{className:"mt-1 block text-amber-200/80",children:"Currently paused on this deployment. Sending either parameter answers 503, and they are omitted from the OpenAPI spec until it is back on."})]}),(0,t.jsx)("p",{className:`mt-8 max-w-2xl ${y}`,children:"The whole thing, end to end:"}),(0,t.jsx)("div",{className:"mt-3",children:(0,t.jsx)(a.CodeBlock,{label:"launch.mjs",children:`import {
+  Connection, Keypair, Transaction,
+} from '@solana/web3.js';
+import fs from 'node:fs';
+
+const API = '${q}${o}';
+const creator = Keypair.fromSecretKey(            // your own wallet, never sent anywhere
+  Uint8Array.from(JSON.parse(fs.readFileSync('creator.json', 'utf8')))
+);
+
+const headers = { 'Content-Type': 'application/json' };   // no key, nothing to sign up for
+const call = async (path, init) => {
+  const response = await fetch(API + path, init);
+  const body = await response.json();
+  if (!response.ok) throw new Error(\`\${body.error.code}: \${body.error.message}\`);
+  return body.data;
+};
+
+// 1. Pick a pair to launch against.
+const { pairs } = await call('/pairs?launchable=true');
+const pair = pairs.find((item) => item.symbol === 'NVDAx') ?? pairs[0];
+
+// 2. Prepare. Returns an UNSIGNED payment transaction.
+const logo = 'data:image/png;base64,' + fs.readFileSync('logo.png').toString('base64');
+const prepared = await call('/launches/prepare', {
+  method: 'POST',
+  headers,
+  body: JSON.stringify({
+    creatorWallet: creator.publicKey.toBase58(),
+    quoteMint: pair.mint,
+    name: 'My Token',
+    symbol: 'MYTKN',
+    mode: 'standard',          // 'standard' accrues creator fees
+    // feeTier: '2%',          // optional: 2% pool — creator fees ~1.5% per trade instead of ~0.5%
+${e?w:k}
+
+// 3. Sign the fee payment locally. Your key never leaves this process.
+const tx = Transaction.from(Buffer.from(prepared.paymentTransaction, 'base64'));
+tx.sign(creator);
+
+// 4. Submit. Usually returns a finished token in this one call.
+let result = await call('/launches/submit', {
+  method: 'POST',
+  headers,
+  body: JSON.stringify({
+    signedQuote: prepared.signedQuote,
+    signedTransaction: tx.serialize().toString('base64'),
+    logo,                      // must be byte-identical to step 2
+  }),
+});
+
+// 5. 'processing' means the launch is ON CHAIN and details are recording. NEVER pay again.
+//    A failed bundle instead returns service_unavailable with charged: false — nothing was
+//    charged; get a fresh quote from /prepare and submit again.
+while (result.status === 'processing') {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+  result = await call(\`/launches/\${result.paymentSignature}\`);
+}
+
+console.log('Live:', result.mint);`})}),(0,t.jsxs)("div",{className:"mt-6 border-l-2 border-amber-300/60 pl-4",children:[(0,t.jsx)("h3",{className:"text-sm font-medium text-amber-200",children:"The two outcomes of submit"}),(0,t.jsxs)("p",{className:`mt-1.5 max-w-2xl ${y}`,children:["Launches are all-or-nothing: the payment, mint, pool and liquidity land together in one atomic bundle, or none of them do. A response of"," ",(0,t.jsx)("code",{className:f,children:"processing"})," means the launch is ON CHAIN and the last details are being recorded — it completes automatically even if your process dies. Poll"," ",(0,t.jsx)("code",{className:f,children:"GET /launches/{paymentSignature}"})," ","until it reads ",(0,t.jsx)("code",{className:f,children:"completed"}),", and"," ",(0,t.jsx)("strong",{className:"font-medium text-amber-200",children:"never pay twice"})," — a second payment creates a second token. If the bundle does not land, submit answers ",(0,t.jsx)("code",{className:f,children:"service_unavailable"})," with"," ",(0,t.jsx)("code",{className:f,children:"charged: false"}),": nothing was charged, no token exists, and the retry is a fresh quote from"," ",(0,t.jsx)("code",{className:f,children:"/prepare"})," — the old quote's payment expires on its own either way."]})]}),N&&(0,t.jsxs)("p",{className:`mt-6 max-w-2xl ${y}`,children:["Rather build the transaction yourself? You can — see"," ",(0,t.jsx)("a",{href:"#build-your-own",className:"text-ink-mid hover:text-ink",children:"Building it yourself"}),", which skips both calls and still gets the launch a token page, fee forwarding and holder rewards."]})]}),N&&(0,t.jsxs)("section",{children:[(0,t.jsx)(b,{id:"build-your-own",children:"Building it yourself"}),(0,t.jsxs)("p",{className:`mt-2 max-w-2xl ${y}`,children:["The two calls above hand you a transaction we built. You can skip them entirely and construct the launch yourself against Raydium's LaunchLab program — your own mint keypair, your own instructions, your own bundle — and still get everything this platform does around a launch. Two reads are all you need from us:"," ",(0,t.jsx)("code",{className:f,children:"GET /pairs"})," for a pair, and"," ",(0,t.jsx)("code",{className:f,children:"GET /launchlab/pricing"})," for the numbers that go in the create instruction."]}),(0,t.jsxs)("p",{className:`mt-3 max-w-2xl ${y}`,children:["What ties the two together is the"," ",(0,t.jsx)("strong",{className:"font-medium text-ink",children:"platform id"})," you bake into the pool. It is what the LaunchLab program charges the 1% curve fee to, and it is what we scan for: every minute we read the pools attributed to our platforms and adopt the ones we do not already have a record of. An adopted launch is indistinguishable from an API-created one — token page, chart, volume, fee ledger, holder rewards — and the pool's own"," ",(0,t.jsx)("code",{className:f,children:"creator"})," account is who gets paid, so a standard launch forwards its creator share to your wallet without you registering anything."]}),(0,t.jsx)("h3",{className:"mt-8 text-sm font-medium text-ink",children:"Sizing: one number, and it is not the SDK's"}),(0,t.jsxs)("p",{className:`mt-1.5 max-w-2xl ${y}`,children:[(0,t.jsx)("code",{className:f,children:"totalFundRaisingB"})," is a RAW amount in the"," ",(0,t.jsx)("em",{children:"quote token's"})," decimals, and Raydium's own constant is 85 SOL written in lamports. Pass it through on an 8-decimal xStock and you have asked for a 850-unit raise; on a 6-decimal stablecoin, 85,000. Both launch happily and graduate at a market cap nobody intended."," ",(0,t.jsx)("code",{className:f,children:"raise.raw"})," from the pricing call is the integer to use — sized so your launch opens and graduates where one launched here would — and ",(0,t.jsx)("code",{className:f,children:"curve.derived"})," carries the virtual reserves the program will compute from it, so you can check your opening price before signing rather than after landing. It is priced at request time; re-fetch if you have been sitting on the response."]}),(0,t.jsx)("h3",{className:"mt-8 text-sm font-medium text-ink",children:"What we adopt, exactly"}),(0,t.jsx)("p",{className:`mt-1.5 max-w-2xl ${y}`,children:"Attribution is necessary but not sufficient: a pool carrying our platform id is adopted only if it matches the launch our own builder would have produced. Everything in this list comes straight out of the pricing response, so matching it is a matter of not substituting your own values:"}),(0,t.jsxs)("ul",{className:`mt-3 max-w-2xl list-disc space-y-1.5 pl-5 ${y}`,children:[(0,t.jsxs)("li",{children:["the GlobalConfig from ",(0,t.jsx)("code",{className:f,children:"curve.configId"}),", and a constant-product curve migrating to ",(0,t.jsx)("code",{className:f,children:"cpmm"}),";"]}),(0,t.jsxs)("li",{children:[(0,t.jsx)("code",{className:f,children:"supply"})," and"," ",(0,t.jsx)("code",{className:f,children:"totalSellA"})," as given — they fix the open-to-graduation run — with a positive"," ",(0,t.jsx)("code",{className:f,children:"totalFundRaisingB"}),";"]}),(0,t.jsxs)("li",{children:["a base mint created by"," ",(0,t.jsx)("code",{className:f,children:"initialize_with_token2022"})," at 6 decimals, which every LaunchLab launch is;"]}),(0,t.jsxs)("li",{children:["no transfer-fee extension at all for a standard launch, or a rate from"," ",(0,t.jsx)("code",{className:f,children:"modes.reward.transferFeeBps"})," for a reward one — the extension IS the mode, and it is read off the mint rather than claimed;"]}),(0,t.jsxs)("li",{children:["the platform id that matches that mode:"," ",(0,t.jsx)("code",{className:f,children:"platform.standard"})," for an untaxed mint,"," ",(0,t.jsx)("code",{className:f,children:"platform.reward"})," for a taxed one;"]}),(0,t.jsxs)("li",{children:["the platform's curve-rule account —"," ",(0,t.jsx)("code",{className:f,children:"curveRule.standard"})," /"," ",(0,t.jsx)("code",{className:f,children:"curveRule.reward"})," from pricing — appended as the LAST account of the initialize, read-only. Ignored until the platform enforces its launch shape on-chain; once it does, an initialize without it is refused outright (",(0,t.jsx)("code",{className:f,children:"6018"}),") and one outside this list is refused too (",(0,t.jsx)("code",{className:f,children:"6025"}),")."]})]}),(0,t.jsx)("p",{className:`mt-3 max-w-2xl ${y}`,children:"Miss any of them and nothing bad happens on chain — the pool exists and trades on Raydium — but this platform never records it, which for a standard launch means no fee forwarding, and for a taxed one means the warning below."}),(0,t.jsxs)("div",{className:"mt-6 border-l-2 border-amber-300/60 pl-4",children:[(0,t.jsx)("h3",{className:"text-sm font-medium text-amber-200",children:"A taxed mint you get wrong taxes holders for nobody"}),(0,t.jsxs)("p",{className:`mt-1.5 max-w-2xl ${y}`,children:["On a reward launch the program assigns our platform's withhold authority (",(0,t.jsx)("code",{className:f,children:"modes.reward.withdrawWithheldAuthority"}),") to the mint at creation. Holders are taxed on every transfer from the first trade, and only that wallet can ever withdraw what is withheld. If the launch is adopted we collect it and pay it out to holders on the reward cycle. If it is not — wrong curve, wrong config, an unpublished tax rate — the tax accrues and is never distributed to anyone."," ",(0,t.jsx)("strong",{className:"font-medium text-amber-200",children:"Land a standard launch first"}),", confirm it appears in ",(0,t.jsx)("code",{className:f,children:"GET /tokens"})," with"," ",(0,t.jsx)("code",{className:f,children:'launchpad: "launchlab"'}),", and only then build a taxed one."]})]}),(0,t.jsx)("p",{className:`mt-8 max-w-2xl ${y}`,children:"The whole thing, end to end:"}),(0,t.jsx)("div",{className:"mt-3",children:(0,t.jsx)(a.CodeBlock,{label:"build.mjs",children:`import {
+  ComputeBudgetProgram, Connection, Keypair, PublicKey, Transaction,
+} from '@solana/web3.js';
+import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import {
+  getPdaLaunchpadAuth, getPdaLaunchpadPoolId, getPdaLaunchpadVaultId, initializeWithToken2022,
+} from '@raydium-io/raydium-sdk-v2';
+import BN from 'bn.js';
+
+const API = '${q}${o}';
+const QUOTE = 'YOUR_QUOTE_MINT';   // a mint from /pairs
+const TAX_BPS = 100;               // reward launch: an offered tier. 0 = standard, no tax.
+const connection = new Connection(pickRpcUrl());
+const creator = Keypair.fromSecretKey(/* your own wallet, never sent anywhere */);
+
+const get = async (path) => (await (await fetch(API + path)).json()).data;
+
+// 1. The pair must be launchable here AND carry a LaunchLab config on chain.
+const { pairs } = await get('/pairs?launchable=true&launchLabReady=true');
+const pair = pairs.find((item) => item.mint === QUOTE);
+if (!pair) throw new Error('Not launchable against that quote right now');
+
+// 2. Size the curve. raise.raw is a raw amount in the quote's decimals. The SDK's 85-SOL
+//    constant would mean 850 units on an 8-decimal xStock and 85,000 on a 6-decimal stablecoin.
+const pricing = await get(\`/launchlab/pricing?quoteMint=\${QUOTE}\`);
+if (TAX_BPS && !pricing.modes.reward.transferFeeBps.includes(TAX_BPS)) {
+  throw new Error('That tax rate is not one this platform publishes');
+}
+
+// 3. Build the create. The platform id attributes the pool to us; pick it by mode.
+const programId = new PublicKey(pricing.curve.programId);
+const platformId = new PublicKey(TAX_BPS ? pricing.platform.reward : pricing.platform.standard);
+const quoteMint = new PublicKey(QUOTE);
+const mintKeypair = Keypair.generate();
+const mint = mintKeypair.publicKey;
+const { publicKey: poolId } = getPdaLaunchpadPoolId(programId, mint, quoteMint);
+
+const instruction = initializeWithToken2022(
+  programId,
+  creator.publicKey,                       // payer
+  creator.publicKey,                       // creator: the wallet fees are forwarded to
+  new PublicKey(pricing.curve.configId),
+  platformId,
+  getPdaLaunchpadAuth(programId).publicKey,
+  poolId,
+  mint,
+  quoteMint,
+  getPdaLaunchpadVaultId(programId, poolId, mint).publicKey,
+  getPdaLaunchpadVaultId(programId, poolId, quoteMint).publicKey,
+  pricing.curve.baseDecimals,
+  'My Token', 'MYTKN', 'https://example.com/metadata.json',
+  {
+    type: 'ConstantCurve',
+    supply: new BN(pricing.curve.supply),
+    totalSellA: new BN(pricing.curve.totalSellA),
+    totalFundRaisingB: new BN(pricing.raise.raw),   // must come from the pricing response
+    migrateType: 'cpmm',
+  },
+  new BN(0), new BN(0), new BN(0),         // no vesting
+  pricing.curve.cpmmCreatorFeeOn,
+  // Reward mode only. Both keys must match the Raydium SDK's declaration exactly, as written
+  // here. The SDK ignores keys it does not recognise and then writes a zero-rate transfer-fee
+  // extension, which looks taxed but collects nothing.
+  TAX_BPS ? { transferFeeBasePoints: TAX_BPS, maxinumFee: new BN('1000000000000000') } : undefined
+);
+
+// The SDK hardcodes classic SPL in the quote-token-program slot. Every xStock is Token-2022,
+// so that account must be substituted or the program is handed the wrong token program.
+if (pair.tokenProgram === TOKEN_2022_PROGRAM_ID.toBase58()) {
+  if (!instruction.keys[11].pubkey.equals(TOKEN_PROGRAM_ID)) throw new Error('layout changed');
+  instruction.keys[11] = { ...instruction.keys[11], pubkey: TOKEN_2022_PROGRAM_ID };
+}
+
+// Append the platform's curve-rule account last, read-only, matching your platform id. While
+// enforcement is off the program ignores it. Once enforcement is on, an initialize without it
+// fails with error 6018 and one outside the published shape fails with 6025.
+instruction.keys.push({
+  pubkey: new PublicKey(TAX_BPS ? pricing.curveRule.reward : pricing.curveRule.standard),
+  isSigner: false,
+  isWritable: false,
+});
+
+// 4. Sign with both the creator and the new mint, then send it yourself.
+const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('confirmed');
+const tx = new Transaction()
+  .add(ComputeBudgetProgram.setComputeUnitLimit({ units: 600_000 }))
+  .add(instruction);
+Object.assign(tx, { recentBlockhash: blockhash, lastValidBlockHeight, feePayer: creator.publicKey });
+tx.sign(creator, mintKeypair);
+console.log('sent:', await connection.sendRawTransaction(tx.serialize()));
+
+// 5. There is nothing else to call. Within a minute or two the pool is adopted. Once the venue
+//    is public, GET /tokens/\${mint} answers with launchpad "launchlab".`

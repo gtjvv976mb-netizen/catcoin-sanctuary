@@ -1,0 +1,138 @@
+
+1. INSTALL OPENS THE SETUP PAGE — ONCE
+──────────────────────────────────────
+  ok   the worker boots under the double and answers  — lane off, signer phantom
+  ok   the unlocked key's area is pinned to trusted contexts
+  ok   an update and a browser start open nothing
+(node:25644) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok   install opens welcome.html, the extension's own page  — [{"url":"chrome-extension://coinmarketcatextensionid/welcome.html"}]
+  ok   …and arms the keepalive the lane has always had
+  ok   the popup is told setup has not run
+
+2. THE STYLES, AND THE STOCKS A NEW USER CAN PICK
+─────────────────────────────────────────────────
+  ok   the record-derived defaults are what the lane ships: 0.005 SOL, 0.01 SOL a day, 1.5x, 90 s, 180 s, 10 s, 1.0x  — {"maxSolPerTrade":0.005,"dailySolCap":0.01,"takeAtEntryX":1.5,"stallMs":90000,"timeStopMs":180000,"entryWaitMs":10000,"entryFollowThroughX":1,"stopFrac":0.2}
+  ok   Cautious: no looser than the defaults on any dial  — {"maxSolPerTrade":0.005,"dailySolCap":0.005,"takeAtEntryX":1.5,"stallMs":60000,"timeStopMs":120000,"stopFrac":null,"entryWaitMs":10000,"entryFollowThroughX":1}
+  ok   Balanced: no looser than the defaults on any dial  — {"maxSolPerTrade":0.005,"dailySolCap":0.01,"takeAtEntryX":1.5,"stallMs":90000,"timeStopMs":180000,"stopFrac":null,"entryWaitMs":10000,"entryFollowThroughX":1}
+  ok   Balanced IS the defaults
+  ok   Cautious is tighter than Balanced somewhere, and says its tighter exits are not a measurement
+  ok   Bold is looser, and labelled so in its name, its flag and its words  — ticket, day, take, stall, time stop
+  ok   Bold's words quote the record, not an invented number
+  ok   every style keeps the entry rule: a 10 s wait and a 1.0x follow-through
+  ok   Cautious: a valid config that can arm once its sentence is typed  — nothing blocking
+  ok   Cautious: a ticket above the 0.005 SOL canary carries a stop
+  ok   Balanced: a valid config that can arm once its sentence is typed  — nothing blocking
+  ok   Balanced: a ticket above the 0.005 SOL canary carries a stop
+  ok   Bold — looser than the record supports: a valid config that can arm once its sentence is typed  — nothing blocking
+  ok   Bold — looser than the record supports: a ticket above the 0.005 SOL canary carries a stop
+  ok   the stock choices start with the fixture's three, then name where the rest came from  — GLDx:fixture TSLAx:fixture SPYx:fixture AAPLx:rpc-2026-09-24 NVDAx:rpc-2026-09-24
+  ok   every choice is a real 32-byte key with an Xs vanity prefix, and GLDx, TSLAx, SPYx are there
+  ok   all five fit the stock list the engine reads (quoteMints), which the setup page writes into
+  ok   normalizeConfig refuses signerMode = "robot" by name
+  ok   normalizeConfig refuses autopilotUnlockMinutes = 2 by name
+  ok   normalizeConfig refuses autopilotUnlockMinutes = 2000 by name
+  ok   normalizeConfig refuses stylePreset = "yolo" by name
+  ok   normalizeConfig refuses stallMs = -1 by name
+  ok   the signer is Phantom by default, and the lane is off
+
+3. ONLY THE EXTENSION'S OWN PAGES DRIVE THE AUTOPILOT WALLET
+────────────────────────────────────────────────────────────
+  ok   a content script's sender (a web page URL) is refused  — the autopilot wallet answers the extension's own pages only
+  ok   another extension is refused
+  ok   …and neither created anything
+  ok   the setup page (an extension page in a tab) is answered
+
+4. CREATE: TYPED TWICE, TWELVE CHARACTERS, STORED SEALED
+────────────────────────────────────────────────────────
+  ok   two different passphrases are refused  — the two passphrases do not match — type the same one twice
+  ok   a passphrase under 12 characters is refused  — the passphrase must be at least 12 characters
+  ok   created: a public key comes back  — eY2k1JYSbJPDrH1dwuhk3khvAk3LoR61YsikUJoNPyu
+  ok   the sealed blob is in storage.local under its key, PBKDF2-SHA256 600k + AES-GCM
+  ok   nothing is in session storage: a new wallet is locked
+  ok   the passphrase is nowhere in storage
+  ok   a second create over it is refused (a funded wallet is not lost to a click)  — a session wallet already exists (eY2k…NPyu); sweep it, then replace it with its current passphrase
+  ok   status: exists, locked, no RPC read yet
+
+5. THE SIGNER SWITCH
+────────────────────
+  ok   the signer is a setting like any other
+  ok   on autopilot the lane's wallet is the autopilot wallet; Phantom's is reported apart  — lane eY2k1JYSbJPDrH1dwuhk3khvAk3LoR61YsikUJoNPyu, phantom 6AW6VpcdsnPfYtbeArtjDj492rfktrPJvYvp6kzxcWKu
+  ok   the checklist is the autopilot one: created ✓, unlocked ✗, funded ✗ (empty)  — autopilot_unlocked,autopilot_funded,live_ack_typed
+  ok   the sentence to type is for the autopilot wallet and says nothing will ask
+  ok   the console tab still sees PHANTOM's wallet as its wallet, and the lane's apart  — {"wallet":"6AW6VpcdsnPfYtbeArtjDj492rfktrPJvYvp6kzxcWKu","laneWallet":"eY2k1JYSbJPDrH1dwuhk3khvAk3LoR61YsikUJoNPyu"}
+
+6. FUND FROM PHANTOM: ONE APPROVAL, BUILT BY THE WORKER
+───────────────────────────────────────────────────────
+  ok   the default amount is the daily budget (0.01 SOL), and it landed  — FUND the autopilot wallet eY2k…NPyu with 0.01 SOL
+  ok   exactly one Phantom approval was asked, for purpose fund  — fund
+  ok   what Phantom signed is one system transfer, Phantom → the autopilot wallet, for exactly that amount
+  ok   it was simulated before Phantom was asked, and sent with preflight on
+  ok   a typed amount funds that amount: 0.05 SOL more
+  ok   refused, and Phantom not asked: zero  — the SOL amount must be more than zero
+  ok   refused, and Phantom not asked: more precision than SOL has  — the SOL amount 0.0000000001 has more precision than the mint's 9 decimals
+  ok   refused, and Phantom not asked: a stock that is not listed  — only SOL, the agent's settlement token (USDC or USDT) or a stock listed in Options → Stock quotes can be funded from here
+  ok   refused, and Phantom not asked: more than Phantom holds  — the funding transfer would fail, so Phantom was not asked: {"InstructionError":[0,{"Custom":1}]} — Program log: InsufficientFunds: system transfer
+  ok   declined in Phantom: nothing moved, and the refusal says so  — you declined in Phantom
+  ok   funding GLDx moves exactly 0.02 GLDx into the autopilot wallet's Token-2022 account  — FUND the autopilot wallet eY2k…NPyu with 0.02 GLDx
+  ok   …by TransferChecked with the mint's 8 decimals, the account created and paid for by Phantom
+  ok   the sweep destination is remembered as the Phantom wallet that funded it
+
+7. UNLOCK, WITH A TTL
+─────────────────────
+  ok   an unlock under 5 minutes is refused
+  ok   a wrong passphrase is refused as such
+  ok   unlocked for 30 minutes  — 2026-09-25T14:56:53.910Z
+  ok   the key sits in session storage only, until the expiry
+  ok   an alarm is set for the expiry, so the lane says so when it locks
+  ok   the checklist turns green for the wallet: unlocked, and funded for a 0.005 SOL ticket  — autopilot_wallet_created:true autopilot_unlocked:true autopilot_funded:true
+  ok   the default unlock is the Options value, 480 minutes
+
+8. EXPORT, FOR RECOVERY
+───────────────────────
+  ok   without the passphrase there is no export
+  ok   with no passphrase at all, none either
+  ok   the export is the wallet's own 64-byte key, in the base58 Phantom imports
+
+9. SWEEP BACK TO PHANTOM
+────────────────────────
+  ok   a sweep to anything but the confirmed Phantom wallet is refused  — the sweep would go to 6AW6VpcdsnPfYtbeArtjDj492rfktrPJvYvp6kzxcWKu, not to 8pqXd6LACwoKUvTCeHbPEJLyiUz4F1D8GB7qHYhRFVT5 — reopen the popup and confirm again
+  ok   the sweep ran  — {"sol":{"lamports":"62692957","sol":0.062692957,"signature":"PdtEBRDtJAWMnxHfnR11rgSpergNFo4N5cHR9nD26xXiaZmurCHaSPtkV6grBYPr9CbFwjUMy8eMnk8fzLBcdSR"},"tokens":1,"closed":1,"skipped":[]}
+  ok   GLDx went back by TransferChecked, its emptied account closed
+  ok   the empty launch-token account was closed for its rent
+  ok   the SOL is down to exactly the rent floor — the fee computed, not guessed  — 890880 lamports left
+  ok   Phantom got back everything above the floor, the closed accounts' rent included, less the sweep's own fees  — +62692957 lamports over 3 transactions
+  ok   every sweep transaction was signed by the autopilot key (the chain verified each), and Phantom was asked nothing
+  ok   a second sweep finds nothing above the floor and says so  — the balance is at the 0.00089088 SOL rent floor: nothing above it to sweep
+
+10. LOCK, AND AN UNLOCK THAT RUNS OUT
+─────────────────────────────────────
+  ok   lock clears the unlocked key from session storage
+  ok   …clears the expiry alarm, and the lane reports it locked
+  ok   locked, it signs nothing: a sweep is refused
+  ok   when the unlock runs out the expired key is removed, and the lane says so
+
+11. NOTHING LOGGED OR STORED CARRIES THE PASSPHRASE OR THE KEY
+──────────────────────────────────────────────────────────────
+  ok   the worker logged plenty — and none of it is the passphrase or the key  — 20 lines
+  ok   storage.local holds the sealed blob and the book, never the passphrase or the plaintext key
+  ok   the notifications carry neither
+  ok   no status the popup or the console tab received carries either
+
+11b. REPLACE: ONLY A SWEPT WALLET, ONLY WITH ITS PASSPHRASE
+───────────────────────────────────────────────────────────
+  ok   a wallet that holds SOL above the floor is not replaced  — the autopilot wallet still holds 0.05089088 SOL — sweep it back to Phantom before replacing it
+  ok   the wrong current passphrase does not replace it
+  ok   swept, with its passphrase, it is replaced by a new wallet  — eY2k1JYSbJPDrH1dwuhk3khvAk3LoR61YsikUJoNPyu → GdDjGxRuSoWMZQ8JqrZrsQNaBniFR9og9Ps5seCZrdgF
+  ok   the old wallet's unlocked key went with it; the new one starts locked
+  ok   the old passphrase no longer unlocks anything
+  ok   the new passphrase unlocks the new wallet
+
+12. NO SWEEP WHILE THE AUTOPILOT WALLET HOLDS A POSITION
+────────────────────────────────────────────────────────
+  ok   the second worker reads the unlocked wallet and the live position it holds  — held 1
+  ok   the sweep is refused while it holds one, and says why  — the autopilot wallet holds 1 live position: let the lane sell (or press HARD STOP), or Forget a row you sold by hand, before sweeping — a sweep would leave the position no SOL to sell with
+  ok   …and it is not replaced while it holds one either  — the autopilot wallet holds a live position — it must be sold or forgotten before the wallet is replaced
+
+94 passed, 0 failed
+

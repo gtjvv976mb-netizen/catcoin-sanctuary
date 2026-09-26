@@ -1,0 +1,194 @@
+[
+ {
+  "name": "Couch Captain Cat",
+  "symbol": "COUCHCAP",
+  "lengths": {
+   "name": 17,
+   "symbol": 8,
+   "description": 274,
+   "body": 150,
+   "nameOk": true,
+   "symbolOk": true,
+   "descOk": true
+  },
+  "disclosureExact": true,
+  "tickerRegex": true,
+  "tickerContainsMeta": false,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBody": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "meta",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=COUCHCAP",
+   "status": 200,
+   "results": 2,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "anyVerified": [],
+   "all": [
+    "COUCH/Couch Capital/v=undefined",
+    "CCP/Couch Crash Party/v=undefined"
+   ]
+  }
+ },
+ {
+  "name": "Pawse Button Tabby",
+  "symbol": "PAUSEPAW",
+  "lengths": {
+   "name": 18,
+   "symbol": 8,
+   "description": 269,
+   "body": 145,
+   "nameOk": true,
+   "symbolOk": true,
+   "descOk": true
+  },
+  "disclosureExact": true,
+  "tickerRegex": true,
+  "tickerContainsMeta": false,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBody": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "meta",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=PAUSEPAW",
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "anyVerified": [],
+   "all": []
+  }
+ },
+ {
+  "name": "Clever House Cat",
+  "symbol": "CLEVERCAT",
+  "lengths": {
+   "name": 16,
+   "symbol": 9,
+   "description": 270,
+   "body": 146,
+   "nameOk": true,
+   "symbolOk": true,
+   "descOk": true
+  },
+  "disclosureExact": true,
+  "tickerRegex": true,
+  "tickerContainsMeta": false,
+  "memeBanned": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_nameSymbolBody": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "meta",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiter": {
+   "url": "https://lite-api.jup.ag/tokens/v2/search?query=CLEVERCAT",
+   "status": 200,
+   "results": 2,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "anyVerified": [],
+   "all": [
+    "CLVR/Clever cat/v=undefined",
+    "Believers/Official Believers Capital/v=undefined"
+   ]
+  }
+ }
+]

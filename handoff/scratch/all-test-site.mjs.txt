@@ -1,0 +1,390 @@
+
+EVERY PAGE IS A PAGE
+────────────────────
+  ok   agency: a <title>  — Cat Intelligence Agency — we read the chain
+  ok   agency: lang and doctype
+  ok   agency: a phone viewport
+  ok   agency: a meta description  — 152 chars
+  ok   agency: og:title
+  ok   agency: og:description
+  ok   agency: og:type
+  ok   agency: og:site_name
+  ok   agency: og:image is the link preview, absolute, on the domain
+  ok   agency: og:url is this page on the domain  — https://catintelligenceagency.com/
+  ok   agency: the canonical link is og:url
+  ok   agency: the kit's favicons
+  ok   agency: Archivo to read, JetBrains Mono for addresses
+  ok   agency: night first, the day shift stored under cc_theme
+  ok   agency: violet and mint
+  ok   floor: a <title>  — The Work Floor — Cat Intelligence Agency
+  ok   floor: lang and doctype
+  ok   floor: a phone viewport
+  ok   floor: a meta description  — 174 chars
+  ok   floor: og:title
+  ok   floor: og:description
+  ok   floor: og:type
+  ok   floor: og:site_name
+  ok   floor: og:image is the link preview, absolute, on the domain
+  ok   floor: og:url is this page on the domain  — https://catintelligenceagency.com/floor/
+  ok   floor: the canonical link is og:url
+  ok   floor: the kit's favicons
+  ok   floor: Archivo to read, JetBrains Mono for addresses
+  ok   floor: night first, the day shift stored under cc_theme
+  ok   floor: violet and mint
+  ok   cat: a <title>  — CoinMarketCat — agentic trading for Solana, in plain English
+  ok   cat: lang and doctype
+  ok   cat: a phone viewport
+  ok   cat: a meta description  — 354 chars
+  ok   cat: og:title
+  ok   cat: og:description
+  ok   cat: og:type
+  ok   cat: og:site_name
+  ok   cat: og:image is the link preview, absolute, on the domain
+  ok   cat: og:url is this page on the domain  — https://catintelligenceagency.com/coinmarketcat/
+  ok   cat: the canonical link is og:url
+  ok   cat: the kit's favicons
+  ok   cat: Archivo to read, JetBrains Mono for addresses
+  ok   cat: night first, the day shift stored under cc_theme
+  ok   cat: violet and mint
+  ok   console: a <title>  — CoinMarketCat console — where the extension meets your Phantom
+  ok   console: lang and doctype
+  ok   console: a phone viewport
+  ok   console: a meta description  — 327 chars
+  ok   console: og:title
+  ok   console: og:description
+  ok   console: og:type
+  ok   console: og:site_name
+  ok   console: og:image is the link preview, absolute, on the domain
+  ok   console: og:url is this page on the domain  — https://catintelligenceagency.com/console/
+  ok   console: the canonical link is og:url
+  ok   console: the kit's favicons
+  ok   console: Archivo to read, JetBrains Mono for addresses
+  ok   console: night first, the day shift stored under cc_theme
+  ok   console: violet and mint
+  ok   downloads: a <title>  — Downloads — Cat Intelligence Agency
+  ok   downloads: lang and doctype
+  ok   downloads: a phone viewport
+  ok   downloads: a meta description  — 172 chars
+  ok   downloads: og:title
+  ok   downloads: og:description
+  ok   downloads: og:type
+  ok   downloads: og:site_name
+  ok   downloads: og:image is the link preview, absolute, on the domain
+  ok   downloads: og:url is this page on the domain  — https://catintelligenceagency.com/downloads/
+  ok   downloads: the canonical link is og:url
+  ok   downloads: the kit's favicons
+  ok   downloads: Archivo to read, JetBrains Mono for addresses
+  ok   downloads: night first, the day shift stored under cc_theme
+  ok   downloads: violet and mint
+  ok   the agency: Anton titles and Press Start 2P pixel labels
+  ok   the cat's stylesheet carries violet #9945ff and mint #14f195, night first
+  ok   the agency's stylesheet carries the palette, night first, with a day shift
+
+THE PAGES LINK TO EACH OTHER, AND EVERY LOCAL LINK RESOLVES
+───────────────────────────────────────────────────────────
+  ok   agency → the floor, the cat, the console, the repository
+  ok   the floor → back to the agency, $CIA, the cat, the console, the repository
+  ok   the cat → the agency, the floor, the console, the repository
+  ok   the console → the agency, the floor, the cat, the repository
+  ok   the downloads page → the agency, the floor, $CIA, the cat, the console, the repository, its README's build steps and its releases
+  ok   "The Floor" is in the site bar of the agency, the floor, the cat's page and the console
+  ok   "Download" is in the site bar of every page, the downloads page's own marked as the current page
+  ok   the bar folds "Download" away only at the widths where it has no room beside the rest
+  ok   the bars never draw their links over the brand: it does not shrink, and the links that do not fit fold away
+  ok   a Download button on the home page's hero and on the cat's page, and the cat's install section points to it
+  ok   every install path leads with the Downloads page; building from the source comes second, and no page says "the extension you built"
+  ok   the agency's, the floor's and the downloads page's footers link the downloads page
+  ok   every local link, asset and #fragment resolves inside site/  — all resolve
+  ok   external links only to the repository, the domain and Google Fonts; never a github.io address  — catintelligenceagency.com, fonts.googleapis.com, fonts.gstatic.com, github.com
+  ok   the site is served on the domain (CNAME)
+  ok   the kit's icons and the pixel CoinMarketCat are there
+  ok   the cat's page and the console show the pixel CoinMarketCat and link back to the agency
+
+THE CONSOLE IS STILL THE BRIDGE
+───────────────────────────────
+  ok   the console's panel script is there
+  ok   it speaks on protocol.mjs's channel (claudeco-hawk)
+  ok   it says hello and connect with protocol.mjs's page types
+  ok   it renders only the status type, from the sender content.mjs stamps
+  ok   it listens to its own window only, and posts to its own origin only
+  ok   it asks the extension for nothing but hello and connect  — hawk:page:hello, hawk:page:connect
+  ok   every element the panel draws into exists  — 12 ids
+  ok   the console lives where the extension looks for it
+
+NO PAGE CAN SIGN, COLLECT OR SEND
+─────────────────────────────────
+  ok   vendor/three holds three@0.169.0's module build, three addons and its licence, unedited  — LICENSE, addons/controls/OrbitControls.js, addons/loaders/GLTFLoader.js, addons/utils/BufferGeometryUtils.js, three.module.min.js
+  ok   the licence is three.js's MIT licence
+  ok   no a signing call anywhere in site/
+  ok   no the wallet provider anywhere in site/
+  ok   no a key word anywhere in site/
+  ok   no a form field anywhere in site/
+  ok   no a network or clipboard call anywhere in site/
+  ok   no storage beyond the theme anywhere in site/
+  ok   no an external script anywhere in site/
+  ok   no a script imported from another host anywhere in site/
+  ok   no a frame anywhere in site/
+  ok   localStorage holds the theme and nothing else  — getItem("cc_theme"), setItem("cc_theme")
+
+THE NUMBERS ARE THE CODE'S
+──────────────────────────
+  ok   the crouch: ten seconds
+  ok   the pounce: still at or above its entry price
+  ok   the take: 1.5x by default
+  ok   the stall: under entry at 90 seconds
+  ok   the clock: 180 seconds
+  ok   the default stop: 20% of entry
+  ok   the break-even at the canary: about 22%
+  ok   the ticket: 0.005 SOL by default, never above 1 SOL
+  ok   the day: 0.01 SOL by default
+  ok   the arm sentence shown is the lane's own, for the default numbers
+  ok   stocks: up to eight, and the five the setup page offers
+  ok   stocks: with none listed, SOL only
+  ok   the pool venue: off until you switch it on
+  ok   who signs: Phantom by default
+  ok   the setup page saves into Observe
+  ok   the passphrase: at least 12 characters
+  ok   the unlock: eight hours by default
+  ok   Phantom windows: a buy abandoned at 25 s, a sell re-asked at 8 s, dropped at 32 s
+  ok   Chrome and Node versions
+  ok   the repository
+
+THE AGENT'S NUMBERS ARE THE CODE'S
+──────────────────────────────────
+  ok   the model is asked every 15, 30 or 60 minutes
+  ok   up to ten tokens
+  ok   cat coins only: the Solana cat coins preset, by symbol
+  ok   settled in USDC by default, or USDT
+  ok   the limits' defaults: $25 a token, 60% in tokens, 8% stop loss, 15% take profit, 5% daily drawdown, 6 trades a day, 100 bps
+  ok   the $10 minimum trade and the $50 minimum vault, fixed
+  ok   paper is the default, from a $100 paper vault
+  ok   the protections check every half minute: the worker's alarm
+  ok   the model is chosen at run time: the newest the key lists, unless the owner picks one
+  ok   SOL itself is not in this version
+  ok   the cat's page says: "It runs while Chrome is open on this computer, not in a clou"
+  ok   the cat's page says: "It is spot only, with no leverage."
+  ok   the cat's page says: "Every model call is billed to your own API key."
+  ok   the cat's page says: "Nothing about this agent's returns has been measured"
+  ok   the cat's page says: "The model cannot change a limit, trade outside your list, or"
+  ok   the cat's page says: "Only you can withdraw"
+  ok   the cat's page says: "Sharing or selling a strategy to other people is not built."
+  ok   the cat's page says: "CoinMarketCat is not affiliated with CoinMarketCap."
+  ok   the agency's pitch says: "CoinMarketCat is not affiliated with CoinMarketCap."
+  ok   the agency's pitch says: "While Chrome is open on your computer, not in a cloud around"
+  ok   the agency's pitch says: "Spot only, with no leverage."
+  ok   the agency's pitch says: "Every model call is billed to your own API key."
+  ok   no page promises round-the-clock trading, leverage on offer, or a figure for returns
+  ok   CoinMarketCat is the agentic trader on its card, its floor station and its page
+  ok   Snipurr is named as the sniper lane on the cat's page and in the agency's pitch
+
+THE RECORD IS RECORD'S
+──────────────────────
+  ok   10 up, 48 down, −1.58 SOL over the first 58
+  ok   entries under three seconds: 0 of 9
+  ok   the ten-minute clock: 0 of 18
+  ok   reached 1.5x: 28 of 64
+  ok   ten seconds and later: 4 of 10, called not a sample
+  ok   read off mainnet on the record's date
+  ok   the console's seconds-late table is RECORD.bySecondsLate, row for row
+
+HONEST, AND CLEAN
+─────────────────
+  ok   the cat's page says: "Launch sniping loses money more often than not."
+  ok   the cat's page says: "The lane this cat learned from has been unprofitable."
+  ok   the cat's page says: "This cat's own live record is unmeasured."
+  ok   the cat's page says: "Run the agent on paper and Snipurr in Observe first. Only fu"
+  ok   the cat's page says: "None of this is evidence of an edge."
+  ok   the cat's page says: "no Autopilot trade, fund or sweep has yet been made on mainn"
+  ok   the cat's page says: "Nothing has been measured yet about stock-paired launches or"
+  ok   the agency calls the track record unmeasured
+  ok   the console keeps its fine print
+  ok   no guarantee on any page
+  ok   no risk-free on any page
+  ok   no passive income on any page
+  ok   no moon talk on any page
+  ok   no a yield on any page
+  ok   no social proof on any page
+  ok   no a user count on any page
+  ok   no a quoted return on any page
+  ok   agency: a meme and software project, affiliated with no government agency, CoinMarketCap or any real cat's owners
+  ok   agency: $CIA has no intrinsic value, and nothing is financial advice
+  ok   floor: a meme and software project, affiliated with no government agency, CoinMarketCap or any real cat's owners
+  ok   floor: $CIA has no intrinsic value, and nothing is financial advice
+  ok   cat: a meme and software project, affiliated with no government agency, CoinMarketCap or any real cat's owners
+  ok   cat: $CIA has no intrinsic value, and nothing is financial advice
+  ok   console: a meme and software project, affiliated with no government agency, CoinMarketCap or any real cat's owners
+  ok   console: $CIA has no intrinsic value, and nothing is financial advice
+  ok   downloads: a meme and software project, affiliated with no government agency, CoinMarketCap or any real cat's owners
+  ok   downloads: $CIA has no intrinsic value, and nothing is financial advice
+  ok   no .gov address and no CoinMarketCap domain anywhere in site/
+  ok   the initials appear only as the ticker, $CIA
+  ok   no seal, eagle, badge, shield or emblem in any image description or image file name  — 105 descriptions
+  ok   CoinMarketCap is named only to say there is no affiliation  — 12 mentions
+  ok   Agent 001 is CoinMarketCat, field status active
+
+THE SEVEN CATS, AND THE PLACEHOLDERS
+────────────────────────────────────
+  ok   seven agent cards, one per cat  — director, coinmarketcat, crying-cat, grumpy-cat, cashcat, popcat, snipurr
+  ok   The Director: its pixel kitten, codename, beat, catchphrase, bio, status and accent
+  ok   CoinMarketCat: its pixel kitten, codename, beat, catchphrase, bio, status and accent
+  ok   Crying Cat: its pixel kitten, codename, beat, catchphrase, bio, status and accent
+  ok   Grumpy Cat: its pixel kitten, codename, beat, catchphrase, bio, status and accent
+  ok   CashCat: its pixel kitten, codename, beat, catchphrase, bio, status and accent
+  ok   Popcat: its pixel kitten, codename, beat, catchphrase, bio, status and accent
+  ok   Snipurr: its pixel kitten, codename, beat, catchphrase, bio, status and accent
+  ok   Popcat's card says the character is not the $POPCAT memecoin, and $CIA is not related to it
+  ok   CashCat's card: the auto-launcher, cat coins from what is trending, on pump.fun and StonkFun, listed at its desk, off until switched on
+  ok   Popcat's card: every new cat coin on pump.fun it can check, listed with its safety checks at its desk; callouts in the feed; a pick every six hours, posted only by hand; off until switched on
+  ok   the pick's disclosure is the same words on the card, at Popcat's desk, in the house rules, the README and the kit's copy
+  ok   no page says a bot is being built any more
+  ok   Snipurr's card: the sniper lane beside CoinMarketCat in the agency's extension, software, linking to that lane, its desk and the console
+  ok   the headline counts six agents, four of them software: two characters, the extension and its lane, the two bots; the Director is the mascot, not one of the six
+  ok   the hero says the two bots are built and not yet switched on, not that they are being built
+  ok   the house rules carry the owner's rules, the pick's disclosure among them, on the site and in the kit's copy
+  ok   the sample case file is marked a template, with placeholder fields
+  ok   one config: the X link, the contract address and the buy link, and nothing else
+  ok   each config value is empty until it exists, or looks exactly like what it is
+  ok   the home page reads the config before its script, and ships every placeholder empty
+  ok   the contract-address slot says where the real one will be
+  ok   no page shows anything shaped like a contract address
+
+THE 3D AGENCY IS SELF-HOSTED AND LIGHT
+──────────────────────────────────────
+  ok   the import map points three and its addons at site/, not at a CDN
+  ok   every module the scene imports is in site/  — three, three/addons/loaders/GLTFLoader.js, three/addons/controls/OrbitControls.js
+  ok   every module the addons import is in site/  — three, ../utils/BufferGeometryUtils.js, three
+  ok   every file the scene loads exists: the model, the floor tile and the seven sprites  — assets/floor-tile-256.png, assets/agency-hq.glb
+  ok   seven kittens stand on the plaza, in the roster picture's order, with the Director in the middle  — popcat, crying-cat, grumpy-cat, director, cashcat, snipurr, coinmarketcat
+  ok   the model is one self-contained binary glTF 2.0, with no tool names inside
+  ok   the model is loaded after first paint, and the pixel roster picture stands in if the 3D cannot run
+  ok   the scene caps the pixel ratio at 2, sleeps off screen and in a hidden tab, and keeps still for reduced motion
+  ok   the home page weighs under 3.5 MB with everything it can load  — 2.69 MB over 34 files
+  ok   no model names or model identifiers in site/
+
+THE WORK FLOOR
+──────────────
+  ok   the hero links to ./floor/, with a button and the ENTER marker's own link
+  ok   the 3D building opens ./floor/, after a push the reduced-motion setting skips
+  ok   a kitten wins the click: the building is asked only when no kitten was hit
+  ok   every agent card on the home page has a way to its desk
+  ok   seven station hotspots, one per cat, in the order the desks read  — director, crying-cat, grumpy-cat, cashcat, popcat, snipurr, coinmarketcat
+  ok   each hotspot is placed in percentages and carries its cat's accent
+  ok   every hotspot sits inside the office picture
+  ok   CoinMarketCat's hotspot, the 7th, is on the new desk in the bottom-left corner  — {"x":4.5,"y":71,"w":25.3,"h":28.3}
+  ok   Snipurr's hotspot is the old CoinMarketCat desk, where the sniper screen is
+  ok   CoinMarketCat's two monitors light inside its hotspot, and light up when its desk is pointed at
+  ok   the floor says seven: seven desks, seven cats
+  ok   hotspots are at least 44 px to tap, and on a phone the floor pans in its frame
+  ok   the ENTER marker's "Go in" (a phone's way in) is at least 44 px to tap
+  ok   the floor's back link sits above the title, so all of it clicks
+  ok   the station list below repeats all seven as buttons, and each is a link target (/floor/#<cat>)
+  ok   The Director's station: its sprite, codename, catchphrase and bio (as on its card), its own screen, and an honest empty state with its template
+  ok   CoinMarketCat's station: its sprite, codename, catchphrase and bio (as on its card), its own screen, and an honest empty state with its template
+  ok   Crying Cat's station: its sprite, codename, catchphrase and bio (as on its card), its own screen, and an honest empty state with its template
+  ok   Grumpy Cat's station: its sprite, codename, catchphrase and bio (as on its card), its own screen, and an honest empty state with its template
+  ok   CashCat's station: its sprite, codename, catchphrase and bio (as on its card), its own screen, and an honest empty state with its template
+  ok   Popcat's station: its sprite, codename, catchphrase and bio (as on its card), its own screen, and an honest empty state with its template
+  ok   Snipurr's station: its sprite, codename, catchphrase and bio (as on its card), its own screen, and an honest empty state with its template
+  ok   CoinMarketCat's station links to its page and the console; the Director's holds the announcements
+  ok   Snipurr's station: software in the agency's extension, beside CoinMarketCat, the old sniper screen, and links to its lane on CoinMarketCat's page and to the console
+  ok   CoinMarketCat's station shows the agent console, the hoodie tabby, and the disclaimer
+  ok   the floor has a "Latest from the floor" feed, with the same empty state
+  ok   cases.json parses and is { "cases": [...] } and nothing else
+  ok   cases.json holds 0 cases: nothing invented, nothing posted yet  — 0 in the file
+  ok   every entry in cases.json passes the validator
+  ok   the validator knows the seven agents, each with the verdicts of its case template, Snipurr's field reports as SNP
+  ok   CashCat and Popcat post no cases: their launches and callouts are their own files, and a case filed under either is refused
+  ok   the floor knows Snipurr: its case prefix, its sprite's size and its field reports
+  ok   the validator keeps well-formed entries, newest first  — CRY-014, CRY-001
+  ok   it rejects an unknown agent
+  ok   it rejects a date that is not a real YYYY-MM-DD day
+  ok   it rejects a javascript: or data: link, in evidence or as the X post
+  ok   it rejects HTML in a title or a summary
+  ok   it rejects a verdict the agent does not give, a case with no evidence, a misspelt field, a wrong prefix and a repeated id
+  ok   a bad file is empty, not an error
+  ok   evidence becomes explorer links: a signature on Solscan's tx page, an address on its account page, a URL as given
+  ok   the floor page loads config.js, then floor.js as a module
+  ok   floor.js validates with cases.js and reads cases.json only through cases-data.js, catching a failure
+  ok   the floor's scripts write text only: no innerHTML, outerHTML, insertAdjacentHTML, document.write or eval
+  ok   evidence and X links open with noopener
+  ok   a malformed link (/floor/#%E0) opens nothing instead of throwing, and a late close never empties a reopened station
+  ok   with reduced motion the floor holds still: no tilt, no tour, no tears or sweep
+  ok   site/assets/floor/ holds web-sized copies of brand/floor/ and nothing else  — case-board-800.webp, case-file-112.png, enter-portal-192.png, radar-sweep-400.webp, screen-cashcat-800.webp, screen-coinmarketcat-800.webp, screen-crying-cat-800.webp, screen-director-800.webp, screen-grumpy-cat-800.webp, screen-popcat-800.webp, screen-snipurr-800.webp, tear-strip.png, workfloor-1600.webp, workfloor-2688.webp
+  ok   every picture the floor shows is the kit's: the office and its screens, the seven sprites, the icons, the floor tile  — 23 pictures
+  ok   no drawn stand-ins: no SVG or canvas on the floor page or in its scripts
+  ok   the floor's link preview is 1200 × 630, cropped from the work floor
+  ok   the floor page weighs under 2.5 MB with everything it can load  — 1.84 MB over 39 files
+
+THE BOTS' DESKS
+───────────────
+  ok   the bots' files are read as JSON modules, each through a loader of its own, never fetched
+  ok   they are checked by the deploy's own validators; callouts only against CashCat's launches, and not at all without them
+  ok   the files on the site load the page's way and pass with no warning  — 0 launches, 0 callouts
+  ok   a bot's status reads "Bot · no launches yet" until one is on file, then counts; Popcat's counts its callouts and its spotted coins apart
+  ok   the home page's two bot cards and their stations carry that status, filled from the same files
+  ok   CashCat's desk shows its launches and Popcat's every coin it checked, every other desk its cases; the feed the cases, launches and callouts, newest first, never a spotted coin
+  ok   Popcat's pick sits on top of the feed and of its desk, which has a slot for it, hidden until there is one
+  ok   a spotted coin says "Spotted", never "Callout", and names each red flag; only a coin with none is called a callout
+  ok   the pick's draft is text to select and copy by hand: one click selects it all, and the page never writes to the clipboard
+  ok   no coin's picture is ever drawn: the only pictures the floor's script sets are the case-file icon and the cats' own sprites  — "../assets/floor/case-file-112.png", `../assets/sprites/${cat}.png`
+  ok   a launch and a callout link only to Solscan, pump.fun and StonkFun  — www.stonkfun.xyz, solscan.io, pump.fun
+  ok   a callout carrying the coin's picture or its links is refused, and so is one on a coin CashCat launched
+  ok   CashCat: two launches a day by default, never more than six
+  ok   CashCat: no dev buy by default, never more than 0.05 SOL
+  ok   CashCat: every coin says a bot of the agency launched it, unaffiliated with its trend, not financial advice
+  ok   Popcat: coins from 15 minutes to a day old
+  ok   Popcat: about every fifteen minutes
+  ok   Popcat: a pick every six hours, from the callouts checked in the six hours before
+
+THE SEVEN-CAT KIT
+─────────────────
+  ok   brand/sprites/coinmarketcat.png: the kit's file, 175 × 209  — 1e6342be
+  ok   brand/sprites/snipurr.png: the kit's file, 146 × 207  — 4e29deea
+  ok   brand/agents/coinmarketcat-1024.png: the kit's file, 1024 × 1024  — 8b39e84e
+  ok   brand/agents/coinmarketcat-avatar-400.png: the kit's file, 400 × 400  — 4fcdf4a0
+  ok   brand/agents/snipurr-1024.png: the kit's file, 1024 × 1024  — eeb7486f
+  ok   brand/agents/snipurr-avatar-400.png: the kit's file, 400 × 400  — d91a259f
+  ok   brand/floor/workfloor.png: the kit's file, 2688 × 1520  — 8aef43df
+  ok   brand/floor/screen-cashcat.png: the kit's file, 1168 × 880  — f08daff3
+  ok   brand/floor/screen-coinmarketcat.png: the kit's file, 1168 × 880  — 7062354d
+  ok   brand/floor/screen-snipurr.png: the kit's file, 1168 × 880  — 37b93ddc
+  ok   brand/source/pixel-roster-2688x1152.png: the kit's file, 2688 × 1152  — 8c4058b0
+  ok   brand/source/pixel-coinmarketcat-alt-1024.png: the kit's file, 1024 × 1024  — 29cf77da
+  ok   icons/coinmarketcat-32.png: the kit's file, 32 × 32  — 65f329ec
+  ok   icons/coinmarketcat-128.png: the kit's file, 128 × 128  — 3ed3f310
+  ok   icons/coinmarketcat-512.png: the kit's file, 512 × 512  — d5553c98
+  ok   the site's link preview and hero pictures are the kit's banners, byte for byte
+  ok   the site's CoinMarketCat icons are the kit's, byte for byte
+  ok   every sprite on the site is its kit sprite at the kit's size
+  ok   the cards and stations draw each sprite at its own size, and CoinMarketCat in its hoodie
+  ok   no picture of CoinMarketCat is described with its old look (mint, scope, crosshair, sniper)  — CoinMarketCat: an orange tabby kitten in a purple hoodie, waving, holding a phone with a green chart | CoinMarketCat: an orange tabby kitten in a purple hoodie, waving, holding a phone with a green chart
+  ok   Snipurr's pictures are described as the mint-green kitten with the scope
+  ok   every link preview says seven kittens, and names CoinMarketCat's hoodie
+  ok   the console is CoinMarketCat's, with Snipurr as its sniper lane: no page calls CoinMarketCat the sniper cat
+  ok   the kit's words list seven cats: the README's agents table, the brand index and the copy's dossiers
+  ok   the brand index credits Higgsfield and names no image or 3D model
+
+THE DOWNLOADS
+─────────────
+  ok   downloads-data.js sets window.CIA_DOWNLOADS: built, commit, both versions, the extension's name, and each zip's name, bytes and SHA-256, nothing else  — built,commit,extensionName,files{cats{bytes,name,sha256},extension{bytes,name,sha256}},version{manifest,package}
+  ok   it is data only: one assignment to window.CIA_DOWNLOADS, no call, no network, no markup
+  ok   committed, it is the placeholder, byte for byte: every number says "built at deploy"
+  ok   the downloads page loads its data, then fills the numbers in as text, and says "built at deploy" until then
+  ok   the big button: "Download the Cat Intelligence Agency extension", the zip, beside its version, size and SHA-256
+  ok   "Listed as" is the merged extension's name before the deploy fills it in, and the deploy's name after
+  ok   what's inside: one line per cat, with its sprite: CoinMarketCat, Snipurr, Popcat, CashCat and Crying Cat  — CoinMarketCat, Snipurr, Popcat, CashCat, Crying Cat
+  ok   the install guide: six plain numbered steps, for Chrome, Brave and Edge  — Download the zip. | Unzip it. | Open chrome://extensions . | Turn on Developer mode. | Click Load unpacked and choose the unzipped folder. | Pin the extension.
+  ok   how to update (the same folder, then reload; the settings stay because the ID comes from the folder's path) and how to remove (it deletes what it stored: withdraw first)
+  ok   safety: it starts on paper (the agent on a paper vault, Snipurr off)
+  ok   safety: the keys stay in the browser, each sent only to its own service; check the SHA-256, with the command for each system
+  ok   what's inside says what each tab of the merged extension does and needs: the RPC the new tabs read, CashCat's one signer, auto mode off until armed  —  CoinMarketCat AI trading Write a strategy in plain English: a model proposes each trade, with your own Anthropic key, a
+  ok   safety: CashCat signs with the autopilot wallet only, never Phantom, after a check and a simulation; auto mode is off until armed; bring your own RPC; the Pinata key goes only to Pinata
+  ok   the Chrome Web Store: "not yet", and no page claims or links a store listing
+  ok   the cats pack: "Download all seven cats", the seven in a row, its size and SHA-256
+  ok   every picture on the downloads page is the kit's: the cats' sprites and the favicon  — ../assets/favicon-64.png, ../assets/sprites/crying-cat.png, ../assets/sprites/cashcat.png, ../assets/sprites/coinmarketcat.png, ../assets/sprites/snipurr.png, ../assets/sprites/popcat.png, ../assets/sprites/director.png, ../assets/sprites/grumpy-cat.png
+  ok   its sprites are drawn at half or three quarters of their own size, pixelated
+  ok   the downloads page weighs under 1 MB with everything it loads (the zips are what you click for)  — 445 KB over 15 files
+  ok   the zips are never committed: .gitignore keeps site/downloads/*.zip out
+
+345 passed, 0 failed
+

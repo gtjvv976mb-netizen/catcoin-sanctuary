@@ -1,0 +1,284 @@
+{
+ "disclosureOnly_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclosureOnly_checkTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "USO",
+    "field": "description"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Nightgloss the Jet-Black Cat",
+   "ticker": "NIGHTGLOSS",
+   "nameLen": 28,
+   "blurbLen": 122,
+   "descLen": 277,
+   "endsWithDisc": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTickerClash": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Nightgloss, a sleek jet-black shorthair ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Oil",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "sample": []
+   },
+   "description": "Nightgloss, a sleek jet-black shorthair with a faint rainbow sheen in the sun and gold eyes, naps on the warm pond stones. A cat coin priced in USO. Not affiliated with United States Oil Fund, LP, USCF, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Amberdrop the Tortie Cat",
+   "ticker": "AMBERDROP",
+   "nameLen": 24,
+   "blurbLen": 118,
+   "descLen": 273,
+   "endsWithDisc": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTickerClash": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Amberdrop, a glossy black tortoiseshell ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber tones",
+      "field": "look"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Crude",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "sample": []
+   },
+   "description": "Amberdrop, a glossy black tortoiseshell with warm honey-gold patches and green-gold eyes, dozes in the sunny herb bed. A cat coin priced in USO. Not affiliated with United States Oil Fund, LP, USCF, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Swirl the Umber Tabby Cat",
+   "ticker": "UMBERSWIRL",
+   "nameLen": 25,
+   "blurbLen": 117,
+   "descLen": 272,
+   "endsWithDisc": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTickerClash": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Swirl, a dark umber-brown tabby with bol",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Crude",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "sample": []
+   },
+   "description": "Swirl, a dark umber-brown tabby with bold black swirl marks and copper eyes, pads slowly along the mossy garden path. A cat coin priced in USO. Not affiliated with United States Oil Fund, LP, USCF, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "rootProbe": {
+  "AMBER": [],
+  "NIGHTGLOS": [],
+  "UMBER": []
+ },
+ "mint": {
+  "slot": 450447316,
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "mintAuthority": "9QcovrmyR7yb988nznuHDEJQvRFvtcjPaNEJjg8htmru",
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "decimals": 6,
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": null,
+  "permanentDelegate": {
+   "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+  },
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "transferHook": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "programId": null
+  }
+ },
+ "mintJup": [
+  {
+   "symbol": "USO",
+   "name": "United States Oil Fund, LP - Backpack Securities",
+   "isVerified": true,
+   "tags": [
+    "verified",
+    "token-2022"
+   ],
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+  }
+ ]
+}

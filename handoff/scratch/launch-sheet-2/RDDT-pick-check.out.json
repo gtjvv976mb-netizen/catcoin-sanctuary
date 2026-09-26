@@ -1,0 +1,328 @@
+{
+ "disclaimer": "A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "disclaimerLen": 135,
+ "checkFields_disclaimerOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "reddit",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Hubbub the Stubby Tabby Cat",
+   "ticker": "HUBBUB",
+   "nameLen": 27,
+   "blurbLen": 131,
+   "descLen": 267,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "wellKnownCatMemeTicker": false,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hubbub, a short-legged brown tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_descriptionWithoutDisclaimer": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 7,
+    "symbolMatches": [],
+    "sample": [
+     "CULT | ChillguyUnstableLabubuTroll | v=undefined | h=3",
+     "HYPE | ChillTungLabubu67Dubai | v=undefined | h=1",
+     "GLXY | 2HehXG149TXuVptQhbiWAWDjbbuCsXSAtLTB5wc2aajK | v=undefined | h=5",
+     "GLXY | 2HehXG149TXuVptQhbiWAWDjbbuCsXSAtLTB5wc2aajK | v=undefined | h=31",
+     "GLXY | 2HehXG149TXuVptQhbiWAWDjbbuCsXSAtLTB5wc2aajK | v=undefined | h=6",
+     "GLXY | 2HehXG149TXuVptQhbiWAWDjbbuCsXSAtLTB5wc2aajK | v=undefined | h=15",
+     "GLXY | 2HehXG149TXuVptQhbiWAWDjbbuCsXSAtLTB5wc2aajK | v=undefined | h=69"
+    ],
+    "verifiedMatch": false
+   },
+   "description": "Hubbub, a short-legged brown tabby with a cream bib and white toe tips, trots between the garden benches to hear every lively chat. A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Socklet the Short-Legged Cat",
+   "ticker": "SOCKLET",
+   "nameLen": 28,
+   "blurbLen": 136,
+   "descLen": 272,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "wellKnownCatMemeTicker": false,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Socklet, a round, stubby-legged brown ta",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_descriptionWithoutDisclaimer": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "sample": [
+     "STOCKLET | Stocklet | v=undefined | h=5",
+     "SLTEST | Stock Launcher Test | v=undefined | h=1",
+     "SLTEST | Stock Launcher Test | v=undefined | h=1",
+     "SLTEST | Stock Launcher Test | v=undefined | h=1",
+     "SLTST2 | Stock Launcher Test 2 | v=undefined | h=1",
+     "SLTEST | Stock Launcher Test | v=undefined | h=1",
+     "sottaceto | sottaceto pickletto | v=undefined | h=9",
+     "sottaceto | sottaceto pickletto | v=undefined | h=1",
+     "TSLA | This Stock Loves Attention | v=undefined | h=2",
+     "STOCKL | StockLab Sentinel | v=undefined | h=3",
+     "PVE | NOT STOCKSLOP RETURN TO MEMES | v=undefined | h=1",
+     "PVE | NOT STOCKSLOP RETURN TO MEMES | v=undefined | h=1",
+     "WST.BP | Stocklana wall struet | v=undefined | h=1",
+     "STOCKLAYER | StockLayer Protocol | v=undefined | h=1",
+     "PORN | Profits Over Reckless Nut | v=undefined | h=undefined",
+     "WARLOCK | Justice for Warlock Left To Die | v=undefined | h=2",
+     "NIKLon | Sprott Nickel Miners ETF (Ondo Tokenized) | v=true | h=3",
+     "Harvey | Justice for Harvey Mucklebust | v=undefined | h=20",
+     "Harvey | Justice for Harvey Mucklebust | v=undefined | h=5",
+     "Harvey | Justice for Harvey Mucklebust | v=undefined | h=1"
+    ],
+    "verifiedMatch": false
+   },
+   "description": "Socklet, a round, stubby-legged brown tabby with a pale chin and four white-tipped toes, pads along the garden path in tiny, busy steps. A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Natter the Low-Slung Tabby Cat",
+   "ticker": "NATTER",
+   "nameLen": 30,
+   "blurbLen": 141,
+   "descLen": 277,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "wellKnownCatMemeTicker": false,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Natter, a plump brown tabby on short leg",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_descriptionWithoutDisclaimer": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "sample": [
+     "NattyMilkers | Big Naturals | v=undefined | h=3",
+     "NAT TURNER | NEW GME DIRECTOR | v=undefined | h=34",
+     "NEO | Neo Cat Terminal | v=undefined | h=1",
+     "BONK | Big Ol’ Natty Knockers | v=undefined | h=1",
+     "BONK | Big Ol’ Natty Knockers | v=undefined | h=1",
+     "35M | One Attempt Remaining | v=undefined | h=33",
+     "OAR | One Attempt Remaining | v=undefined | h=3",
+     "NATE | Nate the Great Token | v=undefined | h=3",
+     "Clippy | Kevan Atteberry | v=undefined | h=3",
+     "Clippy | Kevan Atteberry | v=undefined | h=14",
+     "Clippy | Kevan Atteberry | v=undefined | h=1",
+     "its ov4uuu | JAMES WYNN NOMATTER WHAT? | v=undefined | h=1",
+     "Attenborough | The Nietzschean Attenborough | v=undefined | h=10",
+     "Attenboroughn | The Nietzschean Attenborough | v=undefined | h=1",
+     "Attenboroughn | The Nietzschean Attenboroughn | v=undefined | h=1",
+     "Attenborough | The Nietzschean Attenborough | v=undefined | h=1",
+     "Attenborough | The Nietzschean Attenboroughn | v=undefined | h=1",
+     "Attenboroughn | The Nietzschean Attenboroughn | v=undefined | h=8",
+     "Attenborou | The Nietzschean Attenborough | v=undefined | h=2",
+     "Atten | The Nietzschean Attenboroughn | v=undefined | h=3"
+    ],
+    "verifiedMatch": false
+   },
+   "description": "Natter, a plump brown tabby on short legs with a cream bib and olive eyes, naps by the garden notice board where all the chatter gets pinned. A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

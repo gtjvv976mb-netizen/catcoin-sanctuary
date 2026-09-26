@@ -1,0 +1,181 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Knitcap the Black Cat",
+   "ticker": "KNITCAP",
+   "nameLen": 21,
+   "blurbLen": 147,
+   "descLen": 281,
+   "tickerHasBrosRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Knitcap, a scruffy black cat with bright",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 3,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Knitcap, a scruffy black cat with bright yellow eyes and a pink nose, wears a rust-orange knit beanie and grins at the first frosty autumn morning. A cat coin priced in BROS. Not affiliated with Dutch Bros, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Bristle the Yellow-Eyed Cat",
+   "ticker": "BRISTLE",
+   "nameLen": 27,
+   "blurbLen": 137,
+   "descLen": 271,
+   "tickerHasBrosRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Bristle, a shaggy black cat with round y",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "Bristle",
+     "name": "Bristle",
+     "id": "2U7LbcCZWZJDbgnXDGu2DH9zJkXqjthNzNcdh5Dupump"
+    },
+    {
+     "symbol": "Bristle",
+     "name": "Bristle",
+     "id": "8mXaqUEwDkJLiaXLerMqKtfPBiYjWYohKX3Szr5qpump"
+    },
+    {
+     "symbol": "Bristle",
+     "name": "bristle worms.",
+     "id": "85ydX72rfzbw9ARBiQVTSrPj2qBQJ4uU56NodujFpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Bristle, a shaggy black cat with round yellow eyes, puffs her tail up to twice its size whenever the autumn wind rattles the garden gate. A cat coin priced in BROS. Not affiliated with Dutch Bros, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Nightfuzz the Beanie Cat",
+   "ticker": "NIGHTFUZZ",
+   "nameLen": 24,
+   "blurbLen": 142,
+   "descLen": 276,
+   "tickerHasBrosRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Nightfuzz, a fluffy black cat with golde",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Nightfuzz, a fluffy black cat with golden-yellow eyes and a toothy grin, tugs an orange knit cap over one ear and waits on the fence for dawn. A cat coin priced in BROS. Not affiliated with Dutch Bros, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

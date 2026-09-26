@@ -1,0 +1,10 @@
+import fs from "node:fs";
+import { detectCat } from "/home/user/Cat-Intelligence-Agency/bots/lib/catdetect.mjs";
+const V = JSON.parse(fs.readFileSync(new URL("./verified.json", import.meta.url)));
+const ch = new Map(JSON.parse(fs.readFileSync(new URL("./chainread.json", import.meta.url))).rows.map(r => [r.mint, r]));
+const cats = V.filter(t => detectCat({ name: t.name, symbol: t.symbol }).isCat);
+const vol = t => t.stats24h ? (t.stats24h.buyVolume ?? 0) + (t.stats24h.sellVolume ?? 0) : null;
+const f = cats.filter(t => (t.liquidity ?? 0) >= 25e3 && (vol(t) ?? 0) >= 1e3);
+console.log("chain-refused among default floors:", f.filter(t => ch.get(t.id)?.why).map(t => `${t.symbol}(${ch.get(t.id).why.split(":")[0]}${ch.get(t.id).why.includes("TransferFee")?" TransferFeeConfig":""}, vol ${Math.round(vol(t))})`).join("; "));
+console.log("board at defaults:", f.filter(t => !ch.get(t.id)?.why).map(t => t.symbol).join(", "));
+console.log("liq>=25k any vol:", cats.filter(t => (t.liquidity ?? 0) >= 25e3).length, " liq>=10k:", cats.filter(t => (t.liquidity ?? 0) >= 1e4).length);

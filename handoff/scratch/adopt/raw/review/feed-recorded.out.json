@@ -1,0 +1,3536 @@
+{
+ "probedAt": "2026-09-25T19:27:40.606Z",
+ "rules": [
+  {
+   "stock": "SPYx",
+   "rule": "QYZp1YzqEHU67ngXphF9LAkxkxWGvpWEv3rXh4yDbWA"
+  },
+  {
+   "stock": "NVDAx",
+   "rule": "9MHtkhfnaBGgUPxThD67t1GYbYY7urggGvsat3AXWe9g"
+  },
+  {
+   "stock": "TSLAx",
+   "rule": "AcKayBxwULBxcRvoRXD9JUqvxhNJCGxcRsiYbcUaN6KT"
+  },
+  {
+   "stock": "MU",
+   "rule": "6u8nALk3LNcoAuY3A5WjscmDXR16a23y5sh7SZXwADVQ"
+  },
+  {
+   "stock": "ANTHROPIC",
+   "rule": "Aew2FoY9UPjKGgkuDrDMb238fH2pU8XuZRHmXwuRsiQB"
+  },
+  {
+   "stock": "OPENAI",
+   "rule": "748EQqmnx8dLUi3xVESBPq2Ksi1DtQntQvtcF8dBw1SB"
+  }
+ ],
+ "pnTxIndex": [
+  {
+   "slot": 450442888,
+   "transactionIndex": 710,
+   "keys": [
+    "blockTime",
+    "confirmationStatus",
+    "err",
+    "memo",
+    "signature",
+    "slot",
+    "transactionIndex"
+   ]
+  },
+  {
+   "slot": 450434928,
+   "transactionIndex": 200,
+   "keys": [
+    "blockTime",
+    "confirmationStatus",
+    "err",
+    "memo",
+    "signature",
+    "slot",
+    "transactionIndex"
+   ]
+  },
+  {
+   "slot": 450433405,
+   "transactionIndex": 245,
+   "keys": [
+    "blockTime",
+    "confirmationStatus",
+    "err",
+    "memo",
+    "signature",
+    "slot",
+    "transactionIndex"
+   ]
+  },
+  {
+   "slot": 450432460,
+   "transactionIndex": 297,
+   "keys": [
+    "blockTime",
+    "confirmationStatus",
+    "err",
+    "memo",
+    "signature",
+    "slot",
+    "transactionIndex"
+   ]
+  },
+  {
+   "slot": 450416570,
+   "transactionIndex": 721,
+   "keys": [
+    "blockTime",
+    "confirmationStatus",
+    "err",
+    "memo",
+    "signature",
+    "slot",
+    "transactionIndex"
+   ]
+  }
+ ],
+ "launches": [
+  {
+   "stock": "SPYx",
+   "sig": "5GaNfKJsCkgYWcKzebVy8QPHaTQpceqXXXfE5APm2QwKTzjon8mzxdLM9RCvZedbm5B8yVNDih77hm1kup8iu4kB",
+   "slot": 450442888,
+   "blockTime": 1790363495,
+   "version": "legacy",
+   "feePayer": "CCpnnezacUQPVyRB7DjQyxpzGfcsi3gAK3BK7CA7Hjy1",
+   "creator": "3yd324X3TtD1FrV3NNNJEz2TgaXjHyiX8mWQuYmJf1BY",
+   "mint": "4sochhyErQuEZicEFRAPWTceRyd1gxpk8VkEnZq9sb3Q",
+   "pool": "5UjDga88Gp7eLHp7JYy1bg2kZXuRMYKvcBqqbMPdSBkq",
+   "payerIsCreator": false,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3gJqkocMWaMm"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T19:12:36.698Z",
+    "tokenCreatedAt": "2026-09-25T19:18:02.279Z",
+    "links": {},
+    "imageUrl": "https://usebasket.fun/api/image/4sochhyErQuEZicEFRAPWTceRyd1gxpk8VkEnZq9sb3Q",
+    "launchLagSec": 62
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "62PxtzsFXfr5VHaNnBrEcwtbytG9hoqJ7osEKs1mzJLMaqTSxFWTLGcA8n8dXJZxr59EmKJdAeZkUwaVpKeoZJq",
+   "slot": 450434928,
+   "blockTime": 1790361360,
+   "version": "legacy",
+   "feePayer": "5QenjQdJoqQPQKW6AGoqP8SnYVYa9c5aSPNsfueRnqse",
+   "creator": "5QenjQdJoqQPQKW6AGoqP8SnYVYa9c5aSPNsfueRnqse",
+   "mint": "EgziT4FkjAVRT6kUryimPUT1Bh3Gq5foPtJBBZ4ASXKq",
+   "pool": "xCHXPc77Rdsx1naatYKs1zr5EazWBxvxnXCjJkyzdp7",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T18:36:02.366Z",
+    "tokenCreatedAt": "2026-09-25T18:43:24.438Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/9QFuffBbPyG8hXnw4sSnXBHEfddranBCLYr9sxmjo1Kh",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "5DWD4AUDEpMu2KKGs5wt5z2doyizowUP4E2153ZtcNSxb2HyNbSgr771PCuub5CJUMc4rZ5xcxvKthViNK9hHWXc",
+   "slot": 450433405,
+   "blockTime": 1790360950,
+   "version": 1,
+   "feePayer": "DktuPmKadhPCKi8YFpz7JWxe2f13DjkyzeSFeBY1KBFK",
+   "creator": "DktuPmKadhPCKi8YFpz7JWxe2f13DjkyzeSFeBY1KBFK",
+   "mint": "BHsKZcDBDqVhh5YdwLsBUsqfVuZ7yN9ukWUV6z9jBE1e",
+   "pool": "9ohHHGjmvZEm4Xi7ko9ko9RcxDCMm3d9u1kowsLen6na",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "Trade"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "J7pourVwqP1VtRNBiFNqbdGxwkx7ta2LHAURURRRJqmd",
+    "11111111111111111111111111111111",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T18:30:39.145Z",
+    "tokenCreatedAt": "2026-09-25T18:34:01.143Z",
+    "links": {},
+    "imageUrl": "https://axiomtrading-v2.axiom-cdn.io/9x5QwyT4CNPkdFwU7Xrc7Vmv58pQuGwEuUdDZyAw6EAo.webp",
+    "launchLagSec": 89
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "3ATjTqvupASjYS2d4z9zkUpxhw8oGB9zzSWfteS3Db5EQVi3bEPJnEmCcGvrt67Rizy8amwdfw3yfBuSY8a9Carr",
+   "slot": 450432460,
+   "blockTime": 1790360696,
+   "version": "legacy",
+   "feePayer": "GNTQdPiJVRYmufpPaRhtNv6nutjMgZCrCURARjjRX4Li",
+   "creator": "GNTQdPiJVRYmufpPaRhtNv6nutjMgZCrCURARjjRX4Li",
+   "mint": "ESLqTZerq1DM6a8Yak1SXRcRiSXtJVgPmCP9mGrQomDj",
+   "pool": "7vY4HB1QWWiJ8CED1hfFdQNos9xw6iUFkyEyewX9QHcx",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T18:24:57.510Z",
+    "tokenCreatedAt": "2026-09-25T18:34:01.143Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/",
+     "twitter": "https://x.com/ReddCinema/status/2103183711562850384?s=20"
+    },
+    "imageUrl": "https://gateway.irys.xyz/BApfZbx65andZURVKC8UtSN782iBHfeiv13qcbN7uM4Z",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "EkKE99vAVRNXwTYiEccAqiC4ShCoCGCfPFBjGgzBCRd3nv75E2VU3JiPM9yQd9YyBgsxFSDqXKxE85HRqJF8AUD",
+   "slot": 450416570,
+   "blockTime": 1790356418,
+   "version": "legacy",
+   "feePayer": "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+   "creator": "BiMdpDwreF375JgGn2JkFKLtg9ycj5LxC1MknXrBim3D",
+   "mint": "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5",
+   "pool": "5J2KdXmhTsZYWp4873CpnMetZogdpUsK13ia73rwZQ2G",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T17:13:39.295Z",
+    "tokenCreatedAt": "2026-09-25T17:18:02.764Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/5tAWGuYPiRkcn6HgfSyx9kMY9nhkR4KVMHkaHibHY5dP",
+    "launchLagSec": 1
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "5ofZVjNcABYStWDFyLSRegUKFLXVkdE2fV2qT9U6PFUpvf8jezu3AiVgyeNNiMm9v5ZBonY5Fm83oqZzFc8XNtt3",
+   "slot": 450415324,
+   "blockTime": 1790356087,
+   "version": 1,
+   "feePayer": "88hq1JDjDpqmxqLJKyqHYJ4P9ZU69cz8CspDNWxEXCTq",
+   "creator": "88hq1JDjDpqmxqLJKyqHYJ4P9ZU69cz8CspDNWxEXCTq",
+   "mint": "GfqvCLGa3wTQ3h4bFZA1jc9yLB3FiMDGkUZJoF4DpBR2",
+   "pool": "AyBNFjkpXGjdKQh6LziGvPFeyYVCp8NNvkcajVBYVX7z",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 10000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T17:08:38.415Z",
+    "tokenCreatedAt": "2026-09-25T17:11:22.967Z",
+    "links": {},
+    "launchLagSec": 31
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "3gytEWUg5K4mEBmP1UPabDuJXs5pWvCAvY7VECswCcixUkhGNH3fS4cxAWaAoSRbAbJPSBwarXKrdzXZvtFuKwVB",
+   "slot": 450402512,
+   "blockTime": 1790352650,
+   "version": 1,
+   "feePayer": "GtFafmuooTwmjWtAYjp1fBYm2ucu9FWcuP2YCTCZaLX1",
+   "creator": "GtFafmuooTwmjWtAYjp1fBYm2ucu9FWcuP2YCTCZaLX1",
+   "mint": "6zkTmsHspmuCbNgrMXTpCrxBv7xsfUBCVGxztbgDSTNK",
+   "pool": "GT12EexysmrPzhe4fnkFTMgPe1QXKDHngSCzD6nwZT6Z",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SwapV2",
+    "SwapV2",
+    "TransferChecked",
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3"
+   ],
+   "topPrograms": [
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T16:12:34.691Z",
+    "tokenCreatedAt": "2026-09-25T16:14:19.629Z",
+    "links": {},
+    "imageUrl": "https://axiomtrading.sfo3.cdn.digitaloceanspaces.com/2uaenSSQrhYUiLttm74HgkczWMx9yyZLNrx6A6ftpump.webp",
+    "launchLagSec": 105
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "3PBkfyF5rG6cdcqKFSmKKx7u5TdWboXcGa7GokQbWUhY4N1xGmXa69LtXe3wHkcvmVhiwNdj7Mz6WeBL9RZBgAEW",
+   "slot": 450398808,
+   "blockTime": 1790351658,
+   "version": "legacy",
+   "feePayer": "2fhYfCazQBH1SuxaE5cDWDn86YPGwpavWzgLkpPQGEw6",
+   "creator": "2fhYfCazQBH1SuxaE5cDWDn86YPGwpavWzgLkpPQGEw6",
+   "mint": "HtQ5PnXT76WwPEKxxMU59NZtQ2Y38HR52xLQzUfKqCkS",
+   "pool": "GD7xVa1CXqoUdJuFP1QpNPjgeEhwKsw3ayq3MSJzf2vw",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T15:54:19.608Z",
+    "tokenCreatedAt": "2026-09-25T15:56:52.768Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/G6SsMMAY8bBKC9q1oAPswaMkGYkKW9TTyHd2XaqAMavh",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "4Qutq1drfvNMEvMZxDBTmADNRDZheDfJeW6ozWC81gy7dJRzoix3c8EAj1wvbWiyNjjsT2EMKDP2Lt19C2tuvdyf",
+   "slot": 450396946,
+   "blockTime": 1790351162,
+   "version": 1,
+   "feePayer": "3g7hgDGr5HynLbdDcmyX1vVbNh3rNarNcRVtPcpKYxms",
+   "creator": "3g7hgDGr5HynLbdDcmyX1vVbNh3rNarNcRVtPcpKYxms",
+   "mint": "6ACtDF5k3VdY7tnQCUkDTbQKEKtQex39qaJMxgnrr2rF",
+   "pool": "6xrGXf2nycK9Pgri6FGPKbB14NW5AsojNbFT8GPzJurj",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 23717,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T15:47:47.181Z",
+    "tokenCreatedAt": "2026-09-25T15:51:56.795Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreiaerqrzk6mx3ewozzrdhkjfqc2ytw2efg2owuwrfnac7lhaq2sxgq",
+    "launchLagSec": 105
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "2DMx2V9q12Pb6WgfnuFBaecZwiPKXD8V5ynaqBy2CqsYQG5ULtTKRNZ3xZioPrQs66S1AhZarqU1uYSnVd5g2sJK",
+   "slot": 450386791,
+   "blockTime": 1790348434,
+   "version": 1,
+   "feePayer": "EfW3p1h7doDcmyXiqZ8BmwgwCGhT3GvSHRDEXzGGyyfP",
+   "creator": "EfW3p1h7doDcmyXiqZ8BmwgwCGhT3GvSHRDEXzGGyyfP",
+   "mint": "i7TsWbp5Mv7AESePXYmHZpziim686hJGHyko4cHSTNK",
+   "pool": "8Yy9AzY3TLu358nJJxyncusFAjGRrvm1h9ZtTMrSrjq7",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SwapV2",
+    "SwapV2",
+    "TransferChecked",
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3"
+   ],
+   "topPrograms": [
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T15:02:52.014Z",
+    "tokenCreatedAt": "2026-09-25T15:07:00.059Z",
+    "links": {},
+    "imageUrl": "https://edge.uxento.io/image/FqDw83qiUqfxmyk6TBqcMbK1ydLHyYo7L5ERGdSAeZf1",
+    "launchLagSec": 138
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "tmxsZreSe6dCJ8qQDAuBgqER9cqsZhXWSXReb5hofZwYujc1QaQnaqCuVTcqNGkMkGgZCo7zur2mx5rheR2rJMf",
+   "slot": 450373619,
+   "blockTime": 1790344891,
+   "version": "legacy",
+   "feePayer": "CUq2ardTK6QTCir9Z8frsS8gaDp7bVv7gtFzuavMgkUk",
+   "creator": "CUq2ardTK6QTCir9Z8frsS8gaDp7bVv7gtFzuavMgkUk",
+   "mint": "88cdSKXTn1iCD71XYC8iX5zGdjCnyckveXYqPxrLKYjh",
+   "pool": "8fnd8oemvGCL3nP6sKYkMyZGFdJqBSfQHtrmfubdij8Q",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T14:01:35.472Z",
+    "tokenCreatedAt": "2026-09-25T14:06:56.542Z",
+    "links": {
+     "website": "https://www.opengap.xyz/",
+     "twitter": "https://x.com/open_gap"
+    },
+    "imageUrl": "https://gateway.irys.xyz/G2qGDXJz6A4bh1USMVd9S1CaGsASFE3oKXeYpiavoPU5",
+    "launchLagSec": 4
+   }
+  },
+  {
+   "stock": "SPYx",
+   "sig": "2dUQ9b7ADoj7zn7dUsvBM6CXrWQc2RhSGqh1HPLU52egLyEFVvm775f4mmHgJraoT56nAW2Wyp8qCAVxpqf3mxgq",
+   "slot": 450372676,
+   "blockTime": 1790344642,
+   "version": 0,
+   "feePayer": "6Knt2VQ5ZdviQKtpLCaKKhAek2eok19VsY1wbXz4ATjw",
+   "creator": "6Knt2VQ5ZdviQKtpLCaKKhAek2eok19VsY1wbXz4ATjw",
+   "mint": "4HpD47bYsNgLyNm3WCB3QAGdQyhiT3W3mNo2dSrFJdjP",
+   "pool": "GzevrvPz7zMD222VLrEq7bKU5AoouUo1y5MCRvgJ4CX2",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [
+    "HMypLP",
+    "3DTuuPbnyF4B"
+   ],
+   "numSigners": 2,
+   "fee": 1610000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T13:58:53.374Z",
+    "tokenCreatedAt": "2026-09-25T14:01:25.698Z",
+    "links": {},
+    "launchLagSec": 91
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "21Q2PvPVMFyh7m8SxxESEnTNGN3gP5XWLgXtrBNvtjixKSC9rv3BAeagCzpdEof2fYu5fiQLdzXBZKyyrfcvog69",
+   "slot": 450442490,
+   "blockTime": 1790363388,
+   "version": "legacy",
+   "feePayer": "AxriZKGLsjntQkg2gE3tLu6cvRhDiS4umMgwipsQKrD7",
+   "creator": "AxriZKGLsjntQkg2gE3tLu6cvRhDiS4umMgwipsQKrD7",
+   "mint": "6ZZRAPNEUmajpgbf6Bx7zxcqxWuRpPe2XjGWVgZQ1yE7",
+   "pool": "AdSZSpzW1SvjZFGHWLnFT1AYsiGf8FwdFZGudJTWiJ4y",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T19:09:49.958Z",
+    "tokenCreatedAt": "2026-09-25T19:18:02.279Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/",
+     "twitter": "https://x.com/catmcgee/status/2103562010193739862"
+    },
+    "imageUrl": "https://gateway.irys.xyz/ACUcTKa2ZtnZ15JBhtY9bmucoEhktdsmdSejL58t44dk",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "EuJm6XzpxgzWxePxtQWdgkcMPxHXzb1tZUwD7TXD81npPuzZVHAnjtSxcJD16Xtxfk2SGfuFGkS94TcucqaddLx",
+   "slot": 450439341,
+   "blockTime": 1790362543,
+   "version": "legacy",
+   "feePayer": "CMLUoPvuZN8iuzaiwBQnKxZWTq3DCppsFyeymxLxBXDR",
+   "creator": "CMLUoPvuZN8iuzaiwBQnKxZWTq3DCppsFyeymxLxBXDR",
+   "mint": "Gmhjx6v5VXTiQief3Ci5o56cj8wJB7Wy5DvHtFybY9rZ",
+   "pool": "6WGDkjt62VHztMkUnCA5YDy4EvaSB63sN3N7tKzGRbcc",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T18:55:44.962Z",
+    "tokenCreatedAt": "2026-09-25T18:58:46.241Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/GCDGESRVUAJfGyELtUisUzAxgqFQVfNZdotEmk9KQtRB",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "xYauYuJxTw4wViz2ovq9WpFzCn2zR9vMiJhHrtueAbWxNmNFFBEPynwzv2LadRV7Pc4Cgo4brPZNVTwbnLEbrJ5",
+   "slot": 450439142,
+   "blockTime": 1790362490,
+   "version": "legacy",
+   "feePayer": "G6zPRD1S5cj4BoqYypn2UgneHs1bdW9W964TrBokeSzq",
+   "creator": "G6zPRD1S5cj4BoqYypn2UgneHs1bdW9W964TrBokeSzq",
+   "mint": "FqZ1CTLYmsGPRFjSmhMJGvUGrco9MyTwGQkZkJe6Bb9n",
+   "pool": "61S4NJjP1CY2b8TWcyfj18mRMHee6hP8bVsx7txfiE6W",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T18:54:51.454Z",
+    "tokenCreatedAt": "2026-09-25T18:56:25.197Z",
+    "links": {
+     "website": "https://futurism.com/health-medicine/nvidia-jensen-huang-children-cognitive-minds-ai-harms"
+    },
+    "imageUrl": "https://gateway.irys.xyz/J63xTaSRPkvUqYc4dvUgnHEG1weQ5k7kEBaDHVXbKc79",
+    "launchLagSec": 1
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "AMwwPWQHbXeMgYD7Rah4vEPBRhUzLT6gF4foynqCnEhbGZnrcE9Li32TrHwdSZvqQ2e7cXHjjPuwjUQ5FkGLLmV",
+   "slot": 450425648,
+   "blockTime": 1790358861,
+   "version": 1,
+   "feePayer": "AXs2y1iBAVq2MCKsipr8vvrEp3de3MFxxGuxvBEhZ2iD",
+   "creator": "AXs2y1iBAVq2MCKsipr8vvrEp3de3MFxxGuxvBEhZ2iD",
+   "mint": "AK2bvykCJBjbexfaMMebJtayi1sFk5jpKAxpRuQo6MMY",
+   "pool": "GHSsQvsCYAYmETWxVFFd1hRSa74a7xBQ1Yu5SzsqyGVN",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "GetAccountDataSize"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "BhXyRawr5GikuipLCCAQw61kKEvjUzTDbNfiTbFaUP9Z",
+    "11111111111111111111111111111111",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T17:54:40.559Z",
+    "tokenCreatedAt": "2026-09-25T17:57:19.012Z",
+    "links": {},
+    "imageUrl": "https://chubby-amethyst-finch.myfilebase.com/ipfs/bafkreibsy73rpbcr5lieiiqm4ivtgv6fdi6mw3k2serrv67eytw6awmlae",
+    "launchLagSec": 20
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "2dnvjQoBjwai4rhBZ4cqyZtM97NGC9Qsu89oP5P8VQJuuZwHB4RVYVkDCh2PKzvWSgzU8BgeXkhuKwFFcn1ND6Zc",
+   "slot": 450421989,
+   "blockTime": 1790357878,
+   "version": "legacy",
+   "feePayer": "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+   "creator": "8a65ZLF2vpARYskcEVZqdhgWuxXUUtYZYroNWs6g4uiV",
+   "mint": "FbDVeqD87Wyp5bBj5nEqGtq5A3LEEwShomPS1nVfZufz",
+   "pool": "5XAQjsPx6nhwjHDirEz9MVFgSj1tEaxEQ2mBjjDBBYxV",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T17:38:00.492Z",
+    "tokenCreatedAt": "2026-09-25T17:39:43.711Z",
+    "links": {
+     "website": "https://www.roxai.space/",
+     "twitter": "https://x.com/RoxAISOL"
+    },
+    "imageUrl": "https://gateway.irys.xyz/5f7kTGYLyhJhEXMniNY291jdYjMRZWhowYVVtyVQx5KM",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "4fmtRgUh8osz8NAkwh77fEPERmzVxCgmXyNBveiDTXPGUk1BSoxqKH8vTP9EcV2BekPJrHMU6EtYckgJmXpVQjTB",
+   "slot": 450420311,
+   "blockTime": 1790357425,
+   "version": "legacy",
+   "feePayer": "C8Z331GUJAeTKymsKEESR52LZdogKJyWRpyaMLstchNr",
+   "creator": "C8Z331GUJAeTKymsKEESR52LZdogKJyWRpyaMLstchNr",
+   "mint": "G1KcVQQGrJZsDQNRE4pyeedS6N8cWb6DaNHmmfCiVvjY",
+   "pool": "9Ek3Ey2sk2ifdVraxXBiABGKcYuts5gkjtSTzS4bYj8F",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T17:30:26.809Z",
+    "tokenCreatedAt": "2026-09-25T17:32:01.996Z",
+    "links": {
+     "website": "https://www.roxai.space/",
+     "twitter": "https://x.com/RoxAISOL"
+    },
+    "imageUrl": "https://gateway.irys.xyz/A8xV2BsvVJfe82bFbtsSLvnFGPMMrn7fcDjEyJBvWZmC",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "2VEEC9LQQVjSFHHL4ko9EeavKpeCju3AsAUQLAoh4HEhbKTN9UfSCVeHe4JDBDey9smhY425VzJnUHKEeg8XsRBT",
+   "slot": 450417224,
+   "blockTime": 1790356592,
+   "version": 1,
+   "feePayer": "8EyL6mg77x948TWbJLha8fwA6q1NbYvhx6tXTo8FzbZU",
+   "creator": "8EyL6mg77x948TWbJLha8fwA6q1NbYvhx6tXTo8FzbZU",
+   "mint": "2ksZNviwu2pCe3B26bMa6xwY2mmBVkSJu4DUQE58STNK",
+   "pool": "83aEr2bbe8xBaUHyRGY3BbPWN7HwXkGZmWVuKTjxYDSj",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SwapV2",
+    "SwapV2",
+    "TransferChecked",
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3"
+   ],
+   "topPrograms": [
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T17:17:37.237Z",
+    "tokenCreatedAt": "2026-09-25T17:20:23.939Z",
+    "links": {},
+    "imageUrl": "https://edge.uxento.io/image/46fLTv9ioLvqKAWf5VhhX3xdcytr7XFhtZygaM9qmKkK",
+    "launchLagSec": 65
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "3rAt9eHYsghrxLgPoWbxiL5jjddsAZwwhHE4Uw8W4myKUVCCVvxome17W1mkXoh6Gw8vasfKnFeRrkaBWgJoCgEa",
+   "slot": 450415300,
+   "blockTime": 1790356080,
+   "version": "legacy",
+   "feePayer": "BRNTHCwvU7gtQXQigLvTs1bBZQLfcgKQB3rH5UoKUWPi",
+   "creator": "BRNTHCwvU7gtQXQigLvTs1bBZQLfcgKQB3rH5UoKUWPi",
+   "mint": "46tXBd5E6fh9f6fqH7vvaTxXLMRxW8S3s6Wp4qfTAYbs",
+   "pool": "Co9fia9CBC3RYLPsSa6nFYF4UsZMT45UbwX6cH3rvpqv",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T17:08:01.878Z",
+    "tokenCreatedAt": "2026-09-25T17:11:22.967Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/",
+     "twitter": "https://x.com/growdots/status/2103526139218047338"
+    },
+    "imageUrl": "https://gateway.irys.xyz/HkNAv3nbJ2k1ScR9cHEH9Xi8r2nWx6XrExQLEUF7ajM7",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "2KcqVjasggd3tdywASVduRGG2ybuHAYYZkYxJhHH4N3czLnyvR58EQjE5AMzmkiahxeCFQZqJbEemRomsoQKi8xs",
+   "slot": 450415016,
+   "blockTime": 1790356004,
+   "version": "legacy",
+   "feePayer": "CMLUoPvuZN8iuzaiwBQnKxZWTq3DCppsFyeymxLxBXDR",
+   "creator": "CMLUoPvuZN8iuzaiwBQnKxZWTq3DCppsFyeymxLxBXDR",
+   "mint": "FNBmqWuhWiYqZCLLcSimdeJUhwEXFNDMG61FuaGPeirg",
+   "pool": "7uV1na35jKUiMUAijPRrPVjLLNb2TQFi71LjbFHDURUa",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T17:06:46.309Z",
+    "tokenCreatedAt": "2026-09-25T17:11:22.967Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/BRLU4JHWJBU6yAcHgQbHtJ22TQmfvb2EibPYXnTmLv9h",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "5rMqb9XBq7Q8rhK2dyfzttiRjapPLkdbEqokZbqyCFDDSWiYG8Lho7gHBZYdpW24QT2HENvZm7Y8WfPzM6SxEdac",
+   "slot": 450412231,
+   "blockTime": 1790355260,
+   "version": "legacy",
+   "feePayer": "CMLUoPvuZN8iuzaiwBQnKxZWTq3DCppsFyeymxLxBXDR",
+   "creator": "CMLUoPvuZN8iuzaiwBQnKxZWTq3DCppsFyeymxLxBXDR",
+   "mint": "4ePzXu2M6kLv75SkByEzoWJgXJQny3RA57dUvpQSv12D",
+   "pool": "53nBUTiLH6P2LKTb1dBECawDXnzwtfArqjweggCru8Va",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T16:54:23.100Z",
+    "tokenCreatedAt": "2026-09-25T16:56:31.023Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/8YpWS9FCQWHniex2esK6JoGb9EFqDhUTPYby9idCNVh7",
+    "launchLagSec": 3
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "2tM6MGQzwyG2eU8zM9ZaViZricmTkvQ5LhSrdU49k7rKv27tQNnMYuHuk81q7oCuWyPcVMgZjKxHVFPZGRnTucHY",
+   "slot": 450410972,
+   "blockTime": 1790354923,
+   "version": 0,
+   "feePayer": "E9Gbqq1PvHJ4HZMz8hT9fFZLDvZXXwXehLtZxDtfKneT",
+   "creator": "E9Gbqq1PvHJ4HZMz8hT9fFZLDvZXXwXehLtZxDtfKneT",
+   "mint": "8a5dfqPaQJEE5kft14GkGu3Hkhcj13qP4mQCabrNVDCF",
+   "pool": "5faxfnYQCwxf38QB36QmbTHFhnTmsTnKYRsEU4ZauMYL",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "EvSMNP",
+    "3vGhvZn9zGuM"
+   ],
+   "numSigners": 2,
+   "fee": 10250,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T16:49:46.921Z",
+    "tokenCreatedAt": "2026-09-25T16:53:05.474Z",
+    "links": {},
+    "imageUrl": "https://gateway.pinata.cloud/ipfs/bafkreievmejuppmukpepjdin6ucwdunxr3ehyirx6rc42ck6bk3nz7i52q",
+    "launchLagSec": 64
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "sig": "62QvvPgM3RqmZWhnrNM5T2UkttUBZTTeugWootiSZZ64tdwZuvVcVCpjxoWemwFMJCL6gBsxSs39KwBFx4QpeuZS",
+   "slot": 450405663,
+   "blockTime": 1790353491,
+   "version": 1,
+   "feePayer": "GXcujphwxVjrjxjhWeM4KKyh7vsUu6zvNzzbzfKR3JuW",
+   "creator": "GXcujphwxVjrjxjhWeM4KKyh7vsUu6zvNzzbzfKR3JuW",
+   "mint": "EMixecup5M4ivD4Nnqv78mMCBbutYj3HgAXU4vHsDKWw",
+   "pool": "4VU3GC3yYGXSp4Zq18oZz9SZGpdcfpVNeQQUbqCxZ5jd",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 24144,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T16:25:35.329Z",
+    "tokenCreatedAt": "2026-09-25T16:29:42.886Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreigix3xrfxf6lvuof7iiyhr4lkok3kngvxa55hldcuh73nbcykwduu",
+    "launchLagSec": 44
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "267xRzQGzXGJRVxzzZ1BmhSBjMtE2QKZ8U26ozRUd6UbxVUUhZQhGBXb9mmNx17czeLvVKAkj9Ai19UVRTSmkEf8",
+   "slot": 450381874,
+   "blockTime": 1790347116,
+   "version": 1,
+   "feePayer": "BjeWM94PT2F3LRnCq4VvfqJ9PcfTHgUBfGWHPkYvZ9rH",
+   "creator": "BjeWM94PT2F3LRnCq4VvfqJ9PcfTHgUBfGWHPkYvZ9rH",
+   "mint": "DXkbLAxTXEhAwMLXeXL2QfKotKSEVTqAgt8HEcvPsZ4R",
+   "pool": "GLwHJuiqsB9Xa5VuDSBE9xUfDx4K6jtQXbn6RPFhE4k3",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 23993,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T14:39:38.410Z",
+    "tokenCreatedAt": "2026-09-25T14:48:13.090Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreif24mj4zfxbit6trwuwsolspsxxkfmc3vbiucdvxzz4doqbwzx2nu",
+    "launchLagSec": 62
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "B27GjUzUemt9j8beokkSYmVFpPFq23fLrZoMVufuBTppXNsTJNkEdVFqpemLdzDL6mEu3GMW4FrXraSqaLTkvhA",
+   "slot": 450358325,
+   "blockTime": 1790340798,
+   "version": 1,
+   "feePayer": "CGGf26qMnvVAv7KJFzgK7zmvbubC7sCqwkn1mHSVUvEE",
+   "creator": "CGGf26qMnvVAv7KJFzgK7zmvbubC7sCqwkn1mHSVUvEE",
+   "mint": "GMc6zzF7ANQb7rZJM2LJDUoGYyKRBAtMLowwNQWsBSHC",
+   "pool": "81MNk2rD8sNhNbBeuhrMC1iQ61ChsDdSMLsHQqQCWiSD",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 24349,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T12:54:46.618Z",
+    "tokenCreatedAt": "2026-09-25T12:57:02.666Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreierxo3gqjpt5ga7m6r2tfqqtlouhagfgkamtlm5sls5kt7aeoca4a",
+    "launchLagSec": 89
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "5rARiHBCngWQSRqfWa69Yqd4hbkvsLkopmvt8b1PU4V1QDjDv7DJ5GfKCeg9DM1ithePJm2XwT7dvuCE3LzJqkqk",
+   "slot": 450283537,
+   "blockTime": 1790320846,
+   "version": 1,
+   "feePayer": "EFdojdDpKrJgygRbpdUDJukywQ3vZTh9GYciPJ4Hw9nK",
+   "creator": "EFdojdDpKrJgygRbpdUDJukywQ3vZTh9GYciPJ4Hw9nK",
+   "mint": "59sm4dSDaW5wfH4tac5Pby2UaA2TsqTQFAZmBt6QU8ke",
+   "pool": "9dEq7W7JRHSAR3Y4KgKgzr3ivPqR53q2x4GzVjpi8xUQ",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 23765,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T07:21:34.325Z",
+    "tokenCreatedAt": "2026-09-25T07:26:42.097Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreif24mj4zfxbit6trwuwsolspsxxkfmc3vbiucdvxzz4doqbwzx2nu",
+    "launchLagSec": 48
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "4XNhfRR7qxixkjFfUJDQ2HHzx8m8scthDh6N4FdUuLUKW2zGr6mxC1MMNg7zMh7veJhktuKycea1gtxiYu9nY8uY",
+   "slot": 450280111,
+   "blockTime": 1790319929,
+   "version": "legacy",
+   "feePayer": "CVAwuDj2FHr2fezLimmrd4vf4Q1CZdX13qrSK4LL1kWC",
+   "creator": "CVAwuDj2FHr2fezLimmrd4vf4Q1CZdX13qrSK4LL1kWC",
+   "mint": "7jzGpFVBWbd7qtpf2q8arJ2UgJnCEjkwJmiksaJjbppy",
+   "pool": "EuWTtbnSfnAPBr6gyoBWf9SEPoaADxqbD9jDx3j23Thv",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T07:05:31.154Z",
+    "tokenCreatedAt": "2026-09-25T07:07:23.954Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/8xn3vEBPjMDZKG4gEu585Kt7uv2ed8Vc9YEqK4pmS3fV",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "2KSLUejkrfyL98pm88Vf2XPPj4E4AVVfaXy5KFLWMiSauMKvnpRjcxVEEc2CWgDxKze3wKjokRbKFeU3B3Q7pRPQ",
+   "slot": 450236549,
+   "blockTime": 1790308335,
+   "version": 1,
+   "feePayer": "EB9CxL9JBZrN6sirnsQ9AyuBxPNBeoyPx6K53HkzVdCZ",
+   "creator": "EB9CxL9JBZrN6sirnsQ9AyuBxPNBeoyPx6K53HkzVdCZ",
+   "mint": "2TcVBcikAGZAeSUBB65z8fPPAC5EvDMEwiCf2H4HYA3k",
+   "pool": "Birk7Zum9DRaj3E6943NEc2GBHeSbCLA1MJUL9qmWv3M",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "Route",
+    "SwapV2",
+    "TransferChecked",
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize"
+   ],
+   "topPrograms": [
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 5010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T03:54:39.105Z",
+    "tokenCreatedAt": "2026-09-25T04:00:08.656Z",
+    "links": {},
+    "imageUrl": "https://pbs.twimg.com/profile_images/2053244804520427520/m8mdWZCG_normal.jpg",
+    "launchLagSec": 144
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "3cApdStcgkHe8vpzMug7vyhTUQtetqDCQ8xnz35FXUsKyb5Y5SjN2TgcHuRdexsptbKLJeQ4FU8RtfWfqbTmpfyg",
+   "slot": 450234814,
+   "blockTime": 1790307875,
+   "version": 1,
+   "feePayer": "EB9CxL9JBZrN6sirnsQ9AyuBxPNBeoyPx6K53HkzVdCZ",
+   "creator": "EB9CxL9JBZrN6sirnsQ9AyuBxPNBeoyPx6K53HkzVdCZ",
+   "mint": "9EFKu9B35vNBGbYppKq5kcx6fJV59aLSpsf5zgNBeNyE",
+   "pool": "5ozrZa6hkrBoTWCMG6x7Le5AGDJxzizajUwstmrKJTe3",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "Route",
+    "SwapV2",
+    "TransferChecked",
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3"
+   ],
+   "topPrograms": [
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 10010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T03:45:33.467Z",
+    "tokenCreatedAt": "2026-09-25T03:48:26.393Z",
+    "links": {},
+    "imageUrl": "https://pbs.twimg.com/profile_images/2053244804520427520/m8mdWZCG_normal.jpg",
+    "launchLagSec": 58
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "3yeuiuvaDS127ep89ENejTRR1CweF1R1jJBaAzfP2zeb4SX45UJ8CEj3aq4eHXZarCtans7FjN3NrNVWqd26YyQk",
+   "slot": 450205917,
+   "blockTime": 1790300146,
+   "version": "legacy",
+   "feePayer": "4vQG3cZuq5kmYVdPXM9Vj22ismMujFbXjUSvF8e9Z2mP",
+   "creator": "4vQG3cZuq5kmYVdPXM9Vj22ismMujFbXjUSvF8e9Z2mP",
+   "mint": "EYfPRZ1L6Ge5cwtcJ5QXA16Qshag1J1VT2W8VVYGsnqW",
+   "pool": "8sfdmPdmKRtMS27f27FmvkBaDs8kQN77ubRj6wKB2oxk",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T01:35:47.815Z",
+    "tokenCreatedAt": "2026-09-25T01:38:43.532Z",
+    "links": {
+     "website": "https://x.com/elonmusk/status/2103267284001382676",
+     "twitter": "https://x.com/elonmusk/status/2103267284001382676"
+    },
+    "imageUrl": "https://gateway.irys.xyz/7CoVoeFVcr74DNSZm1JHtb8EHqvP3G1mPHKxpZPazox4",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "5SjMkKUz8b4JqHpyPPafYQtaGnqSxNvpoAWiaU7Jvr4i3ahcwenmcRUfEUNrp29UFFd4b25SzJjRKWyNxSYqtWJ9",
+   "slot": 450198531,
+   "blockTime": 1790298166,
+   "version": "legacy",
+   "feePayer": "DccjSF9GaHH74ZrNikmYTtQWK1RgFeacyUJThGvwbTd9",
+   "creator": "DccjSF9GaHH74ZrNikmYTtQWK1RgFeacyUJThGvwbTd9",
+   "mint": "5An7dEpWrE8Qc7TPD3WrCMVdtLgKYevT1ads7EfdS6iN",
+   "pool": "4rqNVmpoGFof1rsTDpZEsnVTh9MGBo9MCfymYgz6HwdD",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T01:02:59.938Z",
+    "tokenCreatedAt": "2026-09-25T01:04:39.851Z",
+    "links": {
+     "website": "https://nuvex.family/",
+     "twitter": "https://x.com/nuvexfamily"
+    },
+    "launchLagSec": 14
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "65r7jtT3UUvEpPGHCAWmvUuqYuXJrDnZ7vVidawhFhNXwjhdYd73io1uFM4abszDAV3Y9cWFTWJZy9HsBdwYUdJp",
+   "slot": 450194089,
+   "blockTime": 1790296979,
+   "version": "legacy",
+   "feePayer": "8yBDz3cX9raT3DTVxxRoxsGwhBs68eCbSt1FmRtSzMGU",
+   "creator": "8yBDz3cX9raT3DTVxxRoxsGwhBs68eCbSt1FmRtSzMGU",
+   "mint": "B6wjuy82QjA9arTzSnvRfALYizNVkzomd2xCuL6R6cxH",
+   "pool": "8xm7HbC7htQmEB4JmSpt3abswCQKQmbbdF8i24jATpMn",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T00:43:02.911Z",
+    "tokenCreatedAt": "2026-09-25T00:45:18.083Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/7Xugo2v3XbJA3Axo263s5UPpe8RNnmxnz4aSSjmknH2X",
+    "launchLagSec": 4
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "2bMqhqg6qKqPybpgwr6BWgmJy4YnQ3PjFUQfryw8jSXCdMsy1XZjCawtQbvjp7V9MygQjRyaaxLzPP45SV9a9obG",
+   "slot": 450180997,
+   "blockTime": 1790293480,
+   "version": "legacy",
+   "feePayer": "62xwEtut8poAhXFgL3hKu2V3WS2bQ2WM1hnEuEzmaw7u",
+   "creator": "62xwEtut8poAhXFgL3hKu2V3WS2bQ2WM1hnEuEzmaw7u",
+   "mint": "dTRv2cAxXDfU52nPHhvGRBRnrDXMTawWhR2cCoq1aGz",
+   "pool": "9yeb5yCy4xMNGuTLnpwPSFnJTxMB5PNttDAcrjvdFaqW",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-24T23:44:43.027Z",
+    "tokenCreatedAt": "2026-09-24T23:49:37.729Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/8HY5PuTHUoo79hwiG9M7X7kMLPuuGztYGjNLY4ixXUxZ",
+    "launchLagSec": 3
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "3PxhZKjFsm4c1wgEgRHu9uUwWzTZjefVgF4fk5Lw9JxcytMG8VBUrpde1HgyZ7gBJ3GWVZPWPZbP1dwdjCPoZgms",
+   "slot": 450168609,
+   "blockTime": 1790290175,
+   "version": 1,
+   "feePayer": "6TdbGLPs8x24Nphm3m9SxstCMBJXkRFCxSNxg4RLWSrc",
+   "creator": "6TdbGLPs8x24Nphm3m9SxstCMBJXkRFCxSNxg4RLWSrc",
+   "mint": "6rwjatVoPbB8Y9twi4cXbjVFsoQxe7KDzRWrQFNcpGxf",
+   "pool": "A1BcFwktaaHHKEzNY5nxstqEHUbvdy44SPbSya5fF5Wz",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 22661,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-24T22:50:41.713Z",
+    "tokenCreatedAt": "2026-09-24T22:56:37.489Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreidpa34pfm4nbp7vxhakjbefh6y64c52nhz4kmy57xjqcnvvalwrmm",
+    "launchLagSec": 67
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "sig": "82w2Sg7PDGgd4zR8akE6i1XGuihBwMaademX5UzbnD2rQef5yRZ8FPhSAyveCb3XYuaF3tMuXnyadrd53GdNF8Q",
+   "slot": 450161866,
+   "blockTime": 1790288380,
+   "version": 1,
+   "feePayer": "6TdbGLPs8x24Nphm3m9SxstCMBJXkRFCxSNxg4RLWSrc",
+   "creator": "6TdbGLPs8x24Nphm3m9SxstCMBJXkRFCxSNxg4RLWSrc",
+   "mint": "H4Zyftzaok41T4c8EPV5P4ULcVkgeNbgbgGGHTdTCSB5",
+   "pool": "78Mz2nYW7FCGNeX5RME6BnusQ36xT8P7LD3TmDj6c7dc",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 23805,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-24T22:21:35.654Z",
+    "tokenCreatedAt": "2026-09-24T22:24:54.573Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreierxo3gqjpt5ga7m6r2tfqqtlouhagfgkamtlm5sls5kt7aeoca4a",
+    "launchLagSec": 116
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "2pjpJ2sKbd3Fd8Bnuf5Nd8V6a7FGieQ2dStrxwCEbcCmuokiLrcDDxy38Nmfw39SNivKEXM6TCkkssS4T4x2CWvB",
+   "slot": 450382065,
+   "blockTime": 1790347168,
+   "version": "legacy",
+   "feePayer": "GNTQdPiJVRYmufpPaRhtNv6nutjMgZCrCURARjjRX4Li",
+   "creator": "GNTQdPiJVRYmufpPaRhtNv6nutjMgZCrCURARjjRX4Li",
+   "mint": "74Q3WYhvfRNTgyAyvfEXpiaJWV8WvMGPCbQx26HiTqaF",
+   "pool": "27oBqrrUgnbGLZ2DH3QAik5mHmKQJA475MGeBmYvjUCR",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T14:39:29.463Z",
+    "tokenCreatedAt": "2026-09-25T14:48:13.090Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/72NMKe7TRBJt8hWw3wEbE54pRqQ2MC8DzXC3vs1YvmQA",
+    "launchLagSec": 1
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "2D2LuttoWEyxTXH2xnZjQTxKXFHcoVZuQj8mbjJHSaXgsuVxNLMrash8wQG7BcHhS5FvpKvYi2KX92FoyPUiRs2S",
+   "slot": 450208140,
+   "blockTime": 1790300742,
+   "version": "legacy",
+   "feePayer": "Fnjru6WwKRDcAP6aHJuax4e3purUU2gna8RWYgmpTLJq",
+   "creator": "Fnjru6WwKRDcAP6aHJuax4e3purUU2gna8RWYgmpTLJq",
+   "mint": "HwzKS2Bbj9aTghUceyDzGsqPvxjieQgMbzcxLBkhQpUZ",
+   "pool": "3Afcsz57TE9RbdpghaXuihpztCtoiYitruqwrvxV4DzM",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T01:45:44.115Z",
+    "tokenCreatedAt": "2026-09-25T01:53:57.222Z",
+    "links": {
+     "website": "https://heybeluga.com/",
+     "twitter": "https://x.com/heybeluga"
+    },
+    "imageUrl": "https://gateway.irys.xyz/97MomfkmPQZ1cmBaYHHwKFx6QSrYd7CM9knzqV63xfam",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "3M6fkXyH2ssHu4PGinLuFMA9h4ft9tfdTCNUmc738EpLCyZ5gQuPKziKL8h6wMpTYiNAMquUPi2DgiSdL9R4E4XR",
+   "slot": 450080665,
+   "blockTime": 1790266691,
+   "version": "legacy",
+   "feePayer": "DB2uDR2DuMQQU1RTkva5aameupQSQDZxPuQbNd2F4iqz",
+   "creator": "DB2uDR2DuMQQU1RTkva5aameupQSQDZxPuQbNd2F4iqz",
+   "mint": "7QUhdd4aNb31hNfe9zuZJgjLGUjYEatq2W1jw4kgTNto",
+   "pool": "DD5A5cj4yA6jdm4aVHCdxh5XbD72vYkd6qbQUz3fCtri",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-24T16:18:14.525Z",
+    "tokenCreatedAt": "2026-09-24T16:21:07.974Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/",
+     "twitter": "https://x.com/TrustWallet/status/2102329430135697866",
+     "telegram": "https://t.me/exitliquidsol"
+    },
+    "imageUrl": "https://gateway.irys.xyz/28Uy1WgtxaiHR93zWT8xPFdKXkZoVZrcEY5T8rfHCYP6",
+    "launchLagSec": 4
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "MuRkQwkdJADq1T9LkJgfBPoAX3xUTqdy7GXZKEpHxzdxtpRpMg7JMzKcYLAs9pMcDvUZXiDDznpBs3L21efnNTZ",
+   "slot": 449934267,
+   "blockTime": 1790227836,
+   "version": "legacy",
+   "feePayer": "91ktXsnrfWurpwwtxNzqNTe7KkMD9ZSsRcSiFJWTcU5N",
+   "creator": "91ktXsnrfWurpwwtxNzqNTe7KkMD9ZSsRcSiFJWTcU5N",
+   "mint": "DYdTWMmz8Mi3C5FxovxboDgfAoqALBP515Xh7Ywsag3T",
+   "pool": "GM2J7BVGurFjvE5CmtDGSvxZ6eZJf4T6rP5Q7zkVMQtH",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-24T05:30:38.019Z",
+    "tokenCreatedAt": "2026-09-24T05:34:35.069Z",
+    "links": {
+     "website": "https://x.com/burnerboi_01/status/2102993804857073776?s=20",
+     "twitter": "https://x.com/burnerboi_01/status/2102993804857073776?s=20"
+    },
+    "imageUrl": "https://gateway.irys.xyz/2esbZgz58KL1f1UEVXsByzHGhzVmY5fDRYvDEBHjFw7H",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "45Yd3VNSV8Qhp4eDBskZc91pjXCExt2B2efq8zmkA1dvAqvgxcPrfGD1Q795rXMVk1znL5VvAArUaU4iNw5xdAF4",
+   "slot": 449843680,
+   "blockTime": 1790203801,
+   "version": "legacy",
+   "feePayer": "6Y7TSudhM3diZRKWZAMH19BaSSNv3Fgu8NZZbKandTQu",
+   "creator": "6Y7TSudhM3diZRKWZAMH19BaSSNv3Fgu8NZZbKandTQu",
+   "mint": "tkpCyy2G5vD9hXF7k3r19xHVSWbj7yJNghwYEFRjSwy",
+   "pool": "27Q8ufRSWJtNUbMhwNYvG13mCArfRHCcH2W9RPxkWDxF",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-23T22:50:04.036Z",
+    "tokenCreatedAt": "2026-09-23T22:54:21.085Z",
+    "links": {
+     "website": "https://xyi.io/",
+     "twitter": "https://x.com/xyi"
+    },
+    "imageUrl": "https://gateway.irys.xyz/6ahwjgSTZ29aWhNFsYNCjWxDSWKxZwcR8Z2EBS1KP5Uu",
+    "launchLagSec": 3
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "muehyEEyCJUd5jUCwJVeQHvTL9nL7EV79BV1trNPvcpw5rzh5KrKejXJK8UMDHgUKQSSpmnGq2ZAivw2VkYvGnV",
+   "slot": 449808127,
+   "blockTime": 1790194358,
+   "version": "legacy",
+   "feePayer": "BPNZxK1KpByRn92yz7wGsr1VvHYohiskeQejosRHRwEi",
+   "creator": "BPNZxK1KpByRn92yz7wGsr1VvHYohiskeQejosRHRwEi",
+   "mint": "EnJ4wH5xTrA91BUytCBggmgSArkUFwfw7mermdM4tNRh",
+   "pool": "3cnGQJo7mdGxU9Y1czemm5YNkKNaSucQk9wSVydtAJzz",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-23T20:12:39.401Z",
+    "tokenCreatedAt": "2026-09-23T20:14:05.654Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/7HYBhr8YwWiiZVZY7V7coraErmo7X9PjMQWU7RXPMgit",
+    "launchLagSec": 1
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "26PWXJNjdQBDGrfwC785tqFcfgJ8U1s2qKYgPc8aAtwRQRR6QPCo9Pdf7uKDgGtKn5mdg9Du2HAYMm27tGnudKQH",
+   "slot": 449598438,
+   "blockTime": 1790138700,
+   "version": "legacy",
+   "feePayer": "9hkQk2DwSpHbX4kCz1tmfS5ucdz4P6yBECYLf8Gsxgep",
+   "creator": "9hkQk2DwSpHbX4kCz1tmfS5ucdz4P6yBECYLf8Gsxgep",
+   "mint": "GVJdnJw79LyxscC6NhYWAabk95CPoVYZHQUE1UA9VUuj",
+   "pool": "J1HeUgrGzx8xU53SWWaKNH4eXnWB9sVaMH3tTg4RXuTj",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-23T04:45:01.467Z",
+    "tokenCreatedAt": "2026-09-23T04:48:44.363Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/25f3FVXmi8qDSLifq1hMFYF4tpJD3BKdbo1ixUV4JgsR",
+    "launchLagSec": 1
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "5Q1cb6KsnuWos4uwEYqEwCvFFX9WftxwbA7wjQjaA5dTaVYhQ96knoLXwsHbmk4uyadrCMAig6GegX73XwP9TbVH",
+   "slot": 449526516,
+   "blockTime": 1790119624,
+   "version": 0,
+   "feePayer": "5Abqn7V2SKfRzuYbwoMujf9uAxsJ2azDmXT4Ho14hZnm",
+   "creator": "5Abqn7V2SKfRzuYbwoMujf9uAxsJ2azDmXT4Ho14hZnm",
+   "mint": "GBkTmK6VmUR4WwywakuWoohtGu5CbFQuawgd1LECVXuZ",
+   "pool": "CoaFWYqk52LS7UXGx9Roypgkg2PLAw33FjYPQTLUmwTG",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3gJqkocMWaMm"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-22T23:28:09.668Z",
+    "tokenCreatedAt": "2026-09-22T23:32:07.329Z",
+    "links": {},
+    "imageUrl": "https://ipfs.io/ipfs/bafkreiaa25nvzw3dxa6bcukikewmcgj35rderhcjhxsnvicpngooczry44",
+    "launchLagSec": 66
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "4Pi6vopreZjJLo4D5gSwDu3o7ZavsvFcPqt8mdU6UEyxksMix8daPiCk8tzjaFN5L9pnSpGuhLmbFF7HA27qWKRB",
+   "slot": 449524646,
+   "blockTime": 1790119125,
+   "version": 0,
+   "feePayer": "5Abqn7V2SKfRzuYbwoMujf9uAxsJ2azDmXT4Ho14hZnm",
+   "creator": "5Abqn7V2SKfRzuYbwoMujf9uAxsJ2azDmXT4Ho14hZnm",
+   "mint": "565yKoR5futTGMN8JWcUASdA3SZrck1gy33ypvuTzPYY",
+   "pool": "9cDxSZ59tqgGPqB3W5dv1s53RSHcze7yUUsUoZ8TYJtQ",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3gJqkocMWaMm"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-22T23:26:25.241Z",
+    "tokenCreatedAt": "2026-09-22T23:30:17.952Z",
+    "links": {},
+    "launchLagSec": 460
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "44xf95gbW182x5SHEZNapMTcfupsNVbpE6aDU1nhDXDxdHLz9esjNgnTD9uBJkwsPXpXuuAeFoXxn3B7hAATqSRD",
+   "slot": 449230160,
+   "blockTime": 1790040475,
+   "version": "legacy",
+   "feePayer": "8zFMQ8SPchStc9KYBFt1X9xvumWiNCGGCrpth4YV5HDU",
+   "creator": "8zFMQ8SPchStc9KYBFt1X9xvumWiNCGGCrpth4YV5HDU",
+   "mint": "i6SeZF9WdjwM3DUNA8a63Ap3XbarP7XQ7kFciwdnKnK",
+   "pool": "8TCDUajYdoMsXpk7KZ89fE7kQnjSoZoyynyjQp1UtgdU",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-22T01:27:56.543Z",
+    "tokenCreatedAt": "2026-09-22T01:29:52.107Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/",
+     "twitter": "https://x.com/coinbureau/status/1943988711189835919?s=20"
+    },
+    "imageUrl": "https://gateway.irys.xyz/8oSDaiuQVneGrvmXUNC6VQ56fJoDgzmyBx4ga5oR1dmq",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "5Un7RWsV5332bQgjWKbVvsZwjSaBJEDhsREQJWEvYsnuvqmNTVgNrRMkMpBeVbHUDgrTF5J28Btdk9qboaUbZiA1",
+   "slot": 449225523,
+   "blockTime": 1790039229,
+   "version": "legacy",
+   "feePayer": "8Ws2HKzxHNQC5goC5PxEB1JZhQUnvQ4gvwx9AP57DbvR",
+   "creator": "8Ws2HKzxHNQC5goC5PxEB1JZhQUnvQ4gvwx9AP57DbvR",
+   "mint": "21cQRFaWouEFoSaAGT4K7pktBWeTXCJ2hPqtNsvqA6xj",
+   "pool": "GUCim54WsJS4L7yKGtEfZu4bf5phHsCYCcAJdPrG8jes",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-22T01:07:10.807Z",
+    "tokenCreatedAt": "2026-09-22T01:09:12.718Z",
+    "links": {
+     "website": "https://myceliumnodes.xyz/",
+     "twitter": "https://x.com/0xJspr"
+    },
+    "imageUrl": "https://gateway.irys.xyz/EmzKuGtLVsXGebUbbJj1tJ7LZtaory2E3BchHdgbRSrU",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "MU",
+   "sig": "2rTmfyyeVXHx6f3aMZUxhRzSeXxeXjBGZgKmYEQHxsesnpQxuPqmvqzgfNttR2p3oP7Y5bG2oN745eysn8qQ7q3x",
+   "slot": 449222613,
+   "blockTime": 1790038445,
+   "version": "legacy",
+   "feePayer": "FL4AoWUVMF9JNnHQAeb9uXwm4kpDTfC4VZSVdvttdtLG",
+   "creator": "FL4AoWUVMF9JNnHQAeb9uXwm4kpDTfC4VZSVdvttdtLG",
+   "mint": "DZ7bcJ6rHyamRaTnT13rS7RwQbidyav9kgEeNQSv4hdS",
+   "pool": "GBBJZHdVgAgzrVWPnsQQAKyQmryENgH9xjH47nTMwU8S",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-22T00:54:07.135Z",
+    "tokenCreatedAt": "2026-09-22T00:56:51.087Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/",
+     "twitter": "https://x.com/shahrianazim6/status/1937109294547148806?s=20"
+    },
+    "imageUrl": "https://gateway.irys.xyz/DsRR2X7LqfUTptR8PEQgYdXjeDSBbktSMCPT2KsWgs7H",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "3h11PwPtDQevGQKVmAEokJBZdHaj2RwaYBMffXePEEZ5TjrvEkq4g4VLF67TCCrJVM6tQmRQkAgnvXrysPNjDWDR",
+   "slot": 450384932,
+   "blockTime": 1790347938,
+   "version": 1,
+   "feePayer": "HJob7LovHenvRxF9k9ExwYzhvsXcx6oFrb8hfg6J5Mto",
+   "creator": "HJob7LovHenvRxF9k9ExwYzhvsXcx6oFrb8hfg6J5Mto",
+   "mint": "d51Ju2yWAFBNgLPuvNUkpNvLPz84JAHaM46nhHbSTNK",
+   "pool": "24dnjs6WTkTS6xijd6SNKM41E9Y6duB5pFmE4Lab1tMb",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SwapV2",
+    "SwapV2",
+    "TransferChecked",
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3"
+   ],
+   "topPrograms": [
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T14:54:25.146Z",
+    "tokenCreatedAt": "2026-09-25T14:57:18.841Z",
+    "links": {},
+    "imageUrl": "https://api.vortexdeployer.com/image/e910153f-faec-4d0f-97cc-0ff5e3b19933.webp",
+    "launchLagSec": 127
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "2CyEBsEDYo94czCPha4iCcjnJEkR3VhK3Fjatcc71RfGpE7EcdjEC1NdEbJLTugxU2a6QcZU7sGdNHWN3i3hAJKj",
+   "slot": 450383120,
+   "blockTime": 1790347451,
+   "version": "legacy",
+   "feePayer": "5EnmYTDHMo9nyNQ4yq7ufji2DG7LcvhdKC9F9oHuWQ8z",
+   "creator": "5EnmYTDHMo9nyNQ4yq7ufji2DG7LcvhdKC9F9oHuWQ8z",
+   "mint": "6rK9nVdQmaLpdewBuyVryRmYSYjhYyxWfczKL7FqLQpE",
+   "pool": "6hz6LZQxi9nBZyvnp6XqUBjTQWWqhvBFrVUBtJ4mxrZc",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T14:44:14.598Z",
+    "tokenCreatedAt": "2026-09-25T14:48:13.090Z",
+    "links": {
+     "website": "https://ladspad.fun/",
+     "twitter": "https://x.com/ladspadAI"
+    },
+    "imageUrl": "https://gateway.irys.xyz/E7ffBFGMmayRomUzpCoTpFNBcszQdUTvKiQY7QMr3PHb",
+    "launchLagSec": 4
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "g5pSsKFBZrWRxj7uGEWdtsmMhhvTqR6iBHQyYr5P4ezpAqV2ytAzbFkwxAMnQHi79WfCr48TKQUYjskLdD9MCXD",
+   "slot": 450358052,
+   "blockTime": 1790340725,
+   "version": "legacy",
+   "feePayer": "3rzf2KAfJ7frHM8cYUfFQyucozDD3mJaq23JGSbJPNGy",
+   "creator": "3rzf2KAfJ7frHM8cYUfFQyucozDD3mJaq23JGSbJPNGy",
+   "mint": "C1mHcKQMTLVWn5FXgKnN4H9WD8mWBHKYGWVSe3rChzfX",
+   "pool": "2vgmQwnXjhCT7jMJQYoVs1PdZbpz8obG24hiv4UNurjh",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T12:52:06.334Z",
+    "tokenCreatedAt": "2026-09-25T12:53:45.225Z",
+    "links": {
+     "website": "https://opuscat.lovable.app/",
+     "twitter": "https://x.com/opus_genesis"
+    },
+    "imageUrl": "https://gateway.irys.xyz/7ZTem47RPkhNge8RVF5WF6HyfL8h1Ef7EcvwQTkVoU7m",
+    "launchLagSec": 1
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "2QKF4YDrMypp1ZbxM4hBVYScjxYdQDbw4kFx8ex3M987Y2LvLXYNTSraui818LvAvtpFLi21ocBxmPbr5L3j2pxv",
+   "slot": 450350032,
+   "blockTime": 1790338580,
+   "version": "legacy",
+   "feePayer": "Eg2gH5QA6QFsACm9gXWVCsTeCtTLwi1v7oKh1wmp3rbB",
+   "creator": "Eg2gH5QA6QFsACm9gXWVCsTeCtTLwi1v7oKh1wmp3rbB",
+   "mint": "EPbu5ypPb8BaW9ojS5YbvLahsw1vDiUyabfAuxnJ1VBy",
+   "pool": "A7PaoNLPxGnoTPX9DxYKvMj2gcpvyeJBN3snAwf1JthQ",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T12:16:22.312Z",
+    "tokenCreatedAt": "2026-09-25T12:17:53.529Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/6cxkcryX6LFa67nHL68PAXi3RerwUwbhqgtaQbvtkbc5",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "Mu5MazU8iNM8ZNBdZXzXWrATkhocqpD9KRXxqPESRGB7RfUnU5nzSaDQ3k584esq26AiQvTqAN1fyGiXn5aot99",
+   "slot": 450278688,
+   "blockTime": 1790319553,
+   "version": "legacy",
+   "feePayer": "HPxfVAFcSecdvzizvcVa3otfdhNREY6sCJSwLQkDfXB6",
+   "creator": "HPxfVAFcSecdvzizvcVa3otfdhNREY6sCJSwLQkDfXB6",
+   "mint": "Hou5CrSgpZsBuJU3127U69EUuJuJV4k5masdmyL4wquU",
+   "pool": "Bjxe4CXwSwurQe9WHeRXBQU8NFUh56MMFe7jFkLU2FU3",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T06:59:16.094Z",
+    "tokenCreatedAt": "2026-09-25T07:01:16.271Z",
+    "links": {
+     "website": "https://clawde.lovable.app/",
+     "twitter": "https://x.com/memenftmeme"
+    },
+    "imageUrl": "https://gateway.irys.xyz/8aP5q53fz93rb7B8t7SFbfrmMqDam4D4bs9JafY73UoR",
+    "launchLagSec": 3
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "4dF3nRYpsEdeYVBUmPLFDv62zbgxUQqkSu1B3kgVsa8aF2XSaHXyFcSdGXGzncUEdJGfXvGPq2yUnfy6J6scPnEg",
+   "slot": 450258685,
+   "blockTime": 1790314230,
+   "version": 1,
+   "feePayer": "2tXTV8gYje1UboiTXgDgEpWhFwAqVEkDG5crnTXxgznr",
+   "creator": "2tXTV8gYje1UboiTXgDgEpWhFwAqVEkDG5crnTXxgznr",
+   "mint": "77HhY8gzGgGqNBWspSbhLaNoVsYuckqu2eraa9fX16Sz",
+   "pool": "BUMf8JgXworjK2jfvQvgGPTkgisbiDTjCZjb2e7vo9RA",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "GetAccountDataSize"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "J7pourVwqP1VtRNBiFNqbdGxwkx7ta2LHAURURRRJqmd",
+    "11111111111111111111111111111111",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T05:32:33.471Z",
+    "tokenCreatedAt": "2026-09-25T05:37:50.412Z",
+    "links": {},
+    "imageUrl": "https://pbs.twimg.com/profile_images/1902044548936953856/J2jeik0t_400x400.jpg",
+    "launchLagSec": 123
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "4ytiVruRMin3RP68C9EgUaip8JFDFsYDYbDRa9kkr4CsutU5VjKRaSzSR8Z5Rfr1d7oVKN86gk43cNTGeDWG7dwy",
+   "slot": 450251682,
+   "blockTime": 1790312362,
+   "version": "legacy",
+   "feePayer": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "creator": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "mint": "EzNDZE4KYK5PV3BCAXTsoyPqDB3XwDyqMUiKnMejmyQg",
+   "pool": "HUPDCBzqqDKtrzKVfv3MGZADZVEPwv8axMtsm2eu2VRx",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "HMypLP",
+    "3uedW6ymeow5"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T05:00:46.726Z",
+    "tokenCreatedAt": "2026-09-25T05:03:14.706Z",
+    "links": {},
+    "launchLagSec": 85
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "2S2zbrfogyt9pwVS2F7LjwZr2zHTqCtJ1pWe3F128fJhYP2GseYSquoU1sWmBuHqZqoabgRHWVKGzTnjgj9re6a2",
+   "slot": 450251672,
+   "blockTime": 1790312360,
+   "version": "legacy",
+   "feePayer": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "creator": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "mint": "G826M87sPGkFqy6HwHkAEB7V12ycTgk4XLdF9JgRJVmU",
+   "pool": "6whZ69zfbx7Xv9z7TWw7cF6n6GGLdhXfoXqZ1q9TsfTt",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "HMypLP",
+    "3uedW6ymeow5"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T05:00:46.334Z",
+    "tokenCreatedAt": "2026-09-25T05:03:14.706Z",
+    "links": {},
+    "launchLagSec": 86
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "2r11WkLbgVSpqX1UqHjnm56mpHQLT2cTfjdfncbU9kpCwDz8H3ByAeKxiDFKEx4Gus5Gn4YhaJAosojipbv5eFuX",
+   "slot": 450251603,
+   "blockTime": 1790312342,
+   "version": "legacy",
+   "feePayer": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "creator": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "mint": "DbvUuiYKbSZybabpUDLug8BTfaGeQUgcjzm4wz33fn9z",
+   "pool": "DrxksxDwTjY8oX7LPYB4ivn3p818591iPo81ARLec3KX",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "HMypLP",
+    "3uedW6ymeow5"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T05:00:46.451Z",
+    "tokenCreatedAt": "2026-09-25T05:03:14.706Z",
+    "links": {},
+    "launchLagSec": 104
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "4Kc1LYuSi1s5GxK91z5wB1SrT1VWpcruyuSRs15AjVoMbWRijirRaNqfnpWakZmPASWiqqAeimxuMkAjg6XCC6sP",
+   "slot": 450251527,
+   "blockTime": 1790312322,
+   "version": "legacy",
+   "feePayer": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "creator": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "mint": "22y2Ds8ba1P2XZkQqjEqLymqn2ZzCq5wE4a9k5oxR957",
+   "pool": "HfyP1YodYMLBPoy6UHThfak7wdAG3xAweUMQacKzyovu",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "HMypLP",
+    "3uedW6ymeow5"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T05:00:46.848Z",
+    "tokenCreatedAt": "2026-09-25T05:03:14.706Z",
+    "links": {},
+    "launchLagSec": 125
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "63PnHUH11ruYKJAPpr9rVvbkixGhqhHKsk8x1UEXKVkseygDHfViUNkyEcsGHJ17sQRyE5tcSF5ZjGc24NgWShGe",
+   "slot": 450251464,
+   "blockTime": 1790312305,
+   "version": "legacy",
+   "feePayer": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "creator": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "mint": "HnpT33KgCHmYRUmDByM4LrpU8nQH4m8FuRiGSp7HWJqh",
+   "pool": "ECPb1BcgzpTvepVKUJt6ebKwBogfdqCVyx7p879MtjDW",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "HMypLP",
+    "3uedW6ymeow5"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T05:00:46.588Z",
+    "tokenCreatedAt": "2026-09-25T05:03:14.706Z",
+    "links": {},
+    "launchLagSec": 142
+   }
+  },
+  {
+   "stock": "ANTHROPIC",
+   "sig": "5eZDJ4oAZhTDE2X9QVNxaLAu3pkNzo6dLocQkuFtnj6zmyJRJmRkndZmwcfznQLc1Yrn51AL3xzZMZApCKcPJLZq",
+   "slot": 450251343,
+   "blockTime": 1790312273,
+   "version": "legacy",
+   "feePayer": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "creator": "6hP9nvbQMUkgUvuY8sXo1WERPDwUPfsmSZEnQw7Rhrrj",
+   "mint": "D5CYJgEuWxkJW1FAv3PNb9RRvvncbJ2UB9LT41BFHxfA",
+   "pool": "9igF1wQiQmpwSSLU6uXGW1NvYBWiMrfffY97SHHjW4Zs",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "HMypLP",
+    "3uedW6ymeow5"
+   ],
+   "numSigners": 2,
+   "fee": 70000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T04:58:43.891Z",
+    "tokenCreatedAt": "2026-09-25T05:00:33.226Z",
+    "links": {},
+    "imageUrl": "https://wiler.fun/api/t/D5CYJgEuWxkJW1FAv3PNb9RRvvncbJ2UB9LT41BFHxfA/image",
+    "launchLagSec": 51
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "3F3j18fctsUrm98uRwgB3buJSnztD9hFh1kBtZLqHPQZsm4HobunaNadNqj44cQv8hgkAvzgVvAm8pjWGAoLa3z",
+   "slot": 450445287,
+   "blockTime": 1790364141,
+   "version": 1,
+   "feePayer": "2D3TEJjGVDvbqkxWr48QZpscxDbXGLtN1wuk78KD3TbV",
+   "creator": "2D3TEJjGVDvbqkxWr48QZpscxDbXGLtN1wuk78KD3TbV",
+   "mint": "9tt99W1Mtegj1Q42XjZv22Vqh1tuWmAA1ZywgPJyW3Ht",
+   "pool": "7VghNim3TFWshGqnB5vVjx8w8D4xGs6sZ5xUrugNV4jb",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "SplitSupply",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "J7pourVwqP1VtRNBiFNqbdGxwkx7ta2LHAURURRRJqmd",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "J7pourVwqP1VtRNBiFNqbdGxwkx7ta2LHAURURRRJqmd"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T19:24:39.854Z",
+    "tokenCreatedAt": "2026-09-25T19:27:20.466Z",
+    "links": {},
+    "imageUrl": "https://metadata.j7tracker.io/images/uRML3Kofl4",
+    "launchLagSec": 139
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "3BwxHcxzGvkYraLTYqdDhm8EpicPK7b7bjt8Nx1YV9j3uzqimhYfgbQFVjQ9s7V5eTYg9wQ9g7StUUWvkEqXXkas",
+   "slot": 450401663,
+   "blockTime": 1790352423,
+   "version": 1,
+   "feePayer": "3g7hgDGr5HynLbdDcmyX1vVbNh3rNarNcRVtPcpKYxms",
+   "creator": "3g7hgDGr5HynLbdDcmyX1vVbNh3rNarNcRVtPcpKYxms",
+   "mint": "EZqVepUrEyp7JGUHCHqpttnJM1oNNWV2MYF3D4rtAair",
+   "pool": "J4t5mPm251HNccNaEW9jCfwv9afLV2jtGQLsFNKfNaaE",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 23029,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T16:09:06.151Z",
+    "tokenCreatedAt": "2026-09-25T16:10:53.212Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreiglgb42o5l4dae3sc4i7cwvrcycjhr4rnhn6bosi47hpeikyzdss4",
+    "launchLagSec": 123
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "4aGjJWWRX6HPeqaov2qq8YxpgGk6Nq1d65LosSY25w23rpYSzA4wSjTJnWR2CrVKTZDoNHKopBzpQECy7GPYQtX8",
+   "slot": 450400414,
+   "blockTime": 1790352088,
+   "version": 1,
+   "feePayer": "3g7hgDGr5HynLbdDcmyX1vVbNh3rNarNcRVtPcpKYxms",
+   "creator": "3g7hgDGr5HynLbdDcmyX1vVbNh3rNarNcRVtPcpKYxms",
+   "mint": "BDqWez7T8q6eG61o8Mt89BuJ14w8wzBsHWrBrBXx8XV4",
+   "pool": "FPVUpwePYXdeEUkdUwiLoYkakAN6bhYXxqArFfCpwj5Y",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 23713,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T16:02:48.714Z",
+    "tokenCreatedAt": "2026-09-25T16:08:58.793Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreicllgldap2x3navfrtqyhwj57ycmlztuzl5vphhoteyn5hi2vphcq",
+    "launchLagSec": 81
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "2MnjMfwPHttLg4uMx9Z5naoAa1AtQPAGJyqYVbAr35ap84nnBcPQdtzamHjyseELtCLyf92EkzY5fMfXUT5Fqyrg",
+   "slot": 450359108,
+   "blockTime": 1790341006,
+   "version": 1,
+   "feePayer": "Gw8Kqa8JAN4iFPsGrHMg4KGN2NeH3JMwiTrnHWxsyvbf",
+   "creator": "Gw8Kqa8JAN4iFPsGrHMg4KGN2NeH3JMwiTrnHWxsyvbf",
+   "mint": "kiBG5hTKNbQ9YY3oHQJcWvnW9XX4AzgoevggeQWTWYz",
+   "pool": "C2k9JviJFLnmT6xWBetWDfy5MaHbou5JGwXPu7m9Jh61",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "BuyExactIn"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 20000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T12:58:56.375Z",
+    "tokenCreatedAt": "2026-09-25T13:01:09.752Z",
+    "links": {},
+    "launchLagSec": 130
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "5unVzr9kzM5jnmz9Q4zE3btPPGZo7Mh5dNWysb4KZvAkvE6iMuu8nyQWEL5AYV2xP46my6czUd7mWNbbjeaSfhza",
+   "slot": 450319945,
+   "blockTime": 1790330541,
+   "version": "legacy",
+   "feePayer": "EnQZ3zqVPbSiiktSNAjnoQrm6ptjVigA37u1JpfaguZx",
+   "creator": "EnQZ3zqVPbSiiktSNAjnoQrm6ptjVigA37u1JpfaguZx",
+   "mint": "ETJZPj5pqVzYBPzGE24ZtwE6NzzYNQ7Dpg9dwpDYZvWG",
+   "pool": "FEnRMvTGKZjGdB7YuwPkHSSEqj6kN5cPoMxAvTRBA2jJ",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T10:02:22.503Z",
+    "tokenCreatedAt": "2026-09-25T10:05:37.797Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/",
+     "twitter": "https://x.com/giantpairoftits"
+    },
+    "imageUrl": "https://gateway.irys.xyz/96ivk3hCBFV3VBGtUvPMVeYDYq1ZadxkJtb1aB7uUbBw",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "2h4PW931BPFre813XkMBAtDiWhqzYE3nUKc6QcTnM7dAV5DFZxBff6cL6gaLZnpoMcMtGVeADgJpjNurAPs1WBJ4",
+   "slot": 450309225,
+   "blockTime": 1790327684,
+   "version": "legacy",
+   "feePayer": "2wFudf9PoHYKrxTkHeDzmj2B2CenwWirywaQPoDvfFUv",
+   "creator": "2wFudf9PoHYKrxTkHeDzmj2B2CenwWirywaQPoDvfFUv",
+   "mint": "C4PwdDW4XJCCnxiRDfy2wRgkZwkaVF3DFVM6mUTF1SpB",
+   "pool": "B62QyBRxCF8yzq3ZCSdViLYuvQXas6VDqjrXom8MpXvC",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T09:14:45.538Z",
+    "tokenCreatedAt": "2026-09-25T09:16:35.905Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/",
+     "twitter": "https://x.com/elonmusk"
+    },
+    "imageUrl": "https://gateway.irys.xyz/Ht8Bug85LyTzYhsTWE1Pmt33FS4Uux5s44SodWkxxsqR",
+    "launchLagSec": 2
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "2yNioJdAAGDqhDC2vhZ6aEv3HENakpyV3vo4dU1ZvwZJmgdVhrtGuktyervcW7ftk49iZdRHaB4mjgysmud4jnZn",
+   "slot": 450248213,
+   "blockTime": 1790311443,
+   "version": "legacy",
+   "feePayer": "BiFVSdknWqHk83Y7bZGW3krBbzc3bwSMZeYKVYE2pgbM",
+   "creator": "BiFVSdknWqHk83Y7bZGW3krBbzc3bwSMZeYKVYE2pgbM",
+   "mint": "5yLJtHavsDqWpFqofoj6rCh6YTNagUC9VcRTw1scstzc",
+   "pool": "ELpM7upNvsNfEcKztdSZ1a37HEK6PzSFHpAgzppy5xXd",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T04:44:04.177Z",
+    "tokenCreatedAt": "2026-09-25T04:47:46.960Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/6NbPzQgTkSwgtS5mT9WcbycJ5LWfkXXQzb4Hq8AQfsWX",
+    "launchLagSec": 1
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "4okybueJbPQMQLBARjqAGc9szCjqU7CdmnKRTrzoyA1KbR8TvuEBQWJUZspzL66MrFHsYhvRZT3mq4As3JdjyJoH",
+   "slot": 450212327,
+   "blockTime": 1790301866,
+   "version": 1,
+   "feePayer": "6eLMvyMwCyxDBfatYYwTZszBK3PYUgGenXVjpFBygJct",
+   "creator": "6eLMvyMwCyxDBfatYYwTZszBK3PYUgGenXVjpFBygJct",
+   "mint": "9pR2sewZh3Sj58w3deD26ncCi9nJGjLsWCkHhkyXEyEB",
+   "pool": "4RTNAL75REEUHTe45QP8eUZJ6cjm6rS481qBGaBJ6Vf5",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 23366,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T02:06:43.590Z",
+    "tokenCreatedAt": "2026-09-25T02:09:32.128Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreihttmkeqn362u23lxz72btfdzoflh2q5m6gumrhwqkhzmn6rciol4",
+    "launchLagSec": 138
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "qxPzXrdWnm64qatPSc61xogGBwh6LZWeddrhr2fTxWx4S52A4vtJCVcAY4c1K72s4eojYre7pGAU72hh4ttPKhq",
+   "slot": 450212222,
+   "blockTime": 1790301838,
+   "version": "legacy",
+   "feePayer": "GLbWXgT211J2BM9SQSSTb1aKLFSFW8hqoEaEYXh4h5AH",
+   "creator": "GLbWXgT211J2BM9SQSSTb1aKLFSFW8hqoEaEYXh4h5AH",
+   "mint": "EyL1A4PbrEqxGW6cWtare1745MStU4tqi8FtFz9Sxv27",
+   "pool": "GryYHbWGDPAMwkNZGQXD1uvGEfBqBrwRQhyUDYFWi7rE",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T02:04:01.068Z",
+    "tokenCreatedAt": "2026-09-25T02:07:19.363Z",
+    "links": {
+     "website": "https://www.stonkfun.xyz/"
+    },
+    "imageUrl": "https://gateway.irys.xyz/8MZNfc3kew5L75B1TgoBHARKXNr3gPPVg1KA61K9hDqm",
+    "launchLagSec": 3
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "TKd3q2ptsHzgmHqF3jsCHwmauyhNsgPoCbtiyTkFj1qvDbNhRg5oHhBVK41aosN13cvRREY1Q2HLNb9gQj6nxZw",
+   "slot": 450205840,
+   "blockTime": 1790300126,
+   "version": "legacy",
+   "feePayer": "HvYbH163uWpuvbCeMDLTdSVC5y8Kc8sew8Aa686V5YRF",
+   "creator": "HvYbH163uWpuvbCeMDLTdSVC5y8Kc8sew8Aa686V5YRF",
+   "mint": "7ucpma4tS1dwwqYMEkWL68DHAPhLdnMkG6MAEFvup2ax",
+   "pool": "8mSJbYrzzMzYAFKxB1YzA2ckyhZ4R77nx6mk6XsJsxWQ",
+   "payerIsCreator": true,
+   "hasBuy": false,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority"
+   ],
+   "topPrograms": [
+    "ComputeBudget111111111111111111111111111111",
+    "ComputeBudget111111111111111111111111111111",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj"
+   ],
+   "computeBudgetData": [
+    "JzwPro",
+    "3Sy41WEwNLnT"
+   ],
+   "numSigners": 2,
+   "fee": 40000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T01:35:27.359Z",
+    "tokenCreatedAt": "2026-09-25T01:37:02.170Z",
+    "links": {
+     "website": "https://xaisol.lovable.app/",
+     "twitter": "https://x.com/3majid6",
+     "telegram": "https://t.me/xaicoinsolana"
+    },
+    "imageUrl": "https://gateway.irys.xyz/64wySDcUHfuKBdb91eZbnH8SHHVVdxdYVmXxCrhDMBsM",
+    "launchLagSec": 1
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "Nivuqyrwk2Nc5bQfkfMzxfQgrukGUrUNQ9F2aVj7vrV5jrkL4EnM5kLnVSRkcnua9qBJUM7PZX3gsCDKxLcsVGG",
+   "slot": 450198686,
+   "blockTime": 1790298208,
+   "version": 1,
+   "feePayer": "CoScx1GSTe6L73yR3CmDEvYJL8tJhoxMxBKedR2fxV1x",
+   "creator": "CoScx1GSTe6L73yR3CmDEvYJL8tJhoxMxBKedR2fxV1x",
+   "mint": "F5htJAGE2TSVNeXyJnxfZ9eX24S8EWQHCzrGGRQHhhks",
+   "pool": "CtRG16qhdb49LYZyBftiHG4rgnXQbqLGF3N1dkhnq1y8",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "SetTokenLedger"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "11111111111111111111111111111111",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "CAMMCzo5YL8w4VFF8KVHrK22GGUsp5VTaW7grrKgrWqK",
+    "LBUZKhRxPF3XUpBCjp4YzTKgLccjZhTSDM9YuVaPwxo",
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4",
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 22442,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T01:05:36.208Z",
+    "tokenCreatedAt": "2026-09-25T01:07:27.060Z",
+    "links": {},
+    "imageUrl": "https://pump.mypinata.cloud/ipfs/bafkreifh3qb2vrnh2c3e5z2dmp7etunegkq4kcimvhuboxfckxofgd5wqa",
+    "launchLagSec": 128
+   }
+  },
+  {
+   "stock": "OPENAI",
+   "sig": "5G9E8r34jBneBhuDDyJy7cQRDGkPEeRhkHkFAZt9wWk3NduGejzgt98BRM8D4cipcCKxgUz5ytEep1iCwCsRxKQk",
+   "slot": 450195436,
+   "blockTime": 1790297344,
+   "version": 1,
+   "feePayer": "5Ms2fdfsm1Z6CeqvRuLxn5zQqFibWRxGMh3HvZr2jkQj",
+   "creator": "5Ms2fdfsm1Z6CeqvRuLxn5zQqFibWRxGMh3HvZr2jkQj",
+   "mint": "3WfGaLyJgkW5xvppGPsLjuRXHoUi2DpnTNEjgVBYdYKQ",
+   "pool": "GWp3zWyk31oC3bDrPHn9XGfh5FejYkkDhGvKSS1CrDnm",
+   "payerIsCreator": true,
+   "hasBuy": true,
+   "ixNames": [
+    "InitializeWithToken2022",
+    "InitializeAccount3",
+    "InitializeMint2",
+    "InitializeAccount3",
+    "MintTo",
+    "SetAuthority",
+    "GetAccountDataSize",
+    "InitializeImmutableOwner",
+    "InitializeAccount3",
+    "GetAccountDataSize"
+   ],
+   "topPrograms": [
+    "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+    "BhXyRawr5GikuipLCCAQw61kKEvjUzTDbNfiTbFaUP9Z",
+    "11111111111111111111111111111111"
+   ],
+   "computeBudgetData": [],
+   "numSigners": 2,
+   "fee": 1010000,
+   "stonkfun": {
+    "status": 200,
+    "launchpad": "launchlab",
+    "mode": "standard",
+    "launchCreatedAt": "2026-09-25T00:49:33.932Z",
+    "tokenCreatedAt": "2026-09-25T00:52:26.757Z",
+    "links": {},
+    "imageUrl": "https://chubby-amethyst-finch.myfilebase.com/ipfs/bafkreiarjarm2k4lx5qzahyj7dpv5zcb5hhia6eo373xrfctlweo4igfx4",
+    "launchLagSec": 30
+   }
+  }
+ ]
+}

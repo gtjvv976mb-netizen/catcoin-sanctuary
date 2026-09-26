@@ -1,0 +1,26 @@
+{
+ "status": 200,
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "decimals": 6,
+ "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+ "mintAuthority": "Cmzoo3U8ezcb95BJYmy3e6p6Lh1kyPm2bjDLcvNtVXES",
+ "extensions": [
+  "metadataPointer",
+  "permanentDelegate",
+  "defaultAccountState",
+  "pausableConfig",
+  "confidentialTransferMint",
+  "transferHook",
+  "scaledUiAmountConfig",
+  "tokenMetadata"
+ ],
+ "hasTransferFee": false,
+ "pausable": {
+  "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "paused": false
+ },
+ "hook": {
+  "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "programId": null
+ }
+}

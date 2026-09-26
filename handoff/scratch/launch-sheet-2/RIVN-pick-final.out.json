@@ -1,0 +1,86 @@
+{
+ "name": "Nightseat the Black Cat",
+ "ticker": "NIGHTSEAT",
+ "nameLen": 23,
+ "blurbLen": 131,
+ "descLen": 272,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "endsWithDisclaimer": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Nightseat, a sleek black shorthair with ",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 7,
+  "symbolMatches": [],
+  "verifiedMatch": false
+ },
+ "coatHex": true,
+ "description": "Nightseat, a sleek black shorthair with gold-green eyes and an aqua patterned collar, always takes the highest perch in the garden. A cat coin priced in RIVN. Not affiliated with Rivian Automotive, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A normal four-legged, slim, solid black shorthair with tall upright ears, long whiskers and gold-green eyes, wearing a light-aqua patterned collar with a small ring. It follows the cat in the company's National Pet Day photo, which wears that collar; the high perch nods to the car headrest that cat lies on.",
+ "coat": {
+  "base": "#1B1C1F",
+  "second": "#2E3034",
+  "pattern": "solid",
+  "eyes": "#CFC24C"
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "at": "2026-09-25T10:20:33.881Z",
+ "rows": [
+  {
+   "sym": "MEW",
+   "usd": 10,
+   "status": 400,
+   "impactPct": null,
+   "err": "NO_ROUTES_FOUND",
+   "hops": ""
+  },
+  {
+   "sym": "MEW",
+   "usd": 25,
+   "status": 400,
+   "impactPct": null,
+   "err": "NO_ROUTES_FOUND",
+   "hops": ""
+  },
+  {
+   "sym": "POPCAT",
+   "usd": 10,
+   "status": 200,
+   "impactPct": "0.476",
+   "err": null,
+   "hops": "Raydium:10000"
+  },
+  {
+   "sym": "POPCAT",
+   "usd": 25,
+   "status": 200,
+   "impactPct": "0.481",
+   "err": null,
+   "hops": "Raydium:10000"
+  }
+ ]
+}

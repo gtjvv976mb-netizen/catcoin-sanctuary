@@ -1,0 +1,80 @@
+{
+ "probedAt": "2026-09-25T19:01:53.038Z",
+ "rpc": "https://solana-rpc.publicnode.com",
+ "origin": "https://catcoinsanctuary.com",
+ "results": [
+  {
+   "method": "getLatestBlockhash",
+   "status": 200,
+   "acao": "*",
+   "ms": 102,
+   "summary": {
+    "jsonrpc": "2.0",
+    "result": {
+     "context": {
+      "apiVersion": "4.2.2",
+      "slot": 450440714
+     },
+     "value": {
+      "blockhash": "8zYa27CopoCbqnJAjWTJum8DfYshaumhViszFj1SUGWF",
+      "lastValidBlockHeight": 428480740
+     }
+    },
+    "id": 1
+   }
+  },
+  {
+   "method": "getMultipleAccounts",
+   "status": 200,
+   "acao": "*",
+   "ms": 91,
+   "summary": {
+    "owners": [
+     "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+     "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+    ]
+   }
+  },
+  {
+   "method": "getBalance",
+   "status": 200,
+   "acao": "*",
+   "ms": 70,
+   "summary": {
+    "jsonrpc": "2.0",
+    "result": {
+     "context": {
+      "apiVersion": "4.2.2",
+      "slot": 450440724
+     },
+     "value": 3453904327
+    },
+    "id": 1
+   }
+  },
+  {
+   "method": "simulateTransaction",
+   "status": 200,
+   "acao": "*",
+   "ms": 80,
+   "summary": {
+    "err": null,
+    "unitsConsumed": 94118,
+    "logsHead": [
+     "Program ComputeBudget111111111111111111111111111111 invoke [1]",
+     "Program ComputeBudget111111111111111111111111111111 success",
+     "Program LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj invoke [1]"
+    ],
+    "apiVersion": "4.2.2"
+   }
+  }
+ ],
+ "preflight": {
+  "status": 204,
+  "acao": "*",
+  "acah": "content-type",
+  "acam": "GET,HEAD,OPTIONS,POST"
+ }
+}

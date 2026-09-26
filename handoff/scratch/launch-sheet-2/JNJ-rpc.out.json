@@ -1,0 +1,68 @@
+{
+ "status": 200,
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "type": "mint",
+ "extensions": [
+  {
+   "extension": "metadataPointer",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "metadataAddress": "JNJg1znKdF712Phe7L7z52AATAvEjEytBdN2w8Lnh1Y"
+   }
+  },
+  {
+   "extension": "permanentDelegate",
+   "state": {
+    "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+   }
+  },
+  {
+   "extension": "defaultAccountState",
+   "state": {
+    "accountState": "initialized"
+   }
+  },
+  {
+   "extension": "pausableConfig",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "paused": false
+   }
+  },
+  {
+   "extension": "confidentialTransferMint",
+   "state": {
+    "auditorElgamalPubkey": null,
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "autoApproveNewAccounts": false
+   }
+  },
+  {
+   "extension": "transferHook",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "programId": null
+   }
+  },
+  {
+   "extension": "scaledUiAmountConfig",
+   "state": {
+    "authority": "5vUPHURNE2sanrrWNTxyfyo3j37UFCTyxD6Warae9pBU",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "extension": "tokenMetadata",
+   "state": {
+    "additionalMetadata": [],
+    "mint": "JNJg1znKdF712Phe7L7z52AATAvEjEytBdN2w8Lnh1Y",
+    "name": "Johnson & Johnson - Backpack Securities",
+    "symbol": "JNJ",
+    "updateAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "uri": "https://metadata.backpack.exchange/stocks/jnj.us.json"
+   }
+  }
+ ]
+}

@@ -1,0 +1,131 @@
+[
+ {
+  "name": "Trinket the Tortie Cat",
+  "ticker": "TRINKETCAT",
+  "nameLen": 22,
+  "tickerLen": 10,
+  "blurbLen": 137,
+  "descLen": 270,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Trinket, a round fluffy tortoiseshell, adds one shiny pebble a day to her secret pile under the garden shed and has never given one back. A cat coin priced in MSTRx. Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Coffer the Vault Cat",
+  "ticker": "COFFERCAT",
+  "nameLen": 20,
+  "tickerLen": 9,
+  "blurbLen": 124,
+  "descLen": 257,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Coffer, a stocky slate-grey shorthair with copper eyes, sits square by the shed door all day like a little locked strongbox. A cat coin priced in MSTRx. Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Tally the Tabby",
+  "ticker": "TALLYCAT",
+  "nameLen": 15,
+  "tickerLen": 8,
+  "blurbLen": 138,
+  "descLen": 271,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "tickerRegex": true,
+  "memeBanned": false,
+  "jupStatus": 200,
+  "jupResults": 20,
+  "jupSymbolMatches": [],
+  "jupVerifiedMatch": false,
+  "description": "Tally, a silver tabby with eye rings like tiny round glasses, counts every bird, bee and falling leaf in the garden and never loses count. A cat coin priced in MSTRx. Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice."
+ }
+]

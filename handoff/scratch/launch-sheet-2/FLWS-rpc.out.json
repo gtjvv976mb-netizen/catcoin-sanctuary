@@ -1,0 +1,67 @@
+(node:32204) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+ "status": 200,
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "type": "mint",
+ "decimals": 6,
+ "extensions": [
+  {
+   "extension": "metadataPointer",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "metadataAddress": "FLWSojG1gB5VStYR3Sb4nQFRt43UBYkqih1j2CpVLqgd"
+   }
+  },
+  {
+   "extension": "permanentDelegate",
+   "state": {
+    "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+   }
+  },
+  {
+   "extension": "defaultAccountState",
+   "state": {
+    "accountState": "initialized"
+   }
+  },
+  {
+   "extension": "pausableConfig",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "paused": false
+   }
+  },
+  {
+   "extension": "confidentialTransferMint",
+   "state": {
+    "auditorElgamalPubkey": null,
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "autoApproveNewAccounts": false
+   }
+  },
+  {
+   "extension": "transferHook",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "programId": null
+   }
+  },
+  {
+   "extension": "scaledUiAmountConfig",
+   "state": {
+    "authority": "BtSKef76m1JsUR4QxjduukD7FFLWiWsfQB6uMUeTMyz3",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "extension": "tokenMetadata",
+   "state": {
+    "name": "1-800-FLOWERS.COM - Backpack Securities",
+    "symbol": "FLWS"
+   }
+  }
+ ]
+}

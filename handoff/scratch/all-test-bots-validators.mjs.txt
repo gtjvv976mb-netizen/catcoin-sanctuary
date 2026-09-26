@@ -1,0 +1,103 @@
+
+LAUNCHES: WHAT PASSES
+─────────────────────
+  ok   a well-formed pump.fun launch passes
+  ok   a StonkFun launch paired with SPYx, with its pool, passes
+  ok   a disclosed dev buy of 0.05 SOL with its transaction passes
+  ok   links are pump.fun and Solscan pages built from the checked mint, signature and wallet — nothing else
+  ok   a StonkFun launch links to its StonkFun token page
+  ok   three venues: pump.fun, pump.fun paired with a stock, StonkFun
+
+LAUNCHES: WHAT IS REFUSED
+─────────────────────────
+  ok   HTML in the name
+  ok   an HTML entity in the tagline
+  ok   a javascript: link in the tagline
+  ok   a data: link in the trend
+  ok   a direction override in the name
+  ok   a bad mint address
+  ok   an address with a 0 in it
+  ok   a bad transaction signature
+  ok   base58 of the right length that is not 32 bytes is no address (44 ones are 44 zero bytes)
+  ok   base58 that is not 64 bytes is no signature
+  ok   an invisible soft hyphen or word joiner in a name
+  ok   an unknown field (a url)
+  ok   an unknown field inside trend
+  ok   an unknown field inside quote
+  ok   an impossible time
+  ok   a time with milliseconds or no Z
+  ok   an unknown venue
+  ok   a lower-case or $ ticker
+  ok   an unknown trend source
+  ok   a dev buy over 0.05 SOL
+  ok   a dev buy without its transaction
+  ok   a transaction on a dev buy that did not happen
+  ok   a dev buy on StonkFun
+  ok   a pump.fun launch not quoted in SOL, or a stock launch quoted in SOL
+  ok   a cost that is not a number
+  ok   an unknown kitten
+  ok   the same mint twice keeps the first
+  ok   a file that is not { launches: [...] } is empty, not an error
+  ok   more than 200 is capped and said
+  ok   newest first
+
+POPCAT'S FILE: CALLOUTS AND SPOTTED COINS
+─────────────────────────────────────────
+  ok   a callout of a recorded coin that passed every check validates
+  ok   its checks come back in the page's order, each with its label
+  ok   links: pump.fun and Solscan only, from the checked addresses; never the coin's own links or image
+  ok   a coin with failed checks is listed as spotted, not refused: its verdict counts its red flags, each named in plain words
+  ok   a coin with none is a callout: "no red flags found"
+  ok   a result other than pass, fail or info is refused
+  ok   an "info" check (a silent source) is allowed
+  ok   …but only for the two checks whose source may be silent
+  ok   a failed not_cashcat check is refused outright: Popcat never lists a coin CashCat launched
+  ok   stats must be there and be counts and percentages, nothing else
+  ok   a missing check is refused
+  ok   a repeated check is refused
+  ok   an unknown check id is refused
+  ok   HTML in a stranger's coin name is refused
+  ok   a javascript: link in a check value is refused
+  ok   a bad address is refused
+  ok   base58 of the right length that is not 32 bytes is refused
+  ok   an invisible soft hyphen in a stranger's coin name is refused
+  ok   an image or link field is refused as unknown
+  ok   a venue other than pump.fun is refused
+  ok   a callout on a coin CashCat launched is refused, by mint and by creator wallet
+  ok   the file may carry picks and nothing else beside its coins
+
+POPCAT'S PICKS: EVERY WAY ONE CAN BE MALFORMED
+──────────────────────────────────────────────
+  ok   a well-formed pick passes, and knows where its window ends
+  ok   a window that does not start at 00, 06, 12 or 18 UTC
+  ok   a time outside its window
+  ok   checks older than six hours, or after the pick
+  ok   an impossible moment
+  ok   a draft over 200 characters
+  ok   a draft without the disclosure, or not opening with the coin's name and ticker
+  ok   a draft that says buy, moon, a price or a multiple
+  ok   HTML, a link scheme or a hidden character in a draft
+  ok   an unknown field (a link, an image)
+  ok   a bad address
+  ok   a pick of a coin CashCat launched
+  ok   a pick of a coin the file lists as spotted
+  ok   two picks for one window: the first is kept
+  ok   the same coin picked twice: the first is kept
+
+THE DATA MODULE: NEWEST FIRST, CAPPED, VALIDATED WHOLE
+──────────────────────────────────────────────────────
+  ok   an empty directory reads as no launches and no callouts
+  ok   two launches appended: newest first, in the file's own shape (no empty pool, no empty dev-buy tx)
+  ok   an entry the site would refuse is never written
+  ok   a callout appended and read back
+  ok   a newer check of the same coin replaces the older: one entry per coin
+  ok   a callout on a CashCat coin is never written
+  ok   a data file that does not validate stops the bot instead of being overwritten
+  ok   Popcat's memory keeps only well-formed entries
+  ok   the caps: 200 launches, 200 coins in Popcat's file, 28 picks
+  ok   capped: the newest 200 coins and the newest 28 picks stay, and the file validates
+  ok   the cap keeps the callouts of the last six hours ahead of newer spotted coins, so the next pick can still choose them
+  ok   Popcat's queue keeps only well-formed coins, with where the last listing reached and the last window tried
+
+test-bots-validators: 85 passed, 0 failed
+

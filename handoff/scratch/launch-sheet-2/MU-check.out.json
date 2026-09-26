@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Wafer the Silver Cat",
+   "ticker": "WAFERPAW",
+   "nameLen": 20,
+   "blurbLen": 137,
+   "descLen": 276,
+   "tickerStartsMU": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Wafer, a sleek silver-white cat whose co",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Wafer, a sleek silver-white cat whose coat throws a faint rainbow shimmer in the sun, sits still as glass on the round stone by the pond. A cat coin priced in MU. Not affiliated with Micron Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Stacker the Charcoal Cat",
+   "ticker": "BOXSTACK",
+   "nameLen": 24,
+   "blurbLen": 138,
+   "descLen": 277,
+   "tickerStartsMU": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stacker, a charcoal-grey cat with gold e",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Stacker, a charcoal-grey cat with gold eyes, naps atop a tower of stacked boxes in the sanctuary shed and knows which one hides his mouse. A cat coin priced in MU. Not affiliated with Micron Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Recall the Grid Tabby",
+   "ticker": "RECALLCAT",
+   "nameLen": 21,
+   "blurbLen": 139,
+   "descLen": 278,
+   "tickerStartsMU": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Recall, a grey mackerel tabby with ruler",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 6,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Recall, a grey mackerel tabby with ruler-straight stripes and green eyes, remembers where every garden treat is tucked and every kind face. A cat coin priced in MU. Not affiliated with Micron Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

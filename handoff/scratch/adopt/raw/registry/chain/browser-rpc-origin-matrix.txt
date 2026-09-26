@@ -1,0 +1,20 @@
+== https://solana-rpc.publicnode.com  (POST getSlot with Origin: https://catcoinsanctuary.com)
+HTTP/2 200 
+access-control-allow-origin: *
+body: {"jsonrpc":"2.0","result":450438015,"id":1}
+
+== https://solana.drpc.org  (POST getSlot with Origin: https://catcoinsanctuary.com)
+HTTP/2 400 
+access-control-allow-origin: *
+body: {"id":1,"jsonrpc":"2.0","error":{"message":"chain is not available on free plan, please upgrade to paid plan","code":35}}
+
+== https://rpc.ankr.com/solana  (POST getSlot with Origin: https://catcoinsanctuary.com)
+HTTP/2 403 
+access-control-allow-origin: *
+body: {"error":"message: API key is not allowed to access blockchain, json-rpc code: -32052, rest code: 403"}
+
+== https://api.mainnet-beta.solana.com  (POST getSlot with Origin: https://catcoinsanctuary.com)
+HTTP/2 403 
+access-control-allow-origin: *
+body:  {"jsonrpc":"2.0","error":{"code": 403,"message":"Access forbidden"}, "id": 1 } 
+

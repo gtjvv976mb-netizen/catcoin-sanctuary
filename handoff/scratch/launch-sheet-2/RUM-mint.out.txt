@@ -1,0 +1,64 @@
+https://api.mainnet-beta.solana.com 200 {
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "extensions": [
+  {
+   "extension": "metadataPointer",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "metadataAddress": "RUMsPfFZFnN1ZmGANwP7FNMJMjKH4m9RiMePrtVtLe7"
+   }
+  },
+  {
+   "extension": "permanentDelegate",
+   "state": {
+    "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+   }
+  },
+  {
+   "extension": "defaultAccountState",
+   "state": {
+    "accountState": "initialized"
+   }
+  },
+  {
+   "extension": "pausableConfig",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "paused": false
+   }
+  },
+  {
+   "extension": "confidentialTransferMint",
+   "state": {
+    "auditorElgamalPubkey": null,
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "autoApproveNewAccounts": false
+   }
+  },
+  {
+   "extension": "transferHook",
+   "state": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "programId": null
+   }
+  },
+  {
+   "extension": "scaledUiAmountConfig",
+   "state": {
+    "authority": "4ffj7SAFJJEnqPgbyrtL77MqtQ61MpzED9o8Ei94N1gj",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "extension": "tokenMetadata",
+   "state": {
+    "name": "RUM Group Inc. - Backpack Securities",
+    "symbol": "RUM"
+   }
+  }
+ ],
+ "mintAuthority": "4ffj7SAFJJEnqPgbyrtL77MqtQ61MpzED9o8Ei94N1gj",
+ "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+}

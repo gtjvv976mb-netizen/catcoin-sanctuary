@@ -1,0 +1,300 @@
+{
+ "results": [
+  {
+   "ticker": "PARLORPUFF",
+   "name": "Parlor Puff the Portrait Cat",
+   "nameLen": 28,
+   "blurbLen": 159,
+   "descLen": 270,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_nameSymbolBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "openai",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeClash": false,
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "all": [],
+    "symbolMatches": []
+   },
+   "jupVerifiedSymbolMatch": false
+  },
+  {
+   "ticker": "NEXTPAW",
+   "name": "Nextpaw the Guessing Cat",
+   "nameLen": 24,
+   "blurbLen": 154,
+   "descLen": 265,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_nameSymbolBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "openai",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeClash": false,
+   "jup": {
+    "status": 200,
+    "results": 2,
+    "all": [
+     {
+      "symbol": "$WHOSNEXT",
+      "name": "who's Next Presidential Brawl"
+     },
+     {
+      "symbol": "sextape",
+      "name": "one sextape creates wealth"
+     }
+    ],
+    "symbolMatches": []
+   },
+   "jupVerifiedSymbolMatch": false
+  },
+  {
+   "ticker": "MULLPAW",
+   "name": "Mull the Thinking Cat",
+   "nameLen": 21,
+   "blurbLen": 155,
+   "descLen": 266,
+   "endsWithDisclosure": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_nameSymbolBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "openai",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeClash": false,
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "all": [],
+    "symbolMatches": []
+   },
+   "jupVerifiedSymbolMatch": false
+  }
+ ],
+ "discPieces": {
+  "A cat coin priced in OPENAI.": [
+   {
+    "rule": "brand",
+    "term": "openai",
+    "field": "piece"
+   }
+  ],
+  "Not affiliated with OpenAI or StonkFun.": [
+   {
+    "rule": "brand",
+    "term": "openai",
+    "field": "piece"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "piece"
+   }
+  ],
+  "OpenAI": [
+   {
+    "rule": "brand",
+    "term": "openai",
+    "field": "piece"
+   }
+  ],
+  "StonkFun": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "piece"
+   }
+  ],
+  "No intrinsic value; not financial advice.": [
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "piece"
+   }
+  ]
+ },
+ "nameSearch": {
+  "Parlor Puff": [],
+  "ParlorPuff": [],
+  "Parlor": [
+   {
+    "symbol": "Parlor",
+    "name": "Parlor"
+   },
+   {
+    "symbol": "Parlor",
+    "name": "Parlor"
+   },
+   {
+    "symbol": "BigEgypt",
+    "name": "Big Egypt Parlor Sphinx"
+   },
+   {
+    "symbol": "Parlor",
+    "name": "parlor"
+   },
+   {
+    "symbol": "PARLWORN",
+    "name": "Parlworn"
+   },
+   {
+    "symbol": "TRUMPLORD",
+    "name": "TRUMP WAR LORD ON SOLANA"
+   },
+   {
+    "symbol": "Pearlwort",
+    "name": "The Immortal Plant"
+   },
+   {
+    "symbol": "Pearlwort",
+    "name": "The Immortal Plant"
+   },
+   {
+    "symbol": "REDS",
+    "name": "Pack of Marlboro Reds"
+   },
+   {
+    "symbol": "marlboro",
+    "name": "a used pack of marlboro reds"
+   },
+   {
+    "symbol": "PolyMB",
+    "name": "Polymarlboro's"
+   },
+   {
+    "symbol": "PINK",
+    "name": "Pink Marlboro"
+   },
+   {
+    "symbol": "EGGPARLOR",
+    "name": "​​33.016079 -96.509586"
+   },
+   {
+    "symbol": "LONER",
+    "name": "Popular Loner"
+   },
+   {
+    "symbol": "BABY",
+    "name": "SpaceWarlordBabyTradingSimulator"
+   },
+   {
+    "symbol": "CWLT",
+    "name": "Crypto Warlord Token"
+   },
+   {
+    "symbol": "PAW",
+    "name": "Post Apocalyptic Warlord"
+   },
+   {
+    "symbol": "Marlon",
+    "name": "Please Marlon Pull Her"
+   },
+   {
+    "symbol": "pleasemarlon",
+    "name": "Please Marlon pull her man"
+   },
+   {
+    "symbol": "Marlon",
+    "name": "Please Marlon Pull Her"
+   }
+  ]
+ }
+}

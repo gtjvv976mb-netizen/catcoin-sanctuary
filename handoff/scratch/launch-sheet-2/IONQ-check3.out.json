@@ -1,0 +1,165 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Beadline the Silver-Spotted Cat",
+   "ticker": "BEADLINE",
+   "nameLen": 31,
+   "blurbLen": 149,
+   "descLen": 277,
+   "tickerHasIonRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Beadline, a pale silver shorthair with a",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 9,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Beadline, a pale silver shorthair with a neat row of small round slate-blue spots down her back, naps on cool flagstones and hops the stones at dusk. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Rime the Blue-Point Cat",
+   "ticker": "RIMEPOINT",
+   "nameLen": 23,
+   "blurbLen": 151,
+   "descLen": 279,
+   "tickerHasIonRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Rime, an ice-white cat with slate-blue e",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 9,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Rime, an ice-white cat with slate-blue ears, mask, paws and tail and bright blue eyes, sits so still on the coolest shady stone that moths land by him. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Flicker the Slate-Blue Cat",
+   "ticker": "DOTCHASE",
+   "nameLen": 26,
+   "blurbLen": 147,
+   "descLen": 275,
+   "tickerHasIonRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Flicker, a slate-blue shorthair with pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 5,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Flicker, a slate-blue shorthair with pale green eyes, chases the tiny dancing dot of light along the garden wall each evening and never catches it. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

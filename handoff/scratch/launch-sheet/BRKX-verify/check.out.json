@@ -1,0 +1,242 @@
+[
+ {
+  "name": "Moat Cat",
+  "ticker": "MOATCAT",
+  "lengths": {
+   "name": 8,
+   "ticker": 7,
+   "description": 270,
+   "body": 147
+  },
+  "limitsOk": true,
+  "tickerFormat": true,
+  "memeTicker": false,
+  "copycatOf": null,
+  "disclosureExactAtEnd": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "stockCatRefusals_withBRKrow": [],
+  "stockCatRefusals_shippedNotes": [
+   "pair_terms_missing: BRK.Bx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+  ],
+  "checkTerms_pair_fullDescMinusDisclosure": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiterSearch": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "sameSymbolRows": []
+  },
+  "verifiedIndexSize": 3694,
+  "inVerifiedIndexSymbol": false
+ },
+ {
+  "name": "Slow Purr",
+  "ticker": "SLOWPURR",
+  "lengths": {
+   "name": 9,
+   "ticker": 8,
+   "description": 274,
+   "body": 151
+  },
+  "limitsOk": true,
+  "tickerFormat": true,
+  "memeTicker": false,
+  "copycatOf": null,
+  "disclosureExactAtEnd": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "stockCatRefusals_withBRKrow": [],
+  "stockCatRefusals_shippedNotes": [
+   "pair_terms_missing: BRK.Bx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+  ],
+  "checkTerms_pair_fullDescMinusDisclosure": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiterSearch": {
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "sameSymbolRows": []
+  },
+  "verifiedIndexSize": 3694,
+  "inVerifiedIndexSymbol": false
+ },
+ {
+  "name": "Two Cats For A Dog",
+  "ticker": "TWOFORDOG",
+  "lengths": {
+   "name": 18,
+   "ticker": 9,
+   "description": 276,
+   "body": 153
+  },
+  "limitsOk": true,
+  "tickerFormat": true,
+  "memeTicker": false,
+  "copycatOf": null,
+  "disclosureExactAtEnd": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "stockCatRefusals_withBRKrow": [],
+  "stockCatRefusals_shippedNotes": [
+   "pair_terms_missing: BRK.Bx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+  ],
+  "checkTerms_pair_fullDescMinusDisclosure": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiterSearch": {
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "sameSymbolVerified": 0,
+   "sameSymbolRows": []
+  },
+  "verifiedIndexSize": 3694,
+  "inVerifiedIndexSymbol": false
+ }
+]

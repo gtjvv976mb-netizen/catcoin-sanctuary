@@ -1,0 +1,51 @@
+
+THE ON-CHAIN IDL
+────────────────
+  ok   create_v2's discriminator is sha256("global:create_v2")[0..8], and verified.mjs's
+  ok   collect_creator_fee's likewise
+  ok   sixteen accounts, in the order pumpfun.mjs names them
+  ok   eight arguments: name, symbol, uri, creator, and four options
+  ok   the option types are one bool and one u64 wide
+  ok   the IDL's seeds give verified.mjs's fixed addresses
+  ok   the IDL was read from the program's own IDL account, with a digest of what was read
+
+ELEVEN REAL create_v2 INSTRUCTIONS
+──────────────────────────────────
+  ok   every account of all 11 re-derives, address and flags (176 accounts)
+  ok   every sample with the full eleven-byte option tail re-encodes byte for byte (7 of 7)
+  ok   in every sample the creator argument is the signing user
+  ok   CashCat's own tail is the all-zero form most samples sent
+
+GLOBAL
+──────
+  ok   reserves as the live IDL decodes them: 1,073,000,000,000,000 / 30 SOL / 793,100,000,000,000
+  ok   create_v2 is enabled
+  ok   eight standard, eight mayhem and eight buyback fee recipients
+
+THE CREATOR-FEE CLAIM
+─────────────────────
+  ok   the recorded claim's five accounts are CashCat's for that creator (the vault is PDA ["creator-vault", creator])
+  ok   its data is the bare discriminator
+  ok   the creator signed it and was paid
+
+CASHCAT'S OWN create_v2, AS SIMULATED ON MAINNET
+────────────────────────────────────────────────
+  ok   rebuilt from the same inputs, the message is the recorded one, byte for byte
+  ok   the simulation succeeded, logged CreateV2, and spent inside the launch budget  — 5549700 lamports, 94684 units
+
+PUMP.FUN CUSTOM PAIRS (A CURVE QUOTED IN A STOCK)
+─────────────────────────────────────────────────
+  ok   the real GLDx-quoted create_v2's twenty accounts are the builder's, flags included  — 20 accounts
+  ok   the twentieth is the QuoteControl PDA ["quote-control"]
+  ok   QuoteControl decodes with the live IDL's layout and lists SPYx and GLDx  — 175 quote mints
+  ok   CashCat's SPYx-quoted create_v2 rebuilds to the simulated bytes, and the simulation succeeded inside the budget  — 7109760 lamports
+
+THE OPTIONAL DEV BUY
+────────────────────
+  ok   built against a recorded curve, the dev buy passes the dev-buy check  — true
+  ok   it is a buy_v2 whose spend ceiling is exactly the dev buy, for a positive amount
+  ok   a ceiling over the cap is refused
+  ok   a dev buy on a coin CashCat did not create is refused
+
+test-bots-pumpfun: 27 passed, 0 failed
+

@@ -1,0 +1,72 @@
+
+PROVENANCE
+──────────
+  ok   the provenance names the upstream repository  — https://github.com/gtjvv976mb-netizen/Claude-Company
+  ok   the provenance names a 40-character commit  — 349c97b22a51dd227c7f24e9aab1c4bcf5489bd9
+  ok   the provenance lists exactly the modules the sync copies  — 20 of 20
+
+THE BYTES
+─────────
+  ok   entry-sizing.mjs matches the manifest  — 3757952659b6
+  ok   network-fee-budget.mjs matches the manifest  — 3052c05141dd
+  ok   snipe-book.mjs matches the manifest  — 4094db82bfc8
+  ok   snipe-curve.mjs matches the manifest  — d1bf058189bb
+  ok   snipe-entry.mjs matches the manifest  — 31cd725daa19
+  ok   snipe-lane.mjs matches the manifest  — fbca858b49fe
+  ok   snipe-policy.mjs matches the manifest  — 58a7c2d8a8e5
+  ok   snipe-shadow.mjs matches the manifest  — 4f9d484e711e
+  ok   snipe-socials.mjs matches the manifest  — ed0c15118a63
+  ok   snipe-venue-pumpfun.mjs matches the manifest  — 8c6a90874ac7
+  ok   snipe-venue.mjs matches the manifest  — 55a8ec8a34a3
+  ok   sol-usd-oracle.mjs matches the manifest  — bb84cdf6ce8d
+  ok   strategy.mjs matches the manifest  — 1c37182f8fe1
+  ok   token2022.mjs matches the manifest  — e35cca9280a6
+  ok   trade-policy.mjs matches the manifest  — 15521eeb35bd
+  ok   shadow-sink.mjs matches the manifest  — e96c607e7588
+  ok   grade-entry-gates.mjs matches the manifest  — d173e208034f
+  ok   test-snipe-stall-default.mjs matches the manifest  — 9a176cbf1bec
+  ok   test-snipe-quote-mint.mjs matches the manifest  — f3c1859ccb08
+  ok   fixtures/pumpfun-xstock-quote.json matches the manifest  — e286d34a2d0b
+  ok   nothing else lives under vendor/executor, at any depth  — clean (22 files)
+  ok   a vendored name one folder down is a fixture, never code  — fixtures/pumpfun-xstock-quote.json
+  ok   jupiter.mjs is the shim, byte for byte — a stand-in, named as one in the provenance  — jupiter.mjs
+
+THE IMPORTS
+───────────
+  ok   src/background.mjs imports the executor only through vendor/  — ok
+  ok   src/content.mjs imports the executor only through vendor/  — ok
+  ok   src/injected.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/agent-brain.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/agent-market.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/agent-risk.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/agent-runner.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/agent-strategy.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/cashcat-draft.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/cashcat-logo.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/cashcat-tab.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/config.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/crying-cat.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/engine.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/jupiter-swap.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/popcat-tab.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/protocol.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/rpc.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/session-wallet.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/stock-cat-notes.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/stockcats.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/tx.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/xstock-discovery.mjs imports the executor only through vendor/  — ok
+  ok   src/lib/xstock-lane.mjs imports the executor only through vendor/  — ok
+  ok   src/options/cats.mjs imports the executor only through vendor/  — ok
+  ok   src/options/options.mjs imports the executor only through vendor/  — ok
+  ok   src/popup/cats.mjs imports the executor only through vendor/  — ok
+  ok   src/popup/popup.mjs imports the executor only through vendor/  — ok
+  ok   src/popup/stockcats.mjs imports the executor only through vendor/  — ok
+  ok   src/shims/buffer-inject.mjs imports the executor only through vendor/  — ok
+  ok   src/shims/jupiter.mjs imports the executor only through vendor/  — ok
+  ok   src/shims/node-crypto.mjs imports the executor only through vendor/  — ok
+  ok   src/welcome/welcome.mjs imports the executor only through vendor/  — ok
+  ok   every relative import inside the vendored closure is itself vendored (jupiter.mjs is the stand-in)  — closed
+
+60 passed, 0 failed
+

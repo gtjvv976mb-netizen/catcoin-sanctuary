@@ -1,0 +1,19 @@
+
+site/assets/launches.json
+─────────────────────────
+  ok   it parses and is { "launches": [...] } and nothing else
+  ok   every entry passes the validator (0 on file)
+  ok   every launch names its transaction, its mint and CashCat's wallet
+  ok   one wallet made every launch
+
+site/assets/callouts.json
+─────────────────────────
+  ok   it parses and is { "callouts": [...], "picks": [...] } and nothing else
+  ok   every coin and every pick passes the validator, and none is CashCat's (0 coins, 0 picks on file)
+
+NOTHING ELSE OF THE BOTS' IS PUBLISHED
+──────────────────────────────────────
+  ok   Popcat's memory (popcat-state.json) is not in the site
+
+test-bots-data: 7 passed, 0 failed
+

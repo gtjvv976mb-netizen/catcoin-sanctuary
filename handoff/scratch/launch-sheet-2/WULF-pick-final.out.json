@@ -1,0 +1,196 @@
+{
+ "disclosureOnly_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclaimerLen": 131,
+ "results": [
+  {
+   "name": "Warmnap the Graphite Cat",
+   "ticker": "WARMNAP",
+   "nameLen": 24,
+   "blurbLen": 140,
+   "descLen": 272,
+   "descBytes": 272,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeBanned": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Warmnap, a sleek graphite-grey shorthair",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "description": "Warmnap, a sleek graphite-grey shorthair with pale gold eyes, spends every afternoon stretched out on the warm air grate by the garden wall. A cat coin priced in WULF. Not affiliated with TeraWulf, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Warmnap the Graphite Cat",
+   "ticker": "WARMNAP",
+   "nameLen": 24,
+   "blurbLen": 148,
+   "descLen": 280,
+   "descBytes": 280,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeBanned": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Warmnap, a sleek graphite-grey shorthair",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "description": "Warmnap, a sleek graphite-grey shorthair with pale gold eyes, dozes on the warm air grate by the garden wall and stretches out in the toasty breeze. A cat coin priced in WULF. Not affiliated with TeraWulf, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "jup": {
+  "WARMNAP": {
+   "status": 200,
+   "results": 0,
+   "top": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "Warmnap": {
+   "status": 200,
+   "results": 0,
+   "top": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "WARMNAPS": {
+   "status": 200,
+   "results": 0,
+   "top": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  }
+ }
+}

@@ -1,0 +1,368 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Hunch the Cream Tabby",
+   "ticker": "HUNCH",
+   "nameLen": 21,
+   "blurbLen": 152,
+   "descLen": 282,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hunch, a fluffy cream-ginger tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "HUNCH",
+     "name": "Hunch",
+     "id": "Cn2qYh4jZZDGEddQsAQBhy63YTW5m6inWqq6xhkxpump",
+     "mcap": 3309.0796704675577
+    },
+    {
+     "symbol": "HUNCH",
+     "name": "Hunchie Coin",
+     "id": "BtUs7v1Bm94phtvm74F3vyTDzribqeSQ9CFFofFYpump",
+     "mcap": 3158.700244248992
+    },
+    {
+     "symbol": "HUNCH",
+     "name": "HunchBot",
+     "id": "6mANbYRZ6y6WJXeaJ3xwwaouZTE5kDb3RpCyFR4Lpump",
+     "mcap": 3321.694228852816
+    },
+    {
+     "symbol": "Hunch",
+     "name": "Hunch",
+     "id": "FRm3m5gTVr2XsBa9cQFcgwwGx4XA7mLaMAnSx4r1pump",
+     "mcap": 3197.710450253746
+    },
+    {
+     "symbol": "Hunch",
+     "name": "Hunch",
+     "id": "EMkFb4eL9HcHPpgZyr4Ldo4N2codPdbj9qJGRSi4pump",
+     "mcap": 3314.911155854142
+    },
+    {
+     "symbol": "HUNCH",
+     "name": "Hunch",
+     "id": "3sVKPhHDqZV4mQDCf1vjp7Gh1JwRCDk2BqPkwJEPpump",
+     "mcap": 3335.731922017711
+    },
+    {
+     "symbol": "Hunch",
+     "name": "Hunch",
+     "id": "8xD2j4T591gcUACALnmaJ7RYGHnkVX7oSksYVq6Fpump",
+     "mcap": 3220.8785347998473
+    },
+    {
+     "symbol": "HUNCH",
+     "name": "Hunch",
+     "id": "9t8fsUYVqusJ2mft6SLkczKhS91GNq1D3cAJRJoypump",
+     "mcap": 3436.6439645205405
+    },
+    {
+     "symbol": "HUNCH",
+     "name": "Hunch",
+     "id": "BqXveaxJzY3GqiAwHmb2KG5bRQNiBR9KUdSiadzmpump",
+     "mcap": 3317.238530169353
+    },
+    {
+     "symbol": "Hunch",
+     "name": "Hunch the mining prodigy ACT II",
+     "id": "GdoSz2e21Cf9zAE4PYTcBUy3cvnpeorLXk5oHjebpump",
+     "mcap": 3304.4606969730025
+    },
+    {
+     "symbol": "HUNCH",
+     "name": "Hunch",
+     "id": "HCay926KRr7cuSrpwM5CJ87LmKw8h8hbrp42G8mMpump",
+     "mcap": 3224.182517897184
+    },
+    {
+     "symbol": "HUNCH",
+     "name": "Elon Hunch",
+     "id": "8FDkoX6bv7efjokDj3GFC9roi3RgykEmBYiFxxNrpump",
+     "mcap": 2820.1046415085616
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Hunch, a fluffy cream-ginger tabby with a round face and big amber eyes, sits by the garden gate each morning and guesses which path visitors will take. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tossup the Cream Cat",
+   "ticker": "TOSSUP",
+   "nameLen": 20,
+   "blurbLen": 150,
+   "descLen": 280,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tossup, a soft pale-cream cat with a rou",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "TOSSUP",
+     "name": "TossUp",
+     "id": "C9hrUQER5AFL7RvRRgqTpVamsZrhgANm2BjJoo1Dpump",
+     "mcap": 2839.030554297081
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Tossup, a soft pale-cream cat with a round face and wide amber eyes, sits between two flowerpots for ages deciding which to nap in, then naps in both. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Drizzle the Butterscotch Cat",
+   "ticker": "DRIZZLE",
+   "nameLen": 28,
+   "blurbLen": 150,
+   "descLen": 280,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Drizzle, a round-faced butterscotch tabb",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "DRIZZLE",
+     "name": "TRIPPY DRIZZLE DEGEN ",
+     "id": "7Q9avpfM1RM9yAD65GrjWEM78F45KQwfED2TJRQrpump",
+     "mcap": 3649.689897278249
+    },
+    {
+     "symbol": "DRIZZLE",
+     "name": "The Drizzle",
+     "id": "Hg2uXoRmi9aDkeAYfpLGVQtcoGyj2zF1NaduAqA3pump"
+    },
+    {
+     "symbol": "DRIZZLE",
+     "name": "DRIZZLE.EXE",
+     "id": "3jadNsT3VNVkCs4vDfkQPAYRwA8g3Mr7AoUpQcSBpump"
+    },
+    {
+     "symbol": "DRIZZLE",
+     "name": "Drizzle",
+     "id": "CJ7YC2iLqtrqnXci9fHPtXi8P5enFHwXn1kJfyyWpump"
+    },
+    {
+     "symbol": "DRIZZLE",
+     "name": "The Drizzler",
+     "id": "AUNWzYRXNaFgViVUkeyA5HLqa17xmQEWjvmNLHHFpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Drizzle, a round-faced butterscotch tabby with big amber eyes, tucks under the porch just before each rain shower and waits there for the first drops. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "ext": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   {
+    "extension": "permanentDelegate"
+   },
+   {
+    "extension": "defaultAccountState"
+   },
+   {
+    "extension": "transferFeeConfig",
+    "state": {
+     "older": {
+      "epoch": 1039,
+      "maximumFee": 18446744073709552000,
+      "transferFeeBasisPoints": 100
+     },
+     "newer": {
+      "epoch": 1043,
+      "maximumFee": 18446744073709552000,
+      "transferFeeBasisPoints": 300
+     }
+    }
+   },
+   {
+    "extension": "confidentialTransferMint"
+   },
+   {
+    "extension": "confidentialTransferFeeConfig"
+   },
+   {
+    "extension": "transferHook"
+   },
+   {
+    "extension": "scaledUiAmountConfig"
+   },
+   {
+    "extension": "metadataPointer"
+   },
+   {
+    "extension": "pausableConfig"
+   },
+   {
+    "extension": "tokenMetadata"
+   }
+  ],
+  "jup": [
+   {
+    "symbol": "POLYMARKET",
+    "name": "Polymarket PreStocks",
+    "tags": [
+     "verified",
+     "stocks",
+     "rwa",
+     "prestocks",
+     "token-2022"
+    ],
+    "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+    "isVerified": true
+   }
+  ],
+  "epoch": 1042
+ }
+}

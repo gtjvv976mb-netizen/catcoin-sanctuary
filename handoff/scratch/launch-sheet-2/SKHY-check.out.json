@@ -1,0 +1,269 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Clockout the Ginger Cat",
+   "ticker": "CLOCKPAW",
+   "nameLen": 23,
+   "blurbLen": 143,
+   "descLen": 275,
+   "tickerStartsSK": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Clockout, a fluffy ginger tabby with fai",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": 0,
+    "verifiedMatch": false,
+    "matches": []
+   },
+   "description": "Clockout, a fluffy ginger tabby with faint forehead stripes and big dark eyes, wears a teal collared shirt and trots home the moment work ends. A cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Brookspot the Spotted Cat",
+   "ticker": "BROOKSPOT",
+   "nameLen": 25,
+   "blurbLen": 140,
+   "descLen": 272,
+   "tickerStartsSK": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Brookspot, a tawny house cat with dark l",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": 0,
+    "verifiedMatch": false,
+    "matches": []
+   },
+   "description": "Brookspot, a tawny house cat with dark leopard-like spots and white streaks by her eyes, keeps watch from the reeds by the sanctuary stream. A cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Bubble the Helmet Cat",
+   "ticker": "BUBBLEHAT",
+   "nameLen": 21,
+   "blurbLen": 136,
+   "descLen": 268,
+   "tickerStartsSK": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Bubble, a white cat with one red-orange ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 13,
+    "symbolMatches": 0,
+    "verifiedMatch": false,
+    "matches": []
+   },
+   "description": "Bubble, a white cat with one red-orange patch over his eye and ear, wears a round clear helmet and checks the garden for specks of dust. A cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "alt": {
+  "CLOCKOUT": {
+   "status": 200,
+   "results": 20,
+   "symbolMatches": 17,
+   "verifiedMatch": false,
+   "matches": [
+    {
+     "symbol": "CLOCKOUT",
+     "name": "Clocked Out",
+     "id": "8NHMCoBLK5HCg9vPGNuBYQLG6fQoxf3cQj46EKokpump"
+    },
+    {
+     "symbol": "CLOCKOUT",
+     "name": "Clocked Out",
+     "id": "DuAujkLLqHGsubhZ87BQTTHE2iRHyokkgYNypFVDpump"
+    },
+    {
+     "symbol": "CLOCKOUT",
+     "name": "Never Working Again",
+     "id": "4Ka8fHcuNcvHbXcmxzqnWc35PX9iCvLgwpcjTnQApump"
+    },
+    {
+     "symbol": "CLOCKOUT",
+     "name": "CLOCKED OUT",
+     "id": "77Vrih6TXgaCANnyoUDy9pYL99216pjCwitRfgZ3pump"
+    },
+    {
+     "symbol": "CLOCKOUT",
+     "name": "Clocked Out",
+     "id": "52xgsLFvMxaAhgQGigymwgx8GgrR98UXzjY9sdXbBAGS"
+    }
+   ]
+  }
+ }
+}

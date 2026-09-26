@@ -1,0 +1,190 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclosureLegalName": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   },
+   {
+    "rule": "link",
+    "term": "1-800-FLOWERS.COM",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Petalpuff the White Cat",
+   "ticker": "PETALPUFF",
+   "nameLen": 23,
+   "blurbLen": 141,
+   "descLen": 278,
+   "tickerHasFlwRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Petalpuff, a round-faced white kitten wi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Petalpuff, a round-faced white kitten with a thick, ruffled coat as crisp as fresh carnations, sits among pink and lavender blooms and purrs. A cat coin priced in FLWS. Not affiliated with 1-800-Flowers, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Posy the Basket Cat",
+   "ticker": "POSYPAWS",
+   "nameLen": 19,
+   "blurbLen": 141,
+   "descLen": 278,
+   "tickerHasFlwRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Posy, a small snow-white cat with green ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Posy, a small snow-white cat with green eyes and a pink nose, naps curled in a woven handled basket lined with pink and purple garden blooms. A cat coin priced in FLWS. Not affiliated with 1-800-Flowers, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Lilac the Doorstep Cat",
+   "ticker": "LILACPOINT",
+   "nameLen": 22,
+   "blurbLen": 141,
+   "descLen": 278,
+   "tickerHasFlwRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lilac, a cream-white cat with soft lilac",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Lilac, a cream-white cat with soft lilac-grey ears, mask, paws and tail, waits on the garden doorstep to sniff each new bouquet that arrives. A cat coin priced in FLWS. Not affiliated with 1-800-Flowers, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

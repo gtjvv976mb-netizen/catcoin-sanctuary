@@ -1,0 +1,404 @@
+{
+ "disclosure": "A cat coin priced in CRWV. Not affiliated with CoreWeave, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "disclosureOnly_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "which": "draft",
+   "name": "Racknap the Slate Cat",
+   "ticker": "RACKNAP",
+   "nameLen": 21,
+   "blurbLen": 125,
+   "descLen": 258,
+   "tickerRegex": true,
+   "tickerHasStockRoot": false,
+   "catMemeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Racknap, a plush slate-grey cat with gre",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "sheetClash": [],
+   "description": "Racknap, a plush slate-grey cat with green eyes that glow like little status lights, naps on the warmest stone in the garden. A cat coin priced in CRWV. Not affiliated with CoreWeave, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "jup_RACKNAP": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "firstFew": []
+   },
+   "jup_Racknap": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "firstFew": []
+   }
+  },
+  {
+   "which": "draft",
+   "name": "Cabletail the Silver Tabby Cat",
+   "ticker": "CABLETAIL",
+   "nameLen": 30,
+   "blurbLen": 140,
+   "descLen": 273,
+   "tickerRegex": true,
+   "tickerHasStockRoot": false,
+   "catMemeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cabletail, a lean silver tabby whose fin",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "sheetClash": [],
+   "description": "Cabletail, a lean silver tabby whose fine blue-grey stripes run like bundled cables, threads through the flower beds and never gets tangled. A cat coin priced in CRWV. Not affiliated with CoreWeave, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "jup_CABLETAIL": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "firstFew": [
+     "LARP|VCAlbemarleRetardioMiladyPNganoo|v=undefined"
+    ]
+   },
+   "jup_Cabletail": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "firstFew": [
+     "LARP|VCAlbemarleRetardioMiladyPNganoo|v=undefined"
+    ]
+   }
+  },
+  {
+   "which": "draft",
+   "name": "Allnight the Tuxedo Cat",
+   "ticker": "ALLNIGHT",
+   "nameLen": 23,
+   "blurbLen": 136,
+   "descLen": 269,
+   "tickerRegex": true,
+   "tickerHasStockRoot": false,
+   "catMemeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Allnight, a tuxedo cat with a white ches",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "sheetClash": [],
+   "description": "Allnight, a tuxedo cat with a white chest and white paws, keeps watch over the sleeping garden from dusk to dawn and never switches off. A cat coin priced in CRWV. Not affiliated with CoreWeave, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "jup_ALLNIGHT": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "firstFew": [
+     "PUG|Pugs all Night|v=undefined",
+     "iran|its ripping all night|v=undefined",
+     "all night|livestreaming all night|v=undefined",
+     "iran|i run all night|v=undefined",
+     "Smokez|Bounties all night n everyday|v=undefined",
+     "nighter|all nighter|v=undefined"
+    ]
+   },
+   "jup_Allnight": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "firstFew": [
+     "PUG|Pugs all Night|v=undefined",
+     "iran|its ripping all night|v=undefined",
+     "all night|livestreaming all night|v=undefined",
+     "iran|i run all night|v=undefined",
+     "Smokez|Bounties all night n everyday|v=undefined",
+     "nighter|all nighter|v=undefined"
+    ]
+   }
+  },
+  {
+   "which": "FIXED PICK",
+   "name": "Cabletail the Charcoal Tabby",
+   "ticker": "CABLETAIL",
+   "nameLen": 28,
+   "blurbLen": 160,
+   "descLen": 293,
+   "tickerRegex": true,
+   "tickerHasStockRoot": false,
+   "catMemeTicker": false,
+   "endsWithDisclosure": true,
+   "checkProposal_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cabletail, a lean charcoal tabby whose b",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "sheetClash": [],
+   "description": "Cabletail, a lean charcoal tabby whose bold black stripes run like bundled cables down to a ringed tail, threads through the flower beds and never gets tangled. A cat coin priced in CRWV. Not affiliated with CoreWeave, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "jup_CABLETAIL": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "firstFew": [
+     "LARP|VCAlbemarleRetardioMiladyPNganoo|v=undefined"
+    ]
+   },
+   "jup_Cabletail": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "firstFew": [
+     "LARP|VCAlbemarleRetardioMiladyPNganoo|v=undefined"
+    ]
+   }
+  }
+ ],
+ "usedCount": 83
+}

@@ -1,0 +1,176 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Vent the Graphite Cat",
+   "ticker": "WARMVENT",
+   "nameLen": 21,
+   "blurbLen": 143,
+   "descLen": 275,
+   "tickerHasWulfRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Vent, a sleek graphite-grey shorthair wi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Vent, a sleek graphite-grey shorthair with pale gold eyes, curls up on the warm garden vent where the air always hums, and purrs along in time. A cat coin priced in WULF. Not affiliated with TeraWulf, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Lakeglass the Blue-Grey Cat",
+   "ticker": "LAKEGLASS",
+   "nameLen": 27,
+   "blurbLen": 151,
+   "descLen": 283,
+   "tickerHasWulfRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lakeglass, a stocky blue-grey cat with a",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Lakeglass, a stocky blue-grey cat with a white chest and paws and deep copper eyes, sits on the lakeside stones at dusk and watches the water go still. A cat coin priced in WULF. Not affiliated with TeraWulf, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Digby the Gold-Striped Cat",
+   "ticker": "DIGBYPAW",
+   "nameLen": 26,
+   "blurbLen": 156,
+   "descLen": 288,
+   "tickerHasWulfRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber stripes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber stripes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Digby, a lean golden-ginger tabby with d",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Digby, a lean golden-ginger tabby with deep amber stripes and green eyes, digs neat little holes all over the flowerbeds, then sits back to admire each one. A cat coin priced in WULF. Not affiliated with TeraWulf, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

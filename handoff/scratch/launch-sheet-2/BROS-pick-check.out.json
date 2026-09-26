@@ -1,0 +1,352 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "othersCount": 296,
+ "results": [
+  {
+   "name": "Knitcap the Black Cat",
+   "ticker": "KNITCAP",
+   "nameLen": 21,
+   "blurbLen": 144,
+   "descLen": 278,
+   "asciiOnly": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "dupElsewhere": [],
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Knitcap, a scruffy black cat with big ye",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "KNITCAP": {
+     "status": 200,
+     "results": 3,
+     "all": [
+      {
+       "symbol": "OSKRS",
+       "name": "Old School Knight RuneScape",
+       "holders": 10,
+       "mcap": 0
+      },
+      {
+       "symbol": "WonietzPSY",
+       "name": "Wojak Nietzschean Psyop Anime",
+       "holders": 2,
+       "mcap": 0
+      },
+      {
+       "symbol": "TSW",
+       "name": "tokenized stock wrappers",
+       "holders": 37,
+       "mcap": 0
+      }
+     ],
+     "symbolMatches": [],
+     "verifiedMatch": false
+    },
+    "KNIT": {
+     "status": 200,
+     "results": 20,
+     "all": [
+      {
+       "symbol": "KNIT",
+       "name": "knitted",
+       "holders": 3,
+       "mcap": 3288
+      },
+      {
+       "symbol": "Swetter",
+       "name": "Knittedswetter ",
+       "holders": 1,
+       "mcap": 3114
+      },
+      {
+       "symbol": "KNIT",
+       "name": "KNIT-TEST",
+       "holders": 2,
+       "mcap": 3290
+      },
+      {
+       "symbol": "KNIT",
+       "name": "knitted",
+       "holders": 1,
+       "mcap": 3105
+      },
+      {
+       "symbol": "KNIT",
+       "name": "Knit Coin",
+       "holders": 1,
+       "mcap": 3117
+      },
+      {
+       "symbol": "KNIT",
+       "name": "Knitcoin",
+       "holders": 3,
+       "mcap": 2962
+      },
+      {
+       "symbol": "DATBOI",
+       "name": "Knit Dat Boi",
+       "holders": 1,
+       "mcap": 2993
+      },
+      {
+       "symbol": "KNITLAP",
+       "name": "KnitLap",
+       "holders": 1,
+       "mcap": 2966
+      }
+     ],
+     "symbolMatches": [],
+     "verifiedMatch": false
+    }
+   },
+   "description": "Knitcap, a scruffy black cat with big yellow eyes and a pink nose, wears a rust-orange knit beanie and grins at the first frosty autumn morning. A cat coin priced in BROS. Not affiliated with Dutch Bros, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Bristle the Yellow-Eyed Cat",
+   "ticker": "BRISTLEPAW",
+   "nameLen": 27,
+   "blurbLen": 137,
+   "descLen": 271,
+   "asciiOnly": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "dupElsewhere": [],
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Bristle, a shaggy black cat with round y",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "BRISTLEPAW": {
+     "status": 200,
+     "results": 0,
+     "all": [],
+     "symbolMatches": [],
+     "verifiedMatch": false
+    }
+   },
+   "description": "Bristle, a shaggy black cat with round yellow eyes, puffs her tail up to twice its size whenever the autumn wind rattles the garden gate. A cat coin priced in BROS. Not affiliated with Dutch Bros, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Nightfuzz the Beanie Cat",
+   "ticker": "NIGHTFUZZ",
+   "nameLen": 24,
+   "blurbLen": 142,
+   "descLen": 276,
+   "asciiOnly": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "dupElsewhere": [],
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Nightfuzz, a fluffy black cat with golde",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "NIGHTFUZZ": {
+     "status": 200,
+     "results": 0,
+     "all": [],
+     "symbolMatches": [],
+     "verifiedMatch": false
+    }
+   },
+   "description": "Nightfuzz, a fluffy black cat with golden-yellow eyes and a toothy grin, tugs an orange knit cap over one ear and waits on the fence for dawn. A cat coin priced in BROS. Not affiliated with Dutch Bros, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

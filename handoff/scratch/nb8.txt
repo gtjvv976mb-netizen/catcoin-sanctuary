@@ -1,0 +1,318 @@
+=================== FLWS
+# FLWS - 1-800-FLOWERS.COM, Inc. (Nasdaq: FLWS)
+
+## Cat research pass (2026-09-25)
+
+Tooling: the session's WebSearch budget was exhausted (200/200). Searches ran through Google News RSS
+(news.google.com/rss/search, article links decoded with tools/gnews2.py), plus direct curl fetches of the company's own
+sitemaps and pages. Bing/Brave/DDG/Startpage/Yahoo/Mojeek were blocked or returned junk; archive.org unreachable from this sandbox.
+
+### Queries run (Google News RSS)
+- "1-800-Flowers" cat (38 items); "1-800-Flowers" cat mascot (0); "1-800-Flowers" mascot (3, none a cat: MediaPost MomVerse, Mets Kiss Cam)
+- "1-800-Flowers" kitten; "1-800-Flowers" "office cat" (0); "1-800-Flowers" "Hello Kitty" (3, unrelated)
+- "1-800-Flowers" Garfield OR Pusheen OR "Grumpy Cat" OR Doraemon (2, unrelated)
+- "1-800-Flowers" lion OR tiger OR jaguar OR panther OR leopard (28; only Disney Mickey/Minnie vase, Lion King Broadway noise)
+- "1-800-Flowers" "National Cat Day"; "1-800-Flowers" "black cat"; "Fabulous Feline" 1-800-Flowers; "Fabulous Feline" flowers
+- "Jim McCann" cat 1-800-Flowers; "Chris McCann" cat; "1-800-Flowers" Kittenish; "Harry & David" cat mascot; "1800flowers" cat arrangement
+### Official sources fetched (curl)
+- https://www.1800flowers.com/robots.txt -> sitemaps: sitemap-products.xml, sitemap-collection.xml, sitemap-marketplace-products.xml,
+  articles/sitemap/post.xml (all downloaded and grepped for cat|kitty|kitten|feline|purr|lion|tiger|panther|leopard|Hello Kitty)
+- Product pages, blog posts listed below; Wikipedia (WebFetch): no mascot, no cat, no animal logo mentioned.
+
+### Finding 1 - OFFICIAL cat product character: "Fabulous Feline(TM)" (1-800-Flowers.com exclusive cat-shaped arrangement)
+- https://www.1800flowers.com/florist-designed-fabulous-feline-147205 (fetched 2026-09-25). Product JSON shortDescription:
+  "EXCLUSIVE The cat's out of the bag... finally! Inspired by the success of our best selling a-DOG-able(R) collection, we've created
+  the purr-fect surprise for feline lovers of all ages. Crafted from crisp white carnations and a mix of colorful blooms inside a
+  charming handled basket, this truly original kitten is sure to have everyone smitten. So go ahead, send one right meow!"
+- https://www.1800flowers.com/fabulous-feline-191478 : title "Fabulous Feline(TM) | 1800Flowers.com", brand "1-800-Flowers",
+  schema availability InStock (2026-09-25). A collection page exists at https://www.1800flowers.com/fabulous-feline
+- Line extensions in the product sitemap: Purrfect Party Cat(TM) (191487, "Our truly original kitty is handcrafted from crisp white
+  carnations"), Cure-All Kitty(TM) (191475, "Our Cure-All Kitty loves to make house calls!"), Magical Fairy Cat, Seaside Mermaid Cat,
+  Luau Kitty, Purrfect Potions Fabulous Feline (Halloween), Fabulous Fall Feline, Fabulous Feline Mom/Baby, Christmas Caroling Cat,
+  Fabulous Feline Starry Night Ornament.
+- Dating: Newport Daily News (NAPS syndicated 1-800-Flowers Halloween feature), 2017-10-16:
+  https://www.newportri.com/story/lifestyle/home-garden/2017/10/16/this-halloween-have-few-tricks/12737545007/ (fetched):
+  "Every Dog Has His Day. Every Cat, Too. ... Brewing up even more Halloween fun is the Purrfect Potions Fabulous Feline, a mischievous
+  kitty indeed." and "This Halloween, 1-800-Flowers.com can help you have a phantasmic celebration."
+- Google News search result (not opened; nj.com blocked): "Original And Inspired Presents - NJ.com | 14 Sep 2016"
+  https://www.nj.com/north_american_precis_syndicate/2016/09/original_and_inspired_presents_1.html returned for query "Fabulous Feline" flowers
+  -> suggests the line dates to at least Sep 2016.
+- Also a Google News hit (not opened, 403): Apartment Therapy 2020-10-24 "1-800-Flowers Has a Wickedly Good Halloween Collection"
+  (https://www.apartmenttherapy.com/1-800-flowers-halloween-collection-36834624), returned for "Fabulous Feline" query.
+
+### Finding 2 - COLLABORATION (cat IP): official "Hello Kitty Gift Set" SKU on 1800flowers.com
+- https://www.1800flowers.com/hello-kitty-gift-set-139359 (fetched 2026-09-25): name "Hello Kitty Gift Set", brand "1-800-Flowers",
+  part number 1001-P-139359, $39.99, schema availability OutOfStock. Description: "Give your little pussycat the "purrr-fect" surprise
+  with this Hello Kitty gift set! ... an adorable Hello Kitty ballet dancer plush and a fun tote bag..."
+- Marketplace (third-party sellers on 1800flowers.com, weaker): hello-kitty-and-friends-sweet-dreams-box / -explosion-box /
+  -easter-explosion-box / -bubble-box; pete-the-cat-plush-and-book-gift-set; pete-the-cat-classroom-set.
+- No launch press release for the Hello Kitty set found.
+
+### Finding 3 - OFFICIAL blog posts about cats (Petal Talk, 1800flowers.com/articles)
+- "Cute Cat Pictures With Flowers" by Vanessa Burton, Published Aug 30, 2016 (modified Jun 18, 2024):
+  https://www.1800flowers.com/articles/everyday-moments/cat-pictures-with-flowers - "In addition to flowers, we also love cats!"
+- "20 Interesting Facts About Cats" by Shannon O'Connor, Published Aug 12, 2016 (modified Oct 11, 2024):
+  https://www.1800flowers.com/articles/everyday-moments/interesting-cat-facts
+- "Poisonous Plants You Shouldn't Keep Around Dogs and Cats", Tara Carlson, Feb 13, 2022.
+- Founder Jim McCann, "The Power of Pets: How Dogs & Cats Enrich Our Lives", Aug 23, 2022:
+  https://www.1800flowers.com/articles/jims-corner/the-power-of-pets - the letter is about dogs; says
+  "We're saving stories about cats, turtles, hamsters, and others for a future letter!" No personal cat of McCann's is mentioned.
+
+### Name-only / noise
+- "Kittenish" collection = Jessie James Decker's clothing brand Kittenish collab with 1-800-Flowers and Things Remembered (not a cat).
+- Sports bouquets: Detroit Tigers, LCU Tigers (licensed team names). "Lion Heart Animated Plush" is a generic plush gift. Not a company big-cat mascot.
+- Disney Parks Blog 2026-01-23: 1-800-Flowers Disney Mickey & Minnie vase only (no Disney cats).
+
+### Negative results
+- No company cat mascot (the company has no mascot at all per Wikipedia and news). No office cat found.
+- No evidence that Jim McCann, Chris McCann, or the 2025 CEO posts a personal cat.
+- No big-cat logo or mascot.
+
+### Verdict
+official_cat_character_or_product - "Fabulous Feline(TM)" cat-shaped floral arrangement line (exclusive, since at least 2016-2017, still sold),
+plus a Hello Kitty Gift Set SKU (collaboration) and official cat blog posts.
+=================== SCHH
+# SCHH - Schwab U.S. REIT ETF (NYSE Arca: SCHH)
+
+Issuer: Schwab Asset Management (Charles Schwab Corp., NYSE: SCHW). Fund inception 01/13/2011 (fund page).
+
+## Cat research pass (2026-09-25)
+
+Tooling: WebSearch budget exhausted (200/200); searches via Google News RSS (+ tools/gnews2.py link decoding) and direct fetches.
+Bing/Brave/DDG blocked or useless; aboutschwab.com sitemap/robots blocked (Akamai 403); archive.org unreachable.
+
+### Queries run (Google News RSS)
+- "Charles Schwab" cat mascot (0); "Schwab" mascot (37: college/sports mascots + one About Schwab story, below)
+- "Charles Schwab" cat commercial (16: brokerage reviews; 'Roaring Kitty' GameStop coverage that merely mentions brokers)
+- "Schwab" ad cat (21: author V.E. Schwab + Cat Clarke, Universal's Schwab's Pharmacy "Puss in Boots" milkshakes - unrelated)
+- "Charles Schwab" kitten; "Schwab" "Hello Kitty" (5, unrelated); "Charles Schwab" "office cat" (0)
+- "Schwab" lion OR tiger OR panther OR leopard mascot (4, unrelated college mascots)
+- "Walt Bettinger" cat (1, retirement story, no cat); "Rick Wurster" cat (1, no cat); "Chuck Schwab" cat (3, unrelated)
+- "Talk to Chuck" cat; "Schwab" "National Cat Day" (0); thinkorswim cat; "Charles Schwab" Garfield OR Pusheen OR "Grumpy Cat" OR "Hello Kitty"
+- "Schwab Asset Management" cat (only Caterpillar); "Charles Schwab" "cat" (Caterpillar, Red Cat, dead-cat-bounce noise); "Charles Schwab" lion (MoneyLion, Cannes Lions noise)
+- "Schwab U.S. REIT ETF" cat (2, MarketBeat/TradingView listings, no cat)
+
+### Official sources fetched
+- https://www.schwabassetmanagement.com/products/schh (title "SCHH | Schwab U.S. REIT ETF | Schwab Asset Management"): grep for
+  cat|kitten|feline|mascot|lion|tiger|panther|leopard -> no matches. Inception 01/13/2011.
+- https://www.schwab.com/research/etfs/quotes/summary/schh -> no matches.
+- About Schwab, "The legend of Zep and forty years a trader", Chelsey Sleator, May 8, 2024
+  https://www.aboutschwab.com/mss/story/forty-years-a-trader (fetched with curl): "Zep" is trade rep Kevin Siemiawski's pit badge;
+  "Longtime clients may even remember Zeppy the monkey, thinkorswim's mascot, which was named after him."
+  -> Schwab's (inherited TD Ameritrade/thinkorswim) platform mascot is a MONKEY, not a cat.
+
+### Negative results
+- No Schwab or Schwab Asset Management cat mascot, cat character, office cat or cat IP collaboration found.
+- No big-cat logo/mascot (Schwab's logo is a wordmark).
+- No evidence of Chuck Schwab, Walt Bettinger or Rick Wurster posting a cat.
+- The SCHH fund marketing (fund page) contains no cat imagery or wording.
+- "Roaring Kitty" (Keith Gill) coverage mentions Schwab only in passing as a broker; he is not affiliated with Schwab (fan/community, not Schwab).
+
+### Verdict
+none_found (only non-cat mascot: Zeppy the monkey, thinkorswim).
+=================== PTN
+# PTN - Palatin Technologies, Inc. (PTN)
+
+Melanocortin biopharma (Vyleesi/bremelanotide, sold to Cosette 2024; PL9643 dry eye; Boehringer Ingelheim retinal deal 2025).
+Moved NYSE American -> OTC Pink (May 2025) -> Nasdaq (PR Newswire, 18 May 2026 "Palatin to Begin Trading on Nasdaq Stock Exchange").
+
+## Cat research pass (2026-09-25)
+
+Tooling: WebSearch budget exhausted (200/200); searches via Google News RSS and direct fetches of palatin.com.
+
+### Queries run (Google News RSS)
+- "Palatin Technologies" cat (1: Boehringer retinopathy deal, no cat)
+- "Palatin" cat mascot (0); "Palatin Technologies" mascot (0); "Palatin Technologies" "Hello Kitty" (0)
+- "Palatin Technologies" lion OR tiger OR panther OR leopard OR jaguar (5: stock pages/press releases, no big cat)
+- "Carl Spana" cat (0) [Carl Spana = co-founder/CEO]; "Vyleesi" cat (0); "Palatin Technologies" feline OR kitten (0)
+- "Palatin Technologies" logo (39 finance items, no cat)
+
+### Official sources fetched
+- https://palatin.com/ home page: logo https://palatin.com/wp-content/uploads/2021/04/palatin-logo.svg rendered locally ->
+  abstract purple pinwheel/pentagon mark plus coral "PALATIN" wordmark. No animal.
+- WordPress search API https://palatin.com/wp-json/wp/v2/search?search=... : "kitten" 0, "feline" 0, "mascot" 0; "cat" and "lion"
+  hits were only substrings (cataract, application, million).
+- Sitemaps (page, resource 75, press_releases 351, events 27): only animal URL is
+  palatin-announces-positive-preclinical-efficacy-data-for-oral-mc4r-agonist-pl7737-in-animal-model-of-obesity (lab model, not a cat post).
+
+### Negative results
+- No cat mascot, cat character, cat post, office cat, or cat IP collaboration found.
+- No big-cat logo/mascot/codename (product codes are PL-numbers).
+- No evidence that CEO Carl Spana posts a cat.
+
+### Verdict
+none_found.
+=================== FLY
+# FLY - Firefly Aerospace Inc. (Nasdaq: FLY)
+
+Cedar Park, Texas launch/lunar company (Alpha rocket, Eclipse with Northrop Grumman, Blue Ghost lander, Elytra vehicle; acquired SciTec).
+IPO on Nasdaq 2025-08-07. CEO Jason Kim (named Aug 2024); founder Tom Markusic (left 2022); former owner Max Polyakov.
+
+## Cat research pass (2026-09-25)
+
+Tooling: WebSearch budget exhausted (200/200); searches via Google News RSS (+ tools/gnews2.py link decoding) and direct fetches of
+fireflyspace.com (sitemaps + WordPress search API) and of the news articles below.
+
+### Queries run (Google News RSS)
+- "Firefly Aerospace" cat (26: Red Cat (RCAT) quote pages, Aerospace America articles bylined by writer "Cat Hofacker" - noise)
+- "Firefly Aerospace" mascot (9, see duck below); "Firefly Aerospace" "office cat" (0); "Firefly Aerospace" "Hello Kitty" (1, unrelated Alamo Drafthouse)
+- "Firefly Aerospace" kitten (6, stemming noise, no kitten in fetched FLYING article)
+- "Firefly Aerospace" lion OR tiger OR panther OR leopard OR jaguar OR cheetah OR puma (49; only Victus Haze noise, below)
+- "Firefly Aerospace" mission patch (48; mission names only: DREAM, To The Black, Victus Nox, Fly the Lightning, Noise of Summer,
+  FLTA006, FLTA007, Ghost Riders in the Sky, Victus Sol, Elytra... none cat-themed)
+- "Jason Kim" Firefly cat (24, no cat); "Tom Markusic" cat (0); "Max Polyakov" cat (1, Murka slot game, unrelated)
+- "Blue Ghost" cat lunar (18, no cat); "Firefly Aerospace" Duckner; Firefly duck mascot Blue Ghost; "Firefly Aerospace" "cat" (35, noise)
+
+### Official sources fetched
+- https://fireflyspace.com/sitemap_index.xml -> post (130), page (26), gallery (45), missions (18), post_tag sitemaps: no URL with cat/kitty/feline/
+  big-cat words (only "million" substrings).
+- WordPress search API fireflyspace.com/wp-json/wp/v2/search: kitten 0, kitty 0, feline 0, mascot 0; "cats" 1 hit = FLTA005 post
+  (stemmed "CubeSats"; fetched, no cat).
+
+### The company's actual mascot is a DUCK, not a cat
+- collectSPACE, 2025-03-01, "'Land' your own Blue Ghost with Firefly's moon lander building blocks set"
+  https://www.collectspace.com/news/news-030125a-firefly-aerospace-blue-ghost-mission-1-building-blocks-set.html (fetched):
+  "We have a mascot at Firefly, and he's been all around. He showed up in a lot of our testing pictures," Patterson told collectSPACE.
+  "It's a duck named 'Duckner' and it is on the lander." Caption: "An image sent back by the Blue Ghost lander reveals "Duckner," Firefly Aerospace's duck mascot. (Firefly Aerospace)"
+- Colorado Springs Gazette, 2025-04-10, "Firefly Aerospace shows off Blue Ghost moon lander"
+  https://gazette.com/2025/04/10/firefly-aerospace-shows-off-blue-ghost-moon-lander/ (fetched):
+  "A rubber ducky, something of a mascot for Firefly Aerospace, proudly sits atop the Blue Ghost lander..."
+
+### Big-cat noise (NOT Firefly)
+- Breaking Defense 2026-07-13 and Ars Technica 2026-07-30 (Victus Haze): "Puma" is Rocket Lab's satellite and "Panther" is an alias of
+  True Anomaly's Jackal. Firefly is only mentioned in passing (Alpha failures / earlier Victus Nox). Not a Firefly asset.
+
+### Negative results
+- No cat mascot, cat character, office cat, cat post or cat IP collaboration found. No big-cat logo, mascot, codename or engine name
+  (engines: Reaver, Lightning, Miranda; vehicles: Alpha, Eclipse, Blue Ghost, Elytra).
+- No evidence that Jason Kim, Tom Markusic or Max Polyakov post a cat.
+
+### Verdict
+none_found (mascot is Duckner the rubber duck).
+=================== BROS
+- Underlying: Dutch Bros Inc. (NYSE: BROS)
+# BROS
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: Dutch Bros Inc; StonkFun category: backpack
+- Underlying: Dutch Bros Inc. (NYSE: BROS)
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: Dutch Bros - Backpack Securities (BROS)
+- Cat research: not done in this pass (identification only).
+
+## Cat research (2026-09-25)
+
+Method note: WebSearch budget for the session was exhausted (200/200) before this pass started; all 3 attempted
+WebSearch queries ("Dutch Bros cat mascot", "Dutch Bros Hello Kitty collaboration", "Dutch Bros cat sticker") returned
+no results. Research was therefore done by fetching official sources directly:
+- https://en.wikipedia.org/wiki/Dutch_Bros (WebFetch): no cat, feline, big cat, Hello Kitty or animal mascot mentioned.
+  Leaders: Travis Boersma (chairman, co-founder), Christine Barone (president & CEO).
+- https://en.wikipedia.org/wiki/Travis_Boersma -> 404 (no article).
+- https://www.dutchbros.com/ homepage (WebFetch): no cat imagery/text.
+- https://shop.dutchbros.com/products.json?limit=250 (official Shopify merch store, 81 products, fetched 2026-09-25):
+  zero products matching cat/kitty/feline/lion/tiger/etc. Pet merch is DOG themed ("Dutch Pup Lick Mat",
+  "Dutch Pup Yours & Mine Tags", "Dutch Pup On Board Bumper Sticker").
+- https://www.dutchbros.com/sitemap.xml -> downloaded all 273 news-events / sticker-hub pages and grepped text + image alt.
+  Saved in raw/bros/ne/. No Hello Kitty / Sanrio / Garfield / Pusheen / Grumpy Cat / Doraemon / Nyan mention anywhere.
+
+### OFFICIAL cat content found on dutchbros.com (company's own newsroom "News & Events")
+1. "Laser Cat" is an official Dutch Bros drink flavour name (raspberry + coconut), sold as Laser Cat Rebel / Soda / Iced Tea,
+   promoted with cat emoji.
+   - https://www.dutchbros.com/news-events/love-your-pet-day-sticker-collection/ (datePublished 2025-02-19):
+     "It's no secret that at Dutch Bros, pets rule the world! ... pick up one of five free stickers with each drink purchase
+     ... Laser Cat Rebel 🐈 A refreshing beverage with raspberry and coconut. ... Tuxedo Blended Freeze 🐈‍⬛ ..."
+   - https://www.dutchbros.com/news-events/national-drive-thru-day-2024/ (2024-07-22): "Laser Cat Iced Tea 🐈‍⬛ A refreshing
+     fusion of raspberry and coconut delight..."
+   - https://www.dutchbros.com/news-events/find-your-next-favorite-drink/ (2023-05-05): "Laser Cat Soda ... the Laser Cat can
+     be made with sugar free raspberry and sugar free coconut!"
+2. Official cat stickers / merch:
+   - https://www.dutchbros.com/news-events/dutch-bros-october-sticker-drop/ (2023-10-03) October 2023 Sticker of the Month;
+     image alt: "Hands applying a sticker of a black cat wearing an orange beanie to a dark blue insulated water bottle."
+   - https://www.dutchbros.com/news-events/mystery-mini-figurines/ (2025-12-09) in-store merch drop, "Inspired by pieces of
+     the beloved brand such as its love for pets"; image alt: "Dutch Bros mystery mini figurines featuring a black cat,
+     coffee cup, and dog characters that stick to phones and laptops." (one of three collectible figurines).
+   - https://www.dutchbros.com/news-events/2025-sticker-memory-lane/ (2025-11-25): "you snagged one of these stickers for
+     National Love Your Pet Day in February! Featuring fish, cats, dogs and more".
+   - https://www.dutchbros.com/sticker-hub/ (Throwback Vault, fetched 2026-09-25): JULY '26 Sticker of the Month alt:
+     "Cartoon UFO beaming up a cool cat holding drinks in a colorful space scene with stars, windmills, and various beverages."
+     MAY '26 alt: "Dutch Bros Records logo featuring a cartoon character holding a vinyl record, a cat, boombox, and jukebox".
+     (Also SEPTEMBER '25 alt: "Dutch Bros mascot dog driving a retro wood-paneled station wagon" -> the recurring mascot
+     animal is a DOG, not a cat.)
+   - https://www.dutchbros.com/news-events/national-love-your-pet-day/ (2024-02-20): free pet tag promo; image alt
+     "National Love Your Pet Day collage showing two dogs, a cat, and Dutch Buddy pet tags"; text "the purrfect
+     pet-friendly activities".
+   None of these cats is given a name; there is no standing cat mascot.
+3. Big cat (weak): "Tiger's Blood" drink flavour (strawberry+coconut; 🐅 emoji on mystery-frog-charm-drop page);
+   "Rad Tiger" by Melody R. was a finalist (not stated winner) in the Vibes Sticker Design Contest,
+   https://www.dutchbros.com/news-events/vibes-sticker-drop-winner/ (2025-06-03); a tiger-on-skateboard design by Tasha G.
+   was a Broista sticker competition finalist, https://www.dutchbros.com/news-events/broista-sticker-competition-top-10/ (2023-03-01).
+
+### Not found
+- No cat mascot, no named cat character, no cat IP collaboration (Hello Kitty etc.), no office cat, no CEO/founder cat
+  (could not search social media; Wikipedia has nothing).
+
+Verdict: official_cat_character_or_product (official "Laser Cat" drink + official black-cat sticker/figurine merch;
+no standing mascot). Confidence: high for the facts quoted (company's own site).
+
+### Addendum: official X @DutchBros (2026-09-25)
+- Media timeline via public fxtwitter read API: 636 posts 2016-01-23 -> 2024-07-17 (account largely inactive since);
+  text/alt grep = 0 cat hits. Thumbnails NOT visually reviewed (official website evidence above already sufficient).
+=================== AMD
+- Underlying: Advanced Micro Devices, Inc. (Nasdaq: AMD)
+# AMD
+
+## Underlying identification (identification pass, 2026-09-25)
+
+- StonkFun name: Advanced Micro Devices; StonkFun category: backpack
+- Underlying: Advanced Micro Devices, Inc. (Nasdaq: AMD)
+- Asset type: company_stock
+- Note: Backpack Securities token; Jupiter token name: Advanced Micro Devices - Backpack Securities (AMD)
+- Cat research: not done in this pass (identification only).
+
+## Cat research (2026-09-25)
+
+Method note: session WebSearch budget exhausted (200/200) before this pass; research done by direct fetches of
+Wikipedia and AMD's own sites. Raw copies in raw/amd/.
+Sources scanned:
+- Wikipedia: Jaguar_(microarchitecture), Bobcat_(microarchitecture), Puma_(microarchitecture), AMD_mobile_platform,
+  List_of_AMD_CPU_microarchitectures, AMD_Accelerated_Processing_Unit, AMD_Catalyst, Lisa_Su.
+- https://ir.amd.com/sitemap.xml -> all 1,293 reachable AMD press releases downloaded and grepped (cat/kitten/feline/meow/
+  Hello Kitty/Garfield/Pusheen/lion/tiger/panther/leopard/cheetah/cougar/lynx/ocelot/wildcat/puma/jaguar/bobcat).
+- https://newsroom.amd.com/sitemap.xml -> all 153 newsroom pages downloaded and grepped.
+- amd.com PDFs / old press URLs returned 503 to WebFetch.
+
+### Findings
+- NO domestic-cat mascot, no cat character, no cat post found in 1,293 press releases + 153 newsroom pages. The only "cat"
+  word hits are third-party names (VBox "Cat's Eye" receivers, "Cat Daddy Games") -> irrelevant.
+- No cat IP collab (Hello Kitty etc.) found in any press release.
+- Lisa Su Wikipedia: no pets/cats mentioned. CEO since 8 Oct 2014.
+- BIG CAT / WILD CAT OFFICIAL CODENAMES (AMD's own press releases):
+  * "Bobcat" x86 core (2011): https://ir.amd.com/news-events/press-releases/detail/168/amd-fusion-apu-era-begins
+    (January 04, 2011): "These APUs feature the new x86 CPU core codenamed "Bobcat." "Bobcat" is AMD's first new x86 core
+    since 2003". Bobcat first revealed 2007 (press release 184, Sept 19, 2007, mentions "the recently discussed "Bobcat"
+    family of processors").
+  * "Jaguar" x86 core (2013): https://ir.amd.com/news-events/press-releases/detail/148/amd-reports-2013-first-quarter-results
+    (April 18, 2013): "Sony announced a semi-custom AMD APU would power its upcoming PS4 gaming console. The APU combines
+    AMD's "Jaguar" processor cores and next-generation AMD Radeon graphics". Also
+    https://ir.amd.com/news-events/press-releases/detail/152/amd-targets-high-growth-embedded-markets-with-new-amd-embedded-g-series-system-on-chip
+    (April 23, 2013): "based on the AMD next-generation "Jaguar" CPU architecture". Wikipedia: PS4 and Xbox One SoCs use Jaguar.
+  * "Puma" / "Puma+" cores (2014): https://ir.amd.com/news-events/press-releases/detail/462/amd-2014-mobile-apus-to-deliver-leaps-in-performance-and-battery-life-in-tablets-2-in-1s-and-notebooks
+    (November 13, 2013): "Both new processor families offer two or four "Puma" CPU cores". Puma+ in Carrizo-L (press release 581, Nov 20, 2014).
+  * "Puma" notebook platform (2008): https://ir.amd.com/news-events/press-releases/detail/175/amd-introduces-ati-mobility-radeontm-hd-3000-series---first-microsoft-directxr-10-1-graphics-processors-for-notebook-pcs
+    (January 07, 2008): "the forthcoming AMD notebook platform, code-named "Puma"".
+  * Wikipedia also lists "Lynx" as the 2011 Llano desktop platform codename (AMD_Accelerated_Processing_Unit table).
+  * Minor: Jan 5, 2026 newsroom release https://newsroom.amd.com/news/amd-introduces-ryzen-ai-embedded-processor-portfol/
+    footnote test system "AMD Reference JAGUAR Motherboard".
+  * 2008 press release 412: ORNL Cray XT4 system "code-named "Jaguar"" (customer's supercomputer, AMD Opteron-powered).
+- NAME ONLY: AMD/ATI "Catalyst" graphics driver suite (abbreviated "Cat" by users) - not a cat.
+- Not checked (no search available): AMD's X/Instagram accounts for one-off cat posts (e.g., International Cat Day).
+
+Verdict: big_cat_official (Bobcat -> Jaguar -> Puma "cat family" of official CPU core codenames). Confidence: high.
+
+### Addendum: official X @AMD (2026-09-25)
+- Media timeline read via public fxtwitter read API: 597 posts 2025-01-15 -> 2026-09-25; text/alt grep = 0 cat hits;
+  all thumbnails viewed (raw/x/amd_sheet_0..9.jpg). No domestic cat image.
+- One BIG-CAT image: https://x.com/AMD/status/1912510071470272548 (2025-04-16) "Generative AI just got better and faster.
+  Introducing Amuse 3.0 ... co-developed with @StabilityAI" - the promo card (AMD x stability.ai, Ryzen AI Max+) shows an
+  AI-generated cartoon LION in a space suit next to a fox and a woman astronaut (viewed: raw/x/amd_532.jpg). One-off.

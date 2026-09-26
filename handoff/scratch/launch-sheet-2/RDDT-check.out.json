@@ -1,0 +1,322 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "reddit",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Hubbub the Stubby Tabby Cat",
+   "ticker": "HUBBUB",
+   "nameLen": 27,
+   "blurbLen": 131,
+   "descLen": 267,
+   "tickerHasStockRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hubbub, a short-legged brown tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 7,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Hubbub, a short-legged brown tabby with a cream bib and white toe tips, trots between the garden benches to hear every lively chat. A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tiptoe the Short-Legged Cat",
+   "ticker": "TIPTOE",
+   "nameLen": 27,
+   "blurbLen": 135,
+   "descLen": 271,
+   "tickerHasStockRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tiptoe, a round, stubby-legged brown tab",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "TipToe",
+     "name": "TipToe",
+     "id": "7JCLSaS45Z2XCYkfPTfLHXLbWDqWfaHGh8AmU6iCpump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "Tiptoe",
+     "id": "4JE9ci178yCbfHAZhw9cmMUBHxXSTQvvimFKCovHpump"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tortoise saved from LA fire",
+     "id": "Gi4aFDTuyGDPP11H9k2GamfugA9qYVjbYet1aGM2pump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "Turtle Saved From LA FIre",
+     "id": "847z8Zjwvgw5RmkPkFFyicoJ2mM8dDuTSXj8eHatpump"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "FJdG7htUEKifk7yPksQ2vryo4bXD2kkEfUStB1Atpump"
+    },
+    {
+     "symbol": "tiptoe",
+     "name": "most viral tortoise",
+     "id": "R9fpdmDFsTYiYeNfmLhwQZtN8a1g4A9rQbSrrqypump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "Most Followed TikTok Tortoise",
+     "id": "Bv8L3ZbnngSDrJvpEEmMCTPjX5aA5ERAJisRtSEGpump"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "TikTok Tortoise Saved From Fire",
+     "id": "99Awp57d8qTPPq1Zpp5jBwFLquVNJnHYbaku1D9hpump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "No1 TikTok Turtle",
+     "id": "8VS4msiovBagxFuipshvzf2yiUwsmbB6uJvSgEBZpump"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "6wTtc22WszEZsWJ1NRpYccCmYxRE85PpHE9tsTubpump"
+    },
+    {
+     "symbol": "TIPTOE",
+     "name": "Turtle Saved From LA FIre",
+     "id": "JB19JP1PkBdjb9vgDtFCLo3DDQeU66sE2z1f2P1Wp1Rr"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "4EUMqdqRDR87YQZTtajKbGFXD5boM6bm5ygL5WeGS1xj"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "2PCVEUR7MSJWKNeVGkXj6emTdxyhPo1sBj8JoqNQ984n"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "AazjFohp2bL4wbHfzj8cuR8kYdTeXScHPy42oLnGGn2j"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "Bdo4Nv8fhQxgdtNFsW7ZJbuGvtMBnqTRYpW8t69Lixj8"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "J6A5DgLf6dwmCT8fHtDpd68CPN5r1TVCAbDEdwpjzqLf"
+    },
+    {
+     "symbol": "Tiptoe",
+     "name": "Tiptoe",
+     "id": "5uo3CYPV6xLFWLm6cKZh9B8nMXAkhWjW4SPAGzHm8XR7"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Tiptoe, a round, stubby-legged brown tabby with a pale chin and four white-tipped toes, pads along the garden path in tiny, busy steps. A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Murmur the Low-Slung Tabby Cat",
+   "ticker": "MURMUR",
+   "nameLen": 30,
+   "blurbLen": 141,
+   "descLen": 277,
+   "tickerHasStockRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "reddit",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Murmur, a plump brown tabby on short leg",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "MURMUR",
+     "name": "MurMur",
+     "id": "Qv9uArMgnHZvGESKmGzk1StK8XkJLf2XGk4qowBpump"
+    },
+    {
+     "symbol": "MurMur",
+     "name": "MurMur The Cats",
+     "id": "8pEPHsfzBmMAaEVfg4sCc7gJfLwhRMTRWDDvhQkAZ7kN"
+    },
+    {
+     "symbol": "MURMUR",
+     "name": "MURMUR",
+     "id": "Cjq3SVM4pAFXTtwGpggMFX4w1vKX2w3ss5Fq83jVpump"
+    },
+    {
+     "symbol": "MURMUR",
+     "name": "Murmur Nexus",
+     "id": "HoBn4t8tHswkYZmkMi71hDWsSuw2fwp1PViqob7Tpump"
+    },
+    {
+     "symbol": "MURMUR",
+     "name": "MURMUR",
+     "id": "EheXVRWAw1WMKRrCitPxGTteazZuNFWgZgeFdSAqpump"
+    },
+    {
+     "symbol": "MURMUR",
+     "name": "MURMUR",
+     "id": "d8H47RZ1NpkxZFZ7ap7zpZZmecZZMgEKog6ihccpump"
+    },
+    {
+     "symbol": "MURMUR",
+     "name": "Ghost Murmur",
+     "id": "AFTj86KFv5JjacLfmruH83RYDsmL9iHvZNbyXEqapump"
+    },
+    {
+     "symbol": "MURMUR",
+     "name": "Ghost Murmur",
+     "id": "BhRCtSNsTKZakyqyVLx1rdV7bdLrzfgCnRgPjb5Epmot"
+    },
+    {
+     "symbol": "MURMUR",
+     "name": "Ghost Murmur",
+     "id": "9wDPTtVNLNhE4JFtrCAAzMJptK9hshqx7ey7andJpump"
+    },
+    {
+     "symbol": "Murmur",
+     "name": "Ghost Murmur",
+     "id": "2g4sTWj18PDYbBhPSu2h62ZvJ7UWLvPEgmEx5Yuvpump"
+    },
+    {
+     "symbol": "Murmur",
+     "name": "Ghost Murmur",
+     "id": "4our7wg22oBin7BkJPVWAbCnFPdFvnxeNrxADG6Kpump"
+    },
+    {
+     "symbol": "murmur",
+     "name": "murmur",
+     "id": "6XowJt5uc6fYcqKntnL3iHKMMRdyxQTXab5TZjTwpump"
+    },
+    {
+     "symbol": "MURMUR",
+     "name": "Ghost Murmur",
+     "id": "3oScv9iazCvkGUePyEXAGQ9TWcYuqts85G2qEE1npump"
+    },
+    {
+     "symbol": "murmur",
+     "name": "murmur",
+     "id": "HdrBAvLZkBXJxTKJJYsa26tJUv5XAJjDTSNDXRZKpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Murmur, a plump brown tabby on short legs with a cream bib and olive eyes, naps by the garden notice board where all the chatter gets pinned. A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

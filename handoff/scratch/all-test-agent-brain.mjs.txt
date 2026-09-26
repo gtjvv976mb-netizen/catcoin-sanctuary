@@ -1,0 +1,85 @@
+
+1. THE REQUEST
+──────────────
+  ok   the models are listed first: GET /v1/models, with the key
+  ok   the decision is POST https://api.anthropic.com/v1/messages
+  ok   with x-api-key, anthropic-version 2023-06-01, JSON and the direct-browser-access header, and nothing else
+  ok   the model is the first one listed (the API lists newest first)
+  ok   one tool, submit_decisions, forced with tool_choice
+  ok   the tool's input_schema is the decision format: rationale, and actions of buy | sell | hold
+  ok   max_tokens is set, and no sampling or thinking parameter is sent
+  ok   the system prompt carries the owner's strategy verbatim inside <strategy>, after the rules
+  ok   …and says the limits are applied after it, that it cannot withdraw, and that null is missing
+  ok   the user message is the context as JSON
+  ok   the answer: the rationale, the buy and the hold, and nothing rejected
+  ok   the usage of the answer is reported
+
+2. WHICH MODEL
+──────────────
+  ok   the list is read once and kept between decisions
+  ok   the owner's pick is used when the key lists it
+  ok   a pick the key does not list is refused (model_unavailable), and nothing is asked
+  ok   a key that lists no models is refused (no_models)
+  ok   parseModels keeps the API's order, ids and display names
+
+3. THE ANSWER, HELD TO THE FORMAT
+─────────────────────────────────
+  ok   a field the format does not have refuses the whole decision — the model cannot send a limit
+  ok   no rationale
+  ok   no action list
+  ok   more than 10 actions
+  ok   not an object at all
+  ok   one bad action is refused by name and the good one stands
+  ok   …withdraw is not an action (action_unknown)
+  ok   …a mint outside the universe, SOL included (not_in_universe)
+  ok   …confidence outside 0..1, an empty reason, a buy by fraction, a sell by usd, a fraction over 1, an extra field, a string
+  ok   a reason is trimmed to 400 characters, a rationale to 2,000
+  ok   through the client too: a decision with a limit in it is a failure, not a trade
+  ok   a size or confidence that is not a JSON number is refused, never coerced ([25], "25", true, "1")  — []
+
+4. EVERY FAILURE HAS A CLAUSE
+─────────────────────────────
+  ok   401 → unauthorized  — the API key was refused (401): check it in Options → Agent
+  ok   403 → forbidden  — the Anthropic API answered 403 permission_error: not allowed
+  ok   429 → rate_limited  — the Anthropic API answered 429 rate_limit_error: slow down
+  ok   500 → server  — the Anthropic API answered 500 api_error: internal
+  ok   529 → overloaded  — the Anthropic API answered 529 overloaded_error: overloaded
+  ok   400 → bad_request  — the Anthropic API answered 400 invalid_request_error: messages: bad
+  ok   a body that is not JSON → malformed  — the Anthropic API answered with something that is not a JSON object
+  ok   a refusal → refused  — the model declined to answer
+  ok   no tool call → no_tool_call  — the model did not call submit_decisions
+  ok   an answer that ran out of room → truncated  — the answer ran out of room before the decision was complete
+  ok   a decision cut off mid-call at max_tokens, its tool call present → truncated  — the answer ran out of room before the decision was complete
+  ok   two tool calls → malformed_output  — the model called submit_decisions 2 times
+  ok   a call to another tool → no_tool_call  — the model did not call submit_decisions
+  ok   a 401 says to check the key in Options, and does not print it
+  ok   the network down → network
+(node:25206) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ok   no answer inside the timeout → timeout
+  ok   the brain counts calls and failures, and keeps the last clause
+
+5. A MODEL THAT REFUSES A FORCED TOOL CHOICE
+────────────────────────────────────────────
+  ok   the 400 naming tool_choice is answered by asking once more with tool_choice auto
+  ok   …with an instruction to call the tool, and the same tool and schema
+  ok   …and the next decision for that model is asked with auto straight away
+  ok   a 400 about something else is a failure, not a retry
+
+6. USAGE IS REPORTED, EVEN FOR A FAILED ANSWER
+──────────────────────────────────────────────
+  ok   an answer with no tool call still reports the tokens it used
+  ok   usageOf reads zeros for what the answer did not report
+
+7. THE KEY: ONE HEADER, ONE ORIGIN
+──────────────────────────────────
+  ok   every request that carries the key is to https://api.anthropic.com  — 9 requests
+  ok   …in the x-api-key header only: never in a URL or a body
+  ok   with no key saved nothing is sent at all (no_api_key)
+  ok   the brain's one origin is https://api.anthropic.com
+  ok   a brain cannot be made without the worker's key reader
+  ok   the system prompt and the user message never carry the key
+  ok   the tool definition is frozen
+
+59 passed, 0 failed
+

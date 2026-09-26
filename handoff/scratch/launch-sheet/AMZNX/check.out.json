@@ -1,0 +1,331 @@
+{
+ "pair": {
+  "symbol": "AMZNx",
+  "root": "AMZN",
+  "stonkfun": "AMZNX",
+  "stonkfunName": "AMAZON",
+  "name": "Amazon xStock",
+  "mint": "Xs3eBt7uRfJX8QUs4suhyU8p2M6DoUDrJyWBa8LLZsg"
+ },
+ "verifiedListSize": 3694,
+ "results": [
+  {
+   "name": "Sunmane the Garden Cat",
+   "ticker": "SUNMANE",
+   "nameLen": 22,
+   "tickerLen": 7,
+   "descLen": 250,
+   "storyLen": 140,
+   "endsWithDisclosure": true,
+   "tickerRegex": true,
+   "checkProposal_story": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sunmane, a sturdy tawny-gold cat with a ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals": [
+    {
+     "clause": "other_pair",
+     "term": "GOLD",
+     "field": "tagline",
+     "message": "other_pair: \"GOLD\" in the tagline (it names another xStock)"
+    }
+   ],
+   "pairTermsUsed": [
+    "AMZNx",
+    "AMZN",
+    "AMZNX",
+    "AMAZON",
+    "Amazon",
+    "Jeff Bezos",
+    "Andy Jassy",
+    "Bezos",
+    "Jassy",
+    "Leo the Lion",
+    "Leo",
+    "Hello Kitty",
+    "Amazon MGM Studios",
+    "MGM",
+    "Metro-Goldwyn-Mayer",
+    "Prime",
+    "Prime Video",
+    "Alexa",
+    "Kindle",
+    "Echo",
+    "Kuiper",
+    "Amazon Leo",
+    "AmazonHelp",
+    "Whiskas",
+    "Amazon Kids",
+    "Ember",
+    "Smile",
+    "Amazon Pay"
+   ],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "tickerStartsEndsWithRoot": false,
+   "tickerHoldsAnyRoot3": [],
+   "memeTickerHit": [],
+   "verifiedSymbolExact": null,
+   "verifiedNear": []
+  },
+  {
+   "name": "Honeyruff the House Cat",
+   "ticker": "HONEYRUFF",
+   "nameLen": 23,
+   "tickerLen": 9,
+   "descLen": 257,
+   "storyLen": 147,
+   "endsWithDisclosure": true,
+   "tickerRegex": true,
+   "checkProposal_story": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Honeyruff, a round honey-coloured cat wi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals": [],
+   "pairTermsUsed": [
+    "AMZNx",
+    "AMZN",
+    "AMZNX",
+    "AMAZON",
+    "Amazon",
+    "Jeff Bezos",
+    "Andy Jassy",
+    "Bezos",
+    "Jassy",
+    "Leo the Lion",
+    "Leo",
+    "Hello Kitty",
+    "Amazon MGM Studios",
+    "MGM",
+    "Metro-Goldwyn-Mayer",
+    "Prime",
+    "Prime Video",
+    "Alexa",
+    "Kindle",
+    "Echo",
+    "Kuiper",
+    "Amazon Leo",
+    "AmazonHelp",
+    "Whiskas",
+    "Amazon Kids",
+    "Ember",
+    "Smile",
+    "Amazon Pay"
+   ],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "tickerStartsEndsWithRoot": false,
+   "tickerHoldsAnyRoot3": [],
+   "memeTickerHit": [],
+   "verifiedSymbolExact": null,
+   "verifiedNear": [
+    "HONEY|HONEY"
+   ]
+  },
+  {
+   "name": "Tuft the Toffee Cat",
+   "ticker": "TOFFEETUFT",
+   "nameLen": 19,
+   "tickerLen": 10,
+   "descLen": 252,
+   "storyLen": 142,
+   "endsWithDisclosure": true,
+   "tickerRegex": true,
+   "checkProposal_story": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tuft, a sandy toffee-coloured cat with a",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "stockCatRefusals": [],
+   "pairTermsUsed": [
+    "AMZNx",
+    "AMZN",
+    "AMZNX",
+    "AMAZON",
+    "Amazon",
+    "Jeff Bezos",
+    "Andy Jassy",
+    "Bezos",
+    "Jassy",
+    "Leo the Lion",
+    "Leo",
+    "Hello Kitty",
+    "Amazon MGM Studios",
+    "MGM",
+    "Metro-Goldwyn-Mayer",
+    "Prime",
+    "Prime Video",
+    "Alexa",
+    "Kindle",
+    "Echo",
+    "Kuiper",
+    "Amazon Leo",
+    "AmazonHelp",
+    "Whiskas",
+    "Amazon Kids",
+    "Ember",
+    "Smile",
+    "Amazon Pay"
+   ],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "tickerStartsEndsWithRoot": false,
+   "tickerHoldsAnyRoot3": [],
+   "memeTickerHit": [],
+   "verifiedSymbolExact": null,
+   "verifiedNear": []
+  }
+ ]
+}

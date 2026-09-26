@@ -1,0 +1,140 @@
+{
+ "name": "Whirr the Blue-Grey Cat",
+ "ticker": "WHIRRPAW",
+ "nameLen": 23,
+ "blurbLen": 136,
+ "descLen": 277,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "endsWithDisclaimer": true,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Whirr, a smoky blue-grey shorthair with ",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurb_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_disclaimerOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "disclaimer"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "disclaimer"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_disclaimer_only": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "PENG",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "WHIRRPAW": {
+   "status": 200,
+   "results": 0,
+   "verifiedAny": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "WHIRR": {
+   "status": 200,
+   "results": 20,
+   "verifiedAny": [],
+   "symbolMatches": [],
+   "verifiedMatch": false
+  }
+ },
+ "mint": {
+  "status": 200,
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFee": null,
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "permanentDelegate": {
+   "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+  }
+ },
+ "description": "Whirr, a smoky blue-grey shorthair with bright green eyes, purrs a steady low hum and keeps one eye open over the garden all night long. A cat coin priced in PENG. Not affiliated with Penguin Solutions, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+}

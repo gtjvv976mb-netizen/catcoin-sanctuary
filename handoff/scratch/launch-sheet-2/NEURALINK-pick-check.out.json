@@ -1,0 +1,394 @@
+{
+ "verifiedListSize": 3695,
+ "othersTermCount": 2923,
+ "earlierCount": 30,
+ "out": [
+  {
+   "id": "SILKSTRIPE",
+   "name": "Silk the Pinstripe Cat",
+   "ticker": "SILKSTRIPE",
+   "lengths": {
+    "name": 22,
+    "ticker": 10,
+    "blurb": 143,
+    "description": 271
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "stockTickerOrRootInTicker": [],
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Silk",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Silk, a sleek silver tabby with hair-thin charcoal pinstripes and a white chin, slips between the fence rails so neatly she never bends a leaf. A cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "HUSHPAW",
+   "name": "Hush the Quiet Grey Cat",
+   "ticker": "HUSHPAW",
+   "lengths": {
+    "name": 23,
+    "ticker": 7,
+    "blurb": 139,
+    "description": 267
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "stockTickerOrRootInTicker": [],
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Hush",
+      "field": "name"
+     },
+     {
+      "rule": "other_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Hush",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Hush, a smooth blue-grey shorthair with pale gold eyes, sits so still in the lavender that you forget she is there until she blinks at you. A cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "LILACNAP",
+   "name": "Lilac the Sunstone Cat",
+   "ticker": "LILACNAP",
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "blurb": 146,
+    "description": 274
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "stockTickerOrRootInTicker": [],
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "neuralink",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Paws",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Lilac",
+    "status": 200,
+    "results": 20,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [
+    {
+     "name": "Lilac the Doorstep Cat",
+     "symbol": "LILACPOINT",
+     "from": "FLWS-coins.json"
+    }
+   ],
+   "description": "Lilac, a cream cat with pinkish-grey ears, face and paws, recharges with a nap on a warm round stepping stone, then wakes up ready to chase moths. A cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 9,
+  "extensions": [
+   "permanentDelegate",
+   "defaultAccountState",
+   "transferFeeConfig",
+   "confidentialTransferMint",
+   "confidentialTransferFeeConfig",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "metadataPointer",
+   "pausableConfig",
+   "tokenMetadata"
+  ],
+  "transferFee": {
+   "older": {
+    "epoch": 1039,
+    "maximumFee": 18446744073709552000,
+    "transferFeeBasisPoints": 100
+   },
+   "newer": {
+    "epoch": 1043,
+    "maximumFee": 18446744073709552000,
+    "transferFeeBasisPoints": 300
+   }
+  },
+  "epoch": 1042,
+  "slotsLeftInEpoch": 152215,
+  "hoursLeftApprox400ms": 16.9
+ },
+ "stonkfunPair": [
+  {
+   "mint": "PrekqLJvJ3qVdXmBGDiexvwUTF4rLFDa6HWS4HJbw9S",
+   "symbol": "NEURALINK",
+   "name": "NEURALINK",
+   "decimals": 9,
+   "logoUrl": "/api/asset/quote-logo/PrekqLJvJ3qVdXmBGDiexvwUTF4rLFDa6HWS4HJbw9S?v=6db844d1",
+   "category": "prestock",
+   "categoryLabel": "PreStock",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  }
+ ]
+}

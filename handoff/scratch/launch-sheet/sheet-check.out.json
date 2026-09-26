@@ -1,0 +1,2532 @@
+{
+ "summary": {
+  "checkedAt": "2026-09-25T17:10:01.740Z",
+  "stonkfunSearchControl": {
+   "query": "AGI",
+   "ok": true,
+   "status": 200
+  },
+  "count": 24,
+  "allPairsLive": true,
+  "allMintsMatch": true,
+  "allProposalOk": true,
+  "allFieldsOk": true,
+  "allDescViolationsFromDisclosure": true,
+  "allLengthsOk": true,
+  "allDisclosure": true,
+  "allTickerRules": true,
+  "jupiterVerifiedClashes": [],
+  "jupiterErrors": [],
+  "stonkfunSymbolTaken": [],
+  "stonkfunNameTaken": [],
+  "stonkfunErrors": [],
+  "allImagesOk": true,
+  "uniqueTickers": true,
+  "uniqueNames": true,
+  "uniquePairs": true
+ },
+ "coins": [
+  {
+   "stock": "SPYx",
+   "stonkfunSymbol": "SPYX",
+   "name": "Patchpaw the Calico",
+   "ticker": "PATCHPAW",
+   "pair": {
+    "symbol": "SPYX",
+    "name": "SP500",
+    "mint": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 19,
+    "ticker": 8,
+    "description": 270,
+    "story": 155
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/PATCHPAW.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/PATCHPAW-512.jpg",
+    "jobId": "6dc202df-47c4-426b-99c1-40f6dfe915e0",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_6dc202df-47c4-426b-99c1-40f6dfe915e0.png",
+    "bytes": 1193700,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "QQQx",
+   "stonkfunSymbol": "QQQX",
+   "name": "Hundred Whisker Cat",
+   "ticker": "WHISK100",
+   "pair": {
+    "symbol": "QQQX",
+    "name": "QQQ",
+    "mint": "Xs8S1uUs1zvS2p7iwtsG3b6fkhpvmwz4GYU3gWAmWHZ",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 19,
+    "ticker": 8,
+    "description": 272,
+    "story": 154
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/WHISK100.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/WHISK100-512.jpg",
+    "jobId": "5c75f0aa-dcb6-4641-aa4d-f14bef38bb9f",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_5c75f0aa-dcb6-4641-aa4d-f14bef38bb9f.png",
+    "bytes": 1172163,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "GLDx",
+   "stonkfunSymbol": "GLDX",
+   "name": "Ingot the Loaf Cat",
+   "ticker": "INGOTLOAF",
+   "pair": {
+    "symbol": "GLDX",
+    "name": "GOLD",
+    "mint": "Xsv9hRk1z5ystj9MhnA7Lq4vjSsLwzL2nxrwmwtD3re",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 18,
+    "ticker": 9,
+    "description": 269,
+    "story": 117
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/INGOTLOAF.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/INGOTLOAF-512.jpg",
+    "jobId": "39421f6e-3df3-48c8-8f97-3a1af2442c13",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_39421f6e-3df3-48c8-8f97-3a1af2442c13.png",
+    "bytes": 1154813,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "TSLAx",
+   "stonkfunSymbol": "TSLAX",
+   "name": "Snowcurl the Shade Cat",
+   "ticker": "SNOWCURL",
+   "pair": {
+    "symbol": "TSLAX",
+    "name": "TESLA",
+    "mint": "XsDoVfqeBukxuZHWhdvWHBhgEHjGNst4MLodqsJHzoB",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 272,
+    "story": 157
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "tesla",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "tesla",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SNOWCURL.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SNOWCURL-512.jpg",
+    "jobId": "7dc12802-ae82-4c29-a1f1-ad88e8bd7dbf",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_7dc12802-ae82-4c29-a1f1-ad88e8bd7dbf.png",
+    "bytes": 1164077,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "NVDAx",
+   "stonkfunSymbol": "NVDAX",
+   "name": "Sockfoot the Morning Cat",
+   "ticker": "SOCKFOOT",
+   "pair": {
+    "symbol": "NVDAX",
+    "name": "NVIDIA",
+    "mint": "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": "no mint in stock text",
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "description": 275,
+    "story": 153
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nvidia",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nvidia",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SOCKFOOT.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SOCKFOOT-512.jpg",
+    "jobId": "7238ed56-6b09-4fa5-b544-5bc1958b09a1",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_7238ed56-6b09-4fa5-b544-5bc1958b09a1.png",
+    "bytes": 1261007,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "AAPLx",
+   "stonkfunSymbol": "APPLX",
+   "name": "Rosette the Climbing Cat",
+   "ticker": "ROSETTE",
+   "pair": {
+    "symbol": "APPLX",
+    "name": "APPLE",
+    "mint": "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 24,
+    "ticker": 7,
+    "description": 265,
+    "story": 151
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "apple",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "apple",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/ROSETTE.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/ROSETTE-512.jpg",
+    "jobId": "db36e71b-7354-494a-8387-39a865fd3080",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_db36e71b-7354-494a-8387-39a865fd3080.png",
+    "bytes": 1208199,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "MSFTx",
+   "stonkfunSymbol": "MSFTX",
+   "name": "Halfsmile Cat",
+   "ticker": "HALFSMILE",
+   "pair": {
+    "symbol": "MSFTX",
+    "name": "MSFT",
+    "mint": "XspzcW1PRtgf6Wj92HCiZdjzKCyFekVD8P5Ueh3dRMX",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 13,
+    "ticker": 9,
+    "description": 276,
+    "story": 151
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "microsoft",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "microsoft",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/HALFSMILE.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/HALFSMILE-512.jpg",
+    "jobId": "fd831572-17ef-4a93-954b-1750f4da7807",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_fd831572-17ef-4a93-954b-1750f4da7807.png",
+    "bytes": 1174010,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "GOOGLx",
+   "stonkfunSymbol": "GOOGLX",
+   "name": "Porchlight the Dusk Cat",
+   "ticker": "PORCHLIGHT",
+   "pair": {
+    "symbol": "GOOGLX",
+    "name": "GOOGLE",
+    "mint": "XsCPL9dNWBMvFtTmwcCA5v3xWPSMEBCszbQdiLLq6aN",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 23,
+    "ticker": 10,
+    "description": 274,
+    "story": 156
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "alphabet",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "alphabet",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 2,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/PORCHLIGHT.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/PORCHLIGHT-512.jpg",
+    "jobId": "b58d48ab-776c-4236-b68a-5453dce41bfd",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165503_b58d48ab-776c-4236-b68a-5453dce41bfd.png",
+    "bytes": 1240384,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "AMZNx",
+   "stonkfunSymbol": "AMZNX",
+   "name": "Sunmane the Sundial Cat",
+   "ticker": "SUNMANE",
+   "pair": {
+    "symbol": "AMZNX",
+    "name": "AMAZON",
+    "mint": "Xs3eBt7uRfJX8QUs4suhyU8p2M6DoUDrJyWBa8LLZsg",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": "no mint in stock text",
+   "lengths": {
+    "name": 23,
+    "ticker": 7,
+    "description": 244,
+    "story": 134
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "amazon",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 13,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SUNMANE.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SUNMANE-512.jpg",
+    "jobId": "5d8bfdce-ed2c-4c42-a856-bbf46277c147",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_5d8bfdce-ed2c-4c42-a856-bbf46277c147.png",
+    "bytes": 1207529,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "METAx",
+   "stonkfunSymbol": "METAX",
+   "name": "Couch Captain Cat",
+   "ticker": "COUCHCAP",
+   "pair": {
+    "symbol": "METAX",
+    "name": "META",
+    "mint": "Xsa62P5mvPszXL1krVUnU5ar38bBSVcWAB6fmPCo5Zu",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 17,
+    "ticker": 8,
+    "description": 274,
+    "story": 150
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "meta",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "meta",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 2,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/COUCHCAP.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/COUCHCAP-512.jpg",
+    "jobId": "c38d8c5e-d93c-4fbd-984b-19bd944ac1ef",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_c38d8c5e-d93c-4fbd-984b-19bd944ac1ef.png",
+    "bytes": 1292143,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "COINx",
+   "stonkfunSymbol": "COINX",
+   "name": "Harrumph the Pouty Cat",
+   "ticker": "HARRUMPH",
+   "pair": {
+    "symbol": "COINX",
+    "name": "COIN",
+    "mint": "Xs7ZdzSHLU9ftNJsii5fCeJhoRWSC32SQGzGQtePxNu",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": "no mint in stock text",
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 271,
+    "story": 159
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 10,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/HARRUMPH.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/HARRUMPH-512.jpg",
+    "jobId": "9ea321cd-3074-4e34-b115-5f9b70884c90",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_9ea321cd-3074-4e34-b115-5f9b70884c90.png",
+    "bytes": 1135753,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "HOODx",
+   "stonkfunSymbol": "HOODX",
+   "name": "Pewter the Catmint Cat",
+   "ticker": "PEWTER",
+   "pair": {
+    "symbol": "HOODX",
+    "name": "HOOD",
+    "mint": "XsvNBAYkrDRNhA7wPHQfX3ZUXZyZLdnCQDfHZ56bzpg",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": "no mint in stock text",
+   "lengths": {
+    "name": 22,
+    "ticker": 6,
+    "description": 273,
+    "story": 160
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "robinhood",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "robinhood",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/PEWTER.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/PEWTER-512.jpg",
+    "jobId": "a47c158e-a9b3-4857-9252-7e106d938b0d",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165501_a47c158e-a9b3-4857-9252-7e106d938b0d.png",
+    "bytes": 1341073,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "MSTRx",
+   "stonkfunSymbol": "MSTRX",
+   "name": "Trinket the Tortie Cat",
+   "ticker": "TRINKETCAT",
+   "pair": {
+    "symbol": "MSTRX",
+    "name": "MICROSTRATEGY",
+    "mint": "XsP7xzNPvEHS1m6qfanPUGjNmdnmsLKEoNAnHjdxxyZ",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": "no mint in stock text",
+   "lengths": {
+    "name": 22,
+    "ticker": 10,
+    "description": 271,
+    "story": 138
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/TRINKETCAT.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/TRINKETCAT-512.jpg",
+    "jobId": "2cff5eee-3522-450e-b4e6-02041bb0c4f6",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165539_2cff5eee-3522-450e-b4e6-02041bb0c4f6.png",
+    "bytes": 1191904,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "CRCLx",
+   "stonkfunSymbol": "CRCLX",
+   "name": "Tuppence the Tweed Cat",
+   "ticker": "TUPPENCE",
+   "pair": {
+    "symbol": "CRCLX",
+    "name": "CIRCLE",
+    "mint": "XsueG8BtpquVJX9LVLLEGuViXUungE6WmK5YZ3p3bd1",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 247,
+    "story": 137
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 3,
+    "sameSymbol": [
+     {
+      "id": "HnU8E8dza4kx7PPd5ZC7HAxqeD5UATvdbkrD5DNHpump",
+      "name": "Tuppence",
+      "isVerified": false
+     }
+    ],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/TUPPENCE.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/TUPPENCE-512.jpg",
+    "jobId": "7bd9b225-9d13-4462-a9c9-9f23091f82e1",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165539_7bd9b225-9d13-4462-a9c9-9f23091f82e1.png",
+    "bytes": 1304449,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "SPCXx",
+   "stonkfunSymbol": "SPCXX",
+   "name": "Warmspot the Tuxedo Cat",
+   "ticker": "WARMSPOT",
+   "pair": {
+    "symbol": "SPCXX",
+    "name": "SPACEX",
+    "mint": "Xs3oZwbHvqis4NYcf4YKWmEia2eC84wSiVrcYcTqpH8",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 23,
+    "ticker": 8,
+    "description": 264,
+    "story": 154
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "spacex",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "spacex",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 1,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/WARMSPOT.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/WARMSPOT-512.jpg",
+    "jobId": "41380148-ea4b-4853-bd90-ab6b886b8eeb",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165539_41380148-ea4b-4853-bd90-ab6b886b8eeb.png",
+    "bytes": 1206835,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "PLTRx",
+   "stonkfunSymbol": "PLTRX",
+   "name": "Skein the Yarn Kitten",
+   "ticker": "SKEINKIT",
+   "pair": {
+    "symbol": "PLTRX",
+    "name": "PLTR",
+    "mint": "XsoBhf2ufR8fTyNSjqfU71DYGaE6Z3SUGAidpzriAA4",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": "no mint in stock text",
+   "lengths": {
+    "name": 21,
+    "ticker": 8,
+    "description": 272,
+    "story": 142
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SKEINKIT.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SKEINKIT-512.jpg",
+    "jobId": "38e5f17c-c00a-43ab-8778-a5857461c2e5",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165538_38e5f17c-c00a-43ab-8778-a5857461c2e5.png",
+    "bytes": 1194586,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "GMEx",
+   "stonkfunSymbol": "GMEX",
+   "name": "Save Point the Tabby",
+   "ticker": "SAVEPAWS",
+   "pair": {
+    "symbol": "GMEX",
+    "name": "GME",
+    "mint": "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 20,
+    "ticker": 8,
+    "description": 264,
+    "story": 153
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "gamestop",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "gamestop",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 1,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SAVEPAWS.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/SAVEPAWS-512.jpg",
+    "jobId": "0b5c34cc-b2a7-4a2f-bc07-e48e2b2fbd7f",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165539_0b5c34cc-b2a7-4a2f-bc07-e48e2b2fbd7f.png",
+    "bytes": 1190796,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "STRCx",
+   "stonkfunSymbol": "STRCX",
+   "name": "Everloop the Sleepy Cat",
+   "ticker": "EVERLOOP",
+   "pair": {
+    "symbol": "STRCX",
+    "name": "STRCX",
+    "mint": "Xs78JED6PFZxWc2wCEPspZW9kL3Se5J7L5TChKgsidH",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 23,
+    "ticker": 8,
+    "description": 267,
+    "story": 150
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 7,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 1,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/EVERLOOP.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/EVERLOOP-512.jpg",
+    "jobId": "059815cc-8a55-4f7c-bad1-07766da5cdc1",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165538_059815cc-8a55-4f7c-bad1-07766da5cdc1.png",
+    "bytes": 1210201,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "MCDx",
+   "stonkfunSymbol": "MCDX",
+   "name": "Milkweed the Meadow Cat",
+   "ticker": "MILKWEED",
+   "pair": {
+    "symbol": "MCDX",
+    "name": "MCDX",
+    "mint": "XsqE9cRRpzxcGKDXj1BJ7Xmg4GRhZoyY1KpmGSxAWT2",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 23,
+    "ticker": 8,
+    "description": 271,
+    "story": 158
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "mcdonalds",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "mcdonalds",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/MILKWEED.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/MILKWEED-512.jpg",
+    "jobId": "1b99733e-c644-4bd2-bab0-ccc71de5c56c",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165539_1b99733e-c644-4bd2-bab0-ccc71de5c56c.png",
+    "bytes": 1192974,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "BRK.Bx",
+   "stonkfunSymbol": "BRKX",
+   "name": "Moat Cat",
+   "ticker": "MOATCAT",
+   "pair": {
+    "symbol": "BRKX",
+    "name": "BRKX",
+    "mint": "Xs6B6zawENwAbWVi7w92rjazLuAr5Az59qgWKcNb45x",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 8,
+    "ticker": 7,
+    "description": 270,
+    "story": 147
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/MOATCAT.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/MOATCAT-512.jpg",
+    "jobId": "b40b16b0-7dfa-4573-ad00-edd1f28ed777",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165542_b40b16b0-7dfa-4573-ad00-edd1f28ed777.png",
+    "bytes": 1210126,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "KOx",
+   "stonkfunSymbol": "KOX",
+   "name": "Tumble the Kitten",
+   "ticker": "TUMBLES",
+   "pair": {
+    "symbol": "KOX",
+    "name": "COCA COLA",
+    "mint": "XsaBXg8dU5cPM6ehmVctMkVqoiRG2ZjMo1cyBJ3AykQ",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": "no mint in stock text",
+   "lengths": {
+    "name": 17,
+    "ticker": 7,
+    "description": 268,
+    "story": 145
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coca cola",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coca cola",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/TUMBLES.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/TUMBLES-512.jpg",
+    "jobId": "c403d402-1605-48da-bed3-24fba3adb703",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165538_c403d402-1605-48da-bed3-24fba3adb703.png",
+    "bytes": 1286973,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "INTCx",
+   "stonkfunSymbol": "INTCX",
+   "name": "Bracken the Fern Cat",
+   "ticker": "BRACKEN",
+   "pair": {
+    "symbol": "INTCX",
+    "name": "INTC",
+    "mint": "XshPgPdXFRWB8tP1j82rebb2Q9rPgGX37RuqzohmArM",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 20,
+    "ticker": 7,
+    "description": 253,
+    "story": 144
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "intel",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "intel",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/BRACKEN.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/BRACKEN-512.jpg",
+    "jobId": "0061cfa8-eb81-45fa-9e32-1fe7d2808cc7",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165538_0061cfa8-eb81-45fa-9e32-1fe7d2808cc7.png",
+    "bytes": 1245329,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "VIDAx",
+   "stonkfunSymbol": "VIDAX",
+   "name": "Trillby the Chirping Cat",
+   "ticker": "TRILLBY",
+   "pair": {
+    "symbol": "VIDAX",
+    "name": "VIDAX",
+    "mint": "XsfCC9VL4DamVGNgdJpfLXB3sBVa158Gbx8sh7NzmTk",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 24,
+    "ticker": 7,
+    "description": 262,
+    "story": 147
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 2,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/TRILLBY.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/TRILLBY-512.jpg",
+    "jobId": "97a34f6d-4ed7-4bfa-9d65-31e0825b94f8",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165538_97a34f6d-4ed7-4bfa-9d65-31e0825b94f8.png",
+    "bytes": 1167388,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  },
+  {
+   "stock": "DFDVx",
+   "stonkfunSymbol": "DFDV",
+   "name": "Latchkey the Vault Cat",
+   "ticker": "LATCHKEY",
+   "pair": {
+    "symbol": "DFDV",
+    "name": "DFDV",
+    "mint": "Xs2yquAgsHByNzx68WJC55WHjHBvG9JsMB7CWjTLyPy",
+    "launchable": true,
+    "launchLabReady": true,
+    "symbolAmbiguous": false
+   },
+   "mintMatchesStockText": true,
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 264,
+    "story": 138
+   },
+   "endsWithDisclosure": true,
+   "disclosureNamesStock": true,
+   "tickerFormat": true,
+   "tickerNotCatMeme": true,
+   "tickerNoRoot": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "verifiedSameSymbol": 0
+   },
+   "stonkfunSearch": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": [],
+    "nameStatus": 200,
+    "sameName": []
+   },
+   "image": {
+    "png": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/LATCHKEY.png",
+    "jpg512": "/tmp/claude-0/-home-user-Cat-Intelligence-Agency/8cd510ac-033d-555a-89da-fcd5d6945b07/scratchpad/launch-sheet/images/LATCHKEY-512.jpg",
+    "jobId": "d1caa958-0ec2-45cf-924e-261123dcabfc",
+    "resultUrl": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260925_165539_d1caa958-0ec2-45cf-924e-261123dcabfc.png",
+    "bytes": 1188680,
+    "width": 1024,
+    "height": 1024,
+    "isPng": true,
+    "under2MB": true,
+    "square": true
+   }
+  }
+ ]
+}

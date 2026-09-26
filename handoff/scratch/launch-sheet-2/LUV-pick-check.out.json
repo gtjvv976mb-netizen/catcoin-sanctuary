@@ -1,0 +1,367 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "othersCount": 74,
+ "othersErr": [],
+ "results": [
+  {
+   "id": "EMBERWISP (fixed)",
+   "name": "Emberwisp the Ruddy Cat",
+   "ticker": "EMBERWISP",
+   "nameLen": 23,
+   "blurbLen": 123,
+   "descLen": 264,
+   "tickerFormat": true,
+   "tickerHasLuv": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDesc": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Emberwisp, a ruddy-orange kitten with a ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDesc": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LUV",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "clashes": [],
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "sample": [],
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Emberwisp, a ruddy-orange kitten with a softly ticked fluffy coat, tall ears and a cream chin, watches the garden sparrows. A cat coin priced in LUV. Not affiliated with Southwest Airlines, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "EMBERWISP (draft)",
+   "name": "Emberwisp the Ruddy Cat",
+   "ticker": "EMBERWISP",
+   "nameLen": 23,
+   "blurbLen": 132,
+   "descLen": 273,
+   "tickerFormat": true,
+   "tickerHasLuv": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDesc": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Emberwisp, a ruddy-orange kitten with a ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDesc": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LUV",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "clashes": [],
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "sample": [],
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Emberwisp, a ruddy-orange kitten with a softly ticked fluffy coat, tall ears and a bushy fox-like tail, watches the garden sparrows. A cat coin priced in LUV. Not affiliated with Southwest Airlines, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "INKSTACHE",
+   "name": "Inkstache the Bicolor Cat",
+   "ticker": "INKSTACHE",
+   "nameLen": 25,
+   "blurbLen": 133,
+   "descLen": 274,
+   "tickerFormat": true,
+   "tickerHasLuv": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDesc": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Inkstache, a white cat with a black cap ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDesc": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LUV",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "clashes": [],
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "sample": [
+     {
+      "symbol": "This Coin Is Going To Completely Fuck Up Your Shit Dawg Lmfao We Don't Use No Ten Character Limit Pussy Ass Token Names Around Here Dawg We Only Dev The Longest Thickest Meatiest Sloppiest Token Names This Side Of The Mississippi Man Get Ready For Your Butthole To Be Torn Asunder",
+      "name": "TCIGTCFUYSDLWDUNTCLPATNAHDWODTLTMSTNTSOTMMGRFYBTBTA"
+     }
+    ],
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Inkstache, a white cat with a black cap over its ears, a few black patches and a black moustache smudge under its nose, eyes beetles. A cat coin priced in LUV. Not affiliated with Southwest Airlines, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "TASSELEAR",
+   "name": "Tassel the Tufted Tabby Cat",
+   "ticker": "TASSELEAR",
+   "nameLen": 27,
+   "blurbLen": 131,
+   "descLen": 272,
+   "tickerFormat": true,
+   "tickerHasLuv": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDesc": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tassel, a big fluffy brown tabby with a ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDesc": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "LUV",
+      "field": "description"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "clashes": [],
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "sample": [],
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "description": "Tassel, a big fluffy brown tabby with a white muzzle and bib, a pink nose and long ear tufts, pads up to sniff each garden visitor. A cat coin priced in LUV. Not affiliated with Southwest Airlines, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

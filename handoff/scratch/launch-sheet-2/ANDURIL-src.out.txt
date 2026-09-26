@@ -1,0 +1,70 @@
+(node:11011) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+status 200 len 286565
+title: Anduril Joins Team Lynx for U.S. Army Optionally-Manned Fighting Vehicle | Anduril
+-  Anduril Joins Team Lynx for U.S. Army Optionally-Manned Fighting Vehicle | Anduril Please enable javascript 
+datePublished: 2022-09-06
+{
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "extensions": [
+  {
+   "extension": "permanentDelegate"
+  },
+  {
+   "extension": "defaultAccountState"
+  },
+  {
+   "extension": "transferFeeConfig",
+   "state": {
+    "newerTransferFee": {
+     "epoch": 1043,
+     "maximumFee": 18446744073709552000,
+     "transferFeeBasisPoints": 300
+    },
+    "olderTransferFee": {
+     "epoch": 1039,
+     "maximumFee": 18446744073709552000,
+     "transferFeeBasisPoints": 100
+    },
+    "transferFeeConfigAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "withdrawWithheldAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "withheldAmount": 2028745737
+   }
+  },
+  {
+   "extension": "confidentialTransferMint"
+  },
+  {
+   "extension": "confidentialTransferFeeConfig"
+  },
+  {
+   "extension": "transferHook",
+   "state": {
+    "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "programId": null
+   }
+  },
+  {
+   "extension": "scaledUiAmountConfig",
+   "state": {
+    "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "extension": "metadataPointer"
+  },
+  {
+   "extension": "pausableConfig",
+   "state": {
+    "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+    "paused": false
+   }
+  },
+  {
+   "extension": "tokenMetadata"
+  }
+ ]
+}

@@ -1,0 +1,282 @@
+[
+ {
+  "name": "Bracken the Tabby Cat",
+  "ticker": "BRACKEN",
+  "lengths": {
+   "name": 21,
+   "ticker": 7,
+   "description": 258,
+   "tagline": 149
+  },
+  "tickerFormat": true,
+  "disclosureVerbatimAtEnd": true,
+  "memeTicker": false,
+  "tickerHasINTC": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "intel",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTermsStockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiterSearch": {
+   "status": 200,
+   "results": 20,
+   "exactSymbol": [],
+   "verifiedExact": 0
+  },
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "copycatOf": null,
+  "stockCatRefusals": []
+ },
+ {
+  "name": "Tweed the Stripy Cat",
+  "ticker": "TWEED",
+  "lengths": {
+   "name": 20,
+   "ticker": 5,
+   "description": 258,
+   "tagline": 149
+  },
+  "tickerFormat": true,
+  "disclosureVerbatimAtEnd": true,
+  "memeTicker": false,
+  "tickerHasINTC": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "intel",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTermsStockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiterSearch": {
+   "status": 200,
+   "results": 20,
+   "exactSymbol": [],
+   "verifiedExact": 0
+  },
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "copycatOf": null,
+  "stockCatRefusals": []
+ },
+ {
+  "name": "Humbug the Garden Cat",
+  "ticker": "HUMBUG",
+  "lengths": {
+   "name": 21,
+   "ticker": 6,
+   "description": 255,
+   "tagline": 146
+  },
+  "tickerFormat": true,
+  "disclosureVerbatimAtEnd": true,
+  "memeTicker": false,
+  "tickerHasINTC": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "intel",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTermsStockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiterSearch": {
+   "status": 200,
+   "results": 10,
+   "exactSymbol": [
+    {
+     "symbol": "HUMBUG",
+     "name": "Humbug Lyrics Bot",
+     "id": "GWp2dTvLjuaKq7TrGDGNJenoLBFL8pDv6eVxRBVCpump",
+     "tags": [
+      "launchpad",
+      "unknown"
+     ]
+    }
+   ],
+   "verifiedExact": 0
+  },
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "copycatOf": null,
+  "stockCatRefusals": []
+ },
+ {
+  "name": "Tweed the Stripy Cat",
+  "ticker": "TWEEDPAW",
+  "lengths": {
+   "name": 20,
+   "ticker": 8,
+   "description": 258,
+   "tagline": 149
+  },
+  "tickerFormat": true,
+  "disclosureVerbatimAtEnd": true,
+  "memeTicker": false,
+  "tickerHasINTC": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "intel",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTermsStockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiterSearch": {
+   "status": 200,
+   "results": 0,
+   "exactSymbol": [],
+   "verifiedExact": 0
+  },
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "copycatOf": null,
+  "stockCatRefusals": []
+ },
+ {
+  "name": "Humbug the Garden Cat",
+  "ticker": "HUMBUGPAW",
+  "lengths": {
+   "name": 21,
+   "ticker": 9,
+   "description": 255,
+   "tagline": 146
+  },
+  "tickerFormat": true,
+  "disclosureVerbatimAtEnd": true,
+  "memeTicker": false,
+  "tickerHasINTC": false,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkFieldsFullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "intel",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTermsStockWords": {
+   "ok": true,
+   "violations": []
+  },
+  "jupiterSearch": {
+   "status": 200,
+   "results": 0,
+   "exactSymbol": [],
+   "verifiedExact": 0
+  },
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "copycatOf": null,
+  "stockCatRefusals": []
+ }
+]

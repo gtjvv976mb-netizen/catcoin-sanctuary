@@ -1,0 +1,248 @@
+{
+ "r": {
+  "1033": {
+   "poolsWithThisEpoch": 1685,
+   "sample": [
+    {
+     "pool": "7aAojf3UcVvkXVoX2tGGuKq5C7aZ45AhfWnK6DwL14V9",
+     "realQuote": "2182122047813196",
+     "newest": {
+      "slot": 446522500,
+      "epoch": 1033,
+      "blockTime": "2026-09-12T20:39:54.000Z",
+      "err": true
+     }
+    },
+    {
+     "pool": "ajy7knyWnWgSxGLW4pKERqjiq7Bf3bt6jRXVH2DSuxs",
+     "realQuote": "2156694945106289",
+     "newest": {
+      "slot": 446536849,
+      "epoch": 1033,
+      "blockTime": "2026-09-12T21:55:36.000Z",
+      "err": true
+     }
+    },
+    {
+     "pool": "3UBkj978CqRT3CY1GxJdhdwn19FmUyTtX4ghxE8K3P4Q",
+     "realQuote": "318185852484274",
+     "newest": {
+      "slot": 446262488,
+      "epoch": 1033,
+      "blockTime": "2026-09-11T21:46:27.000Z",
+      "err": true
+     }
+    },
+    {
+     "pool": "4SDFZtr32HiRxfxvaoMfHcMijMu5howpPjVZzWP74jrf",
+     "realQuote": "19826750914051",
+     "newest": {
+      "slot": 446679432,
+      "epoch": 1033,
+      "blockTime": "2026-09-13T10:24:51.000Z",
+      "err": true
+     }
+    },
+    {
+     "pool": "93mvQNv9ra6Rt993t18PK1rWMdFGE6iYZaAKRAHDKbae",
+     "realQuote": "16296000935273",
+     "newest": {
+      "slot": 446479021,
+      "epoch": 1033,
+      "blockTime": "2026-09-12T16:49:54.000Z",
+      "err": true
+     }
+    },
+    {
+     "pool": "498ahoVi9wVA8ma51DrXGCicHQwjdBujoaaCqZzyyrqz",
+     "realQuote": "16037009236375",
+     "newest": {
+      "slot": 446572156,
+      "epoch": 1033,
+      "blockTime": "2026-09-13T01:01:26.000Z",
+      "err": true
+     }
+    }
+   ]
+  },
+  "1040": {
+   "poolsWithThisEpoch": 3263,
+   "sample": [
+    {
+     "pool": "CBMcUrRvhG8XtPKjzrwzTi8Xm4FHoitoypfxJjMAjEsg",
+     "realQuote": "62669332783931",
+     "newest": {
+      "slot": 449458950,
+      "epoch": 1040,
+      "blockTime": "2026-09-22T18:26:04.000Z",
+      "err": true
+     }
+    },
+    {
+     "pool": "Bvhi7vpG9Uhkt95FKWQ8AjYzghJPdX9i1frtJo2znswB",
+     "realQuote": "56459621962262",
+     "newest": {
+      "slot": 449445912,
+      "epoch": 1040,
+      "blockTime": "2026-09-22T17:27:21.000Z",
+      "err": true
+     }
+    },
+    {
+     "pool": "7BRZT9pfss9PHoAtatJ4Q5bgivovw9F9jMGLCdkvYeU4",
+     "realQuote": "33171469493390",
+     "newest": {
+      "slot": 449522995,
+      "epoch": 1040,
+      "blockTime": "2026-09-22T23:11:26.000Z",
+      "err": true
+     }
+    },
+    {
+     "pool": "Fy7EPhJkN9ivmazXaoZcAMdzpHMZxx1pGwgFHYVUbmYS",
+     "realQuote": "14574562994765",
+     "newest": {
+      "slot": 449555937,
+      "epoch": 1040,
+      "blockTime": "2026-09-23T01:37:11.000Z",
+      "err": false
+     }
+    },
+    {
+     "pool": "3bPwCupb1HFAzpZTyyAboFFzxfdtDy3wHCc4sr4axBmi",
+     "realQuote": "5209878097452",
+     "newest": {
+      "slot": 449662848,
+      "epoch": 1040,
+      "blockTime": "2026-09-23T09:29:23.000Z",
+      "err": false
+     }
+    },
+    {
+     "pool": "2yjkxDU4uG6HYG2CJfdr5RdZxmtyeqpaetUgB3vZvTf7",
+     "realQuote": "2359586426046",
+     "newest": {
+      "slot": 449406683,
+      "epoch": 1040,
+      "blockTime": "2026-09-22T14:32:02.000Z",
+      "err": false
+     }
+    }
+   ]
+  }
+ },
+ "log": [
+  {
+   "at": "2026-09-25T18:47:51.563Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 569,
+   "bytes": 424561
+  },
+  {
+   "at": "2026-09-25T18:47:52.021Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 426,
+   "bytes": 296
+  },
+  {
+   "at": "2026-09-25T18:47:52.597Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 402,
+   "bytes": 296
+  },
+  {
+   "at": "2026-09-25T18:47:53.203Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 407,
+   "bytes": 296
+  },
+  {
+   "at": "2026-09-25T18:47:53.793Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 396,
+   "bytes": 295
+  },
+  {
+   "at": "2026-09-25T18:47:54.452Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 455,
+   "bytes": 295
+  },
+  {
+   "at": "2026-09-25T18:47:54.966Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 369,
+   "bytes": 296
+  },
+  {
+   "at": "2026-09-25T18:47:55.391Z",
+   "method": "getProgramAccounts",
+   "status": 200,
+   "ms": 193,
+   "bytes": 822139
+  },
+  {
+   "at": "2026-09-25T18:47:56.106Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 307,
+   "bytes": 297
+  },
+  {
+   "at": "2026-09-25T18:47:56.739Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 340,
+   "bytes": 297
+  },
+  {
+   "at": "2026-09-25T18:47:57.422Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 422,
+   "bytes": 296
+  },
+  {
+   "at": "2026-09-25T18:47:57.934Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 334,
+   "bytes": 260
+  },
+  {
+   "at": "2026-09-25T18:47:58.250Z",
+   "method": "getSignaturesForAddress",
+   "status": 429,
+   "ms": 49,
+   "bytes": 107
+  },
+  {
+   "at": "2026-09-25T18:48:02.303Z",
+   "method": "getSignaturesForAddress",
+   "status": 429,
+   "ms": 51,
+   "bytes": 107
+  },
+  {
+   "at": "2026-09-25T18:48:10.808Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 502,
+   "bytes": 260
+  },
+  {
+   "at": "2026-09-25T18:48:11.213Z",
+   "method": "getSignaturesForAddress",
+   "status": 200,
+   "ms": 307,
+   "bytes": 261
+  }
+ ]
+}

@@ -1,0 +1,51 @@
+{
+ "r": {
+  "result": {
+   "ms": 253,
+   "bytesJson": 30613,
+   "decodedFully": 100,
+   "truncatedOrOther": 0,
+   "sample": [
+    {
+     "mint": "Bi5q9MQeLYL5rr6F5qsp17jSLsYR8sZFs3qCbc5c4fW1",
+     "name": "FOOMSFOMO",
+     "symbol": "FOOMSFOMO",
+     "uri": "https://gateway.irys.xyz/88zPeZSRryZCtPpDL11nWySDST4HndgUpSfRsPqQVc4T"
+    },
+    {
+     "mint": "9fSowgcqJ2dp1bML3HrsJAn18EkSgpp6DvD6DjFsmjCT",
+     "name": "Hostile",
+     "symbol": "HOSTILE",
+     "uri": "https://gateway.pinata.cloud/ipfs/QmXnSKerT9U79h8RvQyUFGesRN9P3eThtVJTKmGeVHsbrH"
+    },
+    {
+     "mint": "CqTbUVcBJf517UT19pyigUuNoJ5ceMKatgFQ2sYR85Sy",
+     "name": "Beta Tester",
+     "symbol": "BETA",
+     "uri": "https://wiler.fun/api/t/CqTbUVcBJf517UT19pyigUuNoJ5ceMKatgFQ2sYR85Sy/metadata.json"
+    },
+    {
+     "mint": "BRvMWZW8hxgegovMHTrWSA153wkLYRnUdXBnxQKJWbj4",
+     "name": "NEET INU",
+     "symbol": "NEETINU",
+     "uri": "https://gateway.irys.xyz/7J6wzs83QtgriBojWC5oNEDagwCkiifSeLDcF61hnCjM"
+    },
+    {
+     "mint": "785DR8cXNHzGuL4CrhS5DJW5eWfns3PaWigUaXVnGexP",
+     "name": "ProShares UltraPro Short QQQ",
+     "symbol": "SQQQ",
+     "uri": "https://metadata.backpack.exchange/stocks/sqqq.us.json"
+    }
+   ]
+  }
+ },
+ "log": [
+  {
+   "at": "2026-09-25T18:54:56.075Z",
+   "method": "getMultipleAccounts",
+   "status": 200,
+   "ms": 251,
+   "bytes": 30648
+  }
+ ]
+}

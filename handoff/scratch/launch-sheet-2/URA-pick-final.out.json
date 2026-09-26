@@ -1,0 +1,89 @@
+{
+ "name": "Lichen the Sage-Grey Cat",
+ "ticker": "LICHENPAW",
+ "nameLen": 24,
+ "blurbLen": 143,
+ "descLen": 274,
+ "endsWithDisclaimer": true,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Lichen, a soft pale green-grey shorthair",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_disclaimer_only": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "URA",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 0,
+  "symbolMatches": 0,
+  "verifiedMatch": false
+ },
+ "description": "Lichen, a soft pale green-grey shorthair with bright lime-green eyes, curls up on the mossy garden rocks and purrs through every afternoon nap. A cat coin priced in URA. Not affiliated with Global X, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A normal four-legged shorthair house cat with a solid pale green-grey coat (soft grey with a sage cast, a shade darker along the back) and lime-green eyes. Wears nothing."
+}

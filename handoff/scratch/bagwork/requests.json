@@ -1,0 +1,257 @@
+[
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/",
+  "t": "document"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/office3d.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://fonts.googleapis.com/css2?family=Bungee&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap",
+  "t": "stylesheet"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/styles.css",
+  "t": "stylesheet"
+ },
+ {
+  "m": "GET",
+  "u": "https://unpkg.com/@solana/web3.js@1.98.0/lib/index.iife.min.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/main.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/api.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/robot.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/ui.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/shared/custom-strategy.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/wallet.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/format.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/pages/home.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/pages/lists.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/pages/agent.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/pages/launch.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/pages/how.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/pages/skins.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://cdn.jsdelivr.net/npm/buffer@6.0.3/+esm",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/boss3d.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://cdn.jsdelivr.net/npm/base64-js@1.5.1/+esm",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://cdn.jsdelivr.net/npm/ieee754@1.2.1/+esm",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/shared/util.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/charts.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/laptop3d.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/phone3d.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/app/skins3d.js",
+  "t": "script"
+ },
+ {
+  "m": "GET",
+  "u": "https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2",
+  "t": "font"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/api/state",
+  "t": "fetch"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/brand/boss.png",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/api/agents/59",
+  "t": "fetch"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/brand/boss-96.png",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://fonts.gstatic.com/s/bungee/v17/N0bU2SZBIuF2PU_0DXR1.woff2",
+  "t": "font"
+ },
+ {
+  "m": "GET",
+  "u": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+  "t": "font"
+ },
+ {
+  "m": "GET",
+  "u": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2",
+  "t": "font"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/api/stream",
+  "t": "eventsource"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/favicon.png",
+  "t": "other"
+ },
+ {
+  "m": "GET",
+  "u": "https://cdn.dexscreener.com/cms/images/Wntvnh2N0ke-zae5?width=800&height=800&quality=95&format=auto",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://cdn.dexscreener.com/cms/images/ULY1O2MJvlYuAM3S?width=800&height=800&quality=95&format=auto",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://cdn.dexscreener.com/cms/images/Psx4uK4fY45XEMt5?width=800&height=800&quality=95&format=auto",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://cdn.dexscreener.com/cms/images/NU1byMh-4A04oKsB?width=800&height=800&quality=95&format=auto",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://ipfs.io/ipfs/bafkreierhavnrox7wj6ojxtaawto7rhs2bnxnmbwcoejjzhcvsbed656qu",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/api/stream",
+  "t": "eventsource"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/brand/boss.png",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://ipfs.io/ipfs/bafkreigrsm2kltw3sz3kohs6hdtf4suvupc46qff5fk2blaz7337n5clge",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://ipfs.io/ipfs/bafkreierhavnrox7wj6ojxtaawto7rhs2bnxnmbwcoejjzhcvsbed656qu",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://ipfs.io/ipfs/bafkreidyv6knepmy23ikglbwdpla5fajyaqca2xytbjelnr3vp2gwdmjvi",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://ipfs.io/ipfs/bafkreig657yinqpaxgtkma2amrfvyb7omykyf62zfx2uhh6crl24ss4s2m",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://ipfs.io/ipfs/bafybeid6ge7hbd4udtzzlcuj5gg4j473z35p2pmuft5dwbhy6wad5iaoke",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://ipfs.io/ipfs/bafkreicmsb76u65p5ma2wv4iujcamcpe6hzpmtspwwupqn766kj7gqhkiu",
+  "t": "image"
+ },
+ {
+  "m": "GET",
+  "u": "https://bagworkagent.fun/favicon.png",
+  "t": "other"
+ }
+]

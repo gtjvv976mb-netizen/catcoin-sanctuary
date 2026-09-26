@@ -1,0 +1,23 @@
+(node:2824) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+== Couch Captain Cat COUCHCAP | name len 17 | symbol len 8 | body len 150 | desc len 274 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"meta","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 2 | same-symbol 0 | same-symbol verified 0 
+ DESC: A fluffy brown tabby with golden eyes who claims the sofa every evening, remote in paw, picks the show for the whole house and naps before the ending. A cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.
+== Pawse Button Tabby PAWSE | name len 18 | symbol len 5 | body len 145 | desc len 269 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"meta","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 20 | same-symbol 17 | same-symbol verified 0 PAWSE/PAWSE/v=undefined/mcap=13228; PAWSE/PAWSE/v=undefined/mcap=16677; PAWSE/PAWSE/v=undefined/mcap=3690; PAWSE/PAWSE/v=undefined/mcap=2989; pawse/pawse/v=undefined/mcap=0
+ DESC: One paw on the pause button, one eye on you. A tufty-eared brown tabby who stops the film whenever it is time for snacks, laps or chin scratches. A cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.
+== Clever House Cat CLEVERCAT | name len 16 | symbol len 9 | body len 146 | desc len 270 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"meta","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 2 | same-symbol 0 | same-symbol verified 0 
+ DESC: Remembers where the treats live, plans the leap to the top shelf and works the TV remote. A golden-eyed brown tabby proving house cats are clever. A cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.

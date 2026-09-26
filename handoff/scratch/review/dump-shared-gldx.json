@@ -1,0 +1,70 @@
+{
+ "capturedAt": "2026-09-25T11:49:15.419Z",
+ "quote": {
+  "inputMint": "Xsv9hRk1z5ystj9MhnA7Lq4vjSsLwzL2nxrwmwtD3re",
+  "inAmount": "1000000",
+  "outputMint": "74sHNXtVDHZVw4ADktjGFHPzNycV8iHvfHLPp6QZPdT4",
+  "outAmount": "37895451540",
+  "otherAmountThreshold": "36758587994",
+  "swapMode": "ExactIn",
+  "slippageBps": 300,
+  "platformFee": null,
+  "priceImpactPct": "0.0284083829551499763727647561",
+  "routePlan": [
+   {
+    "swapInfo": {
+     "ammKey": "FfoLgunhjqaa9Ry34PaedRU5ZoXnzPaRuu1EyxGpAP4",
+     "label": "Raydium CP",
+     "inputMint": "Xsv9hRk1z5ystj9MhnA7Lq4vjSsLwzL2nxrwmwtD3re",
+     "outputMint": "74sHNXtVDHZVw4ADktjGFHPzNycV8iHvfHLPp6QZPdT4",
+     "inAmount": "1000000",
+     "outAmount": "37895451540",
+     "updateContextSlot": "450343786"
+    },
+    "percent": null,
+    "bps": 10000
+   }
+  ],
+  "contextSlot": 450343949,
+  "timeTaken": 0.00301647,
+  "swapUsdValue": "3.939242891646865",
+  "mostReliableAmmsQuoteReport": {
+   "info": {
+    "78ReVNMLGRWmjtf2HmBoHUe2pRcsctXTTbxJnbhchyze": "Not used RG: FullLiquidIntermediate, contains ALT: true",
+    "74sHNXtVDHZVw4ADktjGFHPzNycV8iHvfHLPp6QZPdT4": "Not found"
+   }
+  },
+  "longtailMarketQuoteReport": null,
+  "useIncurredSlippageForQuoting": null,
+  "useRewards": null,
+  "otherRoutePlans": null,
+  "loadedLongtailToken": false,
+  "instructionVersion": "V2",
+  "transactionVersion": 0,
+  "additionalIntermediateTokens": [
+   "7JdoYAQHgqSX9oAhhukyBTwdgR3qPmrjm2NBFjbWsU6F",
+   "Xsv9hRk1z5ystj9MhnA7Lq4vjSsLwzL2nxrwmwtD3re"
+  ]
+ },
+ "swap": {
+  "swapTransaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAGCkjAG1BZAFRV2dywxrzs3LT7Wy6rwamoK1c5K6qkDwTmMw/mZggOz6MzAit0UvTfOu7mfBb3yuJV0al70AZ3cwiH9pX1VUJ710sDjKEkk6aGWNo/FVvzhYFLe5OQOvaAQddN1gro7KKPK/amChHDAQyQKO28sav78VFGOL0vJWcKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADBkZv5SEXMv/srbpyw5vnvIzlu8X3EmssQ5s6QAAAAAR51VvyMcBu7nTFbs5oFQf9sbLeo/SOUQKxzaJWvBOPUT4sXbpCw72DMNq9g07pl+VQNYn6AFX14JDk5y7MAxKMlyWPTiSJ8bs9ECkUjg2DC1oTmdr/EIQEjnvY2+n4WbQ/+if11/ZKdMCbHylYed5LCas238ndUUsyGqezjOXocSIDjwl8v1XO0z42GMQHK8Rn5zruFb3976KHV2dX9X0EBQAFAsBcFQAFAAkDgosAAAAAAAAIBgACABAEDgEBBhoHAAEDAgIPEA4OCQYRBxMSCgMCCwwODg8QDSjRmFOTfP7Y6QNAQg8AAAAAAJSzvtIIAAAALAEAAAAAAQAAAC4QJwABAbDIoY+y+dtcU8djmEPDq51QX9Crj3JLjapw3gym5jS5BEtNSUwGBlBHFxge",
+  "lastValidBlockHeight": 428383974,
+  "prioritizationFeeLamports": 49999,
+  "computeUnitLimit": 1400000,
+  "loadedAccountsDataSize": null,
+  "loadedAccountsDataSizeLimit": null,
+  "transactionVersion": 0,
+  "prioritizationType": {
+   "computeBudget": {
+    "microLamports": 35714,
+    "estimatedMicroLamports": 107638
+   }
+  },
+  "simulationSlot": null,
+  "dynamicSlippageReport": null,
+  "simulationError": null,
+  "addressesByLookupTableAddress": null,
+  "timeTaken": 0.405460492,
+  "createAtaTimeTaken": 0.095837911
+ }
+}

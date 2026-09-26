@@ -1,0 +1,203 @@
+[
+  {
+    "name": "Purrline the Answering Cat",
+    "ticker": "PURRLINE",
+    "lengths": {
+      "name": 26,
+      "ticker": 8,
+      "description": 270,
+      "body": 155
+    },
+    "tickerFormat": true,
+    "disclosureExactAtEnd": true,
+    "jupiter": {
+      "results": 2,
+      "symbolMatches": [],
+      "verifiedSymbolMatch": false,
+      "resultSymbols": [
+        "USDT",
+        "SUPERNUT"
+      ]
+    },
+    "verifiedIndexSymbolHit": null,
+    "existingCatTicker": false,
+    "containsVIDA": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "stockCatRefusals": [
+      {
+        "clause": "pair_terms_missing",
+        "message": "pair_terms_missing: VIDAx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+      }
+    ]
+  },
+  {
+    "name": "Lantern the Night Watch Cat",
+    "ticker": "LANTERNCAT",
+    "lengths": {
+      "name": 27,
+      "ticker": 10,
+      "description": 259,
+      "body": 144
+    },
+    "tickerFormat": true,
+    "disclosureExactAtEnd": true,
+    "jupiter": {
+      "results": 0,
+      "symbolMatches": [],
+      "verifiedSymbolMatch": false,
+      "resultSymbols": []
+    },
+    "verifiedIndexSymbolHit": null,
+    "existingCatTicker": false,
+    "containsVIDA": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "stockCatRefusals": [
+      {
+        "clause": "pair_terms_missing",
+        "message": "pair_terms_missing: VIDAx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+      },
+      {
+        "clause": "other_pair",
+        "term": "GOLD",
+        "field": "tagline",
+        "message": "other_pair: \"GOLD\" in the tagline (it names another xStock)"
+      }
+    ]
+  },
+  {
+    "name": "Trillby the Chirping Cat",
+    "ticker": "TRILLBY",
+    "lengths": {
+      "name": 24,
+      "ticker": 7,
+      "description": 254,
+      "body": 139
+    },
+    "tickerFormat": true,
+    "disclosureExactAtEnd": true,
+    "jupiter": {
+      "results": 2,
+      "symbolMatches": [],
+      "verifiedSymbolMatch": false,
+      "resultSymbols": [
+        "WALLABY",
+        "WALLABY"
+      ]
+    },
+    "verifiedIndexSymbolHit": null,
+    "existingCatTicker": false,
+    "containsVIDA": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "stockCatRefusals": [
+      {
+        "clause": "pair_terms_missing",
+        "message": "pair_terms_missing: VIDAx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+      }
+    ]
+  }
+]

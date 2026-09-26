@@ -1,0 +1,109 @@
+{
+ "memecoin": {
+  "text": "Patchpaw the Calico, a memecoin adopted at Sanctuary.",
+  "fields": [],
+  "coinxPairTerm": [],
+  "launchClaims": []
+ },
+ "catcoinSpace": {
+  "text": "Patchpaw the Calico, a cat coin adopted at Sanctuary.",
+  "fields": [],
+  "coinxPairTerm": [
+   {
+    "rule": "pair_term",
+    "term": "COIN",
+    "field": "text"
+   }
+  ],
+  "launchClaims": []
+ },
+ "loseAll": {
+  "text": "This coin can lose all of its value and may never be traded.",
+  "fields": [],
+  "coinxPairTerm": [
+   {
+    "rule": "pair_term",
+    "term": "COIN",
+    "field": "text"
+   }
+  ],
+  "launchClaims": []
+ },
+ "independent": {
+  "text": "Launched by an independent adopter, not by Sanctuary.",
+  "fields": [],
+  "coinxPairTerm": [],
+  "launchClaims": []
+ },
+ "creatorShare": {
+  "text": "StonkFun may pay its creator a share of trading fees.",
+  "fields": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "text"
+   }
+  ],
+  "coinxPairTerm": [],
+  "launchClaims": [
+   {
+    "rule": "launch_claim",
+    "term": "share",
+    "field": "text"
+   }
+  ]
+ },
+ "notCharity": {
+  "text": "Not an animal charity; no real cat.",
+  "fields": [],
+  "coinxPairTerm": [],
+  "launchClaims": []
+ },
+ "issuerX": {
+  "text": "Not affiliated with NVIDIA, Backed Assets (xStocks) or StonkFun.",
+  "fields": [
+   {
+    "rule": "brand",
+    "term": "nvidia",
+    "field": "text"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "text"
+   }
+  ],
+  "coinxPairTerm": [],
+  "launchClaims": [
+   {
+    "rule": "launch_claim",
+    "term": "stock",
+    "field": "text"
+   }
+  ]
+ },
+ "prestock": {
+  "text": "A cat coin priced in the ANTHROPIC PreStock token.",
+  "fields": [
+   {
+    "rule": "brand",
+    "term": "anthropic",
+    "field": "text"
+   }
+  ],
+  "coinxPairTerm": [
+   {
+    "rule": "pair_term",
+    "term": "COIN",
+    "field": "text"
+   }
+  ],
+  "launchClaims": [
+   {
+    "rule": "launch_claim",
+    "term": "stock",
+    "field": "text"
+   }
+  ]
+ }
+}

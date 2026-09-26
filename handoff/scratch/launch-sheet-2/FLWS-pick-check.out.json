@@ -1,0 +1,374 @@
+{
+ "disclaimer": "A cat coin priced in FLWS. Not affiliated with 1-800-Flowers, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "disclaimerLen": 136,
+ "disclaimerOnly_checkFields": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclaimer_checkTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "FLWS",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Petalpuff the White Cat",
+   "ticker": "PETALPUFF",
+   "nameLen": 23,
+   "blurbLen": 141,
+   "descLen": 278,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Petalpuff, a round-faced white kitten wi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "all": [
+     {
+      "symbol": "Puff",
+      "name": "Presidential Puff"
+     }
+    ],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupNameWord": {
+    "query": "Petalpuff",
+    "status": 200,
+    "results": 1,
+    "verified": [],
+    "nameMatches": []
+   },
+   "description": "Petalpuff, a round-faced white kitten with a thick, ruffled coat as crisp as fresh carnations, sits among pink and lavender blooms and purrs. A cat coin priced in FLWS. Not affiliated with 1-800-Flowers, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Posy the Basket Cat",
+   "ticker": "POSYPAWS",
+   "nameLen": 19,
+   "blurbLen": 141,
+   "descLen": 278,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Posy, a small snow-white cat with green ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupTicker": {
+    "status": 200,
+    "results": 1,
+    "all": [
+     {
+      "symbol": "PAWS",
+      "name": "POSEYPAWS"
+     }
+    ],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupNameWord": {
+    "query": "Posy",
+    "status": 200,
+    "results": 20,
+    "verified": [],
+    "nameMatches": [
+     {
+      "symbol": "POSY",
+      "name": "POSY"
+     }
+    ]
+   },
+   "description": "Posy, a small snow-white cat with green eyes and a pink nose, naps curled in a woven handled basket lined with pink and purple garden blooms. A cat coin priced in FLWS. Not affiliated with 1-800-Flowers, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Lilac the Doorstep Cat",
+   "ticker": "LILACPOINT",
+   "nameLen": 22,
+   "blurbLen": 141,
+   "descLen": 278,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lilac, a cream-white cat with soft lilac",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "all": [],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "jupNameWord": {
+    "query": "Lilac",
+    "status": 200,
+    "results": 20,
+    "verified": [
+     {
+      "symbol": "LLY",
+      "name": "Eli Lilly and Company - Backpack Securities"
+     }
+    ],
+    "nameMatches": [
+     {
+      "symbol": "LILAC",
+      "name": "LILAC"
+     },
+     {
+      "symbol": "LILACH",
+      "name": "Lilac H."
+     },
+     {
+      "symbol": "LILAC",
+      "name": "Lilac H."
+     },
+     {
+      "symbol": "LILAC",
+      "name": "LILAC"
+     },
+     {
+      "symbol": "LILAC",
+      "name": "Justice For Lilac"
+     }
+    ]
+   },
+   "description": "Lilac, a cream-white cat with soft lilac-grey ears, mask, paws and tail, waits on the garden doorstep to sniff each new bouquet that arrives. A cat coin priced in FLWS. Not affiliated with 1-800-Flowers, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "rpc": {
+  "status": 200,
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFee": null,
+  "paused": false,
+  "metaName": "1-800-FLOWERS.COM - Backpack Securities"
+ },
+ "pair": [
+  {
+   "mint": "FLWSojG1gB5VStYR3Sb4nQFRt43UBYkqih1j2CpVLqgd",
+   "symbol": "FLWS",
+   "name": "FLWS",
+   "decimals": 6,
+   "logoUrl": "/api/asset/quote-logo/FLWSojG1gB5VStYR3Sb4nQFRt43UBYkqih1j2CpVLqgd?v=af75f13e",
+   "category": "backpack",
+   "categoryLabel": "Sunrise",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  }
+ ]
+}

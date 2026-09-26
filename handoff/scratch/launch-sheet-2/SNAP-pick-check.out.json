@@ -1,0 +1,379 @@
+{
+ "verifiedListSize": 3696,
+ "othersTermCount": 3117,
+ "earlierCount": 57,
+ "out": [
+  {
+   "id": "D1",
+   "name": "Sandstep the Tawny Cat",
+   "ticker": "SANDSTEP",
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "blurb": 143,
+    "description": 276
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 2,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Sandstep",
+    "status": 200,
+    "results": 2,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Sandstep, a lean tawny shorthair with a cream chest, dark-tipped tail and gold-brown eyes, pads across the little garden footbridge every dusk. A cat coin priced in SNAP. Not affiliated with Snap Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "D2",
+   "name": "Cloudleap the Striped Cat",
+   "ticker": "CLOUDLEAP",
+   "lengths": {
+    "name": 25,
+    "ticker": 9,
+    "blurb": 138,
+    "description": 271
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "GOLD",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 2,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Cloudleap",
+    "status": 200,
+    "results": 2,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Cloudleap, a bright orange mackerel tabby with bold dark stripes, a white chin and gold eyes, springs over the garden hedges in one bound. A cat coin priced in SNAP. Not affiliated with Snap Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "D3",
+   "name": "Shutterpaw the Tuxedo Cat",
+   "ticker": "SHUTTERPAW",
+   "lengths": {
+    "name": 25,
+    "ticker": 10,
+    "blurb": 142,
+    "description": 275
+   },
+   "limitsOk": true,
+   "tickerFormat": true,
+   "memeTicker": false,
+   "notStockTicker": true,
+   "disclosureEndsRight": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_withTrendCat": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_blurb_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_ownStock": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_otherPairs": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "other_pair",
+      "term": "Tuxedo",
+      "field": "name"
+     },
+     {
+      "rule": "other_pair",
+      "term": "Tuxedo",
+      "field": "blurb"
+     }
+    ]
+   },
+   "checkTerms_launchClaims": {
+    "ok": true,
+    "violations": []
+   },
+   "otherXstockRootInTicker": null,
+   "siteRefusals": [],
+   "tickerFree": {
+    "ok": true,
+    "reasons": []
+   },
+   "copycatOf": null,
+   "jupTicker": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false
+   },
+   "jupFirstName": {
+    "q": "Shutterpaw",
+    "status": 200,
+    "results": 0,
+    "verifiedSymbolOrNameMatch": []
+   },
+   "earlierCollision": [],
+   "draftsElsewhereSharingFirstWordOrTicker": [],
+   "description": "Shutterpaw, a sleek black-and-white tuxedo cat with a white face blaze and green eyes, poses for one quick photo, then slips behind the hedge. A cat coin priced in SNAP. Not affiliated with Snap Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "decimals": 6,
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFee": null,
+  "epoch": 1042
+ },
+ "stonkfunPair": [
+  {
+   "mint": "SNAPcESrvnH8yUdgeMF6xm1hym9b6hW6s8YeqeHdZFz",
+   "symbol": "SNAP",
+   "name": "SNAP",
+   "decimals": 6,
+   "logoUrl": "/api/asset/quote-logo/SNAPcESrvnH8yUdgeMF6xm1hym9b6hW6s8YeqeHdZFz?v=21c5f066",
+   "category": "backpack",
+   "categoryLabel": "Sunrise",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  }
+ ]
+}

@@ -1,0 +1,545 @@
+{
+ "disclosureAlone": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "pair": {
+  "mint": "QUBTAD8C9bMU9LvmMNgKPhrmBGbHvxpu6vfWQtThxxw",
+  "symbol": "QUBT",
+  "name": "QUBT",
+  "decimals": 6,
+  "logoUrl": "/api/asset/quote-logo/QUBTAD8C9bMU9LvmMNgKPhrmBGbHvxpu6vfWQtThxxw?v=c65f78cd",
+  "category": "backpack",
+  "categoryLabel": "Sunrise",
+  "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "launchable": true,
+  "symbolAmbiguous": false,
+  "launchLabReady": true
+ },
+ "jupPair": [
+  {
+   "id": "QUBTAD8C9bMU9LvmMNgKPhrmBGbHvxpu6vfWQtThxxw",
+   "symbol": "QUBT",
+   "name": "Quantum Computing - Backpack Securities",
+   "tags": [
+    "token-2022",
+    "verified",
+    "stocks",
+    "rwa",
+    "backpack"
+   ],
+   "isVerified": true,
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+  }
+ ],
+ "chain": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "B98JFNttxEtfUNH3sj83FBWHKyxWinhmAcisWC1Xa1Nr",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": null,
+  "permanentDelegate": {
+   "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+  },
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "transferHook": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "programId": null
+  }
+ },
+ "src": {
+  "status": 200,
+  "light": true,
+  "catHits": []
+ },
+ "results": [
+  {
+   "name": "Prism the Silver Beam Cat",
+   "ticker": "PRISMPAW",
+   "nameLen": 25,
+   "blurbLen": 134,
+   "descLen": 280,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "coat": {
+    "base": "#C9CED6",
+    "second": "#858D99",
+    "pattern": "tabby",
+    "eyes": "#9FD3EA"
+   },
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Prism, a sleek silver tabby with faint g",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_PRISMPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "verifiedAny": []
+   },
+   "jup_PRISM": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "Prism",
+      "name": "Prism Videos",
+      "id": "7JyhFpMNCxdQcL44qsFLKwktZDYB6RaijmP9We9opump"
+     },
+     {
+      "symbol": "PRISM",
+      "name": "Prism Foundation",
+      "id": "8fzziiswWWta8K3H8YWUzxdHUuN2yDC47fQz17Jspump"
+     },
+     {
+      "symbol": "Prism",
+      "name": "Prism coin",
+      "id": "F2MkYyFeGnxc2YS3JC9wbkRVKrUhc5BxEp6CRsqSpump"
+     },
+     {
+      "symbol": "PRISM",
+      "name": "1M IS FUD",
+      "id": "4shBkfh8WKQbG2wfj6u9SjBQtVms2Yooa1QP8Stnozy8"
+     },
+     {
+      "symbol": "PRISM",
+      "name": "Prism",
+      "id": "J2A4XfQbtNovS66ywJRuATbqgJaMtHDVaZkBcQ3Bpump"
+     },
+     {
+      "symbol": "Prism",
+      "name": "Prism",
+      "id": "8dKC14QDz6zis3z8Rpfv7xHk3u9HRsyY41DZP2RYpump"
+     },
+     {
+      "symbol": "PRISM",
+      "name": "ITS GENNY HELLO?????",
+      "id": "D6oJ9tnguFPdohUF87nLg17h9jn3buJt8bCzhtdCeCUd"
+     },
+     {
+      "symbol": "PRISM",
+      "name": "Prism",
+      "id": "8EkrSgazmTdK6sujzSXST57Z2hqb2B9qC6xnPykSpump"
+     },
+     {
+      "symbol": "Prism",
+      "name": "Prism",
+      "id": "5zNmPYCm724a7HLE8FXB2d6R3BbsuPSjzNAxBmkHpump"
+     },
+     {
+      "symbol": "PRISM",
+      "name": "Prism Assets",
+      "id": "9NLSrjYwC3GZz8xPRia537ek1SKHYQaPXddwE39teJ1M"
+     },
+     {
+      "symbol": "Prism",
+      "name": "Prism",
+      "id": "2izXxVFSxSjv7xDm9uwVLwyHp9HM19bWpMpCMGUnpump"
+     },
+     {
+      "symbol": "Prism",
+      "name": "Prism",
+      "id": "AYNNkbiKvZn7uqNjYaGjQYmYtSutxXKEjjGrC9tppump"
+     },
+     {
+      "symbol": "PRISM",
+      "name": "Prism",
+      "id": "8VGYypDSYt9CTnpWcHzG7dq8d3LivKnScrYh1ZqQpump"
+     },
+     {
+      "symbol": "Prism",
+      "name": "Prism Launch",
+      "id": "UHumKSkN29ybBAVvWUTgzghmknmVKrkHdm8qjthpump"
+     },
+     {
+      "symbol": "Prism",
+      "name": "Prism",
+      "id": "DFjjvRqPgukk7cSVHMqmSWd7MDx8Vi2adyYZXFHXpump"
+     }
+    ],
+    "verifiedSymbolMatch": false,
+    "verifiedAny": [
+     "SOLANA / Prisma Staked SOL"
+    ]
+   },
+   "description": "Prism, a sleek silver tabby with faint grey stripes and ice-blue eyes, chases the rainbow dots a glass prism casts on the garden wall. A cat coin priced in QUBT. Not affiliated with Quantum Computing Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Scatter the Dice-Spot Cat",
+   "ticker": "SCATTERPAW",
+   "nameLen": 25,
+   "blurbLen": 127,
+   "descLen": 273,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "coat": {
+    "base": "#F3F0E8",
+    "second": "#1F1D22",
+    "pattern": "spotted",
+    "eyes": "#8FBF4F"
+   },
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Scatter, a white shorthair with black sp",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_SCATTERPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "verifiedAny": []
+   },
+   "jup_SCATTER": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "Scatter",
+      "name": "Scatter Brain",
+      "id": "JoqHBooxiqHBPckPfXS4yQokkw52wAC8RfnHFWGpump"
+     },
+     {
+      "symbol": "Scatter",
+      "name": "Scatter",
+      "id": "HbgwyZiQ8u2KrQhBDN3qNppvc2HH6TYCRG45Za9Spump"
+     },
+     {
+      "symbol": "SCATTER",
+      "name": "Gates of Olympus",
+      "id": "FEQKh6VLxYZa4LPFWLsJJCYhLzroQaVy8e7MsF3Dpump"
+     },
+     {
+      "symbol": "SCATTER",
+      "name": "GamblingCat",
+      "id": "AWDQFLzSLsrG8cj1wBzWszsncbXBvVRNPzjEmX62uPBb"
+     },
+     {
+      "symbol": "SCATTER",
+      "name": "BOOK OF RA™ COIN",
+      "id": "DZD8BiHQq7KrUNzy23MAQf8hLo47ynd661R8Rh32pump"
+     },
+     {
+      "symbol": "SCATTER",
+      "name": "The Alcoholic Chimp",
+      "id": "FUjaVjTSUYbwrszwZ1rxBygVbkbRdAex7fNHpLkKpump"
+     },
+     {
+      "symbol": "SCATTER",
+      "name": "SUGAR RUSH SCATTER",
+      "id": "DSSm9wVqDVbkjzL7LsWVzez6Hs8qjDoxB1rPtY7cpump"
+     },
+     {
+      "symbol": "SCATTER",
+      "name": "SCATTER",
+      "id": "DR8tpgZHAiscdei7b48AxFJMew5SUxjwU86po2jCpump"
+     },
+     {
+      "symbol": "Scatter",
+      "name": "Scatter",
+      "id": "4qSAgPqjMMUKbtmtKVahJA8semLAg3bcx4b4qMX1pump"
+     }
+    ],
+    "verifiedSymbolMatch": false,
+    "verifiedAny": []
+   },
+   "description": "Scatter, a white shorthair with black spots strewn at random so no two sides match, naps wherever the first falling leaf lands. A cat coin priced in QUBT. Not affiliated with Quantum Computing Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Flicker the Smoky Dusk Cat",
+   "ticker": "FLICKPAW",
+   "nameLen": 26,
+   "blurbLen": 133,
+   "descLen": 279,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "coat": {
+    "base": "#3A3C42",
+    "second": "#B9BEC6",
+    "pattern": "solid",
+    "eyes": "#E0A526"
+   },
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Flicker, a smoky charcoal cat with a pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_FLICKPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedSymbolMatch": false,
+    "verifiedAny": []
+   },
+   "jup_FLICK": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "FLICK",
+      "name": "··-· ·-·· ·· -·-· -·-",
+      "id": "5Tvu57FiEeSieTHxC65L8TWjyvesE8TFsrPCMFEx6AXE"
+     },
+     {
+      "symbol": "FLICK",
+      "name": "Flick",
+      "id": "DrEW2ekwgG9xshVx9XKbqSB8ja9T82uCw7ZBjV6jSxh6"
+     },
+     {
+      "symbol": "FLICK",
+      "name": "FLICK THE BEAN",
+      "id": "GL2pHmsSrzhMZionbNZxDsz41owS7TndbcZcdoL9pump"
+     },
+     {
+      "symbol": "FLICK",
+      "name": "Flick",
+      "id": "55idVXJtNcFre44F3amxePnKKgUNuwPXyRg5GNX8pump"
+     },
+     {
+      "symbol": "FLICK",
+      "name": "Bean",
+      "id": "AKpAsxzSaENADnq4JJZoTHXJ9aYYKE4RrT1TTaCFpump"
+     },
+     {
+      "symbol": "FLICK",
+      "name": "FLICKTHEFROG",
+      "id": "26BScBZob9yHqAnyUF7Xz3qrfpCVnSsq8PaX25aRpump"
+     },
+     {
+      "symbol": "FLICK",
+      "name": "FLICK UP DOG",
+      "id": "CkMzPNSxrmPixwUMKp3cKVn3YJjGALas4A5PsWunu7KE"
+     },
+     {
+      "symbol": "FLICK",
+      "name": "FLICK THE BEAN",
+      "id": "42mivqgBDH7X57W4SWeaHE7YYWKDMWC3Jw5ofYBxpump"
+     },
+     {
+      "symbol": "Flick",
+      "name": "flick.rip",
+      "id": "Hj6sTLXMVWoUAt4Q7FrUHGb2e9NVZcNo4DoqBLy9pump"
+     },
+     {
+      "symbol": "Flick",
+      "name": "flick.rip",
+      "id": "CzMvfAZc291VYzDU45hLduXo4wCodzLSSD2Wu4NXpump"
+     },
+     {
+      "symbol": "flick",
+      "name": "flick.ripflick.rip",
+      "id": "GuBmZ6BNGXySTdx4CTYPPvPEBeccLc1sRp5BtGPVpump"
+     },
+     {
+      "symbol": "flick",
+      "name": "flick.rip",
+      "id": "89uYArVseMMzjMBgi27GtLU6aszwibovbE9SHSRvpump"
+     },
+     {
+      "symbol": "Flick",
+      "name": "Flick",
+      "id": "kAAs4WYjPuDEUm33SS7FSWM2UErP9vfMo37cfNWpump"
+     }
+    ],
+    "verifiedSymbolMatch": false,
+    "verifiedAny": []
+   },
+   "description": "Flicker, a smoky charcoal cat with a pale silver undercoat and bright gold eyes, sits by the pond at dusk blinking back at glowworms. A cat coin priced in QUBT. Not affiliated with Quantum Computing Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

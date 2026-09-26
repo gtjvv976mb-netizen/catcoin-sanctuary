@@ -1,0 +1,21 @@
+== Rosette the Garden Cat ROSETTE | name len 22 | symbol len 7 | body len 158 | desc len 272 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"apple","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 20 | same-symbol 0 | same-symbol verified 0 
+ DESC: Rosette is a stocky golden-tan cat dappled with black rosette spots. She pads through the tall grass by the pond, then flops in the sun and purrs at the bees. A cat coin priced in AAPLx. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.
+== Snowspot the Cloud Cat SNOWSPOT | name len 22 | symbol len 8 | body len 158 | desc len 272 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"apple","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 0 | same-symbol 0 | same-symbol verified 0 
+ DESC: Snowspot is a fluffy smoke-grey cat freckled with dark rosettes. She wraps her long bushy tail round her nose like a scarf and dozes on the cool garden rocks. A cat coin priced in AAPLx. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.
+== Clementine the Stripy Cat STRIPEY | name len 25 | symbol len 7 | body len 154 | desc len 268 | TICKER re true | meme-banned false
+ checkProposal(tagline=body): {"ok":true,"violations":[]}
+ displaySafe: {"ok":true,"violations":[]}
+ checkFields(full description incl. disclosure): {"ok":false,"violations":[{"rule":"brand","term":"apple","field":"description"},{"rule":"endorsement","term":"affiliated","field":"description"},{"rule":"financial_promise","term":"financial advice","field":"description"}]}
+ checkTerms(stock words, name/symbol/body): {"ok":true,"violations":[]}
+ jupiter: status 200 | results 20 | same-symbol 0 | same-symbol verified 0 
+ DESC: Clementine is a bright orange cat with bold black stripes and a white chin. She naps in the warm flower beds and trots over, tail high, whenever you call. A cat coin priced in AAPLx. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.

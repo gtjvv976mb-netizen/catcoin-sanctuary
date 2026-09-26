@@ -1,0 +1,24 @@
+ M README.md
+ M src/lib/agent-brain.mjs
+ M src/lib/agent-market.mjs
+ M src/lib/agent-risk.mjs
+ M src/lib/agent-runner.mjs
+ M src/lib/agent-strategy.mjs
+ M src/lib/engine.mjs
+ M src/lib/jupiter-swap.mjs
+ M src/lib/rpc.mjs
+ M src/lib/tx.mjs
+ M src/options/options.mjs
+ M test-agent-runner.mjs
+ M test-hawk-no-key.mjs
+ M test-hawk-xstock-venue.mjs
+?? fixtures/agent/jupiter-cat-route-shapes.json
+?? fixtures/agent/jupiter-scout-quotes-cats.json
+?? fixtures/agent/jupiter-search-cat-cluster.json
+?? fixtures/agent/jupiter-usdc-kitty-swap.json
+?? fixtures/agent/jupiter-usdc-lmeow-pumpswap.json
+?? fixtures/agent/jupiter-usdc-mew-swap.json
+?? fixtures/agent/jupiter-verified-cats.json
+?? fixtures/agent/mainnet-rent-and-slot-reads.json
+?? fixtures/agent/scout-mints.json
+?? src/lib/agent-scout.mjs

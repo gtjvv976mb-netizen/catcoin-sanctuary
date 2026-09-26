@@ -1,0 +1,176 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Millrace the Blue-Grey Cat",
+   "ticker": "MILLRACE",
+   "nameLen": 26,
+   "blurbLen": 143,
+   "descLen": 279,
+   "tickerHasIrenRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Millrace, a plush solid blue-grey cat wi",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 8,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Millrace, a plush solid blue-grey cat with pale green eyes, sits by the garden stream all day, watching the water turn the little wooden wheel. A cat coin priced in IREN. Not affiliated with IREN Limited, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Windrow the Sandy Tabby Cat",
+   "ticker": "WINDROW",
+   "nameLen": 27,
+   "blurbLen": 145,
+   "descLen": 281,
+   "tickerHasIrenRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "real_person",
+      "term": "amber eyes",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Windrow, a sandy-gold tabby with soft ca",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Windrow, a sandy-gold tabby with soft caramel stripes and amber eyes, stretches out in the long meadow grass wherever the breeze blows steadiest. A cat coin priced in IREN. Not affiliated with IREN Limited, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Lodestone the Copper Tortie Cat",
+   "ticker": "LODESTONE",
+   "nameLen": 31,
+   "blurbLen": 141,
+   "descLen": 277,
+   "tickerHasIrenRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lodestone, a tortoiseshell cat mottled i",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Lodestone, a tortoiseshell cat mottled in black and bright copper with gold eyes, digs through the rockery and lines up the shiniest pebbles. A cat coin priced in IREN. Not affiliated with IREN Limited, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

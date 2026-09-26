@@ -1,0 +1,78 @@
+
+THE INPUT, CHECKED STRICTLY
+───────────────────────────
+  ok   accepted: "64xwhN5Rshirb1rB6KAC5Qw26zhYhPEXGPxLkpNmpump"
+  ok   accepted: "  64xwhN5Rshirb1rB6KAC5Qw26zhYhPEXGPxLkpNmpump\n"
+  ok   accepted: "https://pump.fun/coin/64xwhN5Rshirb1rB6KAC5Qw26zhYhPEXGPxLk
+  ok   accepted: "https://pump.fun/coin/64xwhN5Rshirb1rB6KAC5Qw26zhYhPEXGPxLk
+  ok   refused, with a reason: empty  — paste a mint address
+  ok   refused, with a reason: blank  — paste a mint address
+  ok   refused, with a reason: not text  — paste a mint address
+  ok   refused, with a reason: a space inside  — a mint address has no spaces in it
+  ok   refused, with a reason: letters base58 does not have  — that is not a Solana address: 32 to 44 base58 characters (no 0, O, I or l)
+  ok   refused, with a reason: too short  — that is not a Solana address: 32 to 44 base58 characters (no 0, O, I or l)
+  ok   refused, with a reason: too long  — that is not a Solana address: 32 to 44 base58 characters (no 0, O, I or l)
+  ok   refused, with a reason: plain http  — only a pump.fun coin link (https://pump.fun/coin/<address>) or the address itself is read
+  ok   refused, with a reason: a query string  — only a pump.fun coin link (https://pump.fun/coin/<address>) or the address itself is read
+  ok   refused, with a reason: another site  — only a pump.fun coin link (https://pump.fun/coin/<address>) or the address itself is read
+  ok   refused, with a reason: a look-alike host  — only a pump.fun coin link (https://pump.fun/coin/<address>) or the address itself is read
+  ok   refused, with a reason: a script link  — that is not a Solana address: 32 to 44 base58 characters (no 0, O, I or l)
+  ok   refused, with a reason: HTML  — a mint address has no spaces in it
+  ok   refused, with a reason: 31 characters, too short to be 32 bytes  — that is not a Solana address: 32 to 44 base58 characters (no 0, O, I or l)
+  ok   refused, with a reason: 33 bytes  — that is not a Solana address: 32 to 44 base58 characters (no 0, O, I or l)
+
+THE REPORT, FROM THE RECORDED COINS
+───────────────────────────────────
+  ok   Asset Cat, recorded: mint and freeze authority revoked, its Token-2022 extensions accepted
+  ok   …its name and ticker read from the mint itself, not from anything the coin's page says
+  ok   …the curve read as pump.fun's, graduated
+  ok   …the holders with the curve and the program-held pool left out, counted (every account was listed)  — 2.80% of the supply; 39 holders besides the curve and pools
+  ok   …the creator's share known, because the curve names the creator
+  ok   …no copy of an established cat coin
+  ok   …so no red flag found
+  ok   every check comes with plain words, and the not-advice line
+  ok   the only links are Solscan and pump.fun, built from the mint and the curve's creator
+  ok   …and nothing the coin supplied: no image, no metadata link, no website
+  ok   it reads the chain only: one getMultipleAccounts (the mint, its curve, pump.fun's Global) and the holders
+  ok   cosmic cat protocol, recorded: too few holders is a red flag, and the curve is still on pump.fun, partly sold
+
+WHAT ONLY A BAD MINT HAS
+────────────────────────
+  ok   a live mint authority is a red flag, said in plain words (more can be minted)
+  ok   a live freeze authority is a red flag, said in plain words (holders can be frozen)
+  ok   a Token-2022 transfer fee (the recorded catwifhat mint) fails the extension audit, and is not a pump.fun coin
+  ok   a creator holding 10% of the supply is a red flag (Popcat's line is 5%)
+
+NOT A MINT, SAID SO
+───────────────────
+  ok   nothing at the address
+  ok   a wallet
+  ok   a token account (someone's balance, 165 bytes)
+  ok   an account of another program
+  ok   no RPC: it asks for one
+
+A TOKEN TOO BIG TO LIST
+───────────────────────
+  ok   with no pump.fun curve it asks for the 20 largest accounts first, reads their owners, and leaves the pools out
+  ok   …and says the holders were not counted rather than failing the count
+
+A NAME ON CHAIN IS A STRANGER'S TEXT
+────────────────────────────────────
+  ok   the recorded mint carries its name and ticker in its Token-2022 metadata
+  ok   a direction override or an invisible character in the name or ticker is dropped before the report carries it  — ["At Cat","CAT"]
+
+ONE CHECK AT A TIME, NOT TWO WITHIN THREE SECONDS
+─────────────────────────────────────────────────
+  ok   a second check while one is running is refused (busy), and the first is answered  — ok, busy
+  ok   another a second later is refused (too_soon): at most one every three seconds
+  ok   …and answered once the gap has passed
+  ok   the worker answers CRYING.CHECK through that one limiter
+
+THE CODE: READS ONLY, AND GRUMPY CAT IS NOT BUILT
+─────────────────────────────────────────────────
+  ok   it signs nothing, holds no key, sends nothing and touches no chrome.* API
+  ok   it never fetches what the user pasted: only the address read out of it goes to the RPC
+  ok   Grumpy Cat stays a character: the tab says why it is not here
+
+test-cats-crying: 51 passed, 0 failed
+

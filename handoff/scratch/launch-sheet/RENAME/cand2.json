@@ -1,0 +1,352 @@
+[
+ {
+  "name": "Jellie",
+  "ticker": "JELLIECAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Jellie",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 2,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Momo the Cat",
+  "ticker": "MOMOTHECAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": [
+    "MOMO",
+    "MOMO"
+   ]
+  }
+ },
+ {
+  "name": "Momo the Cat",
+  "ticker": "MOMOCAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 2,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [
+    "Monero Cat",
+    "Monero Cat"
+   ],
+   "nameStatus": 200,
+   "sameName": [
+    "MOMO",
+    "MOMO"
+   ]
+  }
+ },
+ {
+  "name": "Leo the Lion",
+  "ticker": "LEOTHELION",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Leo the Lion",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 14,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": [
+    "LEO"
+   ]
+  }
+ },
+ {
+  "name": "Leo the Lion",
+  "ticker": "LEOLION",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Leo the Lion",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": [
+    "LEO"
+   ]
+  }
+ },
+ {
+  "name": "Mister Miggles",
+  "ticker": "MIGGLES",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Mister Miggles",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 17,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Mister Miggles",
+  "ticker": "MRMIGGLES",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Mister Miggles",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 16,
+   "sameSymbol": 3,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Olivia Benson",
+  "ticker": "OLIVIACAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "real_person",
+     "term": "olivia benson",
+     "field": "name"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Olivia Benson",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "real_person",
+     "term": "olivia benson",
+     "field": "name"
+    }
+   ]
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 5,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ }
+]

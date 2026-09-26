@@ -1,0 +1,47 @@
+{
+ "capturedAt": "2026-09-25T12:01:57.531Z",
+ "rows": [
+  {
+   "mint": "CB8afe6zJDGoCoSHx2iJACqemTUjgpvKKLTa86qMpump",
+   "name": "LMEOW",
+   "symbol": "LMEOW",
+   "program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "extensions": "Token-2022, tradeable",
+   "mintAuthority": null,
+   "freezeAuthority": null,
+   "agentSpec": "admitted",
+   "HEAD agent ask (direct only) buy": "Pump.fun Amm impact=1.90%",
+   "HEAD agent ask (direct only) sell": "Pump.fun Amm impact=1.29%",
+   "working-tree agent ask (solHop) buy": "jupiter_no_route: No routes found (NO_ROUTES_FOUND)",
+   "working-tree agent ask (solHop) sell": "jupiter_no_route: No routes found (NO_ROUTES_FOUND)",
+   "diag_sell": {
+    "onlyDirectRoutes=true (HEAD)": "Pump.fun Amm out=24208310",
+    "onlyDirectRoutes=true, maxAccounts=24": "400 NO_ROUTES_FOUND",
+    "onlyDirectRoutes=false, restrict=true, no maxAccounts": "Pump.fun Amm out=24208310",
+    "onlyDirectRoutes=false, restrict=true, maxAccounts=24 (working tree)": "400 NO_ROUTES_FOUND",
+    "onlyDirectRoutes=false, restrict=true, maxAccounts=32": "Pump.fun Amm out=24208310"
+   }
+  },
+  {
+   "mint": "5pYB12kEhfhSFXJjZ7JtyqDpt6uUqhsF6iu6Ee9spump",
+   "name": "catwifhat",
+   "symbol": "CATWIF",
+   "program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "extensions": "Token-2022, tradeable",
+   "mintAuthority": null,
+   "freezeAuthority": null,
+   "agentSpec": "admitted",
+   "HEAD agent ask (direct only) buy": "Pump.fun Amm impact=2.35%",
+   "HEAD agent ask (direct only) sell": "Pump.fun Amm impact=0.22%",
+   "working-tree agent ask (solHop) buy": "jupiter_no_route: No routes found (NO_ROUTES_FOUND)",
+   "working-tree agent ask (solHop) sell": "jupiter_no_route: No routes found (NO_ROUTES_FOUND)",
+   "diag_sell": {
+    "onlyDirectRoutes=true (HEAD)": "Pump.fun Amm out=24358418",
+    "onlyDirectRoutes=true, maxAccounts=24": "400 NO_ROUTES_FOUND",
+    "onlyDirectRoutes=false, restrict=true, no maxAccounts": "Pump.fun Amm out=24358418",
+    "onlyDirectRoutes=false, restrict=true, maxAccounts=24 (working tree)": "400 NO_ROUTES_FOUND",
+    "onlyDirectRoutes=false, restrict=true, maxAccounts=32": "Pump.fun Amm out=24358418"
+   }
+  }
+ ]
+}

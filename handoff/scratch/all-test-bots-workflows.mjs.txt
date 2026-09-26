@@ -1,0 +1,47 @@
+
+WHEN THEY RUN
+─────────────
+  ok   Popcat: every fifteen minutes (at :07, :22, :37 and :52), so one skipped run stays inside pump.fun's forty-minute listing, and by hand
+  ok   CashCat: three times a day and by hand
+  ok   neither runs on a pull request, and each runs on main only
+  ok   each in its own concurrency group, never cancelling a run in progress
+
+THE SECRETS REACH ONLY THEIR STEPS
+──────────────────────────────────
+  ok   CashCat's job runs in the "cashcat" environment, so its secrets can be kept to main (Settings → Environments), out of reach of any other branch or pull request
+  ok   CashCat's wallet secret: once, in CashCat's own step
+  ok   the Pinata token: only CashCat's step
+  ok   the model key and the RPC: only the two bot steps
+  ok   the switches are repository variables: CASHCAT_LIVE and POPCAT_LIVE
+  ok   Popcat is told CashCat's wallet address, so it never calls out a CashCat coin
+  ok   no workflow echoes a secret
+  ok   the job token reaches only the floor-data steps
+
+THE DATA: FLOOR-DATA, THEN A DEPLOY
+───────────────────────────────────
+  ok   Popcat: checks out floor-data, runs on it, pushes only callouts.json,popcat-state.json
+  ok   Popcat: the job may write contents (the floor-data push) and nothing else
+  ok   Popcat: deploys through pages.yml only when it pushed something
+  ok   CashCat: checks out floor-data, runs on it, pushes only launches.json
+  ok   CashCat: the job may write contents (the floor-data push) and nothing else
+  ok   CashCat: deploys through pages.yml only when it pushed something
+  ok   CashCat installs the logo renderer
+
+THE DEPLOY
+──────────
+  ok   pages.yml runs on a push to main, by hand, and when a bot calls it
+  ok   one deploy at a time: the pages-deploy group, never cancelling a running deploy
+  ok   it checks out main, whoever called it
+  ok   it overlays floor-data, then runs the site's tests on the overlaid data, then uploads
+  ok   its job may read contents and deploy Pages, nothing more
+  ok   CI installs the renderer too, so the logo tests run there
+
+PINNED AND CREDENTIAL-FREE
+──────────────────────────
+  ok   every third-party action is pinned to a commit  — actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1, actions/setup-node@820762786026740c76f36085b0efc47a31fe5020, actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9, actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128, actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1, actions/setup-node@820762786026740c76f36085b0efc47a31fe5020, ./.github/workflows/pages.yml, actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1, actions/setup-node@820762786026740c76f36085b0efc47a31fe5020, ./.github/workflows/pages.yml, actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1, actions/setup-node@820762786026740c76f36085b0efc47a31fe5020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+  ok   every checkout keeps no credentials
+  ok   no workflow grants itself write-all
+  ok   every one-line run: that YAML would misread is quoted  — 17 plain run lines
+
+test-bots-workflows: 29 passed, 0 failed
+

@@ -1,0 +1,589 @@
+{
+ "disclosureAlone": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "pair": [
+  {
+   "mint": "Pre8AREmFPtoJFT8mQSXQLh56cwJmM7CFDRuoGBZiUP",
+   "symbol": "POLYMARKET",
+   "name": "POLYMARKET",
+   "decimals": 9,
+   "logoUrl": "/api/asset/quote-logo/Pre8AREmFPtoJFT8mQSXQLh56cwJmM7CFDRuoGBZiUP?v=128e10fc",
+   "category": "prestock",
+   "categoryLabel": "PreStock",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  },
+  {
+   "mint": "B4iCqVsAZv9dBiBVv58GJiBxWGmwkwbtPTn4sUQTpump",
+   "symbol": "Polycat",
+   "name": "LowPoly Cat",
+   "decimals": 6,
+   "logoUrl": "/api/asset/quote-logo/B4iCqVsAZv9dBiBVv58GJiBxWGmwkwbtPTn4sUQTpump?v=c21cd549",
+   "category": "custom",
+   "categoryLabel": "Custom",
+   "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+   "launchable": true,
+   "symbolAmbiguous": false,
+   "launchLabReady": true
+  }
+ ],
+ "chain": {
+  "epoch": 1042,
+  "slotIndex": 279482,
+  "slotsInEpoch": 432000,
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "permanentDelegate",
+   "defaultAccountState",
+   "transferFeeConfig",
+   "confidentialTransferMint",
+   "confidentialTransferFeeConfig",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "metadataPointer",
+   "pausableConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": {
+   "newerTransferFee": {
+    "epoch": 1043,
+    "maximumFee": 18446744073709552000,
+    "transferFeeBasisPoints": 300
+   },
+   "olderTransferFee": {
+    "epoch": 1039,
+    "maximumFee": 18446744073709552000,
+    "transferFeeBasisPoints": 100
+   },
+   "transferFeeConfigAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+   "withdrawWithheldAuthority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+   "withheldAmount": 14953977493
+  },
+  "pausable": {
+   "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+   "paused": false
+  },
+  "transferHook": {
+   "authority": "WV9PJN7XTmTLVwbutCLFxp8TyePee6Xq5mRq6Fti5Wc",
+   "programId": null
+  },
+  "defaultAccountState": {
+   "accountState": "initialized"
+  }
+ },
+ "results": [
+  {
+   "tag": "draft1",
+   "name": "Hunch the Cream Tabby",
+   "ticker": "HUNCHPAW",
+   "nameLen": 21,
+   "blurbLen": 148,
+   "descLen": 278,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "mentionsSanctuary": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hunch, a fluffy cream-ginger tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_HUNCHPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedAny": []
+   },
+   "jup_HUNCH": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "Cn2qYh4jZZDGEddQsAQBhy63YTW5m6inWqq6xhkxpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunchie Coin",
+      "id": "BtUs7v1Bm94phtvm74F3vyTDzribqeSQ9CFFofFYpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "HunchBot",
+      "id": "6mANbYRZ6y6WJXeaJ3xwwaouZTE5kDb3RpCyFR4Lpump"
+     },
+     {
+      "symbol": "Hunch",
+      "name": "Hunch",
+      "id": "FRm3m5gTVr2XsBa9cQFcgwwGx4XA7mLaMAnSx4r1pump"
+     },
+     {
+      "symbol": "Hunch",
+      "name": "Hunch",
+      "id": "EMkFb4eL9HcHPpgZyr4Ldo4N2codPdbj9qJGRSi4pump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "3sVKPhHDqZV4mQDCf1vjp7Gh1JwRCDk2BqPkwJEPpump"
+     },
+     {
+      "symbol": "Hunch",
+      "name": "Hunch",
+      "id": "8xD2j4T591gcUACALnmaJ7RYGHnkVX7oSksYVq6Fpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "9t8fsUYVqusJ2mft6SLkczKhS91GNq1D3cAJRJoypump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "BqXveaxJzY3GqiAwHmb2KG5bRQNiBR9KUdSiadzmpump"
+     },
+     {
+      "symbol": "Hunch",
+      "name": "Hunch the mining prodigy ACT II",
+      "id": "GdoSz2e21Cf9zAE4PYTcBUy3cvnpeorLXk5oHjebpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "HCay926KRr7cuSrpwM5CJ87LmKw8h8hbrp42G8mMpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Elon Hunch",
+      "id": "8FDkoX6bv7efjokDj3GFC9roi3RgykEmBYiFxxNrpump"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "description": "Hunch, a fluffy cream-ginger tabby with a round face and big copper eyes, sits by the garden gate each morning and guesses which path visitors take. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "tag": "draft2",
+   "name": "Tossup the Cream Cat",
+   "ticker": "TOSSPAW",
+   "nameLen": 20,
+   "blurbLen": 146,
+   "descLen": 276,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "mentionsSanctuary": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tossup, a pale-cream cat with a round fa",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_TOSSPAW": {
+    "status": 200,
+    "results": 1,
+    "symbolMatches": [],
+    "verifiedAny": []
+   },
+   "jup_TOSS": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "TOSS",
+      "name": "Jeet Toss",
+      "id": "7FYR5XiUBFSZ1D6Yz9m8KNJ3HRBzZ3vconcquG17pump"
+     },
+     {
+      "symbol": "TOSS",
+      "name": "TOM OF SOL STREET",
+      "id": "E5v7cTypeWJGrGMeeqvmCRM9uFozmECSxXSRvkuspump"
+     },
+     {
+      "symbol": "TOSS",
+      "name": "MayhemCoinflip",
+      "id": "HbxEmi7GfHxfx2ZZbFkaXProCPZxDdRXys9A2Ke6pump"
+     },
+     {
+      "symbol": "TOSS",
+      "name": "Tipping our small streamers ",
+      "id": "CrUXwwkzLWwfjkxSYc6EqWtj4yZ1c6bTyoaHnVgypump"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "description": "Tossup, a pale-cream cat with a round face and wide copper eyes, sits between two flowerpots for ages deciding which to nap in, then naps in both. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "tag": "draft3",
+   "name": "Drizzle the Butterscotch Cat",
+   "ticker": "DRIZZPAW",
+   "nameLen": 28,
+   "blurbLen": 145,
+   "descLen": 275,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "mentionsSanctuary": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Drizzle, a round-faced butterscotch tabb",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_DRIZZPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedAny": []
+   },
+   "jup_DRIZZ": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "DRIZZ",
+      "name": "The Duck Rizzler ",
+      "id": "CsrGJ7QpnTYyUZhi7r7x7J9L37VDDWHPtsSbULzxpump"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "description": "Drizzle, a round-faced butterscotch tabby with big copper eyes, tucks under the porch just before each rain shower and waits for the first drops. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "tag": "pick (draft1, set in the Cat Sanctuary)",
+   "name": "Hunch the Cream Tabby",
+   "ticker": "HUNCHPAW",
+   "nameLen": 21,
+   "blurbLen": 147,
+   "descLen": 277,
+   "descOk": true,
+   "nameOk": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "mentionsSanctuary": true,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Hunch, a fluffy cream-ginger tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_HUNCHPAW": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedAny": []
+   },
+   "jup_HUNCH": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "Cn2qYh4jZZDGEddQsAQBhy63YTW5m6inWqq6xhkxpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunchie Coin",
+      "id": "BtUs7v1Bm94phtvm74F3vyTDzribqeSQ9CFFofFYpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "HunchBot",
+      "id": "6mANbYRZ6y6WJXeaJ3xwwaouZTE5kDb3RpCyFR4Lpump"
+     },
+     {
+      "symbol": "Hunch",
+      "name": "Hunch",
+      "id": "FRm3m5gTVr2XsBa9cQFcgwwGx4XA7mLaMAnSx4r1pump"
+     },
+     {
+      "symbol": "Hunch",
+      "name": "Hunch",
+      "id": "EMkFb4eL9HcHPpgZyr4Ldo4N2codPdbj9qJGRSi4pump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "3sVKPhHDqZV4mQDCf1vjp7Gh1JwRCDk2BqPkwJEPpump"
+     },
+     {
+      "symbol": "Hunch",
+      "name": "Hunch",
+      "id": "8xD2j4T591gcUACALnmaJ7RYGHnkVX7oSksYVq6Fpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "9t8fsUYVqusJ2mft6SLkczKhS91GNq1D3cAJRJoypump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "BqXveaxJzY3GqiAwHmb2KG5bRQNiBR9KUdSiadzmpump"
+     },
+     {
+      "symbol": "Hunch",
+      "name": "Hunch the mining prodigy ACT II",
+      "id": "GdoSz2e21Cf9zAE4PYTcBUy3cvnpeorLXk5oHjebpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Hunch",
+      "id": "HCay926KRr7cuSrpwM5CJ87LmKw8h8hbrp42G8mMpump"
+     },
+     {
+      "symbol": "HUNCH",
+      "name": "Elon Hunch",
+      "id": "8FDkoX6bv7efjokDj3GFC9roi3RgykEmBYiFxxNrpump"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "description": "Hunch, a fluffy cream-ginger tabby with a round face and big copper eyes, sits by the Cat Sanctuary gate at dawn guessing which path visitors take. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+{"fetchedAt":"2026-09-25T18:50Z","tool":"mcp__higgsfield__models_explore search 'gpt image' type=image + get gpt_image_2 (read-only; no generation run)",
+ "note":"No per-image credit price is returned by the catalog; the ~0.25 credits/image figure is task-given, not verified here.",
+ "items":[
+  {"id":"gpt_image_2","parameters":{"resolution":["1k","2k","4k"],"quality":["low","medium","high"]},"aspect_ratios":["1:1","4:3","3:4","16:9","21:9","9:16","3:2","2:3"],"supports_unlim":true,"unlim":{"available":false}},
+  {"id":"gpt_image_2_5","parameters":{"variant":["flare","sunburst"],"quality":["low","medium","high","xhigh","max"],"resolution":["1k","2k","4k"],"background":["auto","opaque","transparent"]},"aspect_ratios":["auto","1:1","3:2","2:3","4:3","3:4","16:9","9:16","21:9","27:16","16:27","9:8","8:9","4:5","5:4"]}
+ ]}

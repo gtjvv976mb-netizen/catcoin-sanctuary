@@ -1,0 +1,248 @@
+[
+  {
+    "name": "Currant the Garden Cat",
+    "ticker": "CURRANT",
+    "lengths": {
+      "name": 22,
+      "ticker": 7,
+      "description": 274,
+      "body": 156
+    },
+    "tickerFormat": true,
+    "endsWithDisclosure": true,
+    "containsGOOG": false,
+    "memeTicker": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "checkProposalFullDesc": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "tagline"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "tagline"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "tagline"
+        },
+        {
+          "rule": "tagline_format",
+          "term": "Currant is a sleek, solid black cat with",
+          "field": "tagline"
+        }
+      ]
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFull": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsBody": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "jupiter": {
+      "url": "https://lite-api.jup.ag/tokens/v2/search?query=CURRANT",
+      "status": 200,
+      "results": 3,
+      "sameSymbol": [],
+      "verifiedSame": 0
+    }
+  },
+  {
+    "name": "Licorice the Hammock Cat",
+    "ticker": "LICORICE",
+    "lengths": {
+      "name": 24,
+      "ticker": 8,
+      "description": 272,
+      "body": 154
+    },
+    "tickerFormat": true,
+    "endsWithDisclosure": true,
+    "containsGOOG": false,
+    "memeTicker": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "checkProposalFullDesc": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "tagline"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "tagline"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "tagline"
+        },
+        {
+          "rule": "tagline_format",
+          "term": "Licorice is a solid black cat, soft as v",
+          "field": "tagline"
+        }
+      ]
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFull": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsBody": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "jupiter": {
+      "url": "https://lite-api.jup.ag/tokens/v2/search?query=LICORICE",
+      "status": 200,
+      "results": 10,
+      "sameSymbol": [],
+      "verifiedSame": 0
+    }
+  },
+  {
+    "name": "Porchlight the Dusk Cat",
+    "ticker": "PORCHLIGHT",
+    "lengths": {
+      "name": 23,
+      "ticker": 10,
+      "description": 271,
+      "body": 153
+    },
+    "tickerFormat": true,
+    "endsWithDisclosure": true,
+    "containsGOOG": false,
+    "memeTicker": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "checkProposalFullDesc": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "tagline"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "tagline"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "tagline"
+        },
+        {
+          "rule": "tagline_format",
+          "term": "Porchlight is a solid black cat with a s",
+          "field": "tagline"
+        }
+      ]
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFull": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "alphabet",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsBody": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "jupiter": {
+      "url": "https://lite-api.jup.ag/tokens/v2/search?query=PORCHLIGHT",
+      "status": 200,
+      "results": 2,
+      "sameSymbol": [],
+      "verifiedSame": 0
+    }
+  }
+]

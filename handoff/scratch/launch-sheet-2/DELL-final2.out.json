@@ -1,0 +1,87 @@
+{
+ "name": "Frostpuff the Fold-Eared Cat",
+ "ticker": "FROSTPUFF",
+ "description": "Frostpuff, a fluffy white cat with faint silver brow stripes, folded ears, a pink nose and big grey-green eyes, peeks out from the hedge. A cat coin priced in DELL. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+ "look": "A normal four-legged, fluffy house cat that wears nothing: a white coat with faint silver-grey tabby stripes on the brow, small folded-down ears, grey-green eyes and a pink nose.",
+ "lengths": {
+  "name": 28,
+  "ticker": 9,
+  "blurb": 137,
+  "description": 278
+ },
+ "withinLimits": true,
+ "endsWithDisclaimer": true,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "checkProposal_nameTickerBlurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Frostpuff, a fluffy white cat with faint",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_blurbOnly": {
+  "ok": true,
+  "violations": []
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_stock": {
+  "ok": true,
+  "violations": []
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jupiter": {
+  "status": 200,
+  "results": 0,
+  "symbolMatches": 0,
+  "verifiedMatch": false
+ }
+}

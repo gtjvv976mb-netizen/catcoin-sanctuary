@@ -1,0 +1,119 @@
+{
+ "name": "Sunstretch the Red Tabby Cat",
+ "ticker": "SUNSTRETCH",
+ "nameLen": 28,
+ "descLen": 277,
+ "blurbLen": 134,
+ "tickerFormat": true,
+ "tickerHasStockRoot": false,
+ "endsWithDisclaimer": true,
+ "coatValid": true,
+ "contrast": {
+  "eyesVsBase_new": 1.58,
+  "eyesVsBase_drafted": 1.07,
+  "stripesVsBase": 4.42
+ },
+ "checkProposal_blurb": {
+  "ok": true,
+  "violations": []
+ },
+ "checkProposal_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "tagline"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "tagline"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "tagline"
+   },
+   {
+    "rule": "tagline_format",
+    "term": "Sunstretch, a red-orange tabby with bold",
+    "field": "tagline"
+   }
+  ]
+ },
+ "checkFields_description": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "checkFields_look": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_coinText": {
+  "ok": true,
+  "violations": []
+ },
+ "checkTerms_fullDescription": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "LULU",
+    "field": "description"
+   }
+  ]
+ },
+ "checkTerms_look": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "tiger",
+    "field": "look"
+   }
+  ]
+ },
+ "displaySafe": {
+  "ok": true,
+  "violations": []
+ },
+ "jup": {
+  "status": 200,
+  "results": 3,
+  "symbolMatches": 0,
+  "verifiedAny": [],
+  "nameNear": [
+   {
+    "symbol": "SUNNY",
+    "name": "SUNSTRETCHER",
+    "holders": 21,
+    "isVerified": false,
+    "launchpad": "pump.fun"
+   },
+   {
+    "symbol": "SUNNY",
+    "name": "SUNSTRETCHER",
+    "holders": 1,
+    "isVerified": false,
+    "launchpad": "met-dbc"
+   }
+  ]
+ }
+}

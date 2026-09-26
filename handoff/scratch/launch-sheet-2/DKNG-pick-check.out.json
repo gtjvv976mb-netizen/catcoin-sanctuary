@@ -1,0 +1,255 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "disclaimer"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "disclaimer"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Laces the Chestnut Cat",
+   "ticker": "LACESPAW",
+   "nameLen": 22,
+   "blurbLen": 135,
+   "descLen": 269,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "sameAsDraft": "n/a",
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_catTextOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "all": [],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Laces, a chestnut-brown shorthair with a thin white stripe down his chest and white toes, chases rolling acorns across the garden lawn. A cat coin priced in DKNG. Not affiliated with DraftKings, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Twirl the Tortie Cat",
+   "ticker": "TWIRLPAW",
+   "nameLen": 20,
+   "blurbLen": 139,
+   "descLen": 273,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "sameAsDraft": "n/a",
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_catTextOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "all": [],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Twirl, a tortoiseshell with swirled black and ginger patches and deep gold eyes, turns three slow circles before every nap in the herb bed. A cat coin priced in DKNG. Not affiliated with DraftKings, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Scratch the Silver Cat",
+   "ticker": "SCRATCHPAW",
+   "nameLen": 22,
+   "blurbLen": 136,
+   "descLen": 270,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "memeTicker": false,
+   "endsWithDisclaimer": true,
+   "sameAsDraft": "n/a",
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_catTextOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 1,
+    "all": [
+     {
+      "symbol": "Scratch",
+      "name": "DJ Scratch Paw"
+     }
+    ],
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Scratch, a smoky silver cat with a warm gold patch on her chest and copper eyes, sharpens her claws on the old garden post each morning. A cat coin priced in DKNG. Not affiliated with DraftKings, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "mint": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "freezeAuthority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+  "mintAuthority": "mHRjfhQqbuPZcHk1YSoNSQmZWFqj2Yc3om1UTQgQJef",
+  "decimals": 6,
+  "extensions": [
+   {
+    "metadataPointer": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "metadataAddress": "DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow"
+    }
+   },
+   {
+    "permanentDelegate": {
+     "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+    }
+   },
+   {
+    "defaultAccountState": {
+     "accountState": "initialized"
+    }
+   },
+   {
+    "pausableConfig": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "paused": false
+    }
+   },
+   {
+    "confidentialTransferMint": {
+     "auditorElgamalPubkey": null,
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "autoApproveNewAccounts": false
+    }
+   },
+   {
+    "transferHook": {
+     "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+     "programId": null
+    }
+   },
+   {
+    "scaledUiAmountConfig": {
+     "authority": "mHRjfhQqbuPZcHk1YSoNSQmZWFqj2Yc3om1UTQgQJef",
+     "multiplier": "1",
+     "newMultiplier": "1",
+     "newMultiplierEffectiveTimestamp": 0
+    }
+   },
+   {
+    "tokenMetadata": {
+     "name": "DraftKings - Backpack Securities",
+     "symbol": "DKNG"
+    }
+   }
+  ]
+ },
+ "hasTransferFee": false
+}

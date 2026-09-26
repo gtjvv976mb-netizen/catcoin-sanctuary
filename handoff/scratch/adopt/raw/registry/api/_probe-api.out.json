@@ -1,0 +1,219 @@
+{
+ "tokenKeys": {
+  "token": [
+   "mint",
+   "pool",
+   "name",
+   "symbol",
+   "quote",
+   "launchpad",
+   "mode",
+   "quoteOnlyFees",
+   "imageUrl",
+   "links",
+   "market",
+   "status",
+   "graduationProgress",
+   "createdAt"
+  ],
+  "launch": [
+   "mint",
+   "pool",
+   "name",
+   "symbol",
+   "creator",
+   "quote",
+   "launchpad",
+   "mode",
+   "logoUrl",
+   "startMarketCapUsd",
+   "targetMarketCapUsd",
+   "createdAt"
+  ],
+  "data": [
+   "token",
+   "launch",
+   "network"
+  ]
+ },
+ "token404": {
+  "status": 404,
+  "body": "{\"error\":{\"code\":\"not_found\",\"message\":\"No platform pool exists for this mint.\"}}"
+ },
+ "token400": {
+  "status": 400,
+  "body": "{\"error\":{\"code\":\"invalid_request\",\"message\":\"The mint must be a base58 Solana address.\"}}"
+ },
+ "tokensQuote": {
+  "status": 200,
+  "dataKeys": [
+   "tokens",
+   "pagination",
+   "network"
+  ],
+  "meta": {
+   "generatedAt": "2026-09-25T18:00:13.656Z"
+  },
+  "n": 100,
+  "pagination": {
+   "page": 1,
+   "pageSize": 100,
+   "total": 3619,
+   "totalPages": 37
+  },
+  "first": {
+   "mint": "QQBY5T5tUGm3q8dJf1fGWKEwdxtwe2ejnVKcbJVYFH8",
+   "pool": "CVso6PJWTF25VnSQBnpVacYGBbZzU5otKGCTd7Daq7Dg",
+   "name": "The Crypto Mom",
+   "symbol": "HESTER",
+   "quote": {
+    "mint": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+    "symbol": "SPYX",
+    "name": "SP500",
+    "logoUrl": "/api/asset/quote-logo/XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W?v=c2b8ddb3",
+    "category": "xstock",
+    "categoryLabel": "xStock"
+   },
+   "launchpad": "launchlab",
+   "mode": "reward",
+   "quoteOnlyFees": true,
+   "transferFee": {
+    "bps": 300
+   },
+   "imageUrl": "https://axiomtrading-v2.axiom-cdn.io/HqBKk7sdYBVZvXyfrPoockZzEryuaztmhb59a2XJpump.webp",
+   "links": {},
+   "market": {
+    "priceUsd": 0.000004198052511283004,
+    "marketCapUsd": 4198.052511283005,
+    "fdvUsd": 4198.052511283005,
+    "volume24hUsd": 7498.3447695428795,
+    "liquidityUsd": 416.8192743512037,
+    "peakMarketCapUsd": 4198.052511283005
+   },
+   "status": "new",
+   "graduationProgress": 0.04060608171292291,
+   "createdAt": "2026-09-25T17:57:19.012Z"
+  },
+  "itemKeys": [
+   "mint",
+   "pool",
+   "name",
+   "symbol",
+   "quote",
+   "launchpad",
+   "mode",
+   "quoteOnlyFees",
+   "transferFee",
+   "imageUrl",
+   "links",
+   "market",
+   "status",
+   "graduationProgress",
+   "createdAt"
+  ]
+ },
+ "sortBogus": {
+  "status": 200,
+  "body": "{\"data\":{\"tokens\":[{\"mint\":\"6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx\",\"pool\":\"7a8xxAJBELDo6P9dikSYctdw6ce8F4mWr3ahcAD8Ao49\",\"name\":\"STONK\",\"symbol\":\"STONK\",\"quote\":{\"mint\":\"XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W\",\"symbol\":\"SPYX\",\"name\":\"SP500\",\"logoUrl\":\"/api/asset/quote-logo/XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W?v=c2b8ddb3\",\"category\":\"xstock\",\"categoryLabel\":\"xStock\"},\"creator\":\"H"
+ },
+ "modeBogus": {
+  "status": 504,
+  "body": "An error occurred with your deployment\n\nFUNCTION_INVOCATION_TIMEOUT\n\nsfo1::pc4x9-1790359251272-efbae1cd5841\n"
+ },
+ "qPatchpaw": {
+  "status": 504
+ },
+ "qNonsol": {
+  "status": 200,
+  "n": 1,
+  "hits": [
+   [
+    "NONSOL",
+    "test",
+    "DQVN3GbQ8ETcFERzRLJZow11yqMQ3xtSnLvNHhVkQ6K5",
+    "SPYX",
+    "2026-09-25T17:18:02.764Z"
+   ]
+  ]
+ },
+ "launches1h": {
+  "status": 200,
+  "pagination": {
+   "page": 1,
+   "pageSize": 100,
+   "total": 605,
+   "totalPages": 7
+  },
+  "n": 100,
+  "itemKeys": [
+   "mint",
+   "pool",
+   "name",
+   "symbol",
+   "creator",
+   "quote",
+   "launchpad",
+   "mode",
+   "logoUrl",
+   "startMarketCapUsd",
+   "targetMarketCapUsd",
+   "createdAt"
+  ]
+ },
+ "launches1hStd": {
+  "status": 200,
+  "pagination": {
+   "page": 1,
+   "pageSize": 100,
+   "total": 111,
+   "totalPages": 2
+  }
+ },
+ "cors": {
+  "access-control-allow-headers": "Content-Type",
+  "access-control-allow-methods": "GET, POST, OPTIONS",
+  "access-control-allow-origin": "*",
+  "access-control-expose-headers": "X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-Quota-Remaining-Day, Retry-After",
+  "access-control-max-age": "86400",
+  "age": "0",
+  "cache-control": "public, max-age=5",
+  "date": "Fri, 25 Sep 2026 18:02:52 GMT",
+  "x-ratelimit-limit": "300",
+  "x-ratelimit-remaining": "296",
+  "x-ratelimit-reset": "1790359380",
+  "x-vercel-cache": "MISS"
+ },
+ "catXstock": {
+  "status": 200,
+  "pagination": {
+   "page": 1,
+   "pageSize": 100,
+   "total": 32868,
+   "totalPages": 329
+  },
+  "newest": "2026-09-25T17:57:19.012Z",
+  "oldestOnPage": "2026-09-25T17:11:22.967Z"
+ },
+ "catBackpack": {
+  "status": 200,
+  "pagination": {
+   "page": 1,
+   "pageSize": 100,
+   "total": 24144,
+   "totalPages": 242
+  },
+  "newest": "2026-09-25T17:57:19.012Z",
+  "oldestOnPage": "2026-09-25T17:46:22.433Z"
+ },
+ "catPrestock": {
+  "status": 200,
+  "pagination": {
+   "page": 1,
+   "pageSize": 100,
+   "total": 6057,
+   "totalPages": 61
+  },
+  "newest": "2026-09-25T17:51:30.449Z",
+  "oldestOnPage": "2026-09-25T04:55:23.812Z"
+ }
+}

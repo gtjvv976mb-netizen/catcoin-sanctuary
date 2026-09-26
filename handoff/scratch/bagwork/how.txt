@@ -1,0 +1,320 @@
+BAG
+WORK
+Home
+Agents
+Tokens
+Launch
+Skins
+Shill on X
+How it works
+Your agent does the bag work.
+Launch a coin and it gets its own trader.
+MAINNET
+Connect
+wallet
+CA
+5NhN6…kpump
+$BRAIN
+$0.0₃283
+−17.1%
+/
+$SWARM
+$0.0₃990
+−25.9%
+/
+$Holdoween
+$0.0019
++14.1%
+/
+$BACKPACA
+$0.0₃394
+−8.6%
+/
+$ARENA
+$0.0₃631
++41.0%
+/
+$GROKBOOK
+$0.0₃115
++91.6%
+/
+$UPTOBER
+$0.0₃310
+−3.5%
+/
+$BillSmith
+$0.0₃112
+−5.8%
+/
+$UTILITY
+$0.0₃180
++6.1%
+/
+$BRAIN
+$0.0₃283
+−17.1%
+/
+$SWARM
+$0.0₃990
+−25.9%
+/
+$Holdoween
+$0.0019
++14.1%
+/
+$BACKPACA
+$0.0₃394
+−8.6%
+/
+$ARENA
+$0.0₃631
++41.0%
+/
+$GROKBOOK
+$0.0₃115
++91.6%
+/
+$UPTOBER
+$0.0₃310
+−3.5%
+/
+$BillSmith
+$0.0₃112
+−5.8%
+/
+$UTILITY
+$0.0₃180
++6.1%
+/
+How it works
+
+One coin, one trading agent, one wallet. Real SOL on Solana mainnet, and everything the agent does is on-chain and public.
+
+Launch coin + agent
+FROM LAUNCH TO LIVE TRADES
+01
+Connect your wallet
+
+Phantom, Solflare or MetaMask (Solana account). It is the creator wallet and stays yours.
+
+02
+Fill in your coin
+
+Image, name, ticker, description, socials, agent name and starting capital.
+
+03
+Agent wallet is created
+
+The server creates a brand-new Solana wallet for the agent. Its key is encrypted on the server.
+
+04
+Send SOL
+
+One transfer from your wallet: starting capital + 0.05 SOL to cover creating the coin.
+
+05
+Coin launches
+
+The agent creates your coin on pump.fun from its own wallet, so the agent is the coin's creator.
+
+06
+Agent trades
+
+It buys and sells Solana tokens with real SOL, following fixed rules.
+
+WHAT EVERY AGENT DOES
+the office crew
+LAUNCH
+Your coin goes live on pump.fun, created by the agent's own wallet
+SHILL
+One click writes a post for X with the coin, CA and live P&L
+TRADE
+Buys and sells real SOL with fixed rules, every few seconds
+FEES
+Creator fees are claimed and go back into the agent's bag
+CAREER LADDER
+agents get promoted by the trading profit they make · promotions are permanent
+1
+Intern
+every new agent
+ 
+2
+Worker
+0.1 SOL profit
++0.005 SOL reward
+3
+Specialist
+0.5 SOL profit
++0.025 SOL reward
+4
+Manager
+1.5 SOL profit
++0.075 SOL reward
+5
+Executive
+4 SOL profit
++0.2 SOL reward
+6
+Boss
+20 SOL profit
++1 SOL reward
+
+Promotion rewards are paid automatically in real SOL to the creator's wallet the moment an agent reaches a new level. Skip a level and you get every reward on the way.
+
+Rewards wallet
+BAB6Yc…PrSfh7 ↗
+Balance
+0.005 SOL
+Paid so far
+0.395 SOL
+STRATEGIES
+the creator picks one per agent, and can switch later
+Classic
+Balanced all-rounder
+
+The original BAGWORK brain: momentum and dip entries, locks gains when the trend fades.
+
+Per trade
+10% of SOL
+Take profit / stop
++40% / −20%
+Trailing stop
+none
+Max hold
+no limit
+Open positions
+up to 3
+Cooldown
+none
+Scalper
+Fast momentum
+
+Frequent short trades on tokens with active momentum.
+
+Per trade
+10% of SOL
+Take profit / stop
++6% / −3%
+Trailing stop
+at +4%, trail 2%
+Max hold
+10 min
+Open positions
+up to 2
+Cooldown
+10 min
+Trend
+Momentum rider
+
+Catch stronger moves and hold them longer.
+
+Per trade
+15% of SOL
+Take profit / stop
++15% / −6%
+Trailing stop
+at +10%, trail 5%
+Max hold
+60 min
+Open positions
+up to 2
+Cooldown
+none
+Dip Buyer
+Recovery
+
+Buy pullbacks instead of chasing green candles.
+
+Per trade
+12% of SOL
+Take profit / stop
++10% / −5%
+Trailing stop
+at +7%, trail 3%
+Max hold
+30 min
+Open positions
+up to 2
+Cooldown
+none
+Sniper
+Selective momentum
+
+Trade less often and only enter the strongest setups.
+
+Per trade
+20% of SOL
+Take profit / stop
++12% / −5%
+Trailing stop
+at +8%, trail 4%
+Max hold
+45 min
+Open positions
+up to 1
+Cooldown
+20 min
+Your own
+Custom · one per wallet
+
+Build your own strategy with sliders and give it a name. Pick an entry style above, then set trade size, open positions, take profit, stop loss, trailing stop, max hold time, cooldown and the entry filters.
+
+Per trade
+1–50% of SOL
+Take profit
++2% to +300%
+Stop loss
+−1% to −50%
+Max hold
+off or up to 24h
+WHAT HAPPENS ON EVERY DECISION
+every 20–40 seconds per agent
+Market data
+Live DexScreener data: price, liquidity, volume, 5m / 1h / 24h change
+→
+Decision
+Built-in trading rules pick BUY, SELL or HOLD. Same logic for every agent
+→
+Risk check
+Size, SOL reserve, max positions, token list, pause switch
+→
+Safety simulation
+The swap is simulated first. If it would spend more than allowed, it is refused
+→
+Signed + sent
+Signed inside the server vault, sent to Solana, confirmed on-chain
+→
+Public update
+Balance, positions, P&L and the Solscan link show up for everyone
+
+The logic proposes, the server decides. The trading logic never touches a private key. Stop loss and take profit are hard rules, checked every time prices refresh (about every 15 seconds).
+
+FIXED RULES
+same for every agent
+Size per trade
+10% of SOL balance
+Max open positions
+3
+Stop loss
+−20%
+Take profit
++40%
+SOL reserve
+0.03 SOL
+Tradable tokens
+≥ $30.0K liquidity, ≥ $50.0K 24h volume, ≥ 1h old
+YOUR MONEY
+
+Two wallets, never mixed. Your wallet launches and funds. The agent wallet trades. The site never asks for your seed phrase.
+
+You stay in control. The creator can pause the agent, add SOL or withdraw at any time. "Withdraw everything" sells all positions and sends all SOL back to your wallet. Every action is confirmed by a signature from your wallet.
+
+Costs. Each swap pays network fees, a 0.0002 SOL priority fee, pool fees and PumpPortal's 0.5% fee. Small agents lose a bigger share to fees.
+
+Risk. Memecoins are extremely volatile and the agent can lose some or all of its SOL. Nothing here is financial advice.
+
+BAGWORK
+· your agents do the bag work
+@bagworkagent
+Real SOL on Solana mainnet
+Not financial advice. Memecoins are extremely risky.

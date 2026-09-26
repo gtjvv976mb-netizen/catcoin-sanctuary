@@ -1,0 +1,79 @@
+{
+ "quote": {
+  "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "inAmount": "10000000",
+  "outputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+  "outAmount": "1968162862",
+  "otherAmountThreshold": "1948481234",
+  "swapMode": "ExactIn",
+  "slippageBps": 100,
+  "platformFee": null,
+  "priceImpactPct": "0.0072293476636333818589593614",
+  "routePlan": [
+   {
+    "swapInfo": {
+     "ammKey": "8FnX3xo2yYw3EUE6w3nQA4GfXGS9wpK6oj3veJpbFzLo",
+     "label": "BisonFi",
+     "inputMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+     "outputMint": "So11111111111111111111111111111111111111112",
+     "inAmount": "10000000",
+     "outAmount": "83714258",
+     "updateContextSlot": "450333686"
+    },
+    "percent": null,
+    "bps": 10000
+   },
+   {
+    "swapInfo": {
+     "ammKey": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
+     "label": "Raydium",
+     "inputMint": "So11111111111111111111111111111111111111112",
+     "outputMint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
+     "inAmount": "83714258",
+     "outAmount": "1968162862",
+     "updateContextSlot": "450333596"
+    },
+    "percent": null,
+    "bps": 10000
+   }
+  ],
+  "contextSlot": 450333686,
+  "timeTaken": 0.001844987,
+  "swapUsdValue": "9.999156018056210",
+  "mostReliableAmmsQuoteReport": {
+   "info": {
+    "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce": "1968162862",
+    "Czfq3xZZDmsdGdUyrNLtRhGc47cXcZtLG4crryfu44zE": "83705205",
+    "BZtgQEyS6eXUXicYPHecYQ7PybqodXQMvkjUbP4R8mUU": "10000304"
+   }
+  },
+  "longtailMarketQuoteReport": null,
+  "useIncurredSlippageForQuoting": null,
+  "useRewards": null,
+  "otherRoutePlans": null,
+  "loadedLongtailToken": false,
+  "instructionVersion": "V2",
+  "transactionVersion": 0
+ },
+ "swap": {
+  "swapTransaction": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAHDf3VwwSXjZoRDXjprhGGNUZ7YGodiUIYIyHRGJMdnI1rPbdaVhuqlrT5hZnIkdcW67eCFvm9ZzXM9jeWm2GwnLBnQQQP5AeqsFBGoH5xsx9hmNdlxN72v4J91uC6Ksvw/n/M1hxnsfU4xA3A1q8O6iUjQT9Rc2VBqmsooDBObcofp8NLx8o3nk9qDkxVWIJQMNrQiX1vLyucEvwWm5pH0x3hc5JzBtnuALzEarjEPfmURGyhahwLn1z8Esyp0yCEXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwZGb+UhFzL/7K26csOb57yM5bvF9xJrLEObOkAAAAAEedVb8jHAbu50xW7OaBUH/bGy3qP0jlECsc2iVrwTjwUu4YM4lpafjNHNRoMYxZjH4FiWB0pZHCrgmGAvFoAAUT4sXbpCw72DMNq9g07pl+VQNYn6AFX14JDk5y7MAxKMlyWPTiSJ8bs9ECkUjg2DC1oTmdr/EIQEjnvY2+n4WbQ/+if11/ZKdMCbHylYed5LCas238ndUUsyGqezjOXouEQXYyfGXeSol3oxrwk6aGTIbPX0109vRRpvKvXCENAEBwAFAsBcFQAHAAkDgosAAAAAAAALBgAEAAkGEwEBCCEKAAUBAwQYCRMTDAgXChESEAIBExMWGQgVEw4UDQ8CAwou0ZhTk3z+2OkDgJaYAAAAAAAuyE91AAAAAGQAAAAAAAIAAACNABAnAAFpECcBAgI4xvRcrRTjIHm0MKScqAGvsCHnNkL9mlm07aJKRUOQYgM9NS8DBRoiaqnD6zW9JDo+H+KAaN7anlH5OQXEZKvnbsMiY28t+NkDgIWEBH+CcYc=",
+  "lastValidBlockHeight": 428373712,
+  "prioritizationFeeLamports": 49999,
+  "computeUnitLimit": 1400000,
+  "loadedAccountsDataSize": null,
+  "loadedAccountsDataSizeLimit": null,
+  "transactionVersion": 0,
+  "prioritizationType": {
+   "computeBudget": {
+    "microLamports": 35714,
+    "estimatedMicroLamports": 508762
+   }
+  },
+  "simulationSlot": null,
+  "dynamicSlippageReport": null,
+  "simulationError": null,
+  "addressesByLookupTableAddress": null,
+  "timeTaken": 0.128802066,
+  "createAtaTimeTaken": 0.062259999
+ }
+}

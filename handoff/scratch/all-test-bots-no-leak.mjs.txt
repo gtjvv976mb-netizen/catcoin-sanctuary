@@ -1,0 +1,51 @@
+
+ONE FILE MAY HOLD A KEY
+───────────────────────
+  ok   only bots/cashcat/wallet.mjs constructs a Keypair or reads a secret key  — bots/cashcat/wallet.mjs
+  ok   the only signature made outside wallet.mjs is a call to the wallet's own sign(), in launch.mjs, always with the checked message
+  ok   the wallet secret's variable is read only by wallet.mjs (the others only ask whether it is set, or name it for redaction)
+  ok   Popcat's files name no key, no wallet secret, and never import the wallet
+  ok   only CashCat's run.mjs and launch.mjs import wallet.mjs
+  ok   no bot file writes to disk anything but the data files, the logo it was asked to, and Popcat's job summary (writeFileSync only in data.mjs, floor-data.mjs and CashCat's run.mjs's --logo-out; appendFileSync in Popcat's run.mjs, to $GITHUB_STEP_SUMMARY only)
+
+THE WALLET GIVES OUT ITS ADDRESS AND SIGNATURES, NEVER ITS SECRET
+─────────────────────────────────────────────────────────────────
+  ok   its public key is the keypair's
+  ok   its JSON is the public key and nothing else
+  ok   no property of it holds the secret
+  ok   the 64-number array form is read too, to the same address
+  ok   a bad secret is refused without repeating it
+  ok   no secret, no wallet (a dry run)
+  ok   it refuses to sign a message nobody checked
+  ok   it refuses to sign a message that changed after the check
+  ok   it refuses to sign for a mint it did not make
+
+THE LOGGER NEVER PRINTS A SECRET
+────────────────────────────────
+  ok   the API key, the wallet secret, the RPC URL and its key, the Pinata token: all replaced  — key [redacted] wallet [redacted]
+ERROR Error: fetch failed for [redacted]
+{"nested":{"jwt":"[redacted]","rpcKey":"[redacted]"}}
+keyfile [redacted key bytes]
+  ok   a keypair-shaped byte array is replaced even when it is not a known secret
+  ok   a signature (88 base58 characters) is not mistaken for a secret
+  ok   the names it redacts include every bot secret
+  ok   a line break in a logged value never starts a workflow command: every printed line carries the bot's prefix  — ["[cashcat] proposal Fine Cat","[cashcat] ::stop-commands::x","[cashcat] ::add-mask::1 refused","[cashcat] ","[cashcat] == A SECTION =="]
+
+ONLY THE HOSTS THE BOTS WERE GIVEN
+──────────────────────────────────
+  ok   another host is refused before a socket opens
+  ok   plain http is refused
+  ok   every URL in the bots' code is on a verified host or is a page the site links to
+
+NO MODEL IDENTIFIER, ANYWHERE THE BOTS REACH
+────────────────────────────────────────────
+  ok   none in 109 files
+  ok   the bots pick the model from GET /v1/models, and the tests use invented ids
+
+THE TEST RUNNER BLANKS EVERY BOT SECRET AND SWITCH
+──────────────────────────────────────────────────
+  ok   CASHCAT_LIVE, POPCAT_LIVE and every bot secret are emptied for the tests
+  ok   and NODE_ENV is test, which no bot will run live under
+
+test-bots-no-leak: 27 passed, 0 failed
+

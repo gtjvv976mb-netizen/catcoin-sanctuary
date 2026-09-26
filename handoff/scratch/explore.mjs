@@ -1,0 +1,31 @@
+import { VersionedTransaction, TransactionMessage, AddressLookupTableAccount, PublicKey } from "@solana/web3.js";
+import fs from "node:fs";
+const USDC="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", WSOL="So11111111111111111111111111111111111111112";
+const USER="J5sCaGHaVmUGsoYTsLnvoX71air9ffpaFnE959kudPt6";
+const [,, outMint, variant] = process.argv;
+const sleep=(ms)=>new Promise(r=>setTimeout(r,ms));
+const RPC="https://api.mainnet-beta.solana.com";
+async function rpc(method, params){ const r=await fetch(RPC,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method,params})}); const j=await r.json(); if(j.error) throw new Error(JSON.stringify(j.error)); return j.result; }
+const qp={inputMint:USDC,outputMint:outMint,amount:"10000000",slippageBps:"100",swapMode:"ExactIn",instructionVersion:"V2",restrictIntermediateTokens:"true",maxAccounts:"24"};
+const quote=await (await fetch("https://lite-api.jup.ag/swap/v1/quote?"+new URLSearchParams(qp))).json();
+console.log("quote", quote.routePlan?.map(h=>`${h.swapInfo.inputMint.slice(0,4)}>${h.swapInfo.outputMint.slice(0,4)}@${h.swapInfo.label} ${h.swapInfo.ammKey}`).join(" | "));
+await sleep(1200);
+const body={quoteResponse:quote,userPublicKey:USER,wrapAndUnwrapSol:false,dynamicComputeUnitLimit:false,prioritizationFeeLamports:{priorityLevelWithMaxLamports:{maxLamports:50000,priorityLevel:"veryHigh",global:false}}};
+if (variant==="shared") body.useSharedAccounts=true;
+if (variant==="noshared") body.useSharedAccounts=false;
+const sr=await fetch("https://lite-api.jup.ag/swap/v1/swap",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
+const swap=await sr.json();
+if(!swap.swapTransaction){console.log("swap error", sr.status, JSON.stringify(swap).slice(0,500)); process.exit(0);}
+console.log("simErr", JSON.stringify(swap.simulationError), "cuLimit", swap.computeUnitLimit);
+const tx=VersionedTransaction.deserialize(Buffer.from(swap.swapTransaction,"base64"));
+const alts=tx.message.addressTableLookups.map(l=>l.accountKey.toBase58());
+const res=await rpc("getMultipleAccounts",[alts,{encoding:"base64",commitment:"confirmed"}]);
+const tables=alts.map((a,i)=>new AddressLookupTableAccount({key:new PublicKey(a),state:AddressLookupTableAccount.deserialize(Buffer.from(res.value[i].data[0],"base64"))}));
+const m=TransactionMessage.decompile(tx.message,{addressLookupTableAccounts:tables});
+const allKeys=[...new Set(m.instructions.flatMap(ix=>ix.keys.map(k=>k.pubkey.toBase58())))];
+await sleep(500);
+const acc=await rpc("getMultipleAccounts",[allKeys,{encoding:"base64",commitment:"confirmed"}]);
+const info=new Map();
+allKeys.forEach((k,i)=>{const a=acc.value[i]; if(!a){info.set(k,"(absent)");return;} const d=Buffer.from(a.data[0],"base64"); let s=`owner=${a.owner.slice(0,6)} len=${d.length}`; if((a.owner.startsWith("Tokenkeg")||a.owner.startsWith("TokenzQ"))&&d.length>=165){s+=` TOKENACCT mint=${new PublicKey(d.subarray(0,32)).toBase58().slice(0,6)} owner=${new PublicKey(d.subarray(32,64)).toBase58()} amt=${d.readBigUInt64LE(64)}`;} info.set(k,s);});
+m.instructions.forEach((ix,i)=>{console.log(`#${i} ${ix.programId.toBase58()} data=${Buffer.from(ix.data).toString("hex").slice(0,140)} (${ix.data.length}B)`); ix.keys.forEach((k,j)=>console.log(`   [${j}] ${k.pubkey.toBase58()} ${k.isSigner?"S":"-"}${k.isWritable?"W":"-"} ${info.get(k.pubkey.toBase58())}`));});
+fs.writeFileSync(`explore-${outMint.slice(0,4)}-${variant??"default"}.json`, JSON.stringify({quote,swap},null,1));

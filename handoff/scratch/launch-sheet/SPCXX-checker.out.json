@@ -1,0 +1,314 @@
+[
+ {
+  "name": "Snowloaf the Tabby Cat",
+  "ticker": "SNOWLOAF",
+  "nameLen": 22,
+  "tickerLen": 8,
+  "blurbLen": 148,
+  "descLen": 258,
+  "endsWithDisclosure": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Snowloaf, a fluffy brown tabby with dark",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock_look": {
+   "ok": true,
+   "violations": []
+  },
+  "stockCatRefusals": [
+   {
+    "clause": "other_pair",
+    "term": "GOLD",
+    "field": "tagline",
+    "message": "other_pair: \"GOLD\" in the tagline (it names another xStock)"
+   }
+  ],
+  "tickerRegex": true,
+  "memeBanned": false,
+  "confusableWithRoot": false,
+  "inVerifiedIndex": null,
+  "jupStatus": 200,
+  "jupResults": 0,
+  "jupAll": [],
+  "jupSymbolMatches": [],
+  "jupVerifiedCollision": false,
+  "description": "Snowloaf, a fluffy brown tabby with dark stripes and gold eyes, folds into a tight loaf on a warm round dish in the snow and naps there till spring. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Warmspot the Tuxedo Cat",
+  "ticker": "WARMSPOT",
+  "nameLen": 23,
+  "tickerLen": 8,
+  "blurbLen": 154,
+  "descLen": 264,
+  "endsWithDisclosure": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Warmspot, a black-and-white tuxedo cat w",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock_look": {
+   "ok": true,
+   "violations": []
+  },
+  "stockCatRefusals": [],
+  "tickerRegex": true,
+  "memeBanned": false,
+  "confusableWithRoot": false,
+  "inVerifiedIndex": null,
+  "jupStatus": 200,
+  "jupResults": 1,
+  "jupAll": [
+   {
+    "symbol": "USDC",
+    "name": "NyanWalterGrumpyCheemsPopcat"
+   }
+  ],
+  "jupSymbolMatches": [],
+  "jupVerifiedCollision": false,
+  "description": "Warmspot, a black-and-white tuxedo cat with a white stripe down her nose and a white chin, always finds the one warm spot in a snowy garden, and keeps it. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ },
+ {
+  "name": "Muffler the Fluffy Cat",
+  "ticker": "MUFFLER",
+  "nameLen": 22,
+  "tickerLen": 7,
+  "blurbLen": 150,
+  "descLen": 260,
+  "endsWithDisclosure": true,
+  "checkProposal": {
+   "ok": true,
+   "violations": []
+  },
+  "checkProposal_fullDescAsTagline": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "tagline"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "tagline"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "tagline"
+    },
+    {
+     "rule": "tagline_format",
+     "term": "Muffler, a long-haired black cat with a ",
+     "field": "tagline"
+    }
+   ]
+  },
+  "checkFields_fullDescription": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkFields_disclosureOnly": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "spacex",
+     "field": "description"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "description"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "description"
+    }
+   ]
+  },
+  "checkTerms_stock": {
+   "ok": true,
+   "violations": []
+  },
+  "checkTerms_stock_look": {
+   "ok": true,
+   "violations": []
+  },
+  "stockCatRefusals": [],
+  "tickerRegex": true,
+  "memeBanned": false,
+  "confusableWithRoot": false,
+  "inVerifiedIndex": null,
+  "jupStatus": 200,
+  "jupResults": 2,
+  "jupAll": [
+   {
+    "symbol": "DWM",
+    "name": "dog wif muffler"
+   },
+   {
+    "symbol": "PLAS",
+    "name": "Emu Flas Nest of Flashy Flyers"
+   }
+  ],
+  "jupSymbolMatches": [],
+  "jupVerifiedCollision": false,
+  "description": "Muffler, a long-haired black cat with a thick white ruff and a white muzzle, curls up with friends on a warm dish in the snow, snug as a winter scarf. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice."
+ }
+]

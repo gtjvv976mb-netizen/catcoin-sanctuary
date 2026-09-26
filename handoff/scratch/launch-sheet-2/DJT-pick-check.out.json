@@ -1,0 +1,310 @@
+{
+ "disclaimerOld": {
+  "checkFields": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "real_person",
+     "term": "trump",
+     "field": "disclaimer"
+    },
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "disclaimer"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclaimer"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclaimer"
+    }
+   ]
+  }
+ },
+ "disclaimerNew": {
+  "checkFields": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "brand",
+     "term": "stonkfun",
+     "field": "disclaimer"
+    },
+    {
+     "rule": "endorsement",
+     "term": "affiliated",
+     "field": "disclaimer"
+    },
+    {
+     "rule": "financial_promise",
+     "term": "financial advice",
+     "field": "disclaimer"
+    }
+   ]
+  }
+ },
+ "coins": [
+  {
+   "id": "draft1",
+   "name": "Marmalade the Town Crier Cat",
+   "ticker": "TOWNCRIER",
+   "nameLen": 28,
+   "blurbLen": 126,
+   "descLen": 279,
+   "descOK": true,
+   "nameOK": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "allSymbols": []
+   },
+   "description": "Marmalade, a lean ginger tabby with rust stripes and gold eyes, meows the morning gossip from the garden gate to all who pass. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "draft2",
+   "name": "Soapbox the Ginger Tabby",
+   "ticker": "SOAPPAW",
+   "nameLen": 24,
+   "blurbLen": 123,
+   "descLen": 276,
+   "descOK": true,
+   "nameOK": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 0,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "allSymbols": []
+   },
+   "description": "Soapbox, a fluffy ginger tabby with a cream chin and copper eyes, stands on an old crate to lecture the sparrows at length. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "draft3",
+   "name": "Echo the Noticeboard Cat",
+   "ticker": "PAWPOST",
+   "nameLen": 24,
+   "blurbLen": 123,
+   "descLen": 276,
+   "descOK": true,
+   "nameOK": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "real_person",
+      "term": "trump",
+      "field": "description"
+     },
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 4,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "allSymbols": [
+     "PAWAI",
+     "PAW",
+     "PAW",
+     "ClawCast"
+    ]
+   },
+   "description": "Echo, a stocky ginger tabby with swirled stripes and green eyes, stamps a paw print on each note on the garden noticeboard. A cat coin priced in DJT. Not affiliated with Trump Media & Technology Group, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "id": "pick",
+   "name": "Tack the Noticeboard Cat",
+   "ticker": "PAWPOST",
+   "nameLen": 24,
+   "blurbLen": 138,
+   "descLen": 265,
+   "descOK": true,
+   "nameOK": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "endsWithDisclaimer": true,
+   "memeTicker": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_blurbOnly": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 4,
+    "symbolMatches": [],
+    "verifiedMatch": false,
+    "allSymbols": [
+     "PAWAI",
+     "PAW",
+     "PAW",
+     "ClawCast"
+    ]
+   },
+   "description": "Tack, a stocky ginger tabby with swirled stripes and green eyes, stamps a paw print on every note pinned to the Cat Sanctuary noticeboard. A cat coin priced in DJT. Not affiliated with TMTG, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

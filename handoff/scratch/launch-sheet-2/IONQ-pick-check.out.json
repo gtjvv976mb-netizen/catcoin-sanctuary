@@ -1,0 +1,359 @@
+{
+ "pair": {
+  "mint": "NQ5hSuXQZrbnrwcDVk2qN73njjd3E3v3badYHnj5thF",
+  "symbol": "IONQ",
+  "name": "IonQ",
+  "decimals": 6,
+  "logoUrl": "/api/asset/quote-logo/NQ5hSuXQZrbnrwcDVk2qN73njjd3E3v3badYHnj5thF?v=9068da72",
+  "category": "backpack",
+  "categoryLabel": "Sunrise",
+  "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "launchable": true,
+  "symbolAmbiguous": false,
+  "launchLabReady": true
+ },
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Beadline the Silver-Spotted Cat",
+   "ticker": "BEADLINE",
+   "nameLen": 31,
+   "blurbLen": 149,
+   "descLen": 277,
+   "tickerRegex": true,
+   "hasStockRoot": false,
+   "catMeme": false,
+   "endsWithDisclosure": true,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Beadline, a pale silver shorthair with a",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "description": "Beadline, a pale silver shorthair with a neat row of small round slate-blue spots down her back, naps on cool flagstones and hops the stones at dusk. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "coat": {
+    "base": "#CDD2DA",
+    "second": "#4F5F7C",
+    "pattern": "spotted",
+    "eyes": "#8CCFB8"
+   },
+   "jup:BEADLINE": {
+    "status": 200,
+    "results": 9,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [],
+    "verifiedInResults": []
+   },
+   "jup:Beadline": {
+    "status": 200,
+    "results": 9,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [],
+    "verifiedInResults": []
+   },
+   "jup:Beadline the Silver-Spotted Cat": {
+    "status": 200,
+    "results": 0,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [],
+    "verifiedInResults": []
+   }
+  },
+  {
+   "name": "Rime the Blue-Point Cat",
+   "ticker": "RIMEPOINT",
+   "nameLen": 23,
+   "blurbLen": 151,
+   "descLen": 279,
+   "tickerRegex": true,
+   "hasStockRoot": false,
+   "catMeme": false,
+   "endsWithDisclosure": true,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Rime, an ice-white cat with slate-blue e",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "description": "Rime, an ice-white cat with slate-blue ears, mask, paws and tail and bright blue eyes, sits so still on the coolest shady stone that moths land by him. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "coat": {
+    "base": "#EEF1F4",
+    "second": "#56647E",
+    "pattern": "point",
+    "eyes": "#4A90DB"
+   },
+   "jup:RIMEPOINT": {
+    "status": 200,
+    "results": 9,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [],
+    "verifiedInResults": []
+   },
+   "jup:Rime": {
+    "status": 200,
+    "results": 20,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [
+     {
+      "symbol": "RIME",
+      "name": "Algorhythm Holdings Inc"
+     },
+     {
+      "symbol": "RIME",
+      "name": "RICH BY MEME"
+     },
+     {
+      "symbol": "RIME",
+      "name": "Curve Rime"
+     },
+     {
+      "symbol": "RIME",
+      "name": "Rime Curve"
+     },
+     {
+      "symbol": "RIME",
+      "name": "RICH BY MEME"
+     }
+    ],
+    "verifiedInResults": []
+   },
+   "jup:Rime the Blue-Point Cat": {
+    "status": 200,
+    "results": 0,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [],
+    "verifiedInResults": []
+   }
+  },
+  {
+   "name": "Flicker the Slate-Blue Cat",
+   "ticker": "DOTCHASE",
+   "nameLen": 26,
+   "blurbLen": 147,
+   "descLen": 275,
+   "tickerRegex": true,
+   "hasStockRoot": false,
+   "catMeme": false,
+   "endsWithDisclosure": true,
+   "checkProposal_nameTickerBlurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkProposal_fullDescriptionAsTagline": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Flicker, a slate-blue shorthair with pal",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "description": "Flicker, a slate-blue shorthair with pale green eyes, chases the tiny dancing dot of light along the garden wall each evening and never catches it. A cat coin priced in IONQ. Not affiliated with IonQ, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "coat": {
+    "base": "#6F7B8D",
+    "second": "#5A6576",
+    "pattern": "solid",
+    "eyes": "#A3C96B"
+   },
+   "jup:DOTCHASE": {
+    "status": 200,
+    "results": 5,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [],
+    "verifiedInResults": []
+   },
+   "jup:Flicker": {
+    "status": 200,
+    "results": 20,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [
+     {
+      "symbol": "Flicker",
+      "name": "Flicker AI"
+     },
+     {
+      "symbol": "Flicker",
+      "name": "Flicker AI"
+     },
+     {
+      "symbol": "FLICKER",
+      "name": "FlickerOfLife"
+     }
+    ],
+    "verifiedInResults": []
+   },
+   "jup:Flicker the Slate-Blue Cat": {
+    "status": 200,
+    "results": 0,
+    "tickerSymbolMatches": [],
+    "firstWordSymbolMatches": [],
+    "verifiedInResults": []
+   }
+  }
+ ]
+}

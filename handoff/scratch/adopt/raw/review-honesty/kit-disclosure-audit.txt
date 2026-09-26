@@ -1,0 +1,18 @@
+Source: adopt/kits-inventory.json (generatedAt 2026-09-25T18:58:24Z). Audit of drafted kit texts.
+templates.xBio: ["{name}, adopted at Catcoin Sanctuary. {disclosure full}", "{name}, adopted at Catcoin Sanctuary. {disclosure core}", "{name} of Catcoin Sanctuary. {disclosure core}", "Adopted at Catcoin Sanctuary. {disclosure core}", "{disclosure core}"]
+templates.disclosureCore: Not affiliated with {issuers} or StonkFun. No intrinsic value; not financial advice.
+templates.xPostWaiting[0]: {name} is up for adoption at Catcoin Sanctuary. ${TICKER}
+drafted kits: 50
+bios with no word 'coin' (48): ['PATCHPAW', 'SOCKFOOT', 'PORCHLIGHT', 'WHISK100', 'SNOWCURL', 'TUPPENCE', 'HARRUMPH', 'TRINKETCAT', 'SUNMANE', 'PEWTER', 'WARMSPOT', 'ROSETTE', 'INGOTLOAF', 'COUCHCAP', 'SKEINKIT', 'HALFSMILE', 'SAVEPAWS', 'EVERLOOP', 'MILKWEED', 'TUMBLES', 'TRILLBY', 'LATCHKEY', 'GIMBALPAW', 'CLOCKPAW', 'PINROW', 'SAVEPAW', 'SAFFWHISK', 'NOTEPAW', 'APOTHECAT', 'COBBLE', 'SCUFFPAW', 'KERNELPAW', 'TREADPAW', 'TOUSLE', 'GLINTPAW', 'HUBBUB', 'CARTONPAW', 'FROSTPUFF', 'PAWPOST', 'TALLYSPOT', 'VELVETPAW', 'PRISMPAW', 'TARTANPAW', 'COTTAPAW', 'HAYBALE', 'HUNCHPAW', 'SILKSTRIPE', 'KNITPAW']
+adopted posts without 'A cat coin priced in' (15): ['INGOTLOAF', 'PINROW', 'SAVEPAW', 'SAFFWHISK', 'APOTHECAT', 'COBBLE', 'SCUFFPAW', 'KERNELPAW', 'TOUSLE', 'GLINTPAW', 'CARTONPAW', 'FROSTPUFF', 'VELVETPAW', 'PRISMPAW', 'TARTANPAW']
+waiting (pre-launch) posts containing a $TICKER (50 of 50)
+xstock kits: 24; disclosures naming Backed/xStocks: 0
+kits whose texts say 'not an animal charity' or 'no real cat': 0
+kits whose texts warn value can be lost/zero: 1
+examples:
+PATCHPAW bio: Patchpaw the Calico, adopted at Catcoin Sanctuary. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.
+PATCHPAW adopted: I adopted Patchpaw the Calico at Catcoin Sanctuary. $PATCHPAW / CA {MINT} / https://catcoinsanctuary.com/cat/patchpaw / A cat coin priced in SPYx. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.
+PATCHPAW waiting: Patchpaw the Calico is up for adoption at Catcoin Sanctuary. $PATCHPAW / https://catcoinsanctuary.com/cat/patchpaw / A cat coin priced in SPYx. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.
+KERNELPAW bio: Adopted at Catcoin Sanctuary. Not affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice.
+KERNELPAW adopted: I adopted Kernel the Butter-Patch Cat at Catcoin Sanctuary. $KERNELPAW / CA {MINT} / https://catcoinsanctuary.com/cat/kernelpaw / Not affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice.
+KERNELPAW waiting: Kernel the Butter-Patch Cat is up for adoption at Catcoin Sanctuary. $KERNELPAW / https://catcoinsanctuary.com/cat/kernelpaw / A cat coin priced in AMC. Not affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice.

@@ -1,0 +1,203 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "intel",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Bracken the Tabby Cat",
+   "ticker": "BRACKEN",
+   "nameLen": 21,
+   "tickerLen": 7,
+   "blurbLen": 149,
+   "descLen": 258,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "intel",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Bracken, a sturdy grey-brown striped tabby with a thick black-ringed tail, stalks moths through the ferns at dusk, then naps on the warm garden wall. A cat coin priced in INTCx. Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tweed the Stripy Cat",
+   "ticker": "TWEED",
+   "nameLen": 20,
+   "tickerLen": 5,
+   "blurbLen": 149,
+   "descLen": 258,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "intel",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [],
+    "verifiedMatch": false
+   },
+   "description": "Tweed, a stocky tabby in a coat of fine dark stripes, sits in the sun with his bushy black-ringed tail wrapped round his paws, purring like a kettle. A cat coin priced in INTCx. Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Humbug the Garden Cat",
+   "ticker": "HUMBUG",
+   "nameLen": 21,
+   "tickerLen": 6,
+   "blurbLen": 146,
+   "descLen": 255,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "intel",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "tickerRegex": true,
+   "memeBanned": false,
+   "jup": {
+    "status": 200,
+    "results": 10,
+    "symbolMatches": [
+     {
+      "symbol": "HUMBUG",
+      "name": "Humbug Lyrics Bot",
+      "id": "GWp2dTvLjuaKq7TrGDGNJenoLBFL8pDv6eVxRBVCpump"
+     }
+    ],
+    "verifiedMatch": false
+   },
+   "description": "Humbug, a stout tabby striped like an old-fashioned sweet, has a fat tail ringed in black. He grumbles at the rain, then naps in the potting shed. A cat coin priced in INTCx. Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice."
+  }
+ ],
+ "altRes": {
+  "TWEEDPAW": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "BRACKENPAW": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "HUMBUGPAW": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "verifiedMatch": false
+  },
+  "FERNSTRIPE": {
+   "status": 200,
+   "results": 0,
+   "symbolMatches": [],
+   "verifiedMatch": false
+  }
+ }
+}

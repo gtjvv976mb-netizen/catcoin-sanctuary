@@ -1,0 +1,61 @@
+
+LAUNCHLAB'S ON-CHAIN IDL
+────────────────────────
+  ok   initialize_with_token_2022's discriminator is sha256("global:initialize_with_token_2022")[0..8]
+  ok   fifteen accounts and five arguments
+  ok   the authority and event-authority PDAs are verified.mjs's
+  ok   the account discriminators verified.mjs pins are the IDL's
+
+SIX REAL STONKFUN LAUNCHES
+──────────────────────────
+  ok   all 6 launches' sixteen accounts re-derive, flags included
+  ok   every launch with the zero-filled tail re-encodes byte for byte (5 of 5)
+  ok   the sixteenth account is the curve rule PDA in every one
+  ok   every one used StonkFun's launch shape: 6 decimals, 1e15 supply, 793.1e12 for sale, cpmm, no vesting, no transfer fee
+  ok   two of them are paired with xStocks
+
+THE ACCOUNTS ON CHAIN
+─────────────────────
+  ok   both platform configs read name "StonkFun", web https://www.stonkfun.xyz
+  ok   creator fee rate 0, platform fee rate 10,000 (1%), launch params restricted
+  ok   the SPYx GlobalConfig: quote mint SPYx, constant curve
+  ok   the curve rule belongs to StonkFun's standard platform and that config
+
+PLANNING A LAUNCH FROM STONKFUN'S API, PROVED ON CHAIN
+──────────────────────────────────────────────────────
+  ok   the plan: SPYx under Token-2022, the SPYx config, the curve rule, the raise the API priced
+  ok   another standard platform id → refused
+  ok   another program → refused
+  ok   a curve rule that is not the PDA → refused
+  ok   a raise that is not a positive integer → refused
+  ok   vesting or another supply → refused
+  ok   a config whose on-chain quote is not the stock → refused
+  ok   a curve rule on chain for another config → refused
+  ok   LaunchLab switched off in StonkFun's stats → refused
+  ok   a pair that is not LaunchLab-ready → refused
+  ok   a quote that is not on the official xStock list → refused
+  ok   the quote may be named by symbol, any case, or by mint
+
+THE PLANNER'S OTHER REFUSALS, EACH BY NAME
+──────────────────────────────────────────
+  ok   a /pairs answer with no pairs list → pairs
+  ok   a pricing answer missing a part (no curve rule) → pricing
+  ok   a config that is not a LaunchLab account on chain → chain
+  ok   a stock whose mint account is missing on chain → quote_mint
+  ok   a name, ticker or URI too long for the instruction → too_long
+  ok   data that is not initialize_with_token_2022, or a curve that is not the constant one → decode
+
+THE QUOTE LIST: THE BOT'S FIFTEEN BY DEFAULT, THE STOCK CATS' TWENTY-FOUR WHEN ASKED
+────────────────────────────────────────────────────────────────────────────────────
+  ok   the fifteen built-ins stay fifteen; the stock cats' list is those fifteen and nine more
+  ok   by default (the bot) each of the nine is refused at quote_not_xstock
+  ok   …and passed the stock cats' list, each resolves, by mint or by symbol
+  ok   all 24 plan against the recorded answers and accounts, each carrying its stock's mint account exactly as read  — 24 of 24
+
+CASHCAT'S OWN INITIALIZE, AS SIMULATED ON MAINNET
+─────────────────────────────────────────────────
+  ok   rebuilt from the recorded plan, the message is the simulated one, byte for byte
+  ok   the simulation succeeded, logged InitializeWithToken2022, and spent inside the budget  — 8673900 lamports, 98816 units
+
+test-bots-stonkfun: 37 passed, 0 failed
+

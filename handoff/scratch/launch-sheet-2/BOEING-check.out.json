@@ -1,0 +1,503 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Windsock the Patch-Cap Cat",
+   "ticker": "WINDSOCK",
+   "nameLen": 26,
+   "blurbLen": 158,
+   "descLen": 302,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Windsock, a white cat with grey tabby pa",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 2,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Windsock, a white cat with grey tabby patches over both ears, a white blaze between them and a striped grey tail, sits by the garden gate to watch the clouds. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Tailwind the Tabby-and-White Cat",
+   "ticker": "TAILWIND",
+   "nameLen": 32,
+   "blurbLen": 155,
+   "descLen": 299,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tailwind, a snowy white cat with a grey ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 16,
+   "jupSymbolMatches": [
+    {
+     "symbol": "TAILWIND",
+     "name": "Tailwind CSS",
+     "id": "GLy5g87gQceq5fcrWn2UgDXACYzQa3pCGcQ1jSt5BAGS"
+    },
+    {
+     "symbol": "TailWind",
+     "name": "TailWind",
+     "id": "GtdFTh2hqr6ECf1hGduWFPBy7tcLPmdt4kZsaV7Fpump"
+    },
+    {
+     "symbol": "tailwind",
+     "name": "tailwind",
+     "id": "9qFMaft99fXVg3qCkR4Jp5Bcz1EsnvEa7Ebpic34pump"
+    },
+    {
+     "symbol": "TailWind",
+     "name": "TailWind",
+     "id": "65Gx9NDdr8QASW96En5Bws2J7TXqgNrXf8c1VUGApump"
+    },
+    {
+     "symbol": "TAILWIND",
+     "name": "Tailwind CSS",
+     "id": "6dA1ufDQ41xf6TQ1DcHioi7mdoh415S1UEe9rmk2hm9g"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Tailwind, a snowy white cat with a grey tabby cap, a brown smudge on his nose and a ringed grey tail, races the breeze down the long, straight garden path. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Contrail the Split-Face Cat",
+   "ticker": "CONTRAIL",
+   "nameLen": 27,
+   "blurbLen": 159,
+   "descLen": 303,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Contrail, a lean white shorthair with a ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "CONTRAIL",
+     "name": "Contrail AI",
+     "id": "KQtnP4ujNroP6JoUf8AjhxNaUztpNhpZJwRbCuApump"
+    },
+    {
+     "symbol": "CONTRAIL",
+     "name": "Contrail AI",
+     "id": "YS7GURRTYfn9nxPvnJnxCJ1imrGx3MebaoeqPJDpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Contrail, a lean white shorthair with a grey tabby patch on each side of his face, pink ears and a long striped tail, naps on the lawn under the wide open sky. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "SKYPATCH",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "CLOUDHOP",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "HANGARPAW",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "LIFTOFF",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "LIFTOFF",
+     "name": "Liftoff",
+     "id": "4qm4bbvMJfifkbhaj6EkKuwFthmHDUHcoJ5EFKwnz7rx"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "Liftoff",
+     "id": "6AYM42hC6mv8rjNv3K5CtCrkV6WoFaKibNK7wSKTbYkd"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "Starship 14",
+     "id": "HnxiKk5rt5RTSn9t5rHSNWDoCZCJ3vuzf4owEqatpump"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "Liftoff",
+     "id": "6eR5sym3PniNf84fMPdjmEfV9PeRXXdCECKBfnX1pump"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "WE HAVE LIFT OFF",
+     "id": "4kQCRHPJSB1CXZ56HqEfS8tkNGbnqmsCyJbDPz8rUjtx"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "Liftoff",
+     "id": "vAymSyGxkzCYHUvLQ7pW4R9Qa7d6H3WiNc56ypkpump"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "LIFTOFF",
+     "id": "51EJJRA1pgVhE3aEZvtbe8edBsuHK9iAR8tXHRqQCRFM"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "LIFTOFF",
+     "id": "2e3ZnZUMkZhFJpxh1fUViwr3px9MrY6Wtz6iAFoLpump"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "Liftoff",
+     "id": "FYfENc5Nz3fftVkGhE42xGBkG3oS4THP6FWXDAMYZ2SR"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "Liftoff",
+     "id": "UZkgHMRTmyjsU5ZLUBRdGQinYgxyDtScm9MMRowqaW8"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "LIFTOFF",
+     "id": "9cvxT1hWi3PqLYVRoDFfhw1rzuT6Qkvs1yLFM2VVpump"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "Liftoff",
+     "id": "96bPbqKyZHjRXFtmKmxmdURyL4G4hgvAfPWLjq6Xpump"
+    },
+    {
+     "symbol": "LIFTOFF",
+     "name": "Liftoff",
+     "id": "4K5VQk1Todbr7oCKUZA6bnpFZwJ4iL6AKcRhQTfapump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Check the Cat",
+   "ticker": "WINDPAW",
+   "nameLen": 13,
+   "blurbLen": 42,
+   "descLen": 186,
+   "tickerHasRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "ticker-only check for an alternate symbo",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "ticker-only check for an alternate symbol. A cat coin priced in BOEING. Not affiliated with The Boeing Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

@@ -1,0 +1,176 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "costco",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Stacks the Cardboard-Tan Cat",
+   "ticker": "STACKPAW",
+   "nameLen": 28,
+   "blurbLen": 139,
+   "descLen": 279,
+   "tickerHasCostRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Stacks, a big broad-chested cat with a c",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Stacks, a big broad-chested cat with a cardboard-tan coat, cream bib and cream paws, naps on a tall pile of brown boxes in the garden shed. A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Roastie the Golden-Crust Cat",
+   "ticker": "ROASTIE",
+   "nameLen": 28,
+   "blurbLen": 137,
+   "descLen": 277,
+   "tickerHasCostRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Roastie, a plump shorthair with a glossy",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "ROASTIE",
+     "name": "ROASTIE",
+     "id": "BRJYaKZtRUsZWUnA4JRJScB5owUKVKib4HLtCTxYpump"
+    },
+    {
+     "symbol": "ROASTIE",
+     "name": "ROASTIES",
+     "id": "BsjHoVWjoprSr2WXfsjA9YGwpPiT24osp6L2GFVMauNe"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Roastie, a plump shorthair with a glossy golden-brown coat and herb-green eyes, dozes in the warmest sunny patch beside the garden grill. A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Toastbun the Long Ginger Cat",
+   "ticker": "TOASTBUN",
+   "nameLen": 28,
+   "blurbLen": 143,
+   "descLen": 283,
+   "tickerHasCostRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "costco",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Toastbun, a long, low ginger tabby with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 1,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Toastbun, a long, low ginger tabby with toasty bun-brown stripes and a cream belly, stretches the whole length of the garden bench after lunch. A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

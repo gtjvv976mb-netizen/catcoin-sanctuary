@@ -1,0 +1,60 @@
+# Posts about the Sanctuary itself on X (@catcosanctuary), with real stills and clips from the
+# site (assets/promo). The cron wakes it every 20 minutes; scripts/promo.mjs posts only when
+# everyMinutes (data/promo-config.json, 120 by default) have passed since its last post, and
+# never within 10 minutes of any other post from the account, so it never crowds the cat posts.
+#
+# Secrets: the same four as Announce, optional. Only the posting step sees them.
+# Own concurrency group, never cancelled: sharing "announce" would let a waiting promo run
+# replace a waiting announce run (GitHub keeps one pending run per group).
+name: Promo
+
+on:
+  schedule:
+    - cron: "7-59/20 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: promo
+  cancel-in-progress: false
+
+jobs:
+  promo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: node --test tests/promo.test.mjs
+      - name: Post the next promo if it is due
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: node scripts/promo.mjs
+      - name: Commit the record if it changed
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/promo-state.json
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Promo: record the post"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          for i in 1 2 3; do
+            if git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then exit 0; fi
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              -c http.extraheader="AUTHORIZATION: basic $auth" pull --rebase origin main
+          done
+          exit 1

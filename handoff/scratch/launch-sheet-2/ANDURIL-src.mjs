@@ -1,0 +1,11 @@
+const url = "https://www.anduril.com/news/anduril-industries-joins-american-rheinmetall-vehicles-team-lynx-to-deliver-data-fusion-and";
+const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0" } });
+const t = await r.text();
+console.log("status", r.status, "len", t.length);
+const title = t.match(/<title[^>]*>([^<]*)<\/title>/i); console.log("title:", title && title[1]);
+const txt = t.replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/\s+/g," ");
+for (const m of txt.matchAll(/.{0,160}(Lynx|lynx|cat\b|feline).{0,160}/g)) console.log("-", m[0]);
+const d = t.match(/"datePublished"\s*:\s*"([^"]+)"/); console.log("datePublished:", d && d[1]);
+const rpc = await fetch("https://api.mainnet-beta.solana.com", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "getAccountInfo", params: ["PresTj4Yc2bAR197Er7wz4UUKSfqt6FryBEdAriBoQB", { encoding: "jsonParsed" }] }) });
+const j = await rpc.json(); const p = j?.result?.value?.data?.parsed?.info;
+console.log(JSON.stringify({ owner: j?.result?.value?.owner, extensions: (p?.extensions ?? []).map(e => ({ extension: e.extension, state: ["transferFeeConfig","transferHook","scaledUiAmountConfig","pausableConfig"].includes(e.extension) ? e.state : undefined })) }, null, 1));

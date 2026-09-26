@@ -1,0 +1,423 @@
+{
+ "sanity": {
+  "status": 200,
+  "n": 20,
+  "verifiedBonk": true
+ },
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "disclosureTerms": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "stock",
+    "term": "URA",
+    "field": "disclaimer"
+   }
+  ]
+ },
+ "coins": [
+  {
+   "name": "Lichen the Sage-Grey Cat",
+   "ticker": "LICHENPAW",
+   "nameLen": 24,
+   "blurbLen": 143,
+   "descLen": 274,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsKnownCatMeme": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Lichen, a soft pale green-grey shorthair",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Uranium",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_LICHENPAW": {
+    "status": 200,
+    "results": 0,
+    "exactSymbolMatches": [],
+    "verifiedMatch": false,
+    "verifiedAny": []
+   },
+   "jup_LICHEN": {
+    "status": 200,
+    "results": 20,
+    "exactSymbolMatches": [
+     {
+      "symbol": "LICHEN",
+      "name": "Lichen",
+      "id": "5aginUf6MCXYKxGqb9dasGKeWs1VqHR3GKZrvdsnpump",
+      "holders": 1,
+      "mcap": 2794.710922950373
+     },
+     {
+      "symbol": "LICHEN",
+      "name": "Lichen",
+      "id": "Bpn4LPRRQ1zjdH2boTEbMW6X15Sm9Qr6iac6hfQCpump",
+      "holders": 1,
+      "mcap": 2881.233909378264
+     }
+    ],
+    "verifiedMatch": false,
+    "verifiedAny": []
+   },
+   "description": "Lichen, a soft pale green-grey shorthair with bright lime-green eyes, curls up on the mossy garden rocks and purrs through every afternoon nap. A cat coin priced in URA. Not affiliated with Global X, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Willow the Grey-Green Tabby Cat",
+   "ticker": "WILLOWPAW",
+   "nameLen": 31,
+   "blurbLen": 134,
+   "descLen": 265,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsKnownCatMeme": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Willow, a pale green-grey tabby with sof",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Willow",
+      "field": "name"
+     },
+     {
+      "rule": "stock",
+      "term": "Willow",
+      "field": "tagline"
+     },
+     {
+      "rule": "stock",
+      "term": "Uranium",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_WILLOWPAW": {
+    "status": 200,
+    "results": 0,
+    "exactSymbolMatches": [],
+    "verifiedMatch": false,
+    "verifiedAny": []
+   },
+   "jup_WILLOW": {
+    "status": 200,
+    "results": 20,
+    "exactSymbolMatches": [
+     {
+      "symbol": "Willow",
+      "name": "TradingView Cat",
+      "id": "AQxwNzZnT4LCLjKixPNdsEeXuBckdzTyRLYuCUMwpump",
+      "holders": 2,
+      "mcap": 3269.7546705140885
+     },
+     {
+      "symbol": "Willow",
+      "name": "One Wish Willow",
+      "id": "2VkpEcZ7zUVWZ8RUPuhKjaARw2vPUnhV2dcmco7spump",
+      "holders": 182,
+      "mcap": 2966.8122188082625
+     },
+     {
+      "symbol": "WILLOW",
+      "name": "Google New Super AI",
+      "id": "26Ek4jnBrr3jsNWAR6iU9briHQWPNjWC4DXrFZ7ppump",
+      "holders": 2381,
+      "mcap": 8738.806020647015
+     },
+     {
+      "symbol": "Willow",
+      "name": "Attitude Goat",
+      "id": "3K4HVrMC556qrYEbiJ1P8XmkLQJA6izXg9ZBAxYPpump",
+      "holders": 6,
+      "mcap": 3195.1895820595037
+     },
+     {
+      "symbol": "WILLOW",
+      "name": "The Oceans",
+      "id": "3fgTjUomVG1F5SSgaPgfNaQCatGp3DTojEK4JZmipump",
+      "holders": 1,
+      "mcap": 2913.677176921278
+     },
+     {
+      "symbol": "Willow",
+      "name": "Willow",
+      "id": "2TMAsHhUr5ey6Z5pGWdcYrXvpguxeMnPsA2sVkRApump",
+      "holders": 1,
+      "mcap": 18.887674161027892
+     },
+     {
+      "symbol": "WILLOW",
+      "name": "Willow Coin",
+      "id": "BrrJaQnvzoVvSiATonkY1q8r91LBa7GArdLkoQh5pump",
+      "holders": 2,
+      "mcap": 2942.7717449386346
+     },
+     {
+      "symbol": "WILLOW",
+      "name": "The Oceans",
+      "id": "HdDxbkRnCtvsq6ZZ89CfveCg7nzyBu1P3s7sbusWpump",
+      "holders": 1,
+      "mcap": 2948.004468579716
+     },
+     {
+      "symbol": "WILLOW",
+      "name": "Biden Cat",
+      "id": "9uBykcSMHJ1JXzZb4quHFT8CdXFYysptQd3L3Txypump",
+      "holders": 1,
+      "mcap": 2875.8105363920267
+     },
+     {
+      "symbol": "Willow",
+      "name": "Willowcopter",
+      "id": "DVsMBedv5hpsNQQMR8PRXkFxTHAgTcocUHov5z5Gpump",
+      "holders": 5,
+      "mcap": 2871.6373244122365
+     }
+    ],
+    "verifiedMatch": false,
+    "verifiedAny": []
+   },
+   "description": "Willow, a pale green-grey tabby with soft slate stripes and yellow eyes, winds between the garden stones looking for the warmest spot. A cat coin priced in URA. Not affiliated with Global X, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Sprig the Sage-and-White Cat",
+   "ticker": "SPRIGPAW",
+   "nameLen": 28,
+   "blurbLen": 142,
+   "descLen": 273,
+   "endsWithDisclaimer": true,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsKnownCatMeme": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Sprig, a pale green-grey cat with a whit",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_description": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkTerms_stock": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "stock",
+      "term": "Uranium",
+      "field": "look"
+     }
+    ]
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup_SPRIGPAW": {
+    "status": 200,
+    "results": 0,
+    "exactSymbolMatches": [],
+    "verifiedMatch": false,
+    "verifiedAny": []
+   },
+   "jup_SPRIG": {
+    "status": 200,
+    "results": 20,
+    "exactSymbolMatches": [
+     {
+      "symbol": "sprig",
+      "name": "sprig",
+      "id": "Bd3PnS493adCDkpm2PwyjY8RKAuTsuJ1BApc3cMQpump",
+      "holders": 3
+     }
+    ],
+    "verifiedMatch": false,
+    "verifiedAny": [
+     "NONGx/Nongfu Spring xStock"
+    ]
+   },
+   "description": "Sprig, a pale green-grey cat with a white bib and four white paws, sits in the herb bed at dusk and watches the fireflies with pale gold eyes. A cat coin priced in URA. Not affiliated with Global X, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

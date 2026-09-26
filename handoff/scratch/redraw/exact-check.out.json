@@ -1,0 +1,606 @@
+{
+ "checkedAt": "2026-09-25T23:27:34.683Z",
+ "stonkfunControlAGI": true,
+ "cats": {
+  "HARRUMPH": {
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 277,
+    "story": 89
+   },
+   "endsWithDisclosure": true,
+   "hasTribute": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "coinbase",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 10,
+    "sameSymbol": 0,
+    "verifiedSameSymbol": 0
+   },
+   "stonkfun": {
+    "status": 200,
+    "sameSymbol": 0,
+    "nameStatus": 200,
+    "sameName": 0
+   }
+  },
+  "PEWTER": {
+   "lengths": {
+    "name": 22,
+    "ticker": 6,
+    "description": 278,
+    "story": 87
+   },
+   "endsWithDisclosure": true,
+   "hasTribute": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "robinhood",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "robinhood",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "verifiedSameSymbol": 0
+   },
+   "stonkfun": {
+    "status": 200,
+    "sameSymbol": 0,
+    "nameStatus": 200,
+    "sameName": 0
+   }
+  },
+  "SNOWCURL": {
+   "lengths": {
+    "name": 22,
+    "ticker": 8,
+    "description": 275,
+    "story": 90
+   },
+   "endsWithDisclosure": true,
+   "hasTribute": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "tesla",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "tesla",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "verifiedSameSymbol": 0
+   },
+   "stonkfun": {
+    "status": 200,
+    "sameSymbol": 0,
+    "nameStatus": 200,
+    "sameName": 0
+   }
+  },
+  "MOATCAT": {
+   "lengths": {
+    "name": 8,
+    "ticker": 7,
+    "description": 273,
+    "story": 54
+   },
+   "endsWithDisclosure": true,
+   "hasTribute": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "verifiedSameSymbol": 0
+   },
+   "stonkfun": {
+    "status": 200,
+    "sameSymbol": 0,
+    "nameStatus": 200,
+    "sameName": 0
+   }
+  },
+  "COUCHCAP": {
+   "lengths": {
+    "name": 17,
+    "ticker": 8,
+    "description": 278,
+    "story": 86
+   },
+   "endsWithDisclosure": true,
+   "hasTribute": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "meta",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "meta",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 2,
+    "sameSymbol": 0,
+    "verifiedSameSymbol": 0
+   },
+   "stonkfun": {
+    "status": 200,
+    "sameSymbol": 0,
+    "nameStatus": 200,
+    "sameName": 0
+   }
+  },
+  "WARMSPOT": {
+   "lengths": {
+    "name": 23,
+    "ticker": 8,
+    "description": 274,
+    "story": 92
+   },
+   "endsWithDisclosure": true,
+   "hasTribute": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "spacex",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "spacex",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 1,
+    "sameSymbol": 0,
+    "verifiedSameSymbol": 0
+   },
+   "stonkfun": {
+    "status": 200,
+    "sameSymbol": 0,
+    "nameStatus": 200,
+    "sameName": 0
+   }
+  },
+  "SOCKFOOT": {
+   "lengths": {
+    "name": 24,
+    "ticker": 8,
+    "description": 276,
+    "story": 82
+   },
+   "endsWithDisclosure": true,
+   "hasTribute": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nvidia",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "nvidia",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 20,
+    "sameSymbol": 0,
+    "verifiedSameSymbol": 0
+   },
+   "stonkfun": {
+    "status": 200,
+    "sameSymbol": 0,
+    "nameStatus": 200,
+    "sameName": 0
+   }
+  },
+  "HALFSMILE": {
+   "lengths": {
+    "name": 13,
+    "ticker": 9,
+    "description": 273,
+    "story": 70
+   },
+   "endsWithDisclosure": true,
+   "hasTribute": true,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_name_symbol_story_look": {
+    "ok": true,
+    "violations": []
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "microsoft",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkFields_disclosureOnly": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "microsoft",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "endorsed",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "descriptionViolationsAllFromDisclosure": true,
+   "jupiter": {
+    "status": 200,
+    "results": 0,
+    "sameSymbol": 0,
+    "verifiedSameSymbol": 0
+   },
+   "stonkfun": {
+    "status": 200,
+    "sameSymbol": 0,
+    "nameStatus": 200,
+    "sameName": 0
+   }
+  }
+ }
+}

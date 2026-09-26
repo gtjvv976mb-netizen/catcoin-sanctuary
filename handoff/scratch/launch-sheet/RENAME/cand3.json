@@ -1,0 +1,540 @@
+[
+ {
+  "name": "Cooper Cat",
+  "ticker": "COOPERCAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 6,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Chik",
+  "ticker": "CHIK",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Chik",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 2,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "AMR Cat",
+  "ticker": "AMRCAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Pepper",
+  "ticker": "PEPPER",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Pepper",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [
+    "Peppercoin",
+    "Peppercoin",
+    "Pepper",
+    "PEPPER",
+    "PEPPER"
+   ],
+   "nameStatus": 200,
+   "sameName": [
+    "PEPPER",
+    "PEPPER",
+    "PEPPER",
+    "PEP"
+   ]
+  }
+ },
+ {
+  "name": "Pepper",
+  "ticker": "PEPPERCAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Pepper",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 4,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": [
+    "PEPPER",
+    "PEPPER",
+    "PEPPER",
+    "PEP"
+   ]
+  }
+ },
+ {
+  "name": "Tom Rutgers",
+  "ticker": "TOMRUTGERS",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Tom Rutgers",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Mittens",
+  "ticker": "MITTENS",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Mittens",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 17,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [
+    "Destroyer Of Worlds",
+    "Google Cat"
+   ],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Mittens",
+  "ticker": "MITTENSCAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Mittens",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Ruby",
+  "ticker": "RUBY",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Ruby",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 20,
+   "sameSymbol": 9,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [
+    "r/Dog",
+    "The R/dog",
+    "The Reddit Dog",
+    "Youtube ruby",
+    "Youtube Ruby",
+    "Ruby",
+    "AMD Ruby",
+    "Ruby",
+    "Ruby Cat Companion",
+    "AMD Ruby",
+    "Ruby",
+    "The Reddit Dog",
+    "Ruby",
+    "Reddit Mascot"
+   ],
+   "nameStatus": 200,
+   "sameName": [
+    "RUBY",
+    "RUBY",
+    "RUBY",
+    "RUBY"
+   ]
+  }
+ },
+ {
+  "name": "Ruby",
+  "ticker": "RUBYCAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Ruby",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 12,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": [
+    "RUBY",
+    "RUBY",
+    "RUBY",
+    "RUBY"
+   ]
+  }
+ },
+ {
+  "name": "Chik",
+  "ticker": "CHIKCAT",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Chik",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 7,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ },
+ {
+  "name": "Cowardly Lion",
+  "ticker": "COWARDLION",
+  "tickerFormat": true,
+  "checkProposal": {
+   "ok": false,
+   "violations": [
+    {
+     "rule": "tagline_format",
+     "term": "A cat.",
+     "field": "tagline"
+    },
+    {
+     "rule": "not_cat",
+     "term": "Cowardly Lion",
+     "field": "name"
+    }
+   ]
+  },
+  "displaySafe": {
+   "ok": true,
+   "violations": []
+  },
+  "copycatOf": null,
+  "tickerFree": {
+   "ok": true,
+   "reasons": []
+  },
+  "jupiter": {
+   "status": 200,
+   "results": 0,
+   "sameSymbol": 0,
+   "verifiedSameSymbol": 0,
+   "verifiedNames": []
+  },
+  "stonkfun": {
+   "status": 200,
+   "sameSymbol": [],
+   "nameStatus": 200,
+   "sameName": []
+  }
+ }
+]

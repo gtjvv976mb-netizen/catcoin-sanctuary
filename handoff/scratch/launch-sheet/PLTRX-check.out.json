@@ -1,0 +1,194 @@
+[
+  {
+    "name": "Tally the Tuxedo Cat",
+    "ticker": "TALLYPAW",
+    "lengths": {
+      "name": 20,
+      "ticker": 8,
+      "description": 267,
+      "body": 137
+    },
+    "tickerFormat": true,
+    "disclosureExactAtEnd": true,
+    "jupiter": {
+      "results": 2,
+      "symbolMatches": [],
+      "verifiedSymbolMatch": false,
+      "resultSymbols": [
+        "CatGang",
+        "E"
+      ]
+    },
+    "verifiedIndexSymbolHit": null,
+    "existingCatTicker": false,
+    "containsPLTR": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "stockCatRefusals": [
+      {
+        "clause": "pair_terms_missing",
+        "message": "pair_terms_missing: PLTRx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+      }
+    ]
+  },
+  {
+    "name": "Skein the Yarn Kitten",
+    "ticker": "SKEINKIT",
+    "lengths": {
+      "name": 21,
+      "ticker": 8,
+      "description": 272,
+      "body": 142
+    },
+    "tickerFormat": true,
+    "disclosureExactAtEnd": true,
+    "jupiter": {
+      "results": 0,
+      "symbolMatches": [],
+      "verifiedSymbolMatch": false,
+      "resultSymbols": []
+    },
+    "verifiedIndexSymbolHit": null,
+    "existingCatTicker": false,
+    "containsPLTR": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "stockCatRefusals": [
+      {
+        "clause": "pair_terms_missing",
+        "message": "pair_terms_missing: PLTRx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+      }
+    ]
+  },
+  {
+    "name": "Speckle the Spotted Cat",
+    "ticker": "SPECKLEPAW",
+    "lengths": {
+      "name": 23,
+      "ticker": 10,
+      "description": 275,
+      "body": 145
+    },
+    "tickerFormat": true,
+    "disclosureExactAtEnd": true,
+    "jupiter": {
+      "results": 0,
+      "symbolMatches": [],
+      "verifiedSymbolMatch": false,
+      "resultSymbols": []
+    },
+    "verifiedIndexSymbolHit": null,
+    "existingCatTicker": false,
+    "containsPLTR": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "stockCatRefusals": [
+      {
+        "clause": "pair_terms_missing",
+        "message": "pair_terms_missing: PLTRx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+      }
+    ]
+  }
+]

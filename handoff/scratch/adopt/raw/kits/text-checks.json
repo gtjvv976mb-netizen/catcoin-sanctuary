@@ -1,0 +1,4376 @@
+{
+ "generatedAt": "2026-09-25T18:55:17.957Z",
+ "rows": [
+  {
+   "n": 1,
+   "stock": "SPYx",
+   "status": "final",
+   "name": "Patchpaw the Calico",
+   "ticker": "PATCHPAW",
+   "website": "https://catcoinsanctuary.com/cat/patchpaw",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=PATCHPAW",
+   "xPostAdopted": {
+    "text": "I adopted Patchpaw the Calico at Catcoin Sanctuary. $PATCHPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/patchpaw\nA cat coin priced in SPYx. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 248,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Patchpaw the Calico is up for adoption at Catcoin Sanctuary. $PATCHPAW\nhttps://catcoinsanctuary.com/cat/patchpaw\nA cat coin priced in SPYx. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 209,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Patchpaw the Calico, adopted at Catcoin Sanctuary. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 138,
+   "xBioVariant": 2,
+   "xDisplayName": "Patchpaw the Calico",
+   "xDisplayNameLen": 19,
+   "xHandleSuggestion": "PATCHPAWcat",
+   "metadataDescription": "Patchpaw is a little calico whose coat is a quilt of many small patches, no two alike. She pads through every flower bed in the garden and sniffs each one. A cat coin priced in SPYx. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 270,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "SPYx",
+     "SPY",
+     "SPYX",
+     "SP500",
+     "State",
+     "Street",
+     "SPDR",
+     "500"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 2,
+   "stock": "NVDAx",
+   "status": "final",
+   "name": "Sockfoot the Morning Cat",
+   "ticker": "SOCKFOOT",
+   "website": "https://catcoinsanctuary.com/cat/sockfoot",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SOCKFOOT",
+   "xPostAdopted": {
+    "text": "I adopted Sockfoot the Morning Cat at Catcoin Sanctuary. $SOCKFOOT\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/sockfoot\nA cat coin priced in NVDAx. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 260,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Sockfoot the Morning Cat is up for adoption at Catcoin Sanctuary. $SOCKFOOT\nhttps://catcoinsanctuary.com/cat/sockfoot\nA cat coin priced in NVDAx. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 221,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Sockfoot the Morning Cat, adopted at Catcoin Sanctuary. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 149,
+   "xBioVariant": 2,
+   "xDisplayName": "Sockfoot the Morning Cat",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "SOCKFOOTcat",
+   "metadataDescription": "Sockfoot is a grey tabby with a white bib and four white paws like socks. At first light he walks the edge of the lawn, tail held high, the first cat up. A cat coin priced in NVDAx. Not affiliated with NVIDIA Corporation or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 275,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "nvidia",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:nvidia",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "NVDAx",
+     "NVDA",
+     "NVDAX",
+     "NVIDIA"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 3,
+   "stock": "GOOGLx",
+   "status": "final",
+   "name": "Porchlight the Dusk Cat",
+   "ticker": "PORCHLIGHT",
+   "website": "https://catcoinsanctuary.com/cat/porchlight",
+   "websiteLen": 43,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=PORCHLIGHT",
+   "xPostAdopted": {
+    "text": "I adopted Porchlight the Dusk Cat at Catcoin Sanctuary. $PORCHLIGHT\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/porchlight\nA cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 257,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Porchlight the Dusk Cat is up for adoption at Catcoin Sanctuary. $PORCHLIGHT\nhttps://catcoinsanctuary.com/cat/porchlight\nA cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 218,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Porchlight the Dusk Cat, adopted at Catcoin Sanctuary. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 143,
+   "xBioVariant": 2,
+   "xDisplayName": "Porchlight the Dusk Cat",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "PORCHLIGHTcat",
+   "metadataDescription": "Porchlight is a solid black cat with a shiny coat and bright yellow eyes. When the garden lanterns glow, she sits on the porch step and slowly blinks hello. A cat coin priced in GOOGLx. Not affiliated with Alphabet Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 274,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "alphabet",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:alphabet",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "GOOGLx",
+     "GOOGL",
+     "GOOGLX",
+     "GOOGLE",
+     "Alphabet",
+     "Google",
+     "Momo"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 4,
+   "stock": "QQQx",
+   "status": "final",
+   "name": "Hundred Whisker Cat",
+   "ticker": "WHISK100",
+   "website": "https://catcoinsanctuary.com/cat/whisk100",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=WHISK100",
+   "xPostAdopted": {
+    "text": "I adopted Hundred Whisker Cat at Catcoin Sanctuary. $WHISK100\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/whisk100\nA cat coin priced in QQQx. Not affiliated with Invesco, Nasdaq or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 251,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Hundred Whisker Cat is up for adoption at Catcoin Sanctuary. $WHISK100\nhttps://catcoinsanctuary.com/cat/whisk100\nA cat coin priced in QQQx. Not affiliated with Invesco, Nasdaq or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 212,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Invesco, Nasdaq or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Hundred Whisker Cat, adopted at Catcoin Sanctuary. Not affiliated with Invesco, Nasdaq or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 141,
+   "xBioVariant": 2,
+   "xDisplayName": "Hundred Whisker Cat",
+   "xDisplayNameLen": 19,
+   "xHandleSuggestion": "WHISK100cat",
+   "metadataDescription": "A fluffy chocolate-brown cat with a hundred white whiskers, one for each name in its basket. Each morning it tries to count them and loses track at forty. A cat coin priced in QQQx. Not affiliated with Invesco, Nasdaq or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 272,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "QQQx",
+     "QQQ",
+     "QQQX",
+     "Invesco"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 5,
+   "stock": "TSLAx",
+   "status": "final",
+   "name": "Snowcurl the Shade Cat",
+   "ticker": "SNOWCURL",
+   "website": "https://catcoinsanctuary.com/cat/snowcurl",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SNOWCURL",
+   "xPostAdopted": {
+    "text": "I adopted Snowcurl the Shade Cat at Catcoin Sanctuary. $SNOWCURL\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/snowcurl\nA cat coin priced in TSLAx. Not affiliated with Tesla, Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 251,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Snowcurl the Shade Cat is up for adoption at Catcoin Sanctuary. $SNOWCURL\nhttps://catcoinsanctuary.com/cat/snowcurl\nA cat coin priced in TSLAx. Not affiliated with Tesla, Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 212,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Tesla, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Snowcurl the Shade Cat, adopted at Catcoin Sanctuary. Not affiliated with Tesla, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 140,
+   "xBioVariant": 2,
+   "xDisplayName": "Snowcurl the Shade Cat",
+   "xDisplayNameLen": 22,
+   "xHandleSuggestion": "SNOWCURLcat",
+   "metadataDescription": "Snowcurl is a sleek white cat with her tail held high and curled at the tip. On hot days she finds cool shade, lifts a paw to wash her face and waits calmly. A cat coin priced in TSLAx. Not affiliated with Tesla, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 272,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "tesla",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:tesla",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "TSLAx",
+     "TSLA",
+     "TSLAX",
+     "TESLA",
+     "Tesla",
+     "Pet Mode balloon cat"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 6,
+   "stock": "CRCLx",
+   "status": "final",
+   "name": "Tuppence the Tweed Cat",
+   "ticker": "TUPPENCE",
+   "website": "https://catcoinsanctuary.com/cat/tuppence",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=TUPPENCE",
+   "xPostAdopted": {
+    "text": "I adopted Tuppence the Tweed Cat at Catcoin Sanctuary. $TUPPENCE\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/tuppence\nA cat coin priced in CRCLx. Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 246,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Tuppence the Tweed Cat is up for adoption at Catcoin Sanctuary. $TUPPENCE\nhttps://catcoinsanctuary.com/cat/tuppence\nA cat coin priced in CRCLx. Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 207,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Tuppence the Tweed Cat, adopted at Catcoin Sanctuary. Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 135,
+   "xBioVariant": 2,
+   "xDisplayName": "Tuppence the Tweed Cat",
+   "xDisplayNameLen": 22,
+   "xHandleSuggestion": "TUPPENCEcat",
+   "metadataDescription": "Tuppence, a tubby blue-grey cat in a flat tweed cap, waddles to the garden tea table at four o'clock sharp and waits politely for crumbs. A cat coin priced in CRCLx. Not affiliated with Circle or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 247,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "CRCLx",
+     "CRCL",
+     "CRCLX",
+     "CIRCLE",
+     "Circle",
+     "Internet",
+     "\"Fat Cat Bat Rat\" (reported)"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 7,
+   "stock": "COINx",
+   "status": "final",
+   "name": "Harrumph the Pouty Cat",
+   "ticker": "HARRUMPH",
+   "website": "https://catcoinsanctuary.com/cat/harrumph",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=HARRUMPH",
+   "xPostAdopted": {
+    "text": "I adopted Harrumph the Pouty Cat at Catcoin Sanctuary. $HARRUMPH\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/harrumph\nA cat coin priced in COINx. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 248,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Harrumph the Pouty Cat is up for adoption at Catcoin Sanctuary. $HARRUMPH\nhttps://catcoinsanctuary.com/cat/harrumph\nA cat coin priced in COINx. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 209,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Harrumph the Pouty Cat, adopted at Catcoin Sanctuary. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 137,
+   "xBioVariant": 2,
+   "xDisplayName": "Harrumph the Pouty Cat",
+   "xDisplayNameLen": 22,
+   "xHandleSuggestion": "HARRUMPHcat",
+   "metadataDescription": "Harrumph, a fluffy grey long-haired cat with a flat face and a grumpy pout, glares at pigeons from the garden wall all morning, then climbs into a lap to purr. A cat coin priced in COINx. Not affiliated with Coinbase or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 271,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "coinbase",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:coinbase",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "COINx",
+     "COIN",
+     "COINX",
+     "Coinbase",
+     "Global",
+     "Mister Miggles"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 8,
+   "stock": "MSTRx",
+   "status": "final",
+   "name": "Trinket the Tortie Cat",
+   "ticker": "TRINKETCAT",
+   "website": "https://catcoinsanctuary.com/cat/trinketcat",
+   "websiteLen": 43,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=TRINKETCAT",
+   "xPostAdopted": {
+    "text": "I adopted Trinket the Tortie Cat at Catcoin Sanctuary. $TRINKETCAT\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/trinketcat\nA cat coin priced in MSTRx. Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 271,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Trinket the Tortie Cat is up for adoption at Catcoin Sanctuary. $TRINKETCAT\nhttps://catcoinsanctuary.com/cat/trinketcat\nA cat coin priced in MSTRx. Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 232,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Trinket the Tortie Cat, adopted at Catcoin Sanctuary. Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 158,
+   "xBioVariant": 2,
+   "xDisplayName": "Trinket the Tortie Cat",
+   "xDisplayNameLen": 22,
+   "xHandleSuggestion": "TRINKETCAT",
+   "metadataDescription": "Trinket, a round fluffy tortoiseshell, adds one shiny pebble a day to her secret pile behind the rain barrel and has never given one back. A cat coin priced in MSTRx. Not affiliated with Strategy Inc. (MicroStrategy) or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 271,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "MSTRx",
+     "MSTR",
+     "MSTRX",
+     "MICROSTRATEGY",
+     "Strategy",
+     "MicroStrategy"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 9,
+   "stock": "AMZNx",
+   "status": "final",
+   "name": "Sunmane the Sundial Cat",
+   "ticker": "SUNMANE",
+   "website": "https://catcoinsanctuary.com/cat/sunmane",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SUNMANE",
+   "xPostAdopted": {
+    "text": "I adopted Sunmane the Sundial Cat at Catcoin Sanctuary. $SUNMANE\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/sunmane\nA cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 246,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Sunmane the Sundial Cat is up for adoption at Catcoin Sanctuary. $SUNMANE\nhttps://catcoinsanctuary.com/cat/sunmane\nA cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 207,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Sunmane the Sundial Cat, adopted at Catcoin Sanctuary. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 136,
+   "xBioVariant": 2,
+   "xDisplayName": "Sunmane the Sundial Cat",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "SUNMANEcat",
+   "metadataDescription": "Sunmane, a sturdy tawny cat with a fluffy ruff like a little mane, sits on the old sundial all day and turns slowly to follow the sun. A cat coin priced in AMZNx. Not affiliated with Amazon or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 244,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "amazon",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:amazon",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "AMZNx",
+     "AMZN",
+     "AMZNX",
+     "AMAZON",
+     "Amazon.com",
+     "Leo the Lion"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 10,
+   "stock": "HOODx",
+   "status": "final",
+   "name": "Pewter the Catmint Cat",
+   "ticker": "PEWTER",
+   "website": "https://catcoinsanctuary.com/cat/pewter",
+   "websiteLen": 39,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=PEWTER",
+   "xPostAdopted": {
+    "text": "I adopted Pewter the Catmint Cat at Catcoin Sanctuary. $PEWTER\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/pewter\nA cat coin priced in HOODx. Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 247,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Pewter the Catmint Cat is up for adoption at Catcoin Sanctuary. $PEWTER\nhttps://catcoinsanctuary.com/cat/pewter\nA cat coin priced in HOODx. Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 208,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Pewter the Catmint Cat, adopted at Catcoin Sanctuary. Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 138,
+   "xBioVariant": 2,
+   "xDisplayName": "Pewter the Catmint Cat",
+   "xDisplayNameLen": 22,
+   "xHandleSuggestion": "PEWTERcat",
+   "metadataDescription": "Pewter, a silver-grey tabby with dark stripes on her cheeks, a white chin and a pink nose, rolls in the catmint patch each afternoon until she is happily dizzy. A cat coin priced in HOODx. Not affiliated with Robinhood or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 273,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "robinhood",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:robinhood",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "HOODx",
+     "HOOD",
+     "HOODX",
+     "Robinhood",
+     "Markets",
+     "Robinhood pixel cat (unnamed)"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 11,
+   "stock": "SPCXx",
+   "status": "final",
+   "name": "Warmspot the Tuxedo Cat",
+   "ticker": "WARMSPOT",
+   "website": "https://catcoinsanctuary.com/cat/warmspot",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=WARMSPOT",
+   "xPostAdopted": {
+    "text": "I adopted Warmspot the Tuxedo Cat at Catcoin Sanctuary. $WARMSPOT\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/warmspot\nA cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 247,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Warmspot the Tuxedo Cat is up for adoption at Catcoin Sanctuary. $WARMSPOT\nhttps://catcoinsanctuary.com/cat/warmspot\nA cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 208,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Warmspot the Tuxedo Cat, adopted at Catcoin Sanctuary. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 136,
+   "xBioVariant": 2,
+   "xDisplayName": "Warmspot the Tuxedo Cat",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "WARMSPOTcat",
+   "metadataDescription": "Warmspot, a black-and-white tuxedo cat with a white stripe down her nose and a white chin, always finds the one warm spot in a snowy garden, and keeps it. A cat coin priced in SPCXx. Not affiliated with SpaceX or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 264,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "spacex",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:spacex",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "SPCXx",
+     "SPCX",
+     "SPCXX",
+     "SPACEX",
+     "Space",
+     "Exploration",
+     "Technologies",
+     "SpaceX",
+     "Starlink \"Cat 5\""
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 12,
+   "stock": "AAPLx",
+   "status": "final",
+   "name": "Rosette the Climbing Cat",
+   "ticker": "ROSETTE",
+   "website": "https://catcoinsanctuary.com/cat/rosette",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=ROSETTE",
+   "xPostAdopted": {
+    "text": "I adopted Rosette the Climbing Cat at Catcoin Sanctuary. $ROSETTE\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/rosette\nA cat coin priced in AAPLx. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 251,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Rosette the Climbing Cat is up for adoption at Catcoin Sanctuary. $ROSETTE\nhttps://catcoinsanctuary.com/cat/rosette\nA cat coin priced in AAPLx. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 212,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Rosette the Climbing Cat, adopted at Catcoin Sanctuary. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 141,
+   "xBioVariant": 2,
+   "xDisplayName": "Rosette the Climbing Cat",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "ROSETTEcat",
+   "metadataDescription": "Rosette is a stocky golden-tan cat dappled with black rosette spots. She climbs the old oak by the lawn and dozes along a low branch, one paw dangling. A cat coin priced in AAPLx. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 265,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "apple",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:apple",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "AAPLx",
+     "AAPL",
+     "APPLX",
+     "APPLE",
+     "Apple",
+     "Mac OS X big cats"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 13,
+   "stock": "GLDx",
+   "status": "final",
+   "name": "Ingot the Loaf Cat",
+   "ticker": "INGOTLOAF",
+   "website": "https://catcoinsanctuary.com/cat/ingotloaf",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=INGOTLOAF",
+   "xPostAdopted": {
+    "text": "I adopted Ingot the Loaf Cat at Catcoin Sanctuary. $INGOTLOAF\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/ingotloaf\nNot affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 258,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Ingot the Loaf Cat is up for adoption at Catcoin Sanctuary. $INGOTLOAF\nhttps://catcoinsanctuary.com/cat/ingotloaf\nA cat coin priced in GLDx. Not affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 246,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 154,
+   "xBioVariant": 4,
+   "xDisplayName": "Ingot the Loaf Cat",
+   "xDisplayNameLen": 18,
+   "xHandleSuggestion": "INGOTLOAFcat",
+   "metadataDescription": "Ingot, a sleek honey-golden cat, tucks in her paws and loafs on the warm garden steps, shaped just like a little bar. A cat coin priced in GLDx. Not affiliated with SPDR Gold Trust, State Street, World Gold Council or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 269,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "GLDx",
+     "GLD",
+     "GLDX",
+     "GOLD",
+     "World",
+     "Gold",
+     "Services",
+     "SPDR"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 14,
+   "stock": "METAx",
+   "status": "final",
+   "name": "Couch Captain Cat",
+   "ticker": "COUCHCAP",
+   "website": "https://catcoinsanctuary.com/cat/couchcap",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=COUCHCAP",
+   "xPostAdopted": {
+    "text": "I adopted Couch Captain Cat at Catcoin Sanctuary. $COUCHCAP\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/couchcap\nA cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 255,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Couch Captain Cat is up for adoption at Catcoin Sanctuary. $COUCHCAP\nhttps://catcoinsanctuary.com/cat/couchcap\nA cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 216,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Couch Captain Cat, adopted at Catcoin Sanctuary. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 144,
+   "xBioVariant": 2,
+   "xDisplayName": "Couch Captain Cat",
+   "xDisplayNameLen": 17,
+   "xHandleSuggestion": "COUCHCAPcat",
+   "metadataDescription": "A fluffy brown tabby with golden eyes who claims the sofa every evening, remote in paw, picks the show for the whole house and naps before the ending. A cat coin priced in METAx. Not affiliated with Meta Platforms, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 274,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "meta",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:meta",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "METAx",
+     "META",
+     "METAX",
+     "Meta",
+     "Platforms",
+     "Pusheen"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 15,
+   "stock": "PLTRx",
+   "status": "final",
+   "name": "Skein the Yarn Kitten",
+   "ticker": "SKEINKIT",
+   "website": "https://catcoinsanctuary.com/cat/skeinkit",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SKEINKIT",
+   "xPostAdopted": {
+    "text": "I adopted Skein the Yarn Kitten at Catcoin Sanctuary. $SKEINKIT\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/skeinkit\nA cat coin priced in PLTRx. Not affiliated with Palantir Technologies Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 265,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Skein the Yarn Kitten is up for adoption at Catcoin Sanctuary. $SKEINKIT\nhttps://catcoinsanctuary.com/cat/skeinkit\nA cat coin priced in PLTRx. Not affiliated with Palantir Technologies Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 226,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Palantir Technologies Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Skein the Yarn Kitten, adopted at Catcoin Sanctuary. Not affiliated with Palantir Technologies Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 154,
+   "xBioVariant": 2,
+   "xDisplayName": "Skein the Yarn Kitten",
+   "xDisplayNameLen": 21,
+   "xHandleSuggestion": "SKEINKITcat",
+   "metadataDescription": "Skein, a fluffy cream kitten with a pink nose, strings red yarn from post to post until every flower pot in the garden is tied to every other. A cat coin priced in PLTRx. Not affiliated with Palantir Technologies Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 272,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "PLTRx",
+     "PLTR",
+     "PLTRX",
+     "Palantir",
+     "Technologies"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 16,
+   "stock": "MSFTx",
+   "status": "final",
+   "name": "Halfsmile Cat",
+   "ticker": "HALFSMILE",
+   "website": "https://catcoinsanctuary.com/cat/halfsmile",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=HALFSMILE",
+   "xPostAdopted": {
+    "text": "I adopted Halfsmile Cat at Catcoin Sanctuary. $HALFSMILE\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/halfsmile\nA cat coin priced in MSFTx. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 253,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Halfsmile Cat is up for adoption at Catcoin Sanctuary. $HALFSMILE\nhttps://catcoinsanctuary.com/cat/halfsmile\nA cat coin priced in MSFTx. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 214,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Halfsmile Cat, adopted at Catcoin Sanctuary. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 141,
+   "xBioVariant": 2,
+   "xDisplayName": "Halfsmile Cat",
+   "xDisplayNameLen": 13,
+   "xHandleSuggestion": "HALFSMILEcat",
+   "metadataDescription": "A grey-and-white cat with grey-green eyes and a crooked grin that looks cross until you see she is pleased. She grins at all who pass her garden bench. A cat coin priced in MSFTx. Not affiliated with Microsoft Corporation or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 276,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "microsoft",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:microsoft",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "MSFTx",
+     "MSFT",
+     "MSFTX",
+     "Microsoft",
+     "Octocat (Mona)"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 17,
+   "stock": "GMEx",
+   "status": "final",
+   "name": "Save Point the Tabby",
+   "ticker": "SAVEPAWS",
+   "website": "https://catcoinsanctuary.com/cat/savepaws",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SAVEPAWS",
+   "xPostAdopted": {
+    "text": "I adopted Save Point the Tabby at Catcoin Sanctuary. $SAVEPAWS\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/savepaws\nA cat coin priced in GMEx. Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 245,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Save Point the Tabby is up for adoption at Catcoin Sanctuary. $SAVEPAWS\nhttps://catcoinsanctuary.com/cat/savepaws\nA cat coin priced in GMEx. Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 206,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Save Point the Tabby, adopted at Catcoin Sanctuary. Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 135,
+   "xBioVariant": 2,
+   "xDisplayName": "Save Point the Tabby",
+   "xDisplayNameLen": 20,
+   "xHandleSuggestion": "SAVEPAWScat",
+   "metadataDescription": "Save Point, a small brown striped tabby with a cream chest and muzzle, taps the same flat stepping stone with a paw before every adventure, just in case. A cat coin priced in GMEx. Not affiliated with GameStop or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 264,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "gamestop",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:gamestop",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "GMEx",
+     "GME",
+     "GMEX",
+     "GameStop",
+     "Roaring Kitty"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 18,
+   "stock": "STRCx",
+   "status": "final",
+   "name": "Everloop the Sleepy Cat",
+   "ticker": "EVERLOOP",
+   "website": "https://catcoinsanctuary.com/cat/everloop",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=EVERLOOP",
+   "xPostAdopted": {
+    "text": "I adopted Everloop the Sleepy Cat at Catcoin Sanctuary. $EVERLOOP\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/everloop\nA cat coin priced in STRCx. Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 254,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Everloop the Sleepy Cat is up for adoption at Catcoin Sanctuary. $EVERLOOP\nhttps://catcoinsanctuary.com/cat/everloop\nA cat coin priced in STRCx. Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 215,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Everloop the Sleepy Cat, adopted at Catcoin Sanctuary. Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 143,
+   "xBioVariant": 2,
+   "xDisplayName": "Everloop the Sleepy Cat",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "EVERLOOPcat",
+   "metadataDescription": "Everloop, a soft blue-cream cat, curls into a perfect ring with her nose tucked in her tail and naps in the garden as if the afternoon will never end. A cat coin priced in STRCx. Not affiliated with Strategy Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 267,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "STRCx",
+     "STRC",
+     "STRCX",
+     "Strategy"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 19,
+   "stock": "MCDx",
+   "status": "final",
+   "name": "Milkweed the Meadow Cat",
+   "ticker": "MILKWEED",
+   "website": "https://catcoinsanctuary.com/cat/milkweed",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=MILKWEED",
+   "xPostAdopted": {
+    "text": "I adopted Milkweed the Meadow Cat at Catcoin Sanctuary. $MILKWEED\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/milkweed\nA cat coin priced in MCDx. Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 250,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Milkweed the Meadow Cat is up for adoption at Catcoin Sanctuary. $MILKWEED\nhttps://catcoinsanctuary.com/cat/milkweed\nA cat coin priced in MCDx. Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 211,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Milkweed the Meadow Cat, adopted at Catcoin Sanctuary. Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 140,
+   "xBioVariant": 2,
+   "xDisplayName": "Milkweed the Meadow Cat",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "MILKWEEDcat",
+   "metadataDescription": "Milkweed, a fluffy white cat with one blue eye and one green eye, pounces on drifting seed fluff in the long grass, then flops in the sun like a fallen cloud. A cat coin priced in MCDx. Not affiliated with McDonald's or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 271,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "mcdonalds",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:mcdonalds",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "MCDx",
+     "MCD",
+     "MCDX",
+     "McDonald's",
+     "Hello Kitty"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 20,
+   "stock": "BRK.Bx",
+   "status": "final",
+   "name": "Moat Cat",
+   "ticker": "MOATCAT",
+   "website": "https://catcoinsanctuary.com/cat/moatcat",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=MOATCAT",
+   "xPostAdopted": {
+    "text": "I adopted Moat Cat at Catcoin Sanctuary. $MOATCAT\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/moatcat\nA cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 244,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Moat Cat is up for adoption at Catcoin Sanctuary. $MOATCAT\nA white calico with one ginger ear and one black ear.\nhttps://catcoinsanctuary.com/cat/moatcat\nA cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 259,
+    "storyUsed": "first-sentence",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Moat Cat of Catcoin Sanctuary. A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 153,
+   "xBioVariant": 3,
+   "xDisplayName": "Moat Cat",
+   "xDisplayNameLen": 8,
+   "xHandleSuggestion": "MOATCAT",
+   "metadataDescription": "A white calico with one ginger ear and one black ear. She sits by the garden pond as if it were her moat and lets nothing cross it but butterflies. A cat coin priced in BRK.Bx. Not affiliated with Berkshire Hathaway or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 270,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "BRK.Bx",
+     "BRK.B",
+     "BRKX",
+     "Berkshire",
+     "Hathaway",
+     "Cam the Cat"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 21,
+   "stock": "KOx",
+   "status": "final",
+   "name": "Tumble the Kitten",
+   "ticker": "TUMBLES",
+   "website": "https://catcoinsanctuary.com/cat/tumbles",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=TUMBLES",
+   "xPostAdopted": {
+    "text": "I adopted Tumble the Kitten at Catcoin Sanctuary. $TUMBLES\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/tumbles\nA cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 253,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Tumble the Kitten is up for adoption at Catcoin Sanctuary. $TUMBLES\nTumble is a small ginger tabby kitten with a white chin.\nhttps://catcoinsanctuary.com/cat/tumbles\nA cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 271,
+    "storyUsed": "first-sentence",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Tumble the Kitten, adopted at Catcoin Sanctuary. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 145,
+   "xBioVariant": 2,
+   "xDisplayName": "Tumble the Kitten",
+   "xDisplayNameLen": 17,
+   "xHandleSuggestion": "TUMBLEScat",
+   "metadataDescription": "Tumble is a small ginger tabby kitten with a white chin. Wherever she naps, more kittens pile in beside her until the whole garden hammock purrs. A cat coin priced in KOx. Not affiliated with The Coca-Cola Company or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 268,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "coca cola",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:coca cola",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "KOx",
+     "KO",
+     "KOX",
+     "COCA",
+     "COLA",
+     "Coca-Cola",
+     "Olivia Benson (Diet Coke \"Kittens\")"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 22,
+   "stock": "INTCx",
+   "status": "final",
+   "name": "Bracken the Fern Cat",
+   "ticker": "BRACKEN",
+   "website": "https://catcoinsanctuary.com/cat/bracken",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=BRACKEN",
+   "xPostAdopted": {
+    "text": "I adopted Bracken the Fern Cat at Catcoin Sanctuary. $BRACKEN\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/bracken\nA cat coin priced in INTCx. Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 242,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Bracken the Fern Cat is up for adoption at Catcoin Sanctuary. $BRACKEN\nhttps://catcoinsanctuary.com/cat/bracken\nA cat coin priced in INTCx. Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 203,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Bracken the Fern Cat, adopted at Catcoin Sanctuary. A cat coin priced in INTCx. Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 160,
+   "xBioVariant": 1,
+   "xDisplayName": "Bracken the Fern Cat",
+   "xDisplayNameLen": 20,
+   "xHandleSuggestion": "BRACKENcat",
+   "metadataDescription": "Bracken, a sturdy grey-brown striped tabby with a thick black-ringed tail, stalks moths through the ferns at dusk and has never once caught one. A cat coin priced in INTCx. Not affiliated with Intel or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 253,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "intel",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:intel",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "INTCx",
+     "INTC",
+     "INTCX",
+     "Intel",
+     "Update Cat"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 23,
+   "stock": "VIDAx",
+   "status": "final",
+   "name": "Trillby the Chirping Cat",
+   "ticker": "TRILLBY",
+   "website": "https://catcoinsanctuary.com/cat/trillby",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=TRILLBY",
+   "xPostAdopted": {
+    "text": "I adopted Trillby the Chirping Cat at Catcoin Sanctuary. $TRILLBY\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/trillby\nA cat coin priced in VIDAx. Not affiliated with Vida Global or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 252,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Trillby the Chirping Cat is up for adoption at Catcoin Sanctuary. $TRILLBY\nhttps://catcoinsanctuary.com/cat/trillby\nA cat coin priced in VIDAx. Not affiliated with Vida Global or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 213,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Vida Global or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Trillby the Chirping Cat, adopted at Catcoin Sanctuary. Not affiliated with Vida Global or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 142,
+   "xBioVariant": 2,
+   "xDisplayName": "Trillby the Chirping Cat",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "TRILLBYcat",
+   "metadataDescription": "Trillby, a slim cream cat with dark brown points and bright blue eyes, chirps back whenever anyone speaks and follows every chat around the garden. A cat coin priced in VIDAx. Not affiliated with Vida Global or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 262,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "VIDAx",
+     "VIDA",
+     "VIDAX",
+     "Global"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 24,
+   "stock": "DFDVx",
+   "status": "final",
+   "name": "Latchkey the Vault Cat",
+   "ticker": "LATCHKEY",
+   "website": "https://catcoinsanctuary.com/cat/latchkey",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=LATCHKEY",
+   "xPostAdopted": {
+    "text": "I adopted Latchkey the Vault Cat at Catcoin Sanctuary. $LATCHKEY\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/latchkey\nA cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 262,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Latchkey the Vault Cat is up for adoption at Catcoin Sanctuary. $LATCHKEY\nhttps://catcoinsanctuary.com/cat/latchkey\nA cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 223,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Latchkey the Vault Cat, adopted at Catcoin Sanctuary. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 151,
+   "xBioVariant": 2,
+   "xDisplayName": "Latchkey the Vault Cat",
+   "xDisplayNameLen": 22,
+   "xHandleSuggestion": "LATCHKEYcat",
+   "metadataDescription": "Latchkey, a sturdy ginger-and-white cat, dozes upright on a little iron-banded strongbox in the garden shed, one paw on the old brass key. A cat coin priced in DFDVx. Not affiliated with DeFi Development Corp. or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 264,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "DFDVx",
+     "DFDV",
+     "DeFi",
+     "Development"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 25,
+   "stock": "MU",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 26,
+   "stock": "BOT",
+   "status": "picked-no-image",
+   "name": "Gimbal the Helper Cat",
+   "ticker": "GIMBALPAW",
+   "website": "https://catcoinsanctuary.com/cat/gimbalpaw",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=GIMBALPAW",
+   "xPostAdopted": {
+    "text": "I adopted Gimbal the Helper Cat at Catcoin Sanctuary. $GIMBALPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/gimbalpaw\nA cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 265,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Gimbal the Helper Cat is up for adoption at Catcoin Sanctuary. $GIMBALPAW\nhttps://catcoinsanctuary.com/cat/gimbalpaw\nA cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 226,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Gimbal the Helper Cat, adopted at Catcoin Sanctuary. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 146,
+   "xBioVariant": 2,
+   "xDisplayName": "Gimbal the Helper Cat",
+   "xDisplayNameLen": 21,
+   "xHandleSuggestion": "GIMBALPAWcat",
+   "metadataDescription": "Gimbal, a gunmetal and white tuxedo cat with green eyes, copies the sanctuary gardener, patting the soil and nudging pots into tidy rows. A cat coin priced in ROBOSTRATEGY. Not affiliated with RoboStrategy, Inc. or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 266,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "BOT",
+     "ROBOSTRATEGY",
+     "RoboStrategy",
+     "Nyan Heroes cats"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 27,
+   "stock": "SKHY",
+   "status": "picked-no-image",
+   "name": "Clockout the Ginger Cat",
+   "ticker": "CLOCKPAW",
+   "website": "https://catcoinsanctuary.com/cat/clockpaw",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=CLOCKPAW",
+   "xPostAdopted": {
+    "text": "I adopted Clockout the Ginger Cat at Catcoin Sanctuary. $CLOCKPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/clockpaw\nA cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 269,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Clockout the Ginger Cat is up for adoption at Catcoin Sanctuary. $CLOCKPAW\nhttps://catcoinsanctuary.com/cat/clockpaw\nA cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 230,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Clockout the Ginger Cat, adopted at Catcoin Sanctuary. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 159,
+   "xBioVariant": 2,
+   "xDisplayName": "Clockout the Ginger Cat",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "CLOCKPAWcat",
+   "metadataDescription": "Clockout, a fluffy ginger tabby with faint forehead stripes and big dark eyes, wears a teal collared shirt and trots home the moment work ends. A cat coin priced in SKHY. Not affiliated with SK hynix, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 275,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "SKHY",
+     "SKHYNIX",
+     "hynix",
+     "Chik (칡)"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 28,
+   "stock": "SNDK",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 29,
+   "stock": "DRAM",
+   "status": "picked-no-image",
+   "name": "Pinrow the Copper-Eyed Cat",
+   "ticker": "PINROW",
+   "website": "https://catcoinsanctuary.com/cat/pinrow",
+   "websiteLen": 39,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=PINROW",
+   "xPostAdopted": {
+    "text": "I adopted Pinrow the Copper-Eyed Cat at Catcoin Sanctuary. $PINROW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/pinrow\nNot affiliated with Roundhill Investments, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 256,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Pinrow the Copper-Eyed Cat is up for adoption at Catcoin Sanctuary. $PINROW\nhttps://catcoinsanctuary.com/cat/pinrow\nA cat coin priced in DRAM. Not affiliated with Roundhill Investments, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 244,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Roundhill Investments, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Roundhill Investments, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 147,
+   "xBioVariant": 4,
+   "xDisplayName": "Pinrow the Copper-Eyed Cat",
+   "xDisplayNameLen": 26,
+   "xHandleSuggestion": "PINROWcat",
+   "metadataDescription": "Pinrow, a glossy jet-black shorthair with silver whiskers and copper eyes, lies long and flat along the top of the garden wall. A cat coin priced in DRAM. Not affiliated with Roundhill Investments, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 272,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "DRAM",
+     "Roundhill",
+     "Investments",
+     "Memory"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 30,
+   "stock": "TTWO",
+   "status": "picked-no-image",
+   "name": "Savepoint the Silver Cat",
+   "ticker": "SAVEPAW",
+   "website": "https://catcoinsanctuary.com/cat/savepaw",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SAVEPAW",
+   "xPostAdopted": {
+    "text": "I adopted Savepoint the Silver Cat at Catcoin Sanctuary. $SAVEPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/savepaw\nNot affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 263,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Savepoint the Silver Cat is up for adoption at Catcoin Sanctuary. $SAVEPAW\nhttps://catcoinsanctuary.com/cat/savepaw\nA cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 251,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 155,
+   "xBioVariant": 4,
+   "xDisplayName": "Savepoint the Silver Cat",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "SAVEPAWcat",
+   "metadataDescription": "Savepoint, a light silver-grey cat with a white muzzle and bib, naps on the same warm stone daily, right where he left off. A cat coin priced in TTWO. Not affiliated with Take-Two Interactive Software, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 276,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "TTWO",
+     "Take-Two",
+     "Interactive",
+     "Software",
+     "Cooper Cat"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 31,
+   "stock": "NBIS",
+   "status": "picked-no-image",
+   "name": "Saffron the Long-Whisker Cat",
+   "ticker": "SAFFWHISK",
+   "website": "https://catcoinsanctuary.com/cat/saffwhisk",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SAFFWHISK",
+   "xPostAdopted": {
+    "text": "I adopted Saffron the Long-Whisker Cat at Catcoin Sanctuary. $SAFFWHISK\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/saffwhisk\nNot affiliated with Nebius Group N.V., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 257,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Saffron the Long-Whisker Cat is up for adoption at Catcoin Sanctuary. $SAFFWHISK\nhttps://catcoinsanctuary.com/cat/saffwhisk\nA cat coin priced in NBIS. Not affiliated with Nebius Group N.V., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 245,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Nebius Group N.V., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Nebius Group N.V., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 143,
+   "xBioVariant": 4,
+   "xDisplayName": "Saffron the Long-Whisker Cat",
+   "xDisplayNameLen": 28,
+   "xHandleSuggestion": "SAFFWHISKcat",
+   "metadataDescription": "Saffron, a burnt-orange tabby with black stripes, white brows and very long white whiskers, stares down the garden sprinkler at dusk. A cat coin priced in NBIS. Not affiliated with Nebius Group N.V., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 274,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "NBIS",
+     "Nebius"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 32,
+   "stock": "MRNA",
+   "status": "picked-no-image",
+   "name": "Courier the Ribbon Tabby",
+   "ticker": "NOTEPAW",
+   "website": "https://catcoinsanctuary.com/cat/notepaw",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=NOTEPAW",
+   "xPostAdopted": {
+    "text": "I adopted Courier the Ribbon Tabby at Catcoin Sanctuary. $NOTEPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/notepaw\nA cat coin priced in MRNA. Not affiliated with Moderna, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 268,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Courier the Ribbon Tabby is up for adoption at Catcoin Sanctuary. $NOTEPAW\nhttps://catcoinsanctuary.com/cat/notepaw\nA cat coin priced in MRNA. Not affiliated with Moderna, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 229,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Moderna, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Courier the Ribbon Tabby, adopted at Catcoin Sanctuary. Not affiliated with Moderna, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 159,
+   "xBioVariant": 2,
+   "xDisplayName": "Courier the Ribbon Tabby",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "NOTEPAWcat",
+   "metadataDescription": "Courier, a silver tabby with looping ribbon-like swirls on each flank, carries folded notes from the potting shed to the pond and never drops one. A cat coin priced in MRNA. Not affiliated with Moderna, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 277,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "MRNA",
+     "MODERNA",
+     "Moderna"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 33,
+   "stock": "LLY",
+   "status": "picked-no-image",
+   "name": "Thyme the Apothecary Cat",
+   "ticker": "APOTHECAT",
+   "website": "https://catcoinsanctuary.com/cat/apothecat",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=APOTHECAT",
+   "xPostAdopted": {
+    "text": "I adopted Thyme the Apothecary Cat at Catcoin Sanctuary. $APOTHECAT\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/apothecat\nNot affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 257,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Thyme the Apothecary Cat is up for adoption at Catcoin Sanctuary. $APOTHECAT\nhttps://catcoinsanctuary.com/cat/apothecat\nA cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 244,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 147,
+   "xBioVariant": 4,
+   "xDisplayName": "Thyme the Apothecary Cat",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "APOTHECAT",
+   "metadataDescription": "Thyme, a smoky sage-grey mackerel tabby with olive eyes, dozes among old glass jars and pots of rosemary in the garden's herb bed. A cat coin priced in LLY. Not affiliated with Eli Lilly and Company, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 274,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "LLY",
+     "Eli",
+     "Lilly"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 34,
+   "stock": "MRVL",
+   "status": "picked-no-image",
+   "name": "Cobble the Street Tabby",
+   "ticker": "COBBLE",
+   "website": "https://catcoinsanctuary.com/cat/cobble",
+   "websiteLen": 39,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=COBBLE",
+   "xPostAdopted": {
+    "text": "I adopted Cobble the Street Tabby at Catcoin Sanctuary. $COBBLE\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/cobble\nNot affiliated with Marvell Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 250,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Cobble the Street Tabby is up for adoption at Catcoin Sanctuary. $COBBLE\nhttps://catcoinsanctuary.com/cat/cobble\nA cat coin priced in MRVL. Not affiliated with Marvell Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 238,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Marvell Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Cobble the Street Tabby of Catcoin Sanctuary. Not affiliated with Marvell Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 160,
+   "xBioVariant": 3,
+   "xDisplayName": "Cobble the Street Tabby",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "COBBLEcat",
+   "metadataDescription": "Cobble, a lean brown-grey mackerel tabby with a nicked ear and green-gold eyes, came in off the back lanes and walks the wall at dusk. A cat coin priced in MRVL. Not affiliated with Marvell Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 276,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "MRVL",
+     "Marvell",
+     "Technology",
+     "AlleyCat"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 35,
+   "stock": "GPRO",
+   "status": "picked-no-image",
+   "name": "Scuff the Tabby-and-White Cat",
+   "ticker": "SCUFFPAW",
+   "website": "https://catcoinsanctuary.com/cat/scuffpaw",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SCUFFPAW",
+   "xPostAdopted": {
+    "text": "I adopted Scuff the Tabby-and-White Cat at Catcoin Sanctuary. $SCUFFPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/scuffpaw\nNot affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 251,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Scuff the Tabby-and-White Cat is up for adoption at Catcoin Sanctuary. $SCUFFPAW\nhttps://catcoinsanctuary.com/cat/scuffpaw\nA cat coin priced in GPRO. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 239,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Scuff the Tabby-and-White Cat of Catcoin Sanctuary. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 159,
+   "xBioVariant": 3,
+   "xDisplayName": "Scuff the Tabby-and-White Cat",
+   "xDisplayNameLen": 29,
+   "xHandleSuggestion": "SCUFFPAWcat",
+   "metadataDescription": "Scuff, a sturdy brown tabby with a white nose stripe, white chest and white paws, zooms down a sloping Cat Sanctuary path and slides to a halt. A cat coin priced in GPRO. Not affiliated with GoPro, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 278,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "GPRO",
+     "GoPro",
+     "Didga"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 36,
+   "stock": "AMC",
+   "status": "picked-no-image",
+   "name": "Kernel the Butter-Patch Cat",
+   "ticker": "KERNELPAW",
+   "website": "https://catcoinsanctuary.com/cat/kernelpaw",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=KERNELPAW",
+   "xPostAdopted": {
+    "text": "I adopted Kernel the Butter-Patch Cat at Catcoin Sanctuary. $KERNELPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/kernelpaw\nNot affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 256,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Kernel the Butter-Patch Cat is up for adoption at Catcoin Sanctuary. $KERNELPAW\nhttps://catcoinsanctuary.com/cat/kernelpaw\nA cat coin priced in AMC. Not affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 243,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 143,
+   "xBioVariant": 4,
+   "xDisplayName": "Kernel the Butter-Patch Cat",
+   "xDisplayNameLen": 27,
+   "xHandleSuggestion": "KERNELPAWcat",
+   "metadataDescription": "Kernel, a fluffy cream-white cat with butter-yellow patches and honey-gold eyes, naps in a buttery patch of sun on the garden bench. A cat coin priced in AMC. Not affiliated with AMC Entertainment, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 272,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "AMC",
+     "Entertainment",
+     "Hello Kitty"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 37,
+   "stock": "NKE",
+   "status": "picked-no-image",
+   "name": "Tread the Soft-Step Cat",
+   "ticker": "TREADPAW",
+   "website": "https://catcoinsanctuary.com/cat/treadpaw",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=TREADPAW",
+   "xPostAdopted": {
+    "text": "I adopted Tread the Soft-Step Cat at Catcoin Sanctuary. $TREADPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/treadpaw\nA cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 271,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Tread the Soft-Step Cat is up for adoption at Catcoin Sanctuary. $TREADPAW\nhttps://catcoinsanctuary.com/cat/treadpaw\nA cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 232,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Tread the Soft-Step Cat of Catcoin Sanctuary. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 152,
+   "xBioVariant": 3,
+   "xDisplayName": "Tread the Soft-Step Cat",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "TREADPAWcat",
+   "metadataDescription": "Tread, a wiry jet-black shorthair with a soft matte coat, graphite-grey paw pads and gold eyes, pads silent circuits of the garden pond at dawn. A cat coin priced in NIKE. Not affiliated with NIKE, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 278,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "nike",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:nike",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "NKE",
+     "NIKE",
+     "Hello Kitty"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 38,
+   "stock": "SPHR",
+   "status": "picked-no-image",
+   "name": "Tousle the Curly-Ruff Cat",
+   "ticker": "TOUSLE",
+   "website": "https://catcoinsanctuary.com/cat/tousle",
+   "websiteLen": 39,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=TOUSLE",
+   "xPostAdopted": {
+    "text": "I adopted Tousle the Curly-Ruff Cat at Catcoin Sanctuary. $TOUSLE\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/tousle\nNot affiliated with Sphere Entertainment Co., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 258,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Tousle the Curly-Ruff Cat is up for adoption at Catcoin Sanctuary. $TOUSLE\nhttps://catcoinsanctuary.com/cat/tousle\nA cat coin priced in SPHR. Not affiliated with Sphere Entertainment Co., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 246,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Sphere Entertainment Co., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Sphere Entertainment Co., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 150,
+   "xBioVariant": 4,
+   "xDisplayName": "Tousle the Curly-Ruff Cat",
+   "xDisplayNameLen": 25,
+   "xHandleSuggestion": "TOUSLEcat",
+   "metadataDescription": "Tousle, a tawny-gold cat with a thick curly russet ruff and honey eyes, lounges in the white garden flowers like it's her stage. A cat coin priced in SPHR. Not affiliated with Sphere Entertainment Co., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 276,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "SPHR",
+     "Sphere",
+     "Entertainment",
+     "Cowardly Lion"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 39,
+   "stock": "HTZ",
+   "status": "picked-no-image",
+   "name": "Glint the Silver-Sedan Cat",
+   "ticker": "GLINTPAW",
+   "website": "https://catcoinsanctuary.com/cat/glintpaw",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=GLINTPAW",
+   "xPostAdopted": {
+    "text": "I adopted Glint the Silver-Sedan Cat at Catcoin Sanctuary. $GLINTPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/glintpaw\nNot affiliated with Hertz Global Holdings, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 258,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Glint the Silver-Sedan Cat is up for adoption at Catcoin Sanctuary. $GLINTPAW\nhttps://catcoinsanctuary.com/cat/glintpaw\nA cat coin priced in HTZ. Not affiliated with Hertz Global Holdings, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 245,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Hertz Global Holdings, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Hertz Global Holdings, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 147,
+   "xBioVariant": 4,
+   "xDisplayName": "Glint the Silver-Sedan Cat",
+   "xDisplayNameLen": 26,
+   "xHandleSuggestion": "GLINTPAWcat",
+   "metadataDescription": "Glint, a sleek silver-grey shorthair with a glossy just-washed coat and copper eyes, sunbathes on warm stones in the sanctuary garden. A cat coin priced in HTZ. Not affiliated with Hertz Global Holdings, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 278,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "HTZ",
+     "Hertz",
+     "Global"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 40,
+   "stock": "RDDT",
+   "status": "picked-no-image",
+   "name": "Hubbub the Stubby Tabby Cat",
+   "ticker": "HUBBUB",
+   "website": "https://catcoinsanctuary.com/cat/hubbub",
+   "websiteLen": 39,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=HUBBUB",
+   "xPostAdopted": {
+    "text": "I adopted Hubbub the Stubby Tabby Cat at Catcoin Sanctuary. $HUBBUB\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/hubbub\nA cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 275,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Hubbub the Stubby Tabby Cat is up for adoption at Catcoin Sanctuary. $HUBBUB\nhttps://catcoinsanctuary.com/cat/hubbub\nA cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 236,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Hubbub the Stubby Tabby Cat of Catcoin Sanctuary. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 158,
+   "xBioVariant": 3,
+   "xDisplayName": "Hubbub the Stubby Tabby Cat",
+   "xDisplayNameLen": 27,
+   "xHandleSuggestion": "HUBBUBcat",
+   "metadataDescription": "Hubbub, a short-legged brown tabby with a cream bib and white toe tips, trots between the garden benches to hear every lively chat. A cat coin priced in RDDT. Not affiliated with Reddit, Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 267,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "reddit",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:reddit",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "RDDT",
+     "Reddit",
+     "Cool Cats"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 41,
+   "stock": "COST",
+   "status": "picked-no-image",
+   "name": "Carton the Cardboard-Tan Cat",
+   "ticker": "CARTONPAW",
+   "website": "https://catcoinsanctuary.com/cat/cartonpaw",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=CARTONPAW",
+   "xPostAdopted": {
+    "text": "I adopted Carton the Cardboard-Tan Cat at Catcoin Sanctuary. $CARTONPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/cartonpaw\nNot affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 256,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Carton the Cardboard-Tan Cat is up for adoption at Catcoin Sanctuary. $CARTONPAW\nhttps://catcoinsanctuary.com/cat/cartonpaw\nA cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 244,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 142,
+   "xBioVariant": 4,
+   "xDisplayName": "Carton the Cardboard-Tan Cat",
+   "xDisplayNameLen": 28,
+   "xHandleSuggestion": "CARTONPAWcat",
+   "metadataDescription": "Carton, a big broad-chested cat with a cardboard-tan coat, cream bib and cream paws, naps on a tall pile of brown boxes in the garden shed. A cat coin priced in COST. Not affiliated with Costco Wholesale, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 279,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "costco",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:costco",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "COST",
+     "Costco",
+     "Wholesale"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 42,
+   "stock": "DELL",
+   "status": "picked-no-image",
+   "name": "Frostpuff the Fold-Eared Cat",
+   "ticker": "FROSTPUFF",
+   "website": "https://catcoinsanctuary.com/cat/frostpuff",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=FROSTPUFF",
+   "xPostAdopted": {
+    "text": "I adopted Frostpuff the Fold-Eared Cat at Catcoin Sanctuary. $FROSTPUFF\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/frostpuff\nNot affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 257,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Frostpuff the Fold-Eared Cat is up for adoption at Catcoin Sanctuary. $FROSTPUFF\nhttps://catcoinsanctuary.com/cat/frostpuff\nA cat coin priced in DELL. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 245,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 143,
+   "xBioVariant": 4,
+   "xDisplayName": "Frostpuff the Fold-Eared Cat",
+   "xDisplayNameLen": 28,
+   "xHandleSuggestion": "FROSTPUFFcat",
+   "metadataDescription": "Frostpuff, a fluffy white cat with faint silver brow stripes, folded ears, a pink nose and big grey-green eyes, peeks out from the hedge. A cat coin priced in DELL. Not affiliated with Dell Technologies, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 278,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "DELL",
+     "Dell",
+     "Technologies",
+     "\"I'm not a cat\" kitten"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 43,
+   "stock": "DJT",
+   "status": "picked-no-image",
+   "name": "Tack the Noticeboard Cat",
+   "ticker": "PAWPOST",
+   "website": "https://catcoinsanctuary.com/cat/pawpost",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=PAWPOST",
+   "xPostAdopted": {
+    "text": "I adopted Tack the Noticeboard Cat at Catcoin Sanctuary. $PAWPOST\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/pawpost\nA cat coin priced in DJT. Not affiliated with TMTG, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 264,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Tack the Noticeboard Cat is up for adoption at Catcoin Sanctuary. $PAWPOST\nhttps://catcoinsanctuary.com/cat/pawpost\nA cat coin priced in DJT. Not affiliated with TMTG, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 225,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with TMTG, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Tack the Noticeboard Cat, adopted at Catcoin Sanctuary. Not affiliated with TMTG, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 156,
+   "xBioVariant": 2,
+   "xDisplayName": "Tack the Noticeboard Cat",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "PAWPOSTcat",
+   "metadataDescription": "Tack, a stocky ginger tabby with swirled stripes and green eyes, stamps a paw print on every note pinned to the Cat Sanctuary noticeboard. A cat coin priced in DJT. Not affiliated with TMTG, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 265,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "DJT",
+     "Trump",
+     "Media",
+     "Technology"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 44,
+   "stock": "IBM",
+   "status": "picked-no-image",
+   "name": "Tally the Sand-Spotted Cat",
+   "ticker": "TALLYSPOT",
+   "website": "https://catcoinsanctuary.com/cat/tallyspot",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=TALLYSPOT",
+   "xPostAdopted": {
+    "text": "I adopted Tally the Sand-Spotted Cat at Catcoin Sanctuary. $TALLYSPOT\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/tallyspot\nA cat coin priced in IBM. Not affiliated with IBM, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 267,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Tally the Sand-Spotted Cat is up for adoption at Catcoin Sanctuary. $TALLYSPOT\nhttps://catcoinsanctuary.com/cat/tallyspot\nA cat coin priced in IBM. Not affiliated with IBM, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 228,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with IBM, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Tally the Sand-Spotted Cat, adopted at Catcoin Sanctuary. Not affiliated with IBM, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 157,
+   "xBioVariant": 2,
+   "xDisplayName": "Tally the Sand-Spotted Cat",
+   "xDisplayNameLen": 26,
+   "xHandleSuggestion": "TALLYSPOTcat",
+   "metadataDescription": "Tally, a lean sandy-gold cat with black spots, dark tear-marks and a white-tipped tail, counts the pond's goldfish each morning and never misses one. A cat coin priced in IBM. Not affiliated with IBM, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 275,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "IBM",
+     "International",
+     "Business",
+     "Machines"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 45,
+   "stock": "LMT",
+   "status": "picked-no-image",
+   "name": "Velvet the Shadow-Spot Cat",
+   "ticker": "VELVETPAW",
+   "website": "https://catcoinsanctuary.com/cat/velvetpaw",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=VELVETPAW",
+   "xPostAdopted": {
+    "text": "I adopted Velvet the Shadow-Spot Cat at Catcoin Sanctuary. $VELVETPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/velvetpaw\nNot affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 253,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Velvet the Shadow-Spot Cat is up for adoption at Catcoin Sanctuary. $VELVETPAW\nhttps://catcoinsanctuary.com/cat/velvetpaw\nA cat coin priced in LMT. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 240,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Velvet the Shadow-Spot Cat of Catcoin Sanctuary. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 160,
+   "xBioVariant": 3,
+   "xDisplayName": "Velvet the Shadow-Spot Cat",
+   "xDisplayNameLen": 26,
+   "xHandleSuggestion": "VELVETPAWcat",
+   "metadataDescription": "Velvet, a sleek glossy-black shorthair whose coat shows faint darker rosettes in bright sun, watches the lily pond with round golden eyes. A cat coin priced in LMT. Not affiliated with Lockheed Martin, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 276,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "LMT",
+     "Lockheed",
+     "Martin",
+     "PANTERA"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 46,
+   "stock": "QUBT",
+   "status": "picked-no-image",
+   "name": "Prism the Silver Beam Cat",
+   "ticker": "PRISMPAW",
+   "website": "https://catcoinsanctuary.com/cat/prismpaw",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=PRISMPAW",
+   "xPostAdopted": {
+    "text": "I adopted Prism the Silver Beam Cat at Catcoin Sanctuary. $PRISMPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/prismpaw\nNot affiliated with Quantum Computing Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 258,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Prism the Silver Beam Cat is up for adoption at Catcoin Sanctuary. $PRISMPAW\nhttps://catcoinsanctuary.com/cat/prismpaw\nA cat coin priced in QUBT. Not affiliated with Quantum Computing Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 246,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Quantum Computing Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Quantum Computing Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 148,
+   "xBioVariant": 4,
+   "xDisplayName": "Prism the Silver Beam Cat",
+   "xDisplayNameLen": 25,
+   "xHandleSuggestion": "PRISMPAWcat",
+   "metadataDescription": "Prism, a sleek silver tabby with faint grey stripes and ice-blue eyes, chases the rainbow dots a glass prism casts on the garden wall. A cat coin priced in QUBT. Not affiliated with Quantum Computing Inc., Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 280,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "QUBT",
+     "Quantum",
+     "Computing"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 47,
+   "stock": "RBLX",
+   "status": "picked-no-image",
+   "name": "Tartan the Yellow-Tie Cat",
+   "ticker": "TARTANPAW",
+   "website": "https://catcoinsanctuary.com/cat/tartanpaw",
+   "websiteLen": 42,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=TARTANPAW",
+   "xPostAdopted": {
+    "text": "I adopted Tartan the Yellow-Tie Cat at Catcoin Sanctuary. $TARTANPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/tartanpaw\nNot affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 255,
+    "storyUsed": "none",
+    "disclosure": "core",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Tartan the Yellow-Tie Cat is up for adoption at Catcoin Sanctuary. $TARTANPAW\nhttps://catcoinsanctuary.com/cat/tartanpaw\nA cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 243,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Adopted at Catcoin Sanctuary. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 144,
+   "xBioVariant": 4,
+   "xDisplayName": "Tartan the Yellow-Tie Cat",
+   "xDisplayNameLen": 25,
+   "xHandleSuggestion": "TARTANPAWcat",
+   "metadataDescription": "Tartan, a sleek jet-black cat with round lemon-yellow eyes, wears a yellow plaid necktie and sits up straight on the sunny garden bench. A cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 278,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "roblox",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:roblox",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "RBLX",
+     "Roblox",
+     "Business Cat"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 48,
+   "stock": "HIMS",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 49,
+   "stock": "LULU",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 50,
+   "stock": "PFE",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 51,
+   "stock": "RIVN",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 52,
+   "stock": "SHOP",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 53,
+   "stock": "SNAP",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 54,
+   "stock": "UPS",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 55,
+   "stock": "PENG",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 56,
+   "stock": "BA",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 57,
+   "stock": "AMBA",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 58,
+   "stock": "BULL",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 59,
+   "stock": "JNJ",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 60,
+   "stock": "BABA",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 61,
+   "stock": "GRND",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 62,
+   "stock": "MGM",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 63,
+   "stock": "DNUT",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 64,
+   "stock": "WEN",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 65,
+   "stock": "DKNG",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 66,
+   "stock": "FLWS",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 67,
+   "stock": "SCHH",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 68,
+   "stock": "PTN",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 69,
+   "stock": "FLY",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 70,
+   "stock": "BROS",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 71,
+   "stock": "AMD",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 72,
+   "stock": "FWDI",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 73,
+   "stock": "LUV",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 74,
+   "stock": "WULF",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 75,
+   "stock": "RUM",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 76,
+   "stock": "USO",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 77,
+   "stock": "CYPH",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 78,
+   "stock": "BB",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 79,
+   "stock": "URA",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 80,
+   "stock": "COPX",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 81,
+   "stock": "IONQ",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 82,
+   "stock": "ARM",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 83,
+   "stock": "CRWV",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 84,
+   "stock": "IREN",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 85,
+   "stock": "ANTHROPIC",
+   "status": "picked-no-image",
+   "name": "Cotta the Terracotta Cat",
+   "ticker": "COTTAPAW",
+   "website": "https://catcoinsanctuary.com/cat/cottapaw",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=COTTAPAW",
+   "xPostAdopted": {
+    "text": "I adopted Cotta the Terracotta Cat at Catcoin Sanctuary. $COTTAPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/cottapaw\nA cat coin priced in ANTHROPIC. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 266,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Cotta the Terracotta Cat is up for adoption at Catcoin Sanctuary. $COTTAPAW\nhttps://catcoinsanctuary.com/cat/cottapaw\nA cat coin priced in ANTHROPIC. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 227,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Cotta the Terracotta Cat, adopted at Catcoin Sanctuary. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 151,
+   "xBioVariant": 2,
+   "xDisplayName": "Cotta the Terracotta Cat",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "COTTAPAWcat",
+   "metadataDescription": "Cotta, a sleek terracotta-orange cat with bright yellow eyes, lounges on the sanctuary garden bench and gives a sleepy wink to anyone hard at work. A cat coin priced in ANTHROPIC. Not affiliated with Anthropic, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 275,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "anthropic",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:anthropic",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "ANTHROPIC",
+     "Anthropic",
+     "Claude Code /buddy cat"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 86,
+   "stock": "ANDURIL",
+   "status": "picked-no-image",
+   "name": "Haybale the Bobtail Cat",
+   "ticker": "HAYBALE",
+   "website": "https://catcoinsanctuary.com/cat/haybale",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=HAYBALE",
+   "xPostAdopted": {
+    "text": "I adopted Haybale the Bobtail Cat at Catcoin Sanctuary. $HAYBALE\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/haybale\nA cat coin priced in ANDURIL. Not affiliated with Anduril Industries, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 271,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Haybale the Bobtail Cat is up for adoption at Catcoin Sanctuary. $HAYBALE\nhttps://catcoinsanctuary.com/cat/haybale\nA cat coin priced in ANDURIL. Not affiliated with Anduril Industries, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 232,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Anduril Industries, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Haybale the Bobtail Cat, adopted at Catcoin Sanctuary. Not affiliated with Anduril Industries, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 159,
+   "xBioVariant": 2,
+   "xDisplayName": "Haybale the Bobtail Cat",
+   "xDisplayNameLen": 23,
+   "xHandleSuggestion": "HAYBALEcat",
+   "metadataDescription": "Haybale, a sandy-buff cat with tufted ears, dark-spotted legs, a white belly and a stubby black-tipped tail, naps atop the garden gate at dusk. A cat coin priced in ANDURIL. Not affiliated with Anduril Industries, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 278,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "ANDURIL",
+     "Anduril",
+     "Industries"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 87,
+   "stock": "POLYMARKET",
+   "status": "picked-no-image",
+   "name": "Hunch the Cream Tabby",
+   "ticker": "HUNCHPAW",
+   "website": "https://catcoinsanctuary.com/cat/hunchpaw",
+   "websiteLen": 41,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=HUNCHPAW",
+   "xPostAdopted": {
+    "text": "I adopted Hunch the Cream Tabby at Catcoin Sanctuary. $HUNCHPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/hunchpaw\nA cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 265,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Hunch the Cream Tabby is up for adoption at Catcoin Sanctuary. $HUNCHPAW\nhttps://catcoinsanctuary.com/cat/hunchpaw\nA cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 226,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Hunch the Cream Tabby, adopted at Catcoin Sanctuary. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 149,
+   "xBioVariant": 2,
+   "xDisplayName": "Hunch the Cream Tabby",
+   "xDisplayNameLen": 21,
+   "xHandleSuggestion": "HUNCHPAWcat",
+   "metadataDescription": "Hunch, a fluffy cream-ginger tabby with a round face and big copper eyes, sits by the Cat Sanctuary gate at dawn guessing which path visitors take. A cat coin priced in POLYMARKET. Not affiliated with Polymarket, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 277,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "POLYMARKET",
+     "Polymarket"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 88,
+   "stock": "KALSHI",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 89,
+   "stock": "NEURALINK",
+   "status": "picked-no-image",
+   "name": "Silk the Pinstripe Cat",
+   "ticker": "SILKSTRIPE",
+   "website": "https://catcoinsanctuary.com/cat/silkstripe",
+   "websiteLen": 43,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=SILKSTRIPE",
+   "xPostAdopted": {
+    "text": "I adopted Silk the Pinstripe Cat at Catcoin Sanctuary. $SILKSTRIPE\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/silkstripe\nA cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 266,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Silk the Pinstripe Cat is up for adoption at Catcoin Sanctuary. $SILKSTRIPE\nhttps://catcoinsanctuary.com/cat/silkstripe\nA cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 227,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Silk the Pinstripe Cat, adopted at Catcoin Sanctuary. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 149,
+   "xBioVariant": 2,
+   "xDisplayName": "Silk the Pinstripe Cat",
+   "xDisplayNameLen": 22,
+   "xHandleSuggestion": "SILKSTRIPEcat",
+   "metadataDescription": "Silk, a sleek silver tabby with hair-thin charcoal pinstripes and a white chin, slips between the fence rails so neatly she never bends a leaf. A cat coin priced in NEURALINK. Not affiliated with Neuralink, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 271,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "neuralink",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:neuralink",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "NEURALINK",
+     "Neuralink",
+     "Schrödinger"
+    ]
+   },
+   "pass": true
+  },
+  {
+   "n": 90,
+   "stock": "OPENAI",
+   "status": "candidates-only",
+   "skipped": "no picked name/ticker yet"
+  },
+  {
+   "n": 91,
+   "stock": "FIGUREAI",
+   "status": "picked-no-image",
+   "name": "Knit the Woolly Grey Cat",
+   "ticker": "KNITPAW",
+   "website": "https://catcoinsanctuary.com/cat/knitpaw",
+   "websiteLen": 40,
+   "websiteToday": "https://catcoinsanctuary.com/#cat=KNITPAW",
+   "xPostAdopted": {
+    "text": "I adopted Knit the Woolly Grey Cat at Catcoin Sanctuary. $KNITPAW\nCA {MINT}\nhttps://catcoinsanctuary.com/cat/knitpaw\nA cat coin priced in FIGUREAI. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weightedWith44CharMint": 264,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "xPostWaiting": {
+    "text": "Knit the Woolly Grey Cat is up for adoption at Catcoin Sanctuary. $KNITPAW\nhttps://catcoinsanctuary.com/cat/knitpaw\nA cat coin priced in FIGUREAI. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+    "weighted": 225,
+    "storyUsed": "none",
+    "disclosure": "full",
+    "over280": false
+   },
+   "disclosureCore": "Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBio": "Knit the Woolly Grey Cat, adopted at Catcoin Sanctuary. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "xBioLen": 151,
+   "xBioVariant": 2,
+   "xDisplayName": "Knit the Woolly Grey Cat",
+   "xDisplayNameLen": 24,
+   "xHandleSuggestion": "KNITPAWcat",
+   "metadataDescription": "Knit, a plush pale ash-grey tabby with a soft woolly coat and faint ribbed stripes, pads between the flowerpots so carefully that none ever tips over. A cat coin priced in FIGUREAI. Not affiliated with Figure AI, PreStocks or StonkFun. No intrinsic value; not financial advice.",
+   "metadataDescriptionLen": 277,
+   "checks": {
+    "ownWords_checkFields": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_pairTerms_launchClaims": {
+     "ok": true,
+     "violations": []
+    },
+    "ownWords_otherPairs": {
+     "ok": true,
+     "violations": []
+    },
+    "disclosure_checkFields": {
+     "ok": false,
+     "violations": [
+      {
+       "rule": "brand",
+       "term": "stonkfun",
+       "field": "disclosure"
+      },
+      {
+       "rule": "endorsement",
+       "term": "affiliated",
+       "field": "disclosure"
+      },
+      {
+       "rule": "financial_promise",
+       "term": "financial advice",
+       "field": "disclosure"
+      }
+     ]
+    },
+    "disclosure_unexpected": [],
+    "fullPost_rules_hit": [
+     "brand:stonkfun",
+     "endorsement:affiliated",
+     "financial_promise:financial advice",
+     "link:https://"
+    ],
+    "hype": [],
+    "pairTermsUsed": [
+     "FIGUREAI",
+     "Figure"
+    ]
+   },
+   "pass": true
+  }
+ ]
+}

@@ -1,0 +1,357 @@
+{
+ "disclosureAlone": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "stonkfun",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "pair": {
+  "mint": "MRVLSjkR2ceUBukujaD3xCyHP1H3B2SzpsNTZF546jo",
+  "symbol": "MRVL",
+  "name": "MRVL",
+  "decimals": 6,
+  "logoUrl": "/api/asset/quote-logo/MRVLSjkR2ceUBukujaD3xCyHP1H3B2SzpsNTZF546jo?v=59d72016",
+  "category": "backpack",
+  "categoryLabel": "Sunrise",
+  "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "launchable": true,
+  "symbolAmbiguous": false,
+  "launchLabReady": true
+ },
+ "chain": {
+  "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "extensions": [
+   "metadataPointer",
+   "permanentDelegate",
+   "defaultAccountState",
+   "pausableConfig",
+   "confidentialTransferMint",
+   "transferHook",
+   "scaledUiAmountConfig",
+   "tokenMetadata"
+  ],
+  "transferFeeConfig": null,
+  "pausable": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "paused": false
+  },
+  "permanentDelegate": {
+   "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+  },
+  "transferHook": {
+   "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+   "programId": null
+  },
+  "defaultAccountState": {
+   "accountState": "initialized"
+  }
+ },
+ "results": [
+  {
+   "name": "Cobble the Street Tabby",
+   "ticker": "COBBLE",
+   "nameLen": 23,
+   "blurbLen": 134,
+   "descLen": 276,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "hasOfficial": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Cobble, a lean brown-grey mackerel tabby",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "COBBLE",
+      "name": "COBBLE",
+      "id": "5p85xBWRiWXYbeEVqKVqEKgTaevGUvFsrVRivVkGpump"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "jupVerifiedSymbolMatch": false,
+   "description": "Cobble, a lean brown-grey mackerel tabby with a nicked ear and green-gold eyes, came in off the back lanes and walks the wall at dusk. A cat coin priced in MRVL. Not affiliated with Marvell Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Dapple the Spotted Cat",
+   "ticker": "DAPPLE",
+   "nameLen": 22,
+   "blurbLen": 132,
+   "descLen": 274,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "hasOfficial": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Dapple, a tawny house cat with dark spot",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 20,
+    "symbolMatches": [
+     {
+      "symbol": "dapple",
+      "name": "Dapple Dog",
+      "id": "GfERM7LEmyWXRgwt3ThHHUxT6MHZMqEbPgsYkibspump"
+     },
+     {
+      "symbol": "Dapple",
+      "name": "Dapple",
+      "id": "3JcB4VboHvVHWxL9ig3iwjo19vdXX7kTJ92YsGVCpump"
+     },
+     {
+      "symbol": "DAPPLE",
+      "name": "Dog Apple",
+      "id": "AFwj6KHUSLXEdWia9cHgMCJA37QghQX35BaEysfpump"
+     },
+     {
+      "symbol": "DAPPLE",
+      "name": "Decentralized Apple",
+      "id": "HYThdRY9RXGfxstxyPTivyst7CA8jWeAP9nM6C7Vmoon"
+     },
+     {
+      "symbol": "DAPPLE",
+      "name": "Decentralized Apple",
+      "id": "7NBjiUJhAHUhpxPE8mtgPe2ESB8EogvVowbq3uaAmoon"
+     },
+     {
+      "symbol": "DAPPLE",
+      "name": "Decentralized Apple",
+      "id": "2jNgCSjscBDypDt47tcpWbFjvyRp5B52beErZAriBAGS"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "jupVerifiedSymbolMatch": false,
+   "description": "Dapple, a tawny house cat with dark spots, a cream belly and black-tipped ears, creeps through the long grass and pounces on leaves. A cat coin priced in MRVL. Not affiliated with Marvell Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Shortcut the Golden Cat",
+   "ticker": "SHORTCUT",
+   "nameLen": 23,
+   "blurbLen": 131,
+   "descLen": 273,
+   "tickerFormat": true,
+   "tickerHasStockRoot": false,
+   "tickerIsAStonkFunPairSymbol": false,
+   "memeClash": false,
+   "endsWithDisclosure": true,
+   "hasOfficial": false,
+   "checkProposal_blurb": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Shortcut, a solid golden-tawny cat with ",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkFields_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "stonkfun",
+      "field": "description"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "description"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "description"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "displaySafe": {
+    "ok": true,
+    "violations": []
+   },
+   "jup": {
+    "status": 200,
+    "results": 10,
+    "symbolMatches": [
+     {
+      "symbol": "SHORTCUT",
+      "name": "The Shortcut",
+      "id": "JDKCsY8ezFT4jGPUcnpMwSL6isCdAdrpDSrvdNuupump"
+     },
+     {
+      "symbol": "shortcut",
+      "name": "shortcut to success",
+      "id": "B1QmiXZdNzxZJEnRyuVaFom4GG2ScYLjwoTow1VDpump"
+     },
+     {
+      "symbol": "SHORTCUT",
+      "name": "shortcut to success",
+      "id": "7BxyDyUw8fo42gaQZQ8NK58ajMGDPuPJpNdeQo9cpump"
+     },
+     {
+      "symbol": "SHORTCUT",
+      "name": "Shortcut To Success",
+      "id": "48LPwhvDqE1Zi2ZJEis6GeRPXfbiWsM9THdh1NK1pump"
+     }
+    ],
+    "verifiedAny": []
+   },
+   "jupVerifiedSymbolMatch": false,
+   "description": "Shortcut, a solid golden-tawny cat with copper eyes, knows every gap in the hedges and leads visitors the quickest way to the pond. A cat coin priced in MRVL. Not affiliated with Marvell Technology, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "owner": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+ "decimals": 6,
+ "extensions": [
+  {
+   "e": "metadataPointer"
+  },
+  {
+   "e": "permanentDelegate",
+   "s": {
+    "delegate": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a"
+   }
+  },
+  {
+   "e": "defaultAccountState",
+   "s": {
+    "accountState": "initialized"
+   }
+  },
+  {
+   "e": "pausableConfig",
+   "s": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "paused": false
+   }
+  },
+  {
+   "e": "confidentialTransferMint"
+  },
+  {
+   "e": "transferHook",
+   "s": {
+    "authority": "2cVYpagTt7ZGc3mmTXBa7fAznUtx5DUu6aCq8uVDaf4a",
+    "programId": null
+   }
+  },
+  {
+   "e": "scaledUiAmountConfig",
+   "s": {
+    "authority": "GstZxcNV2U1nZAiPQLw1nA263xyfhKJMEMJp6spo7yqc",
+    "multiplier": "1",
+    "newMultiplier": "1",
+    "newMultiplierEffectiveTimestamp": 0
+   }
+  },
+  {
+   "e": "tokenMetadata"
+  }
+ ]
+}

@@ -1,0 +1,75 @@
+{
+  "pick": {
+    "name": "Trillby the Chirping Cat",
+    "ticker": "TRILLBY",
+    "description": "Trillby, a small cream-and-ginger cat with a pink nose, chirps back whenever anyone speaks and follows every chat from bench to flower bed. A cat coin priced in VIDAx. Not affiliated with Vida Global or StonkFun. No intrinsic value; not financial advice.",
+    "look": "A small, round-faced cream-and-ginger house cat with a pink nose and soft ginger patches on its back and tail, head tilted and mouth open in a friendly chirp. It wears nothing.",
+    "basis": "No real cat link found. The look comes from the asset theme: voice and chat conversations (vida.io, re-opened 2026-09-25), shown as a talkative cat that chirps back. No headset, chat-bubble branding, sound-wave logo or company character."
+  },
+  "check": {
+    "name": "Trillby the Chirping Cat",
+    "ticker": "TRILLBY",
+    "lengths": {
+      "name": 24,
+      "ticker": 7,
+      "description": 254,
+      "body": 139
+    },
+    "tickerFormat": true,
+    "disclosureExactAtEnd": true,
+    "jupiter": {
+      "results": 2,
+      "symbolMatches": [],
+      "verifiedSymbolMatch": false,
+      "resultSymbols": [
+        "WALLABY",
+        "WALLABY"
+      ]
+    },
+    "verifiedIndexSymbolHit": null,
+    "existingCatTicker": false,
+    "containsVIDA": false,
+    "checkProposal": {
+      "ok": true,
+      "violations": []
+    },
+    "displaySafe": {
+      "ok": true,
+      "violations": []
+    },
+    "checkFieldsFullDescription": {
+      "ok": false,
+      "violations": [
+        {
+          "rule": "brand",
+          "term": "stonkfun",
+          "field": "description"
+        },
+        {
+          "rule": "endorsement",
+          "term": "affiliated",
+          "field": "description"
+        },
+        {
+          "rule": "financial_promise",
+          "term": "financial advice",
+          "field": "description"
+        }
+      ]
+    },
+    "checkFieldsLook": {
+      "ok": true,
+      "violations": []
+    },
+    "checkTermsStock": {
+      "ok": true,
+      "violations": []
+    },
+    "stockCatRefusals": [
+      {
+        "clause": "pair_terms_missing",
+        "message": "pair_terms_missing: VIDAx has no research row yet (its people, mascots and brands, sourced), so no stock cat may be paired with it"
+      }
+    ]
+  }
+}

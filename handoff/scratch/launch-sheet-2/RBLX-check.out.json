@@ -1,0 +1,672 @@
+{
+ "disclosureOnly": {
+  "ok": false,
+  "violations": [
+   {
+    "rule": "brand",
+    "term": "roblox",
+    "field": "description"
+   },
+   {
+    "rule": "endorsement",
+    "term": "affiliated",
+    "field": "description"
+   },
+   {
+    "rule": "financial_promise",
+    "term": "financial advice",
+    "field": "description"
+   }
+  ]
+ },
+ "results": [
+  {
+   "name": "Tartan the Yellow-Tie Cat",
+   "ticker": "TARTAN",
+   "nameLen": 25,
+   "blurbLen": 136,
+   "descLen": 278,
+   "tickerHasRblxRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "roblox",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Tartan, a sleek jet-black cat with round",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "TARTAN",
+     "name": "The Tartan Army",
+     "id": "BmyY9jdDhEMuRZ2cA7tdFzFEovKdGkiaVnEr2tyxpump"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "Tartan Army",
+     "id": "BSsD7o8pm8pdUm4VfAsrrH5Z9qfKJDbkW8mAVb1Fpump"
+    },
+    {
+     "symbol": "Tartan",
+     "name": "Tartan army",
+     "id": "HFPyMEqVAUXm943GkMA5fiELHrMs8D9RGVVZ1gUJpump"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "The Tartan Army",
+     "id": "2UBimvqctBpvrCHfnwGAuaPqz8VvG1woAYv4eGVZpump"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "The Tartan Army",
+     "id": "4tsjjW8bpavg9RQw3GcSnSXzms4BCdrr7FmUJBULo6xU"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "The Tartan Army",
+     "id": "3TKNZW2uQfrMtFnRMpman3hPtDjpP8N7i71zYr8LJdoJ"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "The Tartan Army",
+     "id": "FEWibbgz8b3a3ywWZVBUdKWfVWip8KCi9YgRfRXYpump"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "The Tartan Army",
+     "id": "B9zdpE1iRBHY4Kw6a1K4yqJ4G6CB2dAF2PBgB9b9wrbz"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "Tartan Army",
+     "id": "24RFCEYGmVTz1TSKV85xK8tW4bi9P2LrpqpRnxMDpu7t"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "Tartan Army",
+     "id": "Hfr456Qj57t4YEjAGbB2U7y1NGARd3BUAKhRtJf5pump"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "Tartan Army",
+     "id": "4wqDcBcn9X4e9SQ4AjEy7CFojbYMy3CgQf2ayawYpump"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "Tartan Army",
+     "id": "CC3pT4MGS7znhp3mfQr4vhZVd5VxmF1pMgbGHYFVpump"
+    },
+    {
+     "symbol": "TARTAN",
+     "name": "Tartan Army",
+     "id": "2B648aVZrVaiU1YqxzBM4rWcUsWdKB74dtvBkPQxpump"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Tartan, a sleek jet-black cat with round lemon-yellow eyes, wears a yellow plaid necktie and sits up straight on the sunny garden bench. A cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Inkwell the Black Necktie Cat",
+   "ticker": "INKWELL",
+   "nameLen": 29,
+   "blurbLen": 137,
+   "descLen": 279,
+   "tickerHasRblxRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "roblox",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Inkwell, a slim glossy-black shorthair w",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 11,
+   "jupSymbolMatches": [
+    {
+     "symbol": "Inkwell",
+     "name": "Inkwell RPG",
+     "id": "4oehieiEE9wvFkBkVaVrV6dJhNaWZu3TadqTG3ggpump"
+    },
+    {
+     "symbol": "INKWELL",
+     "name": "Inkwell Terminal",
+     "id": "E3Uk3nq1bH6mhbbmWGR2hJeVVcqNwEbhnkCVcSEApump"
+    },
+    {
+     "symbol": "INKWELL",
+     "name": "Inkwell Terminal",
+     "id": "E1d8t5qG9zWsmL2wstSJdedGWPKwRTBzkmzmfPrmpump"
+    },
+    {
+     "symbol": "INKWELL",
+     "name": "Inkwell Terminal💎",
+     "id": "BrKfAnDEAK9XoEVBbcn87uac2Cb96FLQzpV1iEtaAXXz"
+    },
+    {
+     "symbol": "INKWELL",
+     "name": "Inkwell Terminal",
+     "id": "HNNfpCgCLM4BFvNTYJRNeURRtrcAt9RwyZ1pzH3viWj6"
+    },
+    {
+     "symbol": "INKWELL",
+     "name": "Inkwell Terminal",
+     "id": "HW9yvi3YGQd7SM8oYqkvKQCRikSWrLF3eb3NB2K5NXHm"
+    },
+    {
+     "symbol": "INKWELL",
+     "name": "Inkwell Terminal",
+     "id": "J6hAYakDweeCRfA6NBhpsVwK2E3SyCvyNgVTDdJe4TZr"
+    },
+    {
+     "symbol": "INKWELL",
+     "name": "Inkwell Terminal",
+     "id": "73N3gYMCXEVg1XDwnYSWaWPzE8X2dySUXwy3wiJimBYs"
+    },
+    {
+     "symbol": "INKWELL",
+     "name": "Inkwell Terminal",
+     "id": "Bcv7GDcsiM6m9ZtSWvHLSa23GoMUykDFeDpHcwdmzeKF"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "Inkwell, a slim glossy-black shorthair with bright yellow eyes, a yellow collar and a plaid tie, keeps a calm watch over the garden gate. A cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "Mustard the Black Cat",
+   "ticker": "MUSTIE",
+   "nameLen": 21,
+   "blurbLen": 136,
+   "descLen": 278,
+   "tickerHasRblxRoot": false,
+   "checkProposal": {
+    "ok": true,
+    "violations": []
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "roblox",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "Mustard, a small black cat with golden e",
+      "field": "tagline"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "Mustard, a small black cat with golden eyes, naps in the warm grass by the pond with his yellow plaid tie tugged loose after a long day. A cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "x",
+   "ticker": "TARTANPAW",
+   "nameLen": 1,
+   "blurbLen": 27,
+   "descLen": 169,
+   "tickerHasRblxRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "name_format",
+      "term": "x",
+      "field": "name"
+     },
+     {
+      "rule": "not_cat",
+      "term": "x",
+      "field": "name"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "roblox",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "name_format",
+      "term": "x",
+      "field": "name"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "alt ticker probe only here. A cat coin p",
+      "field": "tagline"
+     },
+     {
+      "rule": "not_cat",
+      "term": "x",
+      "field": "name"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "alt ticker probe only here. A cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "x",
+   "ticker": "MUSTARD",
+   "nameLen": 1,
+   "blurbLen": 27,
+   "descLen": 169,
+   "tickerHasRblxRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "name_format",
+      "term": "x",
+      "field": "name"
+     },
+     {
+      "rule": "not_cat",
+      "term": "x",
+      "field": "name"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "roblox",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "name_format",
+      "term": "x",
+      "field": "name"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "alt ticker probe only here. A cat coin p",
+      "field": "tagline"
+     },
+     {
+      "rule": "not_cat",
+      "term": "x",
+      "field": "name"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "Mustard",
+     "name": "MUSTAAAAAARD",
+     "isVerified": true,
+     "id": "22Xeo6diWfJrScaoVFzgkwzrCByPukK45fdwkJyrpump"
+    },
+    {
+     "symbol": "mustard",
+     "name": "ELON MUSTARD",
+     "id": "3NAeMZ2rjgX4LiAh1HHxWiX5LbZSdUHnEjH3N5U1pump"
+    },
+    {
+     "symbol": "MUSTARD",
+     "name": "Mustard",
+     "id": "G9MPAQJJGTqLcH4Pkhd2vwwmi3pdsR4jUpy3ogh8AFHD"
+    },
+    {
+     "symbol": "Mustard",
+     "name": "Mustard",
+     "id": "6kDXsmDBA726WT9rA1ucMcRj1NTtEAaKoffjN55fpump"
+    },
+    {
+     "symbol": "MUSTARD",
+     "name": "Elon Mustard",
+     "id": "EB5gJTQLBwQ66s77fDRsK8ktMcvTmyqYoJYDGKA1pump"
+    },
+    {
+     "symbol": "mustard",
+     "name": "mustard",
+     "id": "7CbjB8qTV9bjjx39ciQFTLHoNLzoPw91qSdcVQvwpump"
+    },
+    {
+     "symbol": "MUSTARD",
+     "name": "Colonel Mustard",
+     "id": "6wpJP1UweRKLCr1KUjvLKhEmriGKCyeTPb3atfiNgj8"
+    },
+    {
+     "symbol": "MUSTARD",
+     "name": "MUSTAAAAAARD",
+     "id": "2n2XmddqPn8WehQ1x63DVfcJo5vmnM5g3LsakeE6pump"
+    },
+    {
+     "symbol": "Mustard",
+     "name": "Colonel Mustard",
+     "id": "F5MyECAEG3YGepJhaP3TUywCh851ATrJEJU563uPpump"
+    }
+   ],
+   "jupVerifiedMatch": true,
+   "description": "alt ticker probe only here. A cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "x",
+   "ticker": "KNOTTY",
+   "nameLen": 1,
+   "blurbLen": 27,
+   "descLen": 169,
+   "tickerHasRblxRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "name_format",
+      "term": "x",
+      "field": "name"
+     },
+     {
+      "rule": "not_cat",
+      "term": "x",
+      "field": "name"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "roblox",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "name_format",
+      "term": "x",
+      "field": "name"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "alt ticker probe only here. A cat coin p",
+      "field": "tagline"
+     },
+     {
+      "rule": "not_cat",
+      "term": "x",
+      "field": "name"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 20,
+   "jupSymbolMatches": [
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "C16DJQGGPy48ZPQe1ERe7Gh21XRrTDsuX1BSwV7GGyTC"
+    },
+    {
+     "symbol": "Knotty",
+     "name": "Interlocking-knot Companion",
+     "id": "2te2iz3UrZwWnADcGn84nkVSMxoLRzqnZRdA6S7upump"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "Knotty",
+     "id": "3QAADBAWCkLEhT97HaPbKpb9kUAAfJd5XQyk2QGWpump"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "Knotty ",
+     "id": "2qaJSnGhjoC2aRTnX2VVJ2mvvvCrLqF2xmR9Z4dGpump"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "Knotty",
+     "id": "CwPrhuCVvgKyfKgfMy6UxHfBN5ApDR1LqD9YUhvKvNP1"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "6UPC3fH92dhpv1hSi6r3pJdQZpc6ipRiKQUThWPu4Fji"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "C74SGSVnedLGCEbjhCqkcj8FVu8k15ZBNwAQBjfT6dhz"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "8Y7SEz2kXmYYEacNZbJEnAKBJQzddqGftVizocytCwDs"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "HuLm4fyC9bQ2zDdHShr2FbvXkgNHFuHvaGxuSGjhYqHU"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "F2sxWUN7LxTgdCmGCD7KxUwMmgFXT64xtTKVrTBVqwh7"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "6zHQkSjCzmQMGaZ7GYkE5raiEmdRCcSA7Vaz85o9Wsuw"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "8GXgLBrsVhZrTvNb6FHCn8SMUARuZ23XXtEAyWH1nPfA"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "HjaUwbwnU4uP6sQGcgdSisv21tP3utuR1L6ktgThquiQ"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "8ZvSN7CiEbPBtXAEWeAPEN7YzYUHq298Hv6UPtHFaecb"
+    },
+    {
+     "symbol": "KNOTTY",
+     "name": "KNOTTY",
+     "id": "HAENhDTQNZVCNEXozsjj8CtRnVYU91w6Jof276PQo5Ee"
+    }
+   ],
+   "jupVerifiedMatch": false,
+   "description": "alt ticker probe only here. A cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  },
+  {
+   "name": "x",
+   "ticker": "INKPAW",
+   "nameLen": 1,
+   "blurbLen": 27,
+   "descLen": 169,
+   "tickerHasRblxRoot": false,
+   "checkProposal": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "name_format",
+      "term": "x",
+      "field": "name"
+     },
+     {
+      "rule": "not_cat",
+      "term": "x",
+      "field": "name"
+     }
+    ]
+   },
+   "checkProposal_fullDescription": {
+    "ok": false,
+    "violations": [
+     {
+      "rule": "brand",
+      "term": "roblox",
+      "field": "tagline"
+     },
+     {
+      "rule": "endorsement",
+      "term": "affiliated",
+      "field": "tagline"
+     },
+     {
+      "rule": "financial_promise",
+      "term": "financial advice",
+      "field": "tagline"
+     },
+     {
+      "rule": "name_format",
+      "term": "x",
+      "field": "name"
+     },
+     {
+      "rule": "tagline_format",
+      "term": "alt ticker probe only here. A cat coin p",
+      "field": "tagline"
+     },
+     {
+      "rule": "not_cat",
+      "term": "x",
+      "field": "name"
+     }
+    ]
+   },
+   "checkTerms_stock": {
+    "ok": true,
+    "violations": []
+   },
+   "memeBanned": false,
+   "jupStatus": 200,
+   "jupResults": 0,
+   "jupSymbolMatches": [],
+   "jupVerifiedMatch": false,
+   "description": "alt ticker probe only here. A cat coin priced in RBLX. Not affiliated with Roblox Corporation, Backpack Securities or StonkFun. No intrinsic value; not financial advice."
+  }
+ ]
+}
