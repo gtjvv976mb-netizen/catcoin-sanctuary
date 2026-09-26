@@ -10,8 +10,10 @@ import { createPanels } from "./panels.js";
 
 const $ = (id) => document.getElementById(id);
 const canvas = $("world");
-const reduce = matchMedia("(prefers-reduced-motion: reduce)");
 const params = new URLSearchParams(location.search);
+// The garden is always alive (owner's choice): many phones turn on "reduce motion" with battery saver,
+// which froze every cat. A visitor who needs stillness can open the page with ?still.
+const reduce = { matches: params.has("still"), addEventListener() {} };
 const debug = params.has("debug");
 const live = $("announce");
 const say = (text) => { live.textContent = ""; setTimeout(() => { live.textContent = text; }, 30); };
