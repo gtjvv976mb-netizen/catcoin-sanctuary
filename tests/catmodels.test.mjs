@@ -16,7 +16,8 @@ const OK_EXT = new Set(["KHR_mesh_quantization", "KHR_texture_transform"]);
 const index = JSON.parse(fs.readFileSync(path.join(DIR, "index.json"), "utf8"));
 const planned = new Set(JSON.parse(fs.readFileSync(path.join(ROOT, "data/planned.json"), "utf8")).cats.map((c) => c.ticker));
 const famous = JSON.parse(fs.readFileSync(path.join(ROOT, "data/famous.json"), "utf8")).coins.map((c) => ({ ...c, kind: "famous", ticker: c.symbol }));
-const residents = [...[...planned].map((id) => ({ id, kind: "stock" })), ...famous];
+const adoptable = JSON.parse(fs.readFileSync(path.join(ROOT, "data/adoptables.json"), "utf8")).cats.map((c) => ({ id: c.ticker, kind: "adoptable" }));
+const residents = [...[...planned].map((id) => ({ id, kind: "stock" })), ...adoptable, ...famous];
 const fileOf = (key, d) => (typeof d.file === "string" ? d.file : key);
 
 function readGlb(buf) {
@@ -33,10 +34,10 @@ function readGlb(buf) {
   return { json, bin };
 }
 
-test("cat models: index lists only planned cats and famous coins, with sane dimensions", () => {
+test("cat models: index lists only planned cats, adoptable cats and famous coins, with sane dimensions", () => {
   assert.ok(Object.keys(index.cats).length > 0);
   for (const [t, d] of Object.entries(index.cats)) {
-    assert.ok(modelIdFor(t, residents), `${t} is a planned cat or a famous coin`);
+    assert.ok(modelIdFor(t, residents), `${t} is a planned cat, an adoptable cat or a famous coin`);
     assert.equal(d.height, 1, `${t} is normalized to 1 unit tall`);
     assert.ok(d.len > d.width && d.len < 2.5, `${t} stands lengthwise along +X (len ${d.len}, width ${d.width})`);
   }

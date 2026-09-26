@@ -169,7 +169,7 @@ test("rules: every research row and planned cat is checked field by field", () =
   assert.equal(validatePlanned({ cats: [] }).refused[0].clause, "shape");
 });
 
-test("the shipped data/planned.json: valid, one research row per stock pair, every cat with its 512 px portrait", () => {
+test("the shipped data/planned.json: valid, one research row per stock pair, every cat with its 512 px portrait (adoptable cats' portraits too)", () => {
   assert.equal(fs.readFileSync(path.join(ROOT, "data/planned.json"), "utf8"), serialize(PLANNED));
   const v = validatePlanned(PLANNED, { nowMs: Date.now() });
   assert.deepEqual(v.refused, []);
@@ -183,7 +183,13 @@ test("the shipped data/planned.json: valid, one research row per stock pair, eve
     if (c.coatFrom === "look") assert.deepEqual(c.coat, coatFromLook(c.look), c.ticker);
   }
   const portraits = fs.readdirSync(path.join(ROOT, "assets/portraits")).sort();
-  assert.deepEqual(portraits, PLANNED.cats.map((c) => `${c.ticker}.jpg`).sort(), "no portrait without a cat");
+  const ADOPT = JSON.parse(fs.readFileSync(path.join(ROOT, "data/adoptables.json"), "utf8")).cats;
+  for (const c of ADOPT.filter((a) => a.portrait)) {
+    const bytes = fs.readFileSync(path.join(ROOT, c.portrait));
+    assert.deepEqual(jpegInfo(bytes), { width: 512, height: 512, metadata: false }, c.ticker);
+  }
+  const owned = [...PLANNED.cats, ...ADOPT.filter((a) => a.portrait)].map((c) => `${c.ticker}.jpg`).sort();
+  assert.deepEqual(portraits, owned, "no portrait without a cat (planned or adoptable)");
 });
 
 test("the shipped data/planned.json is up to date with the research in data/cats-info.json (else run scripts/build-planned.mjs)", () => {

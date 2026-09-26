@@ -197,9 +197,10 @@ def build(ticker, job, exe, yaw):
         raw.with_suffix(".job").write_text(job.get("model_job", ""))
     info = {}
     # Per-job overrides for dense sources (Hunyuan3D v3 gives ~500k faces): "si"/"si_lo" simplify
-    # ratios, "tex"/"tex_lo" texture sizes; HD models get the larger full-size budget.
-    si_hi = [] if not job.get("si") else ["-si", str(job["si"])]
-    si_lo = ["-si", str(job.get("si_lo", 0.25))]
+    # ratios, "tex"/"tex_lo" texture sizes, "sa_lo" aggressive simplification (-sa) for a far copy
+    # that gltfpack cannot otherwise bring under budget; HD models get the larger full-size budget.
+    si_hi = ([] if not job.get("si") else ["-si", str(job["si"])]) + (["-sa"] if job.get("sa") else [])
+    si_lo = ["-si", str(job.get("si_lo", 0.25))] + (["-sa"] if job.get("sa_lo") else [])
     hi_budget = BUDGET_HD if job.get("hd") else BUDGET_HI
     for tag, tex, extra, budget in (("", job.get("tex", 1024), si_hi, hi_budget), ("-lo", job.get("tex_lo", 512), si_lo, BUDGET_HD_LO if job.get("hd") else BUDGET_LO)):
         js, binc = read_glb(raw.read_bytes())

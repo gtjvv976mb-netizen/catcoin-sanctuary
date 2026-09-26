@@ -76,3 +76,15 @@ front, left, back, right, default face count (~500k faces; 15 credits, a custom 
 which make-cat-models.py uses to simplify to ~20k faces with a 2K texture (budget 800 KB) and a far copy
 (budget 300 KB; gltfpack stops at ~6k triangles on Hunyuan's fragmented UV atlas, so most land at 140-200 KB).
 index.json marks these cats `hd: true`. What is left is in `scripts/cat-models.queue.json`.
+
+### 2026-09-26 (second run): realistic adoptables, lore pictures, queue
+
+- Adoptable cats: a realistic portrait made from the real cat's proof photo (cropped to the cat), a standing
+  reference made from that portrait, four views, Hunyuan3D v3. Characters the image model refuses by name
+  (Meowth, Sylvester) went through nano_banana_pro. Job entries carry `source: "adoptable ..."`.
+- Queue cats: the queue's old `ref_job`s belong to another Higgsfield account and cannot be used; each cat's
+  standing reference was remade from its site portrait (stock cats) or coin logo (famous coins).
+- Famous coins are keyed in index.json by their data/famous.json `id` (e.g. `cate-meme`), which
+  `modelIdFor` resolves.
+- Far copies gltfpack cannot bring under budget get `sa_lo: true` (aggressive simplification, `-sa`).
+- `--yaw 180` was needed for BENBUTTON, CHOUPETCAT and CROOKSHNK (long fluffy tails fooled the heading test).

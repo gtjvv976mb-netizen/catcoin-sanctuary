@@ -52,6 +52,16 @@ export function silhouetteFor(r, cls = "card-portrait card-silhouette") {
   return f;
 }
 
+/** The picture of the moment that made a cat famous, with its caption. */
+export function loreFigure(r) {
+  const fig = el("figure", "card-lore-pic");
+  const img = el("img", "card-lore-img");
+  img.src = r.lore.image; img.alt = r.lore.caption; img.width = 1200; img.height = 800; img.loading = "lazy"; img.decoding = "async";
+  img.addEventListener("error", () => fig.remove(), { once: true });
+  fig.append(img, el("figcaption", "card-lore-caption", r.lore.caption));
+  return fig;
+}
+
 /** A little drawn cat face in the cat's coat colour (used when there is no portrait). */
 export function faceFor(r, cls = "face") {
   const f = el("span", cls);
@@ -367,6 +377,7 @@ export function createCard({ root, onClose, onInset }) {
     own.append(el("span", "card-real-kicker", "Owner"), " ", el("b", null, r.owner));
     who.append(own);
     if (r.description) who.append(el("p", "card-story", r.description));
+    if (r.lore) who.append(loreFigure(r));
     if (r.tribute) who.append(el("p", "card-tribute", r.tribute));
     body.append(who);
 
@@ -461,6 +472,7 @@ export function createCard({ root, onClose, onInset }) {
     /* 1. Who the cat is: its own story, then the stock's real cat as the research found it. */
     const who = section("Who the cat is", "card-who");
     if (r.description) who.append(el("p", "card-story", r.description));
+    if (r.lore) who.append(loreFigure(r));
     // A cat drawn to look like a company's cat says so plainly, right under its story.
     if (r.tribute) who.append(el("p", "card-tribute", r.tribute));
     const real = el("div", "card-real");

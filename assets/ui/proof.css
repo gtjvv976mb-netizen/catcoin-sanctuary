@@ -2,24 +2,22 @@
    Only card-specific rules; colours come from the site's tokens when they exist. */
 .proof {
   --proof-bg: #ffffff;
-  --proof-ink: #0f1419;
-  --proof-soft: #536471;
-  --proof-line: #cfd9de;
-  --proof-accent: #1d9bf0;
+  --proof-ink: #3d1834;
+  --proof-soft: #6e4f63;
+  --proof-line: #efd9bb;
+  --proof-accent: #a2500c;
   margin: 8px 0 0;
   padding: 12px 14px;
-  border: 1px solid var(--proof-line);
-  border-radius: 16px;
+  border: 0;
+  box-shadow: inset 0 0 0 2px var(--proof-line), 0 3px 0 var(--proof-line);
+  border-radius: 18px;
   background: var(--proof-bg);
   color: var(--proof-ink);
   font-size: 0.94rem;
   line-height: 1.4;
   overflow: hidden;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .proof { --proof-bg: #16181c; --proof-ink: #e7e9ea; --proof-soft: #8b98a5; --proof-line: #2f3336; }
-}
-:root[data-theme="dark"] .proof { --proof-bg: #16181c; --proof-ink: #e7e9ea; --proof-soft: #8b98a5; --proof-line: #2f3336; }
+/* The site is light only (color-scheme: light), so the proof keeps the card's warm palette. */
 .proof-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .proof-avatar {
   flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%;
@@ -56,12 +54,13 @@ a.proof-handle:hover, a.proof-handle:focus-visible { color: var(--proof-accent);
   font-weight: 700; font-size: 0.95rem; text-decoration: none; text-align: center;
 }
 .proof-web .proof-link { background: var(--proof-accent); color: #ffffff; }
+.proof-link { box-shadow: 0 3px 0 rgba(61, 24, 52, .3); }
 .proof-link:hover, .proof-link:focus-visible { opacity: 0.88; text-decoration: underline; }
 .proof-link:focus-visible { outline: 2px solid var(--proof-accent); outline-offset: 2px; }
 .proof-note { margin: 8px 0 0; color: var(--proof-soft); font-size: 0.84rem; }
 
 /* Adoptable cats (assets/ui/card.js adoptableBody). */
-.adopt-chip { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: .02em; background: #efe6ff; color: #4b2f86; }
+.adopt-chip { display: inline-block; padding: 2px 9px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px currentColor; font-size: 0.72rem; font-weight: 700; letter-spacing: .02em; background: #efe6ff; color: #4b2f86; }
 .adopt-celebrity { background: #ffe7ef; color: #8a1f4a; }
 .adopt-tv-movie { background: #e5efff; color: #1f4a8a; }
 .adopt-company { background: #e6f5ea; color: #1f6a3a; }
@@ -69,7 +68,8 @@ a.proof-handle:hover, a.proof-handle:focus-visible { color: var(--proof-accent);
 .adopt-crypto { background: #efe6ff; color: #4b2f86; }
 .adopt-owner { margin: 0 0 6px; }
 .adopt-memorial { margin: 0 0 8px; font-style: italic; color: var(--ink-soft, #6a5f73); }
-.adopt-cta { margin: 0; font-weight: 700; }
+.adopt-cta { display: flex; align-items: center; justify-content: center; min-height: 44px; margin: 0; padding: 10px 16px; border-radius: 999px; font-weight: 800;
+  background: repeating-linear-gradient(115deg, #fff3dc 0 11px, #fde6c2 11px 17px); color: #3d1834; box-shadow: inset 0 0 0 2px #3d1834; text-align: center; }
 .adopt-coin { margin: 6px 0 0; font-size: 0.86rem; color: var(--ink-soft, #6a5f73); }
 .adopt-sources { margin-top: 4px; }
 .card-silhouette { display: inline-block; width: 112px; height: 112px; border-radius: 14px; overflow: hidden; flex: none; }

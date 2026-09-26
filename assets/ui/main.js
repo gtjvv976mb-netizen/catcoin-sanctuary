@@ -18,17 +18,68 @@ const debug = params.has("debug");
 const live = $("announce");
 const say = (text) => { live.textContent = ""; setTimeout(() => { live.textContent = text; }, 30); };
 
+/* ── The loading screen: a paw-print bar driven by what has really loaded, and rotating tips ── */
+
+const TIPS = [
+  "Tip: press F in the garden to find any cat by name.",
+  "A little gold coin over a cat's head means it has launched on Solana.",
+  "The Hall of Fame is out by the fountain: famous cat coins, here as inspiration.",
+  "Every card shows the post or page that proves the cat's lore.",
+  "Drag to look around, scroll or pinch to zoom, and click a cat to meet it.",
+  "$CATSANC is the sanctuary's own coin. Only an address on our own socials is ours.",
+  "Adoptable cats are not tokens until they launch. Nothing here is financial advice.",
+];
+const loader = (() => {
+  const box = $("loading"), bar = $("loading-bar"), fill = $("loading-fill"), walker = $("loading-walker"), text = $("loading-text"), tip = $("loading-tip");
+  let shown = 0, t = 0, timer = 0, fade = 0;
+  const setTip = () => {
+    tip.classList.add("is-out");
+    clearTimeout(fade);
+    fade = setTimeout(() => { t = (t + 1) % TIPS.length; tip.textContent = TIPS[t]; tip.classList.remove("is-out"); }, 260);
+  };
+  const start = () => { clearInterval(timer); timer = setInterval(setTip, 3600); };
+  start();
+  return {
+    /** Move the bar forward (never back) to p percent, with an optional line of what is happening. */
+    set(p, msg) {
+      shown = Math.max(shown, Math.min(100, p));
+      fill.style.transform = `scaleX(${(shown / 100).toFixed(3)})`;
+      walker.style.left = `${shown.toFixed(1)}%`;
+      bar.setAttribute("aria-valuenow", String(Math.round(shown)));
+      if (msg && text.textContent !== msg) text.textContent = msg;
+    },
+    done() {
+      this.set(100, "Welcome to the sanctuary!");
+      clearInterval(timer);
+      box.setAttribute("aria-busy", "false");
+      box.classList.add("is-done");
+      setTimeout(() => { if (box.classList.contains("is-done")) box.hidden = true; }, 700);
+    },
+    show(msg) {
+      box.hidden = false;
+      box.classList.remove("is-done");
+      box.setAttribute("aria-busy", "true");
+      text.textContent = msg;
+      start();
+    },
+    hide() { clearInterval(timer); box.hidden = true; },
+  };
+})();
+loader.set(4, "The cats are waking up…");
+
 /* ── The cats ─────────────────────────────────────────────────────────── */
 
 let residents = [];
 let loadError = null;
 try { residents = await getResidents(); } catch (e) { loadError = e; console.warn("Could not read the residents", e); }
+loader.set(12, "Counting whiskers…");
 const byId = new Map(residents.map((r) => [r.id, r]));
 const launched = residents.filter(isLaunched).length;
 $("count").textContent = residents.length ? String(residents.length) : "";
 const famousN = residents.filter(isFamous).length;
 $("find").setAttribute("aria-label", `Find a cat: ${residents.length} cats, ${launched} launched${famousN ? `, ${famousN} in the Hall of Fame` : ""}`);
 $("legend-famous").hidden = famousN === 0;
+$("hall-open").hidden = famousN === 0;
 // The legend explains the gold coin only once there is one to see.
 $("legend-launched").hidden = launched === 0;
 
@@ -77,6 +128,7 @@ function hideCard() {
 
 const finder = createFinder({ root: $("finder"), residents, onChoose: (id) => show(id, { from: $("find") }) });
 $("find").addEventListener("click", () => finder.open());
+$("hall-open").addEventListener("click", () => finder.open({ filter: "hall" }));
 
 /* ── About and Socials (links from data/socials.json) ─────────────────── */
 const panels = createPanels({
@@ -132,7 +184,7 @@ function webglOk() {
 function fallback(message) {
   document.body.classList.add("no-webgl");
   canvas.hidden = true;
-  $("loading").hidden = true;
+  loader.hide();
   hint.hidden = true;
   const main = $("fallback");
   main.hidden = false;
@@ -146,6 +198,7 @@ function fallback(message) {
   if (legend) { main.append(legend); const t = legend.querySelector("#legend-launched .legend-text"); if (t) t.textContent = "a token on Solana"; }
   createFinder({ root: list, residents, inline: true, onChoose: (id) => show(id) });
   $("find").hidden = true;
+  $("hall-open").hidden = true;
 }
 
 if (loadError || !residents.length) {
@@ -154,6 +207,13 @@ if (loadError || !residents.length) {
   fallback("This browser can't draw the 3D garden, so here is every cat as a list. Choose one to see its card.");
 } else {
   try {
+    // Every model and texture the world loads goes through three.js's default loading manager,
+    // so its count of files is the bar's real progress.
+    const THREE = await import("three");
+    loader.set(20, "Planting the garden…");
+    const LINES = ["Planting the garden…", "Fluffing the cushions…", "Polishing the coins…", "Filling the fountain…", "Calling the cats in…"];
+    const mgr = THREE.DefaultLoadingManager;
+    mgr.onProgress = (url, loaded, total) => loader.set(20 + 75 * (loaded / Math.max(total, 1)), LINES[Math.min(LINES.length - 1, Math.floor((loaded / Math.max(total, 1)) * LINES.length))]);
     const { startWorld } = await import("../world/world.js");
     world = await startWorld({
       canvas, residents, reduce, debug, adaptive: !(debug && params.has("noadapt")), quality: params.get("q"),
@@ -181,10 +241,11 @@ if (loadError || !residents.length) {
         if (!pin.hidden) placeAt(pin, x, y);
       },
     });
+    mgr.onProgress = undefined;
     document.body.classList.add("ready");
-    $("loading").hidden = true;
-    canvas.addEventListener("world:lost", () => $("loading").hidden = false);
-    canvas.addEventListener("world:restored", () => $("loading").hidden = true);
+    loader.done();
+    canvas.addEventListener("world:lost", () => loader.show("Waking the garden up again…"));
+    canvas.addEventListener("world:restored", () => loader.done());
     if (debug) window.__world = world;
   } catch (e) {
     console.warn(e);

@@ -49,7 +49,7 @@
    not launched. Every text reaches the page as data; the page sets it with textContent. */
 
 import { validateCollection, validateWallets, validatePlanned, validateFamous, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
-import { validateAdoptables, adoptableCard } from "./ui/adoptables.js";
+import { validateAdoptables, adoptableCard, validateLore, lorePath } from "./ui/adoptables.js";
 
 const NO_RESEARCH = Object.freeze({
   company: "", realCat: { name: null, who: "", basis: "", linkType: "none", strength: "none", linked: false }, links: [], virality: [], checked: null, disclaimer: "",
@@ -166,6 +166,11 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
   const left = planned.refused.length + collection.refused.length;
   if (left && typeof console !== "undefined") console.warn(`${left} ${left === 1 ? "entry was" : "entries were"} left out`, planned.refused, collection.refused);
   const stock = mergeResidents({ planned, cats: collection.cats });
+  // The lore pictures (data/lore.json): optional. A stock cat with a caption there gets its picture.
+  try {
+    const lore = validateLore(await getJson(fetchImpl, new URL("data/lore.json", base)));
+    for (const r of stock) if (!r.lore && lore[r.id]) r.lore = { image: lorePath(r.id), caption: lore[r.id] };
+  } catch (e) { if (typeof console !== "undefined") console.warn("The lore pictures could not be read", e); }
   // The famous cat coins: optional. A missing or unreadable file leaves the stock cats as they are.
   let famous = [];
   try {

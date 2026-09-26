@@ -61,7 +61,7 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     b.type = "button";
     b.dataset.key = key;
     b.setAttribute("aria-pressed", String(key === filter));
-    b.addEventListener("click", () => { filter = key; for (const c of chips.children) c.setAttribute("aria-pressed", String(c.dataset.key === key)); draw(); });
+    b.addEventListener("click", () => setFilter(key));
     return b;
   };
   chips.append(chipFor("all", "All"), chipFor("adoptable", "Adoptable cats"));
@@ -105,6 +105,12 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     return { r, li, hay: [r.name, r.ticker, r.stock, r.company, r.realCatName, r.pair.symbol, r.catName, r.owner, r.category, isFamous(r) ? `${r.chain} ${chainName(r.chain)} ${r.contract}` : "solana"].join(" ").toLowerCase() };
   });
 
+  function setFilter(key) {
+    filter = key;
+    for (const c of chips.children) c.setAttribute("aria-pressed", String(c.dataset.key === key));
+    draw();
+  }
+
   function draw() {
     const q = input.value.trim().toLowerCase().replace(/^\$/, "");
     let n = 0;
@@ -138,7 +144,9 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
   draw();
 
   return {
-    open() {
+    /** Open the list; `filter` picks a chip first (e.g. "hall" for the Hall of Fame). */
+    open({ filter: key } = {}) {
+      if (key && [...chips.children].some((c) => c.dataset.key === key)) setFilter(key);
       if (inline) return;
       if (!root.open) root.showModal();
       input.focus();

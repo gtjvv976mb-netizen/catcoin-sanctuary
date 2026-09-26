@@ -11,7 +11,9 @@
        sources: [{ label, url }],
        existingCoin: { symbol, contract, mcapUsd } | null,
        memorial: boolean, tribute, sensitivity, portrait: "assets/portraits/<TICKER>.jpg" | null,
-       portraitStatus: "ready" | "pending", confidence: "high" | "medium" } */
+       portraitStatus: "ready" | "pending", confidence: "high" | "medium",
+       lore: { image: "assets/lore/<TICKER>.webp", caption } | null (optional: the picture of the moment
+       that made the cat famous, shown on its card with the caption) } */
 
 export const ADOPTABLE_CATEGORIES = Object.freeze(["celebrity", "tv-movie", "company", "viral", "crypto"]);
 export const CATEGORY_LABELS = Object.freeze({ celebrity: "Celebrity cat", "tv-movie": "TV & movie cat", company: "Company cat", viral: "Viral cat", crypto: "Crypto cat" });
@@ -24,7 +26,7 @@ const ID = /^[a-z0-9][a-z0-9-]{1,40}$/;
 const B58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const X_STATUS = /^https:\/\/(x|twitter)\.com\/([A-Za-z0-9_]{1,15})\/status\/\d{5,25}$/;
-const FIELDS = ["id", "ticker", "name", "coinName", "owner", "category", "story", "look", "coat", "pair", "proof", "sources", "existingCoin", "memorial", "tribute", "sensitivity", "portrait", "portraitStatus", "confidence"];
+const FIELDS = ["id", "ticker", "name", "coinName", "owner", "category", "story", "look", "coat", "pair", "proof", "sources", "existingCoin", "memorial", "tribute", "sensitivity", "portrait", "portraitStatus", "confidence", "lore"];
 const COAT_KEYS = ["base", "second", "pattern", "eyes"];
 /* Words that must never reach a card: price talk and promises. */
 const PRICE_TALK = /\b(moon|100x|1000x|guaranteed|price target|pump it|to the moon|financial advice(?! ))\b/i;
@@ -41,6 +43,27 @@ export function existingCoinLine(c) {
   if (!c) return null;
   const size = c.mcapUsd > 0 ? `~$${c.mcapUsd >= 1_000_000 ? `${(c.mcapUsd / 1_000_000).toFixed(1)}M` : `${Math.max(1, Math.round(c.mcapUsd / 1000))}k`}` : "no live market";
   return `A small coin already exists: $${c.symbol}, ${size} — not affiliated.`;
+}
+
+/** Where a cat's lore picture lives. */
+export const lorePath = (ticker) => `assets/lore/${ticker}.webp`;
+
+/** What is wrong with a cat's lore picture ({ image, caption }, null or absent is fine), or null. */
+export function loreProblem(lore, ticker) {
+  if (lore === undefined || lore === null) return null;
+  if (!isObj(lore) || Object.keys(lore).some((k) => k !== "image" && k !== "caption")) return "lore must be { image, caption } or null";
+  if (lore.image !== lorePath(ticker)) return `lore image must be ${lorePath(ticker)}`;
+  if (!text(lore.caption, 10, 200)) return "lore caption must be 10 to 200 characters";
+  if (PRICE_TALK.test(lore.caption)) return "lore caption talks about price";
+  return null;
+}
+
+/** data/lore.json ({ note, cats: { TICKER: caption } }) as { TICKER: caption }, keeping only good rows. */
+export function validateLore(data) {
+  const out = {};
+  if (!isObj(data) || !isObj(data.cats)) return out;
+  for (const [t, cap] of Object.entries(data.cats)) if (TICKER.test(t) && loreProblem({ image: lorePath(t), caption: cap }, t) === null) out[t] = cap;
+  return out;
 }
 
 /** What is wrong with one adoptable cat, or null. */
@@ -75,6 +98,8 @@ export function adoptableProblem(c) {
   if (!text(c.sensitivity, 0, 300)) return "sensitivity must be a short note";
   if (c.portraitStatus === "ready" ? c.portrait !== `assets/portraits/${c.ticker}.jpg` : !(c.portraitStatus === "pending" && c.portrait === null)) return "portrait must be assets/portraits/<TICKER>.jpg when ready, null when pending";
   if (!["high", "medium"].includes(c.confidence)) return "confidence must be high or medium";
+  const lp = loreProblem(c.lore, c.ticker);
+  if (lp) return lp;
   return null;
 }
 

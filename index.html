@@ -10,21 +10,24 @@
 <meta name="theme-color" content="#8fc6ef">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Catcoin Sanctuary">
-<meta property="og:title" content="Catcoin Sanctuary">
-<meta property="og:description" content="A sunny 3D garden full of cats, each paired with a stock. Click a cat to meet it.">
+<meta property="og:title" content="Catcoin Sanctuary — Where all catcoins live">
+<meta property="og:description" content="A sunny 3D garden where all catcoins live: adoptable cats paired with stocks, and the Hall of Fame of famous cat coins. Home of $CATSANC.">
 <meta property="og:url" content="https://catcoinsanctuary.com/">
 <meta property="og:image" content="https://catcoinsanctuary.com/assets/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Cats playing in a bright, sunny 3D garden around a cottage with cat-ear gables, under a blue sky with clouds and birds.">
+<meta property="og:image:alt" content="The Catcoin Sanctuary logo, cat-eared cream and orange tabby lettering, with the tagline Where all catcoins live and an orange tabby cat in a purple hoodie in front of a cottage at sunset.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Catcoin Sanctuary">
-<meta name="twitter:description" content="A sunny 3D garden full of cats, each paired with a stock. Click a cat to meet it.">
+<meta name="twitter:site" content="@catcosanctuary">
+<meta name="twitter:title" content="Catcoin Sanctuary — Where all catcoins live">
+<meta name="twitter:description" content="A sunny 3D garden where all catcoins live: adoptable cats paired with stocks, and the Hall of Fame of famous cat coins. Home of $CATSANC.">
 <meta name="twitter:image" content="https://catcoinsanctuary.com/assets/og-image.jpg">
-<meta name="twitter:image:alt" content="Cats playing in a bright, sunny 3D garden around a cottage with cat-ear gables, under a blue sky with clouds and birds.">
+<meta name="twitter:image:alt" content="The Catcoin Sanctuary logo, cat-eared cream and orange tabby lettering, with the tagline Where all catcoins live and an orange tabby cat in a purple hoodie in front of a cottage at sunset.">
 <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/brand/wordmark-480.webp" as="image" type="image/webp" imagesrcset="assets/brand/wordmark-240.webp 240w, assets/brand/wordmark-480.webp 480w, assets/brand/wordmark-960.webp 960w" imagesizes="(max-width: 640px) 78vw, 440px">
+<link rel="preload" href="assets/brand/loading-scene.webp" as="image" type="image/webp">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/gluten-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -36,14 +39,31 @@
 <body>
 <canvas id="world" tabindex="0" aria-label="The Catcoin Sanctuary garden in 3D. Drag or use the arrow keys to look around, scroll or plus and minus to zoom, click a cat to open its card. Press F or use Find a cat to choose one from a list." aria-describedby="hint"></canvas>
 
-<div class="loading" id="loading" role="status">
-  <p class="loading-mark">Catcoin <span>Sanctuary</span></p>
-  <p class="loading-text">The cats are waking up…</p>
+<div class="loading" id="loading" aria-busy="true">
+  <img class="loading-scene" src="assets/brand/loading-scene.webp" width="1344" height="576" alt="" fetchpriority="high">
+  <div class="loading-inner">
+    <img class="loading-mark" src="assets/brand/wordmark-480.webp" srcset="assets/brand/wordmark-240.webp 240w, assets/brand/wordmark-480.webp 480w, assets/brand/wordmark-960.webp 960w" sizes="(max-width: 640px) 78vw, 440px" width="480" height="267" alt="Catcoin Sanctuary">
+    <p class="loading-tagline">Where all catcoins live</p>
+    <div class="loading-bar" id="loading-bar" role="progressbar" aria-label="Loading the garden" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <span class="loading-fill" id="loading-fill"></span><span class="loading-walker" id="loading-walker" aria-hidden="true"></span>
+    </div>
+    <p class="loading-text" id="loading-text" role="status">The cats are waking up…</p>
+    <p class="loading-tip" id="loading-tip">Tip: press F in the garden to find any cat by name.</p>
+  </div>
 </div>
 
 <header class="bar">
-  <a class="mark" href="./">Catcoin <span>Sanctuary</span></a>
+  <a class="mark" href="./"><img class="mark-img" src="assets/brand/wordmark-240.webp" srcset="assets/brand/wordmark-240.webp 240w, assets/brand/wordmark-480.webp 480w, assets/brand/wordmark-960.webp 960w" sizes="(max-width: 460px) 84px, 124px" width="240" height="134" alt="Catcoin Sanctuary, home" decoding="async"></a>
   <nav class="bar-right" aria-label="Site">
+  <button class="find" id="find" type="button" aria-haspopup="dialog">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <span class="find-label">Find a cat</span>
+    <span class="find-count" id="count"></span>
+  </button>
+  <button class="pill" id="hall-open" type="button" aria-haspopup="dialog" aria-label="Hall of Fame" hidden>
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M12 13v4M8.5 20h7M10 17h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="pill-label">Hall of Fame</span>
+  </button>
   <button class="pill" id="about-open" type="button" aria-haspopup="dialog" aria-label="About the sanctuary">
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.4" fill="currentColor"/></svg>
     <span class="pill-label">About</span>
@@ -52,14 +72,10 @@
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>
     <span class="pill-label">Socials</span>
   </button>
-  <button class="find" id="find" type="button" aria-haspopup="dialog">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-    <span class="find-label">Find a cat</span>
-    <span class="find-count" id="count"></span>
-  </button>
   </nav>
 </header>
 
+<div class="dock">
 <aside class="legend" aria-label="What the badges mean">
   <p id="legend-launched" hidden><span class="badge badge-launched">Launched</span> <span class="legend-text">a token on Solana · gold coin overhead</span></p>
   <p><span class="badge badge-planned">Not launched yet</span> <span class="legend-text">adoptable, not a token yet</span></p>
@@ -67,6 +83,7 @@
 </aside>
 
 <p class="hint" id="hint">Drag to look around · scroll to zoom · click a cat</p>
+</div>
 <div class="tag" id="tag" hidden></div>
 <div class="tag tag-pin" id="pin" hidden aria-hidden="true"></div>
 

@@ -199,7 +199,10 @@ test("the head: title, description, canonical address, sharing picture, icons", 
   assert.match(INDEX, /<title>Catcoin Sanctuary<\/title>/);
   assert.ok((meta("name", "description") ?? "").length >= 50);
   assert.match(INDEX, /<link rel="canonical" href="https:\/\/catcoinsanctuary\.com\/">/);
-  assert.equal(meta("property", "og:title"), "Catcoin Sanctuary");
+  assert.equal(meta("property", "og:title"), "Catcoin Sanctuary — Where all catcoins live");
+  assert.equal(meta("name", "twitter:title"), "Catcoin Sanctuary — Where all catcoins live");
+  assert.equal(meta("name", "twitter:site"), "@catcosanctuary");
+  assert.match(meta("property", "og:description") ?? "", /\$CATSANC/);
   assert.equal(meta("property", "og:url"), SITE);
   assert.equal(meta("property", "og:image"), `${SITE}assets/og-image.jpg`);
   assert.equal(meta("name", "twitter:card"), "summary_large_image");
@@ -212,6 +215,22 @@ test("the head: title, description, canonical address, sharing picture, icons", 
   const ico = fs.readFileSync(path.join(ROOT, "favicon.ico"));
   assert.deepEqual([ico.readUInt16LE(0), ico.readUInt16LE(2)], [0, 1], "favicon.ico is an icon file");
   assert.match(read("assets/icons/favicon.svg"), /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
+  // The brand: the cat-lettering wordmark in the header and on the loading screen, with the tagline.
+  assert.match(INDEX, /<a class="mark" href="\.\/"><img class="mark-img" src="assets\/brand\/wordmark-240\.webp"[^>]* alt="Catcoin Sanctuary, home"/);
+  assert.match(INDEX, /<img class="loading-mark" src="assets\/brand\/wordmark-480\.webp"[^>]* alt="Catcoin Sanctuary"/);
+  assert.match(INDEX, /<p class="loading-tagline">Where all catcoins live<\/p>/);
+  // The loading screen: the dusk scene, a real progress bar (driven by main.js) and a live status line.
+  assert.match(INDEX, /<img class="loading-scene" src="assets\/brand\/loading-scene\.webp"[^>]* alt=""[^>]*>/);
+  assert.match(INDEX, /<div class="loading-bar" id="loading-bar" role="progressbar" aria-label="Loading the garden" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">/);
+  assert.match(INDEX, /<p class="loading-text" id="loading-text" role="status">/);
+  assert.ok(size("assets/brand/loading-scene.webp") < 150_000, "the loading scene is too heavy");
+  const main = read("assets/ui/main.js");
+  assert.match(main, /DefaultLoadingManager/, "the bar follows three.js's real loading progress");
+  // The top bar: Find a cat, Hall of Fame, About, Socials, each a real button with a name.
+  for (const [id, name] of [["find", null], ["hall-open", "Hall of Fame"], ["about-open", "About the sanctuary"], ["socials-open", "Socials"]]) {
+    assert.match(INDEX, new RegExp(`<button class="(find|pill)" id="${id}" type="button" aria-haspopup="dialog"${name ? ` aria-label="${name}"` : ""}`), id);
+  }
+  for (const w of [240, 480, 960]) assert.ok(size(`assets/brand/wordmark-${w}.webp`) < 120_000, `wordmark-${w}.webp is too heavy`);
 });
 
 test("page weight: the first view stays within budget", () => {
@@ -302,6 +321,13 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
     assert.equal(b.querySelector("span.find-meta").textContent.includes(`$${r.ticker}`), r.token.status === "launched" || r.kind === "famous", b.dataset.id);
   }
   assert.match(root.querySelector("p.finder-intro").textContent, /adoptable cats so far, each with real, verified lore and no coin yet/);
+  // The top bar's Hall of Fame button opens the list on its chip: only the famous coins show.
+  const hallRoot = new Element("div");
+  const hallFinder = createFinder({ root: hallRoot, residents: list, inline: true, onChoose() {} });
+  hallFinder.open({ filter: "hall" });
+  const shown = hallRoot.querySelectorAll("li").filter((li) => !li.hidden).map((li) => list.find((x) => x.id === li.querySelector("button.find-item").dataset.id));
+  assert.ok(shown.length > 0 && shown.every((r) => r.kind === "famous"), "the Hall of Fame filter shows only famous coins");
+  assert.equal(hallRoot.querySelectorAll("button.chip").find((c) => c.dataset.key === "hall").getAttribute("aria-pressed"), "true");
 });
 
 test("a cat drawn like a company's cat says so: its whyLook's company cat comes with the fan-tribute line on its card, and held cats ship no portrait", async () => {
@@ -522,7 +548,29 @@ test("adoptable cats: each card shows its category chip, owner, story, X proof, 
     assert.equal(/In loving memory/.test(c.text), a.memorial, `${a.ticker}: memorial line`);
     if (a.existingCoin) assert.match(c.text, new RegExp(`A small coin already exists: \\$${a.existingCoin.symbol}`));
     if (!a.portrait) assert.ok(c.root.querySelector(".card-silhouette"), `${a.ticker}: placeholder silhouette`);
+    const fig = c.root.querySelector("figure.card-lore-pic");
+    if (a.lore) {
+      assert.ok(fig, `${a.ticker}: lore picture`);
+      assert.equal(fig.querySelector("img.card-lore-img").getAttribute("src") ?? fig.querySelector("img.card-lore-img").src, a.lore.image);
+      assert.equal(fig.querySelector("figcaption").textContent, a.lore.caption);
+    } else assert.equal(fig, null, `${a.ticker}: no lore picture`);
     assert.deepEqual(c.buy, []);
     assert.ok(!c.links.some((l) => TOKEN_HOSTS.test(l.href)), `${a.ticker}: no token links`);
+  }
+});
+
+test("lore pictures: every stock cat with a caption in data/lore.json shows its picture and caption on its card, and no other stock cat shows one", async () => {
+  const list = await residents();
+  const LORE = JSON.parse(read("data/lore.json")).cats;
+  const stock = list.filter((r) => r.kind !== "famous" && r.kind !== "adoptable");
+  assert.ok(stock.some((r) => LORE[r.id]), "some stock cats have lore pictures");
+  for (const r of stock) {
+    const c = renderCard(r);
+    const fig = c.root.querySelector("figure.card-lore-pic");
+    if (LORE[r.id]) {
+      assert.ok(fig, `${r.id}: lore picture`);
+      assert.equal(fig.querySelector("img.card-lore-img").src, `assets/lore/${r.id}.webp`);
+      assert.equal(fig.querySelector("figcaption").textContent, LORE[r.id]);
+    } else assert.equal(fig, null, `${r.id}: no lore picture`);
   }
 });

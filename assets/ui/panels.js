@@ -65,6 +65,14 @@ function icon(kind, cls) {
   return s;
 }
 
+/** How a link's address reads under its label: the @handle for X, otherwise the host. */
+function socialHost(l) {
+  const u = new URL(l.url);
+  const handle = u.pathname.split("/")[1];
+  if (l.id === "x" && /^[A-Za-z0-9_]{1,15}$/.test(handle || "")) return `@${handle}`;
+  return u.hostname.replace(/^www\./, "");
+}
+
 function shell(root, titleText, id) {
   root.replaceChildren();
   root.setAttribute("aria-labelledby", id);
@@ -101,8 +109,13 @@ export function createPanels({ about, socials, config = null, onDisclaimers }) {
   /* ── About ── */
   {
     const body = shell(about, "About", "about-title");
+    const logo = el("img", "panel-logo");
+    logo.setAttribute("src", "assets/brand/wordmark-480.webp");
+    logo.setAttribute("width", "480"); logo.setAttribute("height", "267");
+    logo.setAttribute("alt", "Catcoin Sanctuary");
     body.append(
-      el("p", "panel-lead", "A home for adoptable cats."),
+      logo,
+      el("p", "panel-lead", `Where all catcoins live. A home for adoptable cats, and of ${ticker}.`),
       el("p", null, "The sanctuary researches companies, personalities, shows, movies and crypto projects for cats with real, verified lore (X posts and sources) that have no coin yet, or only a tiny one under $50k. Those cats move into the garden, and you can adopt one and launch its coin on StonkFun."),
       el("p", null, "Walk round the cottage and click a cat: its card tells you who it is, its lore and the posts and pages behind it. An adoptable cat becomes a real token only when it is launched on StonkFun and the hourly check finds that launch on Solana. Then a little gold coin turns over its head."),
       el("p", null, "Out by the fountain is the Hall of Fame: legendary cat coins that already exist, made by others. They are not adoptable; they are there as inspiration."),
@@ -133,7 +146,7 @@ export function createPanels({ about, socials, config = null, onDisclaimers }) {
       a.target = "_blank";
       a.rel = "noopener noreferrer";
       const text = el("span", "social-text");
-      text.append(el("span", "social-label", l.label), el("span", "social-host", new URL(l.url).hostname.replace(/^www\./, "")));
+      text.append(el("span", "social-label", l.label), el("span", "social-host", socialHost(l)));
       a.append(icon(l.id, "social-icon"), text);
       li.append(a);
       list.append(li);

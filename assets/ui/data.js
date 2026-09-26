@@ -35,6 +35,13 @@ export function httpsUrl(v) {
 }
 
 /** A picture on this site: a relative path under assets/, no scheme, no "..". */
+/** A cat's lore picture ({ image, caption }): a local picture with a short caption, or null. */
+export function loreOf(v) {
+  if (!v || typeof v !== "object") return null;
+  const image = localPicture(v.image), caption = str(v.caption, 200);
+  return image && caption ? { image, caption } : null;
+}
+
 export function localPicture(v) {
   if (typeof v !== "string") return null;
   const s = v.trim().replace(/^\.\//, "").replace(/^\//, "");
@@ -142,6 +149,7 @@ function normalizeNew(e) {
     tribute: str(e.tribute, 200),
     proof: normalizeProof(e.proof),
     portrait: localPicture(e.portrait),
+    lore: loreOf(e.lore),
     coat: { base: str(coatIn.base, 40), second: str(coatIn.second, 40), pattern: str(coatIn.pattern, 40), eyes: str(coatIn.eyes, 40) },
     who, virality, links, token, buy,
     example: false,

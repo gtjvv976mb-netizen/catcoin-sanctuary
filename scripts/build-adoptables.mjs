@@ -11,13 +11,14 @@
  * settled ("verify with photos"). Every cat is checked by assets/ui/adoptables.js; a bad cat stops
  * the run. A ticker already used by a planned cat stops the run too. A cat's portrait is
  * assets/portraits/<TICKER>.jpg when that file exists; otherwise it is "pending" and the card draws
- * a silhouette in the cat's coat colours. New cats are recorded in data/announced.json as "held"
+ * a silhouette in the cat's coat colours. Its lore picture is assets/lore/<TICKER>.webp with the caption
+ * from data/lore.json, when both exist; otherwise lore is null. New cats are recorded in data/announced.json as "held"
  * (no auto-posting yet); an existing record is never changed.
  */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { validateAdoptables, tributeLine, STONK_PAIR } from "../assets/ui/adoptables.js";
+import { validateAdoptables, tributeLine, STONK_PAIR, lorePath } from "../assets/ui/adoptables.js";
 import { STOCK_PAIRS } from "../assets/collection.js";
 import { coatFromLook } from "./lib/coat.mjs";
 
@@ -44,7 +45,12 @@ function pairOf(r) {
 }
 
 /** One research row as a data/adoptables.json cat. */
-export function adoptableFrom(r, { root }) {
+/** The lore captions (data/lore.json: { cats: { TICKER: caption } }), or {}. */
+export function loreCaptions(root) {
+  try { return JSON.parse(fs.readFileSync(path.join(root, "data/lore.json"), "utf8")).cats ?? {}; } catch { return {}; }
+}
+
+export function adoptableFrom(r, { root, captions = loreCaptions(root) }) {
   const x = (r.proof?.x ?? [])[0];
   if (!x) throw new AdoptablesError(`${r.id}: no verified X post`);
   const ticker = TICKER_OVERRIDES[r.id] ?? r.suggestedTicker;
@@ -77,6 +83,7 @@ export function adoptableFrom(r, { root }) {
     portrait: hasPortrait ? `assets/portraits/${ticker}.jpg` : null,
     portraitStatus: hasPortrait ? "ready" : "pending",
     confidence: r.confidence,
+    lore: fs.existsSync(path.join(root, lorePath(ticker))) && captions[ticker] ? { image: lorePath(ticker), caption: String(captions[ticker]).trim() } : null,
   };
 }
 
@@ -85,10 +92,11 @@ export function buildAdoptables({ root, source, top = 25, checked = new Date().t
   try { rows = JSON.parse(fs.readFileSync(source, "utf8")); } catch { throw new AdoptablesError(`${source} is not readable JSON`); }
   if (!Array.isArray(rows)) throw new AdoptablesError(`${source} is not a list`);
   const picked = [];
+  const captions = loreCaptions(root);
   for (const r of rows) {
     if (picked.length >= top) break;
     if (!usable(r)) { log(`${r?.id}: skipped (${r?.confidence === "low" ? "low confidence" : "look not settled"}).`); continue; }
-    picked.push(adoptableFrom(r, { root }));
+    picked.push(adoptableFrom(r, { root, captions }));
   }
   const planned = JSON.parse(fs.readFileSync(path.join(root, "data/planned.json"), "utf8"));
   const taken = new Set(planned.cats.map((c) => c.ticker));

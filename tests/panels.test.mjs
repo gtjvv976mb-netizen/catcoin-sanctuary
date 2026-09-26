@@ -65,6 +65,10 @@ test("the About and Socials panels: modal dialogs with a title, a close button a
     assert.ok(about.open, "About opens as a modal dialog");
     assert.equal(about.getAttribute("aria-labelledby"), "about-title");
     assert.match(about.textContent, /A home for adoptable cats/);
+    assert.match(about.textContent, /Where all catcoins live/);
+    const logo = about.querySelector("img.panel-logo");
+    assert.equal(logo?.getAttribute("src"), "assets/brand/wordmark-480.webp", "About opens with the logo");
+    assert.equal(logo.getAttribute("alt"), "Catcoin Sanctuary");
     assert.match(about.textContent, /companies, personalities, shows, movies and crypto projects/);
     assert.match(about.textContent, /real, verified lore \(X posts and sources\)/);
     assert.match(about.textContent, /under \$50k/);
