@@ -25,7 +25,7 @@ const research = (mint) => PLANNED.stocks.find((s) => s.pair.mint === mint);
 
 /** The real GMEx launch as the builder writes it, with its symbol set to a planned cat's ticker. */
 const GME = Object.freeze({
-  mint: "EcB7LMNFXdSbzY4DQ6Uc9AKXmb9DCKqAeoNmLvNp3HvL", name: "Save Point the Tabby", symbol: "SAVEPAWS",
+  mint: "EcB7LMNFXdSbzY4DQ6Uc9AKXmb9DCKqAeoNmLvNp3HvL", name: "Roaring Kitty", symbol: "SAVEPAWS",
   pair: { symbol: "GMEx", mint: GMEX.mint }, pool: "2un6cyq4X2fMdgevvUSpcueiX1ER2CxRjsPxNMNkHcFz",
   payer: GME_LAUNCHER, tx: GME_LAUNCH, time: "2026-09-24T20:57:15Z",
 });
@@ -150,7 +150,7 @@ test("ticker case aside; a second launch of the same planned cat shows as a toke
   assert.equal(r.slice(2).every((c) => c.token.status === "planned"), true);
   const renamed = await load(files([{ ...GME, name: "Save Point" }]));
   assert.equal(renamed[0].name, "Save Point");
-  assert.equal(renamed[0].plannedName, "Save Point the Tabby");
+  assert.equal(renamed[0].plannedName, "Roaring Kitty");
 });
 
 test("buy links appear exactly when a cat is launched, and always name its own mint", async () => {
