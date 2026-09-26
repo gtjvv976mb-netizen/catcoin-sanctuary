@@ -5,7 +5,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { ROOT } from "./helpers.mjs";
-import { listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT } from "../scripts/announce.mjs";
+import { listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft } from "../scripts/announce.mjs";
 import { oauthHeader } from "../scripts/lib/x-api.mjs";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
@@ -13,11 +13,12 @@ const PLANNED = read("data/planned.json");
 const CATS = listCats(PLANNED);
 const CREDS = { X_API_KEY: "k", X_API_SECRET: "s", X_ACCESS_TOKEN: "t", X_ACCESS_SECRET: "a" };
 
-function sandbox({ announced = { cats: {} }, config = {}, planned = PLANNED } = {}) {
+function sandbox({ announced = { cats: {} }, config = {}, planned = PLANNED, queue = null } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "announce-"));
   fs.mkdirSync(path.join(dir, "data"));
   const w = (f, v) => fs.writeFileSync(path.join(dir, "data", f), JSON.stringify(v));
   w("planned.json", planned); w("collection.json", { cats: [] }); w("announced.json", announced); w("announce-config.json", config);
+  if (queue) w("release-queue.json", queue);
   return { dir, read: (f) => JSON.parse(fs.readFileSync(path.join(dir, "data", f), "utf8")) };
 }
 /** A fake X: records every request, answers each post with a new id. */
@@ -157,7 +158,7 @@ test("OAuth 1.0a header is well formed and deterministic for a fixed nonce and t
   assert.match(h, /oauth_signature_method="HMAC-SHA1"/);
 });
 
-test("announce workflow: pinned actions, push on planned.json + every 2 h, contents: write only, X secrets only in the posting step", () => {
+test("announce workflow: pinned actions, push on planned.json + every 20 min, contents: write only, X secrets only in the posting step", () => {
   const W = fs.readFileSync(path.join(ROOT, ".github/workflows/announce.yml"), "utf8");
   const uses = [...W.matchAll(/uses:\s*(\S+)\s*#\s*(\S+)/g)].map((m) => `${m[1]} ${m[2]}`);
   assert.deepEqual(uses, ["actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 v7.0.1", "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 v7.0.0"]);
@@ -172,5 +173,103 @@ test("announce workflow: pinned actions, push on planned.json + every 2 h, conte
   assert.equal(withSecrets.length, 1);
   assert.match(withSecrets[0], /node scripts\/announce\.mjs/);
   assert.deepEqual([...new Set([...W.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))].sort(), ["X_ACCESS_SECRET", "X_ACCESS_TOKEN", "X_API_KEY", "X_API_SECRET"]);
-  assert.match(W, /git add -- data\/announced\.json data\/announce-queue\.json/);
+  assert.match(W, /git add -- data\/announced\.json data\/announce-queue\.json data\/release-queue\.json data\/releases\.json/);
+  assert.match(W, /- data\/release-queue\.json/);
+});
+
+/* ── Releases: after the initial roster, one approved, ready cat an hour; X first, then the site ── */
+function releaseSandbox({ queueKeys, announced, fail = false } = {}) {
+  const cats = PLANNED.cats.filter((c) => c.proof?.url).slice(0, 4);
+  const planned = { ...PLANNED, cats };
+  const state = { cats: Object.fromEntries(cats.map((c) => [c.ticker, { status: "posted", ids: ["1"] }])) };
+  for (const k of queueKeys) delete state.cats[k];
+  Object.assign(state.cats, announced || {});
+  const s = sandbox({ planned, announced: state, config: { dryRun: false, perRun: 1, thread: false }, queue: { lastReleaseAt: null, cats: queueKeys.map((key) => ({ key, approved: true })) } });
+  fs.mkdirSync(path.join(s.dir, "assets/portraits"), { recursive: true });
+  fs.mkdirSync(path.join(s.dir, "assets/kits"), { recursive: true });
+  for (const c of cats) fs.writeFileSync(path.join(s.dir, c.portrait), Buffer.from([0xff, 0xd8, 0xff]));
+  fs.writeFileSync(path.join(s.dir, "assets/kits/kits.json"), JSON.stringify({ cats: Object.fromEntries(cats.map((c) => [c.ticker, { token: `assets/kits/${c.ticker}/token.png` }])) }));
+  return { ...s, cats };
+}
+
+test("release queue: queued cats are never posted as roster cats, and hold the roster open only if not queued", () => {
+  const state = { cats: {} };
+  const queued = new Set(CATS.map((c) => c.key));
+  assert.equal(pick(CATS, state, { perRun: 3 }, queued).length, 0);
+  assert.equal(rosterLeft(CATS, state, queued), 0);
+  assert.ok(rosterLeft(CATS, state) > 0);
+});
+
+test("release: roster empty -> the first approved, ready cat is posted on X, then released with its tweet id; one an hour", async () => {
+  const [, , a, b] = PLANNED.cats.filter((c) => c.proof?.url).slice(0, 4).map((c) => c.ticker);
+  const s = releaseSandbox({ queueKeys: [a, b] });
+  let t = Date.parse("2026-10-01T10:00:00Z");
+  const now = () => new Date(t);
+  const x = fakeX();
+  const r = await run({ root: s.dir, env: CREDS, fetchImpl: x, now, ...quiet });
+  assert.equal(r.released, a);
+  const q = s.read("release-queue.json");
+  assert.equal(q.cats[0].status, "released");
+  assert.equal(q.cats[0].tweet, r.posted[0].ids[0]);
+  assert.equal(q.lastReleaseAt, "2026-10-01T10:00:00.000Z");
+  const rel = s.read("releases.json");
+  assert.deepEqual(rel.hidden, [b]);
+  assert.equal(rel.released[0].key, a);
+  // 20 minutes later: too soon.
+  t += 20 * 60_000;
+  const r2 = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), now, ...quiet });
+  assert.equal(r2.posted.length, 0);
+  // An hour after the first: the next one.
+  t += 40 * 60_000;
+  const r3 = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), now, ...quiet });
+  assert.equal(r3.released, b);
+  assert.deepEqual(s.read("releases.json").hidden, []);
+});
+
+test("release: if X refuses, the cat is not released on the site and is tried again next run", async () => {
+  const k = PLANNED.cats.filter((c) => c.proof?.url)[3].ticker;
+  const s = releaseSandbox({ queueKeys: [k] });
+  const r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX({ fail: (u) => (u.endsWith("/2/tweets") ? 503 : null) }), ...quiet });
+  assert.deepEqual(r.failed, [k]);
+  assert.equal(s.read("release-queue.json").cats[0].status, undefined);
+  assert.deepEqual(s.read("releases.json").hidden, [k]);
+  const r2 = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
+  assert.equal(r2.released, k);
+});
+
+test("release: not while the roster lasts; held, unapproved or incomplete cats wait; no secrets means no release", async () => {
+  const keys = PLANNED.cats.filter((c) => c.proof?.url).slice(0, 4).map((c) => c.ticker);
+  // A backlog cat left: that goes first, the queue waits.
+  let s = releaseSandbox({ queueKeys: [keys[3]], announced: { [keys[0]]: { status: "backlog" } } });
+  let r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
+  assert.deepEqual(r.posted.map((p) => p.key), [keys[0]]);
+  assert.equal(r.released, undefined);
+  // Held stays held.
+  s = releaseSandbox({ queueKeys: [keys[3]], announced: { [keys[3]]: { status: "held" } } });
+  r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
+  assert.equal(r.posted.length, 0);
+  // Missing kit: not ready.
+  s = releaseSandbox({ queueKeys: [keys[3]] });
+  fs.writeFileSync(path.join(s.dir, "assets/kits/kits.json"), JSON.stringify({ cats: {} }));
+  assert.deepEqual(readiness(s.cats[3] && listCats({ ...PLANNED, cats: [s.cats[3]] })[0], { root: s.dir, kits: {} }), ["kit"]);
+  r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
+  assert.equal(r.posted.length, 0);
+  // Not approved.
+  s = releaseSandbox({ queueKeys: [keys[3]] });
+  const q = s.read("release-queue.json"); q.cats[0].approved = false; fs.writeFileSync(path.join(s.dir, "data/release-queue.json"), JSON.stringify(q));
+  r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
+  assert.equal(r.posted.length, 0);
+  // No X secrets: drafted, never released.
+  s = releaseSandbox({ queueKeys: [keys[3]] });
+  r = await run({ root: s.dir, env: {}, ...quiet });
+  assert.equal(r.released, undefined);
+  assert.deepEqual(s.read("releases.json").hidden, [keys[3]]);
+});
+
+test("the shipped release queue and releases file are well formed", () => {
+  const q = read("data/release-queue.json");
+  assert.ok(Array.isArray(q.cats));
+  for (const e of q.cats) assert.equal(typeof e.key, "string");
+  const rel = read("data/releases.json");
+  assert.ok(Array.isArray(rel.hidden) && Array.isArray(rel.released));
 });

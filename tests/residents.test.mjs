@@ -1,6 +1,6 @@
 /* What the page receives from assets/residents.js: the planned cats and the launched tokens,
    merged; buy links only for a launched token; the famous cat coins after them (optional: a missing
-   data/famous.json leaves the stock cats as they are); nothing fetched but the four data files. */
+   data/famous.json leaves the stock cats as they are); nothing fetched but the data files; cats queued in data/release-queue.json and not released are hidden. */
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -78,7 +78,7 @@ test("no token yet: every planned cat, not launched, with no mint, no buy link a
     assert.equal(c.portrait, `assets/portraits/${c.id}.jpg`);
     assert.ok(c.stock && c.who && c.pair.mint, c.id);
   }
-  assert.deepEqual(asked.map((a) => a.url).sort(), [`${BASE}data/adoptables.json`, `${BASE}data/collection.json`, `${BASE}data/famous.json`, `${BASE}data/lore.json`, `${BASE}data/planned.json`, `${BASE}data/wallets.json`]);
+  assert.deepEqual(asked.map((a) => a.url).sort(), [`${BASE}data/adoptables.json`, `${BASE}data/collection.json`, `${BASE}data/famous.json`, `${BASE}data/lore.json`, `${BASE}data/planned.json`, `${BASE}data/release-queue.json`, `${BASE}data/wallets.json`]);
   assert.ok(asked.every((a) => a.init.credentials === "same-origin"));
 });
 
@@ -235,4 +235,13 @@ test("a famous coin file that is missing or broken leaves the stock cats as they
     assert.equal(r.length, PLANNED.cats.length);
     assert.ok(r.every((c) => c.kind !== "famous"));
   }
+});
+
+test("release queue: a queued cat is hidden until it is released; a released one shows", async () => {
+  const [a, b] = PLANNED.cats;
+  const f = { ...files(), "data/release-queue.json": { cats: [{ key: a.ticker, approved: true }, { key: b.ticker, approved: true, status: "released", releasedAt: "2026-09-26T12:00:00Z" }] } };
+  const r = await load(f);
+  assert.ok(!r.some((c) => c.id === a.ticker), "queued cat hidden");
+  assert.ok(r.some((c) => c.id === b.ticker), "released cat shown");
+  assert.equal(r.length, PLANNED.cats.length - 1);
 });

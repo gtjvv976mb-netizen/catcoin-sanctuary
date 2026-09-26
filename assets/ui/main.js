@@ -265,3 +265,24 @@ if (loadError || !residents.length) {
   const m = /^#cat=(.+)$/.exec(location.hash);
   if (m) { const id = decodeURIComponent(m[1]); if (byId.has(id)) show(id, { from: world ? canvas : null }); }
 }
+
+/* ── "New cat just moved in!": the newest released cat (data/releases.json), once per visitor ── */
+{
+  const { createNewCat } = await import("./newcat.js");
+  const goTo = (r, then) => {
+    if (byId.has(r.id)) { show(r.id); then?.(); return; }
+    // Released after this page loaded: reload so the garden has it, straight to its card.
+    location.hash = `#cat=${encodeURIComponent(r.id)}`;
+    location.reload();
+  };
+  const newcat = createNewCat({
+    root: $("newcat"),
+    lookup: async (key) => {
+      if (byId.has(key)) return byId.get(key);
+      try { const { loadResidents } = await import("../residents.js"); return (await loadResidents()).find((r) => r.id === key) || null; } catch { return null; }
+    },
+    onMeet: (r) => goTo(r),
+    onAdopt: (r) => goTo(r, () => card.adopt()),
+  });
+  if (!location.hash.startsWith("#cat=")) setTimeout(() => newcat.check(), 1200);
+}

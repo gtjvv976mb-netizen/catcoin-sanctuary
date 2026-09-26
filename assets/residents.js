@@ -185,7 +185,19 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
     if (a.refused.length && typeof console !== "undefined") console.warn(`${a.refused.length} adoptable cats were left out`, a.refused);
     adoptable = a.cats.map(adoptableCard);
   } catch (e) { if (typeof console !== "undefined") console.warn("The adoptable cats could not be read", e); }
-  return [...stock, ...adoptable, ...famous];
+  // The release queue (data/release-queue.json): a queued cat is hidden until the announcer has
+  // posted it on X and marked it released. Optional: a missing file hides nothing.
+  let hidden = new Set();
+  try {
+    const q = await getJson(fetchImpl, new URL("data/release-queue.json", base));
+    hidden = hiddenByQueue(q);
+  } catch { /* no queue */ }
+  return [...stock, ...adoptable, ...famous].filter((r) => !hidden.has(r.id) && !hidden.has(r.ticker));
+}
+
+/** The keys the site must not show yet: queued in data/release-queue.json and not released. */
+export function hiddenByQueue(q) {
+  return new Set((Array.isArray(q?.cats) ? q.cats : []).filter((e) => e && typeof e.key === "string" && e.status !== "released").map((e) => e.key));
 }
 
 /** A famous coin's card: its data/famous.json row, marked as famous. */

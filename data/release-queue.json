@@ -1,0 +1,5 @@
+{
+  "note": "New cats to release after the initial roster: one an hour, in this order. Add { \"key\": \"<TICKER>\", \"approved\": true, \"added\": \"<date>\" } once the cat is in data/planned.json or data/adoptables.json with a proof, a portrait and a kit (assets/kits/kits.json). A cat listed here is hidden on the site until scripts/announce.mjs has posted it on X and set status \"released\", releasedAt and tweet. approved: false keeps it waiting (and hidden). A cat held in data/announced.json stays held.",
+  "lastReleaseAt": null,
+  "cats": []
+}

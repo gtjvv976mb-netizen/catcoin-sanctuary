@@ -1,5 +1,7 @@
-# Announces new cats on X (@catcosanctuary): on a push to main that changes data/planned.json,
-# every 2 hours, and by hand. scripts/announce.mjs drafts each new cat's post, checks it against
+# Announces new cats on X (@catcosanctuary): on a push to main that changes data/planned.json or
+# data/release-queue.json, every 20 minutes, and by hand. While the initial roster lasts it posts
+# one cat a run; after that it releases one approved cat from data/release-queue.json an hour,
+# posting on X first and only then marking it released (data/releases.json) so the site shows it. scripts/announce.mjs drafts each new cat's post, checks it against
 # the content rules, and posts at most perRun cats a run, spacingMinutes apart
 # (data/announce-config.json). It starts with dryRun: true, which only writes the preview to
 # data/announce-queue.json.
@@ -17,6 +19,7 @@ on:
     branches: [main]
     paths:
       - data/planned.json
+      - data/release-queue.json
   schedule:
     - cron: "*/20 * * * *"
   workflow_dispatch:
@@ -54,7 +57,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add -- data/announced.json data/announce-queue.json data/intro-thread.json data/thread-*.json
+          git add -- data/announced.json data/announce-queue.json data/release-queue.json data/releases.json data/intro-thread.json data/thread-*.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git diff --cached --stat
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \

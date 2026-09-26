@@ -28,6 +28,16 @@
  * A cat is marked "posting" (and the file saved) before its first post goes out, and "posted"
  * with the post ids after; a cat in any state but "failed" is never picked again, so a crash
  * mid-post can cost an announcement but never double one.
+ *
+ * RELEASES (data/release-queue.json). While the initial roster lasts (any cat still "backlog",
+ * unrecorded or retryable), each run (every 20 minutes) posts from it as above. Once it is empty,
+ * the run releases one NEW cat an hour: the first entry of the release queue that the owner
+ * approved, that is not held, and that is ready (a proof, a portrait on disk and a launch kit in
+ * assets/kits/kits.json), if at least releaseEveryMinutes (default 60, less a few minutes of cron
+ * slack) have passed since lastReleaseAt. The cat is posted on X FIRST; only when the post
+ * succeeds is it marked released (releasedAt, tweet id) in the queue and in data/releases.json,
+ * which the site reads: a queued cat that is not released is hidden on the site. If X fails, the
+ * cat stays queued and is tried again next run.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -172,8 +182,10 @@ export function draft(cat, { thread = true } = {}) {
 
 export const intentLink = (text) => `https://x.com/intent/post?text=${encodeURIComponent(text)}`;
 
-/** Which cats this run takes: new ones first (in planned order), then retries, then the backlog. */
-export function pick(cats, state, config) {
+/** Which cats this run takes: new ones first (in planned order), then retries, then the backlog.
+ *  Cats in the release queue (`queued`, a Set of keys) are never taken here: they go out one an hour. */
+export function pick(cats, state, config, queued = new Set()) {
+  cats = cats.filter((c) => !queued.has(c.key));
   const perRun = Math.max(0, Math.floor(config.perRun ?? DEFAULT_CONFIG.perRun));
   const backlogPerRun = Math.min(2, Math.max(0, Math.floor(config.backlogPerRun ?? DEFAULT_CONFIG.backlogPerRun)));
   const s = (c) => state.cats[c.key];
@@ -181,6 +193,58 @@ export function pick(cats, state, config) {
   const retry = cats.filter((c) => s(c)?.status === "failed" && (s(c).attempts ?? 0) < MAX_ATTEMPTS);
   const backlog = config.announceBacklog ? cats.filter((c) => s(c)?.status === "backlog").slice(0, backlogPerRun) : [];
   return [...fresh, ...retry, ...backlog].slice(0, perRun);
+}
+
+export const RELEASE_SLACK_MINUTES = 5;
+
+/** Is a cat complete and ready to release: a proof, a portrait on disk, a launch kit? */
+export function readiness(cat, { root, kits = {} }) {
+  const missing = [];
+  if (!cat?.proof?.url) missing.push("proof");
+  const pic = cat?.portrait && path.join(root, cat.portrait);
+  const lore = cat && path.join(root, `assets/lore/${cat.key}.webp`);
+  if (!((pic && fs.existsSync(pic)) || (lore && fs.existsSync(lore)))) missing.push("portrait");
+  if (!kits[cat?.key]?.token) missing.push("kit");
+  return missing;
+}
+
+/** Is the initial roster still going: a cat in the backlog, unrecorded (and not queued) or retryable? */
+export function rosterLeft(cats, state, queued = new Set()) {
+  return cats.filter((c) => !queued.has(c.key)).filter((c) => {
+    const s = state.cats[c.key];
+    return !s || s.status === "backlog" || (s.status === "failed" && (s.attempts ?? 0) < MAX_ATTEMPTS);
+  }).length;
+}
+
+/** The next cat to release from the queue, or { cat: null, why }. */
+export function pickRelease(cats, state, queue, config, { root, kits, nowMs }) {
+  const every = Math.max(1, config.releaseEveryMinutes ?? 60);
+  if (queue.lastReleaseAt && nowMs - Date.parse(queue.lastReleaseAt) < (every - RELEASE_SLACK_MINUTES) * 60_000) return { cat: null, why: `last release ${queue.lastReleaseAt}; next after ${every} minutes` };
+  const byKey = new Map(cats.map((c) => [c.key, c]));
+  for (const q of queue.cats || []) {
+    if (q.status === "released" || q.approved !== true) continue;
+    const s = state.cats[q.key]?.status;
+    if (["held", "needs_review", "posting", "posted"].includes(s)) continue;
+    if (s === "failed" && (state.cats[q.key].attempts ?? 0) >= MAX_ATTEMPTS) continue;
+    const cat = byKey.get(q.key);
+    if (!cat) continue;
+    if (readiness(cat, { root, kits }).length) continue;
+    return { cat, entry: q };
+  }
+  return { cat: null, why: "no approved, ready cat in the release queue" };
+}
+
+/** data/releases.json: what the site reads (hidden: queued, not released; released: newest first). */
+export function releasesFile(queue, now) {
+  const released = (queue.cats || []).filter((q) => q.status === "released" && q.releasedAt)
+    .sort((a, b) => Date.parse(b.releasedAt) - Date.parse(a.releasedAt))
+    .map((q) => ({ key: q.key, name: q.name ?? null, releasedAt: q.releasedAt, tweet: q.tweet ?? null }));
+  return {
+    note: "Written by scripts/announce.mjs from data/release-queue.json. hidden: queued cats the site must not show yet. released: newest first.",
+    updated: now, lastReleaseAt: queue.lastReleaseAt ?? null,
+    hidden: (queue.cats || []).filter((q) => q.status !== "released").map((q) => q.key),
+    released: released.slice(0, 20),
+  };
 }
 
 export function readJson(file, fallback) {
@@ -216,8 +280,19 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
     } catch (e) { log(`::warning::Announce: X refused the keys when asked who they belong to (${e.message}). Check that all four secrets come from the same app and were regenerated consumer keys first, then access token.`); }
   }
 
-  const chosen = pick(cats, state, config);
-  log(`Announce: ${mode} mode; ${cats.filter((c) => !state.cats[c.key]).length} new, ${cats.filter((c) => state.cats[c.key]?.status === "backlog").length} in the backlog; taking ${chosen.length}.`);
+  const queue = readJson(data("release-queue.json"), { cats: [] });
+  queue.cats ||= [];
+  const queued = new Set(queue.cats.filter((q) => q.status !== "released").map((q) => q.key));
+  const kits = readJson(path.join(root, "assets/kits/kits.json"), { cats: {} }).cats || {};
+  let chosen = pick(cats, state, config, queued);
+  let release = null;
+  const left = rosterLeft(cats, state, queued);
+  if (!left) {
+    const r = pickRelease(cats, state, queue, config, { root, kits, nowMs: now().getTime() });
+    if (r.cat) { release = r.entry; chosen = [r.cat]; }
+    log(`Announce: the initial roster is done; hourly releases. ${r.cat ? `Releasing ${r.cat.key}.` : r.why}`);
+  }
+  log(`Announce: ${mode} mode; ${cats.filter((c) => !state.cats[c.key] && !queued.has(c.key)).length} new, ${cats.filter((c) => state.cats[c.key]?.status === "backlog").length} in the backlog, ${queued.size} in the release queue; taking ${chosen.length}.`);
 
   for (const [i, cat] of chosen.entries()) {
     const prev = state.cats[cat.key];
@@ -261,6 +336,14 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
         catch (e) { log(`::warning::${cat.key}: the proof reply did not post (${e.message}).`); }
       }
       summary.posted.push({ key: cat.key, ids });
+      // Only now, with the post out, does the cat launch on the site.
+      if (release && release.key === cat.key) {
+        Object.assign(release, { status: "released", name: cat.name, releasedAt: stamp(), tweet: ids[0] });
+        queue.lastReleaseAt = release.releasedAt;
+        writeJson(data("release-queue.json"), queue);
+        summary.released = cat.key;
+        log(`Released ${cat.key} on the site.`);
+      }
       log(`Posted ${cat.key}: https://x.com/catcosanctuary/status/${ids[0]}`);
     } catch (e) {
       if (ids.length) continue;                         // the first post is out: it stays "posted"
@@ -284,6 +367,9 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const newNote = mode === "post" ? old.note ?? note : note;
   if (newNote !== old.note || JSON.stringify(drafts) !== JSON.stringify(old.drafts ?? [])) writeJson(qFile, { note: newNote, updated: stamp(), drafts });
   if (mode !== "dryRun") saveState();
+  const rel = releasesFile(queue, stamp());
+  const oldRel = readJson(data("releases.json"), {});
+  if (JSON.stringify({ ...oldRel, updated: 0 }) !== JSON.stringify({ ...rel, updated: 0 })) writeJson(data("releases.json"), rel);
   log(`Announce: ${summary.posted.length} posted, ${summary.queued.length} queued, ${summary.held.length} held, ${summary.failed.length} failed.`);
   return summary;
 }
