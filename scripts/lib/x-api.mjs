@@ -33,7 +33,8 @@ export function oauthHeader(method, url, creds, { nonce = crypto.randomBytes(16)
 
 /** The four secrets from the environment, or null when any is missing. */
 export function credsFromEnv(env = process.env) {
-  const c = { apiKey: env.X_API_KEY, apiSecret: env.X_API_SECRET, accessToken: env.X_ACCESS_TOKEN, accessSecret: env.X_ACCESS_SECRET };
+  const t = (v) => (typeof v === "string" ? v.trim() : v); // a pasted secret often carries a stray space or newline
+  const c = { apiKey: t(env.X_API_KEY), apiSecret: t(env.X_API_SECRET), accessToken: t(env.X_ACCESS_TOKEN), accessSecret: t(env.X_ACCESS_SECRET) };
   return Object.values(c).every((v) => typeof v === "string" && v.trim()) ? c : null;
 }
 
