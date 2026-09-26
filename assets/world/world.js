@@ -3,8 +3,8 @@
    to a chosen cat. main.js loads this only when WebGL is available; the page's overlay lives in
    assets/ui/.
 
-   The world is built to a quality tier chosen from the device (tierFor: phones low or medium,
-   desktops high; ?q=low|medium|high overrides), which sets the grass density and reach, the
+   The world is built to a quality tier chosen from the device (tierFor: conservative — phones low or medium,
+   desktops medium unless the GPU is clearly strong; ?q=low|medium|high overrides), which sets the grass density and reach, the
    shadow map, the reflections and the finishing pass (post.js). The first view comes up with the
    ground, the garden, the trees and the cottage; the grass then grows in round the view a few
    chunks a frame, and the finishing pass arrives a moment later.
@@ -24,6 +24,7 @@ import { buildWater } from "./water.js";
 import { buildCritters } from "./critters.js";
 import { buildAmbient } from "./ambient.js";
 import { buildSign, buildHallSign } from "./sign.js";
+import { buildResearch } from "./research.js";
 import { createSanctuary } from "./cats.js";
 import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
@@ -43,18 +44,48 @@ const PORTRAIT_FOV = 64;
 
 /** The quality tiers. */
 export const TIERS = {
-  low: { tier: "low", dpr: 1.25, terrain: 0.5, texSize: 256, grassLawn: 9, grassMeadow: 4, grassFade: 34, grassR: 90, grassShadows: false, flowers: 0.45, forest: 700, treeNear: 30, shadow: 1024, post: false, ao: false, msaa: 0, mirror: false, rays: false },
-  medium: { tier: "medium", dpr: 1.5, terrain: 0.6, texSize: 256, grassLawn: 16, grassMeadow: 7, grassFade: 42, grassR: 110, grassShadows: false, flowers: 0.7, forest: 1100, treeNear: 36, shadow: 2048, post: true, ao: false, msaa: 0, mirror: false, rays: true },
-  high: { tier: "high", dpr: 2, terrain: 1, texSize: 512, grassLawn: 34, grassMeadow: 15, grassFade: 64, grassR: 130, grassShadows: true, flowers: 1, forest: 1800, treeNear: 60, shadow: 4096, post: true, ao: true, msaa: 4, mirror: true, rays: true },
+  low: { tier: "low", dpr: 1.25, terrain: 0.5, texSize: 256, grassLawn: 9, grassMeadow: 4, grassFade: 34, grassR: 90, grassShadows: false, flowers: 0.45, forest: 700, treeNear: 30, shadow: 1024, post: false, ao: false, msaa: 0, mirror: false, rays: false, hiTex: 512, hiMax: 8 },
+  medium: { tier: "medium", dpr: 1.5, terrain: 0.6, texSize: 256, grassLawn: 16, grassMeadow: 7, grassFade: 42, grassR: 110, grassShadows: false, flowers: 0.7, forest: 1100, treeNear: 36, shadow: 2048, post: true, ao: false, msaa: 0, mirror: false, rays: true, hiTex: 1024, hiMax: 16 },
+  high: { tier: "high", dpr: 2, terrain: 1, texSize: 512, grassLawn: 34, grassMeadow: 15, grassFade: 64, grassR: 130, grassShadows: true, flowers: 1, forest: 1800, treeNear: 60, shadow: 4096, post: true, ao: true, msaa: 4, mirror: true, rays: true, hiTex: 2048, hiMax: 32 },
 };
-/** The tier for this device: phones and tablets medium (low when small on memory or cores), desktops high. */
+const ORDER = ["low", "medium", "high"];
+const CAP_KEY = "cs-quality-cap";
+/** The highest tier this tab may use (lowered after a lost GPU context or slow frames; kept for the session). */
+export function tierCap() { try { return ORDER.includes(sessionStorage.getItem(CAP_KEY)) ? sessionStorage.getItem(CAP_KEY) : "high"; } catch { return "high"; } }
+/** Lowers the session's tier cap one step below `from`; returns the new cap. */
+export function dropTier(from) {
+  const next = ORDER[Math.max(0, ORDER.indexOf(from) - 1)];
+  try { sessionStorage.setItem(CAP_KEY, next); } catch {}
+  return next;
+}
+/** The GPU's name, when the browser tells it. */
+function gpuName() {
+  try {
+    const gl = document.createElement("canvas").getContext("webgl2");
+    const ext = gl && gl.getExtension("WEBGL_debug_renderer_info");
+    const name = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl?.getParameter(gl.RENDERER);
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
+    return String(name || "");
+  } catch { return ""; }
+}
+/** The tier for this device, conservatively: phones low or medium; desktops medium unless the
+    GPU is clearly a strong discrete one; software renderers low. ?q=low|medium|high overrides
+    (and ignores the session cap). */
 export function tierFor({ mobile, override }) {
   if (override && TIERS[override]) return { ...TIERS[override] };
-  if (mobile) {
-    const weak = (navigator.deviceMemory && navigator.deviceMemory <= 3) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
-    return { ...TIERS[weak ? "low" : "medium"] };
+  const mem = navigator.deviceMemory || 8, cores = navigator.hardwareConcurrency || 4;
+  const gpu = gpuName().toLowerCase();
+  let t;
+  if (/swiftshader|llvmpipe|software|basic render|mali-4|adreno \(tm\) [34]/.test(gpu)) t = "low";
+  else if (mobile) t = mem <= 3 || cores <= 4 ? "low" : "medium";
+  else {
+    const strong = /(rtx|rx [67]\d{3}|rx [5-9]\d{3}m?|radeon pro|apple m\d (pro|max|ultra)|arc a[57])/.test(gpu) && mem >= 8 && cores >= 8;
+    const weak = mem <= 4 || cores <= 4 || /intel.*(hd|uhd) graphics|mali|adreno|powervr/.test(gpu);
+    t = strong ? "high" : weak ? "low" : "medium";
   }
-  return { ...TIERS.high };
+  const cap = tierCap();
+  if (ORDER.indexOf(t) > ORDER.indexOf(cap)) t = cap;
+  return { ...TIERS[t] };
 }
 
 /**
@@ -154,6 +185,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     });
     scene.add(house);
   }
+  /* Research HQ: the cottage is where the Research Team works (research.js). */
+  const research = buildResearch(scene, { house, requestRender: () => requestRender() });
 
   /* ── The finishing pass (post.js): loaded once the first view is up ── */
   let post = null;
@@ -332,6 +365,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 7 || performance.now() - down[2] > 600) { down = null; return; }
     down = null;
     const cat = catAt(e.clientX, e.clientY, e.pointerType === "touch" ? 36 : 20);
+    // No cat there, but the cottage (Research HQ): open its panel.
+    if (!cat && Number.isFinite(research.hit(ray))) { research.open(); return; }
     onPick?.(cat ? cat.id : null);
   });
   canvas.addEventListener("pointermove", (e) => {
@@ -487,6 +522,36 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     }
   }
 
+  /* ── Guards against a black screen ──
+     - the finishing pass: if its first frame reads back black (float buffers that can't be drawn
+       to on this GPU, or NaNs), it is dropped and the plain render is used;
+     - the watchdog: under 15 frames a second for 5 s drops the finishing pass, then the
+       resolution, and lowers this session's tier for the next visit. */
+  let postChecked = false;
+  function checkPost() {
+    postChecked = true;
+    const gl = renderer.getContext(), w = gl.drawingBufferWidth, h = gl.drawingBufferHeight, px = new Uint8Array(4);
+    let lit = 0;
+    for (const [fx, fy] of [[0.5, 0.9], [0.2, 0.7], [0.8, 0.5], [0.5, 0.3], [0.3, 0.15]]) {
+      gl.readPixels(Math.floor(w * fx), Math.floor(h * fy), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+      if (px[0] + px[1] + px[2] > 12) lit++;
+    }
+    if (!lit) { console.warn("post: first frame was black; drawing without it"); post.dispose(); post = null; renderer.render(scene, camera); }
+  }
+  const dog = { slowSince: 0, stage: 0 };
+  function watchdog(ms) {
+    if (still || !adaptive || document.hidden) { dog.slowSince = 0; return; }
+    const now = performance.now();
+    if (ms < 66) { dog.slowSince = 0; return; }
+    if (!dog.slowSince) { dog.slowSince = now; return; }
+    if (now - dog.slowSince < 5000) return;
+    dog.slowSince = 0; dog.stage++;
+    console.warn("watchdog: frames under 15 fps for 5 s; lowering quality", dog.stage);
+    if (post) { post.dispose(); post = null; }
+    else if (dprCap > 0.85) { dprCap = Math.max(0.85, dprCap * 0.7); renderer.setPixelRatio(Math.min(devicePixelRatio, dprCap)); resize(); }
+    if (dog.stage === 2 && !quality) dropTier(q.tier);
+  }
+
   /* ── Staying in the world: the view's centre stays over the meadows, the camera above the ground ── */
   const LIMIT_R = MEADOW.ring2.outer + 6;
   function keepInWorld() {
@@ -550,6 +615,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     flora.update(camera);
     grassPending = grass.update(camera, grassPending > 8 ? 3 : 2);
     sign?.update(still);
+    research.update(still);
     // Launched cats' coins, and the ring under the chosen cat.
     const tt = clock.elapsedTime;
     launched.forEach((c, i) => {
@@ -568,7 +634,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     // No hover labels while the camera glides to a chosen cat (the pointer is still where the click was).
     if (hoverQueued && !(focus && focus.t < 1)) { const [x, y] = hoverQueued; hoverQueued = null; setHover(catAt(x, y, 0)); }
     water.update(renderer, scene, camera);
-    if (post) post.render(); else renderer.render(scene, camera);
+    if (post) { post.render(); if (!postChecked) checkPost(); } else renderer.render(scene, camera);
     if (grassPending > 0 && !running) requestRender();
     if (cc && onTrack) {
       herd.headPoint(cc, tmp).project(camera);
@@ -583,7 +649,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     }
     needsRender = false;
     frameMs = performance.now() - t0;
-    if (running && lastFrameAt) adapt(t0 - lastFrameAt);
+    if (running && lastFrameAt) { adapt(t0 - lastFrameAt); watchdog(t0 - lastFrameAt); }
     lastFrameAt = t0;
   }
   function startLoop() {
@@ -597,8 +663,23 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const easing = () => (focus && focus.t < 1) || Math.abs(inset.x - inset.right / 2) > 0.5 || Math.abs(inset.y - inset.bottom / 2) > 0.5;
   const tick = () => { if (!running) { frame(); if (easing()) requestAnimationFrame(tick); } };
 
-  canvas.addEventListener("webglcontextlost", (e) => { e.preventDefault(); renderer.setAnimationLoop(null); running = false; canvas.dispatchEvent(new CustomEvent("world:lost", { bubbles: true })); });
-  canvas.addEventListener("webglcontextrestored", () => { startLoop(); canvas.dispatchEvent(new CustomEvent("world:restored", { bubbles: true })); });
+  /* A lost GPU context (most often: out of GPU memory): the tier drops one step for this session,
+     and the page rebuilds at it once the context is back (or after a few seconds if it never comes). */
+  let lostTimer = 0;
+  canvas.addEventListener("webglcontextlost", (e) => {
+    e.preventDefault();
+    renderer.setAnimationLoop(null); running = false;
+    let losses = 0;
+    try { losses = +(sessionStorage.getItem("cs-gl-losses") || 0) + 1; sessionStorage.setItem("cs-gl-losses", String(losses)); } catch {}
+    const next = dropTier(q.tier);
+    canvas.dispatchEvent(new CustomEvent("world:lost", { bubbles: true, detail: { losses, tier: next } }));
+    clearTimeout(lostTimer);
+    lostTimer = setTimeout(() => canvas.dispatchEvent(new CustomEvent("world:rebuild", { bubbles: true, detail: { losses, tier: next } })), 5000);
+  });
+  canvas.addEventListener("webglcontextrestored", () => {
+    clearTimeout(lostTimer);
+    canvas.dispatchEvent(new CustomEvent("world:rebuild", { bubbles: true, detail: { tier: tierCap() } }));
+  });
 
   mark("cats and first frame");
   timings.total = +(performance.now() - t00).toFixed(1);
@@ -609,6 +690,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const postLoad = q.post ? (async () => {
     await new Promise((r) => setTimeout(r, 0));
     try {
+      if (!renderer.extensions.has("EXT_color_buffer_float") && !renderer.extensions.has("EXT_color_buffer_half_float")) throw new Error("no float render targets");
       const { createPost } = await import("./post.js");
       const aoSkip = [grass.group, sky.group, water.group, ambient.group, garden.group.getObjectByName("glass"), ...scene.children.filter((o) => o.isInstancedMesh && /^(cat|ginger)-/.test(o.name)), herd.blobs].filter(Boolean);
       post = await createPost(renderer, scene, camera, { q, aoSkip, sunDir: SUN_DISC });
@@ -621,7 +703,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
      assets/models/cats/index.json lists every model; a key is a cat's id (a stock cat's ticker),
      or a famous coin's contract, symbol or id (ui/models.js matches them). Models are fetched
      only for cats within OWN.loadDist of the camera; the rest keep the shared, tinted model. */
-  const ownState = { index: null, queue: [], loading: 0, done: new Set() };
+  const ownState = { index: null, queue: [], loading: 0, done: new Set(), hi: [] };
   const ownLoad = (async () => {
     await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
     let index;
@@ -636,6 +718,37 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const LOAD_DIST = 70;
   const ownFrustum = new THREE.Frustum(), ownPv = new THREE.Matrix4(), ownP = new THREE.Vector3();
   const loadGlb = (f) => loader.loadAsync(`assets/models/cats/${encodeURIComponent(f)}.glb`).then((g) => g.scene).catch(() => null);
+  /* A budget for the full models' GPU memory: at most tier.hiMax of them are kept (the farthest
+     is freed, and queued again, to make room), and their textures are shrunk to tier.hiTex. */
+  const tierQ = q;
+  function makeRoomForHi(want) {
+    if (ownState.hi.length < tierQ.hiMax) return true;
+    const d = (e) => { if (e.id === chosenId) return -1; herd.midPoint(sim.byId(e.id), ownP); return ownP.distanceTo(camera.position); };
+    ownState.hi.sort((x, y) => d(y) - d(x));
+    const far = ownState.hi[0];
+    if (!far || d(far) <= d(want) + 4) return false;
+    ownState.hi.shift();
+    if (herd.dropOwnHi(far.id)) ownState.queue.push(far);
+    return true;
+  }
+  function shrinkTextures(root, max) {
+    const seen = new Set();
+    root.traverse((o) => {
+      for (const m of [].concat(o.material || [])) for (const k of ["map", "normalMap", "roughnessMap", "metalnessMap", "emissiveMap"]) {
+        const t = m[k], img = t?.image;
+        if (!t || seen.has(t) || !img || !(img.width > max)) continue;
+        seen.add(t);
+        try {
+          const c = document.createElement("canvas");
+          const k2 = max / Math.max(img.width, img.height);
+          c.width = Math.round(img.width * k2); c.height = Math.round(img.height * k2);
+          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+          img.close?.();
+          t.image = c; t.needsUpdate = true;
+        } catch {}
+      }
+    });
+  }
   /** Loads the nearest wanted models (the far copy first, then the full one), up to three at once. */
   async function pumpOwn(first = false) {
     if (!ownState.queue.length) return;
@@ -643,21 +756,31 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     const score = (q) => { const c = sim.byId(q.id); herd.midPoint(c, ownP); return ownP.distanceTo(camera.position) + (ownFrustum.containsPoint(ownP) ? 0 : 30) + q.stage * 40; };
     const jobs = [];
     while (ownState.loading < 3) {
-      const cand = ownState.queue.filter((q) => !q.busy).map((q) => [score(q), q]).filter(([d, q]) => d - q.stage * 40 < LOAD_DIST || q.id === chosenId).sort((a, b) => a[0] - b[0]);
+      const now = performance.now(), cand = ownState.queue.filter((q) => !q.busy && !(q.wait > now)).map((q) => [score(q), q]).filter(([d, q]) => d - q.stage * 40 < LOAD_DIST || q.id === chosenId).sort((a, b) => a[0] - b[0]);
       if (!cand.length) break;
       const q = cand[0][1];
+      if (q.stage === 1 && q.id !== chosenId && !makeRoomForHi(q)) { q.wait = now + 3000; continue; }
       q.busy = true; ownState.loading++;
       jobs.push((async () => {
         const root = await loadGlb(q.file + (q.stage === 0 ? "-lo" : ""));
+        if (root && q.stage === 1) shrinkTextures(root, tierQ.hiTex);
         if (root) { herd.attachOwn(q.id, q.stage === 0 ? { lo: root, dims: q.dims } : { hi: root, dims: q.dims }); requestRender(); }
         ownState.loading--; q.busy = false;
-        if (q.stage === 0) q.stage = 1; else ownState.queue.splice(ownState.queue.indexOf(q), 1);
+        if (q.stage === 0) q.stage = 1; else { ownState.queue.splice(ownState.queue.indexOf(q), 1); if (root) ownState.hi.push(q); }
       })());
     }
     await Promise.all(jobs);
     if (first && jobs.length) return pumpOwn(true);
   }
-  setInterval(() => { if (ownState.index && !document.hidden) pumpOwn(); }, 700);
+  function trimHi() {
+    const d = (e) => { if (e.id === chosenId) return -1; herd.midPoint(sim.byId(e.id), ownP); return ownP.distanceTo(camera.position); };
+    while (ownState.hi.length > tierQ.hiMax) {
+      ownState.hi.sort((x, y) => d(y) - d(x));
+      const far = ownState.hi.shift();
+      if (herd.dropOwnHi(far.id)) ownState.queue.push(far);
+    }
+  }
+  setInterval(() => { if (ownState.index && !document.hidden) { trimHi(); pumpOwn(); } }, 700);
 
   const api = {
     choose(id, opts) { choose(id, opts); if (!running) { requestAnimationFrame(tick); } },
@@ -677,7 +800,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   if (debug) {
     // For screenshots and checks: step the garden forward without waiting, and read the draw stats.
     Object.assign(api, {
-      sim, meadow, renderer, scene, camera, controls, critters, herd, ownLoad, q, postLoad, grass, flora, water, timings,
+      research, sim, meadow, renderer, scene, camera, controls, critters, herd, ownLoad, q, postLoad, grass, flora, water, timings,
       /** Views for screenshots: the first footbridge over the stream, and the Hall of Fame plaza. */
       debugViews: (() => {
         const b = BRIDGES[0], H = HALL_OF_FAME, a = Math.atan2(H.z, H.x);

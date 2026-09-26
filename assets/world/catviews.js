@@ -858,6 +858,21 @@ export class CatHerd {
     return !!o;
   }
 
+  /** Frees a cat's full model (its GPU geometry and textures); the far copy stays. Returns whether it had one. */
+  dropOwnHi(catId) {
+    const o = this.own.get(catId);
+    if (!o?.hi) return false;
+    const m = o.hi;
+    o.group.remove(m);
+    m.geometry.dispose();
+    for (const k of ["map", "normalMap", "roughnessMap", "metalnessMap", "emissiveMap", "aoMap"]) m.material[k]?.dispose();
+    m.material.dispose();
+    const i = this.ownMeshes.findIndex(([mm]) => mm === m);
+    if (i >= 0) this.ownMeshes.splice(i, 1);
+    o.hi = null;
+    return true;
+  }
+
   /** Plays `name` on a cat's mixer, crossfading from what it was doing. */
   playClip(o, name, fade = OWN.fade) {
     if (o.clip === name) return o.actions[name];

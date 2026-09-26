@@ -155,7 +155,8 @@ test("nothing the page loads comes from another host", () => {
   // The only absolute URLs in the head are the page's own address, for sharing (never loaded by the page).
   for (const m of INDEX.matchAll(/<(?:meta|link)\b[^>]*\b(?:content|href)="(https?:\/\/[^"]+)"/g)) assert.ok(m[1].startsWith(SITE), `the head names ${m[1]}`);
   // In the page's own scripts, a web address is only ever an outbound link (buy and explorer pages) or a comment.
-  const OUTBOUND = new Set(["gmgn.ai", "fomo.family", "solscan.io", "www.stonkfun.xyz", "dexscreener.com"]);
+  const OUTBOUND = new Set(["gmgn.ai", "fomo.family", "solscan.io", "www.stonkfun.xyz", "dexscreener.com",
+    "www.w3.org"]); // www.w3.org: the SVG namespace name, never fetched
   for (const rel of moduleGraph().filter((m) => !m.includes("/vendor/"))) {
     const code = read(rel).replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'`\\])\/\/.*$/gm, "$1");
     for (const m of code.matchAll(/https?:\/\/([^/"'`\s$)]+)/g)) assert.ok(OUTBOUND.has(m[1]), `${rel} names ${m[0]}`);

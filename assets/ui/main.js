@@ -244,8 +244,13 @@ if (loadError || !residents.length) {
     mgr.onProgress = undefined;
     document.body.classList.add("ready");
     loader.done();
-    canvas.addEventListener("world:lost", () => loader.show("Waking the garden up again…"));
-    canvas.addEventListener("world:restored", () => loader.done());
+    // A lost GPU context: a friendly note, then the page is rebuilt at a lighter tier (world.js
+    // lowers it for this session). After three losses, the list of cats instead of the 3D garden.
+    canvas.addEventListener("world:lost", (e) => {
+      if ((e.detail?.losses || 0) >= 3 && e.detail?.tier === "low") { world = null; fallback("The 3D garden kept running out of graphics memory here, so here is every cat as a list. Choose one to see its card."); return; }
+      loader.show("The garden ran out of graphics memory, so it's coming back a little lighter…");
+    });
+    canvas.addEventListener("world:rebuild", () => { if (world) location.reload(); });
     if (debug) window.__world = world;
   } catch (e) {
     console.warn(e);

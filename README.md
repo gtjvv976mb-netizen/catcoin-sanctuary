@@ -294,3 +294,32 @@ recorded fixtures keep a fixed one.
 - Catcoin Sanctuary is not affiliated with StonkFun, with the issuers of the tokenised stocks, or with
   any company whose stock a cat is paired with. Memecoins have no intrinsic value. Nothing here
   is financial advice.
+
+## Research Team (runs on your laptop)
+
+The cottage in the garden is **Research HQ**. Its "team" is Claude Code, run by you, on your
+laptop, when you want it. Nothing runs on a server and nothing runs when the laptop is off.
+
+1. Install Claude Code once: `npm install -g @anthropic-ai/claude-code` (Node 22+), then run
+   `claude` and sign in with your Claude account.
+2. Open the repo: `cd cat-sanctuary && claude`.
+3. Type **`/scout`** (optionally a focus: `/scout TV and film cats max 5`). It searches the web and
+   X for cats with real lore (companies, celebrities, TV/film, crypto projects, viral cats) that are
+   not in `data/adoptables.json` or `data/planned.json`, verifies each with an X post (read through
+   api.fxtwitter.com) and a reliable web source, checks DexScreener/Jupiter for existing coins
+   (skips a cat whose coin is over $50k), proposes a name, ticker (checked free on Jupiter and
+   StonkFun), look, category and pair, and writes them to `data/research/inbox.json`, plus a run
+   entry in `data/research/log.json`. It is read-only on the web: it never signs or sends a
+   transaction and never posts to X. The instructions are in `.claude/commands/scout.md`.
+4. Review: `npm run scout:status` for a summary, `npm run scout:review` to read the candidates,
+   `npm run scout:review -- --approve <id>` to add one (it goes into `data/adoptables.json` and is
+   held from X in `data/announced.json`; its research row is kept in
+   `data/research/adoptables-source.json`), or `-- --reject <id> --why "…"`.
+5. Commit and push as usual; the house on the site reads `data/research/log.json`. For ~6 hours
+   after a scan its lights are on, the rooftop antenna turns and a bubble says "Scanning the net…
+   N new leads"; after that it says "Research team resting — last scan …". Clicking the house
+   opens a small panel (last scan, cats found this week, latest leads, how the research works).
+
+**How often:** once or twice a week is plenty; each run adds up to ~10 leads.
+**What it costs:** nothing extra. It uses your own Claude plan's usage (a run is a few dozen web
+searches and fetches, so it counts like a longer Claude Code session). No API keys or servers.

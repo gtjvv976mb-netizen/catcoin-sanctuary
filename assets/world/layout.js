@@ -328,6 +328,9 @@ export function obstacles() {
     ...ROSE_ARCHES.flatMap((a) => [-1, 1].map((s) => ({ id: `${a.id}-${s}`, type: "circle", x: a.x + s * a.half, z: a.z, r: 0.14 }))),
     ...GARDEN_BENCHES.map((b) => ({ id: b.id, type: "circle", x: b.x, z: b.z, r: b.r })),
     ...PLANTERS.map((p) => ({ id: p.id, type: "circle", x: p.x, z: p.z, r: p.r })),
+    // Research HQ by the porch (research.js): the desk and its stool, and the map board.
+    { id: "research-desk", type: "circle", x: -3.35, z: 3.45, r: 0.75 },
+    { id: "research-board", type: "circle", x: -4.2, z: 2.75, r: 0.65 },
   ];
 }
 
