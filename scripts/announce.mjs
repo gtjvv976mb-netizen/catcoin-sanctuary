@@ -109,8 +109,8 @@ const companyShort = (c) => (c ? c.replace(/\s*\(.*\)\s*$/, "").replace(/,?\s+(I
 /** The credit line for a cat's proof. */
 export function proofCredit(p) {
   if (!p) return null;
-  if (p.kind === "x" && p.handle) return `As seen in @${p.handle}'s post.`;
-  if (p.author) return `Inspired by ${p.author}.`;
+  if (p.kind === "x" && p.handle) return `👀 As seen in @${p.handle}'s post`;
+  if (p.author) return `📰 Inspired by ${p.author}`;
   return null;
 }
 
@@ -120,12 +120,21 @@ export function draft(cat, { thread = true } = {}) {
   const company = companyShort(cat.company);
   const owner = company ? `${company}'s ${cat.symbol}` : cat.symbol;
   const cited = [company, cat.company, cat.symbol, cat.proof?.author, cat.proof?.handle && `@${cat.proof.handle}`, cat.proof?.url, link, SITE];
-  const status = cat.launched ? "Adopted: its owner has launched it." : "Not launched yet — adopt it soon.";
+  const status = cat.launched ? "🎉 Adopted! Its owner has launched it 🚀" : "🔓 Not launched yet, be the first to adopt 👇";
   const credit = proofCredit(cat.proof);
-  const lores = [...sentences(cat.story).slice(0, 1), ""];
+  const lores = [...sentences(cat.story).slice(0, 1).map((s) => `📜 ${s}`), ""];
+  // Rotate hyped openers so the feed doesn't repeat itself (stable per cat).
+  const n = [...String(cat.id)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+  const openers = [
+    `🚨 NEW CAT IN THE SANCTUARY 🚨\n🐾 ${cat.name} just moved in, the cat of ${owner}!`,
+    `🐱✨ Say hi to ${cat.name}, ${owner}'s very own cat!`,
+    `🏡😼 A new resident has arrived: ${cat.name}, the cat of ${owner}!`,
+    `🎀 Fresh lore just dropped 🎀\n🐈 Meet ${cat.name}, the cat of ${owner}!`,
+  ];
+  const hooks = [openers[n % openers.length], `🐾 Meet ${shortName(cat.name)}, the cat for ${cat.symbol}!`];
   let first = null, violations = [];
   outer:
-  for (const hook of [`Meet ${cat.name}, the sanctuary cat for ${owner}.`, `Meet ${shortName(cat.name)}, the cat for ${cat.symbol}.`]) {
+  for (const hook of hooks) {
     for (const lore of lores) {
       for (const tags of [HASHTAGS, HASHTAGS.slice(0, 1)]) {
         const fixed = [hook, credit, status, link, tags.join(" ")].filter(Boolean);
@@ -141,8 +150,8 @@ export function draft(cat, { thread = true } = {}) {
   if (!first) return { ok: false, posts: [], violations };
   const posts = [{ text: first, image: cat.portrait || null, link }];
   if (thread && cat.proof?.url) {
-    const lead = `Why ${shortName(cat.name)} looks the way it does: `;
-    const tail = `\nProof: ${cat.proof.url}`;
+    const lead = `🧵 Why ${shortName(cat.name)} looks the way it does: `;
+    const tail = `\n🔗 Proof: ${cat.proof.url}`;
     const why = clip(sentences(cat.why).find((s) => !/^No (real )?cat link/i.test(s)) || sentences(cat.why)[0] || "", LIMIT - weightedLength(lead + tail));
     const text = (why ? lead + why : `The proof behind ${shortName(cat.name)}:`) + tail;
     const r = checkPost(text, cited);
