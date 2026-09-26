@@ -12,7 +12,7 @@
  *
  *   node scripts/meshy.mjs balance
  *   node scripts/meshy.mjs run [KEY ...] [--limit N] [--priority P] [--only retexture|rebuild]
- *                              [--image] [--views] [--reserve CREDITS] [--dry]
+ *                              [--image] [--views] [--fresh-uv] [--reserve CREDITS] [--dry]
  *   node scripts/meshy.mjs status
  *   node scripts/meshy.mjs remesh KEY ... [--faces N]   a far copy (FAR_POLYCOUNT faces, 5 credits) for
  *                              a cat's current model; with --faces, replaces the model itself with an
@@ -142,7 +142,7 @@ export function recordModel(jobs, key, entry) {
   return jobs;
 }
 
-async function fix(q, { useImage, log, prior = null, viewsOnly = false }) {
+async function fix(q, { useImage, log, prior = null, viewsOnly = false, freshUv = false }) {
   // A famous coin's model is filed under its coin id (queue "modelKey"), not its ticker.
   const mk = q.modelKey ?? q.key;
   const jobs = readJson(FILES.jobs, {});
@@ -151,7 +151,9 @@ async function fix(q, { useImage, log, prior = null, viewsOnly = false }) {
     // The raw source first (full detail); if Meshy cannot take it (some Hunyuan sources are ~500k
     // faces), the site's own packed copy.
     let t;
-    try { t = await task("retexture", retextureBody(q, job, { useImage }), log); }
+    // --fresh-uv: repaint on a fresh UV layout from the start. The model's own UVs keep much of the
+    // old paint's pattern (orange stripes survived on CATCOIN), a fresh layout repaints cleanly.
+    try { t = await task("retexture", retextureBody(q, job, { useImage, originalUv: !freshUv }), log); if (freshUv) t.freshUv = true; }
     catch (e) {
       if (job?.url && !/model_insufficient_uv/.test(e.message)) {
         log(`  raw source refused (${e.message.slice(0, 120)}); retrying with the site model`);
@@ -231,7 +233,7 @@ async function main(argv) {
     if (balance - COST[q.action] < reserve) { console.log(`stop: balance ${balance}, ${q.key} needs ${COST[q.action]}, reserve ${reserve}`); break; }
     console.log(`${q.key}: ${q.action} (priority ${q.priority}; balance ${balance})`);
     try {
-      const r = await fix(q, { useImage: rest.includes("--image"), log, prior: state[q.key], viewsOnly: rest.includes("--views") });
+      const r = await fix(q, { useImage: rest.includes("--image"), log, prior: state[q.key], viewsOnly: rest.includes("--views"), freshUv: rest.includes("--fresh-uv") });
       state[q.key] = r.views
         ? { status: "views", action: q.action, views_job: r.views_job, urls: r.urls, tasks: r.tasks, credits: r.credits, at: new Date().toISOString() }
         : { status: "done", action: q.action, tasks: r.tasks, credits: r.credits + (state[q.key]?.status === "views" ? state[q.key].credits : 0), at: new Date().toISOString() };

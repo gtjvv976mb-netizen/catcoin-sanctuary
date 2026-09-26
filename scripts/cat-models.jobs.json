@@ -306,20 +306,38 @@
  "WARMSPOT": {
   "image_job": "41380148-ea4b-4853-bd90-ab6b886b8eeb",
   "clean_job": "22360428-fa91-417b-875f-cb2212398c83",
-  "model_job": "a2aaf4ef-728f-4e7c-9966-17c77e0c55dd",
-  "model": "tripo_h3_1_image_to_3d",
-  "faces": 12000,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032637_a2aaf4ef-728f-4e7c-9966-17c77e0c55dd.glb",
   "pose": "standing on all fours",
+  "model_job": "01a0df9d-8192-76f5-8ed8-0ed572bbc8ba",
+  "model": "meshy retexture (tripo_h3_1_image_to_3d)",
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0df9d-8192-76f5-8ed8-0ed572bbc8ba/output/model.glb?Expires=1790717301&Signature=gVHgkgr2K2UqA8DqRdsl6W4JkTqPBXxIu2toCQFka~n8YzT8fIvJQC427QzNOEQSCbo76WwtzmCDByP2UdUaBLzp6E3XF4Sg-qkUj2hfjwI8iNrx10Pv5639NPNNhi7bgS1mv~qE7f~4-Io7ppsp6CqS0Gr6Xof5frYzLjTn51YlgBj1iW8reHNxdl5iSdFpC5m3KQzu0aLgCAR9sP-4B3XBZkqOmvz1RVdn4U-FKP1k-vQhtr6X3oBWQfki~nAaiWd9HX5~Ih3NFp4P88y4yhIUvTOXQlhknMQ7j7BX1ma6bfKrzk4a~kWcILY3M6IvIWRhx2uOmiIyoAPNKscrsg__&Key-Pair-Id=K1VGYTHIYLM9UM",
   "status": "done",
+  "previous": {
+   "image_job": "41380148-ea4b-4853-bd90-ab6b886b8eeb",
+   "clean_job": "22360428-fa91-417b-875f-cb2212398c83",
+   "model_job": "a2aaf4ef-728f-4e7c-9966-17c77e0c55dd",
+   "model": "tripo_h3_1_image_to_3d",
+   "faces": 12000,
+   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032637_a2aaf4ef-728f-4e7c-9966-17c77e0c55dd.glb",
+   "pose": "standing on all fours",
+   "status": "done",
+   "sizes": {
+    "hi": 243400,
+    "lo": 83616
+   },
+   "dims": {
+    "len": 1.3101,
+    "height": 1,
+    "width": 0.449
+   }
+  },
   "sizes": {
-   "hi": 243400,
-   "lo": 83616
+   "hi": 219936,
+   "lo": 65180
   },
   "dims": {
-   "len": 1.3101,
+   "len": 1.3102,
    "height": 1,
-   "width": 0.449
+   "width": 0.4496
   }
  },
  "SKEINKIT": {
@@ -1453,36 +1471,59 @@
   }
  },
  "LILBUBCAT": {
-  "image_job": "6f1ed3af-51a1-4dd0-a88f-1fb2c5e28624",
-  "clean_job": "36d72917-5df1-49a9-b1ec-984d6e4b4d2d",
-  "view_jobs": {
-   "front": "ad6e9f65-ee0e-44da-9ae0-3f7a6a290c6b",
-   "left": "3411d762-db12-492e-9e7a-7c8861279498",
-   "back": "68d45e74-846e-41ce-9bf5-5c51c7dcb09b",
-   "right": "c766d16d-16f2-4491-b693-27bd63c73abe"
-  },
-  "model_job": "badc7aaf-d2ff-4342-a154-ee87099f0eed",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "01a0dfa0-1da7-72c3-9398-ea4bef1cbed3",
+  "clean_job": "01a0dfa0-1da7-72c3-9398-ea4bef1cbed3",
+  "model_job": "01a0dfa0-6f7a-72d6-815e-54ced49be4ee",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfa0-6f7a-72d6-815e-54ced49be4ee/output/model.glb?Expires=1790717526&Signature=YIuD3IvvhcUjs87~e0KMGV7EpmB4Ddys0H6gDaMXZUgGyiYupN6yd-q5aqKigSZ283jL58nWJPWxL8EWofoN56ofkUCD-9rdsiK3pYRsYqbtVH4-S7lXKXdInUWtFqwAuEO6u4C8nGaAg7i-3MiTPI7S-c9cW6E1kS3YwlFd0H4HpOBUFRCjsA4LmpcD8103qz9XQy7athkcMTpMSCOJ00nzc3hMWY11WbpQ9WH06j0Ieqile2KVqaRhsj8B24oWRgyMnLIHhtax4P5k7CutEzkW0mB7gKqFe5xO3LsPHFTbMRG7v5Pjd8SjrGWMZ4wX8WXs8QTOp5caE-j36Ua6Lw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfa1-fdfb-7742-a770-9bdcc69b8290",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfa1-fdfb-7742-a770-9bdcc69b8290/output/model.glb?Expires=1790717587&Signature=Sr7H0tLP9kyiPbUW-TUOijrl5Z4xlGBRG4fkpY5nn17is-fcHhtzK7RF-~HHSg6IAFDegG4~w5ZpdywYxbl9qs04nHMsJE3B3-h~KIB2GcKtIL01MFKqEsviKei3DTye6HiaYom9Gb6jcV5q4GPSMtWNUfSBdxYwJGWiX9Ze8hcwBDGt-vdnFYsEhjk~PW-2Jy72bxjTiysXmewfY0kAiMtDtQpoQROsdCj5JyaFqub-W-WXP6NhxKUNqsVxk6us2eW6AWND44pYNN7s6D5TJECnwU7-CJgT-pGhPy2k6EJkThJxWsoOsuiy8m5WoLN3mxqSFV8BhOLWETzP4m1ssQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
   "pose": "standing on all fours",
-  "source": "adoptable (realistic portrait from the real cat's proof photo)",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_073409_badc7aaf-d2ff-4342-a154-ee87099f0eed.glb",
+  "previous": {
+   "image_job": "6f1ed3af-51a1-4dd0-a88f-1fb2c5e28624",
+   "clean_job": "36d72917-5df1-49a9-b1ec-984d6e4b4d2d",
+   "view_jobs": {
+    "front": "ad6e9f65-ee0e-44da-9ae0-3f7a6a290c6b",
+    "left": "3411d762-db12-492e-9e7a-7c8861279498",
+    "back": "68d45e74-846e-41ce-9bf5-5c51c7dcb09b",
+    "right": "c766d16d-16f2-4491-b693-27bd63c73abe"
+   },
+   "model_job": "badc7aaf-d2ff-4342-a154-ee87099f0eed",
+   "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
+   "faces": "~500k raw, packed ~20k",
+   "pose": "standing on all fours",
+   "source": "adoptable (realistic portrait from the real cat's proof photo)",
+   "status": "done",
+   "hd": true,
+   "si": 0.032,
+   "si_lo": 0.01,
+   "tex": 2048,
+   "tex_lo": 256,
+   "q": 70,
+   "credits": 16.25,
+   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_073409_badc7aaf-d2ff-4342-a154-ee87099f0eed.glb",
+   "sizes": {
+    "hi": 757864,
+    "lo": 125352
+   },
+   "dims": {
+    "len": 1.1887,
+    "height": 1,
+    "width": 0.5808
+   }
+  },
+  "si_lo": 0.8,
+  "tex_lo": 512,
   "sizes": {
-   "hi": 757864,
-   "lo": 125352
+   "hi": 498732,
+   "lo": 144188
   },
   "dims": {
-   "len": 1.1887,
+   "len": 1.6453,
    "height": 1,
-   "width": 0.5808
+   "width": 0.4811
   }
  },
  "PUSHEENX": {
@@ -1795,36 +1836,57 @@
   }
  },
  "TOMBILICAT": {
-  "image_job": "c377b011-8861-4c2a-8a34-5a5e1d4af2f1",
-  "clean_job": "943ae787-1cc5-4edd-bb11-31660a84b0a8",
-  "view_jobs": {
-   "front": "68ef87cd-6fbc-486c-9fac-8d7462ed0d8c",
-   "left": "c4419868-690e-42aa-9d90-0f1b158c8de6",
-   "back": "94beee45-c0c1-4d6f-be41-79e871d1e2f1",
-   "right": "dd6e947c-087e-4d08-9509-67d9e44c2281"
-  },
-  "model_job": "b26970e2-c546-4191-a13d-e800a4aa102b",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "01a0dfa8-db0b-73be-aa89-50b97003bc40",
+  "clean_job": "01a0dfa8-db0b-73be-aa89-50b97003bc40",
+  "model_job": "01a0dfa9-53ea-73cd-a082-603897abbaec",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfa9-53ea-73cd-a082-603897abbaec/output/model.glb?Expires=1790718094&Signature=aOpOzwCWI8vpN-g6Si5z208m21bpHoS9lArwbEPvsYwd0mONBQI3v97Q7BNusx3rkNoYs5v7MUfDDkbk3Nixy-ta-BKJA8-ym8L0B3OB-mLBLsTW3p6EyUmM-XGs9ibYpqq7JaPbC4dnVyyrmcFaFEF8K5R6NDpTfOaQZnTHOa6MNcDYuC9hySU6NmmVHzJ58aOfXfNxWDzhs6XawnbCBJP-TpDqmAHa8p8NNi6T11Y7pMlL2lHPVAwi6N72HfoHAb52eoiTLSZgmXNOG0Wseg6uI~qBB0z9h8EhpqrxyX-SC-mH1zoa5BxP~BbGeISwvkowTbXjrzWrt7wLgfve~A__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfaa-b9f2-7120-aa04-d0aa9f7338fc",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfaa-b9f2-7120-aa04-d0aa9f7338fc/output/model.glb?Expires=1790718164&Signature=lgIq64TQY5ux~3eEAGAyr1Ux8116c64ki2uSJ4imUvw9rhx2ze4WhJMeMhAxiHeLR73UIctKqtB1lW0NVGXBJk5aC~VshhcOnNEE-yk~YaUq0gJp48rP6lSt2legzxDgYAUgLGXAa2DggU0Vt27hZFBVri3mLt-SfwUDA~c535x~Ct6A2ltRDMgbeV7O7FYq8QTuLqKIb4OBs04opTj-jOXCZZiprlRYN7Tv07k85LggoWorRde7SJf~x1GxYb15u03POpmGV6WfUGygE4CRt9bIgRcOusSxa4uxyWx-vqBRtMINZhbXeNCnC1etC25wHsfUTRkEOpuuZ9UNm1YTLw__&Key-Pair-Id=K1VGYTHIYLM9UM",
   "pose": "standing on all fours",
-  "source": "adoptable (realistic portrait from the real cat's proof photo)",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_073905_b26970e2-c546-4191-a13d-e800a4aa102b.glb",
+  "previous": {
+   "image_job": "c377b011-8861-4c2a-8a34-5a5e1d4af2f1",
+   "clean_job": "943ae787-1cc5-4edd-bb11-31660a84b0a8",
+   "view_jobs": {
+    "front": "68ef87cd-6fbc-486c-9fac-8d7462ed0d8c",
+    "left": "c4419868-690e-42aa-9d90-0f1b158c8de6",
+    "back": "94beee45-c0c1-4d6f-be41-79e871d1e2f1",
+    "right": "dd6e947c-087e-4d08-9509-67d9e44c2281"
+   },
+   "model_job": "b26970e2-c546-4191-a13d-e800a4aa102b",
+   "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
+   "faces": "~500k raw, packed ~20k",
+   "pose": "standing on all fours",
+   "source": "adoptable (realistic portrait from the real cat's proof photo)",
+   "status": "done",
+   "hd": true,
+   "si": 0.032,
+   "si_lo": 0.01,
+   "tex": 2048,
+   "tex_lo": 256,
+   "q": 70,
+   "credits": 16.25,
+   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_073905_b26970e2-c546-4191-a13d-e800a4aa102b.glb",
+   "sizes": {
+    "hi": 667668,
+    "lo": 129448
+   },
+   "dims": {
+    "len": 1.1903,
+    "height": 1,
+    "width": 0.4538
+   }
+  },
   "sizes": {
-   "hi": 667668,
-   "lo": 129448
+   "hi": 481732,
+   "lo": 138512
   },
   "dims": {
-   "len": 1.1903,
+   "len": 1.6503,
    "height": 1,
-   "width": 0.4538
+   "width": 0.486
   }
  },
  "STEPANCAT": {
@@ -1918,36 +1980,51 @@
   }
  },
  "TAMAEKI": {
-  "image_job": "be182de4-87e6-4f2c-9b28-491c3c4fb6c4",
-  "clean_job": "907cbde5-3e17-41a0-8f1e-67d926320e97",
-  "view_jobs": {
-   "front": "7e7ca502-3b1b-4e5f-b91b-299ca9dd9917",
-   "left": "ff78f863-77ee-47f7-afd1-0783a3bf87fb",
-   "back": "54a5b5f2-6f16-4cce-81b7-32be292cc266",
-   "right": "e2fab6b8-9054-47d2-aa3f-40d03dfbbc27"
-  },
-  "model_job": "c6264764-cd87-4e64-af9c-7a2c60f04387",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "01a0dfcb-6de1-737a-b9d2-a82b1465fd80",
+  "clean_job": "01a0dfcb-6de1-737a-b9d2-a82b1465fd80",
+  "model_job": "01a0dfd5-f381-7211-a09b-fc1206a089af",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfd5-f381-7211-a09b-fc1206a089af/output/model.glb?Expires=1790721017&Signature=VGn96uA1vccrkbWIWojA~SYeQCNKP9WOJW5jsBsHNpmhw4jg5hKanC4LQYDgjFqr9WvHWiazo4MflMt-vUOHpsMDwO1aaDXvDq~oHBl8v7leKGTq-zSWV28AKHWlDr8N-0O3ME3fgPT82tITDWAdy6xlzsObANwdvh~ybPMHelBM9pken2j5KBcupiriUTUTB8wkUtB9kdHiEIRqJxjxoYbPhxdXm5do0dKXe3XFNS1rW9KrzJ8JcxJjNSM4yxWeDMqqSk0v7tLlmSQAYUQooBfk9t1Y7tBkw5-EWBnIKvsGejdGre9Je73Sk~---Dv2zQmoliKVjZD8nxiZ9wwCEQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfd7-32ff-7781-8227-3e7700a2842e",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfd7-32ff-7781-8227-3e7700a2842e/output/model.glb?Expires=1790721074&Signature=UfcErpbQSNdfwJAPpEGQS-ui3es7HE8xvNF2w-RjtIaB1U80WD-3k68CsAlZnNBiPfD7lj37QxqN-yCG3QxTeVN4TwY-yUKrOD-ODcaP8g0eXO-MnQMLecbQl-DGm77JDNeTE6OwJ2WPqikrZEjq~lMqlZHRhQOmGjDhDN9it4HtVyWMGnkXKpbXIpwUgLLz667BJ7UUFq-ahRS3j3ifaRehyQEFw9p426vmNWO1H~5tzN2xCC2RwimM6HwBZGo4akGpsK5frvlK~3GnQxQHM7Ib65J~fDaOG0YgtugvIZ1M62m4DTlq80eS28~F5SnKVDPzLOHmaCBDtDtCYMMlYQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
   "pose": "standing on all fours",
-  "source": "adoptable (realistic portrait from the real cat's proof photo)",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_074034_c6264764-cd87-4e64-af9c-7a2c60f04387.glb",
+  "previous": {
+   "image_job": "01a0dfa5-94f1-74ed-929a-bba1d832b4e3",
+   "clean_job": "01a0dfa5-94f1-74ed-929a-bba1d832b4e3",
+   "model_job": "01a0dfa6-0e6b-7127-ae1e-ee6374598e9d",
+   "model": "meshy-7.1 multi-image-to-3d",
+   "faces": 10000,
+   "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfa6-0e6b-7127-ae1e-ee6374598e9d/output/model.glb?Expires=1790717908&Signature=oQyWzIg~XFNtG1j4HNDDWMVgS0VyuWGP7NOEwMKgxlqafUmGx0Utw1LafzJK~UzlxV4HdfjX1q08UJXV3OGk-qin943JhhzkRNddC2MxqcczZFjqOk4DtOuO3ya~506RAatqMsg3N3a~iQBOkF6zQkHyR2dw2ZwXuDeQ-eeFo-LvzzFtB5vERfjFwZR7~liGzubTBUW6GGMQMclSZbyQDPKkygUefks-GAXySyBMNoUzUqvkZ4AKyge1WR2hCqnu9FhOwwFJHRIr2z2Z3YEek89chqsFt-YtQCu4zq~jnEQTyXs1SRqILQ3hACmdwEK75O2N8Q05qB4JmXjFcAWv2A__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "lo_job": "01a0dfa7-c5cc-76e7-9e04-85036c7c0901",
+   "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfa7-c5cc-76e7-9e04-85036c7c0901/output/model.glb?Expires=1790717974&Signature=q2tLxTd7XGZuUiWl86Pf5kUFf-3m5pD~HHjj3gcS8WNViNxhJFjEqdJSBr4ydEh~ibp0tFcqYnEFsYKO7bIt262FHKgcoykfoml0jMqCF2GEFrDa7wPtBRJu4Rj2lK~wOe~968~lY4vfTYnTWEIl--g-fWJ2hbCjuj~8EDouVkDw1~gmmRkocCbrhOvtXV5WEZp0SADr0E8pKbNw265ztyhShVNXWXnPBeGcLqTMqtrLdDfdpJGD8~ecV0d8kDlxl5DlEfzqjeURciDT1Zw857rtHJbxt6U7wx21t~~rjnjABopppWGXwAnF9O~7hsTAwRskys~yUOtxlC0pqk0jsQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "pose": "standing on all fours",
+   "status": "done",
+   "si_lo": 0.8,
+   "tex_lo": 512,
+   "sizes": {
+    "hi": 547332,
+    "lo": 145844
+   },
+   "dims": {
+    "len": 0.815,
+    "height": 1,
+    "width": 0.506
+   }
+  },
+  "si": 0.8,
+  "tex": 1024,
+  "si_lo": 0.8,
+  "tex_lo": 512,
   "sizes": {
-   "hi": 747832,
-   "lo": 132212
+   "hi": 569668,
+   "lo": 149244
   },
   "dims": {
-   "len": 1.0978,
+   "len": 1.8016,
    "height": 1,
-   "width": 0.3901
+   "width": 0.402
   }
  },
  "NOSTROMCAT": {
@@ -2190,36 +2267,59 @@
   }
  },
  "NEKOBUS": {
-  "image_job": "96069275-5102-404d-a343-207f83ab9edc",
-  "clean_job": "96a86792-2cbe-4712-bc5d-623cefb40c61",
-  "view_jobs": {
-   "front": "1093122e-6df0-4fa9-a470-50a6624eaeab",
-   "left": "945c6cfa-ce6e-4f59-87e8-77d7f7fddcdc",
-   "back": "223bc59d-7776-46fd-bdce-3fe9d1684492",
-   "right": "ff33f707-6bd2-456a-b3fa-816bcfc968bc"
-  },
-  "model_job": "ab34be86-18cc-413e-b271-c294fb29ea65",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "01a0dfa2-ebe8-7589-9cf9-49c15c14d5e7",
+  "clean_job": "01a0dfa2-ebe8-7589-9cf9-49c15c14d5e7",
+  "model_job": "01a0dfa3-3e1f-77cb-8a20-378489421008",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfa3-3e1f-77cb-8a20-378489421008/output/model.glb?Expires=1790717704&Signature=NCyt0A3T78hQEB3Frott~jCDaliB9-GTuTxGKZ9l4pBlsJsR1hHtfTgK2wy6y4E-IIrdMro44jJuH0HzCA8yeGpezY-JQB0aC-qR4xkCeE3SaGiVHAvbXuz5WpiADXTwZkiQKz0X3Q4Wz4OyGq4xh1nkBmybrLOdgGELcrI7JeMmG1R4EvuxHW1AqCe9yQ2IePmSCi8duWNPctqsjaBYiHcXur9sgXEbq81DIvr90dbYry1UQ8dk6~KV7dEeNcJqXig~SDdVKplsRDsdVatPKQ9ICkFKDKRVQzQei--zNA-sirWi5UGMHMeegHlaDio2~pQzOO58CiphseyKVH93jg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfa4-a719-75ac-9db3-a93aa07e5b75",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfa4-a719-75ac-9db3-a93aa07e5b75/output/model.glb?Expires=1790717762&Signature=cJdghS5r9uBAboFhp1gYeZaJhK~SgK3IPv2mOgtLF4m3dOl8ew9axWg98dcFs0sRy0dqXdu2VRhjupTQZEEb5YnLgZaHwPFsNimUY2bBOfaxy0V8dRrzCYehhgqSr77NTGWhPO5a-mmWcSCoj5F8nqk7t7oEw4ov9i6Z9E2qbm8556-7ndXxuXNYs50vpRCf1zw1wJTUHGxXRTIL4Ym9qq2EYoCrvHLDIiwXhNCkq~Br3N28Up7haNc2MOBHlPlg~Daiy4pCku0kQUIdpGnuYSHVXtK3yoVdSdeqwNFsj7VMF1zoHXQ8ZoSI17sMdfh-gBAhg6NrwabvSLkz~lQOBA__&Key-Pair-Id=K1VGYTHIYLM9UM",
   "pose": "standing on all fours",
-  "source": "adoptable (realistic portrait from the real cat's proof photo)",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_074537_ab34be86-18cc-413e-b271-c294fb29ea65.glb",
+  "previous": {
+   "image_job": "96069275-5102-404d-a343-207f83ab9edc",
+   "clean_job": "96a86792-2cbe-4712-bc5d-623cefb40c61",
+   "view_jobs": {
+    "front": "1093122e-6df0-4fa9-a470-50a6624eaeab",
+    "left": "945c6cfa-ce6e-4f59-87e8-77d7f7fddcdc",
+    "back": "223bc59d-7776-46fd-bdce-3fe9d1684492",
+    "right": "ff33f707-6bd2-456a-b3fa-816bcfc968bc"
+   },
+   "model_job": "ab34be86-18cc-413e-b271-c294fb29ea65",
+   "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
+   "faces": "~500k raw, packed ~20k",
+   "pose": "standing on all fours",
+   "source": "adoptable (realistic portrait from the real cat's proof photo)",
+   "status": "done",
+   "hd": true,
+   "si": 0.032,
+   "si_lo": 0.01,
+   "tex": 2048,
+   "tex_lo": 256,
+   "q": 70,
+   "credits": 16.25,
+   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_074537_ab34be86-18cc-413e-b271-c294fb29ea65.glb",
+   "sizes": {
+    "hi": 665044,
+    "lo": 255364
+   },
+   "dims": {
+    "len": 1.4551,
+    "height": 1,
+    "width": 1.0685
+   }
+  },
+  "si_lo": 0.8,
+  "tex_lo": 512,
   "sizes": {
-   "hi": 665044,
-   "lo": 255364
+   "hi": 505312,
+   "lo": 149640
   },
   "dims": {
-   "len": 1.4551,
+   "len": 2.3728,
    "height": 1,
-   "width": 1.0685
+   "width": 1.0091
   }
  },
  "PRISMPAW": {
@@ -2489,29 +2589,53 @@
  "WAYBILL": {
   "image_job": "883dfb7b-c218-4733-b75f-80f56027c2eb",
   "clean_job": "fa445e8f-3887-4288-a0ed-ef336bc9d8c3",
-  "view_jobs": {
-   "front": "e672c7f6-d10d-4e51-bbae-fbe9d8bf49af",
-   "left": "936e7fcd-4b58-4aca-acfc-c62d27145edb",
-   "back": "5b576670-3a38-4e0b-a7e8-28e519971762",
-   "right": "b4e7e552-dfc7-4aec-9b2d-7f5526eee27d"
-  },
-  "model_job": "96d88c83-8477-4a65-b183-3c778d2f22ba",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
   "pose": "standing on all fours",
-  "source": "queue (site portrait)",
-  "status": "done",
   "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
   "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_080652_96d88c83-8477-4a65-b183-3c778d2f22ba.glb",
+  "model_job": "01a0df9e-9dd5-76cc-ab21-305724723a53",
+  "model": "meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right))",
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0df9e-9dd5-76cc-ab21-305724723a53/output/model.glb?Expires=1790717396&Signature=VFUAsp5sDj~IDU8UcoiNfkA-hHcKQqLBVn~RgxGnx4avV8knq1ApECI12zO3OEyFEDoLJVVFsXhcbZo4pr6L1Mn1kjtsZtryqOtJSaErHot0MdWw14wnxgJJbRaMz3xkkc5hSig1CtwGkI7txeMNLhSP1Vss7q65oB-TKpYkOgfKXLQktuSopPAgsIpWm~UnG1P4Q7sKdgmmsaqO5ye55ayfXm4VC6rY60thbd0o04Ggy6pmTCN1UUr1ioXTE1h9WRfHaE4MpmAzg9quwY7tFBruhFV-WpAaXuq0RyA0UBjmByDHbwE2g0yg7LnaXEbwAJH1klpxm5NUV1n3ZzpR5w__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "status": "done",
+  "previous": {
+   "image_job": "883dfb7b-c218-4733-b75f-80f56027c2eb",
+   "clean_job": "fa445e8f-3887-4288-a0ed-ef336bc9d8c3",
+   "view_jobs": {
+    "front": "e672c7f6-d10d-4e51-bbae-fbe9d8bf49af",
+    "left": "936e7fcd-4b58-4aca-acfc-c62d27145edb",
+    "back": "5b576670-3a38-4e0b-a7e8-28e519971762",
+    "right": "b4e7e552-dfc7-4aec-9b2d-7f5526eee27d"
+   },
+   "model_job": "96d88c83-8477-4a65-b183-3c778d2f22ba",
+   "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
+   "faces": "~500k raw, packed ~20k",
+   "pose": "standing on all fours",
+   "source": "queue (site portrait)",
+   "status": "done",
+   "hd": true,
+   "si": 0.04,
+   "si_lo": 0.01,
+   "tex": 2048,
+   "tex_lo": 256,
+   "q": 78,
+   "credits": 16.25,
+   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_080652_96d88c83-8477-4a65-b183-3c778d2f22ba.glb",
+   "sizes": {
+    "hi": 725716,
+    "lo": 198780
+   },
+   "dims": {
+    "len": 1.1159,
+    "height": 1,
+    "width": 0.4896
+   }
+  },
+  "si": 0.05,
+  "tex": 1024,
+  "si_lo": 0.02,
+  "tex_lo": 256,
   "sizes": {
-   "hi": 725716,
-   "lo": 198780
+   "hi": 677232,
+   "lo": 261704
   },
   "dims": {
    "len": 1.1159,
@@ -2848,7 +2972,7 @@
   },
   "dims": {
    "len": 1.3037,
-   "height": 1.0,
+   "height": 1,
    "width": 0.3688
   }
  },
@@ -4007,29 +4131,53 @@
  "anonymous-cat": {
   "image_job": "0240d536-3841-4a7b-b0f2-17b9144639b4",
   "clean_job": "9953a607-d63a-48a1-a154-cd4ac73ea8a2",
-  "view_jobs": {
-   "front": "9f7c3eab-9c38-4545-8e6a-3413d004e0ed",
-   "left": "9100ae1c-dbc8-46c6-9a3f-c4c64e4120e0",
-   "back": "5911503c-1087-4382-b171-9f0a95acc91e",
-   "right": "d162f415-00cd-4e6f-9bb6-d6d8aa35885c"
-  },
-  "model_job": "1ff9fe1b-e7da-4c35-b8af-81a7a0333655",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
-  "status": "done",
   "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
   "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082408_1ff9fe1b-e7da-4c35-b8af-81a7a0333655.glb",
+  "model_job": "01a0dfd3-e45c-736c-9c76-8b4e025ef3b6",
+  "model": "meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right))",
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfd3-e45c-736c-9c76-8b4e025ef3b6/output/model.glb?Expires=1790720926&Signature=QYOOqWI5Zf2Enw5bW7~bx-cGqRo8RaY~E9-qenuJxLylzj0f2qV4nCnYZptmXfd0-oTa7wShClvxSPAbHIxSPe5gRK8co~dUwVq9IunwqqolsBoCPeDSKx8pSmiU34SWv9BjAh0TWc9o7Bn9kOxHyobRHORfbiuawPjFuOSYzlmojjY4S0MUQ9~9tclG~oupeebbuBBFthMeYcfvCRDqi5s6Ky9t03cxZINrPvv6s7-cHJSMAItv1BzWD8s35sXIMq6ZZiIqHDvl-zlVfl4jKTS~MhWHeSxN8JZohkUxzWVYBAkXhy5EdGyiE6Gmi-LpJJU4nvmvpdksSjipqP5zGw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "status": "done",
+  "previous": {
+   "image_job": "0240d536-3841-4a7b-b0f2-17b9144639b4",
+   "clean_job": "9953a607-d63a-48a1-a154-cd4ac73ea8a2",
+   "view_jobs": {
+    "front": "9f7c3eab-9c38-4545-8e6a-3413d004e0ed",
+    "left": "9100ae1c-dbc8-46c6-9a3f-c4c64e4120e0",
+    "back": "5911503c-1087-4382-b171-9f0a95acc91e",
+    "right": "d162f415-00cd-4e6f-9bb6-d6d8aa35885c"
+   },
+   "model_job": "1ff9fe1b-e7da-4c35-b8af-81a7a0333655",
+   "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
+   "faces": "~500k raw, packed ~20k",
+   "pose": "standing on all fours",
+   "source": "queue (site portrait or coin logo)",
+   "status": "done",
+   "hd": true,
+   "si": 0.04,
+   "si_lo": 0.01,
+   "tex": 2048,
+   "tex_lo": 256,
+   "q": 78,
+   "credits": 16.25,
+   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082408_1ff9fe1b-e7da-4c35-b8af-81a7a0333655.glb",
+   "sizes": {
+    "hi": 762352,
+    "lo": 145924
+   },
+   "dims": {
+    "len": 1.2567,
+    "height": 1,
+    "width": 0.5615
+   }
+  },
+  "si": 0.05,
+  "tex": 1024,
+  "si_lo": 0.02,
+  "tex_lo": 256,
   "sizes": {
-   "hi": 762352,
-   "lo": 145924
+   "hi": 738108,
+   "lo": 243272
   },
   "dims": {
    "len": 1.2567,
@@ -4038,36 +4186,48 @@
   }
  },
  "popcat": {
-  "image_job": "774c96e7-a13c-4c24-8d83-8ed1f8a5d65d",
-  "clean_job": "e93d7046-176d-4d97-a307-9a9d8acd5912",
-  "view_jobs": {
-   "front": "67990b4c-661b-40e3-bec3-4ab8cea4c2b9",
-   "left": "570f2b28-04bd-4da8-b6d6-56c90713b428",
-   "back": "c43155f5-a1d7-4973-a3ad-8a874a231ee8",
-   "right": "fa459b29-ff8c-4b37-bc73-16bdfac3cdbb"
-  },
-  "model_job": "2a63f5aa-3470-40d5-a666-7f720074f060",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "01a0dfe7-730e-7171-8734-f3a597ba8354",
+  "clean_job": "01a0dfe7-730e-7171-8734-f3a597ba8354",
+  "model_job": "01a0dfea-35ef-744b-a513-9812b36f8f3c",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfea-35ef-744b-a513-9812b36f8f3c/output/model.glb?Expires=1790722343&Signature=iGiNgADInsqZ1Af0d325dAQUlmmz96ztjoJcB5fpEp9YECloXLyeyMIO7bmALOQwr0wv30aH0tAkSxLISUx2QCty-Trm3tcbowwiim~o5yz9s78u3TNXJWxhNzG8xXWJ7Fx8f8MpSHEl87VbPDG2olsWyySM17xavhen49abVTAvvSVFn7e5oG0DM5CfWZS0-iHi7ogVjR6Yyh2cS-XbLlzFM8F9AOpdLxm8iBEQwGCEHY6hF7iBnOaOdPzFo4fefI9jxVtZwk4KY5qkQf9EXArTv~eZFqwPsJcFSZ~dUFe-3pLYNXeib8L-NDuHB8m~-4r4DdJdJF~JnAUjUl-W4w__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfeb-76aa-7321-b492-7538b43402b8",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfeb-76aa-7321-b492-7538b43402b8/output/model.glb?Expires=1790722441&Signature=oCDCYVrBQBgSfpRGcs1R5Gz-UNhXK0PaWWsQyNKgYjY5p2szVVzqmrirk5DjAB4CvxUNc-LtTA1Y9NhVGq2n04KpNoIbDT1-Yfl8HkZRRIjk~AAfh9rRKstv3Mul0Es~ECCBTMzL5e6gXv~-HgNhi~JFZZKKtnm4p53q--hdLw7xzMRaR2pp~QFa5Uz3XhWOqH79r2m-xztYsIKvVg2yKXbLkky09D5GJFvjc5YY8zAxcvOYPOvhM2MaYxSCQXWARZ6XpsoKEtPQxoOerp6MA3Yx8O3nOhV4~QQNQajM1k1SF6BvacCVq7Xsh~1sutB9EZIBYpc0pKuzmHdGRUbgOQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082410_2a63f5aa-3470-40d5-a666-7f720074f060.glb",
+  "previous": {
+   "image_job": "774c96e7-a13c-4c24-8d83-8ed1f8a5d65d",
+   "clean_job": "e93d7046-176d-4d97-a307-9a9d8acd5912",
+   "pose": "standing on all fours",
+   "hd": true,
+   "q": 78,
+   "model_job": "01a0dfe3-adb2-708b-bb29-08ac2eeae2c1",
+   "model": "meshy retexture (meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)))",
+   "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfe3-adb2-708b-bb29-08ac2eeae2c1/output/model.glb?Expires=1790721909&Signature=JV08wQgl92i1Y3D-V-D9ZAW-jG7i050f35mXtm7Mheoz88MxWwLyyvQMY5XQkOQ-biQ7Wsr9GbN3vUhDhlh1y9e1d~1BInLK1ARhufFUFg5oxt4fe9E7n7FsKJGS-giotr2nt4NK0aAj8wWtXwvzNLzMqjXYDsMB~WPZ9WSRuJQXmSsoKt-6-wIo6aAjYZwxL1AoRmeT95fYzxoBV0hZUFxevOCARSyMSylq4~PGFT7LbKdy2df7e696aS6RNQL6yhdp-CXuG~H~H9kgsoB36~Zt182MkNLAJ1FOL3p6geANCgXINytle7x~GRg6bEmhCXPyv754V1zDWDqoWkJFxQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "lo_job": "01a0dfe4-ee38-76aa-a801-8fd08a2c427e",
+   "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfe4-ee38-76aa-a801-8fd08a2c427e/output/model.glb?Expires=1790721984&Signature=Rf1ZIg7Y2j4ZP7UjoY5Lw7x7cYqWP5bsW60GLi5AyGTEYZb0o1zkh1fe3XvqFv4y7KRUQkfuG46h4H6q-SU51UaLc7caWqizgIqtD8KnwqgbkmlernHQjTr2lFa-eN8CMZqK3DshbMIHDgEPOhJy5HVPou1UztzcY5ZNy4DhPNEEZzIyScsc1efJEx2sTggBBrksFSOoThkv6Afax0PUF0kZWFpaW63N~jzWu2Duqlc8Y26yC821Jk~3uYVFipraJLcSDVDRYL~oA2AaZco6IrO20S9wTJFiiGByyAVMUxqKSB29gBFTduLrbcDbpm~bMP8RCDZ7~qXooi8JqnhRjw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "status": "done",
+   "si": 0.08,
+   "tex": 1024,
+   "sizes": {
+    "hi": 779824,
+    "lo": 124280
+   },
+   "dims": {
+    "len": 1.1753,
+    "height": 1,
+    "width": 0.5956
+   }
+  },
   "sizes": {
-   "hi": 798900,
-   "lo": 183856
+   "hi": 366760,
+   "lo": 128604
   },
   "dims": {
-   "len": 1.175,
-   "height": 1,
-   "width": 0.5964
+   "len": 1.6206,
+   "height": 1.0,
+   "width": 0.3308
   }
  },
  "cat-in-a-dogs-world": {
@@ -4106,29 +4266,53 @@
  "catwifhat-2": {
   "image_job": "7c0e4a84-ad50-47fa-bb8c-ead7f44c92e6",
   "clean_job": "5917e56d-1d72-4007-8216-04d21d98874b",
-  "view_jobs": {
-   "front": "2cd6bdef-683c-42f5-9d0f-0f591bbd6725",
-   "left": "abef7c9d-4884-4303-8e8b-cb1a87641c6a",
-   "back": "72548b97-bfab-4381-b399-a122bb9962ec",
-   "right": "252aafba-5bd3-4e1d-a106-d4ed430942f6"
-  },
-  "model_job": "260ea671-dd3a-4ef6-941d-501ae01e331c",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
-  "status": "done",
   "hd": true,
-  "si": 0.0256,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
   "q": 62,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082512_260ea671-dd3a-4ef6-941d-501ae01e331c.glb",
+  "model_job": "01a0dfce-6138-71fa-993d-eb6acca624de",
+  "model": "meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right))",
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfce-6138-71fa-993d-eb6acca624de/output/model.glb?Expires=1790720526&Signature=FyRqe~VqK6LLZVifeY7G8hzpA4dAy8lVclJ3wMPHwoU28Kg9xtvc70U~p2GgBm-x3Ly58gCX0di4SLNTj1NIU9Q1oHOPPY1PcWrKbpdnVFAdJWmSdoBxAYWA82H7gX8e7DcI8CJsaW5CXNs5Ox26UFxOUtgToUtNtSiYP6Nk~eyLIc1U2bkQjGtK~68OrG7dBAAtBiHW7QV-02poafXhfdbpij4zrSSgxfp18RJLTus~5K747vyBfsv0y2-xoAYBcdp0tAj9Kgo2iEjAzzW3yNTVRQoAJz07kjXjshBWKhui3YiYw8yXyPFhXxtGyx7n0T8l6mKHFDf8LvjrIDihmQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "status": "done",
+  "previous": {
+   "image_job": "7c0e4a84-ad50-47fa-bb8c-ead7f44c92e6",
+   "clean_job": "5917e56d-1d72-4007-8216-04d21d98874b",
+   "view_jobs": {
+    "front": "2cd6bdef-683c-42f5-9d0f-0f591bbd6725",
+    "left": "abef7c9d-4884-4303-8e8b-cb1a87641c6a",
+    "back": "72548b97-bfab-4381-b399-a122bb9962ec",
+    "right": "252aafba-5bd3-4e1d-a106-d4ed430942f6"
+   },
+   "model_job": "260ea671-dd3a-4ef6-941d-501ae01e331c",
+   "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
+   "faces": "~500k raw, packed ~20k",
+   "pose": "standing on all fours",
+   "source": "queue (site portrait or coin logo)",
+   "status": "done",
+   "hd": true,
+   "si": 0.0256,
+   "si_lo": 0.01,
+   "tex": 2048,
+   "tex_lo": 256,
+   "q": 62,
+   "credits": 16.25,
+   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082512_260ea671-dd3a-4ef6-941d-501ae01e331c.glb",
+   "sizes": {
+    "hi": 745936,
+    "lo": 127208
+   },
+   "dims": {
+    "len": 1.1867,
+    "height": 1,
+    "width": 0.5188
+   }
+  },
+  "si": 0.05,
+  "tex": 1024,
+  "si_lo": 0.02,
+  "tex_lo": 256,
   "sizes": {
-   "hi": 745936,
-   "lo": 127208
+   "hi": 651736,
+   "lo": 219364
   },
   "dims": {
    "len": 1.1867,
@@ -4370,36 +4554,48 @@
   }
  },
  "catcoin-6": {
-  "image_job": "8952f7b5-6314-4618-8307-8f3bc97d8075",
-  "clean_job": "92324f4f-a534-4670-87c7-055590ad6871",
-  "view_jobs": {
-   "front": "86a46a4d-b01d-4807-8422-015ab4757e07",
-   "left": "8ac5ca5e-6729-46ca-84fe-d8ff00ac5690",
-   "back": "1cf41f7d-d269-4ea4-ae40-e9ddb1419365",
-   "right": "bc719531-e1b9-4018-8697-bcaf4be45cab"
-  },
-  "model_job": "45d18b27-2417-4d67-81d2-b31d6e8f9e09",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "01a0dfe6-d11a-73c0-8e37-f5d24c1f7ce8",
+  "clean_job": "01a0dfe6-d11a-73c0-8e37-f5d24c1f7ce8",
+  "model_job": "01a0dfe7-de57-70ea-b534-220e695f1e69",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfe7-de57-70ea-b534-220e695f1e69/output/model.glb?Expires=1790722191&Signature=kOCwM2kcu-QtsS5Qgwqo3MNfVmd1XkEAK0sPWOBUjDNK1Om32CeUb4WZAuY~JTTBsXGqNbKpErC7jbhUo61JOx6sb9hVkgiL5yUMMX-~hXzjsgw7Kn1Q6rhfDHPum6bjHLaS5M9fePXJhj6Iq2WDwLqs3aSHHbKLOjrqmhHyTCXn4l92vJizQQCT3g6Ju~wd-G0VMiX9Wy-Sb405R6qhkkFlIDwb4SJ2~jlpQteE182xFzbc4Uqj3IQSpcXmmF7qRAGt4BUgVp~UZYL7rI9spPS3IE4lBKREXj~xDPXymXXmSogWL6L-bmesHoMg8~kR-MeY4lFGXYIvIvmA-pi1Sg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfe9-1f64-70f4-ae6a-f4c243a36f88",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfe9-1f64-70f4-ae6a-f4c243a36f88/output/model.glb?Expires=1790722260&Signature=m33DyI89qdUsk6yQAcEELWk3MSBIPTTFyNQEHQ6-z7WlnRUU2LOyN2I3trDyGOWxCb4tC4UwG3blEqpLR4ohP1dP3Fx0-koG0hMuRZnILjmDQdkBw34wxu2ZYxwOPz-m4Qi0s10gkbrgcxSOGy~DO-uwQ1ha9Iwx4WL7wz8s03EuqRLe6e8Ody4Sk7dW3LL~utSBE97XMD9OOF62wzw3uxzAZI6JIyBG1VbTMVc4xYQEWhyu-Tex-ytyuegInkIaM8GX9TLZoVtnCoG4GpkgjSKJXnJGDxJE1t8fhaotZ72iFP8QN80zsKepm2YpmI0mIpKUaFbCfLHdCUOgheIq-A__&Key-Pair-Id=K1VGYTHIYLM9UM",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082819_45d18b27-2417-4d67-81d2-b31d6e8f9e09.glb",
+  "previous": {
+   "image_job": "8952f7b5-6314-4618-8307-8f3bc97d8075",
+   "clean_job": "92324f4f-a534-4670-87c7-055590ad6871",
+   "pose": "standing on all fours",
+   "hd": true,
+   "q": 70,
+   "model_job": "01a0dfde-b1ab-70ea-be2f-ddab24827ad7",
+   "model": "meshy retexture (meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)))",
+   "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfde-b1ab-70ea-be2f-ddab24827ad7/output/model.glb?Expires=1790721599&Signature=oLGr2Y0fQN0VBFwt0IFfIDtPYa0cgK7Wk72DvBf-pd6M-wHMlKL3KpgIM3UVJvl63qM7ba~iy2cdkFilYihRvdgmvoW8~84-6h4WLZ1KWKK9qYa699n08~FnPCtujex7ofQMTh5tlh2UYeoYG05lb944H9LKfeTJhI15GyvDtNErsSdYLdmOcoAAmMzkrq9Hm94nRCUm-N~LMh~IhjFAK-sxTR5XjNUm9Y-EF7CBULYVAPVfohssERU~o~GFInHooHk56apDtLJ3PmcFOR90bJ8bJHep181shRap4r9evObyxwvLvoeCbR7anftlnAT51XBCQcmmLAVb-32SFnoiBg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "lo_job": "01a0dfe0-1a9a-7433-9a33-5a778b861dad",
+   "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfe0-1a9a-7433-9a33-5a778b861dad/output/model.glb?Expires=1790721672&Signature=N3HxV98enjMnGrifgWrO6lWeremZJrdZFHRZgZsSt8Nan3QHteAzdoMF80N5lQRDnELN1P697OxGp0-qoRoeWB1GCodsGd1lXIQVxEfkjtZhwqp~5kVsp9pDMTbwDadBUSaISu~IO0q7TP1yXUm0Z2LnUwrWGX38IHp2VnSbtKTYF~JRWL1u14NMyXbc1GI4oxjsBjgc3x~uNAnRI5X6bEwUgwqhOlAipG26GElcYtc6uOo1CxPgwWr9o5hru4IXiruRtOUwBlEp4NTZFIaG1fRJmpFMdi~Ef2El88NC-E0GYHjNZ6NJdlGwQ3nUuc739QJ-hDTFQ6YtsLNu4hMG6Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "status": "done",
+   "si": 0.05,
+   "tex": 1024,
+   "sizes": {
+    "hi": 586656,
+    "lo": 125160
+   },
+   "dims": {
+    "len": 1.2348,
+    "height": 1,
+    "width": 0.5902
+   }
+  },
   "sizes": {
-   "hi": 709772,
-   "lo": 133780
+   "hi": 409896,
+   "lo": 130104
   },
   "dims": {
-   "len": 1.2335,
-   "height": 1,
-   "width": 0.5932
+   "len": 1.3631,
+   "height": 1.0,
+   "width": 0.4654
   }
  },
  "raydium-cat": {
@@ -4905,6 +5101,296 @@
    "len": 1.1539,
    "height": 1,
    "width": 0.4981
+  }
+ },
+ "ATCHOUMCAT": {
+  "image_job": "01a0dfab-d02f-7602-b498-fcaa7e7e90c1",
+  "clean_job": "01a0dfab-d02f-7602-b498-fcaa7e7e90c1",
+  "model_job": "01a0dfac-21ca-715f-9c54-41c344a3ed7a",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfac-21ca-715f-9c54-41c344a3ed7a/output/model.glb?Expires=1790718351&Signature=aQdfiolFzBNMV8jzvxo4zHS0LuEkVM-kPw9zY4BShSUyyuLiSu4QcKhJTfLWrL-L6UToNccI935WPylmx3d-rWE69IshbAboyiQzwpedS4-VdCA07GAWsAoho4QYauj7cHrOuD-YiwlKgWW0~548gqqMdhzcILpN-wkCedQ344b6cekQphKHZ5sHGUUtfJcR3u8gTwD1RAFyhyH67X1y7M4LS-FINwfRvt70Q8Zcc9EO3Va2Dt7mWXjW-dTlg2E56a5c4gK5oV3uwAaQvb1MfiIjIoBTJlbLVnJ1Jjx5kXY0Dh4RxbjGYl4jz4vCcgu6NuVKNvf3tPrbAAlQefyJiA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfae-9d55-72b5-871b-0d19441e54d2",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfae-9d55-72b5-871b-0d19441e54d2/output/model.glb?Expires=1790718428&Signature=fBJlvWWYS6hV0VMu~Icc7dWYDm9jb2lgtHX7m114rksF1Q11oK7INDHsweX2UQbspgrolYc2jb8f-fAlXdKZcCuDnneviWWV0zaAAlL2jm1ATFUA2MHeoVhb0ejM1IyNXMEzMQiYr~JpwhTpCMK~SS7GwOzK4-hceaMEXdKth~u2VP2rESAMiSzEDlbAo74HjSKciEZE0Ol-rZ8mAzXzvqBIoCyDMykUZy6voRpArnkHLOrAZcCllOaduLj50s2L8pa7rTqPlG~Vgy5SD8gqc1vWBAl9oeY20LN~ou2N~1hvEAl-s0KisRuFYcfLH7aqBtWpoFF-M9Pr0VnOEI3v3Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": null,
+  "si": 0.8,
+  "tex": 512,
+  "sizes": {
+   "hi": 446880,
+   "lo": 147276
+  },
+  "dims": {
+   "len": 1.8356,
+   "height": 1,
+   "width": 0.8005
+  },
+  "yaw": 0
+ },
+ "AZRAELCAT": {
+  "image_job": "01a0dfaf-b323-77b8-acef-d22788e08652",
+  "clean_job": "01a0dfaf-b323-77b8-acef-d22788e08652",
+  "model_job": "01a0dfb0-05fb-729c-add5-47ae39d3183f",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfb0-05fb-729c-add5-47ae39d3183f/output/model.glb?Expires=1790718537&Signature=KvnuZfn8dpMs5F1S8P5D4o8U9CI~cSj59ezlXzRa~yH2BhIf0Y8bLu1cgPRZrp0vJb7RnJZXtK3svzJIbspx7wRuBf6zBIP6aRdczH20R8cH~AbsXQdzBHfLdcDz1OkLnxDszvub4qRRs8Qpk8Dhb4ZQy-VrxOgtETwke6FHbAd~nLCGTOc1hi0Mz~fYElbRsL~e7br8R6k1wfqrHh-rZUcG40yA15Dw-AJtaNAWT9XDncC7R~1wqMJVURz~ONSijF~C~G~RgKrkGCus5ci9z0l1b23CTZyCHeqEEdHGoF2IMVKgdomRi4X9xp7IYusWrZpKCjyquTv5NZopJvJ0Sg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfb1-701d-7418-a743-3faf3adfa03a",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfb1-701d-7418-a743-3faf3adfa03a/output/model.glb?Expires=1790718598&Signature=GDXdIJ8KjUblcksCBYGEzbbt~fG6Y5Vks9Xg9kTOXtVTXIK4ckAnYI9zscaep3MuwqKSqg6OlDi7~VfZJUW4D83J2Snt9bp1h6KcdvwOvoFPlxGyl-ItB43UUARjaTxlfo1OGuAuhrzWfNjLDAeWzXCwaK1SpFczfZ-cTgsk8zKD-zAAU59KZ90QAy~5oIo~H93xdaxgusWPiCAt7hOJuCErIre-6YybxLrf~tgUY8LUws4B66gN57ZfTsfwn73FF0L7xHjRWmiSAEs49cYKLiJIeUyb~kzfQt3QT1pDNYpKxINB2klpfhdNcW03jmr4d1j53O5DCQwV8ZyBPf0bhQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": null,
+  "sizes": {
+   "hi": 391740,
+   "lo": 138544
+  },
+  "dims": {
+   "len": 0.9547,
+   "height": 1,
+   "width": 0.4399
+  }
+ },
+ "BIGFROGGY": {
+  "image_job": "01a0dfcb-bf9d-71b4-95fd-d46b88687276",
+  "clean_job": "01a0dfcb-bf9d-71b4-95fd-d46b88687276",
+  "model_job": "01a0dfd8-2184-771c-a895-9e6192cfd57b",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfd8-2184-771c-a895-9e6192cfd57b/output/model.glb?Expires=1790721151&Signature=TIqDXW47Y4OT6MyRfcjBDNLf2IXwy83Nbo9wQLl~Hbsy2C7KK0-kP2bD~KGJUuinXP9ig4h67LZClYGaq8QTlw~rceK1Z5EUPclRGJ3OYBKcClgQJXzaK6tD~LKLzq858nG8qgxu5y-FonToGejsStXJ5bbeOfUecD9U~wLiWYZhRJmjHjJTY8oLzesaFbTDlE6plMfo1udQPS1Q2w7KH--W9Z7dV3AMcGLMmRZsKHi-ChaSJ~tTQjS58SNio3ui4zsHBlpfoZFFFNc3pOTyVY7wQVm1rn~RjWp3sox5Viln5juu1jgfZ0JqXjzNB~PH-CcI0zl-hoVQOWgGZSgd8g__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfd9-616b-7100-94b0-0165825fca34",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfd9-616b-7100-94b0-0165825fca34/output/model.glb?Expires=1790721220&Signature=fTLcI988RKpfVffk1oHkoms9osFD0Ratfd175yBRqMORNB-o5FR4I~nLX-DPCc~eCEgr8z24dMPxBiWbJOFv9S7MQ8Z7yWcIM2s3DpcMesv8SpESDSrjc5cXr90kZP2z-nOzY4TJBqI~mSeTQpGLG2-Ns-T5SJn1RN7KExXeGHV2iAw78gg5pft4lbhvysdsz6UuC-LkmxGbD4Td-sFHloNQDOWFSLlcGLTwk8qx~feJ6D8HTyveoPQMs5M6~SWvXDoh7gci42chfaZhC5eM1h4KUtaUCr7BfGEAj1dkoeqNoq1xDbarUwuM3JRk9YDA9yKg3yjUQwKtYLA9yF8JEw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": {
+   "image_job": "01a0dfb2-5e12-706d-9e9c-8e48c9f9b108",
+   "clean_job": "01a0dfb2-5e12-706d-9e9c-8e48c9f9b108",
+   "model_job": "01a0dfb3-7751-7339-82ab-8acd2951b2d1",
+   "model": "meshy-7.1 multi-image-to-3d",
+   "faces": 10000,
+   "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfb3-7751-7339-82ab-8acd2951b2d1/output/model.glb?Expires=1790718835&Signature=QWlkIjvAijBzU9Zx-AHsd8YpKasgiVSzPpuOGsTbMpUPeJqnaAu1JPJIdX6gdvMXgk-1WYk8cinr1ptu4ox251dk04iRLiT-bVq6bPuRwavXOwP4mm9n2qYt~T4-6aMNCe5MS8rn62w0p0MKfJuJcetMJzzhGya2~al51rxXs1xgsNbqBZ8nDsGMiAfnlOAEQM7lkGic7VtKp~jqM00IjsfQ2HNEfwOYArjvH~6T0apjchXUPFLEXnLahJc4uLeTTpGYXFLXPMNdp-PNnqwCf0awUVOU2k6aKgbkNtvDGiMNNubYRXtYHISuWKj1OJNuWnJ25vJtY6AB1AkgWJcbdg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "lo_job": "01a0dfb5-f5d2-7070-9e50-8049cd9d3694",
+   "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfb5-f5d2-7070-9e50-8049cd9d3694/output/model.glb?Expires=1790718897&Signature=Q0whJdh5G1Z3pLiwJq7jxmQTw1CQcIf8OtpP36KiVZHujR4kOCc580wj1MsE3uJyo2bIVxxp9aF1LfNdcGsbK5Q73zfIHWvpzwhDx1FUYDhoVJz5Z8fmW0P3wwTx22VkWaF87CFpl2Yd1lpgQv-bziiwrXf0D8Y0NfTW73NvdwmWexdV5JiHDgYyJLd4t-UTfh0RE1-zT1LLH6BWIMJInndBGXlhtr-Q88a~6J~n0oLtsIcuuVpcm~9EXdqhLyU868BcXzfTWNm-dgjbLfUPmxqAn30YRtNNcej0QmkphJll5QH5OTSwtanbHAz7wzazjSXmLDXNpvwq4I~46eo~Jw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "pose": "standing on all fours",
+   "status": "done",
+   "si_lo": 0.8,
+   "tex_lo": 256,
+   "sizes": {
+    "hi": 532584,
+    "lo": 94928
+   },
+   "dims": {
+    "len": 1.0908,
+    "height": 1,
+    "width": 0.9087
+   }
+  },
+  "si_lo": 0.8,
+  "tex_lo": 512,
+  "sizes": {
+   "hi": 493536,
+   "lo": 148696
+  },
+  "dims": {
+   "len": 2.0533,
+   "height": 1,
+   "width": 0.9524
+  },
+  "yaw": 0
+ },
+ "BLAZECAT": {
+  "image_job": "01a0dfb6-e46a-74f7-afea-9f3bd7c9dfd4",
+  "clean_job": "01a0dfb6-e46a-74f7-afea-9f3bd7c9dfd4",
+  "model_job": "01a0dfb7-368b-760f-bf18-e7a25a6a9672",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfb7-368b-760f-bf18-e7a25a6a9672/output/model.glb?Expires=1790719007&Signature=fY6tShFWTNEaIakdtScDt3Ic0SKfHDKI1CB6WGLKdnXBwNDeQQzsvrhWxtldTi2EVsCZ7lbkFMQ~QGoamHABI6aihZ3LYOQD6D8eJbXjjIfefJtRV5jOSzf9Abt-iPmELh6dI0c0ZVqcKIuCThQJU-VOGZptFS5HoAEdzo7CA9n3kK7motJsOtY4LVhZis6a95zVPKfSsQu24iZz3qIzqY3sb8v7WTR6RzY~ks~cdrHtTuv57~ZB7AMJfOC4OGCqN7RWLb42TVB3TcvEmRnEwMMkNU793BhYVd2v45pUTYX06-~Ffq2v7HJ-br1J5THZ4F6aJS6AHBljaZ0Bz3-zzQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfb8-9e31-7658-9534-eaa18a3ea977",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfb8-9e31-7658-9534-eaa18a3ea977/output/model.glb?Expires=1790719070&Signature=BlS3ehw1qNTe2HWsOarCMmhCrGl7duAqGtoNKghslQVjxPjBEtssXIanlf0t4q-NnCeQjWjVICtokzXgFikQes5vEtlTX9qQsM4fJ4W7W9aPw~4jzotfXZ6-KVO2MVOc-YXepcQY3uFXLVppTR5NvxePMfKF33OOL6Tb~O5yTMlmIWdjyNbzAwttiT3vXAFfWjuOUYXZvWAwsmsTeamxEXSHfmROeC2kyvT-gltDtty5F6QTKqnIrh-EAKUp1ITPWaWcozFZ4qEGo0hhkUw~9oCN3Ax7j7keztGOSCZPxWn75rysDg7QRuCp9D5XTzbLHcErSfbcbGZQsBWQlQ6VoQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": null,
+  "si_lo": 0.8,
+  "tex_lo": 512,
+  "sizes": {
+   "hi": 470460,
+   "lo": 149968
+  },
+  "dims": {
+   "len": 0.9032,
+   "height": 1,
+   "width": 0.3687
+  }
+ },
+ "CHISWEET": {
+  "image_job": "01a0dfb9-8c67-7541-8e7e-4269d17749f5",
+  "clean_job": "01a0dfb9-8c67-7541-8e7e-4269d17749f5",
+  "model_job": "01a0dfb9-de0b-7744-97f4-c1a7bf5445d7",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfb9-de0b-7744-97f4-c1a7bf5445d7/output/model.glb?Expires=1790719232&Signature=F4UFvtii-RZK6MmOqhd58Cypa2dAmAP8dMXAuHLctP58xebdzZKSTjgKaG---njRcdJMqVROdg4v6sAr7weqygqruB4N~bF3-~MQswQA0YSjKV3jjLMW0FGwPViPc1eN98M-xcDRbS~UqdZFRBVFRj~8Cn42geZnuFyiu-HQCLosdi509IX6WfD2xE1W3lL6EBaqmSxN7mKZGl57eg7UEUVw6K3-ixavUMQO50n-mbM7MGP0hFAizHaYz9CFR1pIy~EYGeeNwCImYhl~pFBWs9Y4U-IFyif99Xyep-75MOli3wwATKJ9Tm9iiq7-lW-GJp2V7pp6P8zGodnjCMjCRw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfbc-0c6f-711b-8b04-e0f606b68e9b",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfbc-0c6f-711b-8b04-e0f606b68e9b/output/model.glb?Expires=1790719295&Signature=P4lQJ2GO~QE4zh9ixPWR~9D7IesVKh1JuZMsshtDPUOSx3lXTQm8RqC4wVVr~skbnt2Dgfkn48bYKq8yX5KfGlPaL3UIQRf96AcqrSMPmTfE9GpPSq6MlhDH4CXxXEvbjUG04-meFhHMsnMW7otQ6SXol0xur~frZ~eDNQK6hTGadfGsBlCalXK26OnpddK-GCindoYa23lHBhzrmjztrj0L1eKhvc5sO4oEgvUufWwS3dlfACgtpj7rKkKSqaRnxnXbmlCGTpDgq0UO9dkfJ6EObpKshviB1ukLHvEGHHH2q95OHuQByoSmdjzpo-7RM1EF9F~hZ2~9yIMlLnnfEA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": null,
+  "sizes": {
+   "hi": 384104,
+   "lo": 131076
+  },
+  "dims": {
+   "len": 1.3556,
+   "height": 1,
+   "width": 0.5302
+  }
+ },
+ "CHOCOCACAT": {
+  "image_job": "01a0dfcc-885c-7073-9ef9-3bbadff47cee",
+  "clean_job": "01a0dfcc-885c-7073-9ef9-3bbadff47cee",
+  "model_job": "01a0dfda-4fb5-7310-935d-7b4f6d8e1773",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfda-4fb5-7310-935d-7b4f6d8e1773/output/model.glb?Expires=1790721305&Signature=ma3j7VHs8dMFFxfkIZ6Gd7PIJdaStpm3cW6VZkw10TtIJPorbix0pBCxKPQnRgrQ7ZqOEtuRbWIiYVAtQM85tVtn8lXHKTR8G~J0jFSYv6-U-CgLba4jEIKpXopPFjym~0cPEezxFMBLO2H7JoG3x2LQ96951W0U3Rnux9CZsoJi3e5L0K8~HnMvTvhfk1uslSThohGhq3fpajEBFNzeQItQOjBHiSV~jC06N5w2ZCVnvN8F4EulYxrEEKmJkzC7J7UmuYyxuem1GevwcRq7a9nLI2oOHOIPWWWsTn91yMsMnPQDqayXl~3Wyw5Fx4auDqFaPeXzocxr1epFo8WD1w__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfdb-b99c-7333-a849-33c224d63786",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfdb-b99c-7333-a849-33c224d63786/output/model.glb?Expires=1790721368&Signature=Kem8P0KYV1BzSeSLYEpxIhtyFEOvOFSxlBfdHgd142mJMHKcgVoPplz~ACgaLQpfv88DlugdZdODVdY5G5IZQl9j4qMZM32IoScAZVnijxAc9hT5TgGGnXfaojus~u5uTQp-vk3L1gWl9oOCLVS8rRSIW~9S2f9eZnU-L4v9gtbL3SD1zDlpzNU~A~rHIRnPfLApxrVYY4NamcAzlhfJ8W7RiUha9X1uB1PED9qDIRMI~JJgJhYazPQyXSylp4PvzfQJRjOL6~QEJZsAHFBWNuI4hJSyMD4gfdQK~SnDpUEMT7k4yiwgeCmy0SB3s5lOLmd8DTYnnWCGuJFpy3yxhw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": {
+   "image_job": "01a0dfbc-fa4c-76b1-8b8e-c5bf4069b0ec",
+   "clean_job": "01a0dfbc-fa4c-76b1-8b8e-c5bf4069b0ec",
+   "model_job": "01a0dfbd-4bc9-711a-b953-652b2c1f233d",
+   "model": "meshy-7.1 multi-image-to-3d",
+   "faces": 10000,
+   "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfbd-4bc9-711a-b953-652b2c1f233d/output/model.glb?Expires=1790719408&Signature=O5cWTzvaqr8rcxt~Ef0PeUwWAVXG8xb5OM1CH-yfJ2MJUuQla3~Yguu06SIZcHYxQbKByKCvmjlP2J4MZfQcbUs7amdNQEzjddHoyavoTzhKSfrz3nth06ebXsRZNQTH-bza8frVmoZM8hRWjM2p1JWm4UN3LQQlVOghFm3xtmah-lCLNZ14QdkhYnnMJY1SErQIgUtDeIRn5fAuY0oCuazgC~bWbYx0IdXjAnQARsJfq3D4dVFMy4CSxOrQsgsCK25ngReneM8J9X00~HrtGWOAjJYekj4h9hFiydii-Rj9s8iW8t8QeCdiJNxmhLXzw03kFmcQKyrgUD4fnrp47Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "lo_job": "01a0dfbe-b381-75c3-9898-95ab359961ef",
+   "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfbe-b381-75c3-9898-95ab359961ef/output/model.glb?Expires=1790719467&Signature=eH4F5EdQoVw-OE6p0jNMTvXCpenHiOTTAH58~Hnwgw8rE1n0mHbMrDnWmIP2WPguaDNrJV2Ap4mPpi2v-WcPy7r2sJ577QcBjE1Br3DrN2SfMHBQMFNTsowyEzNX1nXNd56A9JlO10JBGZAnJX3Tdk3SrpC~MR6Ls1d03R31vCTjz4pHJj0O~jjyo8E2Wx7bnsFb73f6IIQqHH3LPy3whHODoKt0j4p4-hfUELF9C~W28zjQhuxzSmU-gbH3DrcX99as7lEhw9KduHrNpDm2ipYb02lZ5gXzGahPd4yjnk6qFOgy8nrLOyv3oc3gldrIKH8z3sQsO4eC3qR2cflHSA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "pose": "standing on all fours",
+   "status": "done",
+   "sizes": {
+    "hi": 298732,
+    "lo": 88304
+   },
+   "dims": {
+    "len": 0.87,
+    "height": 1,
+    "width": 0.8117
+   }
+  },
+  "sizes": {
+   "hi": 310024,
+   "lo": 94024
+  },
+  "dims": {
+   "len": 0.9004,
+   "height": 1,
+   "width": 0.8471
+  }
+ },
+ "CHURCHCCAT": {
+  "image_job": "01a0dfbf-a110-77e5-9706-aff7061cd926",
+  "clean_job": "01a0dfbf-a110-77e5-9706-aff7061cd926",
+  "model_job": "01a0dfbf-f308-77f8-893e-203068c29501",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfbf-f308-77f8-893e-203068c29501/output/model.glb?Expires=1790719632&Signature=VX5Wyln6q5qCZBVytvZBd79f9ZTEM2UXsUisIgsO06HZNF~uCPXyMBbn8wFb-lEx9OL0xTNfBHlLtw-c9rSgWfkw5flsVpWD9dkUWWXZKMzKthoCvmQ92i8eIajNkPd424NjCp6wUXsJaoeBs13clyn1ZZQXxJ~ilbN1Xl8Chm7Rt250-hsKn3bctJc2BJhnDmc8aeqdGP4eKeF-IoD76a17SQKPrNiWEFsvvjxLsXcs2QU~HHKGTBm9wEKT5NUvaiaoTI0OXd6TcuCXjpKbi-qEvroUYmdswCvQyG59~mRAMBk4Twwa4XDeMRiMelr5Ja1cHzqglpNxVz8Qme67sw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfc2-20cd-76d7-af06-dc474a16a46e",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfc2-20cd-76d7-af06-dc474a16a46e/output/model.glb?Expires=1790719700&Signature=WuLhPKEWxgKg1uhArxmzoghlx67gC7vOy1vMa23E74SWCunCenH7JIPF-R5hlP30kzZFJjBYERJH4j~oVZPd6Pts1EFEyoWKwt-ZQjPIaE~GV15DsjRrtsyl8XGPxGlD1LJ3~yHtu-SvKnjYdSyqQabUt-uwVzztHTiJ7cVNA32f2GtaEhcACdjqGoMQ4gPyr0QURr8n7hiu2HhIa-qXZ7wj6cX9WqSJ6CI7laDfF185m3NF89lG3WBLh9YK7PWvKyeO5R3xOZjyPD27KZTb64gStE9tz51BR9b9FmDFYR5cQL-kfXWJsLg1OD8D3zm4IUIOr8aX~1YVO9nTV0bXJg__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": null,
+  "si": 0.8,
+  "tex": 512,
+  "sizes": {
+   "hi": 457964,
+   "lo": 149520
+  },
+  "dims": {
+   "len": 1.6999,
+   "height": 1,
+   "width": 0.4347
+  }
+ },
+ "COLEMARM": {
+  "image_job": "01a0dfc3-36c4-737a-8e4a-c5d655852396",
+  "clean_job": "01a0dfc3-36c4-737a-8e4a-c5d655852396",
+  "model_job": "01a0dfc3-8820-740b-a07f-e8459fc7104d",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfc3-8820-740b-a07f-e8459fc7104d/output/model.glb?Expires=1790719839&Signature=DSm~Qbw2hozmEjyCya4ChMBe~4XVkkpcTdyYzlzkr7JYpRpfOqyHSr-YJsZ6zbda2LM2H7XVtoWDHS3G5wyXqXZJGGieQLpQ0f6HnuvRmYpN0vlDt97iservw5fk0VyMDg10pEMoK9kxi0c5uAsSX1c1-mHVbE6Po~kwmhL3aFrvw2errutIm8yPSRptIzqXwcuEaATD8rZucVVx-lCK1ZK2ZJfl66Cyjz1AsCk1dQQMI4YXPP-eJ5UfDaV-dlEt10LKgACjOofmowxJCZoYMuxz3JauIFpzGmdjMjXSwA~u7CewdROdTJU4Fun6fxhv82lDk7tEI2JjQL~pxPX6LQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfc5-3e4e-755c-a855-9ec076ed4791",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfc5-3e4e-755c-a855-9ec076ed4791/output/model.glb?Expires=1790719895&Signature=UwaR4X9YsBvezduyOXc09RHvau7mEjYkQLVbieombjvwYVc-D5FBPR9hNhzU7Ts~Tjy1MDZ3DMBXS6lzksnoHtfxCv2wrpzD0H2ZgjJjyM4ZQ0veF3oW2MBn1tx7J93vOK3pmkY6YblZcmjWv0AIQdCnjVKgBnVciexeQqj9fG-dXB-Ue8nGS1m4MxIEjMb0uDsl8faEIcV1Grw3kReSoJ3UqjhDtpRYBa27Gaq4IxDWIcshfCRVJ2w505LGAZjEIgo6vm4YZnyRVxFgL8vN8EKTORJdmCs4b2rtgxqLrMT91pjuvzLfA-1HS~-wLiCkMs3fPYsvu7WJwdEHLoRxxA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": null,
+  "sizes": {
+   "hi": 504488,
+   "lo": 110996
+  },
+  "dims": {
+   "len": 1.8568,
+   "height": 1,
+   "width": 0.4619
+  }
+ },
+ "FELIX1919": {
+  "image_job": "01a0dfc6-2d49-7185-8adb-ed48d022acb7",
+  "clean_job": "01a0dfc6-2d49-7185-8adb-ed48d022acb7",
+  "model_job": "01a0dfc6-7edc-709f-bbf8-ccb4ea932dd4",
+  "model": "meshy-7.1 multi-image-to-3d",
+  "faces": 10000,
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfc6-7edc-709f-bbf8-ccb4ea932dd4/output/model.glb?Expires=1790720000&Signature=DTtnRwvfZ6BYI9Ft0G3jkUXiPWS2zRjbnOmd7sQ9yla6RD-wUSSftFVvjEBcP9MI0dtKh4KGB0WSBkl4QM4pfODb9AJok6NxTFR81iFkyuIT5lU7gpJ7iXpSZCaN~myfKRVB-dOqRnsV8TKnmo2bgsOkqTv33SFm7utErqTbYq~cEVgSPNP2UPBcj9OEu8LtCDEpA3RES3lC5yiPfzwmovsKJE4OVQ8VPmTw0OPi0HdcibONzXlttis~JM~KFKXsJWevB~RN2FLqC8Ccei9aNWemxmReVyV-0rDAHPfB8Wq1mMoT1ioJDhrDqHF0~fEpFFNjstggyP6zICij7ZH~uA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfc7-c055-70da-9af6-30274752f1ba",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfc7-c055-70da-9af6-30274752f1ba/output/model.glb?Expires=1790720055&Signature=NBQkqesRKNZWKu3G3xqrtu4-1giOCkZN9mlhuAe2PQqS~imX6j7a688Qip47uPwA2-HTv4E4JuELlXWI-SPnIOeOWKoDp94hqJF8Y0Pq7WPgpVVM5dABWYZSzwLLd92xxFx8rfGEuJmgu0rFP4YerxgV099w7mMeBAqkCzOaRFdOUzzhuJOxDjD6WLFtVLQFZ~BrPplUmuUfrmiCkwbORX5z7sa-D6-9vIJFbhAvIlPJ-ZaWVbx76W0VGjjF7X3PN83TuKn6fL5rgH4e7yCf2N0wSarXzkboZblcDgE6IBTMMI~f~trVCYpiNPqBweQIXoAI1pyEbdeHIVm3hXynuw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "pose": "standing on all fours",
+  "status": "done",
+  "previous": null,
+  "sizes": {
+   "hi": 322428,
+   "lo": 101544
+  },
+  "dims": {
+   "len": 1.3205,
+   "height": 1,
+   "width": 0.5317
+  }
+ },
+ "leveraged-cat": {
+  "image_job": "-",
+  "model_job": "01a0dfe1-309a-7350-af63-c655b5e4325c",
+  "model": "meshy retexture (meshy retexture (site model))",
+  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfe1-309a-7350-af63-c655b5e4325c/output/model.glb?Expires=1790721768&Signature=fw~0cEcsGEWBSEB76kHnJHdB82hh-TNcLTd33kQ8Ee5q918X9sq9d5mvkeurjyb2ezbE5KPYIunIC9xcxQMJ81QbSDV3kskTpwL4CGNrbJlqV2O6517Z32Bnvixu9DvQkCgMKo2~DcEHrNsbHhcAI3fDGfVrJcS23fbyp~S~BTSwNsg7gMPxlu0PBb9abrcNWy8C8YJZg0NTS2swfHMxqGSoSyUzFYgO0fvr7mLO9w8mxwmzOOnlX0xBqMDwADmKwKySSH4MKrfszpWGV6H-xJS9Foc8yTpbGlklO337-qWEbxKM-pJ-bC3TV67cmMX1Ta4vyBa0sQ~-AKOyVJgjDA__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "lo_job": "01a0dfe2-bf3e-71b6-9289-30138bee2ce1",
+  "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfe2-bf3e-71b6-9289-30138bee2ce1/output/model.glb?Expires=1790721833&Signature=c2dDi5hxcYKL5c1YkMCxJTpbiXoHwZLr09~m9Q0Tp9INb~E~XFZeICD1uIqMpZlqQN-lAAucYYgMNaa6XeWWLGXv7B5Zkkug7W-SpqmAsmMnXBSZeAO-ggRvWuH~C~bJStPPvCGsLAKk1Gxl2R6Ysp3JHalZ0KDYtoji1CFndoJE-UzNQRsXgCir68XPYA7SeCrbm54mUvu4waMTdIoRxJLVZP-H2JD3JZOWOiw81fkGW78d40ssoOzfqjvZxD4~EgWuk8pGF15UAGThP4jxnt09G35Mt9T-K7G3IXYiQPXu69767Dj-6HlwrnFhBViMOGFFGEQ0Ex1dICsKWtwTmQ__&Key-Pair-Id=K1VGYTHIYLM9UM",
+  "status": "done",
+  "previous": {
+   "image_job": "-",
+   "model_job": "01a0dfcf-fcfe-7115-9e5f-ac3993a33b89",
+   "model": "meshy retexture (site model)",
+   "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfcf-fcfe-7115-9e5f-ac3993a33b89/output/model.glb?Expires=1790720608&Signature=MevyXUjFSOd3xq7eTq~nWl5j~hbOZ9npLFVGGXDnq1d4wq7xmV-4sLAGpUm0hZ7JvFnITGLudz6bs2l0B2u0X7wBfbLcXcb55-sRP5kzrBjR6u2u9N8MPGx9jSAIrrrdJI~V1Wby2fCZjxz13jTYU6Fj7ip7zYQXrA369g5YKrLBdpUsxki2iUQorPDPhCeN45cn0-3clTde0X9fkYZyQmdv7LResSbiH-WWmXSYSbr9dPgLNacNwcfnZkE2LqY8w6WrejfJgPnC-zZ6Jz29WVRf98WKjP7FJ9R8~yFiH4E6uizv8CrMmITrBzNdrHKdrY6norHulhKE~g0U31X7jw__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "lo_job": "01a0dfd1-136c-7401-92f4-b26e0fac1561",
+   "lo_url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0dfd1-136c-7401-92f4-b26e0fac1561/output/model.glb?Expires=1790720674&Signature=gfy4liGffZk6fpZJXs5jKkSB9~oO1pMN7Ymcjrp1N8xjDADRtZTXOG3F5mURMK5FdCBAd72eEJp5VmM8x5rACnYAASO8BBIwgA7IWTvKNXLElIHlYC5HbTDflF6ydR7kgDA2jHQSb0fVdz0WVEKiqzfLx3ALdBi2c6khy-lYwdkHB3KQGJ0eWshdr9WJ4dSrsooF2whCfKnEO7XvV1ofoYzvfCZMCTN1cXAt5nhE3B6zUR5g963NAInmTdqgUHoKyPCnj3NoPLohmt5Uw~BZNNR72Ph3SP1JSkfto22KyG1Ut2w4WMz-Cb9HHh1kR1xTMlJxuSU7238c6T2C40pj8Q__&Key-Pair-Id=K1VGYTHIYLM9UM",
+   "status": "done",
+   "si_lo": 0.8,
+   "tex_lo": 512,
+   "sizes": {
+    "hi": 575744,
+    "lo": 147144
+   },
+   "dims": {
+    "len": 1.1742,
+    "height": 1,
+    "width": 0.3727
+   }
+  },
+  "si_lo": 0.8,
+  "tex_lo": 512,
+  "sizes": {
+   "hi": 584148,
+   "lo": 149144
+  },
+  "dims": {
+   "len": 1.1743,
+   "height": 1,
+   "width": 0.3727
   }
  }
 }
