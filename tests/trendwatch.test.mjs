@@ -3,6 +3,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { qualify, heat, cleanReading, isCandidate, scan, MIN_LIKES, MAX_AGE_HOURS, QUERY } from "../scripts/scan-trending-cats.mjs";
+import { readPostByRules, tickerFor } from "../scripts/lib/read-cat-post.mjs";
 
 const NOW = Date.parse("2026-09-27T12:00:00Z");
 const hoursAgo = (h) => new Date(NOW - h * 3_600_000).toISOString();
@@ -91,11 +92,38 @@ test("a cat already in the sanctuary is not a candidate; X refusing search keeps
   assert.deepEqual(t2.candidates, t.candidates);
 });
 
-test("without Claude, trending posts are not read and are tried again next run", async () => {
-  const f = fakes();
+test("X-only mode (no Anthropic key): posts are read by rules from their words, and the ticker is still checked", async () => {
+  const f = fakes({ taken: ["MOCHI"] });
   const t = await scan({ data: { trending: { posts: [] }, names: new Set() }, creds: CREDS, client: null, fetchImpl: f.fetchImpl, nowMs: NOW });
-  assert.deepEqual(t.posts, []);
+  assert.deepEqual(t.candidates, ["1001"], "Biscuit is a candidate; Mochi's ticker is taken");
+  const b = t.posts.find((p) => p.id === "1001").reading;
+  assert.deepEqual([b.catName, b.ticker, b.kind, b.sensitive, b.readBy], ["Biscuit", "BISCUIT", "real", false, "rules"]);
+  assert.equal(b.lore, "Biscuit learned to open the fridge 😹");
+  assert.equal(t.posts.find((p) => p.id === "1005").status, "passed");
+  assert.equal(f.asked.length, 0, "Claude is never asked");
   assert.ok(!isCandidate({ reading: null }));
+});
+
+test("the rules: a name only from how people write about their cat, sensitive on any sad or political word", () => {
+  const name = (text) => readPostByRules({ text }).catName;
+  assert.equal(name("my cat Biscuit learned to open the fridge"), "Biscuit");
+  assert.equal(name("Meet Pudding, the office cat who runs payroll"), "Pudding");
+  assert.equal(name("Taco the cat refuses to leave the box"), "Taco");
+  assert.equal(name("new video of #MochiTheCat is out"), "Mochi");
+  assert.equal(name("Nugget has learned to ring the doorbell"), "Nugget");
+  assert.equal(name("This cat learned to open the fridge"), null, "no name, no cat coin");
+  assert.equal(name("Black cat crossing the road"), null);
+  assert.equal(name("My cat is judging me"), null);
+  assert.equal(readPostByRules({ text: "Meet Pudding" }).readBy, "rules");
+  for (const sad of ["RIP my cat Biscuit, 14 years", "my cat Biscuit is at the vet for surgery", "Meet Pudding, my son's cat", "my cat Biscuit went missing"]) {
+    assert.equal(readPostByRules({ text: sad }).sensitive, true, sad);
+  }
+  assert.equal(readPostByRules({ text: "Meet Nyan, the anime cat everyone is drawing" }).kind, "cartoon");
+  assert.equal(readPostByRules({ text: "Meet Goose, the cat stealing the new movie trailer" }).kind, "fiction");
+  assert.equal(tickerFor("Señor Whiskers"), "SENORWHISK");
+  assert.equal(tickerFor("B"), null);
+  assert.equal(readPostByRules({ text: "Meet Nugget 🐱 https://t.co/x @someone #cats" }).lore, null, "too little left for a lore line");
+  assert.equal(cleanReading(readPostByRules({ text: "my cat Biscuit buys $BISC at https://x.y" })).lore, null, "no links or price talk");
 });
 
 test("trend watch workflow: pinned actions, contents: write for the scan, secrets only in the scan step, the next-run job runs no repository code", async () => {
