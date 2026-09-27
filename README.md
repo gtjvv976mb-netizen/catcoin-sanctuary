@@ -56,6 +56,15 @@ proven on chain.
    carries must verify over its message, so the RPC provider cannot pass off someone else's
    launch as the owner's. A launch that passes is added to `data/collection.json`. The workflow
    commits that file, and the Pages workflow then publishes it.
+
+   The automatic launcher's **pump.fun** launches are proved the same way
+   (`scripts/lib/chain.mjs` `proveLaunchPump`): one direct `create_v2` priced in SOL, every account
+   re-derived with `scripts/lib/pump.mjs`, the wallet as creator, every option off (mayhem,
+   cashback, creator fee, holder rewards), no dev buy and nothing else but ComputeBudget; then the
+   mint's metadata and its bonding curve are read back. Such an entry carries `"launchpad":
+   "pump.fun"` and the pair SOL. An adoptable cat with a `launch` field in `data/adoptables.json`
+   shows as **Launched by the sanctuary** only once its mint is in `data/collection.json`
+   ("Launching…" until then), and that coin gets no card of its own.
 4. **On the page.** A launch whose pair and ticker match a planned cat (letter case aside) takes
    that cat. The badge turns to **Launched**, a gold coin turns above the cat's head, and the
    card shows the mint, the launch and the GMGN and FOMO buy links. A launch that matches no

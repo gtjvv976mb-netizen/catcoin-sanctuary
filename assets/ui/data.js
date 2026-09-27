@@ -1,15 +1,7 @@
 /* The residents as the page shows them. assets/residents.js is the one source (its data is
-   prepared ahead of time; nothing here calls another site). This file reads whatever it
-   exports and checks every field before it reaches the page:
-
-     { id, name, ticker, plannedName, stock, company, pair: { symbol, mint },
-       description (the cat's story), look, whyLook, tribute, portrait, coat: { base, second, pattern, eyes },
-       proof: { kind: "x" | "web", url, author, handle, date, dateType, text, note, image } | null,
-       realCatName, who, basis, linkType, strength, realCatLink, checked, disclaimer,
-       virality: [{ label, value, source, date, dateType, method }], links: [{ label, url, date, dateType }],
-       token: { status: "planned" } | { status: "launched", mint, launchedAt, tx },
-       buy: [{ label, url }], explorer: { token, tx, stonkfun } | null,
-       adoption: { mint, name, symbol, launchpad, createdAt } | null }
+   prepared ahead of time; nothing here calls another site). This file reads the cards it
+   documents and checks every field before it reaches the page (token keeps { status, mint,
+   launchedAt, tx }; pair keeps { symbol, mint }; adoption and sanctuaryLaunch are null when absent).
 
    Rules kept here, whatever the data says:
    - a link is shown only if it is https;
@@ -77,6 +69,7 @@ const TOKEN_PAGES = {
   token: ["solscan.io", "/token/"],
   tx: ["solscan.io", "/tx/"],
   stonkfun: ["www.stonkfun.xyz", "/token/"],
+  pumpfun: ["pump.fun", "/coin/"],
 };
 /** The exact https page for `needle` (a mint or a signature) that `kind` names, or null. */
 function tokenPage(v, kind, needle) {
@@ -140,7 +133,8 @@ function normalizeNew(e) {
     ? (Array.isArray(e.buy) ? e.buy : []).slice(0, 4).map((b) => { const label = str(b?.label, 40); return { label, url: tokenPage(b?.url, label, mint) }; }).filter((b) => b.url && b.label)
     : [];
   const ex = launched && e.explorer && typeof e.explorer === "object" ? e.explorer : null;
-  const explorer = ex ? { token: tokenPage(ex.token, "token", mint), tx: tokenPage(ex.tx, "tx", tx), stonkfun: tokenPage(ex.stonkfun, "stonkfun", mint) } : null;
+  const pf = ex && tokenPage(ex.pumpfun, "pumpfun", mint);
+  const explorer = ex ? { token: tokenPage(ex.token, "token", mint), tx: tokenPage(ex.tx, "tx", tx), stonkfun: tokenPage(ex.stonkfun, "stonkfun", mint), ...(pf && { pumpfun: pf }) } : null;
   const coatIn = e.coat && typeof e.coat === "object" ? e.coat : {};
   const linkType = str(e.linkType, 24).toLowerCase();
   const strength = str(e.strength, 12).toLowerCase();
@@ -174,21 +168,6 @@ function normalizeNew(e) {
     adoption: launched ? null : adoptionOf(e.adoption),
     example: false,
   };
-}
-
-/** The earlier collection shape ({ name, ticker, pair, mint, example, look, … }), read the same way. */
-function normalizeOld(e) {
-  const hasMint = typeof e.mint === "string" && B58.test(e.mint);
-  const look = e.look || null;
-  const r = normalizeNew({
-    id: e.id || e.mint,
-    name: e.name,
-    ticker: e.ticker && e.ticker !== "—" ? e.ticker : "",
-    pair: { symbol: e.pair && e.pair !== "—" ? e.pair : "", mint: e.pairMint || "" },
-    coat: look ? { base: look.swatch || look.tint, pattern: look.model === "ginger" ? "tabby" : look.coat === "Cream point" ? "point" : "solid" } : {},
-    token: hasMint ? { status: "launched", mint: e.mint, launchedAt: e.time || e.arrived, tx: e.tx } : { status: "planned" },
-  });
-  return r && { ...r, example: !!e.example };
 }
 
 /* A famous cat coin: a coin that already exists, made by others. Its buy link is kept only when it
@@ -249,12 +228,14 @@ export const isAdoptable = (r) => r?.kind === "adoptable";
 
 /* An adoptable cat (data/adoptables.json, checked by assets/ui/adoptables.js): the common fields as
    a planned cat has them, plus its category, owner, sources, any coin that already exists, and the
-   gentle notes its card shows. It is never launched here: the page shows it as "Not launched yet",
-   or "Adopted" once a stranger has launched it from its kit. */
+   gentle notes its card shows: "Not launched yet", "Adopted" (a stranger launched it from its kit),
+   or launched by the sanctuary (sanctuaryLaunch: pending until proved). */
 const ADOPT_CATEGORIES = new Set(["celebrity", "tv-movie", "company", "viral", "crypto"]);
 function normalizeAdoptable(e) {
-  const r = normalizeNew({ ...e, token: { status: "planned" }, buy: [], explorer: null });
+  const sl = e.sanctuaryLaunch, pad = sl?.launchpad;
+  const r = normalizeNew(sl?.status === "launched" ? e : { ...e, token: { status: "planned" }, buy: [], explorer: null });
   if (!r || !ADOPT_CATEGORIES.has(e.category)) return null;
+  const sanctuaryLaunch = pad === "pump.fun" || pad === "stonkfun" ? { status: isLaunched(r) ? "launched" : "pending", launchpad: pad } : null;
   const ec = e.existingCoin && typeof e.existingCoin === "object" ? e.existingCoin : null;
   return {
     ...r, kind: "adoptable",
@@ -264,15 +245,14 @@ function normalizeAdoptable(e) {
     sources: (Array.isArray(e.sources) ? e.sources : []).slice(0, 6).map((s) => ({ label: str(s?.label, 140), url: httpsUrl(s?.url) })).filter((s) => s.url),
     existingCoin: ec && str(ec.symbol, 24) ? { symbol: str(ec.symbol, 24), mcapUsd: num(ec.mcapUsd) ?? 0 } : null,
     memorial: e.memorial === true, sensitivity: str(e.sensitivity, 300), portraitStatus: e.portraitStatus === "ready" && r.portrait ? "ready" : "pending",
+    sanctuaryLaunch, adoption: sanctuaryLaunch ? null : r.adoption,
   };
 }
 
 export function normalize(e) {
   if (!e || typeof e !== "object") return null;
   if (e.kind === "famous") return normalizeFamous(e);
-  if (e.kind === "adoptable") return normalizeAdoptable(e);
-  const old = !("token" in e) && ("example" in e || "look" in e || "arrived" in e);
-  return old ? normalizeOld(e) : normalizeNew(e);
+  return e.kind === "adoptable" ? normalizeAdoptable(e) : normalizeNew(e);
 }
 
 /** Every resident, checked; ids made unique. Rejects only when assets/residents.js cannot be read at all. */

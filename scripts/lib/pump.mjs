@@ -32,7 +32,7 @@
  */
 import { createHash } from "node:crypto";
 import { base58Decode, base58Encode, isAddress, textProblem, httpsProblem } from "../../assets/collection.js";
-import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./chain.mjs";
+import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
 import {
   pda, ata, compileLegacyMessage, decodeLegacyMessage, decompileInstructions, setComputeUnitLimit, setComputeUnitPrice,
   signTransaction, serializeTransaction, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT, PACKET_DATA_SIZE,

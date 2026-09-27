@@ -5,12 +5,14 @@ import { createHash } from "node:crypto";
 import {
   proveLaunch, checkLaunchAccounts, readTokenMetadata, decodeInitialize, pda, isOnCurve, poolAddress, vaultAddress, curveRuleAddress,
   IX, GLOBAL_CONFIG_DISC, LAUNCHLAB_PROGRAM, LAUNCHLAB_AUTHORITY, LAUNCHLAB_EVENT_AUTHORITY, STONKFUN_PLATFORM, STONKFUN_PLATFORM_REWARD,
-  signaturesVerify, messageBytes,
+  signaturesVerify, messageBytes, proveLaunchPump, checkPumpAccounts, BONDING_CURVE_DISC, SOL_PAIR,
+  SYSTEM_PROGRAM, TOKEN_PROGRAM, COMPUTE_BUDGET_PROGRAM,
 } from "../scripts/lib/chain.mjs";
+import { PUMP, CREATE_V2_DISC, createV2Accounts, decodeCreateV2, bondingCurve, anchorDiscriminator } from "../scripts/lib/pump.mjs";
 import { base58Decode, base58Encode, STOCK_PAIRS, XSTOCKS } from "../assets/collection.js";
 import {
   LAUNCHES, PUMPFUN, FAILED, ACCOUNTS, ACCOUNTS_MORE, REWARD, launchTx, recordedAccounts, GME_LAUNCHER, GOOGL_LAUNCHER, GME_LAUNCH, GOOGL_LAUNCH,
-  ANTHROPIC_LAUNCHER, IREN_LAUNCHER,
+  ANTHROPIC_LAUNCHER, IREN_LAUNCHER, pumpLaunch, token2022MintData, PUMP_COIN,
 } from "./helpers.mjs";
 
 const payerOf = (tx) => tx.transaction.message.accountKeys[0];
@@ -389,4 +391,185 @@ test("REFUSED (hostile, review 3): the owner loaded from a lookup table as payer
     delete tx.meta.err;
     assert.equal(proveLaunch(tx, { wallet: OWNER_W }).clause, "failed");
   }
+});
+
+/* ── pump.fun: the sanctuary's automatic launcher (scripts/lib/pump.mjs), proved like LaunchLab ─── */
+
+const PUMP_PAYER = "BevqMZhvHq1T3io2eRL6ZmvzyHmH6wk6qh1e3oTgrdrM";   // the recorded launch's payer and creator
+const PUMP_MINT = "EbBE6V3wta2HtsdAPsxoJwaYtGUuxdsLRLTZ8btTpump";
+const pumpKeys = (tx) => keysOf(tx);
+const pumpCreateOf = (tx) => tx.transaction.message.instructions.find((ix) => pumpKeys(tx)[ix.programIdIndex] === PUMP.program
+  && Buffer.from(base58Decode(ix.data, 2000)).subarray(0, 8).toString("hex") === CREATE_V2_DISC);
+/** The recorded real launch, as recorded: ComputeBudget (one with a Jito marker account), create_v2, an ATA create, buy_v2. */
+const recordedPump = () => structuredClone(PUMPFUN.answer.result);
+/** The recorded real launch cut down to what the sanctuary's launcher sends: plain ComputeBudget and create_v2 alone. */
+function createOnly() {
+  const tx = recordedPump(), m = tx.transaction.message;
+  m.instructions = m.instructions.filter((ix) => [COMPUTE_BUDGET_PROGRAM, PUMP.program].includes(pumpKeys(tx)[ix.programIdIndex])
+    && !(pumpKeys(tx)[ix.programIdIndex] === PUMP.program && ix !== pumpCreateOf(tx)));
+  for (const ix of m.instructions) if (pumpKeys(tx)[ix.programIdIndex] === COMPUTE_BUDGET_PROGRAM) ix.accounts = [];
+  tx.meta.innerInstructions = tx.meta.innerInstructions.filter((g) => g.index === 2);
+  return tx;
+}
+/** Rewrite create_v2's data in `tx` with `edit(bytes, offsetAfterStrings)`. */
+function editCreate(tx, edit) {
+  const ix = pumpCreateOf(tx), d = Buffer.from(base58Decode(ix.data, 2000)), a = decodeCreateV2(d);
+  const at = 8 + 12 + Buffer.byteLength(a.name) + Buffer.byteLength(a.symbol) + Buffer.byteLength(a.uri); // the creator
+  edit(d, at);
+  ix.data = base58Encode(d);
+  return tx;
+}
+/** A legacy launch built and signed by the stage-1 builder, with `ix` (a { programId, accounts, data } json instruction) added. */
+function builtWith(extra) {
+  const L = pumpLaunch();
+  const m = L.tx.transaction.message;
+  for (const x of extra) {
+    const idx = (k) => { let i = m.accountKeys.indexOf(k); if (i < 0) { m.accountKeys.push(k); m.header.numReadonlyUnsignedAccounts += 1; i = m.accountKeys.length - 1; } return i; };
+    m.instructions.push({ programIdIndex: idx(x.programId), accounts: x.accounts.map(idx), data: base58Encode(Buffer.from(x.data)) });
+  }
+  return L;
+}
+
+test("pump.fun: the recorded real create_v2 is re-derived by pump.mjs's own derivations (every one of its sixteen accounts)", () => {
+  const tx = recordedPump(), ix = pumpCreateOf(tx);
+  assert.deepEqual(ix.accounts.map((i) => pumpKeys(tx)[i]), createV2Accounts(PUMP_MINT, PUMP_PAYER).map((k) => k.pubkey));
+  assert.equal(pumpKeys(tx)[ix.accounts[2]], bondingCurve(PUMP_MINT));
+  assert.equal(BONDING_CURVE_DISC, createHash("sha256").update("account:BondingCurve").digest().subarray(0, 8).toString("hex"));
+});
+
+test("pump.fun REFUSED: the recorded real launch as it was made (a dev buy with buy_v2), even with its payer listed; LaunchLab's proof still calls it no launch", () => {
+  const r = proveLaunchPump(recordedPump(), { wallet: PUMP_PAYER });
+  assert.equal(r.clause, "pump_dev_buy");
+  assert.equal(r.launchLike, true);
+  assert.equal(proveLaunch(recordedPump(), { wallet: PUMP_PAYER }).clause, "no_launch");
+  // without the buy, its ATA create and Jito-marked ComputeBudget are still refused
+  const noBuy = recordedPump(), m = noBuy.transaction.message;
+  m.instructions = m.instructions.filter((ix) => !(pumpKeys(noBuy)[ix.programIdIndex] === PUMP.program && ix !== pumpCreateOf(noBuy)));
+  assert.equal(proveLaunchPump(noBuy, { wallet: PUMP_PAYER }).clause, "pump_unexpected_instruction");
+});
+
+test("pump.fun ACCEPTED: the recorded real launch cut down to create_v2 alone (v0, lookup table), as a SOL-priced entry", () => {
+  const tx = createOnly();
+  const r = proveLaunchPump(tx, { wallet: PUMP_PAYER });
+  assert.equal(r.ok, true, r.detail);
+  assert.deepEqual(r.launch, {
+    mint: PUMP_MINT, name: "Gull Gadot", symbol: "GULLGADOT", pair: { symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+    pool: bondingCurve(PUMP_MINT), payer: PUMP_PAYER, tx: tx.transaction.signatures[0], time: "2026-09-24T20:41:59Z", launchpad: "pump.fun",
+    uri: "https://ipfs.io/ipfs/QmbUFoY7PHPMCmkqKjerAnfseEKLszkdmqcd4SX4dGqJJd",
+  });
+  assert.deepEqual(r.launch.pair, SOL_PAIR);
+  assert.equal(proveLaunch(tx, { wallet: PUMP_PAYER }).clause, "no_launch");
+});
+
+test("pump.fun ACCEPTED: a launch built and signed by the stage-1 builder (legacy), its signatures verify, and the read-back passes", () => {
+  const L = pumpLaunch();
+  const r = proveLaunchPump(L.tx, { wallet: L.wallet });
+  assert.equal(r.ok, true, r.detail);
+  assert.equal(signaturesVerify(L.tx), true);
+  assert.deepEqual([r.launch.mint, r.launch.pool, r.launch.launchpad, r.launch.tx], [L.mint, L.curve, "pump.fun", L.signature]);
+  assert.deepEqual(checkPumpAccounts(r.launch, L.accounts.get(L.mint), L.accounts.get(L.curve)), { ok: true });
+});
+
+test("pump.fun REFUSED: the wrong wallet, a failed transaction, a newer version, no block time", () => {
+  assert.equal(proveLaunchPump(createOnly(), { wallet: GME_LAUNCHER }).clause, "fee_payer");
+  const L = pumpLaunch();
+  assert.equal(proveLaunchPump(L.tx, { wallet: PUMP_PAYER }).clause, "fee_payer");
+  const failed = createOnly();
+  failed.meta.err = { InstructionError: [2, { Custom: 6000 }] }; failed.meta.status = { Err: failed.meta.err };
+  assert.equal(proveLaunchPump(failed, { wallet: PUMP_PAYER }).clause, "failed");
+  const noErr = createOnly(); delete noErr.meta.err;
+  assert.equal(proveLaunchPump(noErr, { wallet: PUMP_PAYER }).clause, "failed");
+  const v1 = createOnly(); v1.version = 1;
+  assert.equal(proveLaunchPump(v1, { wallet: PUMP_PAYER }).clause, "tx_version");
+  const untimed = createOnly(); delete untimed.blockTime;
+  assert.equal(proveLaunchPump(untimed, { wallet: PUMP_PAYER }).clause, "no_time");
+  assert.equal(proveLaunchPump(null, { wallet: PUMP_PAYER }).clause, "unreadable");
+  assert.equal(proveLaunchPump(launchTx("592bMtm5"), { wallet: GOOGL_LAUNCHER }).clause, "no_launch");
+});
+
+test("pump.fun REFUSED: a create made through another program (CPI), and two creates in one transaction", () => {
+  const cpi = createOnly(), ci = pumpCreateOf(cpi);
+  cpi.transaction.message.instructions = cpi.transaction.message.instructions.filter((x) => x !== ci);
+  cpi.meta.innerInstructions.push({ index: 0, instructions: [{ ...ci, stackHeight: 2 }] });
+  const r = proveLaunchPump(cpi, { wallet: PUMP_PAYER });
+  assert.equal(r.clause, "pump_cpi_launch");
+  assert.equal(r.launchLike, true);
+  const two = createOnly();
+  two.transaction.message.instructions.push(structuredClone(pumpCreateOf(two)));
+  assert.equal(proveLaunchPump(two, { wallet: PUMP_PAYER }).clause, "pump_several_launches");
+  const legacyCreate = createOnly(), li = pumpCreateOf(legacyCreate), d = Buffer.from(base58Decode(li.data, 2000));
+  Buffer.from(createHash("sha256").update("global:create").digest().subarray(0, 8)).copy(d, 0);
+  li.data = base58Encode(d);
+  assert.equal(proveLaunchPump(legacyCreate, { wallet: PUMP_PAYER }).clause, "pump_unrecorded_variant");
+});
+
+test("pump.fun REFUSED: anything else in the transaction: a SOL transfer, a memo, a buy, an unknown ComputeBudget kind", () => {
+  const transfer = Buffer.alloc(12); transfer.writeUInt32LE(2, 0); transfer.writeBigUInt64LE(1_000_000n, 4);
+  const cases = [
+    [{ programId: SYSTEM_PROGRAM, accounts: [null, "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM"], data: transfer }, "pump_unexpected_instruction"],
+    [{ programId: "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr", accounts: [], data: Buffer.from("meow") }, "pump_unexpected_instruction"],
+    [{ programId: PUMP.program, accounts: [], data: Buffer.from(anchorDiscriminator("buy_v2") + "00".repeat(16), "hex") }, "pump_dev_buy"],
+    [{ programId: PUMP.program, accounts: [], data: Buffer.from(anchorDiscriminator("buy") + "00".repeat(16), "hex") }, "pump_dev_buy"],
+    [{ programId: PUMP.program, accounts: [], data: Buffer.from(anchorDiscriminator("sell") + "00".repeat(16), "hex") }, "pump_unexpected_instruction"],
+    [{ programId: COMPUTE_BUDGET_PROGRAM, accounts: [], data: Buffer.from([2, 1, 0, 0]) }, "pump_unexpected_instruction"],
+  ];
+  for (const [ix, clause] of cases) {
+    const x = { ...ix, accounts: ix.accounts.map((a) => a ?? pumpLaunch().wallet) };
+    const t = builtWith([x]);
+    assert.equal(proveLaunchPump(t.tx, { wallet: t.wallet }).clause, clause, ix.programId);
+  }
+});
+
+test("pump.fun REFUSED: mayhem mode on, other options on, a creator that is not the wallet, a mint that did not sign", () => {
+  const mayhem = editCreate(createOnly(), (d, at) => { d[at + 32] = 1; });
+  assert.equal(proveLaunchPump(mayhem, { wallet: PUMP_PAYER }).clause, "pump_mayhem");
+  for (const [off, what] of [[33, "cashback"], [34, "creator fee"], [42, "holder reward"]]) {
+    const t = editCreate(createOnly(), (d, at) => { d[at + off] = 1; });
+    assert.equal(proveLaunchPump(t, { wallet: PUMP_PAYER }).clause, "pump_options", what);
+  }
+  const creator = editCreate(createOnly(), (d, at) => { Buffer.from(base58Decode(GME_LAUNCHER)).copy(d, at); });
+  assert.equal(proveLaunchPump(creator, { wallet: PUMP_PAYER }).clause, "pump_not_creator");
+  // absent trailing options read as off (the program reads them so): the same coin
+  const short = createOnly(), si = pumpCreateOf(short);
+  si.data = base58Encode(Buffer.from(base58Decode(si.data, 2000)).subarray(0, -10));
+  assert.equal(proveLaunchPump(short, { wallet: PUMP_PAYER }).ok, true);
+  const garbled = editCreate(createOnly(), (d, at) => { d[at + 32] = 2; });
+  assert.equal(proveLaunchPump(garbled, { wallet: PUMP_PAYER }).clause, "pump_decode");
+  const L = pumpLaunch(), m = L.tx.transaction.message;
+  m.header.numRequiredSignatures = 1; L.tx.transaction.signatures = L.tx.transaction.signatures.slice(0, 1);
+  assert.equal(proveLaunchPump(L.tx, { wallet: L.wallet }).clause, "pump_mint_unsigned");
+});
+
+test("pump.fun REFUSED: an account swapped, replaced or added (a coin-priced launch), and a user that is not the wallet", () => {
+  const swapped = createOnly(), s = pumpCreateOf(swapped);
+  [s.accounts[2], s.accounts[3]] = [s.accounts[3], s.accounts[2]];
+  assert.equal(proveLaunchPump(swapped, { wallet: PUMP_PAYER }).clause, "pump_wrong_accounts");
+  const L = pumpLaunch(), m = L.tx.transaction.message, c = m.instructions.find((ix) => m.accountKeys[ix.programIdIndex] === PUMP.program);
+  m.accountKeys[c.accounts[2]] = "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM";          // another bonding curve
+  assert.equal(proveLaunchPump(L.tx, { wallet: L.wallet }).clause, "pump_wrong_accounts");
+  const extra = createOnly();
+  pumpCreateOf(extra).accounts.push(0);
+  assert.equal(proveLaunchPump(extra, { wallet: PUMP_PAYER }).clause, "pump_not_sol");
+  const fewer = createOnly();
+  pumpCreateOf(fewer).accounts.pop();
+  assert.equal(proveLaunchPump(fewer, { wallet: PUMP_PAYER }).clause, "pump_wrong_accounts");
+  const user = createOnly(), u = pumpCreateOf(user);
+  u.accounts[5] = u.accounts[0];
+  assert.equal(proveLaunchPump(user, { wallet: PUMP_PAYER }).clause, "pump_payer");
+});
+
+test("pump.fun read-back: refuses a mint whose metadata differs or can be renamed by the wallet, and a bonding curve that is missing, foreign or not one", () => {
+  const L = pumpLaunch(), { launch } = proveLaunchPump(L.tx, { wallet: L.wallet });
+  const mint = L.accounts.get(L.mint), curve = L.accounts.get(L.curve);
+  assert.equal(checkPumpAccounts({ ...launch, symbol: "GULL" }, mint, curve).clause, "metadata_mismatch");
+  assert.equal(checkPumpAccounts(launch, { ...mint, owner: TOKEN_PROGRAM }, curve).clause, "metadata");
+  assert.equal(checkPumpAccounts(launch, null, curve).clause, "metadata");
+  const renamable = { ...mint, data: [token2022MintData({ mint: L.mint, updateAuthority: L.wallet, ...PUMP_COIN }).toString("base64"), "base64"] };
+  assert.match(checkPumpAccounts(launch, renamable, curve).detail, /rename/);
+  const another = { ...mint, data: [token2022MintData({ mint: PUMP_MINT, updateAuthority: PUMP.mintAuthority, ...PUMP_COIN }).toString("base64"), "base64"] };
+  assert.equal(checkPumpAccounts(launch, another, curve).clause, "metadata");
+  assert.equal(checkPumpAccounts(launch, mint, null).clause, "bonding_curve");
+  assert.equal(checkPumpAccounts(launch, mint, { ...curve, owner: SYSTEM_PROGRAM }).clause, "bonding_curve");
+  assert.equal(checkPumpAccounts(launch, mint, { ...curve, data: [Buffer.alloc(151).toString("base64"), "base64"] }).clause, "bonding_curve");
+  assert.equal(checkPumpAccounts({ ...launch, pool: GME_LAUNCHER }, mint, curve).clause, "bonding_curve");
 });

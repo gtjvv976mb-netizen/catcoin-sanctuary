@@ -8,41 +8,40 @@
    planned cats in the sheets' order:
 
    {
-     id,                   the planned cat's ticker ("PATCHPAW"), or the mint of a launched token
-                           that has no planned cat
-     name, ticker,         the cat's name and ticker (a launched token's own, as read on chain)
-     plannedName,          the planned name when the launched token's name differs, else null
-     planned,              true for a planned cat (launched or not), false for a launched token
-                           that matches no planned cat
-     stock,                the company or fund behind the pair ("Tesla, Inc.")
-     pair: { symbol, name, mint, category, stonkfun },   the stock pair it is priced in
-     description,          the cat's story ("" for a token with no planned cat)
-     look, whyLook,        the words its portrait was drawn from, and why it looks that way
-     proof,                the one X post or page that best links the cat to its company (or null)
-     tribute,              "Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>."
-                           when the cat is drawn to look like a company's cat, else null
-     portrait,             "assets/portraits/<TICKER>.jpg", or null
+     id,  the planned cat's ticker ("PATCHPAW"), or the mint of a launched token
+       that has no planned cat
+     name, ticker,  the cat's name and ticker (a launched token's own, as read on chain)
+     plannedName,  the planned name when the launched token's name differs, else null
+     planned,  true for a planned cat (launched or not), false for a launched token
+       that matches no planned cat
+     stock,  the company or fund behind the pair ("Tesla, Inc.")
+     pair: { symbol, name, mint, category, stonkfun },  the stock pair it is priced in
+     description,  the cat's story ("" for a token with no planned cat)
+     look, whyLook,  the words its portrait was drawn from, and why it looks that way
+     proof,  the one X post or page that best links the cat to its company (or null)
+     tribute,  "Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>."
+       when the cat is drawn to look like a company's cat, else null
+     portrait,  "assets/portraits/<TICKER>.jpg", or null
      coat: { base, second, pattern, eyes },  for the 3D model (colour and pattern words)
-     coatFrom,             "sheet" | "look" | "mint"
-     realCatName, who,     who the stock's real cat is, as the research found it (sourced), or
-                           that none was found
+     coatFrom,  "sheet" | "look" | "mint"
+     realCatName, who,  who the stock's real cat is, as the research found it (sourced), or
+       that none was found
      basis, linkType, strength, realCatLink,
-     links: [{ label, url, date, dateType, opened }],       the X posts and sites that link the cat to the stock
-     virality: [{ label, value, source, date, method }],   empty: the card says "Not measured"
-     checked,              the day the research was checked
-     disclaimer,           not affiliated with the company or StonkFun; no intrinsic value; not financial advice
-     token:                { status: "planned" }
-                         | { status: "launched", mint, launchedAt, tx, pool, payer, name, symbol }
-     buy: [{ label, url }],   GMGN and FOMO, only for a launched token (a mint exists); [] otherwise
-     explorer:             null | { token, tx, stonkfun }   Solscan and StonkFun pages of a launched token
-     adoption:             absent, or { mint, name, symbol, launchpad, createdAt }: a coin a stranger
-                           launched from the cat's kit (data/adoptions.json), never on a launched cat
+     links: [{ label, url, date, dateType, opened }],  the X posts and sites that link the cat to the stock
+     virality: [{ label, value, source, date, method }],  empty: the card says "Not measured"
+     checked,  the day the research was checked
+     disclaimer,  not affiliated with the company or StonkFun; no intrinsic value; not financial advice
+     token:  { status: "planned" }
+       | { status: "launched", mint, launchedAt, tx, pool, payer, name, symbol }
+     buy: [{ label, url }],  GMGN and FOMO, only for a launched token (a mint exists); [] otherwise
+     explorer:  null | { token, tx, stonkfun | pumpfun }  Solscan and launchpad pages of a launched token
+     adoption:  absent, or { mint, name, symbol, launchpad, createdAt }: a coin a stranger
+       launched from the cat's kit (data/adoptions.json), never on a launched cat
    }
+   An adoptable the sanctuary launched also has sanctuaryLaunch (see adoptableResident).
 
-   A famous coin's card (after the stock cats) is its data/famous.json row with kind: "famous":
-   { id, kind: "famous", name, ticker (its symbol), chain, contract, pair: { quote, address, dex, url },
-     company, tier, logo, market, coingeckoId, catName, who, lore, loreSource, viral, links: { x, website },
-     buy: { label, url }, warnings, coat, ownerPick, disclaimer }.
+   A famous coin's card (after the stock cats) is its data/famous.json row (collection.js
+   famousProblem) with kind: "famous" and ticker: its symbol.
 
    A launched token matches its planned cat when its pair mint is the cat's and its symbol is the
    cat's ticker (letter case aside); if one planned cat has several such launches, the first one
@@ -167,7 +166,7 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
   const collection = validateCollection(collectionFile, { wallets: validateWallets(walletsFile), nowMs });
   const left = planned.refused.length + collection.refused.length;
   if (left && typeof console !== "undefined") console.warn(`${left} ${left === 1 ? "entry was" : "entries were"} left out`, planned.refused, collection.refused);
-  const stock = mergeResidents({ planned, cats: collection.cats });
+  let stock = mergeResidents({ planned, cats: collection.cats });
   // The lore pictures (data/lore.json): optional. A stock cat with a caption there gets its picture.
   let lore = {};
   try {
@@ -188,7 +187,11 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
   try {
     const a = validateAdoptables(await getJson(fetchImpl, new URL("data/adoptables.json", base)), { taken: new Set(planned.cats.map((c) => c.ticker)) });
     if (a.refused.length && typeof console !== "undefined") console.warn(`${a.refused.length} adoptable cats were left out`, a.refused);
-    adoptable = a.cats.map(adoptableCard);
+    const taken = new Set(stock.filter((r) => r.planned && r.token.mint).map((r) => r.token.mint));
+    adoptable = a.cats.map((c) => adoptableResident(c, collection.cats.filter((e) => !taken.has(e.mint))));
+    // One card per cat: the coin's bare token card goes.
+    const own = new Set(adoptable.map((r) => r.token.mint).filter(Boolean));
+    stock = stock.filter((r) => r.planned || !own.has(r.token.mint));
   } catch (e) { if (typeof console !== "undefined") console.warn("The adoptable cats could not be read", e); }
   // The adopted cats (data/adoptions.json): optional. A missing or bad file adopts nothing.
   try {
@@ -214,6 +217,15 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
   return [...stock, ...adoptable, ...famous].filter((r) => !hidden.has(r.id) && !hidden.has(r.ticker));
 }
 
+/** An adoptable's card. One the sanctuary launched (c.launch) gets sanctuaryLaunch: { status, launchpad }:
+ *  "launched" only when that mint, tx and launchpad are in the proved collection (`cats`), else "pending". */
+export function adoptableResident(c, cats) {
+  const r = adoptableCard(c), l = c.launch;
+  if (!l) return r;
+  const e = cats.find((x) => x.mint === l.mint && x.tx === l.tx && (x.launchpad ?? "stonkfun") === l.launchpad);
+  return { ...r, sanctuaryLaunch: { status: e ? "launched" : "pending", launchpad: l.launchpad }, ...(e && launchedToken(e)) };
+}
+
 /* data/adoptions.json, checked again: a row needs a well-formed mint and creator, a known
    launchpad, ISO times after the kits went live, the kit's own name and ticker plus one more piece
    of evidence, and a cat here that the owner has not launched, with a mint not in `own` (the
@@ -229,7 +241,7 @@ export function adoptionsFor(file, cats, own = []) {
   const b58 = (v) => typeof v === "string" && B58.test(v);
   const rows = (Array.isArray(file?.adoptions) ? file.adoptions : []).filter((a) => {
     const r = byKey.get(a?.key), ev = a?.evidence;
-    return r && r.token?.status !== "launched" && b58(a.mint) && b58(a.creator) && !taken.has(a.mint)
+    return r && r.token?.status !== "launched" && !r.sanctuaryLaunch && b58(a.mint) && b58(a.creator) && !taken.has(a.mint)
       && ["pump.fun", "stonkfun"].includes(a.launchpad) && at(a.createdAt) >= Date.parse("2026-09-25T00:00:00Z") && at(a.createdAt) <= at(a.foundAt)
       && typeof a.symbol === "string" && a.symbol.trim().toUpperCase() === (r.launchTicker || r.ticker) && nameKey(a.name) && nameKey(a.name) === nameKey(r.coinName || r.name)
       && Array.isArray(ev) && ev.every((x) => EVIDENCE.includes(x)) && ev.includes("name") && ev.includes("ticker") && new Set(ev).size > 2;

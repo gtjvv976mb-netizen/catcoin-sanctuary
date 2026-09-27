@@ -17,6 +17,14 @@
  * the new mint and the launch's global config back (getMultipleAccounts) and keeps the cat only
  * when the mint's own metadata carries the same name and symbol and the config is for that stock.
  *
+ * PUMP.FUN. The sanctuary's automatic launcher launches on pump.fun (a SOL-priced create_v2, no dev
+ * buy; scripts/lib/pump.mjs). A transaction that is not a LaunchLab launch is proved again as
+ * such a launch (chain.mjs proveLaunchPump: every account re-derived with pump.mjs's own
+ * derivations, nothing else in the transaction but ComputeBudget), its mint and bonding curve are
+ * read back (checkPumpAccounts), and it is listed exactly like a StonkFun launch, with
+ * launchpad "pump.fun", pair SOL and its bonding curve as the pool. Listed launches
+ * (data/launches.json) may be pump.fun launches too.
+ *
  * It never drops a cat. The existing file must validate as a whole before anything is read
  * (a cat whose wallet was removed from wallets.json stops the run; give the wallet an `until`
  * date instead), the new file must validate as a whole and still hold every cat it held, and
@@ -56,7 +64,7 @@ import {
   validateCollection, validateWallets, entryProblem, compareEntries,
   isAddress, isSignature, parseTime, blockTimeToIso, textProblem, MAX_CATS,
 } from "../assets/collection.js";
-import { proveLaunch, checkLaunchAccounts, signaturesVerify } from "./lib/chain.mjs";
+import { proveLaunch, proveLaunchPump, checkLaunchAccounts, checkPumpAccounts, signaturesVerify } from "./lib/chain.mjs";
 import { createRpc, PUBLIC_RPC, UNSUPPORTED_VERSION } from "./lib/rpc.mjs";
 
 export const FILES = Object.freeze({
@@ -219,7 +227,8 @@ export async function buildCollection({ root, rpc, log = () => {}, nowMs = Date.
 
   /** Proves `tx` for `wallet` and, if it is a new launch, reads it back and lists it. Records refusals in `row`'s log. */
   async function consider(tx, wallet, row) {
-    const proof = proveLaunch(tx, { wallet });
+    let proof = proveLaunch(tx, { wallet });
+    if (!proof.ok && proof.clause === "no_launch") proof = proveLaunchPump(tx, { wallet }); // not LaunchLab: a pump.fun launch?
     if (!proof.ok) {
       if (proof.launchLike) refused.push(row(proof.clause, proof.detail));
       else if (proof.clause === "unreadable" || proof.clause === "tx_version") unread.push(row(proof.clause, proof.detail));
@@ -227,12 +236,12 @@ export async function buildCollection({ root, rpc, log = () => {}, nowMs = Date.
     }
     if (known.has(proof.launch.mint)) return proof;
     if (!signaturesVerify(tx)) throw new BuildError(`the launch ${proof.launch.tx.slice(0, 12)}… as the RPC gave it does not carry valid signatures; nothing was written`);
-    const L = proof.launch;
-    const accounts = await rpc.getMultipleAccounts([L.mint, L.globalConfig]);
+    const L = proof.launch, pump = L.launchpad === "pump.fun";
+    const accounts = await rpc.getMultipleAccounts([L.mint, pump ? L.pool : L.globalConfig]);
     if (!Array.isArray(accounts) || accounts.length !== 2) throw new BuildError("getMultipleAccounts answered in an unexpected shape");
-    if (!accounts[0] || !accounts[1]) throw new BuildError(`the RPC did not return the new mint or its config for ${L.tx.slice(0, 12)}…; the next run tries again`);
-    const check = checkLaunchAccounts(L, accounts[0], accounts[1]);
-    const entry = { mint: L.mint, name: L.name, symbol: L.symbol, pair: L.pair, pool: L.pool, payer: L.payer, tx: L.tx, time: L.time };
+    if (!accounts[0] || !accounts[1]) throw new BuildError(`the RPC did not return the new mint or its ${pump ? "bonding curve" : "config"} for ${L.tx.slice(0, 12)}…; the next run tries again`);
+    const check = (pump ? checkPumpAccounts : checkLaunchAccounts)(L, accounts[0], accounts[1]);
+    const entry = { mint: L.mint, name: L.name, symbol: L.symbol, pair: L.pair, pool: L.pool, payer: L.payer, tx: L.tx, time: L.time, ...(pump ? { launchpad: L.launchpad } : {}) };
     const problem = check.ok ? entryProblem(entry, { launchers: wallets.launchers, nowMs }) : check;
     if (problem) refused.push(row(problem.clause, problem.detail));
     // (A name read off the chain is never at the start of a log line, where it could pass for a workflow command.)

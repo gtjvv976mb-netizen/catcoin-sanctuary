@@ -101,8 +101,12 @@ const clip = (s, max) => {
 };
 const shortName = (name) => String(name).split(/\s+the\s+/i)[0].trim();
 
-/** Every cat the sanctuary has: planned ones by ticker, adopted-but-unplanned ones by mint. */
+/** Every cat the sanctuary has: planned ones by ticker, adopted-but-unplanned ones by mint. A coin the
+ *  sanctuary launched for an adoptable cat (its `launch` field) is that cat's, listed once under its
+ *  ticker (launched once the Collection has proved the mint), never again as a coin of its own. */
 export function listCats(planned, collection = { cats: [] }, adoptables = { cats: [] }) {
+  const proved = new Set((collection.cats || []).map((e) => e.mint));
+  const claimed = new Set((adoptables.cats || []).map((c) => c.launch?.mint).filter(Boolean));
   const stocks = new Map((planned.stocks || []).map((s) => [s.pair.mint, s]));
   const out = [];
   const tickers = new Set();
@@ -115,11 +119,12 @@ export function listCats(planned, collection = { cats: [] }, adoptables = { cats
   // Adoptable cats (verified lore from companies, people, shows); the lore picture is the post image.
   for (const c of adoptables.cats || []) {
     out.push({ key: c.ticker, id: c.ticker, name: c.name, ticker: c.ticker, symbol: c.pair?.symbol ?? "STONK", company: c.owner ?? null,
-      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore?.image ?? (typeof c.lore === "string" ? c.lore : `assets/lore/${c.ticker}.webp`), launched: false, adoptable: true });
+      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore?.image ?? (typeof c.lore === "string" ? c.lore : `assets/lore/${c.ticker}.webp`),
+      launched: !!c.launch && proved.has(c.launch.mint), adoptable: true, ...(c.launch ? { sanctuary: true } : {}) });
   }
   for (const e of collection.cats || []) {
     const launchedPlanned = tickers.has(`${e.pair?.mint} ${String(e.symbol).toUpperCase()}`);
-    if (launchedPlanned) continue;       // the planned cat, already listed (and announced) under its ticker
+    if (launchedPlanned || claimed.has(e.mint)) continue; // the planned or adoptable cat, already listed under its ticker
     const s = stocks.get(e.pair?.mint);
     out.push({ key: e.mint, id: e.mint, name: e.name, ticker: e.symbol, symbol: e.pair?.symbol ?? null, company: s?.company ?? null,
       story: null, why: null, proof: null, portrait: null, launched: true });
@@ -144,7 +149,8 @@ export function draft(cat, { thread = true, ingame = false } = {}) {
   const company = companyShort(cat.company);
   const owner = cat.adoptable ? (company || cat.name) : company ? `${company}'s ${cat.symbol}` : cat.symbol;
   const cited = [cat.adoptable ? cat.name : null, company, cat.company, cat.symbol, cat.proof?.author, cat.proof?.handle && `@${cat.proof.handle}`, cat.proof?.url, link, SITE];
-  const status = cat.launched ? "🎉 Adopted! Its owner has launched it 🚀" : "🔓 No coin yet: be the first to adopt it 👇";
+  const status = cat.sanctuary ? (cat.launched ? "🚀 Launched by the sanctuary" : "🚀 Its coin is on the way")
+    : cat.launched ? "🎉 Adopted! Its owner has launched it 🚀" : "🔓 No coin yet: be the first to adopt it 👇";
   const credit = proofCredit(cat.proof);
   const caption = LORE_CAPTIONS[cat.key];
   const lores = [...(caption ? [`📸 ${caption}`] : []), ...sentences(cat.story).slice(0, 1).map((s) => `📜 ${s}`), ""];

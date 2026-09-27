@@ -22,7 +22,8 @@
  */
 import { createHmac, createPrivateKey, createPublicKey, sign as ed25519Sign, verify as ed25519Verify, timingSafeEqual } from "node:crypto";
 import { base58Decode, base58Encode, isAddress } from "../../assets/collection.js";
-import { pda, isOnCurve, COMPUTE_BUDGET_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM } from "./chain.mjs";
+import { pda, isOnCurve } from "./chain.mjs";
+import { COMPUTE_BUDGET_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM } from "./programs.mjs";
 
 export { pda, isOnCurve };
 

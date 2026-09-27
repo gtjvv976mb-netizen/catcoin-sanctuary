@@ -13,7 +13,8 @@
        memorial: boolean, tribute, sensitivity, portrait: "assets/portraits/<TICKER>.jpg" | null,
        portraitStatus: "ready" | "pending", confidence: "high" | "medium",
        lore: { image: "assets/lore/<TICKER>.webp", caption } | null (optional: the picture of the moment
-       that made the cat famous, shown on its card with the caption) } */
+       that made the cat famous, shown on its card with the caption),
+       launch: { mint, tx, launchpad: "pump.fun" | "stonkfun", at } (optional: the sanctuary launched it) } */
 
 export const ADOPTABLE_CATEGORIES = Object.freeze(["celebrity", "tv-movie", "company", "viral", "crypto"]);
 export const CATEGORY_LABELS = Object.freeze({ celebrity: "Celebrity cat", "tv-movie": "TV & movie cat", company: "Company cat", viral: "Viral cat", crypto: "Crypto cat" });
@@ -26,7 +27,7 @@ const ID = /^[a-z0-9][a-z0-9-]{1,40}$/;
 const B58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const X_STATUS = /^https:\/\/(x|twitter)\.com\/([A-Za-z0-9_]{1,15})\/status\/\d{5,25}$/;
-const FIELDS = ["id", "ticker", "name", "coinName", "owner", "category", "story", "look", "coat", "pair", "proof", "sources", "existingCoin", "memorial", "tribute", "sensitivity", "portrait", "portraitStatus", "confidence", "lore", "launchTicker"];
+const FIELDS = ["id", "ticker", "name", "coinName", "owner", "category", "story", "look", "coat", "pair", "proof", "sources", "existingCoin", "memorial", "tribute", "sensitivity", "portrait", "portraitStatus", "confidence", "lore", "launchTicker", "launch"];
 const COAT_KEYS = ["base", "second", "pattern", "eyes"];
 /* Words that must never reach a card: price talk and promises. */
 const PRICE_TALK = /\b(moon|100x|1000x|guaranteed|price target|pump it|to the moon|financial advice(?! ))\b/i;
@@ -130,7 +131,16 @@ export function adoptableProblem(c) {
   if (!["high", "medium"].includes(c.confidence)) return "confidence must be high or medium";
   const lp = loreProblem(c.lore, c.ticker);
   if (lp) return lp;
-  return null;
+  return c.launch === undefined ? null : launchProblem(c.launch);
+}
+
+/** What is wrong with an adoptable's `launch`, or null. */
+export function launchProblem(l) {
+  const ms = Date.parse(l?.at);
+  return !isObj(l) || Object.keys(l).some((k) => !["mint", "tx", "launchpad", "at"].includes(k)) ? "launch must be { mint, tx, launchpad, at }"
+    : !B58.test(l.mint ?? "") || !/^[1-9A-HJ-NP-Za-km-z]{64,88}$/.test(l.tx ?? "") ? "launch mint and tx must be base58"
+    : !["pump.fun", "stonkfun"].includes(l.launchpad) ? "launchpad must be pump.fun or stonkfun"
+    : !(ms > 0) || new Date(ms).toISOString().replace(".000Z", "Z") !== l.at ? "launch at must be YYYY-MM-DDTHH:MM:SSZ" : null;
 }
 
 /** The file, checked: { cats, refused: [{ index, detail }] }. `taken` is a set of tickers already used elsewhere (the planned cats). */
@@ -142,6 +152,7 @@ export function validateAdoptables(data, { taken = new Set() } = {}) {
     if (p) return refused.push({ index, detail: `${c?.ticker ?? index}: ${p}` });
     if (taken.has(c.ticker) || cats.some((x) => x.ticker === c.ticker)) return refused.push({ index, detail: `${c.ticker}: ticker used twice` });
     if (cats.some((x) => x.id === c.id)) return refused.push({ index, detail: `${c.id}: id used twice` });
+    if (c.launch && cats.some((x) => x.launch?.mint === c.launch.mint)) return refused.push({ index, detail: `${c.ticker}: launch mint used twice` });
     cats.push(c);
   });
   return { cats, refused };

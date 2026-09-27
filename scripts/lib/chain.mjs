@@ -33,9 +33,15 @@
  * a launch on StonkFun's reward platform (a transfer-taxed coin; a real one, made from StonkFun's
  * site, is in tests/fixtures/stonkfun-reward-launch.json), and LaunchLab's initialize and
  * initialize_v2, which no recorded StonkFun launch has used.
+ *
+ * A PUMP.FUN LAUNCH (proveLaunchPump, checkPumpAccounts, below) is the sanctuary's automatic
+ * launcher's: a SOL-priced create_v2 with no dev buy, re-derived with scripts/lib/pump.mjs's own
+ * account derivations. The rules are written out above proveLaunchPump.
  */
 import { createHash, createPublicKey, verify as verifySignature } from "node:crypto";
-import { STOCK_PAIRS, base58Decode, base58Encode, isAddress, isSignature, blockTimeToIso } from "../../assets/collection.js";
+import { STOCK_PAIRS, SOL_PAIR, base58Decode, base58Encode, isAddress, isSignature, blockTimeToIso } from "../../assets/collection.js";
+import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
+import { PUMP, CREATE_V2_DISC, createV2Accounts, decodeCreateV2, bondingCurve } from "./pump.mjs";
 
 /* ── pinned ids (bots/lib/verified.mjs, read off mainnet 2026-09-24) ─────────────────── */
 export const LAUNCHLAB_PROGRAM = "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj";
@@ -45,12 +51,7 @@ export const LAUNCHLAB_EVENT_AUTHORITY = "2DPAtwB8L12vrMRExbLuyGnC7n2J5LNoZQSeje
 export const STONKFUN_PLATFORM = "4E876qZTE9FJMrBzgVtBrSrzz2TLivB5Y5QXPjB4gZL7";
 /** StonkFun's reward (transfer-taxed) platform. Not a sanctuary launch: refused by name. */
 export const STONKFUN_PLATFORM_REWARD = "6BwHHDg3u1854jC8PDLXvR4spTcLNaoBxLJNGC4nTESt";
-export const PUMPFUN_PROGRAM = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
-export const SYSTEM_PROGRAM = "11111111111111111111111111111111";
-export const TOKEN_PROGRAM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
-export const TOKEN_2022_PROGRAM = "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb";
-export const ATA_PROGRAM = "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
-export const COMPUTE_BUDGET_PROGRAM = "ComputeBudget111111111111111111111111111111";
+export { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM, SOL_PAIR };
 
 /** sha256("global:<name>")[0..8], equal to the live IDL's discriminators (a test recomputes them). */
 export const IX = Object.freeze({
@@ -255,13 +256,17 @@ export function proveLaunch(tx, { wallet, stocks = STOCK_PAIRS } = {}) {
   };
 }
 
+/** Why a ComputeBudget instruction is not a plain limit / price / heap / loaded-data one (no accounts), or null. */
+function computeBudgetProblem(ix) {
+  const d = ix.data;
+  const ok = ix.accounts.length === 0 && ((d[0] === 3 && d.length === 9) || ([1, 2, 4].includes(d[0]) && d.length === 5));
+  return ok ? null : "a compute-budget instruction of an unknown kind";
+}
+
 /** Why an instruction beside the launch is not one a StonkFun launch carries, or null. */
 function otherInstructionProblem(ix, { wallet, mint, quote, quoteProgram, pool, globalConfig, platform }) {
   const d = ix.data;
-  if (ix.program === COMPUTE_BUDGET_PROGRAM) {
-    const ok = ix.accounts.length === 0 && ((d[0] === 3 && d.length === 9) || ([1, 2, 4].includes(d[0]) && d.length === 5));
-    return ok ? null : "a compute-budget instruction of an unknown kind";
-  }
+  if (ix.program === COMPUTE_BUDGET_PROGRAM) return computeBudgetProblem(ix);
   if (ix.program === ATA_PROGRAM) {
     // create (no data or 0) or create_idempotent (1): funder, account, owner, mint, system, token program
     const kind = d.length === 0 ? 0 : d.length === 1 ? d[0] : -1;
@@ -284,6 +289,115 @@ function otherInstructionProblem(ix, { wallet, mint, quote, quoteProgram, pool, 
     return null;
   }
   return `an instruction for ${ix.program.slice(0, 8)}… that a StonkFun launch does not carry`;
+}
+
+/* ── a pump.fun launch (the sanctuary's automatic launcher, scripts/lib/pump.mjs) ─────────
+
+   WHAT IS ACCEPTED: exactly what scripts/lib/pump.mjs buildLaunchTransaction builds, read back off
+   the chain. A legacy or v0 transaction that succeeded, whose fee payer is the listed wallet,
+   holding ONE top-level pump.fun create_v2 (a create made through another program is refused)
+   whose sixteen accounts are exactly createV2Accounts(mint, wallet) (the same derivations the
+   builder uses, so the mint's bonding curve, its token accounts and mayhem accounts all re-derive),
+   signed by the new mint, whose creator argument is the wallet, and whose options are all off:
+   mayhem mode false, cashback false, creator_fee_bps 0, holder reward false. Any other option
+   value is refused (clause pump_mayhem or pump_options), because the builder never writes one and a
+   coin with them is not the plain coin the sanctuary shows. A trailing option the transaction
+   leaves out is read as off, as the program itself reads it, so it is the same coin. Only a
+   SOL-priced launch is read (no remaining accounts after the sixteen: a coin-quoted pump.fun launch
+   is refused as pump_not_sol until a later stage proves it). Every other top-level instruction must
+   be a ComputeBudget one with no accounts and the byte forms otherInstructionProblem allows.
+
+   A DEV BUY IS REFUSED (clause pump_dev_buy): the launcher never buys its own coin, so a create
+   followed by buy / buy_v2 / buy_exact_sol_in is not one of its launches. The recorded real launch
+   (tests/fixtures/pumpfun-create.json) is a create_v2 plus an associated-token-account create and a
+   buy_v2, with a Jito marker account on its ComputeBudget instruction: it is refused, and a
+   create-only copy of it is what the tests accept. pump.fun's older `create` (a classic SPL mint)
+   is refused as pump_unrecorded_variant. */
+
+const sha8 = (text) => createHash("sha256").update(text).digest().subarray(0, 8).toString("hex");
+const PUMP_CREATE_LEGACY = sha8("global:create");
+const PUMP_BUYS = ["buy", "buy_v2", "buy_exact_sol_in"].map((n) => sha8(`global:${n}`));
+/** sha256("account:BondingCurve")[0..8]. */
+export const BONDING_CURVE_DISC = sha8("account:BondingCurve");
+
+const isPumpCreate = (ix) => ix.program === PUMPFUN_PROGRAM && [CREATE_V2_DISC, PUMP_CREATE_LEGACY].includes(disc(ix));
+
+/**
+ * Whether `tx` (a getTransaction answer, encoding json) is a pump.fun launch made by `wallet` as the
+ * sanctuary's launcher makes it (see above). Returns { ok: true, launch } or { ok: false, clause,
+ * detail, launchLike }. `launch` is { mint, name, symbol, pair: SOL_PAIR, pool (the bonding curve),
+ * payer, tx, time, launchpad: "pump.fun", uri }. "no_launch": the transaction creates no pump.fun coin.
+ */
+export function proveLaunchPump(tx, { wallet } = {}) {
+  let launchLike = null;
+  const no = (clause, detail) => ({ ok: false, clause, detail, launchLike });
+  if (!tx || typeof tx !== "object" || !tx.meta) return no("unreadable", "no transaction, or no status");
+  if (tx.version !== "legacy" && tx.version !== 0) return no("tx_version", `transaction version ${JSON.stringify(tx.version)}`);
+  let t;
+  try { t = readTransaction(tx); } catch (e) { return no("unreadable", e.message); }
+  const creates = t.instructions.filter(isPumpCreate);
+  launchLike = creates.length > 0 || t.inner.some(isPumpCreate);
+  if (tx.meta.err !== null || (tx.meta.status && !("Ok" in tx.meta.status))) return no("failed", "the transaction failed on chain");
+  if (t.feePayer !== wallet) return no("fee_payer", "the fee payer is not the listed wallet");
+  if (creates.length === 0) return no(launchLike ? "pump_cpi_launch" : "no_launch", launchLike ? "pump.fun's create was called by another program; only a direct launch is read" : "not a pump.fun launch");
+  if (creates.length > 1) return no("pump_several_launches", "more than one pump.fun create in one transaction");
+  const create = creates[0];
+  if (disc(create) !== CREATE_V2_DISC) return no("pump_unrecorded_variant", "pump.fun's older create (a classic SPL mint), not create_v2");
+
+  let args;
+  try { args = decodeCreateV2(create.data); } catch (e) { return no("pump_decode", e.message); }
+  const a = create.accounts;
+  if (a.length > 16) return no("pump_not_sol", `${a.length} accounts: a launch priced in a coin, not in SOL`);
+  if (a.length !== 16) return no("pump_wrong_accounts", `${a.length} accounts; create_v2 has 16`);
+  const mint = a[0];
+  if (a[5] !== wallet) return no("pump_payer", "the create's user is not the listed wallet");
+  if (mint === wallet) return no("pump_wrong_accounts", "the mint is the wallet");
+  const want = createV2Accounts(mint, wallet).map((k) => k.pubkey);
+  const wrong = want.findIndex((k, i) => a[i] !== k);
+  if (wrong >= 0) return no("pump_wrong_accounts", `account ${wrong} is not the one create_v2 derives for this mint and wallet`);
+  if (!t.isSigner(mint)) return no("pump_mint_unsigned", "the new mint did not sign");
+  if (args.creator !== wallet) return no("pump_not_creator", "the coin's creator is not the listed wallet");
+  if (args.isMayhemMode) return no("pump_mayhem", "a mayhem-mode coin");
+  if (args.isCashbackEnabled || args.creatorFeeBps !== 0n || args.isHolderReward) return no("pump_options", "cashback, a creator fee or holder rewards turned on");
+
+  if (t.instructions.some((ix) => ix.program === PUMPFUN_PROGRAM && PUMP_BUYS.includes(disc(ix)))) return no("pump_dev_buy", "a buy beside the create; the sanctuary's launcher never buys its own coin");
+  for (const ix of t.instructions) {
+    if (ix === create) continue;
+    const bad = ix.program === COMPUTE_BUDGET_PROGRAM ? computeBudgetProblem(ix) : `an instruction for ${ix.program.slice(0, 8)}… that a launch does not carry`;
+    if (bad) return no("pump_unexpected_instruction", bad);
+  }
+  if (!Number.isInteger(tx.blockTime) || tx.blockTime <= 0) return no("no_time", "the transaction has no block time");
+
+  return {
+    ok: true,
+    launch: {
+      mint, name: args.name, symbol: args.symbol, pair: { ...SOL_PAIR }, pool: a[2],
+      payer: wallet, tx: t.signature, time: blockTimeToIso(tx.blockTime), launchpad: "pump.fun", uri: args.uri,
+    },
+  };
+}
+
+/**
+ * Cross-check a proved pump.fun launch against the chain as it is now: `mintAccount` and
+ * `curveAccount` are getMultipleAccounts answers (base64) for launch.mint and launch.pool (the
+ * bonding curve). The mint must be a Token-2022 mint whose own metadata names it and carries the
+ * name and symbol create_v2 wrote, and whose update authority is not the launching wallet (pump.fun
+ * holds it, so the coin cannot be renamed; which pump.fun account holds it is not pinned: no
+ * pump.fun mint account is recorded). The bonding curve must be PDA["bonding-curve", mint], exist,
+ * be owned by pump.fun and carry BondingCurve's account discriminator.
+ */
+export function checkPumpAccounts(launch, mintAccount, curveAccount) {
+  const no = (clause, detail) => ({ ok: false, clause, detail });
+  if (!mintAccount || mintAccount.owner !== TOKEN_2022_PROGRAM || !Array.isArray(mintAccount.data)) return no("metadata", "the mint is not a Token-2022 account on chain");
+  let meta;
+  try { meta = readTokenMetadata(Buffer.from(mintAccount.data[0], "base64")); } catch (e) { return no("metadata", e.message); }
+  if (meta.mint !== launch.mint) return no("metadata", "the mint's metadata names another mint");
+  if (meta.updateAuthority === launch.payer) return no("metadata", "the launching wallet can rename the coin");
+  if (meta.name !== launch.name || meta.symbol !== launch.symbol) return no("metadata_mismatch", "the mint's metadata does not carry the name and symbol the launch wrote");
+  if (launch.pool !== bondingCurve(launch.mint)) return no("bonding_curve", "the pool is not the mint's bonding curve");
+  if (!curveAccount || curveAccount.owner !== PUMP.program || !Array.isArray(curveAccount.data)) return no("bonding_curve", "the bonding curve is not a pump.fun account on chain");
+  if (Buffer.from(curveAccount.data[0], "base64").subarray(0, 8).toString("hex") !== BONDING_CURVE_DISC) return no("bonding_curve", "not a pump.fun BondingCurve account");
+  return { ok: true };
 }
 
 /* ── the transaction's own signatures ─────────────────────────────────────────────────── */
