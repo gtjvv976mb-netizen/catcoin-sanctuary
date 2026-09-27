@@ -54,9 +54,9 @@ export const MODEL = "claude-opus-5";
 export const TREND_PLACES = [1, 23424977, 23424856]; // worldwide, the US, Japan
 export const TREND_SEARCHES = 2;
 export const READ_BUDGET = 10_000;   // posts a month, leaving room for the announcer on a small plan
-export const PER_SEARCH = 30;        // posts per plain search (X's minimum is 10, its maximum 100)
+export const PER_SEARCH = 10;        // posts per plain search (X's minimum is 10, its maximum 100)
 export const TREND_PER_SEARCH = 10;  // posts per cat-trend search
-export const EVERY_MINUTES = 180;    // how often it searches (the workflow wakes every 20 minutes)
+export const EVERY_MINUTES = 60;     // how often it searches (the workflow wakes every 20 minutes)
 
 /** The read budget for the day of nowMs: { day, month, dayCap, monthCap, dayUsed, monthUsed, left }. */
 export function readBudget(reads, nowMs, monthly = READ_BUDGET) {
