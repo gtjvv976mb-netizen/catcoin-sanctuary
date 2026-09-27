@@ -38,6 +38,9 @@
  * succeeds is it marked released (releasedAt, tweet id) in the queue and in data/releases.json,
  * which the site reads: a queued cat that is not released is hidden on the site. If X fails, the
  * cat stays queued and is tried again next run.
+ *
+ * An adoptable cat held as "adoptable cat: announcing paused" is released by queueing it. A queue
+ * entry with shown: true is a cat the site already shows: the queue orders its X post and never hides it.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -112,7 +115,7 @@ export function listCats(planned, collection = { cats: [] }, adoptables = { cats
   // Adoptable cats (verified lore from companies, people, shows); the lore picture is the post image.
   for (const c of adoptables.cats || []) {
     out.push({ key: c.ticker, id: c.ticker, name: c.name, ticker: c.ticker, symbol: c.pair?.symbol ?? "STONK", company: c.owner ?? null,
-      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore ?? `assets/lore/${c.ticker}.webp`, launched: false, adoptable: true });
+      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore?.image ?? (typeof c.lore === "string" ? c.lore : `assets/lore/${c.ticker}.webp`), launched: false, adoptable: true });
   }
   for (const e of collection.cats || []) {
     const launchedPlanned = tickers.has(`${e.pair?.mint} ${String(e.symbol).toUpperCase()}`);
@@ -200,6 +203,8 @@ export function pick(cats, state, config, queued = new Set()) {
 }
 
 export const RELEASE_SLACK_MINUTES = 5;
+/** The hold build-adoptables.mjs and research-status.mjs put on a new adoptable cat; queueing it lifts it. */
+export const PAUSED_REASON = "adoptable cat: announcing paused";
 
 /** A cat's in-game shot (scripts/capture-ingame.mjs), relative to the root. */
 export const ingameShot = (key) => `assets/ingame/${key}.jpg`;
@@ -241,7 +246,9 @@ export function pickRelease(cats, state, queue, config, { root, kits, nowMs }) {
   for (const q of queue.cats || []) {
     if (q.status === "released" || q.approved !== true) continue;
     const s = state.cats[q.key]?.status;
-    if (["held", "needs_review", "posting", "posted"].includes(s)) continue;
+    // An adoptable cat held only because announcing adoptables is paused is released by queueing it.
+    const paused = s === "held" && state.cats[q.key].reason === PAUSED_REASON;
+    if (!paused && ["held", "needs_review", "posting", "posted"].includes(s)) continue;
     if (s === "failed" && (state.cats[q.key].attempts ?? 0) >= MAX_ATTEMPTS) continue;
     const cat = byKey.get(q.key);
     if (!cat) continue;
@@ -259,7 +266,8 @@ export function releasesFile(queue, now) {
   return {
     note: "Written by scripts/announce.mjs from data/release-queue.json. hidden: queued cats the site must not show yet. released: newest first.",
     updated: now, lastReleaseAt: queue.lastReleaseAt ?? null,
-    hidden: (queue.cats || []).filter((q) => q.status !== "released").map((q) => q.key),
+    // shown: true marks a cat already on the site; the queue only orders its X post, so it is not hidden.
+    hidden: (queue.cats || []).filter((q) => q.status !== "released" && q.shown !== true).map((q) => q.key),
     released: released.slice(0, 20),
   };
 }

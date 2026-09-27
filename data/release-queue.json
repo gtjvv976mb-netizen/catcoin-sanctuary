@@ -1,5 +1,331 @@
 {
-  "note": "New cats to release after the initial roster: one an hour, in this order. Add { \"key\": \"<TICKER>\", \"approved\": true, \"added\": \"<date>\" } once the cat is in data/planned.json or data/adoptables.json with a proof, a portrait and a kit (assets/kits/kits.json). A cat listed here is hidden on the site until scripts/announce.mjs has posted it on X and set status \"released\", releasedAt and tweet. approved: false keeps it waiting (and hidden). A cat held in data/announced.json stays held.",
+  "note": "New cats to release after the initial roster: one an hour, in this order. Add { \"key\": \"<TICKER>\", \"approved\": true, \"added\": \"<date>\" } once the cat is in data/planned.json or data/adoptables.json with a proof, a portrait and a kit (assets/kits/kits.json). A cat listed here is hidden on the site until scripts/announce.mjs has posted it on X and set status \"released\", releasedAt and tweet. approved: false keeps it waiting (and hidden). A cat held in data/announced.json stays held, except an adoptable cat held only because announcing is paused: queueing it releases it. shown: true marks a cat the site already shows; it is queued only to order its X post and is never hidden.",
   "lastReleaseAt": null,
-  "cats": []
+  "cats": [
+    {
+      "key": "BIGGLESCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "NALACATCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "LUNAMOOCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "PICKLECCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "FELICETCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SABERHACAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "MAYORSTUB",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "FDCW",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SOCKSCACAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "DIPLOMOG",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SNOWBALCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "COLMEOW2",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "VENUS2F",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "CHEETLE",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "TALKTOM",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "MRSNORRCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "CHURCHCCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "THACKERY",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "FIGAROCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "GUMBALLW",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "FELIX1919",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "ARTEMISCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SPRIGATO",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "STRAYB12",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "GENKITTY",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "OCTOMONA",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SUSHITUNA",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "TREMAINE",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "PUSSBOOCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "DIDGACAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "GRREAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "COPYCC",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "MUSTACHCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "JOCKCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "FELIXHUD",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "NITAMACAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "BLAZECAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "CHOCOCACAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "UNSINKSAM",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "OSCARRI",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "COLEMARM",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "TREASMOG",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "MISTO",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SASSYHB",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "BIGFROGGY",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "CAITSITH",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SEACAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "KURONEKCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SERPOUNCE",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "AZRAELCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "NERMALCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "GROOVYPETE",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "CHISWEET",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "PALICO",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "ATCHOUMCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SNOWBELCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "FINICKY",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "NYANKOSEN",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SCRATCHC",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "EMPTANG",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "KITTENPLZ",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "FAITHCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "TRIMCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "TUBBSCAT",
+      "approved": true,
+      "shown": true
+    },
+    {
+      "key": "SGTTIBBS",
+      "approved": true,
+      "shown": true
+    }
+  ]
 }

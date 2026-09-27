@@ -207,9 +207,10 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
   return [...stock, ...adoptable, ...famous].filter((r) => !hidden.has(r.id) && !hidden.has(r.ticker));
 }
 
-/** The keys the site must not show yet: queued in data/release-queue.json and not released. */
+/** The keys the site must not show yet: queued in data/release-queue.json and not released
+ *  (shown: true marks a cat the site already shows, queued only to order its X post). */
 export function hiddenByQueue(q) {
-  return new Set((Array.isArray(q?.cats) ? q.cats : []).filter((e) => e && typeof e.key === "string" && e.status !== "released").map((e) => e.key));
+  return new Set((Array.isArray(q?.cats) ? q.cats : []).filter((e) => e && typeof e.key === "string" && e.status !== "released" && e.shown !== true).map((e) => e.key));
 }
 
 /** A famous coin's card: its data/famous.json row, marked as famous. */

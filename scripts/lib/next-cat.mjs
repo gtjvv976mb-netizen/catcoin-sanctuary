@@ -7,7 +7,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { checkFields } from "./content-rules/content-rules.mjs";
-import { pick, rosterLeft, listCats, readJson, DEFAULT_CONFIG } from "../announce.mjs";
+import { pick, rosterLeft, listCats, readJson, DEFAULT_CONFIG, PAUSED_REASON } from "../announce.mjs";
 
 export const CATEGORIES = ["company", "celebrity", "tv-movie", "crypto", "viral"];
 export const RUN_EVERY_MINUTES = 20; // .github/workflows/announce.yml: */20
@@ -26,7 +26,9 @@ export function upcoming(cats, state, queue, config = DEFAULT_CONFIG) {
   // pick() takes at most 2 from the backlog a run; the order past them is the same list's order.
   const rest = config.announceBacklog ? cats.filter((c) => !queued.has(c.key) && state.cats[c.key]?.status === "backlog" && !roster.includes(c)) : [];
   const byKey = new Map(cats.map((c) => [c.key, c]));
-  const release = queue.cats.filter((q) => q.status !== "released" && q.approved === true && !HELD.includes(state.cats[q.key]?.status))
+  // As in pickRelease: a queued adoptable held only because announcing is paused is on its way.
+  const waits = (q) => { const st = state.cats[q.key]; return HELD.includes(st?.status) && !(st.status === "held" && st.reason === PAUSED_REASON); };
+  const release = queue.cats.filter((q) => q.status !== "released" && q.approved === true && !waits(q))
     .map((q) => byKey.get(q.key)).filter(Boolean);
   return [...roster, ...rest, ...release];
 }
