@@ -113,7 +113,8 @@ test("sitting and lying cats keep all four paws on the ground and the body out o
   const clips = R.makeClips(rig);
   for (const name of ["stand", "sit", "loaf", "crouch"]) {
     pose(clips, name, 0.3);
-    for (const k of ["hL", "hR", "fL", "fR"]) assert.ok(Math.abs(toeAt(k).y) < 0.03, `${name}: ${k} toe at ${toeAt(k).y.toFixed(3)}`);
+    // (a paw folded under a lying or sitting cat rests on its skin: its toe up to a leg's thickness off the ground)
+    for (const k of ["hL", "hR", "fL", "fR"]) assert.ok(toeAt(k).y > -0.01 && toeAt(k).y < 0.03 + 1.5 * rig.legs[k].r, `${name}: ${k} toe at ${toeAt(k).y.toFixed(3)}`);
     const pelvis = new THREE.Vector3().setFromMatrixPosition(sk.bones.pelvis.matrixWorld);
     assert.ok(pelvis.y > 0.05, `${name}: pelvis above the ground (${pelvis.y.toFixed(3)})`);
   }
@@ -155,15 +156,41 @@ test("every action in catmotion.js has a clip of its kind", () => {
   }
 });
 
-test("no clip has a NaN anywhere, and loops end where they start", () => {
+test("no clip has a NaN anywhere, and loops end where they start (a mannerism's where its cycle starts)", () => {
   for (const [name, c] of Object.entries(clips)) {
     for (const t of c.tracks) {
       assert.ok(t.values.every(Number.isFinite), `${name}: ${t.name} is finite`);
       if (c.userData.loop !== false) {
-        const n = t.getValueSize(), v = t.values, last = v.length - n;
-        for (let i = 0; i < n; i++) assert.ok(Math.abs(v[i] - v[last + i]) < 1e-6, `${name}: ${t.name} loops seamlessly`);
+        const n = t.getValueSize(), v = t.values, last = v.length - n, at = c.userData.enter ? t.createInterpolant().evaluate(c.userData.enter) : v.subarray(0, n);
+        for (let i = 0; i < n; i++) assert.ok(Math.abs(at[i] - v[last + i]) < 1e-5, `${name}: ${t.name} loops seamlessly`);
       }
     }
+  }
+});
+
+test("a mannerism begins on its posture's plain pose, and its ways out end there (or at the next one's cycle)", () => {
+  const plain = { sit: "sit", stand: "stand", lie: "loaf" };
+  const mann = Object.keys(M.ACTIONS).filter((k) => clips[k].userData.enter);
+  for (const k of ["groom", "legLick", "earScratch", "beckon", "knead", "chatter", "dab", "flop", "roll", "hindStand", "scratch", "headBunt"]) assert.ok(mann.includes(k), `${k} has a way in`);
+  for (const name of mann) {
+    const base = frame(clips, plain[M.ACTIONS[name].posture], 0), c = clips[name];
+    const got = frame(clips, name, 0);
+    for (const b in got.q) assert.ok(angle(got.q[b], base.q[b]) < 0.02, `${name} starts as ${plain[M.ACTIONS[name].posture]}: ${b}`);
+    for (const t of [0.1, c.userData.enter * 0.5, c.userData.enter + 0.3, c.duration * 0.8]) {
+      const x = clips.exitFor(name, t);
+      assert.ok(x && x.userData.loop === false && x.userData.exitOf === name && x.duration > 0.25, `${name}: a way out at ${t}`);
+      const a = frame({ x }, "x", 0), want = frame(clips, name, Math.round(t * 30) / 30 / c.duration), end = frame({ x }, "x", 1);
+      for (const b in a.q) {
+        assert.ok(angle(a.q[b], want.q[b]) < 0.03, `${name} way out at ${t} starts where it is: ${b}`);
+        assert.ok(angle(end.q[b], base.q[b]) < 0.03, `${name} way out at ${t} ends on the plain pose: ${b}`);
+      }
+    }
+  }
+  // Straight on from its side onto its back and back: the way ends where the next one's cycle begins.
+  for (const [p, q] of [["flop", "roll"], ["roll", "flop"]]) {
+    const x = clips.exitFor(p, clips[p].duration * 0.7, q), end = frame({ x }, "x", 1), want = frame(clips, q, x.userData.at / clips[q].duration);
+    assert.equal(x.userData.into, q);
+    for (const b in end.q) assert.ok(angle(end.q[b], want.q[b]) < 0.03, `${p} > ${q}: ${b}`);
   }
 });
 
@@ -191,7 +218,8 @@ test("paws that carry the cat stay planted on the ground through sitting down, s
       const u = u0 + (u1 - u0) * f / 30;
       pose(clips, name, u);
       const t = toeAt(k);
-      assert.ok(t.y > -0.01 && t.y < 0.03, `${name}: ${k} on the ground at ${u.toFixed(2)} (y ${t.y.toFixed(3)})`);
+      // (a hind paw folding down under a lying cat comes to rest on its skin: its toe up to a leg's thickness off the ground)
+      assert.ok(t.y > -0.01 && t.y < 0.03 + 1.5 * rig.legs[k].r, `${name}: ${k} on the ground at ${u.toFixed(2)} (y ${t.y.toFixed(3)})`);
       if (!first) first = t.clone();
       const moved = Math.hypot(t.x - first.x, t.z - first.z);
       assert.ok(moved < 0.004, `${name}: ${k} slides ${moved.toFixed(4)} by ${u.toFixed(2)}`);
@@ -214,7 +242,7 @@ test("a cat's style changes its clips and keeps walking paws planted", () => {
     assert.ok(Math.min(spread, stride - spread) < stride * 0.02, `${k}: planted paw slides ${spread.toFixed(4)} of a ${stride.toFixed(3)} stride`);
   }
   // Still every base posture on the ground, and still a clean start and end to every posture change.
-  for (const name of ["stand", "sit", "loaf"]) { pose(own, name, 0.3); for (const k of PAWS) assert.ok(Math.abs(toeAt(k).y) < 0.03, `${name}: ${k} on the ground`); }
+  for (const name of ["stand", "sit", "loaf"]) { pose(own, name, 0.3); for (const k of PAWS) assert.ok(toeAt(k).y > -0.01 && toeAt(k).y < 0.03 + 1.5 * rig.legs[k].r, `${name}: ${k} on the ground`); }
   for (const [name, a] of Object.entries(M.ACTIONS)) {
     if (a.kind !== "trans") continue;
     const got = frame(own, name, 1), want = frame(own, BASE[a.to], 0);

@@ -29,7 +29,7 @@ import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
 import { AMBIENT } from "./ambient.js";
 import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit, GAIT_RATE, PIVOT_TURN, STOPS } from "./catrig.js";
-import { ACTIONS, NEUTRAL_TRAITS } from "./catmotion.js";
+import { ACTIONS, NEUTRAL_TRAITS, transitionPath } from "./catmotion.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { lookOf } from "./looks.js";
 
@@ -769,11 +769,11 @@ export function animState(o, cat) {
   return A;
 }
 
-/** The mixer action for one of a cat's clips; its time is always set by hand (timeScale 0). */
-function actionOf(o, name) {
+/** The mixer action for one of a cat's clips (`clip`: one made for the moment, a way out of a
+    mannerism); its time is always set by hand (timeScale 0). */
+function actionOf(o, name, clip = o.clips[name]) {
   let a = o.actions[name];
   if (!a) {
-    const clip = o.clips[name];
     a = o.actions[name] = o.mixer.clipAction(clip);
     if (clip.userData?.loop === false) a.setLoop(THREE.LoopOnce, 1);
     a.clampWhenFinished = true; a.timeScale = 0; a.weight = 0;
@@ -781,13 +781,17 @@ function actionOf(o, name) {
   return a;
 }
 
-function entryOf(o, A, key) {
+function entryOf(o, A, key, clip0 = undefined) {
   let E = A.e[key];
   if (!E) {
-    const gait = key === "gait", a = gait ? null : actionOf(o, key), clip = a ? a.getClip() : null, def = ACTIONS[key];
+    const gait = key === "gait", a = gait ? null : actionOf(o, key, clip0), clip = a ? a.getClip() : null, def = ACTIONS[key], ud = clip?.userData || {};
+    // (a way out of a mannerism shows as the mannerism does: its posture, its layers, its mood)
+    const as = ud.exitOf || key;
     E = A.e[key] = {
-      key, a, kind: gait ? "gait" : def ? def.kind : clip.userData?.loop === false ? "once" : "loop", post: gait ? "move" : def ? def.posture : "stand",
-      dur: clip ? clip.duration : 1, fade: clip?.userData?.fade ?? ANIM.fade, s: 0, d0: 0, p: 0, t: 0, L: LAYERS[key] || (key.startsWith("stop:") ? LAYERS.stand : NO_LAYERS), mood: MOOD[key] || (key.startsWith("stop:") ? REST : 0),
+      key, a, kind: gait ? "gait" : def ? def.kind : ud.loop === false ? "once" : "loop", post: gait ? "move" : def ? def.posture : ud.posture || "stand",
+      dur: clip ? clip.duration : 1, fade: ud.fade ?? ANIM.fade, s: 0, d0: 0, p: 0, t: 0, L: LAYERS[as] || (key.startsWith("stop:") ? LAYERS.stand : NO_LAYERS), mood: MOOD[as] || (key.startsWith("stop:") ? REST : 0),
+      // A mannerism's clip begins with its way in (enter s), then loops its cycle; stop and exit clips run on their own clock.
+      enter: ud.enter || 0, exits: !!ud.exits, own: key.startsWith("stop:") || !!ud.exitOf,
     };
   }
   return E;
@@ -849,33 +853,65 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
     }
     A.gcur = gi;
   }
+  // Out of a mannerism that took the cat off its posture's plain pose (a paw up washing, over on its
+  // side, up on its hind legs): first its way back, made by catrig (exitFor) for the very moment it
+  // is at and played on its own clock to the end (a paw comes down the way a paw does, not swung out
+  // in a blend of two far-apart poses), or straight on into the next mannerism of the same posture;
+  // then what the sim shows now. Walking off, it just blends.
+  // (A posture change the sim began, or made, while the way out played is then played from its start
+  // on the controller's clock, and what follows waits for it: a paw comes down, then the cat gets up.)
+  let tkey = key, pulling = false, from = null, enterAt = null, held = false;
+  if (A.exit) {
+    const X = A.e[A.exit];
+    if (snap || !X || X.t >= X.dur - 1e-6) {
+      A.exit = null; from = X;
+      if (X && !snap && kind !== "gait" && def) {
+        const ud = X.a.getClip().userData, cur = X.own ? X.post : ACTIONS[X.key]?.to || X.post, want = kind === "trans" ? def.from : def.posture;
+        let next = null;
+        if (ud.into === key) enterAt = ud.at;
+        else if ((X.own || X.clock) && transitionPath(cur, want).length) next = transitionPath(cur, want)[0];
+        else if (X.own && (kind === "trans" || kind === "once") && u !== null && u > 0.1) next = key;
+        if (next && o.clips[next]) { A.exit = tkey = next; enterAt = 0; held = true; }
+      }
+    } else tkey = A.exit;
+  } else if (!snap && key !== A.target && kind !== "gait" && o.clips.exitFor) {
+    const P = A.target ? A.e[A.target] : null;
+    const c = P && P.exits && P.s > 0.25 ? o.clips.exitFor(P.key, P.t, key) : null;
+    if (c) { entryOf(o, A, c.name, c); A.exit = tkey = c.name; }
+  }
   // Pulling up out of a gait into a standing loop: first the last step or two to stand square
   // (catrig's stop:<gait>:<k>, from the phase it pulled up at, on its own clock), then the loop.
-  let tkey = key, pulling = false;
   if (A.stop) {
     const X = A.e[A.stop.key];
     if (snap || key !== A.stop.then || !X || X.t >= X.dur - 1e-6) A.stop = null;
     else tkey = A.stop.key;
-  } else if (!snap && key !== A.target && A.target === "gait" && A.gcur >= 0 && A.wMove > 0.6 && def && def.kind === "loop" && def.posture === "stand") {
+  } else if (!A.exit && !snap && key !== A.target && A.target === "gait" && A.gcur >= 0 && A.wMove > 0.6 && def && def.kind === "loop" && def.posture === "stand") {
     const ph = A.phi + GAIT_AT[A.gcur], sk = `stop:${GAITS[A.gcur]}:${Math.round((ph - Math.floor(ph)) * STOPS) % STOPS}`;
     if (o.clips[sk]) { A.stop = { key: sk, then: key }; tkey = sk; pulling = true; }
   }
   // A new action: its blend time; what was shown starts to ease out from where it is; a loop starts
-  // at a phase of its own, a move at its start.
+  // at a phase of its own (a mannerism at the start of its way in, or where a way out left it), a
+  // move at its start.
   const E = entryOf(o, A, tkey);
   if (tkey !== A.target) {
     const P = A.target ? A.e[A.target] : null;
-    A.fade = pulling ? E.fade : fadeFor(P, E);
+    A.fade = pulling || E.own ? E.fade : from ? Math.min(0.12, E.fade) : fadeFor(P, E);
     if (P) { P.d0 = P.s; P.p = 1; }
-    if (E.s <= 0) E.t = E.kind === "loop" ? rnd(A) * E.dur : 0;
+    if (E.s <= 0 || held) E.t = enterAt !== null ? enterAt : E.kind === "loop" ? (E.enter ? (snap ? E.enter + rnd(A) * (E.dur - E.enter) : 0) : rnd(A) * E.dur) : 0;
     else if (E.kind !== "loop" && E.kind !== "gait" && E.t >= E.dur) E.t = 0;
+    E.clock = held;
     E.p = 0;
     A.target = tkey;
     if (!A.live.includes(E)) A.live.push(E);
-  } else if (u !== null && u < A.u - 0.5) E.t = 0; // the same move again, straight after the last
+  } else if (u !== null && u < A.u - 0.5 && !E.clock) E.t = 0; // the same move again, straight after the last
   A.u = u ?? 0;
   if (snap) {
-    for (let i = 0; i < A.live.length; i++) { const X = A.live[i]; if (X !== E) { X.s = 0; X.p = 0; stopEntry(A, X); } }
+    for (let i = 0; i < A.live.length; i++) {
+      const X = A.live[i];
+      if (X === E) continue;
+      X.s = 0; X.p = 0; stopEntry(A, X);
+      if (X.own && X.key.startsWith("exit:")) { o.mixer.uncacheClip(X.a.getClip()); delete o.actions[X.key]; delete A.e[X.key]; }
+    }
     A.live.length = 0; A.live.push(E); E.s = 1;
     A.odo = odo;
   }
@@ -888,7 +924,12 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
     if (X === E) continue;
     X.p = Math.max(0, X.p - step);
     X.s = X.d0 * smooth01(X.p);
-    if (X.s <= 1e-5) { X.s = 0; stopEntry(A, X); A.live[i] = A.live[A.live.length - 1]; A.live.pop(); continue; }
+    if (X.s <= 1e-5) {
+      X.s = 0; stopEntry(A, X); A.live[i] = A.live[A.live.length - 1]; A.live.pop();
+      // (a way out, made for its moment, is let go once it is over)
+      if (X.own && X.key.startsWith("exit:") && A.exit !== X.key) { o.mixer.uncacheClip(X.a.getClip()); delete o.actions[X.key]; delete A.e[X.key]; }
+      continue;
+    }
     rest -= X.s;
   }
   E.s = Math.max(0, rest);
@@ -946,7 +987,8 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
     const a = X.a;
     if (!a.isScheduled()) a.play();
     a.weight = d;
-    if (X.kind === "loop") { X.t += dt; if (X.t >= X.dur) X.t %= X.dur; }
+    if (X.kind === "loop") { X.t += dt; if (X.t >= X.dur) X.t = X.enter + ((X.t - X.enter) % (X.dur - X.enter)); }
+    else if (X.own || X.clock) X.t = Math.min(X.dur, X.t + dt);
     else if (X === E) X.t = u !== null ? Math.min(1, Math.max(0, u)) * X.dur : Math.min(X.dur, X.t + dt);
     a.time = X.t;
     const L = X.L, md = X.mood;
@@ -958,11 +1000,18 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
     if (md & SLEEP) A.wSleep += d;
   }
   // The clips' pose (the layers' bones put back first: the mixer only writes what changed).
-  const bones = A.bones, Q = A.saved;
+  const bones = A.bones, Q = A.saved, rootB = o.sk.bones.root;
   if (A.hasSaved) for (let i = 0; i < bones.length; i++) bones[i].quaternion.fromArray(Q, i * 4);
+  if (A.lifted) { rootB.position.y -= A.lifted; A.lifted = 0; }
   o.mixer.update(dt);
   for (let i = 0; i < bones.length; i++) bones[i].quaternion.toArray(Q, i * 4);
   A.hasSaved = true;
+  // While two poses blend, their legs' angles mixed can put a paw into the ground that neither pose
+  // does (a stand easing into a crouch, a walk setting off from one): the body is held up by as much.
+  if (A.live.length > 1 || (A.e.gait?.s > 0 && A.gs[0] * A.gs[1] + A.gs[0] * A.gs[2] + A.gs[0] * A.gs[3] + A.gs[1] * A.gs[2] + A.gs[1] * A.gs[3] + A.gs[2] * A.gs[3] > 1e-4)) {
+    const lo = lowestToe(o);
+    if (lo < -0.003) { A.lifted = -0.003 - lo; rootB.position.y += A.lifted; }
+  }
   // How tall it stands (for its tag and the camera), eased as the posture changes.
   const hk = m && m.posture ? POSTURE_H[m.posture] ?? 1 : OWN_HEIGHT[cat.pose] || 1;
   A.hk = snap ? hk : A.hk + (hk - A.hk) * Math.min(1, dt * 4);
@@ -984,6 +1033,21 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
   lookLayer(o, cat, A, b, dt, now, look, LG[0] * gD, snap, cam);
   if (A.tail) tailLayer(A, dt, now, LG[1] * gD, snap);
   return true;
+}
+
+/** How high the lowest of the four toes is (model units; the ground is 0), from the bones as posed. */
+const TOE_CHAIN = { hL: ["pelvis", "thigh.L", "shin.L", "foot.L"], hR: ["pelvis", "thigh.R", "shin.R", "foot.R"], fL: ["pelvis", "spine", "chest", "arm.L", "forearm.L", "paw.L"], fR: ["pelvis", "spine", "chest", "arm.R", "forearm.R", "paw.R"] };
+function lowestToe(o) {
+  const b = o.sk.bones;
+  let lo = Infinity;
+  for (const k in TOE_CHAIN) {
+    const ch = TOE_CHAIN[k];
+    _qd.copy(b.root.quaternion); _vc.copy(b.root.position);
+    for (let i = 0; i < ch.length; i++) { const x = b[ch[i]]; _vd.copy(x.position).applyQuaternion(_qd); _vc.add(_vd); _qd.multiply(x.quaternion); }
+    _vd.copy(o.rig.legs[k].toe).sub(b[ch[ch.length - 1]].userData.at).applyQuaternion(_qd);
+    lo = Math.min(lo, _vc.y + _vd.y);
+  }
+  return lo;
 }
 
 /** Breathing: the belly and flanks (the spine bone) rise and fall across the body; the chest is

@@ -94,24 +94,31 @@ test("clip weights always add up to one and change smoothly, whatever the sim sh
   assert.ok(frames > 1000);
 });
 
-test("a mannerism far from its posture's pose blends out over its own fade: off its side in 0.7 s, not in a blink", () => {
+test("a mannerism far from its posture's pose goes back to it its own way: off its side in 0.8 s, not in a blink", () => {
   // Flop (on its side) back to a loaf, and a paw wash into getting up (an older sim that does not
-  // settle first): the outgoing clip's own fade sets the blend, not only the incoming one's.
+  // settle first): the mannerism hands over to its way out (catrig's exitFor, made for the moment it
+  // is at, which starts on its pose and moves back to the plain pose over its own length); the two
+  // together hold over half the weight for a good part of that, and the paw wash comes down before
+  // the cat gets up.
   for (const [from, to, fromPost] of [["flop", "loaf", "lie"], ["groom", "standUp", "sit"]]) {
     const { o, cat } = ownCat();
     const dt = 1 / 60;
     let now = 0;
     set(cat, from); cat.motion.posture = fromPost;
-    for (let f = 0; f < 120; f++) { now += dt; V.animateOwn(o, cat, now, 5); }
-    const fade = o.clips[from].userData.fade;
+    for (let f = 0; f < 150; f++) { now += dt; V.animateOwn(o, cat, now, 5); }
     const n = Math.round(M.ACTIONS[to].kind === "trans" ? M.transDur(to) / dt : 90);
-    let half = null;
-    for (let f = 0; f < n; f++) {
-      set(cat, to, { u: M.ACTIONS[to].kind === "trans" ? (f + 1) / n : null });
+    let half = null, out = 0, upAt = null;
+    for (let f = 0; f < n + 60; f++) {
+      set(cat, f < n ? to : M.ACTIONS[to].kind === "trans" ? { standUp: "stand" }[to] : to, { u: f < n && M.ACTIONS[to].kind === "trans" ? (f + 1) / n : null });
       now += dt; V.animateOwn(o, cat, now, 5);
-      if (half === null && o.actions[from].weight < 0.5) half = (f + 1) * dt;
+      let w = o.actions[from]?.weight || 0;
+      for (const a of Object.values(o.actions)) if (a.getClip().userData.exitOf === from) { w += a.weight; out = Math.max(out, a.getClip().userData.dur); }
+      if (half === null && w < 0.5) half = (f + 1) * dt;
+      if (upAt === null && to === "standUp" && o.actions.standUp?.weight > 0.5) upAt = (f + 1) * dt;
     }
-    assert.ok(half !== null && half > fade * 0.35, `${from} > ${to}: ${from} is under half weight after ${half?.toFixed(2)} s (its fade is ${fade} s)`);
+    assert.ok(out > 0.3, `${from} > ${to}: a way out of ${from} (${out} s)`);
+    assert.ok(half !== null && half > out * 0.6, `${from} > ${to}: ${from} and its way out are under half weight after ${half?.toFixed(2)} s (the way out takes ${out} s)`);
+    if (to === "standUp") assert.ok(upAt !== null && upAt >= half, `groom > standUp: gets up (${upAt}) once the paw is down (${half})`);
   }
 });
 
