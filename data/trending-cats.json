@@ -1,7 +1,15 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats trending on X, read by rules (X-only) or by Claude (readBy). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). Launching is a person's decision.",
- "checkedAt": "2026-09-27T14:03:01.133Z",
+ "checkedAt": "2026-09-27T17:09:28.118Z",
  "trends": [],
+ "reads": {
+  "day": "2026-09-27",
+  "dayUsed": 30,
+  "month": "2026-09",
+  "monthUsed": 30,
+  "monthCap": 10000,
+  "dayCap": 333
+ },
  "searchError": null,
  "candidates": [],
  "posts": []
