@@ -25,7 +25,7 @@ window.draw = async (t, phase) => {
   const r = new THREE.WebGLRenderer({ canvas: document.getElementById("c"), antialias: true, preserveDrawingBuffer: true });
   r.outputColorSpace = THREE.SRGBColorSpace; r.setScissorTest(true);
   const g = await new GLTFLoader().loadAsync("/assets/models/cats/" + t + ".glb");
-  const f = flatMesh(g.scene), rig = findRig(f.pos), sk = buildSkeleton(rig), w = skinWeights(f.pos, rig, sk);
+  const f = flatMesh(g.scene), rig = findRig(f.pos), sk = buildSkeleton(rig), w = skinWeights(f.pos, rig, sk, f.geometry.index ? f.geometry.index.array : null);
   f.geometry.setAttribute("skinIndex", w.index); f.geometry.setAttribute("skinWeight", w.weight);
   const m = new THREE.SkinnedMesh(f.geometry, f.material); m.frustumCulled = false;
   const grp = new THREE.Group(); grp.add(sk.root); grp.add(m); m.bind(sk.skeleton, new THREE.Matrix4());

@@ -28,7 +28,7 @@ import * as THREE from "three";
 import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
 import { AMBIENT } from "./ambient.js";
-import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit } from "./catrig.js";
+import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit, GAIT_RATE } from "./catrig.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { lookOf } from "./looks.js";
 
@@ -585,10 +585,12 @@ function coatShader(material, md) {
    A cat whose picture was made into its own model (assets/models/cats/<TICKER>.glb, listed in
    assets/models/cats/index.json) is drawn from that model, in its own colours, instead of the
    tinted shared ones. Every such model is a cat standing on all fours; catrig.js rigs it at load
-   (a quadruped skeleton found from its shape, skin weights) and gives it a set of clips (walk,
-   trot, run, stalk, sit, loaf, sleep, groom, stretch, wiggle, pounce, eat, knead, scratch, ...)
-   that an AnimationMixer crossfades between as the cat's activity changes (clipFor, below).
-   Walking clips are stepped by the distance walked, so paws don't slide. Near the camera a cat is
+   (a quadruped skeleton found from its shape, skin weights blended along the surface) and gives
+   it a set of clips posed by inverse kinematics (walk, trot, run, stalk, sit, loaf, sleep, groom,
+   stretch, wiggle, pounce, eat, knead, scratch, ...) that an AnimationMixer crossfades between as
+   the cat's activity changes (clipFor, below). Walking clips are stepped by the distance walked,
+   and plant each paw on the ground for the part of the stride it carries weight, so paws don't
+   slide. Near the camera a cat is
    drawn from the full model, far away from a lighter copy (<TICKER>-lo.glb) on the same
    skeleton; only the nearest OWN.maxHi at a time get the full one, and far cats' animation is
    updated less often. */
@@ -837,7 +839,7 @@ export class CatHerd {
         o.perUnit = cyclesPerUnit(rig, o.s);
         this.own.set(catId, o);
       }
-      const { index, weight } = skinWeights(f.pos, o.rig, o.sk);
+      const { index, weight } = skinWeights(f.pos, o.rig, o.sk, f.geometry.index ? f.geometry.index.array : null);
       f.geometry.setAttribute("skinIndex", index);
       f.geometry.setAttribute("skinWeight", weight);
       f.geometry.computeBoundingSphere();
@@ -950,7 +952,7 @@ export class CatHerd {
         const act = this.playClip(o, name, this.still ? 0 : OWN.fade);
         const gaitClip = name === "walk" || name === "trot" || name === "run" || name === "stalk";
         const dist = (cat.stride || 0) / 5.2;
-        if (gaitClip) { act.timeScale = 0; act.time = ((dist * o.perUnit * (name === "run" ? 0.55 : name === "trot" ? 0.8 : name === "stalk" ? 1.3 : 1)) % 1) * act.getClip().duration; }
+        if (gaitClip) { act.timeScale = 0; act.time = ((dist * o.perUnit * GAIT_RATE[name]) % 1) * act.getClip().duration; }
         else act.timeScale = 1;
         // Far cats step their animation less often (every third frame).
         const now = T;
