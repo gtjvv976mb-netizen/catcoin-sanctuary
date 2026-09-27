@@ -81,14 +81,15 @@ export function findRig(pos) {
   {
     const band = P.filter((p) => p.x > hindX + 0.25 * d && p.x < frontX - 0.25 * d);
     const bins = 24, w = [], step = (yt - yb) / bins;
-    for (let b = 0; b < bins; b++) { const zs = band.filter((p) => p.y >= yb + b * step && p.y < yb + (b + 1) * step).map((p) => p.z); w.push(zs.length > 8 ? pct(zs, 0.95) - pct(zs, 0.05) : null); }
+    for (let b = 0; b < bins; b++) { const zs = band.filter((p) => p.y >= yb + (b - 0.5) * step && p.y < yb + (b + 1.5) * step).map((p) => p.z); w.push(zs.length > 12 ? pct(zs, 0.97) - pct(zs, 0.03) : null); }
     for (let b = 0; b < bins; b++) if (w[b] === null) w[b] = w[b - 1] ?? w.find((v) => v !== null) ?? 0; // thin slices: as the one below
-    let wmax = 0, cut = -1;
-    for (let b = 3; b < bins - 2; b++) {
-      wmax = Math.max(wmax, ...w.slice(0, b));
-      const above = w.slice(b + 1);
-      if (w[b] < 0.8 * wmax && above.filter((v) => v > w[b] * 1.3).length >= 3) {
-        let m = b; while (m + 1 < bins && w[m + 1] <= w[m]) m++;
+    const sm = w.map((v, b) => [w[b - 1] ?? v, v, w[b + 1] ?? v].sort((x, y) => x - y)[1]); // median of three
+    let cut = -1;
+    for (let b = 3; b < bins - 3; b++) {
+      const below = Math.max(...sm.slice(0, b + 1)), above = sm.slice(b + 1);
+      // A neck: narrower than the body below it, with a head above much wider than the body.
+      if (sm[b] < 0.85 * below && above.filter((v) => v > below * 1.35).length >= 3) {
+        let m = b; while (m + 1 < bins && sm[m + 1] <= sm[m]) m++;
         cut = m; break;
       }
     }
@@ -101,7 +102,9 @@ export function findRig(pos) {
   const noseX = Math.max(headC.x + 0.05, pct(headPts.map((p) => p.x), 0.98));
   // Tail: from behind the rump to its furthest point, in four joints.
   const tailBase = V(hindX - 0.22 * d, yb + 0.72 * (yt - yb), zc);
-  const tailPts = P.filter((p) => p.x < tailBase.x && p.y > yb + 0.25 * (yt - yb));
+  // (A tail may hang down: low points count too, unless they are by a hind leg or at the ground.)
+  const offLegs = (p) => p.y > 0.25 * yb && ["hL", "hR"].every((k) => Math.hypot(p.x - paws[k].x, p.z - paws[k].z) > Math.max(0.12, (z1 - z0) * 0.4));
+  const tailPts = P.filter((p) => p.x < tailBase.x && (p.y > yb + 0.25 * (yt - yb) || offLegs(p)));
   let tailTip = V(x0, yt, zc);
   if (tailPts.length) { let best = -1; for (const p of tailPts) { const dd = p.distanceTo(tailBase); if (dd > best) { best = dd; tailTip = p.clone(); } } }
   const tail = [tailBase.clone()];
@@ -139,8 +142,11 @@ export function findRig(pos) {
   { const ring = tailPts.filter((p) => { const dd = p.distanceTo(tailBase); return dd > span * 0.35 && dd < span * 0.65; });
     if (ring.length > 6) { const c = mean(ring); tailR = Math.max(0.012, Math.min(0.08, pct(ring.map((p) => p.distanceTo(c)), 0.7))); } }
   const legTop = (legs.hL.top.y + legs.hR.top.y + legs.fL.top.y + legs.fR.top.y) / 4;
+  // A stub tail (a pom-pom on a round body, or none): what was followed is the rump itself, so
+  // the tail bones hold still and ride on the hips.
+  const tailStub = span < 0.12 * (x1 - x0);
   return {
-    H, L: x1 - x0, W: z1 - z0, zc, yb, yt, yMid, frontX, hindX, d, paws, headC, noseX, tail, legs, headR, tailR, bodyR: Math.max(0.05, (yt - yb) / 2),
+    H, L: x1 - x0, W: z1 - z0, zc, yb, yt, yMid, frontX, hindX, d, paws, headC, noseX, tail, tailStub, legs, headR, tailR, bodyR: Math.max(0.05, (yt - yb) / 2),
     // The underside and back of the body (rump, belly), to keep them on or above the ground.
     legR,
     under: [V(hindX - 0.3 * d, yb + 0.35 * (yt - yb), zc), V(hindX - 0.18 * d, yb + 0.08 * (yt - yb), zc), V(hindX, yb, zc), V((frontX + hindX) / 2, yb, zc), V(frontX, yb, zc)],
@@ -433,7 +439,7 @@ export function kinematics(rig) {
   }
   const tail = [];
   for (let k = 1; k <= 4; k++) tail.push({ a: ang(rig.tail[k - 1], rig.tail[k]), l: len2(rig.tail[k - 1], rig.tail[k]) });
-  return { legs, tail, P0: rig.pelvis, S0: rig.spine, C0: rig.chest, N0: rig.neck, H0: rig.headJoint, T0: rig.tail[0] };
+  return { legs, tail, stub: !!rig.tailStub, P0: rig.pelvis, S0: rig.spine, C0: rig.chest, N0: rig.neck, H0: rig.headJoint, T0: rig.tail[0] };
 }
 
 /** Forward kinematics of the body in the side view: where the hips, shoulders and head end up for
@@ -472,6 +478,7 @@ function legTo(K, p, B, k, toe, end = null, roll = 0) {
 /** The tail along a curve: `dirs` are the four segments' directions in the side view (radians:
     PI points straight back, PI/2 up), `side` their turn to the side (y). */
 function tailTo(K, p, B, dirs, side = [0, 0, 0, 0]) {
+  if (K.stub) { for (let k = 1; k <= 4; k++) p[`tail${k}`] = [0, (side[k - 1] || 0) * 0.15, 0]; return; }
   let prev = B.aP;
   for (let k = 0; k < 4; k++) {
     const w = dirs[k] - K.tail[k].a;
