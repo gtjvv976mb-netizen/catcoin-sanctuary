@@ -5,9 +5,11 @@
  *
  *   node scripts/scan-trending-cats.mjs [--dry-run]
  *
- * 1. X recent search (scripts/lib/x-api.mjs searchRecent; an X plan whose keys may search) for cat
- *    posts with a picture or video, no retweets or replies, and no coin talk (a post already
- *    shilling a ticker is late, not early).
+ * 1. X's own trending lists (worldwide, the US, Japan and the account's "for you" trends; whichever
+ *    the plan allows): a trend that is a cat (its name, or X files it under pets / animals) is
+ *    searched on its own, up to TREND_SEARCHES a run. Then X recent search (searchRecent; an X plan
+ *    whose keys may search) for cat posts with a picture or video, no retweets or replies, and no
+ *    coin talk (a post already shilling a ticker is late, not early).
  * 2. A post qualifies when it is at most MAX_AGE_HOURS old and has at least MIN_LIKES likes or
  *    MIN_VIEWS views; it is ranked by engagement per hour (likes + 2 x reposts + views / 100).
  * 3. The best new ones (at most PER_RUN a run) are read: is it about one particular cat, the cat's
@@ -31,7 +33,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import Anthropic from "@anthropic-ai/sdk";
-import { credsFromEnv, searchRecent, XError } from "./lib/x-api.mjs";
+import { credsFromEnv, searchRecent, getTrends, getPersonalizedTrends, XError } from "./lib/x-api.mjs";
 import { checkFields } from "./lib/content-rules/content-rules.mjs";
 import { detectCat } from "./lib/content-rules/catdetect.mjs";
 import { readPostByRules } from "./lib/read-cat-post.mjs";
@@ -43,6 +45,46 @@ export const MIN_VIEWS = 1_000_000;
 export const PER_RUN = 5;
 export const KEEP = 400;
 export const MODEL = "claude-opus-5";
+export const TREND_PLACES = [1, 23424977, 23424856]; // worldwide, the US, Japan
+export const TREND_SEARCHES = 3;
+const NO_COIN_TALK = '-is:retweet -is:reply -"$" -pump -memecoin -solana -"contract address" -airdrop -giveaway';
+const CATTISH = /\b(?:cats?|kitt(?:y|ies|en|ens)|meow\w*|purr\w*|neko|nyan|gato|chat(?:on|te)|katze|kucing|pusa)\b|猫|ねこ|ネコ|にゃ/i;
+
+/** The cat trends among X's trending lists: [{ name, count, where }], at most TREND_SEARCHES, busiest first. */
+export async function catTrends(creds, fetchImpl = fetch) {
+  const found = new Map();
+  const add = (name, count, where) => {
+    const n = String(name || "").replace(/["\u0000-\u001f]/g, "").trim().slice(0, 60);
+    if (n && !found.has(n.toLowerCase())) found.set(n.toLowerCase(), { name: n, count: Number(count) || 0, where });
+  };
+  for (const woeid of TREND_PLACES) {
+    try { for (const t of (await getTrends(woeid, creds, fetchImpl))?.data || []) if (CATTISH.test(t.trend_name) || detectCat({ name: t.trend_name }).isCat) add(t.trend_name, t.tweet_count, woeid); }
+    catch { /* not in this plan, or X is down: the plain search still runs */ }
+  }
+  try {
+    for (const t of (await getPersonalizedTrends(creds, fetchImpl))?.data || []) {
+      if (CATTISH.test(t.trend_name) || /\b(?:pets?|animals?|cats?)\b/i.test(t.category || "")) add(t.trend_name, postCount(t.post_count), "for-you");
+    }
+  } catch { /* same */ }
+  return [...found.values()].sort((a, b) => b.count - a.count).slice(0, TREND_SEARCHES);
+}
+
+/** X's "12.5K posts" as a number (12500). */
+export function postCount(v) {
+  const m = String(v ?? "").replace(/,/g, "").match(/([\d.]+)\s*([KkMm])?/);
+  return m ? Math.round(parseFloat(m[1]) * (/k/i.test(m[2] || "") ? 1e3 : /m/i.test(m[2] || "") ? 1e6 : 1)) || 0 : 0;
+}
+
+/** Several search answers as one: posts once each, their users and media together. */
+export function mergeAnswers(answers) {
+  const data = new Map(), users = new Map(), media = new Map();
+  for (const a of answers) {
+    for (const t of a?.data || []) if (!data.has(t.id)) data.set(t.id, t);
+    for (const u of a?.includes?.users || []) users.set(u.id, u);
+    for (const m of a?.includes?.media || []) media.set(m.media_key, m);
+  }
+  return { data: [...data.values()], includes: { users: [...users.values()], media: [...media.values()] } };
+}
 const TICKER = /^[A-Z0-9]{2,10}$/;
 
 /** Engagement per hour since the post: likes + 2 x reposts + views / 100. */
@@ -151,14 +193,27 @@ export const isCandidate = (p) => p.reading && p.reading.aboutOneCat && !p.readi
 export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Date.now(), log = () => {} }) {
   const prev = data.trending?.posts || [];
   const seen = new Set(prev.map((p) => p.id));
+  const trends = await catTrends(creds, fetchImpl);
+  const byTrend = new Map();
+  const trendAnswers = [];
+  for (const tr of trends) {
+    try {
+      const a = await searchRecent(`"${tr.name}" has:media ${NO_COIN_TALK}`, creds, fetchImpl);
+      for (const t of a?.data || []) if (!byTrend.has(t.id)) byTrend.set(t.id, tr.name);
+      trendAnswers.push(a);
+    } catch { /* the plain search below still runs */ }
+  }
   let answer;
-  try { answer = await searchRecent(QUERY, creds, fetchImpl); }
+  try { answer = mergeAnswers([...trendAnswers, await searchRecent(QUERY, creds, fetchImpl)]); }
   catch (e) {
     log(`X search refused (${e instanceof XError ? `HTTP ${e.status}` : e.message}); keeping the last list. Search needs an X plan whose keys may search (Basic or above).`);
-    return { ...data.trending, checkedAt: new Date(nowMs).toISOString(), searchError: e instanceof XError ? e.status : "unreachable" };
+    return { ...data.trending, checkedAt: new Date(nowMs).toISOString(), trends, searchError: e instanceof XError ? e.status : "unreachable" };
   }
-  const fresh = qualify(answer, nowMs).filter((p) => !seen.has(p.id) && (detectCat({ name: p.text }).isCat || /猫|ねこ|gato/.test(p.text)));
-  log(`Trend watch: ${answer?.data?.length ?? 0} posts searched, ${fresh.length} new ones trending.`);
+  // A post found through a cat trend is a cat post already; the rest must say cat.
+  const fresh = qualify(answer, nowMs).map((p) => (byTrend.has(p.id) ? { ...p, trend: byTrend.get(p.id) } : p))
+    .filter((p) => !seen.has(p.id) && (p.trend || detectCat({ name: p.text }).isCat || /猫|ねこ|gato/.test(p.text)))
+    .sort((a, b) => (b.trend ? 1 : 0) - (a.trend ? 1 : 0) || b.heat - a.heat);
+  log(`Trend watch: ${trends.length ? `cat trends on X: ${trends.map((t) => t.name).join(", ")}; ` : "no cat trend on X's lists; "}${answer?.data?.length ?? 0} posts searched, ${fresh.length} new ones trending.`);
   const read = [];
   for (const p of fresh.slice(0, PER_RUN)) {
     const reading = client ? await readPost(p, client) : cleanReading(readPostByRules(p));
@@ -173,7 +228,7 @@ export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Dat
   const posts = [...read.filter((r) => r.status !== "unread"), ...prev].sort((a, b) => Date.parse(b.postedAt) - Date.parse(a.postedAt)).slice(0, KEEP);
   return {
     note: "Written by scripts/scan-trending-cats.mjs: cats trending on X, read by rules (X-only) or by Claude (readBy). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). Launching is a person's decision.",
-    checkedAt: new Date(nowMs).toISOString(), searchError: null,
+    checkedAt: new Date(nowMs).toISOString(), trends, searchError: null,
     candidates: posts.filter((p) => p.status === "candidate").map((p) => p.id),
     posts,
   };
