@@ -54,13 +54,19 @@ test("pages: deploys on a push to main; nothing by default; the deploy job may w
   assert.match(PAGES, /test -f _site\/data\/famous\.json/);
 });
 
-test("collection: hourly and by hand, contents: write only, no stored credentials, one optional secret, commits data only when it changed", () => {
+test("collection: hourly and by hand, contents: write for collecting, actions: write only for the next-run job, no stored credentials, one optional secret, commits data only when it changed", () => {
   assert.match(COLLECTION, /^name: Collection$/m);
   assert.match(COLLECTION, /cron: "\d{1,2} \* \* \* \*"/);
   assert.match(COLLECTION, /workflow_dispatch:/);
   assert.match(COLLECTION, /^permissions: \{\}$/m);
   const perms = [...COLLECTION.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim());
-  assert.deepEqual(perms, ["contents: write"]);
+  assert.deepEqual(perms, ["contents: write", "actions: write"]);
+  // The next-run job runs no code of the repository's: no checkout, no node, no secrets.
+  const next = COLLECTION.slice(COLLECTION.indexOf("\n  next:"));
+  assert.match(next, /needs: collect/);
+  assert.match(next, /gh workflow run collection\.yml/);
+  assert.match(next, /vars\.COLLECTION_CHAIN != 'off'/);
+  assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(next), "the next job runs repository code or sees a secret");
   assert.match(COLLECTION, /persist-credentials: false/);
   assert.deepEqual([...new Set([...COLLECTION.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))], ["SOLANA_RPC_URL"]);
   // Only the builder's own tests gate the hourly run (a content test can hold up a deploy, never the recording of a launch).
