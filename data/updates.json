@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-09-27T10:18:19.262Z",
+  "lastPostedAt": "2026-09-27T13:32:53.985Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -16,9 +16,10 @@
       "id": "hall-of-fame",
       "text": "🏆 Have you visited the Hall of Fame? It's out by the fountain ⛲\nLegendary cat coins that already exist, made by others, in the garden as inspiration ✨\nThey aren't ours and they aren't up for adoption, just there to inspire 😼\nhttps://catcoinsanctuary.com/\n#catcoin",
       "approved": true,
-      "status": "queued",
-      "postedAt": null,
-      "tweet": null
+      "status": "posted",
+      "postedAt": "2026-09-27T13:32:53.985Z",
+      "tweet": "2104202621468746066",
+      "attempts": 1
     },
     {
       "id": "copycat-check",
