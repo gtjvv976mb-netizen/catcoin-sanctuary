@@ -3,7 +3,7 @@
    page): type to narrow the list by name, ticker, stock or contract, filter by kind (adoptable
    cats, Hall of Fame, launched), choose one, and its card opens (and the camera goes to it). */
 
-import { isLaunched, isFamous, isAdoptable } from "./data.js";
+import { isLaunched, isAdopted, isFamous, isAdoptable } from "./data.js";
 import { faceFor, silhouetteFor, badgeFor, tickerLabel, chainName, usdShort } from "./card.js";
 import { ADOPTABLE_CATEGORIES, CATEGORY_CHIPS } from "./adoptables.js";
 
@@ -19,7 +19,8 @@ const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls)
 export function createFinder({ root, residents, onChoose, inline = false }) {
   const launchedCount = residents.filter(isLaunched).length;
   const famousCount = residents.filter(isFamous).length;
-  const stockCount = residents.length - famousCount;
+  const adoptedCount = residents.filter(isAdopted).length;
+  const stockCount = residents.length - famousCount - adoptedCount;
   // Launched cats first, then the adoptable cats by name, then the Hall of Fame, biggest first.
   const sorted = residents.slice().sort((a, b) => (isLaunched(b) - isLaunched(a)) || (isFamous(a) - isFamous(b))
     || (isFamous(a) ? (b.market?.marketCapUsd || 0) - (a.market?.marketCapUsd || 0) : 0) || a.name.localeCompare(b.name));
@@ -38,7 +39,7 @@ export function createFinder({ root, residents, onChoose, inline = false }) {
     close.addEventListener("click", () => root.close?.());
     head.append(close);
   }
-  const stockLine = `${stockCount} adoptable ${stockCount === 1 ? "cat" : "cats"} so far, each with real, verified lore and no coin yet. ${launchedCount ? `${launchedCount} launched as ${launchedCount === 1 ? "a token" : "tokens"}; the rest are` : "None has launched yet: every adoptable cat is"} not a token until it launches.`;
+  const stockLine = `${stockCount} adoptable ${stockCount === 1 ? "cat" : "cats"} so far, each with real, verified lore and no coin yet. ${adoptedCount ? `${adoptedCount} more ${adoptedCount === 1 ? "was" : "were"} adopted: launched from ${adoptedCount === 1 ? "its" : "their"} kit by the community, not by the sanctuary. ` : ""}${launchedCount ? `${launchedCount} launched as ${launchedCount === 1 ? "a token" : "tokens"}; the rest are` : adoptedCount ? "The sanctuary has launched none: every other adoptable cat is" : "None has launched yet: every adoptable cat is"} not a token until it launches.`;
   const famousLine = famousCount ? ` And ${famousCount} in the Hall of Fame: legendary cat coins that already exist, made by others, here as inspiration and not affiliated with the sanctuary.` : "";
   const intro = el("p", "finder-intro", stockLine + famousLine);
 

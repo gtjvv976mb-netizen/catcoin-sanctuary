@@ -1,4 +1,4 @@
-/* Posts data/intro-thread.json once, as a thread from the sanctuary's X account, and records the ids.
+/* Posts data/intro-thread.json (and the other thread files below) once each, as a thread from the sanctuary's X account, and records the ids.
    With "replyToLatestOwn", the first post replies to the account's most recent post (to finish a thread).
    Ids are saved after every post, so a refusal part-way never makes it post the same text twice. */
 import fs from "node:fs";
@@ -6,7 +6,7 @@ import { credsFromEnv, createPost, whoAmI, getLatestOwnPostId } from "./lib/x-ap
 
 const creds = credsFromEnv(process.env);
 if (!creds) { console.log("No X secrets; threads not posted."); process.exit(0); }
-for (const name of ["intro-thread.json", "thread-glowup.json", "thread-mechanics.json"]) {
+for (const name of ["intro-thread.json", "thread-glowup.json", "thread-mechanics.json", "thread-adoption-catbus.json"]) {
 const file = new URL(`../data/${name}`, import.meta.url);
 if (!fs.existsSync(file)) continue;
 const t = JSON.parse(fs.readFileSync(file, "utf8"));

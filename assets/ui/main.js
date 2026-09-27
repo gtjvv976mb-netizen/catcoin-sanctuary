@@ -121,7 +121,7 @@ function show(id, { from = null } = {}) {
   card.open(r);
   world?.choose(id);
   tag.hidden = true;
-  say(isFamous(r) ? `${r.name}, $${r.ticker}. Hall of Fame: already a coin, here as inspiration, not made by the sanctuary.` : `${r.name}${r.ticker ? (isLaunched(r) ? `, $${r.ticker}` : `, planned ticker ${r.ticker}`) : ""}. ${r.example ? "An example cat, not a token." : isLaunched(r) ? "Launched." : "Not launched yet."}`);
+  say(isFamous(r) ? `${r.name}, $${r.ticker}. Hall of Fame: already a coin, here as inspiration, not made by the sanctuary.` : `${r.name}${r.ticker ? (isLaunched(r) ? `, $${r.ticker}` : r.adoption ? `, $${r.adoption.symbol}` : `, planned ticker ${r.ticker}`) : ""}. ${r.example ? "An example cat, not a token." : isLaunched(r) ? "Launched." : r.adoption ? "Adopted: launched from its kit by the community, not by the sanctuary." : "Not launched yet."}`);
   history.replaceState(null, "", `#cat=${encodeURIComponent(id)}`);
 }
 function hideCard() {

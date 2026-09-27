@@ -45,6 +45,10 @@ export function existingCoinLine(c) {
   return `A small coin already exists: $${c.symbol}, ${size} — not affiliated.`;
 }
 
+/** A coin name as an adoption is compared: letters and digits of any script, accents and case aside.
+ *  "Nekobasu 🚌" is "Nekobasu"; "Nekobasu ХУЙ" is not (scripts/lib/adoptions.mjs and assets/residents.js). */
+export const nameKey = (s) => (typeof s === "string" ? s.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase().replace(/[^\p{L}\p{N}]/gu, "") : "");
+
 /** Where a cat's lore picture lives. */
 export const lorePath = (ticker) => `assets/lore/${ticker}.webp`;
 

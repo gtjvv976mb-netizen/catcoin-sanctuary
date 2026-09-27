@@ -8,7 +8,8 @@
        realCatName, who, basis, linkType, strength, realCatLink, checked, disclaimer,
        virality: [{ label, value, source, date, dateType, method }], links: [{ label, url, date, dateType }],
        token: { status: "planned" } | { status: "launched", mint, launchedAt, tx },
-       buy: [{ label, url }], explorer: { token, tx, stonkfun } | null }
+       buy: [{ label, url }], explorer: { token, tx, stonkfun } | null,
+       adoption: { mint, name, symbol, launchpad, createdAt } | null }
 
    Rules kept here, whatever the data says:
    - a link is shown only if it is https;
@@ -18,7 +19,9 @@
    - buy links (GMGN, FOMO) and explorer links are kept only for a launched cat, and only the exact
      page for its own mint (or, for the launch, its transaction) on the one host each label names;
      the page never builds a buy link;
-   - the portrait must be a picture on this site (a relative path under assets/). */
+   - the portrait must be a picture on this site (a relative path under assets/);
+   - an adoption (a coin a stranger launched from the cat's kit) is kept only with a well-formed
+     mint, a known launchpad and a launch time, and never on a launched cat. */
 import { realPhotoOf } from "./adoptables.js";
 
 const B58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
@@ -100,6 +103,14 @@ export function normalizeProof(p) {
   return { kind, url, author: str(p.author, 60) || hostOf(url), handle, date: str(p.date, 40), dateType: str(p.dateType, 20).toLowerCase(), text, note: para(p.note, 400), image };
 }
 
+/** A cat's adoption, checked again: or null. */
+function adoptionOf(a) {
+  if (!a || typeof a !== "object") return null;
+  const mint = str(a.mint, 60), name = str(a.name, 60), symbol = str(a.symbol, 20).replace(/^\$+/, ""), createdAt = str(a.createdAt, 40);
+  return B58.test(mint) && name && symbol && (a.launchpad === "pump.fun" || a.launchpad === "stonkfun") && !Number.isNaN(Date.parse(createdAt))
+    ? { mint, name, symbol, launchpad: a.launchpad, createdAt } : null;
+}
+
 /** The real photo a card shows at its top (data/real-photos.json), checked again: or null. */
 function photoOf(p) {
   const ph = realPhotoOf(p);
@@ -160,6 +171,7 @@ function normalizeNew(e) {
     lore: loreOf(e.lore),
     coat: { base: str(coatIn.base, 40), second: str(coatIn.second, 40), pattern: str(coatIn.pattern, 40), eyes: str(coatIn.eyes, 40) },
     who, virality, links, token, buy,
+    adoption: launched ? null : adoptionOf(e.adoption),
     example: false,
   };
 }
@@ -237,7 +249,8 @@ export const isAdoptable = (r) => r?.kind === "adoptable";
 
 /* An adoptable cat (data/adoptables.json, checked by assets/ui/adoptables.js): the common fields as
    a planned cat has them, plus its category, owner, sources, any coin that already exists, and the
-   gentle notes its card shows. It is never launched here: the page shows it as "Not launched yet". */
+   gentle notes its card shows. It is never launched here: the page shows it as "Not launched yet",
+   or "Adopted" once a stranger has launched it from its kit. */
 const ADOPT_CATEGORIES = new Set(["celebrity", "tv-movie", "company", "viral", "crypto"]);
 function normalizeAdoptable(e) {
   const r = normalizeNew({ ...e, token: { status: "planned" }, buy: [], explorer: null });
@@ -281,6 +294,8 @@ export async function getResidents() {
 }
 
 export const isLaunched = (r) => r?.token?.status === "launched";
+/** Launched from its kit by someone else (never the owner's own launch). */
+export const isAdopted = (r) => !!r?.adoption && !isLaunched(r);
 export const shortMint = (m) => (m && m.length > 10 ? `${m.slice(0, 4)}…${m.slice(-4)}` : m || "");
 export const hostOf = (u) => { try { return new URL(u).host.replace(/^www\./, ""); } catch { return ""; } };
 

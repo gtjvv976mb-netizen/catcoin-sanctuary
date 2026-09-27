@@ -35,6 +35,8 @@
                          | { status: "launched", mint, launchedAt, tx, pool, payer, name, symbol }
      buy: [{ label, url }],   GMGN and FOMO, only for a launched token (a mint exists); [] otherwise
      explorer:             null | { token, tx, stonkfun }   Solscan and StonkFun pages of a launched token
+     adoption:             absent, or { mint, name, symbol, launchpad, createdAt }: a coin a stranger
+                           launched from the cat's kit (data/adoptions.json), never on a launched cat
    }
 
    A famous coin's card (after the stock cats) is its data/famous.json row with kind: "famous":
@@ -49,7 +51,7 @@
    not launched. Every text reaches the page as data; the page sets it with textContent. */
 
 import { validateCollection, validateWallets, validatePlanned, validateFamous, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
-import { validateAdoptables, adoptableCard, validateLore, lorePath, validateRealPhotos } from "./ui/adoptables.js";
+import { validateAdoptables, adoptableCard, validateLore, lorePath, validateRealPhotos, nameKey } from "./ui/adoptables.js";
 
 const NO_RESEARCH = Object.freeze({
   company: "", realCat: { name: null, who: "", basis: "", linkType: "none", strength: "none", linked: false }, links: [], virality: [], checked: null, disclaimer: "",
@@ -188,6 +190,11 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
     if (a.refused.length && typeof console !== "undefined") console.warn(`${a.refused.length} adoptable cats were left out`, a.refused);
     adoptable = a.cats.map(adoptableCard);
   } catch (e) { if (typeof console !== "undefined") console.warn("The adoptable cats could not be read", e); }
+  // The adopted cats (data/adoptions.json): optional. A missing or bad file adopts nothing.
+  try {
+    const found = adoptionsFor(await getJson(fetchImpl, new URL("data/adoptions.json", base)), [...stock, ...adoptable], collectionFile.cats);
+    for (const r of [...stock, ...adoptable]) if (found.has(r.id)) r.adoption = found.get(r.id);
+  } catch { /* no adoptions */ }
   // The real photos (data/real-photos.json): optional. A cat listed there shows its real photo,
   // hotlinked from pbs.twimg.com with credit, at the top of its card.
   try {
@@ -205,6 +212,34 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
     hidden = hiddenByQueue(q);
   } catch { /* no queue */ }
   return [...stock, ...adoptable, ...famous].filter((r) => !hidden.has(r.id) && !hidden.has(r.ticker));
+}
+
+/* data/adoptions.json, checked again: a row needs a well-formed mint and creator, a known
+   launchpad, ISO times after the kits went live, the kit's own name and ticker plus one more piece
+   of evidence, and a cat here that the owner has not launched, with a mint not in `own` (the
+   owner's launches). The earliest launch takes the cat; later ones are copycats. */
+const B58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/, ISO = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z$/;
+const EVIDENCE = ["name", "ticker", "description", "proof-link", "card-link", "image"];
+
+/** Cat key -> { mint, name, symbol, launchpad, createdAt }. The name and ticker shown are the kit's own,
+ *  never the stranger's text (they matched it, letter case, accents and punctuation aside). */
+export function adoptionsFor(file, cats, own = []) {
+  const byKey = new Map(cats.map((r) => [r.id, r])), out = new Map(), taken = new Set((Array.isArray(own) ? own : []).map((e) => e?.mint));
+  const at = (v) => (typeof v === "string" && ISO.test(v) ? Date.parse(v) : NaN);
+  const b58 = (v) => typeof v === "string" && B58.test(v);
+  const rows = (Array.isArray(file?.adoptions) ? file.adoptions : []).filter((a) => {
+    const r = byKey.get(a?.key), ev = a?.evidence;
+    return r && r.token?.status !== "launched" && b58(a.mint) && b58(a.creator) && !taken.has(a.mint)
+      && ["pump.fun", "stonkfun"].includes(a.launchpad) && at(a.createdAt) >= Date.parse("2026-09-25T00:00:00Z") && at(a.createdAt) <= at(a.foundAt)
+      && typeof a.symbol === "string" && a.symbol.trim().toUpperCase() === (r.launchTicker || r.ticker) && nameKey(a.name) && nameKey(a.name) === nameKey(r.coinName || r.name)
+      && Array.isArray(ev) && ev.every((x) => EVIDENCE.includes(x)) && ev.includes("name") && ev.includes("ticker") && new Set(ev).size > 2;
+  }).sort((a, b) => at(a.createdAt) - at(b.createdAt));
+  for (const a of rows) if (!out.has(a.key) && !taken.has(a.mint)) {
+    taken.add(a.mint);
+    const r = byKey.get(a.key);
+    out.set(a.key, { mint: a.mint, name: r.coinName || r.name, symbol: r.launchTicker || r.ticker, launchpad: a.launchpad, createdAt: a.createdAt });
+  }
+  return out;
 }
 
 /** The keys the site must not show yet: queued in data/release-queue.json and not released

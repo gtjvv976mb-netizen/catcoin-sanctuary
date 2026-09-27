@@ -1,7 +1,8 @@
 /* "Trending": three lists read from data/trending.json (scripts/build-trending.mjs writes it every
    20 minutes). Top movers: the Hall of Fame coins and the sanctuary's launched cats by 24 h volume.
-   New on pump.fun: cat coins launched there in the last day, copycats of the sanctuary's cats
-   flagged. Hot on X: the sanctuary's own posts by engagement.
+   New on pump.fun: cat coins launched there in the last day, with adoptions (a visitor's coin
+   from a cat's own kit) and copycats of the sanctuary's cats flagged. Hot on X: the sanctuary's
+   own posts by engagement.
 
    Every name and symbol here was typed by a stranger, so the page checks the file (checkTrending)
    and draws text only through textContent; links are built from checked addresses, never read. */
@@ -28,8 +29,10 @@ export function checkTrending(j) {
     }),
     fresh: sec(j.fresh, (r) => {
       if (!r || !MINT.test(r.mint ?? "") || !iso(r.createdAt)) return null;
+      const key = (v) => (/^[A-Za-z0-9]{2,44}$/.test(v ?? "") ? v : null);
+      const adoptedOf = key(r.adoptedOf);
       return { mint: r.mint, name: clean(r.name, 40) || "(no name)", symbol: clean(r.symbol, 16), createdAt: r.createdAt, marketCapUsd: num(r.marketCapUsd),
-        copycatOf: /^[A-Za-z0-9]{2,44}$/.test(r.copycatOf ?? "") ? r.copycatOf : null, count: Math.max(1, Math.min(999, Math.round(num(r.count) ?? 1))) };
+        copycatOf: adoptedOf ? null : key(r.copycatOf), adoptedOf, count: Math.max(1, Math.min(999, Math.round(num(r.count) ?? 1))) };
     }),
     x: sec(j.x, (r) => {
       if (!r || !/^\d{5,25}$/.test(r.tweet ?? "") || !/^[A-Za-z0-9]{2,44}$/.test(r.key ?? "")) return null;
@@ -100,13 +103,15 @@ export function createTrending({ dialog, shell, catOf, onOpenCat, now = () => Da
         const main = el("span", "trend-main");
         main.append(link(`https://pump.fun/coin/${r.mint}`, "trend-name", r.name), el("span", "trend-sym mono", r.symbol ? `$${r.symbol}` : ""));
         if (r.count > 1) main.append(el("span", "trend-count", `\u00d7${r.count}`));
-        const cat = r.copycatOf && catOf(r.copycatOf);
-        if (cat) { main.append(el("span", "badge trend-copy", "Copycat")); main.append(catButton(r.copycatOf, `Not the real ${cat.name}`)); }
+        const adopted = r.adoptedOf && catOf(r.adoptedOf), cat = r.copycatOf && catOf(r.copycatOf);
+        if (adopted) main.append(el("span", "badge trend-adopted", "Adopted"), catButton(r.adoptedOf, `See ${adopted.name}`));
+        else if (cat) main.append(el("span", "badge trend-copy", "Copycat"), catButton(r.copycatOf, `Not the real ${cat.name}`));
         const fig = el("span", "trend-fig");
         fig.append(el("span", null, usd(r.marketCapUsd)), el("span", "trend-when", ago(r.createdAt, nowMs)));
         return [main, fig];
       }));
-      body.append(el("p", "panel-small", "Cat coins launched on pump.fun in the last day, by strangers. Not affiliated, not checked, often scams. A “Copycat” uses the name or ticker of a sanctuary cat before the real launch: only the mint on the cat's own card is real."));
+      body.append(el("p", "panel-small", "Cat coins launched on pump.fun in the last day, by strangers. Not affiliated, not checked, often scams."));
+      body.append(el("p", "panel-small", "“Adopted”: launched by a visitor from the cat's own kit on this site. The sanctuary did not launch it and does not own it. “Copycat”: uses a sanctuary cat's name or ticker without being its adoption. Adoptions and copycats stay listed for a week."));
     } else {
       body.append(rows(s.items, (r) => {
         const main = el("span", "trend-main");

@@ -1,8 +1,10 @@
 # Every 20 minutes, rebuilds data/trending.json for the site's Trending tab (scripts/build-trending.mjs):
 # the Hall of Fame coins and launched sanctuary cats by 24 h volume (DexScreener), cat coins launched on
-# pump.fun in the last day with copycats of the sanctuary's cats flagged, and the sanctuary's own X posts
-# by engagement (read at most every 3 hours). Commits the file when, and only when, it changed; the
-# Pages workflow publishes it.
+# pump.fun in the last day with adoptions and copycats of the sanctuary's cats flagged, and the
+# sanctuary's own X posts by engagement (read at most every 3 hours). Every pump.fun launch it reads is
+# also tested against the cats' Adopt kits: a cat's first launch from its own kit is recorded in
+# data/adoptions.json (scripts/lib/adoptions.mjs). Commits the two files when, and only when, they
+# changed; the Pages workflow publishes them.
 #
 # GitHub often skips scheduled runs, so each run starts the next one itself (as Announce does): the
 # "next" job waits until 20 minutes after this run began and dispatches the workflow again, unless
@@ -38,7 +40,7 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
-      - run: node --test tests/trending.test.mjs
+      - run: node --test tests/trending.test.mjs tests/adoptions.test.mjs
       - name: Build the trending lists
         env:
           X_API_KEY: ${{ secrets.X_API_KEY }}
@@ -50,7 +52,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add -- data/trending.json
+          git add -- data/trending.json data/adoptions.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Trending: refresh the lists"
