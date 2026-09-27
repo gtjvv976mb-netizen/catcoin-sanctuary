@@ -73,7 +73,8 @@ function socialHost(l) {
   return u.hostname.replace(/^www\./, "");
 }
 
-function shell(root, titleText, id) {
+/** A panel's frame (title, close button, backdrop click closes); returns its body. Trending uses it too. */
+export function shell(root, titleText, id) {
   root.replaceChildren();
   root.setAttribute("aria-labelledby", id);
   const head = el("div", "panel-head");

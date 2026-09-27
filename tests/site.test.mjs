@@ -248,8 +248,9 @@ test("page weight: the first view stays within budget", () => {
   // now uses three's mergeGeometries instead of its own copy; then to 661 KB for the real photo at the
   // top of each card, data/real-photos.json checked in assets/ui/adoptables.js and drawn by card.js;
   // then to 680 KB for the reworked cat rig, assets/world/catrig.js: legs posed by IK, skin weights
-  // blended along the surface.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 680 * 1024, "the page's own scripts over 680 KB");
+  // blended along the surface; then to 690 KB for the Trending tab, assets/ui/trending.js, loaded
+  // only when it is first opened.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 690 * 1024, "the page's own scripts over 690 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");

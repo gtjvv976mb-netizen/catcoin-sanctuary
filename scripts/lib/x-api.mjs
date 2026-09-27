@@ -85,3 +85,8 @@ export async function getLatestOwnPostId(userId, creds, fetchImpl = fetch) {
   const b = await call(fetchImpl, "GET", `https://api.x.com/2/users/${encodeURIComponent(userId)}/tweets?max_results=5`, creds);
   return b?.data?.[0]?.id ?? null;
 }
+
+/** Up to 100 posts with their public figures (GET /2/tweets?ids=…&tweet.fields=public_metrics). */
+export async function getPosts(ids, creds, fetchImpl = fetch) {
+  return call(fetchImpl, "GET", `https://api.x.com/2/tweets?ids=${ids.slice(0, 100).map(encodeURIComponent).join(",")}&tweet.fields=public_metrics`, creds);
+}

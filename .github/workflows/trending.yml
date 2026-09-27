@@ -1,0 +1,85 @@
+# Every 20 minutes, rebuilds data/trending.json for the site's Trending tab (scripts/build-trending.mjs):
+# the Hall of Fame coins and launched sanctuary cats by 24 h volume (DexScreener), cat coins launched on
+# pump.fun in the last day with copycats of the sanctuary's cats flagged, and the sanctuary's own X posts
+# by engagement (read at most every 3 hours). Commits the file when, and only when, it changed; the
+# Pages workflow publishes it.
+#
+# GitHub often skips scheduled runs, so each run starts the next one itself (as Announce does): the
+# "next" job waits until 20 minutes after this run began and dispatches the workflow again, unless
+# another Trending run is already queued or running. To stop the chain, set the repository variable
+# TRENDING_CHAIN to "off" (or disable the workflow).
+#
+# Secrets: the four X secrets, optional, and only in the build step (reading the posts' figures).
+# The checkout keeps no credentials; the push hands the workflow token to git for that one command.
+name: Trending
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: trending
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: node --test tests/trending.test.mjs
+      - name: Build the trending lists
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: node scripts/build-trending.mjs
+      - name: Commit the lists if they changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/trending.json
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Trending: refresh the lists"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+
+  next:
+    needs: build
+    if: ${{ !cancelled() && vars.TRENDING_CHAIN != 'off' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: write
+    steps:
+      - name: Start the next run 20 minutes after this one began
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          started=$(date -d "$(gh api "repos/$REPO/actions/runs/$RUN_ID" --jq .run_started_at)" +%s)
+          wait=$(( started + 20 * 60 - $(date +%s) ))
+          if [ "$wait" -gt 0 ]; then echo "Waiting ${wait}s."; sleep "$wait"; fi
+          others=$(gh run list -R "$REPO" -w trending.yml -L 20 --json databaseId,status \
+            --jq "[.[] | select(.status != \"completed\" and .databaseId != $RUN_ID)] | length")
+          if [ "$others" -gt 0 ]; then echo "Another Trending run is already queued or running."; exit 0; fi
+          gh workflow run trending.yml -R "$REPO" --ref main
