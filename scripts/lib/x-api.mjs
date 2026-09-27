@@ -106,7 +106,7 @@ export async function getPersonalizedTrends(creds, fetchImpl = fetch) {
 export async function searchRecent(query, creds, fetchImpl = fetch, { maxResults = 100, sort = "relevancy" } = {}) {
   const q = new URLSearchParams({
     query, max_results: String(maxResults), sort_order: sort,
-    "tweet.fields": "public_metrics,created_at,author_id,attachments,lang,possibly_sensitive",
+    "tweet.fields": "public_metrics,created_at,author_id,attachments,lang,possibly_sensitive,note_tweet",  // note_tweet: a long post's full text (text holds its first 280 characters)
     expansions: "attachments.media_keys,author_id",
     "media.fields": "type,url,preview_image_url,width,height",
     "user.fields": "username,name,public_metrics",
