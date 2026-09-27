@@ -1,0 +1,86 @@
+# Every 20 minutes, the research team's trend watch (scripts/scan-trending-cats.mjs): searches X for cats
+# trending right now, has Claude read each new one (the cat, its name, real / cartoon / fiction, a coin
+# name, ticker and lore line, and whether a coin would be in poor taste), checks the ticker on Solana, and
+# commits the shortlist, data/trending-cats.json, when it changed. Launching a candidate stays a person's
+# decision.
+#
+# GitHub often skips scheduled runs, so each run starts the next one itself (as Announce does). To stop
+# the chain, set the repository variable TRENDWATCH_CHAIN to "off" (or disable the workflow).
+#
+# Secrets, only in the scan step: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET (an X plan
+# whose keys may search: Basic or above) and ANTHROPIC_API_KEY. Without the X keys nothing is searched.
+# The checkout keeps no credentials; the push hands the workflow token to git for that one command.
+name: Trend watch
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: trendwatch
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: node --test tests/trendwatch.test.mjs
+      - name: Search X and read the trending cats
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/scan-trending-cats.mjs
+      - name: Commit the shortlist if it changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/trending-cats.json
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Trend watch: cats trending on X"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+
+  next:
+    needs: scan
+    if: ${{ !cancelled() && vars.TRENDWATCH_CHAIN != 'off' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: write
+    steps:
+      - name: Start the next run 20 minutes after this one began
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          started=$(date -d "$(gh api "repos/$REPO/actions/runs/$RUN_ID" --jq .run_started_at)" +%s)
+          wait=$(( started + 20 * 60 - $(date +%s) ))
+          if [ "$wait" -gt 0 ]; then echo "Waiting ${wait}s."; sleep "$wait"; fi
+          others=$(gh run list -R "$REPO" -w trendwatch.yml -L 20 --json databaseId,status \
+            --jq "[.[] | select(.status != \"completed\" and .databaseId != $RUN_ID)] | length")
+          if [ "$others" -gt 0 ]; then echo "Another Trend watch run is already queued or running."; exit 0; fi
+          gh workflow run trendwatch.yml -R "$REPO" --ref main
