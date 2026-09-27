@@ -2,7 +2,7 @@
    DexScreener and a fake Claude: what qualifies, how it is ranked, what becomes a candidate. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { qualify, heat, cleanReading, isCandidate, scan, MIN_LIKES, MAX_AGE_HOURS, QUERY } from "../scripts/scan-trending-cats.mjs";
+import { postCount, mergeAnswers, qualify, heat, cleanReading, isCandidate, scan, MIN_LIKES, MAX_AGE_HOURS, QUERY } from "../scripts/scan-trending-cats.mjs";
 import { readPostByRules, tickerFor } from "../scripts/lib/read-cat-post.mjs";
 
 const NOW = Date.parse("2026-09-27T12:00:00Z");
@@ -124,6 +124,33 @@ test("the rules: a name only from how people write about their cat, sensitive on
   assert.equal(tickerFor("B"), null);
   assert.equal(readPostByRules({ text: "Meet Nugget 🐱 https://t.co/x @someone #cats" }).lore, null, "too little left for a lore line");
   assert.equal(cleanReading(readPostByRules({ text: "my cat Biscuit buys $BISC at https://x.y" })).lore, null, "no links or price talk");
+});
+
+test("X's own trending lists: a cat trend is searched on its own and its posts lead, marked with the trend", async () => {
+  const trendPost = { id: "2001", text: "Pudding at the vending machine again", created_at: hoursAgo(2), author_id: "u1", attachments: { media_keys: ["m1"] }, public_metrics: { like_count: 60_000, impression_count: 2_000_000 } };
+  const asked = [];
+  const fetchImpl = async (url) => {
+    asked.push(url);
+    if (url.startsWith("https://api.x.com/2/trends/by/woeid/1?")) return new Response(JSON.stringify({ data: [{ trend_name: "Pudding the Cat", tweet_count: 90_000 }, { trend_name: "Champions League", tweet_count: 900_000 }] }));
+    if (url.startsWith("https://api.x.com/2/trends/by/woeid/")) return new Response(JSON.stringify({ title: "Forbidden" }), { status: 403 });
+    if (url.startsWith("https://api.x.com/2/users/personalized_trends")) return new Response(JSON.stringify({ data: [{ trend_name: "#Nyanners", category: "Animals", post_count: "12.5K posts" }, { trend_name: "Mondays", category: "Only on X" }] }));
+    if (url.startsWith("https://api.x.com/2/tweets/search/recent")) {
+      const q = new URL(url).searchParams.get("query");
+      if (q.startsWith('"Pudding the Cat"')) return new Response(JSON.stringify({ data: [trendPost], includes: answer.includes }));
+      if (q.startsWith('"#Nyanners"')) return new Response(JSON.stringify({ data: [] }));
+      return new Response(JSON.stringify(answer));
+    }
+    if (url.startsWith("https://api.dexscreener.com/")) return new Response(JSON.stringify({ pairs: [] }));
+    throw new Error(`unexpected ${url}`);
+  };
+  const t = await scan({ data: { trending: { posts: [] }, names: new Set() }, creds: CREDS, client: null, fetchImpl, nowMs: NOW });
+  assert.deepEqual(t.trends.map((x) => x.name), ["Pudding the Cat", "#Nyanners"], "cat trends only; a place the plan refuses is skipped");
+  assert.ok(asked.some((u) => new URL(u).searchParams.get("query")?.includes("-is:retweet") && new URL(u).searchParams.get("query")?.startsWith('"Pudding the Cat"')));
+  const p = t.posts.find((x) => x.id === "2001");
+  assert.equal(p.trend, "Pudding the Cat", "found through the trend, though its words never say cat");
+  assert.equal(p.reading.catName, null, "the rules still need the post to name its cat");
+  assert.deepEqual([postCount("12.5K posts"), postCount("1,204 posts"), postCount("2M"), postCount(undefined)], [12_500, 1204, 2_000_000, 0]);
+  assert.equal(mergeAnswers([{ data: [{ id: "1" }] }, { data: [{ id: "1" }, { id: "2" }] }]).data.length, 2);
 });
 
 test("trend watch workflow: pinned actions, contents: write for the scan, secrets only in the scan step, the next-run job runs no repository code", async () => {
