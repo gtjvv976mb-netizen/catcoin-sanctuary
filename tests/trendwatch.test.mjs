@@ -71,15 +71,15 @@ function fakes({ taken = [], xStatus = 200 } = {}) {
 test("a run: new trending posts read by Claude, tickers checked on Solana, candidates listed; a post is never read twice", async () => {
   const f = fakes({ taken: ["MOCHI"] });
   const t = await scan({ data: { trending: { posts: [] }, names: new Set() }, creds: CREDS, client: f.client, fetchImpl: f.fetchImpl, nowMs: NOW });
-  assert.deepEqual(t.candidates, ["1001"], "Mochi's ticker is taken");
-  assert.equal(t.posts.find((p) => p.id === "1005").status, "passed");
+  assert.deepEqual(t.candidates, ["1005", "1001"], "a taken ticker does not rule a cat out");
+  assert.equal(t.posts.find((p) => p.id === "1005").taken[0].symbol, "MOCHI", "the coins already using it are recorded");
   assert.equal(f.asked[0].model, "claude-opus-5");
   assert.equal(f.asked[0].output_config.format.type, "json_schema");
   assert.equal(f.asked[0].messages[0].content[0].type, "image", "Claude sees the picture");
   const again = fakes();
   const t2 = await scan({ data: { trending: t, names: new Set() }, creds: CREDS, client: again.client, fetchImpl: again.fetchImpl, nowMs: NOW + 60_000 });
   assert.equal(again.asked.length, 0, "already read");
-  assert.deepEqual(t2.candidates, ["1001"]);
+  assert.deepEqual(t2.candidates, ["1005", "1001"]);
 });
 
 test("a cat already in the sanctuary is not a candidate; X refusing search keeps the last list", async () => {
@@ -95,11 +95,11 @@ test("a cat already in the sanctuary is not a candidate; X refusing search keeps
 test("X-only mode (no Anthropic key): posts are read by rules from their words, and the ticker is still checked", async () => {
   const f = fakes({ taken: ["MOCHI"] });
   const t = await scan({ data: { trending: { posts: [] }, names: new Set() }, creds: CREDS, client: null, fetchImpl: f.fetchImpl, nowMs: NOW });
-  assert.deepEqual(t.candidates, ["1001"], "Biscuit is a candidate; Mochi's ticker is taken");
+  assert.deepEqual(t.candidates, ["1005", "1001"], "both cats, Mochi's taken ticker only recorded");
   const b = t.posts.find((p) => p.id === "1001").reading;
   assert.deepEqual([b.catName, b.ticker, b.kind, b.sensitive, b.readBy], ["Biscuit", "BISCUIT", "real", false, "rules"]);
   assert.equal(b.lore, "Biscuit learned to open the fridge 😹");
-  assert.equal(t.posts.find((p) => p.id === "1005").status, "passed");
+  assert.equal(t.posts.find((p) => p.id === "1005").taken.length, 1);
   assert.equal(f.asked.length, 0, "Claude is never asked");
   assert.ok(!isCandidate({ reading: null }));
 });

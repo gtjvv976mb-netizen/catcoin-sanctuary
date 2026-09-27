@@ -16,11 +16,12 @@
  *    be in poor taste for). X-only mode (the default, no Anthropic key): scripts/lib/read-cat-post.mjs
  *    reads the post's words by rules (readBy "rules"). With ANTHROPIC_API_KEY set, Claude reads the
  *    words, the author and the picture instead (readBy "claude").
- * 4. Its ticker is looked up on DexScreener: a coin that already uses it is recorded (late, or taken).
+ * 4. Its ticker is looked up on DexScreener: coins that already use it are recorded next to it, for the
+ *    record only. A taken ticker does not rule a cat out; an accurate name and ticker matter more.
  *
  * data/trending-cats.json keeps every post it has read (so none is read twice) with its figures and
  * Claude's reading, newest first; "candidates" are the ones fit to launch: about one cat, not
- * sensitive, with a ticker no Solana coin uses yet. Launching stays a person's decision: the file is
+ * sensitive, with a name and ticker. Launching stays a person's decision: the file is
  * the shortlist, each with its kit ready (name, ticker, lore, proof post, picture).
  *
  * Secrets: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET (search) and, optionally,
@@ -141,7 +142,7 @@ export async function tickerTaken(ticker, fetchImpl = fetch) {
 }
 
 /** Is this reading a launch candidate? */
-export const isCandidate = (p) => p.reading && p.reading.aboutOneCat && !p.reading.sensitive && p.reading.kind !== "none" && p.reading.catName && p.reading.coinName && p.reading.ticker && p.reading.lore && Array.isArray(p.taken) && p.taken.length === 0 && !p.known;
+export const isCandidate = (p) => p.reading && p.reading.aboutOneCat && !p.reading.sensitive && p.reading.kind !== "none" && p.reading.catName && p.reading.coinName && p.reading.ticker && p.reading.lore && !p.known;
 
 /**
  * One run. `data` is { trending (data/trending-cats.json), names (the sanctuary's cat names and tickers, lower-case) };
@@ -171,7 +172,7 @@ export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Dat
   // An unread post is tried again next run (it stays out of `seen` by not being stored).
   const posts = [...read.filter((r) => r.status !== "unread"), ...prev].sort((a, b) => Date.parse(b.postedAt) - Date.parse(a.postedAt)).slice(0, KEEP);
   return {
-    note: "Written by scripts/scan-trending-cats.mjs: cats trending on X, read by rules (X-only) or by Claude (readBy). candidates = about one cat, not sensitive, ticker unused on Solana, not already in the sanctuary. Launching is a person's decision.",
+    note: "Written by scripts/scan-trending-cats.mjs: cats trending on X, read by rules (X-only) or by Claude (readBy). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). Launching is a person's decision.",
     checkedAt: new Date(nowMs).toISOString(), searchError: null,
     candidates: posts.filter((p) => p.status === "candidate").map((p) => p.id),
     posts,
