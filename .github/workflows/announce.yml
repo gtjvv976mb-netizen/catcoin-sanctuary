@@ -10,8 +10,16 @@
 # user context of the @catcosanctuary app, Read and Write). Only the posting step sees them.
 # Without them the drafts go to data/announce-queue.json with one-click intent links.
 #
+# GitHub often skips or delays scheduled runs (for hours at a time), so each run also starts the
+# next one itself: the "next" job waits until 20 minutes after this run began and dispatches the
+# workflow again (a dispatch made with the workflow token does start a run). It dispatches only if
+# no other Announce run is already queued or running, so there is never more than one chain; the
+# schedule stays as the backup that restarts a broken chain. To stop the chain, set the repository
+# variable ANNOUNCE_CHAIN to "off" (or disable the workflow).
+#
 # The checkout keeps no credentials; the push hands the workflow token to git for that one
-# command. The job may write repository contents and nothing else.
+# command. The announce job may write repository contents and nothing else; the next job may
+# only start workflow runs and runs none of the repository's code.
 name: Announce
 
 on:
@@ -69,3 +77,25 @@ jobs:
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
             git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
           fi
+
+  next:
+    needs: announce
+    if: ${{ !cancelled() && vars.ANNOUNCE_CHAIN != 'off' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: write
+    steps:
+      - name: Start the next run 20 minutes after this one began
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          started=$(date -d "$(gh api "repos/$REPO/actions/runs/$RUN_ID" --jq .run_started_at)" +%s)
+          wait=$(( started + 20 * 60 - $(date +%s) ))
+          if [ "$wait" -gt 0 ]; then echo "Waiting ${wait}s."; sleep "$wait"; fi
+          others=$(gh run list -R "$REPO" -w announce.yml -L 20 --json databaseId,status \
+            --jq "[.[] | select(.status != \"completed\" and .databaseId != $RUN_ID)] | length")
+          if [ "$others" -gt 0 ]; then echo "Another Announce run is already queued or running."; exit 0; fi
+          gh workflow run announce.yml -R "$REPO" --ref main
