@@ -32,6 +32,11 @@ export const MEMORIAL = new Set(["maru", "bob", "lilbub", "kittypurry", "delilah
 /* A coat the look's words read wrongly (a colourpoint read as a tortie, a pink cartoon cat). */
 export const COAT_OVERRIDES = { choupette: { base: "white", second: "cream", pattern: "point", eyes: "blue" }, cheshire: { base: "lilac", second: "", pattern: "tabby", eyes: "yellow" } };
 export const TICKER_OVERRIDES = { gli: "GLICAT" };
+/* The owner's own launch name and ticker for a cat, where it differs from the research's (the key stays: card link, files). */
+/* catbus: a stranger launched "Nekobasu" / CATBUS on pump.fun on 2026-09-27 (08:34 UTC, creator LGfWJw…pYTw); the card names it
+   as the existing coin, not this cat's. */
+export const LAUNCH_OVERRIDES = { catbus: { coinName: "Nekobasu", launchTicker: "CATBUS",
+  existingCoin: { symbol: "CATBUS", contract: "Hqge3as7GhF2JqVfTkpaj9BUq9tGAFSnpwWHBie5pump", mcapUsd: 3879 } } };
 
 /** Whether a research row may be taken: not low confidence, and its look settled. */
 export const usable = (r) => r && r.confidence !== "low" && !/verify with photos/i.test(String(r.look ?? ""));
@@ -84,6 +89,7 @@ export function adoptableFrom(r, { root, captions = loreCaptions(root) }) {
     portraitStatus: hasPortrait ? "ready" : "pending",
     confidence: r.confidence,
     lore: fs.existsSync(path.join(root, lorePath(ticker))) && captions[ticker] ? { image: lorePath(ticker), caption: String(captions[ticker]).trim() } : null,
+    ...(LAUNCH_OVERRIDES[r.id] ?? {}),
   };
 }
 
