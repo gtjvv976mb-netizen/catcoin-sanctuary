@@ -1,15 +1,16 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": null,
+  "lastPostedAt": "2026-09-27T10:18:19.262Z",
   "posts": [
     {
       "id": "adoptions-found",
       "text": "🧺 Adopted cats now show up by themselves 🐾\nWhen a visitor launches a cat straight from its Adopt kit, the sanctuary spots it and its card turns Adopted, with its mint 🔍\nAnd we'll cheer every adoption right here 🎉\nhttps://catcoinsanctuary.com/\n#catcoin #CatsOfX",
       "approved": true,
-      "status": "queued",
-      "postedAt": null,
-      "tweet": null
+      "status": "posted",
+      "postedAt": "2026-09-27T10:18:19.262Z",
+      "tweet": "2104153653716156569",
+      "attempts": 1
     },
     {
       "id": "hall-of-fame",
