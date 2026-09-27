@@ -10,19 +10,22 @@
  *    shilling a ticker is late, not early).
  * 2. A post qualifies when it is at most MAX_AGE_HOURS old and has at least MIN_LIKES likes or
  *    MIN_VIEWS views; it is ranked by engagement per hour (likes + 2 x reposts + views / 100).
- * 3. The best new ones (at most PER_RUN a run) are read by Claude (the post's words, its author and
- *    its picture): is it about one particular cat, the cat's name, real / cartoon / fiction, a coin
- *    name and ticker in the sanctuary's style, one line of lore, and whether it is sensitive (a cat
- *    that died or is ill, a tragedy, a child, anything a coin would be in poor taste for).
- * 4. Its ticker is looked up on DexScreener: a coin that already uses it is recorded (late, or taken).
+ * 3. The best new ones (at most PER_RUN a run) are read: is it about one particular cat, the cat's
+ *    name, real / cartoon / fiction, a coin name and ticker in the sanctuary's style, one line of lore,
+ *    and whether it is sensitive (a cat that died or is ill, a tragedy, a child, anything a coin would
+ *    be in poor taste for). X-only mode (the default, no Anthropic key): scripts/lib/read-cat-post.mjs
+ *    reads the post's words by rules (readBy "rules"). With ANTHROPIC_API_KEY set, Claude reads the
+ *    words, the author and the picture instead (readBy "claude").
+ * 4. Its ticker is looked up on DexScreener: coins that already use it are recorded next to it, for the
+ *    record only. A taken ticker does not rule a cat out; an accurate name and ticker matter more.
  *
  * data/trending-cats.json keeps every post it has read (so none is read twice) with its figures and
  * Claude's reading, newest first; "candidates" are the ones fit to launch: about one cat, not
- * sensitive, with a ticker no Solana coin uses yet. Launching stays a person's decision: the file is
+ * sensitive, with a name and ticker. Launching stays a person's decision: the file is
  * the shortlist, each with its kit ready (name, ticker, lore, proof post, picture).
  *
- * Secrets: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET (search) and ANTHROPIC_API_KEY.
- * Without the X keys nothing is searched; without the Anthropic key posts are kept unread.
+ * Secrets: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET (search) and, optionally,
+ * ANTHROPIC_API_KEY. Without the X keys nothing is searched; without the Anthropic key it runs X-only.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -31,6 +34,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { credsFromEnv, searchRecent, XError } from "./lib/x-api.mjs";
 import { checkFields } from "./lib/content-rules/content-rules.mjs";
 import { detectCat } from "./lib/content-rules/catdetect.mjs";
+import { readPostByRules } from "./lib/read-cat-post.mjs";
 
 export const QUERY = '(cat OR cats OR kitten OR kitty OR "my cat" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -"$" -pump -memecoin -solana -"contract address" -airdrop -giveaway';
 export const MAX_AGE_HOURS = 48;
@@ -122,7 +126,7 @@ export function cleanReading(r) {
   return {
     aboutOneCat: r?.aboutOneCat === true, catName: s(r?.catName, 40) || null, kind: ["real", "cartoon", "fiction"].includes(r?.kind) ? r.kind : "none",
     coinName: s(r?.coinName, 32) || null, ticker: ticker && TICKER.test(ticker) ? ticker : null, lore: loreOk ? lore : null,
-    sensitive: r?.sensitive !== false, why: s(r?.why, 200) || "",
+    sensitive: r?.sensitive !== false, why: s(r?.why, 200) || "", readBy: r?.readBy === "rules" ? "rules" : "claude",
   };
 }
 
@@ -138,11 +142,11 @@ export async function tickerTaken(ticker, fetchImpl = fetch) {
 }
 
 /** Is this reading a launch candidate? */
-export const isCandidate = (p) => p.reading && p.reading.aboutOneCat && !p.reading.sensitive && p.reading.kind !== "none" && p.reading.catName && p.reading.coinName && p.reading.ticker && p.reading.lore && Array.isArray(p.taken) && p.taken.length === 0 && !p.known;
+export const isCandidate = (p) => p.reading && p.reading.aboutOneCat && !p.reading.sensitive && p.reading.kind !== "none" && p.reading.catName && p.reading.coinName && p.reading.ticker && p.reading.lore && !p.known;
 
 /**
  * One run. `data` is { trending (data/trending-cats.json), names (the sanctuary's cat names and tickers, lower-case) };
- * `client` an Anthropic client (or null). Returns the new file content.
+ * `client` an Anthropic client, or null for X-only mode (the post's words read by rules). Returns the new file content.
  */
 export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Date.now(), log = () => {} }) {
   const prev = data.trending?.posts || [];
@@ -157,7 +161,7 @@ export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Dat
   log(`Trend watch: ${answer?.data?.length ?? 0} posts searched, ${fresh.length} new ones trending.`);
   const read = [];
   for (const p of fresh.slice(0, PER_RUN)) {
-    const reading = client ? await readPost(p, client) : null;
+    const reading = client ? await readPost(p, client) : cleanReading(readPostByRules(p));
     const known = !!reading?.catName && (data.names.has(reading.catName.toLowerCase()) || (reading.ticker && data.names.has(reading.ticker.toLowerCase())));
     const taken = reading?.ticker ? await tickerTaken(reading.ticker, fetchImpl) : null;
     const row = { ...p, readAt: reading ? new Date(nowMs).toISOString() : null, reading, known, taken };
@@ -168,7 +172,7 @@ export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Dat
   // An unread post is tried again next run (it stays out of `seen` by not being stored).
   const posts = [...read.filter((r) => r.status !== "unread"), ...prev].sort((a, b) => Date.parse(b.postedAt) - Date.parse(a.postedAt)).slice(0, KEEP);
   return {
-    note: "Written by scripts/scan-trending-cats.mjs: cats trending on X, read by Claude. candidates = about one cat, not sensitive, ticker unused on Solana, not already in the sanctuary. Launching is a person's decision.",
+    note: "Written by scripts/scan-trending-cats.mjs: cats trending on X, read by rules (X-only) or by Claude (readBy). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). Launching is a person's decision.",
     checkedAt: new Date(nowMs).toISOString(), searchError: null,
     candidates: posts.filter((p) => p.status === "candidate").map((p) => p.id),
     posts,
@@ -181,7 +185,7 @@ async function main() {
   const creds = credsFromEnv(process.env);
   if (!creds) { console.log("Trend watch: no X secrets; nothing searched."); return; }
   const client = process.env.ANTHROPIC_API_KEY ? new Anthropic() : null;
-  if (!client) console.log("Trend watch: no ANTHROPIC_API_KEY; trending posts are listed but not read.");
+  if (!client) console.log("Trend watch: X-only mode (no ANTHROPIC_API_KEY): posts are read by rules.");
   const names = new Set([...read("data/planned.json", { cats: [] }).cats, ...read("data/adoptables.json", { cats: [] }).cats]
     .flatMap((c) => [c.name, c.coinName, c.ticker, c.launchTicker]).filter(Boolean).map((s) => String(s).toLowerCase()));
   const next = await scan({ data: { trending: read("data/trending-cats.json", { posts: [] }), names }, creds, client, log: console.log });

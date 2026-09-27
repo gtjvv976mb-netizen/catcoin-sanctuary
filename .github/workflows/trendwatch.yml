@@ -1,6 +1,7 @@
 # Every 20 minutes, the research team's trend watch (scripts/scan-trending-cats.mjs): searches X for cats
-# trending right now, has Claude read each new one (the cat, its name, real / cartoon / fiction, a coin
-# name, ticker and lore line, and whether a coin would be in poor taste), checks the ticker on Solana, and
+# trending right now, reads each new one (the cat, its name, real / cartoon / fiction, a coin name, ticker
+# and lore line, and whether a coin would be in poor taste; by rules from the X post alone, or by Claude
+# when ANTHROPIC_API_KEY is set), checks the ticker on Solana, and
 # commits the shortlist, data/trending-cats.json, when it changed. Launching a candidate stays a person's
 # decision.
 #
@@ -8,7 +9,8 @@
 # the chain, set the repository variable TRENDWATCH_CHAIN to "off" (or disable the workflow).
 #
 # Secrets, only in the scan step: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET (an X plan
-# whose keys may search: Basic or above) and ANTHROPIC_API_KEY. Without the X keys nothing is searched.
+# whose keys may search: Basic or above) and, optionally, ANTHROPIC_API_KEY. Without the X keys nothing is
+# searched; without the Anthropic key it runs X-only.
 # The checkout keeps no credentials; the push hands the workflow token to git for that one command.
 name: Trend watch
 
