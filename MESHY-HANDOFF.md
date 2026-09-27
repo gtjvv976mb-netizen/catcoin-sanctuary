@@ -57,3 +57,31 @@ Meshy subscription (**3,000 credits**) and added `MESHY_API_KEY` to this cloud e
 - The packer now fits each copy to its budget by itself and updates only the packed cats' rows in
   `index.json` and `PROVENANCE.md` (the jobs file is out of date for older cats).
 - Check each shot's facing: a big plume tail can fool the heading guess (CROOKSHNK needed `--yaw 180`).
+
+## Batch 5+ (2026-09-27)
+- **Balance:** 1,042 at the start of this session, although `meshy.state.json` recorded 1,732 of
+  3,000 spent (so ~1,268 expected): about 226 credits went on tasks the state file does not show.
+  Now **112** (spent ~930 this session). Keep the 100 reserve; the queue needs a top-up.
+- **Batch 5, the last 20 retextures:** JITTERPAW PATCHPAW PRISMPAW RUBYCAT SAVEPAWS SOCKFOOT MANEKI
+  TSUKI VIBECOIN JOCKCAT GLINTPAW LATCHKEY NOTEPAW PUMICE RUSTLEPAW TARTANPAW TOMRUTGERS TRILLBY
+  WHIRRPAW WINDSOCK, all to their lore. GLINTPAW and TRILLBY needed `--fresh-uv`; PRISMPAW,
+  SAVEPAWS, TSUKI, VIBECOIN and PUMICE kept the old pattern even then and were fixed with
+  `--image --fresh-uv`. A re-run retextures the *last* result (the jobs file's `url`), so a bad
+  pattern carries over: go straight to `--image --fresh-uv` when the prompt one keeps it.
+  Big far copies (JITTERPAW, RUBYCAT, TARTANPAW) fit with `sa_lo: true` in the jobs file.
+- **Batch 6, rebuilds:** views first (`run --only rebuild --views --limit 14`, 6 credits each),
+  checked by eye, then built: FIGAROCAT GRREAT GUMBALLW KITTENPLZ KURONEKCAT LUNAMOOCAT MAYORSTUB
+  MISTO MUSTACHCAT NERMALCAT NITAMACAT NYANKOSEN, and GENKITTY from redone views (its first front
+  view sat). **GROOVYPETE** has views only (front view stood upright with the forelegs out like
+  arms): redo them (drop its state entry, `run GROOVYPETE --views`) before building.
+- CHOCOCACAT's `#pose2` views were already superseded (its batch-3 model is good); marked done.
+- **Don't wrap `meshy.mjs run` in `timeout`:** a killed run loses the cat in flight (credits spent,
+  nothing recorded). VIBECOIN was recovered from its task id by hand.
+- **Queue left: 79** (59 priority-1 rebuilds, 19 priority-2, 1 priority-3), next GROOVYPETE
+  OCTOMONA OSCARRI PALICO SCRATCHC SERPOUNCE SGTTIBBS SNOWBALCAT ... at ~41 credits each
+  (~3,250 credits for all).
+- **Rig (assets/world/catrig.js) reworked** the same day: legs posed by IK (planted paws), skin
+  weights per leg piece blurred along the surface. Check a new model's animation with
+  `node scripts/render-cat-clips.mjs OUT.png KEY`. Known weak spots: models whose legs are fused
+  or webbed (about a quarter; the legs still split along the surface, a raised paw can pull a
+  sheet), a thick S-curved tail (GENKITTY) flattening when posed, and NYANKOSEN's pom-pom tail.
