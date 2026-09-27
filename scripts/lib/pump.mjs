@@ -31,11 +31,11 @@
  * tests/launcher-tx.test.mjs, and the flags equal the fixture's message flags.
  */
 import { createHash } from "node:crypto";
-import { base58Decode, base58Encode, isAddress, textProblem } from "../../assets/collection.js";
+import { base58Decode, base58Encode, isAddress, textProblem, httpsProblem } from "../../assets/collection.js";
 import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./chain.mjs";
 import {
   pda, ata, compileLegacyMessage, decodeLegacyMessage, decompileInstructions, setComputeUnitLimit, setComputeUnitPrice,
-  signTransaction, serializeTransaction, MAX_COMPUTE_UNIT_LIMIT, PACKET_DATA_SIZE,
+  signTransaction, serializeTransaction, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT, PACKET_DATA_SIZE,
 } from "./solana-tx.mjs";
 
 /** pump.fun's fixed accounts. The PDAs are pinned here and re-derived by the tests. */
@@ -100,8 +100,10 @@ export function createV2Accounts(mint, user) {
 /**
  * Why a coin's name, symbol or metadata uri may not be launched, or null. The name and symbol
  * must be plain text the sanctuary would show (assets/collection.js textProblem: no link, markup,
- * control or hidden character) within create_v2's byte limits; the uri must be an https URL of at
- * most 200 bytes, with no credentials and no space or control character.
+ * control or hidden character) within create_v2's byte limits; the uri must be a link the
+ * sanctuary itself would make (assets/collection.js httpsProblem: https to a named host, no
+ * credentials) that starts with "https://", is at most 200 bytes and holds no space, control
+ * character, markup or quote (< > " ' ` \), since it is written on-chain for good.
  */
 export function launchTextProblem({ name, symbol, uri } = {}) {
   const n = textProblem(name, { maxBytes: CREATE_V2_LIMITS.name });
@@ -111,10 +113,9 @@ export function launchTextProblem({ name, symbol, uri } = {}) {
   if (typeof uri !== "string" || !uri.startsWith("https://")) return "the uri must start with https://";
   if (Buffer.byteLength(uri, "utf8") > CREATE_V2_LIMITS.uri) return `the uri is longer than ${CREATE_V2_LIMITS.uri} bytes`;
   if (/[\s\p{Cc}\p{Cf}]/u.test(uri)) return "the uri holds a space or a control character";
-  let url;
-  try { url = new URL(uri); } catch { return "the uri is not a URL"; }
-  if (url.protocol !== "https:" || !url.hostname) return "the uri is not an https URL";
-  if (url.username || url.password) return "the uri carries credentials";
+  if (/[<>"'`\\]/.test(uri)) return "the uri holds markup or a quote (< > \" ' ` \\)";
+  const bad = httpsProblem(uri);
+  if (bad) return `the uri: ${bad}`;
   return null;
 }
 
@@ -203,7 +204,7 @@ export function buildLaunchTransaction({
   const price = typeof computeUnitPriceMicroLamports === "bigint" ? computeUnitPriceMicroLamports
     : Number.isSafeInteger(computeUnitPriceMicroLamports) ? BigInt(computeUnitPriceMicroLamports) : -1n;
   if (price < 0n) throw new RangeError("a compute-unit price is a whole number of micro-lamports, 0 or more");
-  const priorityFee = (BigInt(computeUnitLimit) * price + 999_999n) / 1_000_000n;
+  const priorityFee = priorityFeeLamports(computeUnitLimit, price);
   if (priorityFee > MAX_PRIORITY_FEE_LAMPORTS) {
     throw new RangeError(`a priority fee of ${priorityFee} lamports is more than the ${MAX_PRIORITY_FEE_LAMPORTS} this launcher allows`);
   }
@@ -225,26 +226,38 @@ export function buildLaunchTransaction({
  * `wallet`, signed by exactly [wallet, mint], holding at most one SetComputeUnitLimit and one
  * SetComputeUnitPrice (no accounts, the 5- and 9-byte forms) and exactly one create_v2 whose
  * sixteen accounts and flags are createV2Accounts(mint, wallet), whose creator is the wallet and
- * whose options are all off, and no other instruction. Returns the decoded create_v2 arguments;
- * throws with the reason otherwise.
+ * whose options are all off, and no other instruction. The compute budget is read too: a limit is
+ * 1..1,400,000 and the priority fee (limit × price) is at most MAX_PRIORITY_FEE_LAMPORTS; with no
+ * limit, 200,000 units for every instruction (at most 1,400,000) are assumed, never less than the
+ * runtime's default. Returns the decoded create_v2 arguments; throws with the reason otherwise.
  */
 export function checkLaunchMessage(messageBytes, { wallet, mint } = {}) {
   const msg = decodeLegacyMessage(messageBytes);
   const signers = msg.accountKeys.slice(0, msg.header.numRequiredSignatures);
   if (signers.length !== 2 || signers[0] !== wallet || signers[1] !== mint) throw new Error("the signers are not [wallet, mint]");
-  let limits = 0, prices = 0, create = null;
+  let limit = null, price = null, create = null;
   for (const ix of decompileInstructions(msg)) {
-    const d = ix.data;
-    if (ix.programId === COMPUTE_BUDGET_PROGRAM && ix.keys.length === 0 && d[0] === 2 && d.length === 5) limits++;
-    else if (ix.programId === COMPUTE_BUDGET_PROGRAM && ix.keys.length === 0 && d[0] === 3 && d.length === 9) prices++;
-    else if (ix.programId === PUMP.program && Buffer.from(d.subarray(0, 8)).toString("hex") === CREATE_V2_DISC) {
+    const d = Buffer.from(ix.data);
+    const budget = ix.programId === COMPUTE_BUDGET_PROGRAM && ix.keys.length === 0;
+    if (budget && d[0] === 2 && d.length === 5) {
+      if (limit !== null) throw new Error("more than one compute-budget instruction of a kind");
+      limit = d.readUInt32LE(1);
+    } else if (budget && d[0] === 3 && d.length === 9) {
+      if (price !== null) throw new Error("more than one compute-budget instruction of a kind");
+      price = d.readBigUInt64LE(1);
+    } else if (ix.programId === PUMP.program && d.subarray(0, 8).toString("hex") === CREATE_V2_DISC) {
       if (create) throw new Error("more than one create_v2");
       create = ix;
     } else {
       throw new Error(`an instruction for ${ix.programId} that a launch does not carry`);
     }
   }
-  if (limits > 1 || prices > 1) throw new Error("more than one compute-budget instruction of a kind");
+  if (limit !== null && (limit < 1 || limit > MAX_COMPUTE_UNIT_LIMIT)) throw new Error(`a compute-unit limit of ${limit}; a launch asks for 1..${MAX_COMPUTE_UNIT_LIMIT}`);
+  const units = limit ?? Math.min(MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT * msg.instructions.length);
+  const priorityFee = priorityFeeLamports(units, price ?? 0n);
+  if (priorityFee > MAX_PRIORITY_FEE_LAMPORTS) {
+    throw new Error(`a priority fee of ${priorityFee} lamports is more than the ${MAX_PRIORITY_FEE_LAMPORTS} this launcher allows`);
+  }
   if (!create) throw new Error("no create_v2");
   const want = createV2Accounts(mint, wallet);
   if (create.keys.length !== want.length || create.keys.some((k, i) => k.pubkey !== want[i].pubkey || k.isSigner !== want[i].isSigner || k.isWritable !== want[i].isWritable)) {
@@ -260,16 +273,19 @@ export function checkLaunchMessage(messageBytes, { wallet, mint } = {}) {
 
 /**
  * Sign a built launch with the wallet's and the mint's keypairs and return the serialized
- * transaction, base64 (what sendTransaction takes). The message is re-checked from its bytes
- * before anything is signed, so bytes that are not a plain launch are never signed.
+ * transaction, base64 (what sendTransaction takes). The message is copied once and that copy is
+ * re-checked from its bytes (checkLaunchMessage, the fee guard included), signed and serialized,
+ * so bytes that are not a plain launch are never signed, even if `built` was changed after it was
+ * built or its bytes change while this runs.
  */
 export function signLaunchTransaction(built, walletKeypair, mintKeypair) {
   if (!built || !(built.messageBytes instanceof Uint8Array)) throw new TypeError("signLaunchTransaction takes what buildLaunchTransaction returned");
   if (walletKeypair?.publicKey !== built.wallet) throw new Error("the wallet keypair is not the launch's wallet");
   if (mintKeypair?.publicKey !== built.mint) throw new Error("the mint keypair is not the launch's mint");
-  checkLaunchMessage(built.messageBytes, { wallet: built.wallet, mint: built.mint });
-  const signatures = signTransaction(built.messageBytes, [walletKeypair, mintKeypair]);
-  return Buffer.from(serializeTransaction(built.messageBytes, signatures)).toString("base64");
+  const messageBytes = Uint8Array.from(built.messageBytes); // what is checked is what is signed and sent
+  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint });
+  const signatures = signTransaction(messageBytes, [walletKeypair, mintKeypair]);
+  return Buffer.from(serializeTransaction(messageBytes, signatures)).toString("base64");
 }
 
 /** sha256("global:<name>")[0..8] as hex: an Anchor instruction discriminator. */

@@ -10,11 +10,11 @@ import { inspect } from "node:util";
 import {
   keypairFromSecret, deriveMintKeypair, verifyEd25519, encodeCompactU16, decodeCompactU16, compileLegacyMessage, encodeLegacyMessage,
   decodeLegacyMessage, decompileInstructions, signTransaction, serializeTransaction, decodeTransaction, transactionToJson, ata, pda,
-  setComputeUnitLimit, setComputeUnitPrice, MINT_DERIVATION_PREFIX, PACKET_DATA_SIZE,
+  setComputeUnitLimit, setComputeUnitPrice, priorityFeeLamports, MINT_DERIVATION_PREFIX, PACKET_DATA_SIZE,
 } from "../scripts/lib/solana-tx.mjs";
 import {
   PUMP, CREATE_V2_DISC, createV2Instruction, createV2Accounts, decodeCreateV2, buildLaunchTransaction, signLaunchTransaction, checkLaunchMessage,
-  bondingCurve, associatedBondingCurve, mayhemState, mayhemTokenVault, anchorDiscriminator, launchTextProblem,
+  bondingCurve, associatedBondingCurve, mayhemState, mayhemTokenVault, anchorDiscriminator, launchTextProblem, MAX_PRIORITY_FEE_LAMPORTS,
 } from "../scripts/lib/pump.mjs";
 import { signaturesVerify, messageBytes, COMPUTE_BUDGET_PROGRAM, SYSTEM_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM } from "../scripts/lib/chain.mjs";
 import { base58Decode, base58Encode } from "../assets/collection.js";
@@ -242,7 +242,16 @@ test("a launch holds only ComputeBudget and create_v2; bytes with anything else 
   const withAccount = { ...cb[0], keys: [{ pubkey: "jitodontfront111111111111111111nopainnogain", isSigner: false, isWritable: false }] };
   const coSigned = { ...create, keys: [...create.keys, { pubkey: attacker.publicKey, isSigner: true, isWritable: false }] };
   const writableAuthority = { ...create, keys: create.keys.map((k, i) => (i === 1 ? { ...k, isWritable: true } : k)) };
+  const rawLimit = (units) => { const d = Buffer.alloc(5); d[0] = 2; d.writeUInt32LE(units, 1); return { programId: COMPUTE_BUDGET_PROGRAM, keys: [], data: new Uint8Array(d) }; };
   const hostile = {
+    // the fee guard holds on the bytes, not only in buildLaunchTransaction (which refuses these same values)
+    "a 1,400-SOL priority fee": [[setComputeUnitLimit(1_400_000), setComputeUnitPrice(10n ** 12n), create], /priority fee of 1400000000000 lamports/],
+    "a fee one lamport over the guard": [[setComputeUnitLimit(200_000), setComputeUnitPrice(25_000_001), create], /priority fee of 5000001 lamports/],
+    "a huge price and no limit (the default limit is assumed)": [[setComputeUnitPrice(10n ** 12n), create], /priority fee/],
+    "a limit of 0xffffffff units": [[rawLimit(0xffffffff), create], /compute-unit limit of 4294967295/],
+    "a limit of 1,400,001 units": [[rawLimit(1_400_001), create], /compute-unit limit of 1400001/],
+    "a limit of 0 units": [[rawLimit(0), create], /compute-unit limit of 0/],
+    "two prices": [[cb[1], cb[1], create], /more than one compute-budget/],
     "a SOL transfer": [[...cb, create, transfer], /instruction for 1111.* does not carry/],
     "a dev buy": [[...cb, create, buy], /instruction for 6EF8.* does not carry/],
     "another creator": [[...cb, otherCreator], /creator is not the wallet/],
@@ -264,12 +273,45 @@ test("a launch holds only ComputeBudget and create_v2; bytes with anything else 
     assert.throws(() => signLaunchTransaction({ ...built, messageBytes: msg }, spy(wallet), spy(mint)), reason, what);
     assert.equal(calls, 0, `${what}: nothing was signed`);
   }
-  // and the plain launch passes the same check
-  assert.doesNotThrow(() => checkLaunchMessage(compileLegacyMessage({ payer: wallet.publicKey, recentBlockhash: blockhash(), instructions: [...cb, create] }).bytes, { wallet: wallet.publicKey, mint: mint.publicKey }));
+  // and the plain launch passes the same check, as do a fee of exactly the guard and a modest price with no limit
+  const passes = (instructions) => checkLaunchMessage(compileLegacyMessage({ payer: wallet.publicKey, recentBlockhash: blockhash(), instructions }).bytes, { wallet: wallet.publicKey, mint: mint.publicKey });
+  assert.doesNotThrow(() => passes([...cb, create]));
+  assert.doesNotThrow(() => passes([setComputeUnitLimit(200_000), setComputeUnitPrice(25_000_000), create]));
+  assert.doesNotThrow(() => passes([setComputeUnitLimit(1_400_000), setComputeUnitPrice(3_571_428), create]));
+  assert.doesNotThrow(() => passes([setComputeUnitPrice(1_000), create]));
+  assert.doesNotThrow(() => passes([create]));
   // a launch is only signed by its own wallet and mint
   assert.throws(() => signLaunchTransaction(built, attacker, mint), /wallet/);
   assert.throws(() => signLaunchTransaction(built, wallet, attacker), /mint/);
   assert.throws(() => signLaunchTransaction(built, mint, wallet), /wallet/);
+});
+
+test("the priority fee is ceil(limit × price / 1,000,000) at build and at sign time alike, and what signLaunchTransaction checks is exactly what it signs", () => {
+  assert.equal(priorityFeeLamports(200_000, 25_000_000), 5_000_000n);
+  assert.equal(priorityFeeLamports(200_000, 25_000_001), 5_000_001n);
+  assert.equal(priorityFeeLamports(180_000, 50_000), 9_000n);
+  assert.equal(priorityFeeLamports(1, 1), 1n, "a part of a lamport is a whole lamport");
+  assert.equal(priorityFeeLamports(1_400_000, 0n), 0n);
+  assert.equal(MAX_PRIORITY_FEE_LAMPORTS, 5_000_000n);
+
+  // a `built` whose bytes turn hostile after k reads (as a shared or reused buffer could): whatever comes out
+  // is a launch that passes the check, signed over those very bytes; before the fix, k = 2 or 3 signed a 1,400-SOL fee
+  const { wallet, mint, built } = launch();
+  const create = createV2Instruction({ mint: mint.publicKey, user: wallet.publicKey, creator: wallet.publicKey, ...COIN });
+  const costly = compileLegacyMessage({ payer: wallet.publicKey, recentBlockhash: blockhash(), instructions: [setComputeUnitLimit(1_400_000), setComputeUnitPrice(10n ** 12n), create] }).bytes;
+  let signed = 0;
+  for (let k = 0; k <= 5; k++) {
+    let reads = 0;
+    const shifty = { ...built, get messageBytes() { return reads++ < k ? built.messageBytes : costly; } };
+    let b64;
+    try { b64 = signLaunchTransaction(shifty, wallet, mint); } catch (e) { assert.match(e.message, /priority fee/, `k = ${k}`); continue; }
+    signed++;
+    const { signatures, messageBytes: msg } = decodeTransaction(new Uint8Array(Buffer.from(b64, "base64")));
+    assert.equal(hexOf(msg), hexOf(built.messageBytes), `k = ${k}: the plain launch, not the costly one`);
+    assert.doesNotThrow(() => checkLaunchMessage(msg, { wallet: wallet.publicKey, mint: mint.publicKey }));
+    assert.equal(verifyEd25519(wallet.publicKey, msg, signatures[0]) && verifyEd25519(mint.publicKey, msg, signatures[1]), true);
+  }
+  assert.ok(signed > 0, "an unchanged launch is still signed");
 });
 
 /* ── keys ───────────────────────────────────────────────────────────────────────────────── */
@@ -295,15 +337,36 @@ test("deriveMintKeypair is deterministic per (wallet, post) and differs across p
 
   for (const bad of ["", " 123", "123 ", "12\n3", "x".repeat(129), 123, null]) assert.throws(() => deriveMintKeypair(w.seed, bad), TypeError, JSON.stringify(bad));
   for (const bad of [new Uint8Array(31), new Uint8Array(64), "seed", null]) assert.throws(() => deriveMintKeypair(bad, "1"), TypeError);
+
+  // a post id is plain ASCII: a lone surrogate (which UTF-8 turns into U+FFFD) or another Unicode spelling cannot alias an id
+  const s7 = new Uint8Array(32).fill(7);
+  for (const bad of ["123\uD800", "123\uDFFF", "123�", "café", "café", "１２３", "12.3", "12/3", "x".repeat(129)]) {
+    assert.throws(() => deriveMintKeypair(s7, bad), TypeError, JSON.stringify(bad));
+  }
+  for (const good of ["1971234567890123456", "t3_1abc-XYZ", "x:1971234567890123456", "x".repeat(128)]) assert.doesNotThrow(() => deriveMintKeypair(s7, good), good);
+
+  // the caller's bytes are never wiped, and only this module's keypairs are read for a seed
+  const mySeed = randomBytes(32), before = hexOf(mySeed);
+  deriveMintKeypair(mySeed, "1");
+  assert.equal(hexOf(mySeed), before, "a seed passed as bytes is left as it was");
+  assert.throws(() => deriveMintKeypair({ publicKey: w.publicKey, seed: mySeed }, "1"), TypeError, "a look-alike object is refused");
+  assert.equal(hexOf(mySeed), before, "and its seed is not wiped");
+  deriveMintKeypair(w, "1");
+  assert.equal(deriveMintKeypair(w, "2").publicKey, deriveMintKeypair(w.seed, "2").publicKey, "a keypair's seed survives being used");
+  // an all-zero seed would make every mint's secret public
+  assert.throws(() => deriveMintKeypair(new Uint8Array(32), "1"), /all zeros/);
 });
 
-test("keypairFromSecret takes a 64-byte base58 secret, a JSON byte array, bytes, or a 32-byte seed; the public key is node's own and signatures verify", () => {
+test("keypairFromSecret takes a 64-byte secret (base58, a JSON byte array or bytes) or a 32-byte seed as bytes; the public key is node's own and signatures verify", () => {
   const seed = randomBytes(32);
   const kp = keypairFromSecret(seed);
   assert.equal(kp.publicKey, nodePublicKey(seed));
   const secret = Buffer.concat([seed, kp.publicKeyBytes]);
-  const forms = [base58Encode(secret), `  ${base58Encode(secret)}\n`, JSON.stringify([...secret]), new Uint8Array(secret), base58Encode(seed), new Uint8Array(seed)];
+  const forms = [base58Encode(secret), `  ${base58Encode(secret)}\n`, JSON.stringify([...secret]), new Uint8Array(secret), new Uint8Array(seed)];
   for (const f of forms) assert.equal(keypairFromSecret(f).publicKey, kp.publicKey);
+  assert.equal(keypairFromSecret(base58Encode(secret), { publicKey: kp.publicKey }).publicKey, kp.publicKey, "the expected wallet");
+  assert.throws(() => keypairFromSecret(base58Encode(secret), { publicKey: fresh().publicKey }), /not the expected wallet/);
+  assert.throws(() => keypairFromSecret(seed, { publicKey: "nope" }), /expected public key/);
   const input = new Uint8Array(secret);
   keypairFromSecret(input);
   assert.equal(hexOf(input), hexOf(secret), "the caller's bytes are left as they were");
@@ -346,6 +409,14 @@ test("keypairFromSecret refuses a mismatched or malformed secret without ever qu
   refused(`[${[...seed].join(",")},256]`, /JSON/);
   refused(`[${[...seed].join(",")}]x`, /JSON/);
   refused(new Uint8Array(33), /64 bytes/);
+  // 32 bytes as text are what a pasted public address looks like: a "keypair" from one has a seed anyone knows
+  refused(base58Encode(seed), /public address/);
+  refused(JSON.stringify([...seed]), /public address/);
+  assert.throws(() => keypairFromSecret(other.publicKey), /public address/);
+  // an all-zero seed (the well-known 4zvwRj… key), alone or with its public key
+  refused(new Uint8Array(32), /all zeros/);
+  refused(Buffer.concat([new Uint8Array(32), base58Decode("4zvwRjXUKGfvwnParsHAS3HuSVzV5cA4McphgmoCtajS")]), /all zeros/);
+  refused(new Uint8Array(64), /all zeros/);
   assert.throws(() => keypairFromSecret(12345), TypeError);
   assert.throws(() => keypairFromSecret(null), TypeError);
 
@@ -380,6 +451,14 @@ test("create_v2's limits (in UTF-8 bytes) and its https uri are enforced, and so
     "a uri with a space": { uri: "https://ipfs.io/ipfs/Qm bUFo" },
     "a uri with credentials": { uri: "https://user:pw@ipfs.io/ipfs/Qm" },
     "a uri that is not a URL": { uri: "https://" },
+    "a uri to localhost": { uri: "https://localhost/x" },
+    "a uri to a single-label host": { uri: "https://intranet/x" },
+    "a uri to an IPv6 host": { uri: "https://[::1]/x" },
+    "a uri with an attribute break-out": { uri: 'https://a.example/"><img/src=x/onerror=alert(1)>' },
+    "a uri with a tag": { uri: "https://a.example/<script>" },
+    "a uri with a quote": { uri: "https://a.example/it's" },
+    "a uri with a backquote": { uri: "https://a.example/`x`" },
+    "a uri with a backslash": { uri: "https://a.example\\@b.example/" },
     "no uri": { uri: undefined },
     "an empty name": { name: "" },
     "a name with a line break": { name: "Gull\nGadot" },

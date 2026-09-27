@@ -6,11 +6,14 @@
  *
  *   · keypairFromSecret: a wallet from its secret, as the Solana CLI (a JSON byte array) or
  *     Phantom (base58) exports it: 64 bytes, the Ed25519 seed then the public key, or the 32-byte
- *     seed alone. A 64-byte secret whose second half is not the public key of its first half is
- *     refused. The secret never appears in an error, in toString, in JSON or in util.inspect.
+ *     seed alone as raw bytes (32 bytes given as text are refused: that is what a public address
+ *     looks like). A 64-byte secret whose second half is not the public key of its first half, an
+ *     all-zero seed, and (when the caller names it) a key for another wallet are refused. The
+ *     secret never appears in an error, in toString, in JSON or in util.inspect.
  *   · deriveMintKeypair: the new coin's mint, derived from the wallet's seed and the trending
  *     post's id (HMAC-SHA256). The same post always gives the same mint, so a retry can only ever
- *     fail on "account already in use", never make a second coin.
+ *     fail on "account already in use", never make a second coin; a post id is plain ASCII, so no
+ *     two spellings of one id can give two mints.
  *   · the legacy wire format: compact-u16, message compile (keys deduplicated, payer first, then
  *     writable signers, readonly signers, writable non-signers, readonly non-signers, each group in
  *     first-seen order, as @solana/web3.js's Message.compile orders them), message decode,
@@ -27,12 +30,25 @@ export { pda, isOnCurve };
 export const PACKET_DATA_SIZE = 1232;
 /** The most compute units a transaction may ask for. */
 export const MAX_COMPUTE_UNIT_LIMIT = 1_400_000;
+/** The most compute units the runtime grants one instruction when a transaction sets no limit (builtins get less). */
+export const DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT = 200_000;
+
+/** The priority fee, in lamports, of `units` compute units at `microLamports` each: ceil(units × price / 1,000,000), as the runtime charges it. */
+export function priorityFeeLamports(units, microLamports) {
+  return (BigInt(units) * BigInt(microLamports) + 999_999n) / 1_000_000n;
+}
 
 const PKCS8_ED25519 = Buffer.from("302e020100300506032b657004220420", "hex"); // + the 32-byte seed
 const SPKI_ED25519 = Buffer.from("302a300506032b6570032100", "hex");        // + the 32-byte public key
 const INSPECT = Symbol.for("nodejs.util.inspect.custom");
 
 /* ── keypairs ─────────────────────────────────────────────────────────────────────────── */
+
+/** The keypairs this module made. Only these are read for a seed: their getter hands out a copy, never the caller's bytes. */
+const ISSUED = new WeakSet();
+
+/** Whether every byte is zero (without stopping at the first that is not). */
+const allZero = (bytes) => bytes.reduce((acc, b) => acc | b, 0) === 0;
 
 /** A keypair from a 32-byte seed. The seed is copied; the caller may wipe its own. */
 function keypairFromSeed(seed) {
@@ -61,7 +77,9 @@ function keypairFromSeed(seed) {
     toString: { value: () => shown },
     [INSPECT]: { value: () => shown },
   });
-  return Object.freeze(kp);
+  Object.freeze(kp);
+  ISSUED.add(kp);
+  return kp;
 }
 
 /** The bytes of a secret given as bytes, base58 text or a JSON byte array (always a fresh copy). No error names the input. */
@@ -84,19 +102,28 @@ function secretBytes(secret) {
 
 /**
  * A keypair { publicKey (base58), seed (Uint8Array, not enumerable), sign(bytes) } from a secret:
- * a 64-byte secret key (seed then public key) or a 32-byte seed, as bytes, base58 or a JSON byte
- * array. Throws, without quoting the secret, when it is malformed or its halves do not match.
+ * a 64-byte secret key (seed then public key) as bytes, base58 or a JSON byte array, or a 32-byte
+ * seed as raw bytes. 32 bytes given as text are refused: the Solana CLI and Phantom export 64, and
+ * 32 bytes of base58 are what a pasted public address looks like (whose "keypair" anyone could
+ * make). With `publicKey`, the secret must be that wallet's. Throws, without quoting the secret,
+ * when it is malformed, its halves do not match, its seed is all zeros or it is another wallet's.
  */
-export function keypairFromSecret(secret) {
+export function keypairFromSecret(secret, { publicKey: expected } = {}) {
+  if (expected !== undefined && !isAddress(expected)) throw new TypeError("the expected public key is not a base58 address");
   const raw = secretBytes(secret);
   try {
     if (raw.length !== 64 && raw.length !== 32) {
       throw new RangeError(`a secret key is 64 bytes (the seed, then the public key) or a 32-byte seed; this one is ${raw.length} bytes`);
     }
+    if (raw.length === 32 && typeof secret === "string") {
+      throw new TypeError("32 bytes given as text look like a public address, not a secret key: give the 64-byte secret key (as the Solana CLI or Phantom exports it), or the 32-byte seed as raw bytes");
+    }
+    if (allZero(raw.subarray(0, 32))) throw new RangeError("the seed is all zeros: a key anyone can compute");
     const kp = keypairFromSeed(raw.subarray(0, 32));
     if (raw.length === 64 && !timingSafeEqual(Buffer.from(raw.subarray(32)), Buffer.from(kp.publicKeyBytes))) {
       throw new Error("the secret key's second half is not the public key of its first half (a corrupt or mismatched secret)");
     }
+    if (expected !== undefined && kp.publicKey !== expected) throw new Error(`the secret key is not the expected wallet ${expected}'s`);
     return kp;
   } finally {
     raw.fill(0);
@@ -107,21 +134,30 @@ export function keypairFromSecret(secret) {
 export const MINT_DERIVATION_PREFIX = "catcoin-sanctuary:mint:";
 
 /**
+ * A post id: 1-128 ASCII letters, digits, "_", "-" or ":" (an X status id, a Reddit id, a
+ * "source:id"). Nothing else, so one id has one spelling (no space, no other Unicode normal form)
+ * and two ids never reach the HMAC as the same bytes (as lone surrogates do: UTF-8 makes each U+FFFD).
+ */
+export const POST_ID = /^[A-Za-z0-9_:-]{1,128}$/;
+
+/**
  * The mint keypair for a trending post: its seed is HMAC-SHA256(key = the wallet's 32-byte seed,
  * "catcoin-sanctuary:mint:" + postId). Deterministic per (wallet, post) and different across
- * both. `walletSeed` is the seed bytes or a keypair from keypairFromSecret. A post id is 1-128
- * characters with no space or control character (so " 123" can never pass for "123").
+ * both. `wallet` is the seed bytes (never modified) or a keypair from keypairFromSecret (no other
+ * object is read). An all-zero seed and a post id that is not POST_ID are refused.
  */
-export function deriveMintKeypair(walletSeed, postId) {
-  const fromKeypair = !(walletSeed instanceof Uint8Array) && walletSeed != null && typeof walletSeed === "object" && "seed" in walletSeed;
-  const key = fromKeypair ? walletSeed.seed : walletSeed; // a keypair's seed getter hands out a copy, wiped below
+export function deriveMintKeypair(wallet, postId) {
+  const issued = ISSUED.has(wallet);
+  if (!issued && !(wallet instanceof Uint8Array)) throw new TypeError("deriveMintKeypair needs the wallet's 32-byte seed (bytes) or a keypair from keypairFromSecret");
+  const key = issued ? wallet.seed : wallet; // an issued keypair's getter hands out a fresh copy, wiped below; the caller's bytes are left alone
   try {
-    if (!(key instanceof Uint8Array) || key.length !== 32) throw new TypeError("deriveMintKeypair needs the wallet's 32-byte seed (or its keypair)");
-    if (typeof postId !== "string" || !/^[^\s\p{Cc}\p{Cf}]{1,128}$/u.test(postId)) throw new TypeError("a post id is 1-128 characters with no space or control character");
+    if (key.length !== 32) throw new TypeError("deriveMintKeypair needs the wallet's 32-byte seed (or its keypair)");
+    if (allZero(key)) throw new RangeError("the wallet's seed is all zeros: anyone could compute every mint's secret");
+    if (typeof postId !== "string" || !POST_ID.test(postId)) throw new TypeError('a post id is 1-128 ASCII letters, digits, "_", "-" or ":"');
     const seed = createHmac("sha256", key).update(MINT_DERIVATION_PREFIX + postId, "utf8").digest();
     try { return keypairFromSeed(seed); } finally { seed.fill(0); }
   } finally {
-    if (fromKeypair && key instanceof Uint8Array) key.fill(0);
+    if (issued) key.fill(0);
   }
 }
 
@@ -191,8 +227,10 @@ export function encodeLegacyMessage({ header, accountKeys, recentBlockhash, inst
  * is first; the order is writable signers, readonly signers, writable non-signers, readonly
  * non-signers, each in first-seen order (the payer, then each program id before its accounts), as
  * @solana/web3.js's Message.compile orders them; with keyOrder "sorted", each group is sorted by
- * its base58 text instead (the payer still first), as web3.js's older Transaction.compileMessage
- * did. Solana accepts either order.
+ * its base58 text in UTF-16 code-unit order instead (the payer still first), which reproduces the
+ * four recorded StonkFun launch messages the tests rebuild. That is not guaranteed to be web3.js's
+ * legacy Transaction.compileMessage order, which sorts with a locale compare (there "a" < "B";
+ * here "B" < "a"). Solana accepts any order.
  * Returns { header, accountKeys, recentBlockhash, instructions (compiled), bytes }.
  */
 export function compileLegacyMessage({ payer, recentBlockhash, instructions, keyOrder = "first-seen" } = {}) {
