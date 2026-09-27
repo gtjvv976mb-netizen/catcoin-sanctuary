@@ -2,7 +2,7 @@
    DexScreener and a fake Claude: what qualifies, how it is ranked, what becomes a candidate. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { postCount, mergeAnswers, qualify, heat, cleanReading, isCandidate, scan, MIN_LIKES, MAX_AGE_HOURS, QUERY } from "../scripts/scan-trending-cats.mjs";
+import { readBudget, postCount, mergeAnswers, qualify, heat, cleanReading, isCandidate, scan, MIN_LIKES, MAX_AGE_HOURS, QUERY } from "../scripts/scan-trending-cats.mjs";
 import { readPostByRules, tickerFor } from "../scripts/lib/read-cat-post.mjs";
 
 const NOW = Date.parse("2026-09-27T12:00:00Z");
@@ -151,6 +151,21 @@ test("X's own trending lists: a cat trend is searched on its own and its posts l
   assert.equal(p.reading.catName, null, "the rules still need the post to name its cat");
   assert.deepEqual([postCount("12.5K posts"), postCount("1,204 posts"), postCount("2M"), postCount(undefined)], [12_500, 1204, 2_000_000, 0]);
   assert.equal(mergeAnswers([{ data: [{ id: "1" }] }, { data: [{ id: "1" }, { id: "2" }] }]).data.length, 2);
+});
+
+test("X reads are budgeted: paced by day within the month, each search asks for few posts, a spent day searches nothing", async () => {
+  const b = readBudget({ month: "2026-09", monthUsed: 900, day: "2026-09-27", dayUsed: 300 }, NOW, 10_000);
+  assert.deepEqual([b.dayCap, b.left], [333, 33], "10,000 over September's 30 days");
+  assert.equal(readBudget({ month: "2026-08", monthUsed: 9_999, day: "2026-08-31", dayUsed: 333 }, NOW).left, 333, "a new day and month start fresh");
+  const f = fakes();
+  const t = await scan({ data: { trending: { posts: [] }, names: new Set() }, creds: CREDS, client: null, fetchImpl: f.fetchImpl, nowMs: NOW });
+  const searches = f.calls.filter((u) => u.startsWith("https://api.x.com/2/tweets/search/recent"));
+  assert.ok(searches.every((u) => Number(new URL(u).searchParams.get("max_results")) <= 30), "at most 30 posts a search");
+  assert.deepEqual([t.reads.dayUsed, t.reads.monthUsed], [answer.data.length, answer.data.length], "what X returned is counted");
+  const spent = fakes();
+  const t2 = await scan({ data: { trending: { ...t, reads: { ...t.reads, dayUsed: 330 } }, names: new Set() }, creds: CREDS, client: null, fetchImpl: spent.fetchImpl, nowMs: NOW, log: () => {} });
+  assert.equal(spent.calls.length, 0, "nothing searched once today's share is spent");
+  assert.deepEqual(t2.candidates, t.candidates, "the last list is kept");
 });
 
 test("trend watch workflow: pinned actions, contents: write for the scan, secrets only in the scan step, the next-run job runs no repository code", async () => {

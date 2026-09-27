@@ -26,6 +26,12 @@
  * sensitive, with a name and ticker. Launching stays a person's decision: the file is
  * the shortlist, each with its kit ready (name, ticker, lore, proof post, picture).
  *
+ * X post reads are budgeted (X counts every post a search returns against the plan's monthly cap, which
+ * the announcer shares): at most READ_BUDGET a month (repository variable TRENDWATCH_MONTHLY_READS),
+ * paced evenly across the days, PER_SEARCH posts per plain search and TREND_PER_SEARCH per trend
+ * search. When today's share is spent the run searches nothing and keeps the last list; the count is
+ * kept in data/trending-cats.json ("reads").
+ *
  * Secrets: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET (search) and, optionally,
  * ANTHROPIC_API_KEY. Without the X keys nothing is searched; without the Anthropic key it runs X-only.
  */
@@ -46,12 +52,26 @@ export const PER_RUN = 5;
 export const KEEP = 400;
 export const MODEL = "claude-opus-5";
 export const TREND_PLACES = [1, 23424977, 23424856]; // worldwide, the US, Japan
-export const TREND_SEARCHES = 3;
+export const TREND_SEARCHES = 2;
+export const READ_BUDGET = 10_000;   // posts a month, leaving room for the announcer on a small plan
+export const PER_SEARCH = 30;        // posts per plain search (X's minimum is 10, its maximum 100)
+export const TREND_PER_SEARCH = 10;  // posts per cat-trend search
+export const EVERY_MINUTES = 180;    // how often it searches (the workflow wakes every 20 minutes)
+
+/** The read budget for the day of nowMs: { day, month, dayCap, monthCap, dayUsed, monthUsed, left }. */
+export function readBudget(reads, nowMs, monthly = READ_BUDGET) {
+  const d = new Date(nowMs), day = d.toISOString().slice(0, 10), month = day.slice(0, 7);
+  const days = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+  const monthUsed = reads?.month === month ? Number(reads.monthUsed) || 0 : 0;
+  const dayUsed = reads?.day === day ? Number(reads.dayUsed) || 0 : 0;
+  const dayCap = Math.floor(monthly / days);
+  return { day, month, dayCap, monthCap: monthly, dayUsed, monthUsed, left: Math.max(0, Math.min(dayCap - dayUsed, monthly - monthUsed)) };
+}
 const NO_COIN_TALK = '-is:retweet -is:reply -"$" -pump -memecoin -solana -"contract address" -airdrop -giveaway';
 const CATTISH = /\b(?:cats?|kitt(?:y|ies|en|ens)|meow\w*|purr\w*|neko|nyan|gato|chat(?:on|te)|katze|kucing|pusa)\b|猫|ねこ|ネコ|にゃ/i;
 
 /** The cat trends among X's trending lists: [{ name, count, where }], at most TREND_SEARCHES, busiest first. */
-export async function catTrends(creds, fetchImpl = fetch) {
+export async function catTrends(creds, fetchImpl = fetch) {  // trend lists are not post reads
   const found = new Map();
   const add = (name, count, where) => {
     const n = String(name || "").replace(/["\u0000-\u001f]/g, "").trim().slice(0, 60);
@@ -190,30 +210,41 @@ export const isCandidate = (p) => p.reading && p.reading.aboutOneCat && !p.readi
  * One run. `data` is { trending (data/trending-cats.json), names (the sanctuary's cat names and tickers, lower-case) };
  * `client` an Anthropic client, or null for X-only mode (the post's words read by rules). Returns the new file content.
  */
-export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Date.now(), log = () => {} }) {
+export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Date.now(), log = () => {}, monthlyReads = READ_BUDGET, perSearch = PER_SEARCH }) {
   const prev = data.trending?.posts || [];
   const seen = new Set(prev.map((p) => p.id));
+  const budget = readBudget(data.trending?.reads, nowMs, monthlyReads);
+  const perPlain = Math.min(100, Math.max(10, Math.round(perSearch)));
+  const reads = { day: budget.day, dayUsed: budget.dayUsed, month: budget.month, monthUsed: budget.monthUsed, monthCap: budget.monthCap, dayCap: budget.dayCap };
+  const spend = (a) => { const n = a?.data?.length || 0; reads.dayUsed += n; reads.monthUsed += n; };
+  const left = () => Math.min(reads.dayCap - reads.dayUsed, reads.monthCap - reads.monthUsed);
+  if (left() < perPlain) {
+    log(`Trend watch: today's X read budget is spent (${reads.dayUsed}/${reads.dayCap} today, ${reads.monthUsed}/${reads.monthCap} this month); nothing searched.`);
+    return { ...data.trending, checkedAt: new Date(nowMs).toISOString(), reads, searchError: null };
+  }
   const trends = await catTrends(creds, fetchImpl);
   const byTrend = new Map();
   const trendAnswers = [];
   for (const tr of trends) {
+    if (left() < perPlain + TREND_PER_SEARCH) break;  // the plain search always keeps its share
     try {
-      const a = await searchRecent(`"${tr.name}" has:media ${NO_COIN_TALK}`, creds, fetchImpl);
+      const a = await searchRecent(`"${tr.name}" has:media ${NO_COIN_TALK}`, creds, fetchImpl, { maxResults: TREND_PER_SEARCH });
+      spend(a);
       for (const t of a?.data || []) if (!byTrend.has(t.id)) byTrend.set(t.id, tr.name);
       trendAnswers.push(a);
     } catch { /* the plain search below still runs */ }
   }
   let answer;
-  try { answer = mergeAnswers([...trendAnswers, await searchRecent(QUERY, creds, fetchImpl)]); }
+  try { const plain = await searchRecent(QUERY, creds, fetchImpl, { maxResults: perPlain }); spend(plain); answer = mergeAnswers([...trendAnswers, plain]); }
   catch (e) {
     log(`X search refused (${e instanceof XError ? `HTTP ${e.status}` : e.message}); keeping the last list. Search needs an X plan whose keys may search (Basic or above).`);
-    return { ...data.trending, checkedAt: new Date(nowMs).toISOString(), trends, searchError: e instanceof XError ? e.status : "unreachable" };
+    return { ...data.trending, checkedAt: new Date(nowMs).toISOString(), trends, reads, searchError: e instanceof XError ? e.status : "unreachable" };
   }
   // A post found through a cat trend is a cat post already; the rest must say cat.
   const fresh = qualify(answer, nowMs).map((p) => (byTrend.has(p.id) ? { ...p, trend: byTrend.get(p.id) } : p))
     .filter((p) => !seen.has(p.id) && (p.trend || detectCat({ name: p.text }).isCat || /猫|ねこ|gato/.test(p.text)))
     .sort((a, b) => (b.trend ? 1 : 0) - (a.trend ? 1 : 0) || b.heat - a.heat);
-  log(`Trend watch: ${trends.length ? `cat trends on X: ${trends.map((t) => t.name).join(", ")}; ` : "no cat trend on X's lists; "}${answer?.data?.length ?? 0} posts searched, ${fresh.length} new ones trending.`);
+  log(`Trend watch: ${trends.length ? `cat trends on X: ${trends.map((t) => t.name).join(", ")}; ` : "no cat trend on X's lists; "}${answer?.data?.length ?? 0} posts searched, ${fresh.length} new ones trending (X reads: ${reads.dayUsed}/${reads.dayCap} today, ${reads.monthUsed}/${reads.monthCap} this month).`);
   const read = [];
   for (const p of fresh.slice(0, PER_RUN)) {
     const reading = client ? await readPost(p, client) : cleanReading(readPostByRules(p));
@@ -228,7 +259,7 @@ export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Dat
   const posts = [...read.filter((r) => r.status !== "unread"), ...prev].sort((a, b) => Date.parse(b.postedAt) - Date.parse(a.postedAt)).slice(0, KEEP);
   return {
     note: "Written by scripts/scan-trending-cats.mjs: cats trending on X, read by rules (X-only) or by Claude (readBy). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). Launching is a person's decision.",
-    checkedAt: new Date(nowMs).toISOString(), trends, searchError: null,
+    checkedAt: new Date(nowMs).toISOString(), trends, reads, searchError: null,
     candidates: posts.filter((p) => p.status === "candidate").map((p) => p.id),
     posts,
   };
@@ -238,12 +269,17 @@ async function main() {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
   const read = (f, d) => { try { return JSON.parse(fs.readFileSync(path.join(root, f), "utf8")); } catch { return d; } };
   const creds = credsFromEnv(process.env);
+  const last = Date.parse(read("data/trending-cats.json", {}).checkedAt);
+  const every = Math.max(20, Number(process.env.TRENDWATCH_EVERY_MINUTES) || EVERY_MINUTES);
+  if (Date.now() - last < (every - 2) * 60_000 && !process.argv.includes("--now")) { console.log(`Trend watch: last searched ${Math.round((Date.now() - last) / 60_000)} min ago; searches every ${every} min.`); return; }
   if (!creds) { console.log("Trend watch: no X secrets; nothing searched."); return; }
   const client = process.env.ANTHROPIC_API_KEY ? new Anthropic() : null;
   if (!client) console.log("Trend watch: X-only mode (no ANTHROPIC_API_KEY): posts are read by rules.");
   const names = new Set([...read("data/planned.json", { cats: [] }).cats, ...read("data/adoptables.json", { cats: [] }).cats]
     .flatMap((c) => [c.name, c.coinName, c.ticker, c.launchTicker]).filter(Boolean).map((s) => String(s).toLowerCase()));
-  const next = await scan({ data: { trending: read("data/trending-cats.json", { posts: [] }), names }, creds, client, log: console.log });
+  const num = (v, d) => (Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : d);
+  const next = await scan({ data: { trending: read("data/trending-cats.json", { posts: [] }), names }, creds, client, log: console.log,
+    monthlyReads: num(process.env.TRENDWATCH_MONTHLY_READS, READ_BUDGET), perSearch: num(process.env.TRENDWATCH_PER_SEARCH, PER_SEARCH) });
   if (process.argv.includes("--dry-run")) { console.log(JSON.stringify(next.candidates)); return; }
   fs.writeFileSync(path.join(root, "data/trending-cats.json"), `${JSON.stringify(next, null, 1)}\n`);
 }
