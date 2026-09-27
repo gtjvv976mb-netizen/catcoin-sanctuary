@@ -1,0 +1,39 @@
+{
+  "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
+  "minGapMinutes": 180,
+  "lastPostedAt": null,
+  "posts": [
+    {
+      "id": "adoptions-found",
+      "text": "🧺 Adopted cats now show up by themselves 🐾\nWhen a visitor launches a cat straight from its Adopt kit, the sanctuary spots it and its card turns Adopted, with its mint 🔍\nAnd we'll cheer every adoption right here 🎉\nhttps://catcoinsanctuary.com/\n#catcoin #CatsOfX",
+      "approved": true,
+      "status": "queued",
+      "postedAt": null,
+      "tweet": null
+    },
+    {
+      "id": "hall-of-fame",
+      "text": "🏆 Have you visited the Hall of Fame? It's out by the fountain ⛲\nLegendary cat coins that already exist, made by others, in the garden as inspiration ✨\nThey aren't ours and they aren't up for adoption, just there to inspire 😼\nhttps://catcoinsanctuary.com/\n#catcoin",
+      "approved": true,
+      "status": "queued",
+      "postedAt": null,
+      "tweet": null
+    },
+    {
+      "id": "copycat-check",
+      "text": "🚩 Copycat check 🚩\nStrangers sometimes launch coins with our cats' names and tickers.\n✅ Only the mint shown on a cat's card is real\n❌ No mint on the card = no coin yet\nAnything else is a copycat. Stay safe 🐾\nhttps://catcoinsanctuary.com/\n#catcoin",
+      "approved": true,
+      "status": "queued",
+      "postedAt": null,
+      "tweet": null
+    }
+  ],
+  "adoptionsPosted": {
+    "NEKOBUS": {
+      "status": "posted",
+      "postedAt": null,
+      "tweet": null,
+      "note": "Posted as a thread from data/thread-adoption-catbus.json on 2026-09-27; its ids are recorded there."
+    }
+  }
+}
