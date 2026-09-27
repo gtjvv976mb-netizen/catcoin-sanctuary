@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-09-27T13:32:53.985Z",
+  "lastPostedAt": "2026-09-27T17:12:54.367Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -25,9 +25,10 @@
       "id": "copycat-check",
       "text": "🚩 Copycat check 🚩\nStrangers sometimes launch coins with our cats' names and tickers.\n✅ Only the mint shown on a cat's card is real\n❌ No mint on the card = no coin yet\nAnything else is a copycat. Stay safe 🐾\nhttps://catcoinsanctuary.com/\n#catcoin",
       "approved": true,
-      "status": "queued",
-      "postedAt": null,
-      "tweet": null
+      "status": "posted",
+      "postedAt": "2026-09-27T17:12:54.367Z",
+      "tweet": "2104257987900785037",
+      "attempts": 1
     }
   ],
   "adoptionsPosted": {
