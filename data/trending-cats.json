@@ -1,16 +1,65 @@
 {
- "note": "Written by scripts/scan-trending-cats.mjs: cats trending on X, read by rules (X-only) or by Claude (readBy). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). Launching is a person's decision.",
- "checkedAt": "2026-09-27T22:15:30.648Z",
+ "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (20k likes or 1M views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. Launching is a person's decision.",
+ "checkedAt": "2026-09-27T23:16:21.523Z",
+ "lens": "big",
+ "query": "(from:elonmusk OR from:cz_binance OR from:VitalikButerin OR from:saylor OR from:aeyakovenko OR from:rajgokal OR from:solana OR from:pumpdotfun OR from:a1lon9 OR from:blknoiz06 OR from:MustStopMurad OR from:frankdegods OR from:cb_doge OR from:DogeDesigner OR from:WatcherGuru) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-09-27",
-  "dayUsed": 70,
+  "dayUsed": 71,
   "month": "2026-09",
-  "monthUsed": 70,
+  "monthUsed": 71,
   "monthCap": 10000,
   "dayCap": 333
  },
  "searchError": null,
  "candidates": [],
- "posts": []
+ "signals": [
+  "2103903040969245011"
+ ],
+ "posts": [
+  {
+   "id": "2103903040969245011",
+   "url": "https://x.com/frankdegods/status/2103903040969245011",
+   "text": "@BitCloutCat 我只是在努力达到大哥哥猫的水平。",
+   "author": {
+    "handle": "frankdegods",
+    "name": "Frank",
+    "followers": 530076
+   },
+   "postedAt": "2026-09-26T17:42:28Z",
+   "likes": 22,
+   "views": 9860,
+   "reposts": 0,
+   "heat": 4,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "frankdegods",
+   "lens": "big",
+   "readAt": "2026-09-27T23:16:21.523Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  }
+ ],
+ "state": {
+  "nextLens": 1,
+  "bigChunk": 1,
+  "figureChunk": 0,
+  "lastLens": "big",
+  "trendSearchedAt": {},
+  "followedUp": {},
+  "names": {}
+ }
 }
