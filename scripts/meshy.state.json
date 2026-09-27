@@ -638,7 +638,7 @@
   "at": "2026-09-26T22:33:41.342Z"
  },
  "CHOCOCACAT#pose2": {
-  "status": "views",
+  "status": "done",
   "action": "rebuild",
   "views_job": "01a0dfcc-10bb-77ab-97c3-b926052b2285",
   "urls": [
@@ -650,7 +650,8 @@
    "01a0dfcc-10bb-77ab-97c3-b926052b2285"
   ],
   "credits": 6,
-  "at": "2026-09-26T22:18:28.738Z"
+  "at": "2026-09-26T22:18:28.738Z",
+  "note": "views still sat upright; superseded by a third set of views (01a0dfcc-885c), which built the model now in use"
  },
  "CHOCOCACAT": {
   "status": "done",
@@ -950,5 +951,318 @@
   ],
   "credits": 15,
   "at": "2026-09-26T23:37:17.645Z"
+ },
+ "JITTERPAW": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0ec-2c9f-71b4-8531-f2c20f94eeb2"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:34:33.711Z"
+ },
+ "PATCHPAW": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0ed-c558-7167-a61b-d461086a4445"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:35:57.105Z"
+ },
+ "RUBYCAT": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0f0-c90a-7179-b44d-428792356ca1"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:39:25.022Z"
+ },
+ "SOCKFOOT": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0f3-556f-7330-925a-2ef5528b60f6"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:41:51.126Z"
+ },
+ "MANEKI": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0f4-720a-76f8-9641-dfa06e5c7c20"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:43:34.782Z"
+ },
+ "JOCKCAT": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0f9-0b85-75a9-aaa6-ffc238c88966",
+   "01a0e0fa-21d7-7158-95f4-ea6e0a03c4b9"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T03:49:04.883Z"
+ },
+ "LATCHKEY": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0fc-a48f-709c-9e94-3ff66241279f"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:52:10.342Z"
+ },
+ "NOTEPAW": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0fd-e40e-7596-9161-b300f575c569"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:53:22.687Z"
+ },
+ "RUSTLEPAW": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e100-9831-7108-b1f3-4f0fcb6bd5a1"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:56:52.722Z"
+ },
+ "TARTANPAW": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e102-33e0-7472-b615-e193bd069ff6"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:58:37.183Z"
+ },
+ "TOMRUTGERS": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e103-cbd7-75d5-87ea-77cd26400f9d"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T04:00:21.310Z"
+ },
+ "WHIRRPAW": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e106-cf0c-7735-b296-1f13d74798ff"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T04:03:39.581Z"
+ },
+ "WINDSOCK": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e108-693b-7178-95b6-a4eff306a7ed"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T04:05:45.057Z"
+ },
+ "PRISMPAW#origuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0ef-0afa-7323-b305-a73c0a77c473"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:37:51.260Z",
+  "note": "kept too much of the old paint or missed the look; redone on a fresh UV layout"
+ },
+ "SAVEPAWS#origuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0f2-3738-75d0-b539-987d3d62596b"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:40:38.333Z",
+  "note": "kept too much of the old paint or missed the look; redone on a fresh UV layout"
+ },
+ "TSUKI#origuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0f6-0655-70d5-b8e7-5554b5032048"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:45:18.628Z",
+  "note": "kept too much of the old paint or missed the look; redone on a fresh UV layout"
+ },
+ "VIBECOIN#origuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0f7-9bce-7741-bf44-9ba2899ca177"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:46:41.796Z",
+  "note": "kept too much of the old paint or missed the look; redone on a fresh UV layout"
+ },
+ "GLINTPAW#origuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0fb-0fae-7219-9ce8-1d933c92ddd7"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:50:48.545Z",
+  "note": "kept too much of the old paint or missed the look; redone on a fresh UV layout"
+ },
+ "PUMICE#origuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e0fe-feb6-7634-bb2d-1877f9aba2ac"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T03:55:07.303Z",
+  "note": "kept too much of the old paint or missed the look; redone on a fresh UV layout"
+ },
+ "TRILLBY#origuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e105-623d-7002-9743-2534a1521fc3"
+  ],
+  "credits": 10,
+  "at": "2026-09-27T04:01:54.752Z",
+  "note": "kept too much of the old paint or missed the look; redone on a fresh UV layout"
+ },
+ "GLINTPAW": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e11b-b256-7406-ba67-41234ceda465",
+   "01a0e11c-f51f-70c8-bc59-6fb0d36493fe"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:27:18.164Z"
+ },
+ "TRILLBY": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e120-925c-758b-9ba5-a693fc81eda5",
+   "01a0e121-d457-7756-8f73-56d658567334"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:32:37.042Z"
+ },
+ "PRISMPAW#freshuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e110-3608-7179-a82b-08835156ac2d",
+   "01a0e111-7a05-7137-87e8-6fbdf1bf39f3"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:14:45.745Z",
+  "note": "fresh UV layout from the prompt still kept the wrong pattern; redone styled from the reference picture"
+ },
+ "SAVEPAWS#freshuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e112-9338-764a-b11a-9a60fe0defd6",
+   "01a0e113-ada0-72c8-8674-b92e772af91e"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:16:59.861Z",
+  "note": "fresh UV layout from the prompt still kept the wrong pattern; redone styled from the reference picture"
+ },
+ "TSUKI#freshuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e114-9f4b-709a-9d5c-027b4a665468",
+   "01a0e117-72a6-70f5-82ca-ebfe05591d3c"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:21:17.260Z",
+  "note": "fresh UV layout from the prompt still kept the wrong pattern; redone styled from the reference picture"
+ },
+ "VIBECOIN#freshuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e118-8cc4-73ba-81a2-762771a8481c",
+   "01a0e11a-9778-7519-89d5-d4978bd86fff"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:24:43.484Z",
+  "note": "fresh UV layout from the prompt still kept the wrong pattern; redone styled from the reference picture"
+ },
+ "PUMICE#freshuv": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e11e-0e58-7561-9eb6-efa11887e00f",
+   "01a0e11f-79cd-70fa-a700-6727ec587527"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:30:03.043Z",
+  "note": "fresh UV layout from the prompt still kept the wrong pattern; redone styled from the reference picture"
+ },
+ "PRISMPAW": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e124-64e6-7039-8bf8-d36a214de8fe",
+   "01a0e125-f8f3-77f0-b88d-acabf3e25683"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:37:09.117Z"
+ },
+ "SAVEPAWS": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e127-1305-7462-8dec-0865846a207b",
+   "01a0e128-2ba3-72ea-8954-b6b859f647fb"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:39:22.788Z"
+ },
+ "TSUKI": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e129-1d72-72d7-a765-a1797005fde2",
+   "01a0e12a-6195-77b7-ba39-e9afea11c053"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:41:58.324Z"
+ },
+ "VIBECOIN": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e12b-7caf-74e5-af77-92a062a96aaf",
+   "01a0e12e-20bc-76bf-8f60-7688b16da55b"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:46:03.701Z"
+ },
+ "PUMICE": {
+  "status": "done",
+  "action": "retexture",
+  "tasks": [
+   "01a0e12f-4f17-75be-ad8f-38a983d6b866",
+   "01a0e130-93a1-7364-9981-cbdcc6f2adc8"
+  ],
+  "credits": 15,
+  "at": "2026-09-27T04:48:43.979Z"
  }
 }
