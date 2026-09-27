@@ -147,6 +147,18 @@ $("about-open").addEventListener("click", () => panels.openAbout());
 $("socials-open").addEventListener("click", () => panels.openSocials());
 fetch("data/socials.json").then((r) => (r.ok ? r.json() : null)).then((j) => j && panels.setConfig(j)).catch(() => {});
 
+/* ── Trending (data/trending.json, refreshed every 20 minutes): loaded when first opened ── */
+let trending = null;
+$("trending-open").addEventListener("click", async () => {
+  if (!trending) {
+    const [{ createTrending }, { shell }] = await Promise.all([import("./trending.js"), import("./panels.js")]);
+    if (!document.getElementById("trend-css")) { const l = document.createElement("link"); l.id = "trend-css"; l.rel = "stylesheet"; l.href = "assets/ui/trending.css"; document.head.append(l); }
+    trending = createTrending({ dialog: $("trending"), shell, catOf: (id) => byId.get(id) || null, onOpenCat: (id) => show(id, { from: $("trending-open") }) });
+    fetch("data/trending.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).then((j) => j && trending.setData(j)).catch(() => {});
+  }
+  trending.open();
+});
+
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && card.isOpen && !document.querySelector("dialog[open]")) { e.preventDefault(); hideCard(); }
   else if ((e.key === "/" || (e.key === "f" && !e.metaKey && !e.ctrlKey)) && document.activeElement === canvas) { e.preventDefault(); finder.open(); }
