@@ -1,4 +1,4 @@
-# Every 20 minutes the chain wakes, and every 3 hours (repository variable TRENDWATCH_EVERY_MINUTES) the research team's trend watch (scripts/scan-trending-cats.mjs): searches X for cats
+# Every 20 minutes the chain wakes, and every hour (repository variable TRENDWATCH_EVERY_MINUTES) the research team's trend watch (scripts/scan-trending-cats.mjs): searches X for cats
 # trending right now, reads each new one (the cat, its name, real / cartoon / fiction, a coin name, ticker
 # and lore line, and whether a coin would be in poor taste; by rules from the X post alone, or by Claude
 # when ANTHROPIC_API_KEY is set), checks the ticker on Solana, and
@@ -7,7 +7,7 @@
 #
 # X counts every post a search returns against the plan's monthly read cap, which the announcer shares:
 # the script reads at most TRENDWATCH_MONTHLY_READS posts a month (default 10000), paced by day, and
-# TRENDWATCH_PER_SEARCH per search (default 30). Set both as repository variables to fit the plan.
+# TRENDWATCH_PER_SEARCH per search (default 10). Set both as repository variables to fit the plan.
 #
 # GitHub often skips scheduled runs, so each run starts the next one itself (as Announce does). To stop
 # the chain, set the repository variable TRENDWATCH_CHAIN to "off" (or disable the workflow).
