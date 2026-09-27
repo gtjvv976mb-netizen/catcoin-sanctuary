@@ -249,8 +249,10 @@ test("page weight: the first view stays within budget", () => {
   // top of each card, data/real-photos.json checked in assets/ui/adoptables.js and drawn by card.js;
   // then to 680 KB for the reworked cat rig, assets/world/catrig.js: legs posed by IK, skin weights
   // blended along the surface; then to 690 KB for the Trending tab, assets/ui/trending.js, loaded
-  // only when it is first opened.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 690 * 1024, "the page's own scripts over 690 KB");
+  // only when it is first opened; then to 695 KB for adopted cats on cards, data/adoptions.json
+  // checked in assets/residents.js and assets/ui/data.js and drawn by card.js, after trimming ~1 KB
+  // of repeated code from card.js: one card body, one portrait, one heading and one row helper.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 695 * 1024, "the page's own scripts over 695 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
@@ -259,7 +261,8 @@ test("page weight: the first view stays within budget", () => {
 
 /* Per card, from the data as shipped (whatever the hourly check has added by now): a cat with no
    proven launch says "Not launched yet" and has nothing to buy; a cat with one says "Launched" and
-   links exactly GMGN and FOMO for its own mint. */
+   links exactly GMGN and FOMO for its own mint; a cat a stranger launched from its kit says
+   "Adopted" (tests/adopted.test.mjs has the rest). */
 const COLLECTION = JSON.parse(read("data/collection.json"));
 const TOKEN_HOSTS = /gmgn\.ai|fomo\.family|solscan\.io|stonkfun\.xyz|pump\.fun|dexscreener\.com|birdeye\.so|jup\.ag|raydium\.io|photon-sol|bullx\.io|axiom\.trade|geckoterminal\.com/;
 
@@ -280,6 +283,11 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
       assert.ok(!/Not launched yet/.test(c.text), r.id);
       for (const l of c.links.filter((a) => TOKEN_HOSTS.test(a.href))) assert.ok(l.href.endsWith(r.token.mint) || l.href.endsWith(r.token.tx), `${r.id}: ${l.href}`);
       assert.equal(badgeFor(r).textContent, "Launched");
+    } else if (r.adoption) {
+      assert.equal(badgeFor(r).textContent, "Adopted", r.id);
+      assert.deepEqual(c.buy, [], `${r.id}: the sanctuary sells no adopted coin`);
+      assert.match(c.section("card-token"), /Adopted by the community/, r.id);
+      assert.ok(!/Not launched yet/.test(c.text), r.id);
     } else {
       assert.equal(r.token.status, "planned", r.id);
       assert.deepEqual(r.buy, [], r.id);
@@ -325,8 +333,9 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
   assert.equal(rows.length, list.length);
   for (const b of rows) {
     const r = list.find((x) => x.id === b.dataset.id);
-    assert.equal(b.querySelector("span.badge").textContent, r.kind === "famous" ? "Hall of Fame" : r.token.status === "launched" ? "Launched" : "Not launched yet", b.dataset.id);
-    assert.equal(b.querySelector("span.find-meta").textContent.includes(`$${r.ticker}`), r.token.status === "launched" || r.kind === "famous", b.dataset.id);
+    assert.equal(b.querySelector("span.badge").textContent, r.kind === "famous" ? "Hall of Fame" : r.token.status === "launched" ? "Launched" : r.adoption ? "Adopted" : "Not launched yet", b.dataset.id);
+    if (r.adoption) assert.ok(b.querySelector("span.find-meta").textContent.includes(`$${r.adoption.symbol}`), b.dataset.id);
+    else assert.equal(b.querySelector("span.find-meta").textContent.includes(`$${r.ticker}`), r.token.status === "launched" || r.kind === "famous", b.dataset.id);
   }
   assert.match(root.querySelector("p.finder-intro").textContent, /adoptable cats so far, each with real, verified lore and no coin yet/);
   // The top bar's Hall of Fame button opens the list on its chip: only the famous coins show.
@@ -538,7 +547,7 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
 });
 
 
-test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' and the fan-tribute line", async () => {
+test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' (or, once a stranger launched it, 'Adopted') and the fan-tribute line", async () => {
   const list = await residents();
   const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
   assert.ok(ADOPT.length >= 25);
@@ -551,7 +560,7 @@ test("adoptable cats: each card shows its category chip, owner, story, X proof, 
     assert.ok(c.text.includes(a.story.slice(0, 40)), `${a.ticker}: story`);
     assert.ok(c.links.some((l) => l.href === a.proof.url && l.text === "View post on X ↗"), `${a.ticker}: X proof`);
     for (const s of a.sources) assert.ok(c.links.some((l) => l.href === new URL(s.url).href), `${a.ticker}: source ${s.url}`);
-    assert.match(c.text, /Not launched yet — adopt it now/);
+    assert.match(c.text, r.adoption ? /Adopted by the community/ : /Not launched yet — adopt it now/, a.ticker);
     assert.match(c.text, /Fan tribute, not affiliated with or endorsed by/);
     assert.equal(/In loving memory/.test(c.text), a.memorial, `${a.ticker}: memorial line`);
     if (a.existingCoin) assert.match(c.text, new RegExp(`A small coin already exists: \\$${a.existingCoin.symbol}`));
@@ -563,7 +572,8 @@ test("adoptable cats: each card shows its category chip, owner, story, X proof, 
       assert.equal(fig.querySelector("figcaption").textContent, a.lore.caption);
     } else assert.equal(fig, null, `${a.ticker}: no lore picture`);
     assert.deepEqual(c.buy, []);
-    assert.ok(!c.links.some((l) => TOKEN_HOSTS.test(l.href)), `${a.ticker}: no token links`);
+    // Token pages only for an adopted cat, and only for its own mint.
+    for (const l of c.links.filter((x) => TOKEN_HOSTS.test(x.href))) assert.ok(r.adoption && l.href.endsWith(`/${r.adoption.mint}`), `${a.ticker}: ${l.href}`);
   }
 });
 

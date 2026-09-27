@@ -11,9 +11,14 @@
  *   volume; the top 25.
  * - fresh: cat coins launched on pump.fun since the last run (its newest-first list, paged back to
  *   the last run, at most 30 minutes and MAX_PAGES pages), kept for a day; their market cap is read
- *   again from DexScreener each run. A coin whose ticker is a sanctuary cat's (key or launchTicker),
- *   or whose name is a sanctuary cat's coin name, is a copycat (unless it is the cat's own launch)
- *   and stays for 7 days, cat-themed or not.
+ *   again from DexScreener each run. A cat's adoption (below) is marked adoptedOf. Any other coin
+ *   whose ticker is a sanctuary cat's (key or launchTicker), or whose name is a sanctuary cat's coin
+ *   name, is a copycat (unless it is the cat's own launch). Both stay for 7 days, cat-themed or not,
+ *   and are listed first.
+ * - adoptions: every launch paged, cat-themed or not, is tested against the cats' Adopt kits
+ *   (scripts/lib/adoptions.mjs); a cat's first launch from its kit is recorded in
+ *   data/adoptions.json, which is checked and written only when it changed. A token picture is
+ *   read (and hashed) only for a launch that carries a kit's name and ticker, briefly.
  * - x: the sanctuary's own posts (data/announced.json, the last 14 days) by likes, reposts,
  *   replies and quotes (GET /2/tweets, one call for up to 100 posts), at most every
  *   X_EVERY_MINUTES: reads are metered on X's plans. Needs the four X secrets; without them, or if X
@@ -21,6 +26,7 @@
  * A source that does not answer leaves its list as it was. The file is checked
  * (assets/ui/trending.js checkTrending) and written only when something changed.
  */
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -28,6 +34,7 @@ import { checkTrending, clean } from "../assets/ui/trending.js";
 import { credsFromEnv, getPosts, XError } from "./lib/x-api.mjs";
 import { detectCat } from "./lib/content-rules/catdetect.mjs";
 import { checkFields } from "./lib/content-rules/content-rules.mjs";
+import { kitsOf, sameKit, matchAdoption, adoptionRecord, adoptionProblem, mergeAdoptions, checkAdoptions, NOTE as ADOPTIONS_NOTE } from "./lib/adoptions.mjs";
 
 export const DS_BATCH = 30;
 export const PAGE = 50;
@@ -36,6 +43,8 @@ export const FRESH_HOURS = 24;
 export const COPYCAT_DAYS = 7;
 export const X_EVERY_MINUTES = 180;
 export const X_DAYS = 14;
+export const IMAGE_MAX_BYTES = 4 * 1024 * 1024;
+export const IMAGE_TIMEOUT_MS = 6000;
 const TOP = 25, FRESH_MAX = 60, KEEP_MAX = 400, X_TOP = 15;
 const iso = (ms) => new Date(ms).toISOString().replace(/\.\d{3}Z$/, "Z");
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -67,17 +76,15 @@ const norm = (s) => String(s || "").normalize("NFKD").toLowerCase().replace(/[^a
 
 /** What a copycat is matched against: every sanctuary cat's tickers and coin name. */
 export function catIndex({ planned = { cats: [] }, adoptables = { cats: [] }, collection = { cats: [] } }) {
-  const tickers = new Map(), names = new Map(), ours = new Set((collection.cats || []).map((c) => c.mint)), watch = [];
+  const tickers = new Map(), names = new Map(), ours = new Set((collection.cats || []).map((c) => c.mint));
   for (const c of planned.cats || []) if (c.ticker) tickers.set(c.ticker.toUpperCase(), c.ticker);
   for (const c of adoptables.cats || []) {
     tickers.set(c.ticker.toUpperCase(), c.ticker);
     if (c.launchTicker) tickers.set(c.launchTicker.toUpperCase(), c.ticker);
     // A cat's coin name only when it is distinctive enough not to catch every "Luna" or "Felix".
     if (norm(c.coinName).length >= 6 && norm(c.coinName) !== norm(c.name)) names.set(norm(c.coinName), c.ticker);
-    const e = c.existingCoin;
-    if (e?.contract && [c.ticker, c.launchTicker].includes(String(e.symbol).toUpperCase())) watch.push({ mint: e.contract, symbol: e.symbol, name: c.coinName, key: c.ticker });
   }
-  return { tickers, names, ours, watch };
+  return { tickers, names, ours };
 }
 
 /** The sanctuary cat this coin copies (its key), or null. */
@@ -145,42 +152,98 @@ export async function pumpLaunches(fetchImpl, sinceMs, { pause = 400 } = {}) {
   return answered ? [...seen.values()] : null;
 }
 
-/** New on pump.fun: last run's list, plus the cat coins and copycats launched since, their market caps read again. */
-export async function fresh({ prev, idx, fetchImpl, nowMs, pause }) {
+/* ── Adoptions: launches from a cat's own Adopt kit ──────────────────────────────────────── */
+
+/** The sha256 of a launch's picture, or null: https only, at most IMAGE_MAX_BYTES, given up after IMAGE_TIMEOUT_MS (IPFS gateways are slow). */
+/** At most this many token pictures are read a run (IPFS gateways are slow). */
+export const IMAGE_READS = 3;
+
+export async function imageSha256(fetchImpl, url) {
+  if (!/^https:\/\/\S+$/.test(String(url ?? ""))) return null;
+  try {
+    const res = await fetchImpl(url, { signal: AbortSignal.timeout(IMAGE_TIMEOUT_MS), headers: { "user-agent": "catcoinsanctuary.com trending" } });
+    if (!res.ok || Number(res.headers?.get("content-length")) > IMAGE_MAX_BYTES) return null;
+    const buf = Buffer.from(await res.arrayBuffer());
+    return buf.length && buf.length <= IMAGE_MAX_BYTES ? crypto.createHash("sha256").update(buf).digest("hex") : null;
+  } catch { return null; }
+}
+
+/**
+ * The launches that are a cat's adoption, as data/adoptions.json records (mergeAdoptions keeps the
+ * earliest per cat). A picture is read only for a launch with a kit's name and ticker, and not for
+ * a cat already `adopted`: a later launch of its kit is a copycat whatever it carries.
+ */
+export async function adoptionsIn(launched, { kits, collectionMints, ownerWallets, adopted = new Set(), fetchImpl, foundAt, log = () => {} }) {
+  const out = [], taken = new Set(adopted), shas = new Map();
+  let reads = 0;
+  // Oldest first, so the earliest launch of a kit is tried (and takes the cat) before its copies.
+  for (const c of [...launched].sort((a, b) => Number(a.created_timestamp) - Number(b.created_timestamp))) {
+    const same = sameKit(c, kits).filter((k) => !taken.has(k.key));
+    if (!same.length) continue;
+    const opts = { collectionMints, ownerWallets };
+    let m = matchAdoption(c, kits, opts);
+    // The picture only when nothing else in the launch matches its kit: once per image, IMAGE_READS a run.
+    if (!m && same.some((k) => k.tokenSha256) && c.image_uri) {
+      if (!shas.has(c.image_uri) && reads < IMAGE_READS) { reads += 1; shas.set(c.image_uri, await imageSha256(fetchImpl, c.image_uri)); }
+      const sha = shas.get(c.image_uri);
+      if (sha) m = matchAdoption({ ...c, imageSha256: sha }, kits, opts);
+    }
+    if (!m || taken.has(m.key)) continue;
+    const rec = adoptionRecord(c, m, { launchpad: "pump.fun", foundAt });
+    const problem = adoptionProblem(rec);
+    if (problem) { log(`Not recorded as an adoption: ${problem}.`); continue; }
+    out.push(rec);
+    taken.add(m.key);
+  }
+  return out;
+}
+
+/* ── New on pump.fun ─────────────────────────────────────────────────────────────────────── */
+
+/**
+ * New on pump.fun: last run's list, plus the cat coins, adoptions and copycats launched since, their
+ * market caps read again. `adopt` is { kits, collectionMints, ownerWallets, adoptions } (the records so far);
+ * returns the records with any new adoption too.
+ */
+export async function fresh({ prev, idx, adopt, fetchImpl, nowMs, pause, log }) {
   const since = Math.max(Date.parse(prev?.updatedAt ?? 0) || 0, nowMs - 30 * 60_000) - 60_000;
   const launched = await pumpLaunches(fetchImpl, since, { pause });
-  // Last run's coins, their copycat mark checked again (a cat's ticker may have changed since).
-  const byMint = new Map((prev?.all || prev?.items || []).map(({ count, ...r }) => [r.mint, { ...r, copycatOf: copycatOf(r, idx) }]));
+  // Every launch against the kits, cat-themed or not: a cat's first launch from its own kit is its adoption.
+  const found = await adoptionsIn(launched || [], { ...adopt, adopted: new Set(adopt.adoptions.map((a) => a.key)), fetchImpl, foundAt: iso(nowMs), log });
+  const adoptions = mergeAdoptions(adopt.adoptions, found);
+  const adoptedBy = new Map(adoptions.map((a) => [a.mint, a.key]));
+  const mark = (r) => (adoptedBy.has(r.mint) ? { adoptedOf: adoptedBy.get(r.mint) } : { copycatOf: copycatOf(r, idx) });
+  // Last run's coins, marked again (a cat's ticker may have changed since).
+  const byMint = new Map((prev?.all || prev?.items || []).map(({ mint, name, symbol, createdAt, marketCapUsd }) => [mint, { mint, name, symbol, createdAt, marketCapUsd, ...mark({ mint, name, symbol }) }]));
   for (const c of launched || []) {
-    const copy = copycatOf({ mint: c.mint, name: c.name, symbol: c.symbol }, idx);
-    if (!copy && (!isCatCoin(c.name, c.symbol) || crude(c.name, c.symbol))) continue;
+    const m = mark({ mint: c.mint, name: c.name, symbol: c.symbol });
+    if (!m.adoptedOf && !m.copycatOf && (!isCatCoin(c.name, c.symbol) || crude(c.name, c.symbol))) continue;
     byMint.set(c.mint, { mint: c.mint, name: clean(c.name, 40), symbol: clean(c.symbol, 16), createdAt: iso(num(c.created_timestamp)),
-      marketCapUsd: num(c.usd_market_cap) == null ? null : Math.round(num(c.usd_market_cap)), copycatOf: copy });
+      marketCapUsd: num(c.usd_market_cap) == null ? null : Math.round(num(c.usd_market_cap)), ...m });
   }
-  // A copycat recorded by hand (a cat's existingCoin that took its ticker) joins the list with its pair's start time.
-  const watch = idx.watch.filter((w) => !byMint.has(w.mint));
-  if (watch.length) {
-    const f = await dexFigures(fetchImpl, "solana", watch, { pause });
-    for (const w of watch) { const d = f.get(w.mint); if (d?.createdAtMs) byMint.set(w.mint, { mint: w.mint, name: clean(d.name || w.name, 40), symbol: clean(d.symbol || w.symbol, 16), createdAt: iso(d.createdAtMs), marketCapUsd: d.marketCapUsd == null ? null : Math.round(d.marketCapUsd), copycatOf: w.key }); }
-  }
-  const live = [...byMint.values()].filter((r) => nowMs - Date.parse(r.createdAt) <= (r.copycatOf ? COPYCAT_DAYS * 24 : FRESH_HOURS) * 3600_000);
-  // Every copycat, and the newest KEEP_MAX other cat coins (thousands launch a day).
-  const keep = [...live.filter((r) => r.copycatOf), ...live.filter((r) => !r.copycatOf).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)).slice(0, KEEP_MAX)];
+  // A recorded adoption on pump.fun is listed for its first week even if no run saw it launch.
+  for (const a of adoptions) if (a.launchpad === "pump.fun" && !byMint.has(a.mint)) byMint.set(a.mint, { mint: a.mint, name: clean(a.name, 40), symbol: clean(a.symbol, 16), createdAt: a.createdAt, marketCapUsd: null, adoptedOf: a.key });
+  const marked = (r) => !!(r.adoptedOf || r.copycatOf);
+  const live = [...byMint.values()].filter((r) => nowMs - Date.parse(r.createdAt) <= (marked(r) ? COPYCAT_DAYS * 24 : FRESH_HOURS) * 3600_000);
+  // Every adoption and copycat, and the newest KEEP_MAX other cat coins (thousands launch a day).
+  const keep = [...live.filter(marked), ...live.filter((r) => !marked(r)).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)).slice(0, KEEP_MAX)];
   // The same name and ticker launched over and over (spam) is one row: the biggest, with how many there are.
+  // An adoption is always a row of its own: its kit's later launches are copycats.
   const groups = new Map();
   for (const r of keep) {
-    const k = `${norm(r.name)}|${String(r.symbol).toUpperCase()}`;
+    const k = r.adoptedOf ? `adopted|${r.mint}` : `${norm(r.name)}|${String(r.symbol).toUpperCase()}`;
     const g = groups.get(k);
     if (!g) { groups.set(k, { ...r, count: 1 }); continue; }
     g.count += 1;
     if ((r.marketCapUsd || 0) > (g.marketCapUsd || 0)) Object.assign(g, { ...r, count: g.count });
   }
-  // Copycats first (they matter most), then the newest; the rows shown get today's market cap.
-  const rows = [...groups.values()].sort((a, b) => (!!b.copycatOf - !!a.copycatOf) || Date.parse(b.createdAt) - Date.parse(a.createdAt)).slice(0, FRESH_MAX);
+  // Adoptions, then copycats (they matter most), then the newest; the rows shown get today's market cap.
+  const rank = (r) => (r.adoptedOf ? 2 : r.copycatOf ? 1 : 0);
+  const rows = [...groups.values()].sort((a, b) => rank(b) - rank(a) || Date.parse(b.createdAt) - Date.parse(a.createdAt)).slice(0, FRESH_MAX);
   const f = await dexFigures(fetchImpl, "solana", rows, { pause });
   const byKeep = new Map(keep.map((r) => [r.mint, r]));
   for (const r of rows) { const d = f.get(r.mint); if (d?.marketCapUsd != null) { r.marketCapUsd = Math.round(d.marketCapUsd); byKeep.get(r.mint).marketCapUsd = r.marketCapUsd; } }
-  return { items: rows, all: keep, answered: launched !== null };
+  return { items: rows, all: keep, answered: launched !== null, adoptions };
 }
 
 /** Hot on X: the sanctuary's posts of the last X_DAYS by engagement, or { status } when X was not asked or refused. */
@@ -204,41 +267,71 @@ export async function xPosts({ prev, announced, creds, fetchImpl, nowMs, names }
   return { status: "ok", items: items.sort((a, b) => score(b) - score(a) || Date.parse(b.postedAt) - Date.parse(a.postedAt)).slice(0, X_TOP) };
 }
 
-/** One build. `data` is every input file's content; returns the new data/trending.json. */
-export async function buildTrending({ data, env = {}, fetchImpl = (...a) => globalThis.fetch(...a), nowMs = Date.now(), pause = 300 }) {
+/**
+ * One build. `data` is every input file's content (data.kits: assets/kits/kits.json; data.adoptions
+ * and data.wallets may be missing); returns { trending, adoptions }: the new data/trending.json and
+ * data/adoptions.json.
+ */
+export async function buildTrending({ data, env = {}, fetchImpl = (...a) => globalThis.fetch(...a), nowMs = Date.now(), pause = 300, log = () => {} }) {
   const prev = data.trending || {};
   const at = iso(nowMs);
   const idx = catIndex(data);
   const names = new Map([...(data.planned.cats || []).map((c) => [c.ticker, c.name]), ...(data.adoptables.cats || []).map((c) => [c.ticker, c.name])]);
+  const adopt = {
+    kits: kitsOf({ planned: data.planned, adoptables: data.adoptables, kits: data.kits }), collectionMints: (data.collection.cats || []).map((c) => c.mint),
+    ownerWallets: (data.wallets?.launchers || []).map((w) => w.address), adoptions: data.adoptions?.adoptions || [],
+  };
   const act = await activity({ famous: data.famous, collection: data.collection, fetchImpl, pause });
-  const fr = await fresh({ prev: prev.fresh, idx, fetchImpl, nowMs, pause });
+  const fr = await fresh({ prev: prev.fresh, idx, adopt, fetchImpl, nowMs, pause, log });
   const x = await xPosts({ prev: prev.x?.status === "ok" ? prev.x : null, announced: data.announced, creds: credsFromEnv(env), fetchImpl, nowMs, names });
+  const row = ({ mint, name, symbol, createdAt, marketCapUsd, copycatOf, adoptedOf }) => ({ mint, name, symbol, createdAt, marketCapUsd, ...(adoptedOf ? { adoptedOf } : { copycatOf }) });
   return {
-    note: "Written by scripts/build-trending.mjs every 20 minutes; read by the Trending tab (assets/ui/trending.js). Names and tickers under fresh were typed by strangers.",
-    updatedAt: at,
-    activity: act ? { updatedAt: at, items: act } : prev.activity ?? { updatedAt: null, items: [] },
-    fresh: fr.answered || fr.items.length ? { updatedAt: fr.answered ? at : prev.fresh?.updatedAt ?? null, items: fr.items, all: fr.all.map(({ mint, name, symbol, createdAt, marketCapUsd, copycatOf }) => ({ mint, name, symbol, createdAt, marketCapUsd, copycatOf })) } : prev.fresh ?? { updatedAt: null, items: [] },
-    x: x === null ? prev.x : x.items ? { updatedAt: at, status: x.status, items: x.items } : { updatedAt: prev.x?.updatedAt ?? null, status: x.status, items: prev.x?.items ?? [] },
+    trending: {
+      note: "Written by scripts/build-trending.mjs every 20 minutes; read by the Trending tab (assets/ui/trending.js). Names and tickers under fresh were typed by strangers.",
+      updatedAt: at,
+      activity: act ? { updatedAt: at, items: act } : prev.activity ?? { updatedAt: null, items: [] },
+      fresh: fr.answered || fr.items.length ? { updatedAt: fr.answered ? at : prev.fresh?.updatedAt ?? null, items: fr.items, all: fr.all.map(row) } : prev.fresh ?? { updatedAt: null, items: [] },
+      x: x === null ? prev.x : x.items ? { updatedAt: at, status: x.status, items: x.items } : { updatedAt: prev.x?.updatedAt ?? null, status: x.status, items: prev.x?.items ?? [] },
+    },
+    adoptions: { note: typeof data.adoptions?.note === "string" && data.adoptions.note.trim() ? data.adoptions.note : ADOPTIONS_NOTE, adoptions: fr.adoptions },
   };
 }
 
 async function main() {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
   const read = (f, d) => { try { return JSON.parse(fs.readFileSync(path.join(root, f), "utf8")); } catch { return d; } };
+  // The adoptions are a record: a file that is there but unreadable stops the run rather than being started again.
+  let adoptions = { note: ADOPTIONS_NOTE, adoptions: [] };
+  try { adoptions = JSON.parse(fs.readFileSync(path.join(root, "data/adoptions.json"), "utf8")); } catch (e) {
+    if (e.code !== "ENOENT") { console.error("Nothing written: data/adoptions.json is not readable JSON."); process.exitCode = 1; return; }
+  }
+  const before = checkAdoptions(adoptions);
+  if (before.length) { console.error(`Nothing written: data/adoptions.json does not pass its check (${before[0]}).`); process.exitCode = 1; return; }
   const data = {
     famous: read("data/famous.json", { coins: [] }), collection: read("data/collection.json", { cats: [] }), planned: read("data/planned.json", { cats: [] }),
     adoptables: read("data/adoptables.json", { cats: [] }), announced: read("data/announced.json", { cats: {} }), trending: read("data/trending.json", {}),
+    kits: read("assets/kits/kits.json", null), wallets: read("data/wallets.json", { launchers: [] }), adoptions,
   };
-  const next = await buildTrending({ data, env: process.env });
+  const { trending: next, adoptions: nextAdoptions } = await buildTrending({ data, env: process.env, log: (m) => console.log(m) });
   const checked = checkTrending(next);
   for (const k of ["activity", "fresh", "x"]) if ((next[k]?.items || []).length !== checked[k].items.length) {
     console.error(`data/trending.json not written: ${k} has rows the page would refuse.`);
     process.exitCode = 1;
     return;
   }
-  console.log(`Trending: ${next.activity.items.length} movers, ${next.fresh.items.length} new cat coins (${next.fresh.items.filter((r) => r.copycatOf).length} copycats), X ${next.x?.status ?? "not asked"} (${next.x?.items?.length ?? 0} posts).`);
+  const problems = checkAdoptions(nextAdoptions);
+  if (problems.length) {
+    console.error(`Nothing written: data/adoptions.json would not pass its check (${problems[0]}).`);
+    process.exitCode = 1;
+    return;
+  }
+  const added = nextAdoptions.adoptions.filter((a) => !adoptions.adoptions.some((b) => b.mint === a.mint));
+  const rows = next.fresh.items;
+  console.log(`Trending: ${next.activity.items.length} movers, ${rows.length} new cat coins (${rows.filter((r) => r.adoptedOf).length} adoptions, ${rows.filter((r) => r.copycatOf).length} copycats), X ${next.x?.status ?? "not asked"} (${next.x?.items?.length ?? 0} posts).`);
+  for (const a of added) console.log(`New adoption: ${a.key} as ${a.name} ($${a.symbol}), ${a.mint}, launched ${a.createdAt} by ${a.creator} (${a.evidence.join(", ")}).`);
   if (process.argv.includes("--dry-run")) return;
   fs.writeFileSync(path.join(root, "data/trending.json"), `${JSON.stringify(next, null, 1)}\n`);
+  if (JSON.stringify(nextAdoptions) !== JSON.stringify(adoptions)) fs.writeFileSync(path.join(root, "data/adoptions.json"), `${JSON.stringify(nextAdoptions, null, 2)}\n`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) main();
