@@ -160,7 +160,7 @@ test("OAuth 1.0a header is well formed and deterministic for a fixed nonce and t
   assert.match(h, /oauth_signature_method="HMAC-SHA1"/);
 });
 
-test("announce workflow: pinned actions, push on planned.json + every 20 min, contents: write only, X secrets only in the posting step", () => {
+test("announce workflow: pinned actions, push on planned.json + every 20 min, contents: write for posting, actions: write only for the next-run job, X secrets only in the posting step", () => {
   const W = fs.readFileSync(path.join(ROOT, ".github/workflows/announce.yml"), "utf8");
   const uses = [...W.matchAll(/uses:\s*(\S+)\s*#\s*(\S+)/g)].map((m) => `${m[1]} ${m[2]}`);
   assert.deepEqual(uses, ["actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 v7.0.1", "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 v7.0.0"]);
@@ -168,7 +168,13 @@ test("announce workflow: pinned actions, push on planned.json + every 20 min, co
   assert.match(W, /cron: "\*\/20 \* \* \* \*"/);
   assert.match(W, /^permissions: \{\}$/m);
   const perms = [...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim());
-  assert.deepEqual(perms, ["contents: write"]);
+  assert.deepEqual(perms, ["contents: write", "actions: write"]);
+  // The next-run job runs no code of the repository's: no checkout, no node, no secrets.
+  const next = W.slice(W.indexOf("\n  next:"));
+  assert.match(next, /needs: announce/);
+  assert.match(next, /gh workflow run announce\.yml/);
+  assert.match(next, /vars\.ANNOUNCE_CHAIN != 'off'/);
+  assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(next), "the next job runs repository code or sees a secret");
   assert.match(W, /persist-credentials: false/);
   const steps = W.split(/\n      - /);
   const withSecrets = steps.filter((s) => /secrets\./.test(s));
