@@ -29,6 +29,7 @@ import { buildResearch } from "./research.js";
 import { createSanctuary } from "./cats.js";
 import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
+import { traitsOf, styleOf } from "./traits.js";
 import { HOUSE, GARDEN, MEADOW, HALL_OF_FAME, BRIDGES, EASEL, groundHeight } from "./layout.js";
 import { modelIdFor } from "../ui/models.js";
 
@@ -200,7 +201,13 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   let saved = null; // the view before the first cat was chosen, to go back to
   let hovered = null, hoverQueued = null;
   const coats = new Map(residents.map((r, i) => [r.id, coatFor(r, i)]));
-  const simOf = (r) => ({ id: r.id, name: r.name, tier: r.tier, model: coats.get(r.id).ginger ? "ginger" : "cat" });
+  // Each cat's character (traits.js: from data/traits.json, else read from its story) and the way
+  // it moves because of it (its style: tempo, stride, tail and head carriage, size); the sim and
+  // the herd both use them. A cat whose traits can't be read is an ordinary adult.
+  const character = new Map(residents.map((r) => {
+    try { const traits = traitsOf(r); return [r.id, { traits, style: styleOf(traits) }]; } catch { return [r.id, { traits: null, style: null }]; }
+  }));
+  const simOf = (r) => ({ id: r.id, name: r.name, tier: r.tier, model: coats.get(r.id).ginger ? "ginger" : "cat", traits: character.get(r.id).traits, style: character.get(r.id).style });
   const mainResidents = residents.filter((r) => !livesInHall(r)).map(simOf);
   // The Hall of Fame cats, biggest first, so the biggest sit nearest the fountain.
   const meadowResidents = residents.filter(livesInHall).sort((a, b) => (b.market?.marketCapUsd || 0) - (a.market?.marketCapUsd || 0)).map(simOf);
@@ -221,14 +228,14 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     yarns: garden0.yarns, nav: garden0.nav,
     byId: (id) => garden0.byId(id) || meadow.byId(id),
     update(dt) { garden0.update(dt); meadow.update(dt); },
-    setViewer(x, z) { garden0.setViewer(x, z); },
+    setViewer(x, z, y) { garden0.setViewer(x, z, y); },
     setReduced(on) { garden0.setReduced(on); meadow.setReduced(on); },
     get time() { return garden0.time; },
     census() { return { ...garden0.census(), ...meadow.census() }; },
     force: (...a) => garden0.force(...a),
   };
   // On phones the cats don't cast into the shadow map (the most costly pass there); each gets a soft blob shadow instead.
-  const herd = new CatHerd(scene, models, sim, coats, { blobShadows: q.tier === "low", contact: true });
+  const herd = new CatHerd(scene, models, sim, coats, { blobShadows: q.tier === "low", contact: true, character });
   herd.still = still;
   herd.camera = camera;
   const byId = new Map(residents.map((r) => [r.id, r]));
@@ -603,7 +610,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     if (!still && !controls.autoRotate && !chosenId && performance.now() - lastInput > 20000) controls.autoRotate = true;
     if (!still) ambientTime += real;
     ambient.update(ambientTime, canvas.clientHeight, camera.aspect, renderer.getPixelRatio());
-    sim.setViewer(camera.position.x, camera.position.z);
+    sim.setViewer(camera.position.x, camera.position.z, camera.position.y); // (a cat looking at you looks up at the camera)
     meadow.setFocus(controls.target.x, controls.target.z, camera.position.x, camera.position.z);
     for (let k = 0; k < steps; k++) { critters.update(dt, still); if (!still) sim.update(dt); }
     if (still) meadow.update(0); // still: nothing moves, but the cats near the view still appear

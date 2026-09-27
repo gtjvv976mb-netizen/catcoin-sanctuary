@@ -248,8 +248,11 @@ test("page weight: the first view stays within budget", () => {
   // now uses three's mergeGeometries instead of its own copy; then to 661 KB for the real photo at the
   // top of each card, data/real-photos.json checked in assets/ui/adoptables.js and drawn by card.js;
   // then to 680 KB for the reworked cat rig, assets/world/catrig.js: legs posed by IK, skin weights
-  // blended along the surface.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 680 * 1024, "the page's own scripts over 680 KB");
+  // blended along the surface; then, 2026-09-27, to 940 KB for cats that move like real cats: the
+  // shared motion vocabulary (world/catmotion.js), each cat's character (world/traits.js), transition
+  // and mannerism clips (catrig.js), a sim that never jumps between postures (cats.js, meadow.js) and
+  // an animation controller with head, spine, tail and breathing layers (catviews.js); 860 KB then.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 940 * 1024, "the page's own scripts over 940 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
