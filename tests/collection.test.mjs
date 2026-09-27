@@ -381,13 +381,14 @@ test("famous coins: the daily refresh takes DexScreener's pair figures and CoinG
     if (u.hostname === "api.coingecko.com") return new Response(JSON.stringify([{ id: popcat.coingeckoId, market_cap: 58_000_000, total_volume: 1e6 }]), { status: 200 });
     return new Response("[]", { status: 200 });
   };
-  const now = Date.parse("2026-09-27T05:41:00Z");
+  // After every figure in the file: the daily refresh keeps moving the kept coins' measuredAt forward.
+  const now = Math.max(Date.parse("2026-09-27T05:41:00Z"), ...data.coins.map((c) => Date.parse(c.market?.measuredAt) || 0)) + 60_000;
   const r = await refreshFamous({ data, fetchImpl, nowMs: now, pause: 0 });
   const p = r.data.coins.find((c) => c.id === popcat.id);
   assert.equal(p.market.marketCapUsd, 58_000_000, "CoinGecko's circulating market cap");
   assert.equal(p.market.volume24hUsd, 900_100, "volume summed over its pairs");
   assert.equal(p.market.source, "coingecko");
-  assert.equal(p.market.measuredAt, "2026-09-27T05:41:00Z");
+  assert.equal(p.market.measuredAt, new Date(now).toISOString().replace(/\.\d{3}Z$/, "Z"));
   assert.equal(p.tier, popcat.tier, "the refresh never moves a coin");
   assert.ok(r.kept.includes(cash.id), "a coin no source answered for keeps its figures");
   assert.deepEqual(r.data.coins.find((c) => c.id === cash.id).market, cash.market);
