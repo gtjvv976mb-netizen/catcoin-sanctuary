@@ -5,8 +5,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { ROOT } from "./helpers.mjs";
-import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft } from "../scripts/announce.mjs";
+import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft, releasesFile, PAUSED_REASON } from "../scripts/announce.mjs";
 import { oauthHeader } from "../scripts/lib/x-api.mjs";
+import { hiddenByQueue } from "../assets/residents.js";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
 const PLANNED = read("data/planned.json");
@@ -280,6 +281,36 @@ test("release: not while the roster lasts; held, unapproved or incomplete cats w
   r = await run({ root: s.dir, env: {}, ...quiet });
   assert.equal(r.released, undefined);
   assert.deepEqual(s.read("releases.json").hidden, [keys[3]]);
+});
+
+test("release: queueing an adoptable held only because announcing is paused releases it; shown: true cats are never hidden", async () => {
+  const keys = PLANNED.cats.filter((c) => c.proof?.url).slice(0, 4).map((c) => c.ticker);
+  let s = releaseSandbox({ queueKeys: [keys[3]], announced: { [keys[3]]: { status: "held", reason: PAUSED_REASON } } });
+  let r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
+  assert.deepEqual(r.posted.map((p) => p.key), [keys[3]]);
+  assert.equal(r.released, keys[3]);
+  // Any other hold still holds.
+  s = releaseSandbox({ queueKeys: [keys[3]], announced: { [keys[3]]: { status: "held", reason: "proof does not show or name a cat" } } });
+  r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX(), ...quiet });
+  assert.equal(r.posted.length, 0);
+  const rel = releasesFile({ cats: [{ key: "A", approved: true }, { key: "B", approved: true, shown: true }, { key: "C", status: "released", releasedAt: "2026-09-27T00:00:00Z" }] }, "now");
+  assert.deepEqual(rel.hidden, ["A"]);
+  assert.deepEqual([...hiddenByQueue({ cats: [{ key: "A" }, { key: "B", shown: true }, { key: "C", status: "released" }] })], ["A"]);
+});
+
+test("adoptable cats: the lore picture object gives the portrait path", () => {
+  const [c] = listCats({ stocks: [], cats: [] }, { cats: [] }, { cats: [{ ticker: "LOREOBJ", name: "L", lore: { image: "assets/lore/LOREOBJ.webp", caption: "c" } }] });
+  assert.equal(c.portrait, "assets/lore/LOREOBJ.webp");
+  assert.deepEqual(readiness(c, { root: ROOT, kits: {} }).includes("portrait"), true);
+});
+
+test("shipped release queue: approved adoptable cats held as paused, all shown (the site keeps showing them)", () => {
+  const q = read("data/release-queue.json");
+  const ann = read("data/announced.json").cats;
+  for (const e of q.cats.filter((e) => e.status !== "released")) {
+    assert.equal(e.shown, true, e.key);
+    assert.ok(["held", "posting", "posted", "failed", "needs_review"].includes(ann[e.key]?.status) || !ann[e.key], e.key);
+  }
 });
 
 test("the shipped release queue and releases file are well formed", () => {
