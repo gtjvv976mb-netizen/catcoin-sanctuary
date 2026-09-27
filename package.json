@@ -15,5 +15,8 @@
     "scout:status": "node scripts/research-status.mjs",
     "scout:review": "node scripts/research-status.mjs --review"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0"
+  }
 }

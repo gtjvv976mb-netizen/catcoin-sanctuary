@@ -90,3 +90,16 @@ export async function getLatestOwnPostId(userId, creds, fetchImpl = fetch) {
 export async function getPosts(ids, creds, fetchImpl = fetch) {
   return call(fetchImpl, "GET", `https://api.x.com/2/tweets?ids=${ids.slice(0, 100).map(encodeURIComponent).join(",")}&tweet.fields=public_metrics`, creds);
 }
+
+/** Recent posts (last 7 days) matching a search query, with their figures, media and authors
+ *  (GET /2/tweets/search/recent; needs an X plan whose keys may search, Basic or above). */
+export async function searchRecent(query, creds, fetchImpl = fetch, { maxResults = 100, sort = "relevancy" } = {}) {
+  const q = new URLSearchParams({
+    query, max_results: String(maxResults), sort_order: sort,
+    "tweet.fields": "public_metrics,created_at,author_id,attachments,lang,possibly_sensitive",
+    expansions: "attachments.media_keys,author_id",
+    "media.fields": "type,url,preview_image_url,width,height",
+    "user.fields": "username,name,public_metrics",
+  });
+  return call(fetchImpl, "GET", `https://api.x.com/2/tweets/search/recent?${q}`, creds);
+}

@@ -15,7 +15,9 @@ const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
 const SHIPPED = read("data/updates.json");
 // Catbus's adoption went out as a thread (data/thread-adoption-catbus.json), so it is shipped as posted;
 // the runs below start from before that, to exercise the adoption post.
-const UPDATES = { ...SHIPPED, adoptionsPosted: {} };
+// The bot records its posts in the shipped file, so the runs below start from a fresh copy of the queue.
+const UPDATES = { ...SHIPPED, lastPostedAt: null, adoptionsPosted: {},
+  posts: SHIPPED.posts.map(({ id, text, image, approved }) => ({ id, text, ...(image ? { image } : {}), approved, status: "queued", postedAt: null, tweet: null })) };
 const ADOPTIONS = read("data/adoptions.json");
 const ADOPTABLES = read("data/adoptables.json");
 const COLLECTION = read("data/collection.json");
@@ -323,5 +325,5 @@ test("announce workflow: post-updates.mjs runs in the one step with the X secret
   assert.deepEqual(step({}), { code: 0, ran: ["post-thread.mjs", "announce.mjs", "post-updates.mjs"] });
   assert.deepEqual(step({ FAIL_ANNOUNCE: "3" }), { code: 3, ran: ["post-thread.mjs", "announce.mjs", "post-updates.mjs"] });
   assert.deepEqual(step({ FAIL_UPDATES: "1" }), { code: 1, ran: ["post-thread.mjs", "announce.mjs", "post-updates.mjs"] });
-  assert.deepEqual(step({ FAIL_THREAD: "2" }), { code: 2, ran: ["post-thread.mjs", "post-updates.mjs"] });
+  assert.deepEqual(step({ FAIL_THREAD: "2" }), { code: 2, ran: ["post-thread.mjs", "announce.mjs", "post-updates.mjs"] }, "a refused thread never holds up the cats");
 });

@@ -66,7 +66,9 @@ jobs:
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
         run: |
           status=0
-          node scripts/post-thread.mjs && node scripts/announce.mjs || status=$?
+          # Each poster runs whatever the others did: a thread X refuses never holds up the cats.
+          node scripts/post-thread.mjs || status=$?
+          node scripts/announce.mjs || status=$?
           node scripts/post-updates.mjs || status=$?
           exit "$status"
       - name: Commit the record if it changed
