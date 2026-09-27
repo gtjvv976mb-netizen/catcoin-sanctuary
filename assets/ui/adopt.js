@@ -51,7 +51,7 @@ export function launchKit(r, { site } = {}) {
   const description = [loreText(r), proof, `Not affiliated with ${ownerOf(r)}. A memecoin with no intrinsic value; not financial advice.`].filter(Boolean).join("\n\n");
   return {
     name: cut(r.coinName || r.name || "", NAME_MAX),
-    ticker: cut(String(r.ticker || "").toUpperCase(), TICKER_MAX),
+    ticker: cut(String(r.launchTicker || r.ticker || "").toUpperCase(), TICKER_MAX),
     description,
     website: cardUrl(r, site),
     x: xLink(r),

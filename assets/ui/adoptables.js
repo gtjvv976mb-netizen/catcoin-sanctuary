@@ -26,7 +26,7 @@ const ID = /^[a-z0-9][a-z0-9-]{1,40}$/;
 const B58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const X_STATUS = /^https:\/\/(x|twitter)\.com\/([A-Za-z0-9_]{1,15})\/status\/\d{5,25}$/;
-const FIELDS = ["id", "ticker", "name", "coinName", "owner", "category", "story", "look", "coat", "pair", "proof", "sources", "existingCoin", "memorial", "tribute", "sensitivity", "portrait", "portraitStatus", "confidence", "lore"];
+const FIELDS = ["id", "ticker", "name", "coinName", "owner", "category", "story", "look", "coat", "pair", "proof", "sources", "existingCoin", "memorial", "tribute", "sensitivity", "portrait", "portraitStatus", "confidence", "lore", "launchTicker"];
 const COAT_KEYS = ["base", "second", "pattern", "eyes"];
 /* Words that must never reach a card: price talk and promises. */
 const PRICE_TALK = /\b(moon|100x|1000x|guaranteed|price target|pump it|to the moon|financial advice(?! ))\b/i;
@@ -98,6 +98,7 @@ export function adoptableProblem(c) {
   if (extra.length) return `unknown field ${extra[0]}`;
   if (!ID.test(c.id ?? "")) return "id must be lower-case letters, digits and dashes";
   if (!TICKER.test(c.ticker ?? "")) return "ticker must be 2 to 10 capital letters or digits";
+  if (c.launchTicker !== undefined && !TICKER.test(c.launchTicker)) return "launchTicker must be 2 to 10 capital letters or digits";
   if (!text(c.name, 2, 60) || !text(c.coinName, 2, 60)) return "name and coinName must be 2 to 60 characters";
   if (!text(c.owner, 2, 120)) return "owner is missing";
   if (!ADOPTABLE_CATEGORIES.includes(c.category)) return `category must be one of ${ADOPTABLE_CATEGORIES.join(", ")}`;

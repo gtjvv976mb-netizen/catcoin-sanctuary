@@ -73,6 +73,11 @@ test("the launch kit's words: name <= 32, ticker <= 10, lore + proof + not-affil
     assert.equal(k.x, r.proof?.kind === "x" ? r.proof.url : "");
     assert.ok(k.quote.symbol, `${r.id}: quote token`);
   }
+  // Catbus launches as Nekobasu / CATBUS; its key (card link, files) stays NEKOBUS.
+  const catbus = list.find((r) => r.id === "NEKOBUS");
+  assert.ok(catbus, "Catbus is on the site");
+  assert.deepEqual([launchKit(catbus, { site: SITE }).name, launchKit(catbus, { site: SITE }).ticker], ["Nekobasu", "CATBUS"]);
+  assert.equal(launchKit(catbus, { site: SITE }).website, "https://catcoinsanctuary.com/#cat=NEKOBUS");
   const larry = list.find((r) => r.id === "LARRY10");
   if (larry) assert.match(launchKit(larry).description, /Not affiliated with /);
 });

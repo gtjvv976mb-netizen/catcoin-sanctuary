@@ -211,6 +211,9 @@ function viralityWhen(v) {
 
 /** The ticker as a card shows it: a cashtag only for a launched token. A planned cat's ticker is
     only a plan, and a token found under it elsewhere is not this cat. */
+/** The ticker a planned cat will launch with: its launchTicker if it has one, else its key. */
+export const plannedTicker = (r) => r.launchTicker || r.ticker;
+
 export function tickerLabel(r) {
   if (!r.ticker) return "";
   if (isFamous(r)) return `$${r.ticker}`;
@@ -422,7 +425,7 @@ export function createCard({ root, onClose, onInset }) {
     h2.id = "card-name";
     titles.append(h2);
     const tick = el("p", "card-ticker");
-    const t = el("span", "card-planned-ticker"); t.append("Planned ticker ", el("span", "mono", r.ticker));
+    const t = el("span", "card-planned-ticker"); t.append("Planned ticker ", el("span", "mono", plannedTicker(r)));
     tick.append(t, badgeFor(r));
     titles.append(tick);
     doingEl = el("p", "card-doing");
@@ -455,7 +458,7 @@ export function createCard({ root, onClose, onInset }) {
     const st = section("Status", "card-adopt");
     st.append(el("p", "adopt-cta", "Not launched yet — adopt it now."));
     st.append(adoptButton(r));
-    st.append(el("p", "card-note", `Nothing to buy yet. Any token called ${r.ticker} that you find before launch is not this cat.`));
+    st.append(el("p", "card-note", `Nothing to buy yet. Any token called ${plannedTicker(r)} that you find before launch is not this cat.`));
     if (r.portraitStatus !== "ready") st.append(el("p", "card-none", "Portrait coming soon."));
     const coin = existingCoinLine(r.existingCoin);
     if (coin) st.append(el("p", "adopt-coin", coin));
@@ -523,7 +526,7 @@ export function createCard({ root, onClose, onInset }) {
     titles.append(h2);
     const tick = el("p", "card-ticker");
     if (r.ticker && isLaunched(r)) tick.append(el("span", "mono", `$${r.ticker}`));
-    else if (r.ticker) { const t = el("span", "card-planned-ticker"); t.append("Planned ticker ", el("span", "mono", r.ticker)); tick.append(t); }
+    else if (r.ticker) { const t = el("span", "card-planned-ticker"); t.append("Planned ticker ", el("span", "mono", plannedTicker(r))); tick.append(t); }
     tick.append(badgeFor(r));
     titles.append(tick);
     doingEl = el("p", "card-doing");
@@ -634,7 +637,7 @@ export function createCard({ root, onClose, onInset }) {
       row("Status", st);
     }
     if (r.ticker && isLaunched(r)) row("Ticker", el("span", "mono", `$${r.ticker}`));
-    else if (r.ticker) row("Planned ticker", el("span", "mono", r.ticker));
+    else if (r.ticker) row("Planned ticker", el("span", "mono", plannedTicker(r)));
     if (r.pair.symbol) {
       const pw = el("span");
       pw.append(el("span", "mono", r.pair.symbol));
@@ -659,7 +662,7 @@ export function createCard({ root, onClose, onInset }) {
     } else {
       buy.append(el("p", "card-none", "Nothing to buy yet."));
       buy.append(el("p", "card-note", "Links to the token on GMGN.ai and FOMO appear here once this cat has launched."));
-      if (r.ticker && !r.example) buy.append(el("p", "card-note card-warn", `Any token called ${r.ticker} that you find before launch is not this cat. Only the mint shown on this card after launch is.`));
+      if (r.ticker && !r.example) buy.append(el("p", "card-note card-warn", `Any token called ${plannedTicker(r)} that you find before launch is not this cat. Only the mint shown on this card after launch is.`));
     }
     body.append(buy);
 
