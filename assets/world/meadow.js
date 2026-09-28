@@ -21,7 +21,7 @@
 
 import { makeRandom } from "./rng.js";
 import * as L from "./layout.js";
-import { ACTIONS, FIDGETS, SIGNATURES, pickFidget, transDur, transitionPath } from "./catmotion.js";
+import { ACTIONS, FIDGETS, SIGNATURES, allowedAction, pickFidget, transDur, transitionPath } from "./catmotion.js";
 import { BODY, HALF_LEN, SHUFFLE, UNWIND, V_MIN, animateShared, bodyGap, circleStep, leadFidget, pathGap, publishMotion, sizeOf, snapMotion, traitsFrom, unwindFor } from "./cats.js";
 
 /** Distances (from the point the camera looks at, and from the camera itself). */
@@ -229,6 +229,8 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       if (rnd.chance(0.15 + 0.3 * t.sleepy)) steps.push(once(c, "yawn", SAY.yawn));
       steps.push(once(c, "stretch", SAY.stretch));
     }
+    // (What its own model can't show (traits.avoid) it doesn't do: the nearest plain pose instead, as long.)
+    for (const s of steps) if (s.type === "hold") { const a = allowedAction(c.traits, s.action); if (a !== s.action) { s.action = a; s.fidget = false; } }
     c.kind = kind; c.plan = steps; c.si = 0; c.started = false;
   }
 

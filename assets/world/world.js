@@ -739,6 +739,10 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
       return j?.v === 1 ? { far: j.far ? decodeLegs(j.far, j.nlo) : null, full: j.full ? decodeLegs(j.full, j.n) : null } : null;
     } catch { return null; }
   };
+  // How far each model's own skin lets a mannerism go (assets/models/cats/fit.json, measured by
+  // scripts/fit-clips.mjs; catrig FIT_KNOBS): one small fetch for the whole herd, read with the far copy.
+  const fitIndex = fetch("assets/models/cats/fit.json").then((r) => (r.ok ? r.json() : null)).then((j) => (j?.v === 1 && j.cats && typeof j.cats === "object" ? j.cats : {})).catch(() => ({}));
+  const loadFit = async (f) => { const c = (await fitIndex)[f]; return c && typeof c === "object" ? c : null; };
   /* A budget for the full models' GPU memory: at most tier.hiMax of them are kept (the farthest
      is freed, and queued again, to make room), and their textures are shrunk to tier.hiTex. */
   const tierQ = q;
@@ -783,9 +787,9 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
       if (q.stage === 1 && q.id !== chosenId && !makeRoomForHi(q)) { q.wait = now + 3000; continue; }
       q.busy = true; ownState.loading++;
       jobs.push((async () => {
-        const [root, legs] = await Promise.all([loadGlb(q.file + (q.stage === 0 ? "-lo" : "")), q.stage === 0 ? loadLegs(q.file) : null]);
+        const [root, legs, fit] = await Promise.all([loadGlb(q.file + (q.stage === 0 ? "-lo" : "")), q.stage === 0 ? loadLegs(q.file) : null, q.stage === 0 ? loadFit(q.file) : null]);
         if (root && q.stage === 1) shrinkTextures(root, tierQ.hiTex);
-        if (root) { herd.attachOwn(q.id, q.stage === 0 ? { lo: root, dims: q.dims, legs } : { hi: root, dims: q.dims }); requestRender(); }
+        if (root) { herd.attachOwn(q.id, q.stage === 0 ? { lo: root, dims: q.dims, legs, fit } : { hi: root, dims: q.dims }); requestRender(); }
         ownState.loading--; q.busy = false;
         if (q.stage === 0) q.stage = 1; else { ownState.queue.splice(ownState.queue.indexOf(q), 1); if (root) ownState.hi.push(q); }
       })());

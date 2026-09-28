@@ -1385,11 +1385,12 @@ export class CatHerd {
    * Gives a cat its own model. `lo` (the far copy) may come first and `hi` later, or both at once;
    * either may be null. `dims` is the model's { len, height, width } from index.json.
    */
-  attachOwn(catId, { hi = null, lo = null, dims, legs = null }) { // legs: { far, full } leg labels per copy (catrig decodeLegs), optional
+  attachOwn(catId, { hi = null, lo = null, dims, legs = null, fit = null }) { // legs: { far, full } leg labels per copy (catrig decodeLegs); fit: how far its skin lets each mannerism go (catrig FIT_KNOBS); both optional
     const cat = this.sim.byId(catId);
     if (!cat) return false;
     let o = this.own.get(catId);
     if (o && legs) o.legs = legs;
+    if (o && fit) o.fit = fit;
     const add = (root, tag) => {
       const f = flatMesh(root);
       if (!f) return null;
@@ -1403,7 +1404,7 @@ export class CatHerd {
         const mixer = new THREE.AnimationMixer(sk.root);
         // Its character: how it moves (the clips in its style) and how big it is drawn.
         const style = this.styleOf(cat), k = Math.min(2, Math.max(0.5, style?.scale || 1));
-        o = { cat, group, hi: null, lo: null, dims, legs, s: ownScale(dims) * k, style, rig, sk, mixer, clips: null, anim: null, actions: {}, u: { hl: { value: 0 } }, near: false, drawOwn: false, dc: 0, size: { len: 0, height: 0, width: 0 } };
+        o = { cat, group, hi: null, lo: null, dims, legs, fit, s: ownScale(dims) * k, style, rig, sk, mixer, clips: null, anim: null, actions: {}, u: { hl: { value: 0 } }, near: false, drawOwn: false, dc: 0, size: { len: 0, height: 0, width: 0 } };
         o.perUnit = cyclesPerUnit(rig, o.s, style || undefined);
         this.own.set(catId, o);
         this.ownRank.push(o);
@@ -1435,7 +1436,7 @@ export class CatHerd {
   /** Makes a cat's clips and its animation state (see attachOwn). */
   readyOwn(o) {
     if (o.anim) return;
-    o.clips = makeClips(o.rig, o.style || {});
+    o.clips = makeClips(o.rig, o.style || {}, o.fit || null);
     o.anim = animState(o, { id: o.cat.id, traits: this.character?.get(o.cat.id)?.traits || o.cat.traits });
   }
 

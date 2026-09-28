@@ -74,7 +74,7 @@
 import { makeRandom } from "./rng.js";
 import { NavWorld, yawTo, wrapAngle } from "./nav.js";
 import * as L from "./layout.js";
-import { ACTIONS, FIDGETS, GAIT_BANDS, GAIT_DWELL, MIN_SHOW, NEUTRAL_TRAITS, gaitFor, pickFidget, transDur, transitionPath } from "./catmotion.js";
+import { ACTIONS, FIDGETS, GAIT_BANDS, GAIT_DWELL, MIN_SHOW, NEUTRAL_TRAITS, allowedAction, canDo, gaitFor, pickFidget, transDur, transitionPath } from "./catmotion.js";
 
 export const POSES = ["sit", "walk", "loaf", "stretch", "sleep"];
 
@@ -649,6 +649,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         break;
       }
       case "climb": {
+        if (!canDo(t, "hop")) return null; // (a model that can't leap doesn't climb)
         const trees = L.TREES.filter((T) => free(T.low.id) && clearOfCats(T.ground, cat));
         if (!trees.length) return null;
         const T = nearest(cat, trees, (x) => x.ground);
@@ -673,7 +674,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       }
       case "porch": {
         const S = L.STEP;
-        if (dist(S.ground, cat) > 14 || !reserve(S.id, cat)) return null;
+        if (!canDo(t, "hop") || dist(S.ground, cat) > 14 || !reserve(S.id, cat)) return null;
         cat.dest = { ...S.ground };
         act.reason = SAY.porchGo;
         steps.push(
@@ -708,7 +709,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       }
       case "play": {
         const y = nearest(cat, yarns.filter((v) => !v.player));
-        if (!y || dist(y, cat) > 13) return null;
+        if (!y || dist(y, cat) > 13 || !canDo(t, "pounce")) return null;
         y.player = cat.id;
         act.yarn = y;
         act.reason = SAY.play;
@@ -740,7 +741,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       }
       case "butterfly": {
         const bs = lowButterflies(cat);
-        if (!bs.length) return null;
+        if (!bs.length || !canDo(t, "pounce")) return null;
         const b = nearest(cat, bs);
         targeted.set(b, cat.id);
         act.prey = b;
@@ -760,7 +761,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       }
       case "bird": {
         const bs = landedBirds(cat);
-        if (!bs.length) return null;
+        if (!bs.length || !canDo(t, "pounce")) return null;
         const b = nearest(cat, bs);
         targeted.set(b, cat.id);
         act.prey = b;
@@ -936,6 +937,9 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   /** Swap in a new activity, releasing what the old one held. */
   function begin(cat, act) {
     if (cat.act) finish(cat, false);
+    // (What its own model can't show (traits.avoid) it doesn't do: such a hold shows the nearest plain
+    // pose it can, for as long, with no mannerisms slipped in.)
+    for (const s of act.steps) if (s.type === "hold") { const a = allowedAction(cat.traits, s.action); if (a !== s.action) { s.action = a; s.fidget = false; s.anim = undefined; } }
     cat.act = act; act.i = 0; act.t = 0; act.started = false;
     // Whatever it stands in now (a bowl's clearance it walked into) it may stay in while it pulls
     // up, not be shoved out of in one tick before its first step starts.
@@ -1642,7 +1646,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     const posture = ACTIONS[step.action].posture;
     let name = null, target = null;
     // A keen hunter that spots a bird it cannot reach chatters at it.
-    if (posture === "sit" && cat.traits.hunter > 0.55 && critters?.birds) {
+    if (posture === "sit" && cat.traits.hunter > 0.55 && critters?.birds && canDo(cat.traits, "chatter")) {
       for (const b of critters.birds) if (Math.abs(b.x - cat.x) < 8 && Math.abs(b.z - cat.z) < 8 && b.y > 0.3) { name = "chatter"; target = b; break; }
     }
     if (!name) name = pickFidget(cat.traits, posture, rnd.next);

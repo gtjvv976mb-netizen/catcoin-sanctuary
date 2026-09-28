@@ -147,12 +147,24 @@ export const SIGNATURES = { beckon: "beckon", hindStand: "hindStand", loaf: "loa
     never give them, and the view shows the posture's plain pose, or standing, instead. */
 export const NEUTRAL_TRAITS = { energy: 0.5, sleepy: 0.5, playful: 0.5, bold: 0.5, social: 0.5, grumpy: 0.5, proud: 0.5, grace: 0.5, curious: 0.5, hunter: 0.5, vocal: 0.5, foodie: 0.5, age: "adult", build: "normal", legs: "normal", size: "medium", flags: [], signature: null, avoid: [] };
 
+/** Whether this cat's own model can show `action` (its traits' `avoid` list, see traits.js MODEL_LIMITS). */
+export const canDo = (traits, action) => !(Array.isArray(traits?.avoid) && traits.avoid.includes(action));
+/** The plain loop each posture falls back to, in order, when a cat's model can't show an action. */
+const FALLBACK = { sleep: ["sleep", "loaf", "sit", "stand"], lie: ["loaf", "sit", "stand"], sit: ["sit", "stand"], stand: ["stand"], move: ["stand"], air: ["stand"] };
+/** `action` if this cat may show it, else the nearest plain pose it may: its posture's own loop, or
+    the next posture up (a cat that can't curl up dozes in its loaf; one that can only stand stands). */
+export function allowedAction(traits, action) {
+  if (canDo(traits, action)) return action;
+  for (const a of FALLBACK[ACTIONS[action]?.posture] || ["stand"]) if (canDo(traits, a)) return a;
+  return "stand";
+}
+
 /** A fidget for a cat holding `posture`, by trait-weighted chance; rnd() gives 0..1. Null if none fits. */
 export function pickFidget(traits, posture, rnd) {
   const t = { ...NEUTRAL_TRAITS, ...(traits || {}) };
-  const options = Object.entries(FIDGETS).filter(([, f]) => f.postures.includes(posture)).map(([name, f]) => [name, Math.max(0, f.weight(t))]);
+  const options = Object.entries(FIDGETS).filter(([, f]) => f.postures.includes(posture) && canDo(t, f)).map(([name, f]) => [name, Math.max(0, f.weight(t))]).filter(([name]) => canDo(t, name));
   const sig = t.signature && SIGNATURES[t.signature];
-  if (sig && ACTIONS[sig]?.posture === posture) options.push([sig, 1.2]);
+  if (sig && ACTIONS[sig]?.posture === posture && canDo(t, sig)) options.push([sig, 1.2]);
   const total = options.reduce((s, [, w]) => s + w, 0);
   if (!total) return null;
   let r = rnd() * total;

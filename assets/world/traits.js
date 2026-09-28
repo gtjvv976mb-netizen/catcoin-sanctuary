@@ -17,7 +17,7 @@
 
    styleOf(traits) turns them into how the cat moves and holds itself (see STYLE_DEFAULTS). */
 
-import { NEUTRAL_TRAITS, SIGNATURES } from "./catmotion.js";
+import { ACTIONS, NEUTRAL_TRAITS, SIGNATURES } from "./catmotion.js";
 import { parseLook } from "./looks.js";
 
 export const TRAIT_KEYS = ["energy", "sleepy", "playful", "bold", "social", "grumpy", "proud", "grace", "curious", "hunter", "vocal", "foodie"];
@@ -444,14 +444,21 @@ export function normalizeTraits(x) {
   if (out.flags.includes("memorial") && !out.flags.includes("gentle")) out.flags.push("gentle");
   out.signature = has(SIGNATURES, src.signature) ? src.signature : null;
   if (out.size === "bigcat") out.scale = Number.isFinite(src.scale) ? clamp(src.scale, 1, 1.6) : 1.45;
+  // (what its model can't show, catmotion ACTIONS names, kept only when there is any: see MODEL_LIMITS)
+  if (Array.isArray(src.avoid) && src.avoid.length) out.avoid = src.avoid.filter((a, i) => typeof a === "string" && has(ACTIONS, a) && src.avoid.indexOf(a) === i);
   return out;
 }
 
 /** A resident's traits: its row in data/traits.json (`table`, keyed by id, or by ticker), else what
     residents.js attached (r.traits), else read from its card now. */
+/** A resident's full traits: its row of data/traits.json (or its own `traits`, or what its words say), made
+    whole, with what its own model cannot show (MODEL_LIMITS) whichever way the traits came. */
 export function traitsOf(r, table) {
   const row = table?.[r?.id] ?? table?.[r?.ticker] ?? r?.traits;
-  return normalizeTraits(row && typeof row === "object" ? row : deriveTraits(r));
+  const t = normalizeTraits(row && typeof row === "object" ? row : deriveTraits(r));
+  const a = avoidOf(r);
+  if (a) t.avoid = [...new Set([...(t.avoid || []), ...a])];
+  return t;
 }
 
 /** How an ordinary adult moves (styleOf(NEUTRAL_TRAITS) gives exactly this; clips use these values
