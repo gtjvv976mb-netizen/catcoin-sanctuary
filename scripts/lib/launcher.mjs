@@ -59,8 +59,8 @@
  *            with nothing in flight, the day's count not reached and room left under the Collection's
  *            MAX_CATS (collectionRoom), prepares ONE new cat: its metadata file and its ledger row.
  *            data/launch-approvals.json is only read (unreadable: no approvals, a warning). Then the photos
- *            of posts the owner hides in data/photo-hide.json (read the same way) leave data/real-photos.json
- *            `cats` for `none` (and come back once no longer hidden), and a prepared row's coin picture
+ *            of posts the owner hides in data/photo-hide.json (read the same way) move, whole, from
+ *            data/real-photos.json `cats` to `hidden` (and back once no longer hidden), and a prepared row's coin picture
  *            follows that list (the site's own picture for a hidden post).
  *   send     (the only phase with the key) settles "sending" rows, then for the prepared row: looks for
  *            a launch of its post on chain (its mint's create in the wallet's own history, on every
@@ -84,7 +84,7 @@
  *            rule: the X post is scripts/post-updates.mjs's, once the Collection has proved the mint;
  *            data/announced.json is the Announce workflow's alone and never written here), a 3D
  *            model queued in scripts/meshy.queue.json, its hotlinked real photo in data/real-photos.json
- *            credited to its post's author on the card (a post the owner hides in data/photo-hide.json: none),
+ *            credited to its post's author on the card (a post the owner hides in data/photo-hide.json: `hidden`),
  *            and its figure (and any other figure now in the sanctuary) off data/cat-watch.json, as the
  *            trend watch's own checks expect of a cat that moved in.
  *
@@ -461,28 +461,27 @@ export function photoHideOf(io, log = () => {}) {
   return approvalsOf({ approve: data.hide });
 }
 
-/** What data/real-photos.json `none` says of a photo the owner hid: the reason, then the post id (so it can come back). */
-export const HIDDEN_NOTE = "hidden by the owner (data/photo-hide.json): post ";
-const postIdOf = (url) => X_POST_URL.exec(String(url ?? ""))?.[2] ?? null;
+/** An X post's status id from any link to it (x.com or twitter.com, www., a query such as ?s=20), or null. */
+export const postIdOf = (url) => /\/status\/(\d{5,25})/.exec(String(url ?? ""))?.[1] ?? null;
 /** The real-photos entry's photo for a ledger row: the post's picture, hotlinked, credited to its author. */
 const photoOfRow = (row) => ({ url: row.image, handle: row.cat.proof.handle, post: row.url, alt: `${row.name}: the photo from @${row.cat.proof.handle}'s post` });
 
 /**
- * data/real-photos.json kept in line with the owner's hide list: a shown photo (`cats`) whose post is
- * hidden moves to `none` (HIDDEN_NOTE and its post id: the card shows its portrait); a photo hidden that
- * way whose post is no longer hidden comes back from the ledger row that recorded it (`rows`).
- * Returns { photos, hid: [tickers], restored: [tickers] }; `photos` is the same object when nothing moved.
+ * data/real-photos.json kept in line with the owner's hide list, without losing anything: a shown photo
+ * (`cats`) whose post is hidden moves, whole, to `hidden` ({ T: { postId, entry } }: the page reads `cats`
+ * only, so the card shows its portrait), and one whose post is no longer hidden moves back to `cats` from
+ * there, exactly as it was. Returns { photos, hid: [tickers], restored: [tickers] }; `photos` is the same
+ * object when nothing moved.
  */
-export function applyPhotoHide(photos, hidden, rows = []) {
-  const cats = isObj(photos?.cats) ? photos.cats : {}, none = isObj(photos?.none) ? photos.none : {};
-  const hiddenId = (T) => (typeof none[T] === "string" && none[T].startsWith(HIDDEN_NOTE) ? none[T].slice(HIDDEN_NOTE.length) : null);
-  const rowOf = (T) => rows.find((r) => r?.ticker === T && r.postId === hiddenId(T) && r.status === "launched");
-  const hid = Object.keys(cats).filter((T) => hidden.has(postIdOf(cats[T]?.realPhoto?.post)));
-  const restored = Object.keys(none).filter((T) => hiddenId(T) && !hidden.has(hiddenId(T)) && !(T in cats) && rowOf(T) && realPhotoOf(photoOfRow(rowOf(T))));
+export function applyPhotoHide(photos, hiddenIds) {
+  const cats = isObj(photos?.cats) ? photos.cats : {}, kept = isObj(photos?.hidden) ? photos.hidden : {};
+  const hid = Object.keys(cats).filter((T) => !(T in kept) && hiddenIds.has(postIdOf(cats[T]?.realPhoto?.post)));
+  const restored = Object.keys(kept).filter((T) => !hiddenIds.has(String(kept[T]?.postId)) && !(T in cats) && isObj(kept[T]?.entry) && realPhotoOf(kept[T].entry.realPhoto));
   if (!hid.length && !restored.length) return { photos, hid, restored };
-  const next = { ...photos, cats: { ...cats }, none: { ...none } };
-  for (const T of hid) { next.none[T] = `${HIDDEN_NOTE}${postIdOf(cats[T].realPhoto.post)}`; delete next.cats[T]; }
-  for (const T of restored) { next.cats[T] = { realPhoto: photoOfRow(rowOf(T)), source: "proof" }; delete next.none[T]; }
+  const next = { ...photos, cats: { ...cats }, hidden: { ...kept } };
+  for (const T of hid) { next.hidden[T] = { postId: postIdOf(cats[T].realPhoto.post), entry: cats[T] }; delete next.cats[T]; }
+  for (const T of restored) { next.cats[T] = next.hidden[T].entry; delete next.hidden[T]; }
+  if (!Object.keys(next.hidden).length) delete next.hidden;
   return { photos: next, hid, restored };
 }
 
@@ -1048,7 +1047,7 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
   // 5. Photos the owner hid (data/photo-hide.json) leave their cards; one no longer hidden comes back.
   if (mode === "on") {
     const photos = readOwned(io, FILES.realPhotos, null, log);    // unreadable: left as it is (a warning), never a stop
-    const { photos: next, hid, restored } = isObj(photos) ? applyPhotoHide(photos, ctx.photoHide, ledger.launches) : { hid: [], restored: [] };
+    const { photos: next, hid, restored } = isObj(photos) ? applyPhotoHide(photos, ctx.photoHide) : { hid: [], restored: [] };
     if (hid.length || restored.length) {
       io.writeText(FILES.realPhotos, json2(next));
       out.photos = [...hid, ...restored];
@@ -1391,12 +1390,13 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
         styleImage: row.image, referencePrompt: look, order };
     }
     // Its real photo, hotlinked from the post (never copied) and credited to its author on the card, unless the owner
-    // ruled it out (`none`) or hides the post (data/photo-hide.json: then `none` says so, and the card keeps its portrait).
+    // ruled it out (`none`) or hides the post (data/photo-hide.json: then it waits in `hidden`, and the card keeps its portrait).
     files.photos.cats ??= {};
     const photo = photoOfRow(row);
-    if (!(T in files.photos.cats) && !(T in (files.photos.none ?? {})) && realPhotoOf(photo)) {
-      if (files.photoHide.has(row.postId)) files.photos = { ...files.photos, none: { ...(files.photos.none ?? {}), [T]: `${HIDDEN_NOTE}${row.postId}` } };
-      else files.photos.cats[T] = { realPhoto: photo, source: "proof" };
+    if (!(T in files.photos.cats) && !(T in (files.photos.none ?? {})) && !(T in (files.photos.hidden ?? {})) && realPhotoOf(photo)) {
+      const entry = { realPhoto: photo, source: "proof" };
+      if (files.photoHide.has(row.postId)) files.photos = { ...files.photos, hidden: { ...(files.photos.hidden ?? {}), [T]: { postId: row.postId, entry } } };
+      else files.photos.cats[T] = entry;
     }
     replaceRow(ledger, { ...row, recordedAt: ISO_SECONDS(nowMs) });
     out.recorded.push(T);

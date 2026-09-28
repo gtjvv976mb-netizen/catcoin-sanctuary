@@ -212,4 +212,4 @@ jobs:
           gh workflow run collection.yml -R "$REPO" --ref main
           gh workflow run pages.yml -R "$REPO" --ref main
           gh workflow run announce.yml -R "$REPO" --ref main
-          gh workflow run models.yml -R "$REPO" --ref main
+          gh workflow run models.yml -R "$REPO" --ref main || echo "::notice::Models not started (the Models workflow is disabled or missing)"

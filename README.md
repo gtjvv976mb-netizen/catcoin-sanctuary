@@ -218,12 +218,13 @@ post never names the @handle of the post a cat was found in (a rule of the launc
 mention of a stranger), and it links to the card, where the credit is.
 
 **Hiding a photo (the owner):** a stranger's photo can show faces, children or a home. To hide one,
-add its post's X status id (in quotes) to **`data/photo-hide.json`** (`{ "hide": ["<post id>"] }`).
-The next Launch run (every 20 minutes) moves the cat's `data/real-photos.json` entry to `none` (the
+add its post's X status id (in quotes; any photo on the site, launched cat or not) to **`data/photo-hide.json`** (`{ "hide": ["<post id>"] }`).
+The next Launch run (every 20 minutes) moves the cat's `data/real-photos.json` entry, whole, to `hidden` (the
 card then shows its portrait), deploys the site, and a coin not sent yet takes the site's own picture
 (`assets/og-image.jpg`, no photo credit) instead. **A coin's picture cannot change once it is
 launched**, so hide a photo *before* the launch if the coin must not show it (for a real pet, you
-see the post anyway when you approve its launch). Remove the id to show the photo again. The file is
+see the post anyway when you approve its launch). Remove the id to show the photo again: it comes back
+from `hidden` exactly as it was. The file is
 read like `data/launch-approvals.json`: a typo hides nothing (the run warns), and it never stops the
 launcher or the tests.
 
@@ -293,6 +294,14 @@ launched cats with no model first, never one whose photo `data/photo-hide.json` 
    verdict is flagged in the log as a model to look at.
 5. A **preview** PNG (`scripts/model-previews/<KEY>.png`, three views, rendered headless) and a line in
    the run's summary; then the commit, and Pages is deployed.
+
+These run as separate jobs, so no job that installs a package holds a key it does not need or the push
+token: the Meshy job installs nothing and alone holds `MESHY_API_KEY`; the Pack job (packages installed
+with `--ignore-scripts`) holds no secret; the Tripo job alone holds `TRIPO_API_KEY`; the Commit job
+installs nothing third-party, takes only the expected files from the others (each checked, the model
+checks and tests run again there) and pushes with git hooks off. A try is counted before Meshy is
+called, and the Commit job always runs, so a run that fails, times out or is cancelled still records
+what Meshy spent (the cat is tried again, at most twice in all).
 
 **Setting it up (the owner):** add the repository secrets **`MESHY_API_KEY`** and **`TRIPO_API_KEY`**
 and the variable **`MODELS_ENABLED`** = `on` (anything else, or unset, runs nothing). Optional

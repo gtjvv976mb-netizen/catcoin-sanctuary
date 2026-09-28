@@ -111,6 +111,9 @@ test("launch workflow: the dispatching jobs run no code of the repository's: the
   for (const w of ["collection.yml", "pages.yml", "announce.yml", "models.yml"]) assert.match(pub, new RegExp(`gh workflow run ${w.replace(".", "\\.")} -R "\\$REPO" --ref main`), w);
   // The new cat's 3D model: the Models workflow (which runs only while MODELS_ENABLED is on) is started after a recorded launch.
   assert.ok(fs.existsSync(path.join(ROOT, ".github/workflows/models.yml")));
+  // A disabled Models workflow never fails the publish job (the Collection, Pages and Announce dispatches come first).
+  assert.match(pub, /gh workflow run models\.yml -R "\$REPO" --ref main \|\| echo "::notice::Models not started[^"]*"\n/);
+  for (const w of ["collection.yml", "pages.yml", "announce.yml"]) assert.ok(pub.indexOf(w) < pub.indexOf("models.yml"), w);
   // The outputs the jobs read come from the launcher's own steps.
   assert.match(job("prepare"), /outputs:\n\s+pending: \$\{\{ steps\.prepare\.outputs\.pending \}\}\n\s+deploy: \$\{\{ steps\.prepare\.outputs\.deploy \}\}/);
   assert.match(job("launch"), /outputs:\n\s+recorded: \$\{\{ steps\.commit-record\.outputs\.recorded \}\}/, "publish starts only for a cat whose record reached main");

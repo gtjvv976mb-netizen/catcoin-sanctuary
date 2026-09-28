@@ -11,10 +11,10 @@ import os from "node:os";
 import path from "node:path";
 import { ROOT } from "./helpers.mjs";
 import {
-  main, selectEntries, reserveOf, perRun, backlogOn, recordTry, meshyOutcome, restoreJob, stateOf, keysOf, launchedCats,
+  main, selectEntries, reserveOf, perRun, backlogOn, startTry, finishTry, cleanRow, bundlePaths, meshyOutcome, restoreJob, stateOf, keysOf, launchedCats,
   glbProblems, rigProblems, glbPositions, readGlb, modelProblems, loadRig, MAX_TRIES, DEFAULT_RESERVE, BUDGET, MODEL_TESTS, FILES,
 } from "../scripts/models.mjs";
-import { HIDDEN_NOTE } from "../scripts/lib/launcher.mjs";
+import { tripo as tripoCli, TRIPO_TIMEOUT_MS } from "../scripts/tripo.mjs";
 
 const W = fs.readFileSync(path.join(ROOT, ".github/workflows/models.yml"), "utf8");
 const LAUNCH = fs.readFileSync(path.join(ROOT, ".github/workflows/launch.yml"), "utf8");
@@ -31,76 +31,86 @@ test("models workflow: name, triggers (by hand, daily, and the Launch workflow's
   assert.ok(!/\n  push:|pull_request/.test(W));
   assert.match(W, /^permissions: \{\}$/m);
   assert.match(W, /concurrency:\n  group: models\n  cancel-in-progress: false\n/);
-  // After a recorded launch, the Launch workflow's publish job (which runs no code of the repository's) starts it.
   const publish = LAUNCH.slice(LAUNCH.indexOf("\n  publish:"));
-  assert.match(publish, /gh workflow run models\.yml -R "\$REPO" --ref main/);
+  assert.match(publish, /gh workflow run models\.yml -R "\$REPO" --ref main \|\| echo/);
 });
 
-test("models workflow: fails closed (MODELS_ENABLED must be on), and each job has the least it needs: contents to commit, actions to deploy", () => {
-  assert.deepEqual([...W.matchAll(/^  ([a-z][\w-]*):\n    (?:needs|if|runs-on)/gm)].map((m) => m[1]), ["build", "pages"]);
-  assert.match(job("build"), /\n    if: \$\{\{ vars\.MODELS_ENABLED == 'on' \}\}\n/);
-  assert.equal([...W.matchAll(/MODELS_ENABLED/g)].filter((m) => !W.slice(0, m.index).split("\n").pop().startsWith("#")).length, 1, "one gate");
-  assert.deepEqual([...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim()), ["contents: write", "actions: write"]);
-  assert.match(job("pages"), /needs: build\n\s+if: \$\{\{ !cancelled\(\) && needs\.build\.outputs\.pushed == 'true' \}\}/);
-  for (const name of ["build", "pages"]) assert.match(job(name), /timeout-minutes: \d+/, name);
+test("models workflow: separate jobs, fail closed: Meshy (read, no installs), Pack (read, no secret), Tripo (read), Commit (write, no third-party code), Pages (actions)", () => {
+  assert.deepEqual([...W.matchAll(/^  ([a-z][\w-]*):\n    (?:needs|if|runs-on)/gm)].map((m) => m[1]), ["meshy", "pack", "tripo", "commit", "pages"]);
+  assert.match(job("meshy"), /\n    if: \$\{\{ vars\.MODELS_ENABLED == 'on' \}\}\n/);
+  for (const name of ["pack", "tripo", "commit", "pages"]) assert.match(job(name), /\n    needs: /, `${name} runs only after the gated job`);
+  const perms = Object.fromEntries(["meshy", "pack", "tripo", "commit", "pages"].map((n) => [n, job(n).match(/permissions:\n((?:\s{6}\S.*\n)+)/)[1].trim()]));
+  assert.deepEqual(perms, { meshy: "contents: read", pack: "contents: read", tripo: "contents: read", commit: "contents: write", pages: "actions: write" });
+  for (const name of ["meshy", "pack", "tripo", "commit", "pages"]) assert.match(job(name), /timeout-minutes: \d+/, name);
+  // No package is installed where a key or the push token is: Meshy and Commit install nothing (meshy.mjs and the checks are node built-ins).
+  for (const name of ["meshy", "commit"]) assert.ok(!/\bnpm\b|\bnpx\b|\bpip\b|playwright install|\byarn\b|\bpnpm\b/.test(job(name)), `${name} installs nothing`);
+  assert.ok(!/secrets\./.test(job("pack")) && !/github\.token/.test(job("pack")), "pack: no secret, no token");
+  assert.ok(!/github\.token/.test(job("tripo")) && !/github\.token/.test(job("meshy")));
+  // Every package installed with its install scripts off, at a pinned version.
+  for (const name of ["pack", "tripo"]) {
+    const lines = job(name).split("\n").filter((l) => /\bnpm i\b/.test(l));
+    assert.ok(lines.length > 0, name);
+    for (const l of lines) {
+      assert.match(l, /--ignore-scripts/, l);
+      for (const p of l.trim().split(/\s+/).filter((w) => /^@?[a-z]/.test(w) && !["npm", "i"].includes(w))) assert.match(p, /^@?[\w./-]+@\d+\.\d+\.\d+$/, `${p} is pinned`);
+    }
+  }
+  assert.match(job("pack"), /pip" install --quiet numpy==[\d.]+ pillow==[\d.]+/);
+  assert.match(job("pages"), /needs: commit\n\s+if: \$\{\{ !cancelled\(\) && needs\.commit\.outputs\.pushed == 'true' \}\}/);
+  assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\.|checkout/.test(job("pages")));
 });
 
-test("models workflow: every action pinned to its release's commit (the bot workflows' two), and every checkout keeps no credentials", () => {
-  assert.deepEqual([...new Set([...W.matchAll(/uses:\s*(\S+)\s*#\s*(\S+)/g)].map((m) => `${m[1]} ${m[2]}`))], [
+test("models workflow: every action pinned to its release's commit, and every checkout keeps no credentials", () => {
+  assert.deepEqual([...new Set([...W.matchAll(/uses:\s*(\S+)\s*#\s*(\S+)/g)].map((m) => `${m[1]} ${m[2]}`))].sort(), [
     "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 v7.0.1",
+    "actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c v8.0.1",
     "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 v7.0.0",
+    "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a v7.0.1",
   ]);
   for (const m of W.matchAll(/uses:\s*(\S+)/g)) assert.match(m[1], /^actions\/[\w-]+@[0-9a-f]{40}$/);
-  assert.equal([...W.matchAll(/actions\/checkout@/g)].length, 1);
-  assert.match(W, /- uses: actions\/checkout@\S+ # v7\.0\.1\n\s+with:\n\s+ref: main\n\s+persist-credentials: false\n/);
+  assert.equal([...W.matchAll(/actions\/checkout@/g)].length, 4);
+  assert.equal([...W.matchAll(/- uses: actions\/checkout@\S+ # v7\.0\.1\n\s+with:\n\s+ref: main\n\s+persist-credentials: false\n/g)].length, 4);
 });
 
-test("models workflow: MESHY_API_KEY only in the Meshy step, TRIPO_API_KEY only in the Tripo step; no wallet secret, no other secret", () => {
+test("models workflow: MESHY_API_KEY only in the Meshy step of the Meshy job, TRIPO_API_KEY only in the Tripo step of the Tripo job; no wallet secret; no expression in a script", () => {
   assert.deepEqual([...new Set([...W.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))].sort(), ["MESHY_API_KEY", "TRIPO_API_KEY"]);
   const withSecrets = steps.filter((s) => /secrets\./.test(s));
   assert.equal(withSecrets.length, 2);
   const meshy = stepNamed(/node scripts\/models\.mjs meshy/), tripo = stepNamed(/node scripts\/models\.mjs tripo/);
   assert.deepEqual([...meshy.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]), ["MESHY_API_KEY"]);
   assert.deepEqual([...tripo.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]), ["TRIPO_API_KEY"]);
-  assert.equal([...W.matchAll(/MESHY_API_KEY: \$\{\{ secrets\.MESHY_API_KEY \}\}/g)].length, 1);
-  assert.equal([...W.matchAll(/TRIPO_API_KEY: \$\{\{ secrets\.TRIPO_API_KEY \}\}/g)].length, 1);
+  assert.ok(job("meshy").includes(meshy) && job("tripo").includes(tripo));
   for (const bad of ["LAUNCH_WALLET_KEY", "SOLANA_RPC_URL", "WALLET", "X_API", "ANTHROPIC", "GITHUB_TOKEN"]) assert.ok(!W.replace(/^#.*$/gm, "").includes(bad), bad);
-  // Secrets go in a step's env, never the job's or the workflow's; the reserves are variables beside them.
   assert.ok(!/^ {0,4}env:/m.test(W));
   assert.match(meshy, /MODELS_MESHY_RESERVE: \$\{\{ vars\.MODELS_MESHY_RESERVE \}\}/);
   assert.match(tripo, /MODELS_TRIPO_RESERVE: \$\{\{ vars\.MODELS_TRIPO_RESERVE \}\}/);
-  // The keys between steps are step outputs passed through env, never pasted into a script.
+  // The API steps are bounded in time.
+  for (const s of [meshy, tripo, stepNamed(/node scripts\/models\.mjs pack/)]) assert.match(s, /timeout-minutes: \d+/);
   for (const s of steps) {
     const script = s.includes("run: |") ? s.split("run: |")[1].split("\n").slice(1).filter((l, i, a) => a.slice(0, i + 1).every((x) => x.startsWith("          ") || !x.trim())).join("\n") : (s.match(/run: .*/)?.[0] ?? "");
     assert.ok(!script.includes("${{"), `no expression inside a script: ${s.slice(0, 60)}`);
   }
 });
 
-test("models workflow: the steps in order; tools installed at pinned versions only when there is a cat to make; the token only in the push, with one rebase retry", () => {
-  const order = ["node --test tests/models.test.mjs", "node scripts/models.mjs pick", "npm ci", "node scripts/models.mjs meshy", "node scripts/models.mjs pack",
-    "node scripts/models.mjs tripo", "node scripts/models.mjs preview", "node scripts/models.mjs summary", "commit -q -m"];
-  const at = order.map((t) => W.indexOf(t));
-  assert.ok(at.every((i) => i > 0) && at.every((i, k) => k === 0 || i > at[k - 1]), `in order: ${at}`);
-  const install = stepNamed(/npm ci/);
-  assert.match(install, /if: \$\{\{ steps\.pick\.outputs\.keys != '' \}\}/);
-  for (const m of install.matchAll(/npm i (?:-g |--no-save )[^\n]*/g)) for (const p of m[0].split(" ").filter((w) => /^@?[a-z]/.test(w) && !["npm", "i"].includes(w))) assert.match(p, /^@?[\w./-]+@\d+\.\d+\.\d+$/, `${p} is pinned`);
-  assert.match(install, /pip" install --quiet numpy==[\d.]+ pillow==[\d.]+/);
-  // The token: in the commit step (the push) and the Pages dispatch only.
-  const withToken = steps.filter((s) => /github\.token/.test(s));
-  assert.equal(withToken.length, 2);
-  const commit = stepNamed(/git -c user\.name="github-actions\[bot\]"/);
+test("models workflow: the state always reaches the commit (every bundle, upload and the commit run always), and the push has git hooks off and one rebase retry", () => {
+  for (const name of ["meshy", "pack", "tripo"]) {
+    const j = job(name);
+    assert.match(j, /node scripts\/models\.mjs bundle "\$RUNNER_TEMP\/out"/, name);
+    for (const s of j.split(/\n      - /).filter((x) => /models\.mjs bundle|upload-artifact/.test(x))) assert.match(s, /if: \$\{\{ always\(\)/, `${name}: ${s.slice(0, 40)}`);
+  }
+  assert.match(job("commit"), /needs: \[meshy, pack, tripo\]\n\s+if: \$\{\{ always\(\) && needs\.meshy\.outputs\.keys != '' \}\}/);
+  assert.match(job("commit"), /node scripts\/models\.mjs merge/);
+  const commit = stepNamed(/git -c core\.hooksPath=\/dev\/null -c user\.name/);
+  assert.match(commit, /if: \$\{\{ always\(\) \}\}/);
   assert.match(commit, /GH_TOKEN: \$\{\{ github\.token \}\}/);
+  assert.equal(steps.filter((s) => /github\.token/.test(s)).length, 2, "the push and the Pages dispatch only");
   assert.match(commit, /auth=\$\(printf 'x-access-token:%s' "\$GH_TOKEN" \| base64 -w0\)\n\s+echo "::add-mask::\$auth"/);
-  assert.match(commit, /if ! git -c http\.extraheader="AUTHORIZATION: basic \$auth" push origin HEAD:main; then\n\s+git -c http\.extraheader="AUTHORIZATION: basic \$auth" fetch origin main\n\s+git -c user\.name="github-actions\[bot\]" -c user\.email="41898282\+github-actions\[bot\]@users\.noreply\.github\.com" rebase origin\/main\n\s+git -c http\.extraheader="AUTHORIZATION: basic \$auth" push origin HEAD:main\n\s+fi/);
-  assert.match(commit, /if git diff --cached --quiet; then echo "Nothing changed\."; exit 0; fi/);
+  assert.match(commit, /if ! git -c core\.hooksPath=\/dev\/null -c http\.extraheader="AUTHORIZATION: basic \$auth" push origin HEAD:main; then\n\s+git -c core\.hooksPath=\/dev\/null -c http\.extraheader="AUTHORIZATION: basic \$auth" fetch origin main\n\s+git -c core\.hooksPath=\/dev\/null -c user\.name="github-actions\[bot\]" -c user\.email="41898282\+github-actions\[bot\]@users\.noreply\.github\.com" rebase origin\/main\n\s+git -c core\.hooksPath=\/dev\/null -c http\.extraheader="AUTHORIZATION: basic \$auth" push origin HEAD:main\n\s+fi/);
+  assert.ok([...commit.matchAll(/\bgit (?!-c core\.hooksPath)(commit|push|rebase|fetch)/g)].length === 0, "every git that could run a hook has them off");
   assert.match(commit, /commit -q -m "Models: [a-zA-Z0-9 ]+"/);
-  // The model files only when the pack step finished (a discarded model is already put back); the state always.
-  assert.match(commit, /if \[ "\$PACKED" = "success" \]; then\n\s+git add -- assets\/models\/cats assets\/models\/PROVENANCE\.md scripts\/cat-models\.jobs\.json/);
-  assert.match(commit, /scripts\/meshy\.state\.json scripts\/models\.state\.json scripts\/tripo\.state\.json/);
-  assert.match(commit, /PACKED: \$\{\{ steps\.pack\.outcome \}\}/);
-  // The Pages dispatch runs no code of the repository's and sees no secret.
-  assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\.|checkout/.test(job("pages")));
-  assert.match(job("pages"), /run: gh workflow run pages\.yml -R "\$REPO" --ref main\n/);
+  // A merge that failed commits no model file, only the state.
+  assert.match(commit, /if \[ "\$MERGED" != "success" \]; then\n\s+git checkout -- assets\/models scripts\/cat-models\.jobs\.json/);
+  assert.match(commit, /MERGED: \$\{\{ steps\.merge\.outcome \}\}/);
 });
 
 /* ── configuration and choosing ───────────────────────────────────────────────────────── */
@@ -149,8 +159,8 @@ test("choosing: queued rebuilds only; launched cats with no model first, the res
   assert.deepEqual(selectEntries({ ...base, limit: 1 }).picked.map((p) => p.key), ["NEWCAT"]);
   // The backlog after the launched cats.
   assert.deepEqual(selectEntries({ ...base, backlog: true, limit: 2, adoptables: { cats: [] } }).picked.map((p) => p.key), ["OLDCAT", "NEWCAT"]);
-  // A photo hidden by its real-photos row (none: HIDDEN_NOTE) is hidden too.
-  assert.match(Object.fromEntries(selectEntries({ ...base, hidden: new Set(), photos: { cats: {}, none: { HIDECAT: `${HIDDEN_NOTE}2100000000000000003` } } }).skipped.map((s) => [s.key, s.why])).HIDECAT, /hidden/);
+  // A photo hidden in data/real-photos.json (hidden) is hidden too.
+  assert.match(Object.fromEntries(selectEntries({ ...base, hidden: new Set(), photos: { cats: {}, hidden: { HIDECAT: { postId: "2100000000000000003", entry: {} } } } }).skipped.map((s) => [s.key, s.why])).HIDECAT, /hidden/);
   // Made (Meshy done), live, a launched cat with a model already, or tried MAX_TRIES times: skipped.
   r = selectEntries({ ...base, limit: 2, meshyState: { NEWCAT: { status: "done" } }, state: { cats: { LATECAT: { attempts: MAX_TRIES, status: "gave-up" } } } });
   assert.deepEqual(r.picked, []);
@@ -161,19 +171,47 @@ test("choosing: queued rebuilds only; launched cats with no model first, the res
   assert.deepEqual(keysOf({ KEYS: "NEWCAT ../x TINT NEWCAT NOPE LATECAT" }, QUEUE), ["NEWCAT", "LATECAT"]);
 });
 
-test("bookkeeping: a try is live or failed, the second failure gives up; Meshy's outcome read from its state; a discarded job put back", () => {
+test("bookkeeping: a try is counted before Meshy is called; made, live or failed after; the second failure gives up; rows from an artifact cleaned", () => {
   const st = stateOf(null);
   assert.deepEqual(st.cats, {});
-  assert.deepEqual(recordTry(st, "A", { ok: false, error: "boom", at: "t1" }), { attempts: 1, status: "failed", at: "t1", error: "boom" });
-  assert.equal(recordTry(st, "A", { ok: false, error: "boom", at: "t2" }).status, "gave-up");
+  const { row, prev } = startTry(st, "A", { at: "t0" });
+  assert.deepEqual([row, prev], [{ attempts: 1, status: "started", at: "t0" }, null]);
+  assert.deepEqual(finishTry(st, "A", { made: true, at: "t1", tasks: ["v", "m", "f"] }), { attempts: 1, status: "made", at: "t1", tasks: ["v", "m", "f"] });
+  assert.deepEqual(finishTry(st, "A", { ok: false, error: "boom", at: "t2" }), { attempts: 1, status: "failed", at: "t2", error: "boom", tasks: ["v", "m", "f"] });
+  startTry(st, "A", { at: "t3" });
+  assert.equal(finishTry(st, "A", { ok: false, error: "boom", at: "t4" }).status, "gave-up");
   st.cats.B = { attempts: 1, status: "failed", tripo: { status: "rigged" } };
-  assert.deepEqual(recordTry(st, "B", { ok: true, at: "t3", tasks: ["x"] }), { attempts: 2, status: "live", at: "t3", tasks: ["x"], tripo: { status: "rigged" } });
+  startTry(st, "B", { at: "t5" });
+  assert.deepEqual(finishTry(st, "B", { ok: true, at: "t6", tasks: ["x"] }), { attempts: 2, status: "live", at: "t6", tasks: ["x"], tripo: { status: "rigged" } });
+  // A try that never finished (started or made) is chosen again while tries are left, and not once they are used.
+  const q = { cats: { AA: { action: "rebuild", priority: 1 } } }, launched = { cats: [launchedRow("AA", "2100000000000000009")] };
+  assert.deepEqual(selectEntries({ queue: q, adoptables: launched, state: { cats: { AA: { attempts: 1, status: "started" } } } }).picked.map((p) => p.key), ["AA"]);
+  assert.deepEqual(selectEntries({ queue: q, adoptables: launched, state: { cats: { AA: { attempts: 2, status: "made" } } } }).picked, []);
   assert.equal(meshyOutcome(null, null).outcome, "stopped");
   assert.equal(meshyOutcome({ status: "failed", at: "a" }, { status: "failed", at: "a" }).outcome, "stopped", "nothing new: the reserve");
   assert.deepEqual(meshyOutcome(null, { status: "done", tasks: ["v", "m", "f"], credits: 41 }), { outcome: "made", tasks: ["v", "m", "f"], credits: 41 });
   assert.deepEqual(meshyOutcome({ status: "failed", at: "a" }, { status: "failed", at: "b", error: "503" }), { outcome: "failed", error: "503" });
   assert.deepEqual(restoreJob({ A: { url: "new", previous: { url: "old" } } }, "A"), { A: { url: "old" } });
   assert.deepEqual(restoreJob({ A: { url: "new", previous: null }, B: {} }, "A"), { B: {} });
+  // A row from another job's artifact: its known fields only, bounded; nonsense refused.
+  assert.deepEqual(cleanRow({ attempts: 1, status: "live", at: "t", tasks: ["a", 5], evil: "x", tripo: { status: "rigged", riggable: true, task: "t1", run: "rm" } }), { attempts: 1, status: "live", at: "t", tasks: ["a"], tripo: { status: "rigged", riggable: true, task: "t1" } });
+  for (const bad of [null, [], { attempts: 0, status: "live" }, { attempts: 1, status: "hacked" }, { attempts: "1", status: "live" }]) assert.equal(cleanRow(bad), null, JSON.stringify(bad));
+  // What goes between the jobs: the state files and each model's pieces, never anything else.
+  assert.deepEqual(bundlePaths(["NEWCAT", "../x"]), [FILES.meshyState, FILES.state, FILES.tripoState, FILES.jobs, FILES.index, FILES.provenance,
+    "assets/models/cats/NEWCAT.glb", "assets/models/cats/NEWCAT-lo.glb", "scripts/model-previews/NEWCAT.png"]);
+});
+
+test("time bounds: a Tripo CLI call is killed after TRIPO_TIMEOUT_MS, every Meshy request carries an abort signal, and a missed poll is asked again", () => {
+  let opts;
+  tripoCli(["balance"], { run: (cmd, args, o) => { opts = o; return '{"balance": 5}'; } });
+  assert.equal(opts.timeout, TRIPO_TIMEOUT_MS);
+  assert.ok(TRIPO_TIMEOUT_MS > 0 && TRIPO_TIMEOUT_MS <= 60 * 60_000);
+  assert.equal(opts.killSignal, "SIGKILL");
+  const src = fs.readFileSync(path.join(ROOT, "scripts/meshy.mjs"), "utf8");
+  const calls = [...src.matchAll(/\bfetch\(([^;]*)\);/g)].map((m) => m[1]);
+  assert.equal(calls.length, 2);
+  for (const c of calls) assert.match(c, /signal: AbortSignal\.timeout\((API|DOWNLOAD)_TIMEOUT_MS\)/, c);
+  assert.match(src, /catch \(e\) \{ if \(\+\+misses >= 3\) throw e; continue; \}/);
 });
 
 /* ── the checks ───────────────────────────────────────────────────────────────────────── */
@@ -196,13 +234,14 @@ test("the checks: a shipped model passes (budget, a textured GLB, the garden's r
 
 /* ── the steps, on a throwaway repository with fakes ──────────────────────────────────── */
 
-function repo({ queue = QUEUE, meshyState = {}, jobs = {}, adoptables = ADOPT } = {}) {
+function repo({ queue = QUEUE, meshyState = {}, jobs = {}, adoptables = ADOPT, state = null } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "models-"));
   const w = (rel, v) => { fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); fs.writeFileSync(path.join(root, rel), typeof v === "string" || Buffer.isBuffer(v) ? v : `${JSON.stringify(v, null, 1)}\n`); };
   w(FILES.queue, queue); w(FILES.meshyState, meshyState); w(FILES.jobs, jobs); w(FILES.adoptables, adoptables);
   w(FILES.photos, { cats: {}, none: {} });
   w(FILES.index, { version: 1, cats: { [SAMPLE]: INDEX.cats[SAMPLE] } });
   w(FILES.provenance, "# Models\n");
+  if (state) w(FILES.state, { note: "n", cats: state });
   for (const tag of ["", "-lo"]) w(`assets/models/cats/${SAMPLE}${tag}.glb`, fs.readFileSync(path.join(ROOT, `assets/models/cats/${SAMPLE}${tag}.glb`)));
   const read = (rel) => fs.readFileSync(path.join(root, rel), "utf8");
   return { root, w, read, json: (rel) => JSON.parse(read(rel)), exists: (rel) => fs.existsSync(path.join(root, rel)) };
@@ -226,6 +265,8 @@ test("meshy: no key, nothing called; each cat through scripts/meshy.mjs with the
   const calls = [];
   const fakeMeshy = (result) => (cmd, args) => {
     calls.push([cmd, ...args]);
+    // The try is on disk before Meshy is called (a run killed here still counts it).
+    assert.deepEqual([t.json(FILES.state).cats[args[2]].status, t.json(FILES.state).cats[args[2]].attempts], ["started", 1]);
     const key = args[2];
     const s = t.json(FILES.meshyState);
     if (result[key] === "done") s[key] = { status: "done", action: "rebuild", tasks: ["v1", "m1", "f1"], credits: 41, at: "x" };
@@ -241,6 +282,7 @@ test("meshy: no key, nothing called; each cat through scripts/meshy.mjs with the
   assert.equal(r.outputs.made, "NEWCAT");
   assert.deepEqual(calls[0], ["node", "scripts/meshy.mjs", "run", "NEWCAT", "--limit", "1", "--only", "rebuild", "--reserve", "150"]);
   assert.deepEqual(t.json(FILES.state).cats.LATECAT, { attempts: 1, status: "failed", at: "2026-09-28T06:00:00Z", error: "Meshy: multi-image-to-3d FAILED" });
+  assert.deepEqual(t.json(FILES.state).cats.NEWCAT, { attempts: 1, status: "made", at: "2026-09-28T06:00:00Z", tasks: ["v1", "m1", "f1"] });
   // Nothing new in Meshy's state (its balance at the reserve): no try used, and the run stops there; the reserve's default is the script's.
   const t2 = repo(), asked = [];
   r = await main(["meshy"], { env: { KEYS: "NEWCAT LATECAT", MESHY_API_KEY: "fake" }, root: t2.root, now: NOW, exec: (cmd, args) => { asked.push(args); return { status: 0 }; }, log: () => {} });
@@ -266,7 +308,8 @@ const fakePacker = (t, { src = SAMPLE, hd = INDEX.cats[src].hd === true, testsPa
 };
 
 test("pack: a model that passes every check goes live; its index row, files and job stay", async () => {
-  const t = repo({ meshyState: { NEWCAT: { status: "done", tasks: ["v1", "m1", "f1"] } }, jobs: { NEWCAT: { model_job: "m1", url: "https://x/new.glb", status: "done", previous: null } } });
+  const t = repo({ meshyState: { NEWCAT: { status: "done", tasks: ["v1", "m1", "f1"] } }, jobs: { NEWCAT: { model_job: "m1", url: "https://x/new.glb", status: "done", previous: null } },
+    state: { NEWCAT: { attempts: 1, status: "made", at: "t", tasks: ["v1", "m1", "f1"] } } });
   const r = await main(["pack"], { env: { KEYS: "NEWCAT" }, root: t.root, now: NOW, exec: fakePacker(t), R, log: () => {} });
   assert.equal(r.outputs.live, "NEWCAT");
   assert.ok(t.exists("assets/models/cats/NEWCAT.glb") && t.json(FILES.index).cats.NEWCAT);
@@ -276,7 +319,7 @@ test("pack: a model that passes every check goes live; its index row, files and 
 
 test("pack: a model over its budget, or failing the model tests, is discarded: files, index row and job put back, Meshy's state failed, a try used; twice, and it gives up", async () => {
   const jobs = { NEWCAT: { model_job: "m2", url: "https://x/new.glb", status: "done", previous: { model_job: "m0", url: "https://x/old.glb", status: "done" } } };
-  const t = repo({ meshyState: { NEWCAT: { status: "done", tasks: ["v2", "m2", "f2"] } }, jobs });
+  const t = repo({ meshyState: { NEWCAT: { status: "done", tasks: ["v2", "m2", "f2"] } }, jobs, state: { NEWCAT: { attempts: 1, status: "made", at: "t" } } });
   const before = [t.read(FILES.index), t.read(FILES.provenance)];
   // Over budget: an HD model's full copy (over 600 KB) packed as a standard one; the model tests are never reached.
   const hdKey = Object.keys(INDEX.cats).find((k) => INDEX.cats[k].hd && typeof INDEX.cats[k].file !== "string" && fs.statSync(path.join(ROOT, `assets/models/cats/${k}.glb`)).size > BUDGET.full);
@@ -295,11 +338,12 @@ test("pack: a model over its budget, or failing the model tests, is discarded: f
   // Chosen again (one try left), then discarded again: it gives up, and is not chosen any more.
   assert.equal((await main(["pick"], { env: {}, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT");
   const j2 = t.json(FILES.jobs); j2.NEWCAT = jobs.NEWCAT; t.w(FILES.jobs, j2);
+  t.w(FILES.state, { note: "n", cats: { NEWCAT: { attempts: 2, status: "made", at: "t" } } });
   await main(["pack"], { env: { KEYS: "NEWCAT" }, root: t.root, now: NOW, exec: fakePacker(t, { testsPass: false }), R, log: () => {} });
   assert.deepEqual([t.json(FILES.state).cats.NEWCAT.attempts, t.json(FILES.state).cats.NEWCAT.status], [2, "gave-up"]);
   assert.equal((await main(["pick"], { env: {}, root: t.root, now: NOW, log: () => {} })).outputs.keys, "LATECAT");
   // A packer that fails is a discarded model too.
-  const t3 = repo({ meshyState: { NEWCAT: { status: "done" } } });
+  const t3 = repo({ meshyState: { NEWCAT: { status: "done" } }, state: { NEWCAT: { attempts: 1, status: "made", at: "t" } } });
   const r3 = await main(["pack"], { env: { KEYS: "NEWCAT" }, root: t3.root, now: NOW, exec: () => ({ status: 1 }), R, log: () => {} });
   assert.equal(r3.outputs.live, "");
   assert.match(t3.json(FILES.state).cats.NEWCAT.error, /packer failed/);
@@ -339,11 +383,112 @@ test("preview and summary: a PNG through scripts/render-cat-thumbs.mjs, and the 
   assert.match(text, /A quick look at each new model is still wise/);
 });
 
+/* ── the commit job's merge: only the expected files, checked again; every try recorded ─────────── */
+
+const PNG = Buffer.concat([Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), Buffer.alloc(32)]);
+/** What the Pack job's artifact holds after it made NEWCAT live (a real pack run with the fake packer, then bundle). */
+async function packArtifact({ src = SAMPLE, hd } = {}) {
+  const runner = repo({ meshyState: { NEWCAT: { status: "done", tasks: ["v1", "m1", "f1"] } }, jobs: { NEWCAT: { model_job: "m1", url: "https://x/new.glb", status: "done", previous: null } },
+    state: { NEWCAT: { attempts: 1, status: "made", at: "t", tasks: ["v1", "m1", "f1"] } } });
+  const r = await main(["pack"], { env: { KEYS: "NEWCAT" }, root: runner.root, now: NOW, exec: fakePacker(runner, { src, ...(hd === undefined ? {} : { hd }) }), R, log: () => {} });
+  assert.equal(r.outputs.live, "NEWCAT");
+  runner.w(`${FILES.previews}/NEWCAT.png`, PNG);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "models-art-"));
+  await main(["bundle", dir], { env: { KEYS: "NEWCAT" }, root: runner.root, now: NOW, log: () => {} });
+  return dir;
+}
+const testsOk = (calls = []) => (cmd, args) => { calls.push([cmd, ...args]); assert.deepEqual([cmd, args[0], ...args.slice(1)], ["node", "--test", ...MODEL_TESTS]); return { status: 0 }; };
+
+test("merge: a model the Pack job made live is taken piece by piece, checked and tested again, and nothing else from the artifact is", async () => {
+  const dir = await packArtifact();
+  // Anything else in the artifact (a changed script, a git hook) is never taken.
+  fs.mkdirSync(path.join(dir, "scripts"), { recursive: true }); fs.writeFileSync(path.join(dir, "scripts/launch.mjs"), "evil");
+  fs.mkdirSync(path.join(dir, ".git/hooks"), { recursive: true }); fs.writeFileSync(path.join(dir, ".git/hooks/pre-push"), "evil");
+  const t = repo({ meshyState: {} });
+  const summary = path.join(t.root, "summary.md"), calls = [];
+  const r = await main(["merge"], { env: { KEYS: "NEWCAT", PACK_DIR: dir, MESHY_DIR: path.join(t.root, "missing"), GITHUB_STEP_SUMMARY: summary }, root: t.root, now: NOW, exec: testsOk(calls), R, log: () => {} });
+  assert.equal(r.outputs.live, "NEWCAT");
+  assert.equal(calls.length, 1, "the model tests ran in the commit job");
+  for (const tag of ["", "-lo"]) assert.ok(fs.readFileSync(path.join(t.root, `assets/models/cats/NEWCAT${tag}.glb`)).equals(fs.readFileSync(path.join(ROOT, `assets/models/cats/${SAMPLE}${tag}.glb`))));
+  assert.deepEqual(t.json(FILES.index).cats.NEWCAT, INDEX.cats[SAMPLE]);
+  assert.ok(t.json(FILES.index).cats[SAMPLE], "the other rows stay");
+  assert.match(t.read(FILES.provenance), /^# Models\n\| NEWCAT \| … \|\n$/);
+  assert.equal(t.json(FILES.jobs).NEWCAT.model_job, "m1");
+  assert.ok(fs.readFileSync(path.join(t.root, `${FILES.previews}/NEWCAT.png`)).equals(PNG));
+  assert.equal(t.json(FILES.state).cats.NEWCAT.status, "live");
+  assert.equal(t.json(FILES.meshyState).NEWCAT.status, "done");
+  assert.ok(!t.exists("scripts/launch.mjs") && !t.exists(".git/hooks/pre-push"));
+  assert.match(fs.readFileSync(summary, "utf8"), /\*\*NEWCAT\*\*: live/);
+});
+
+test("merge: a model that fails at the commit (over budget, a bad index row, or the tests) is not taken; the tree stays; the try is recorded failed", async () => {
+  const hdKey = Object.keys(INDEX.cats).find((k) => INDEX.cats[k].hd && typeof INDEX.cats[k].file !== "string" && fs.statSync(path.join(ROOT, `assets/models/cats/${k}.glb`)).size > BUDGET.full);
+  for (const [name, prepare, exec] of [
+    ["over budget (an HD model with a standard row)", async (d) => { const idx = JSON.parse(fs.readFileSync(path.join(d, FILES.index), "utf8")); delete idx.cats.NEWCAT.hd; fs.writeFileSync(path.join(d, FILES.index), JSON.stringify(idx)); for (const tag of ["", "-lo"]) fs.copyFileSync(path.join(ROOT, `assets/models/cats/${hdKey}${tag}.glb`), path.join(d, `assets/models/cats/NEWCAT${tag}.glb`)); }, testsOk()],
+    ["a malformed index row", async (d) => { const idx = JSON.parse(fs.readFileSync(path.join(d, FILES.index), "utf8")); idx.cats.NEWCAT.onload = "x"; fs.writeFileSync(path.join(d, FILES.index), JSON.stringify(idx)); }, testsOk()],
+    ["the model tests", async () => {}, () => ({ status: 1 })],
+  ]) {
+    const dir = await packArtifact();
+    await prepare(dir);
+    const t = repo();
+    const before = [FILES.index, FILES.provenance, FILES.jobs].map(t.read);
+    const r = await main(["merge"], { env: { KEYS: "NEWCAT", PACK_DIR: dir }, root: t.root, now: NOW, exec, R, log: () => {} });
+    assert.equal(r.outputs.live, "", name);
+    assert.deepEqual([FILES.index, FILES.provenance, FILES.jobs].map(t.read), before, name);
+    assert.ok(!t.exists("assets/models/cats/NEWCAT.glb") && !t.exists(`${FILES.previews}/NEWCAT.png`), name);
+    assert.deepEqual([t.json(FILES.state).cats.NEWCAT.status, t.json(FILES.state).cats.NEWCAT.attempts], ["failed", 1], name);
+    assert.match(t.json(FILES.state).cats.NEWCAT.error, /at the commit/, name);
+    assert.equal(t.json(FILES.meshyState).NEWCAT.status, "failed", `${name}: tried again`);
+  }
+});
+
+test("merge: a try whose Pack (or Meshy) job failed, timed out or was cancelled is recorded failed, Meshy's state too (never left done), and the summary says so", async () => {
+  // Meshy made it (its artifact: state "made", Meshy "done", a new job entry); no Pack artifact.
+  const runner = repo({ state: {} });
+  const ms = { NEWCAT: { status: "done", tasks: ["v1", "m1", "f1"], credits: 41 } };
+  runner.w(FILES.meshyState, ms);
+  runner.w(FILES.state, { note: "n", cats: { NEWCAT: { attempts: 1, status: "made", at: "t", tasks: ["v1", "m1", "f1"] }, LATECAT: { attempts: 2, status: "started", at: "t" } } });
+  runner.w(FILES.jobs, { NEWCAT: { model_job: "m1", url: "https://x/unchecked.glb", status: "done", previous: null } });
+  const meshyDir = fs.mkdtempSync(path.join(os.tmpdir(), "models-art-"));
+  await main(["bundle", meshyDir], { env: { KEYS: "NEWCAT LATECAT" }, root: runner.root, now: NOW, log: () => {} });
+  const t = repo();
+  const jobsBefore = t.read(FILES.jobs);
+  const summary = path.join(t.root, "summary.md");
+  const r = await main(["merge"], { env: { KEYS: "NEWCAT LATECAT", MESHY_DIR: meshyDir, PACK_DIR: path.join(t.root, "none"), GITHUB_STEP_SUMMARY: summary }, root: t.root, now: NOW, exec: () => assert.fail("no test run"), R, log: () => {} });
+  assert.equal(r.outputs.live, "");
+  const st = t.json(FILES.state).cats;
+  assert.deepEqual([st.NEWCAT.status, st.NEWCAT.attempts], ["failed", 1]);
+  assert.match(st.NEWCAT.error, /packing did not finish/);
+  assert.deepEqual([st.LATECAT.status, st.LATECAT.attempts], ["gave-up", 2]);
+  assert.match(st.LATECAT.error, /Meshy step did not finish/);
+  assert.equal(t.json(FILES.meshyState).NEWCAT.status, "failed", "never committed as done without its model");
+  assert.equal(t.read(FILES.jobs), jobsBefore, "the unchecked model's job entry is not committed");
+  const text = fs.readFileSync(summary, "utf8");
+  assert.match(text, /\*\*Did not finish:\*\*[\s\S]*NEWCAT: Meshy made the model, but packing did not finish/);
+  // So the next run chooses NEWCAT again (a try left) and pays Meshy only within the bound.
+  assert.equal((await main(["pick"], { env: {}, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT");
+});
+
+test("merge: the Tripo job's record wins for the rig; bundle and unbundle carry only the expected paths", async () => {
+  const dir = await packArtifact();
+  const tripoDir = fs.mkdtempSync(path.join(os.tmpdir(), "models-art-"));
+  const runner = repo();
+  await main(["unbundle", dir], { env: { KEYS: "NEWCAT" }, root: runner.root, now: NOW, log: () => {} });
+  assert.ok(runner.exists("assets/models/cats/NEWCAT.glb") && runner.json(FILES.state).cats.NEWCAT.status === "live");
+  const st = runner.json(FILES.state); st.cats.NEWCAT.tripo = { status: "rigged", riggable: true, task: "tr1" }; runner.w(FILES.state, st);
+  runner.w(FILES.tripoState, { NEWCAT: { status: "rigged", rig_task: "tr1" } });
+  await main(["bundle", tripoDir], { env: { KEYS: "NEWCAT" }, root: runner.root, now: NOW, log: () => {} });
+  const t = repo();
+  await main(["merge"], { env: { KEYS: "NEWCAT", PACK_DIR: dir, TRIPO_DIR: tripoDir }, root: t.root, now: NOW, exec: testsOk(), R, log: () => {} });
+  assert.deepEqual(t.json(FILES.state).cats.NEWCAT.tripo, { status: "rigged", riggable: true, task: "tr1" });
+  assert.deepEqual(t.json(FILES.tripoState).NEWCAT, { status: "rigged", rig_task: "tr1" });
+});
+
 test("the shipped state files read as the steps expect", () => {
   const st = JSON.parse(fs.readFileSync(path.join(ROOT, FILES.state), "utf8"));
   assert.deepEqual(Object.keys(st).sort(), ["cats", "note"]);
   for (const [k, v] of Object.entries(st.cats)) {
     assert.ok(Number.isInteger(v.attempts) && v.attempts >= 1 && v.attempts <= MAX_TRIES, k);
-    assert.ok(["live", "failed", "gave-up"].includes(v.status), k);
+    assert.ok(["started", "made", "live", "failed", "gave-up"].includes(v.status), k);
   }
 });

@@ -26,7 +26,7 @@ import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
-  descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, HIDDEN_NOTE,
+  descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf,
 } from "../scripts/lib/launcher.mjs";
 import { main, fsStore, scrubber } from "../scripts/launch.mjs";
 import { draftLaunch, checkUpdate, ADDRESS_LIKE, FAN_TRIBUTE, fanTribute, run as postUpdates } from "../scripts/post-updates.mjs";
@@ -836,20 +836,29 @@ test("photos: every kind shows its post's photo, credited; data/photo-hide.json 
     assert.deepEqual([...photoHideOf(io(text), (l) => logs.push(l))], want, text);
     assert.equal(logs.some((l) => /^::warning/.test(l)), warned, text);
   }
-  // A shown photo whose post is hidden moves to none (its reason names the post); unhidden, it comes back from its ledger row.
+  // A shown photo whose post is hidden moves, whole, to `hidden`; unhidden, it comes back exactly as it was, for any cat
+  // (not only a launched one: a hand-reviewed photo has no ledger row), and whatever form its post link takes.
   const photo = { url: img, handle: "floppafan", post: "https://x.com/floppafan/status/2100000000000000401", alt: "Quillbert: the photo from @floppafan's post" };
-  const photos = { note: "n", checked: "2026-09-26", cats: { QUILL: { realPhoto: photo, source: "proof" }, OTHER: { realPhoto: { ...photo, post: "https://x.com/a/status/2100000000000000999" }, source: "proof" } }, none: { ZZZ: "no photo" } };
+  const photos = { note: "n", checked: "2026-09-26", cats: { QUILL: { realPhoto: photo, source: "proof" }, OTHER: { realPhoto: { ...photo, post: "https://x.com/a/status/2100000000000000999" }, source: "search" } }, none: { ZZZ: "no photo" } };
   const hidden = applyPhotoHide(photos, new Set(["2100000000000000401"]));
   assert.deepEqual(hidden.hid, ["QUILL"]);
-  assert.equal(hidden.photos.none.QUILL, `${HIDDEN_NOTE}2100000000000000401`);
-  assert.ok(!("QUILL" in hidden.photos.cats) && "OTHER" in hidden.photos.cats && hidden.photos.none.ZZZ === "no photo");
+  assert.deepEqual(hidden.photos.hidden.QUILL, { postId: "2100000000000000401", entry: photos.cats.QUILL });
+  assert.ok(!("QUILL" in hidden.photos.cats) && "OTHER" in hidden.photos.cats && hidden.photos.none.ZZZ === "no photo" && !("QUILL" in hidden.photos.none));
   assert.equal(applyPhotoHide(hidden.photos, new Set(["2100000000000000401"])).photos, hidden.photos, "nothing moves twice");
-  const row = { ticker: "QUILL", postId: "2100000000000000401", status: "launched", image: img, url: photo.post, name: "Quillbert", cat: { proof: { handle: "floppafan" } } };
-  assert.deepEqual(applyPhotoHide(hidden.photos, new Set(), []).restored, [], "no ledger row: it stays hidden (a person may move it back)");
-  const back = applyPhotoHide(hidden.photos, new Set(), [row]);
+  const back = applyPhotoHide(hidden.photos, new Set());
   assert.deepEqual(back.restored, ["QUILL"]);
-  assert.deepEqual(back.photos.cats.QUILL, photos.cats.QUILL);
-  assert.ok(!("QUILL" in back.photos.none));
+  assert.deepEqual(back.photos, photos, "unhidden: the file exactly as it was");
+  // Every photo the site ships can be hidden and shown again without losing it (the review's probe).
+  const shippedPhotos = JSON.parse(readRoot(FILES.realPhotos));
+  const ids = new Set(Object.values(shippedPhotos.cats).map((v) => postIdOf(v.realPhoto.post)));
+  const all = applyPhotoHide(shippedPhotos, ids);
+  assert.deepEqual(Object.keys(all.photos.cats).filter((T) => ids.has(postIdOf(shippedPhotos.cats[T].realPhoto.post))), []);
+  assert.deepEqual(applyPhotoHide(all.photos, new Set()).photos, shippedPhotos);
+  // Any link form of the post: twitter.com, www., a query.
+  for (const u of ["https://twitter.com/floppafan/status/2100000000000000401", "https://www.x.com/floppafan/status/2100000000000000401?s=20", "https://x.com/floppafan/status/2100000000000000401/photo/1"]) {
+    assert.equal(postIdOf(u), "2100000000000000401", u);
+    assert.deepEqual(applyPhotoHide({ cats: { QUILL: { realPhoto: { ...photo, post: u }, source: "proof" } } }, new Set(["2100000000000000401"])).hid, ["QUILL"], u);
+  }
   // The row's own fields: the coin's picture is its post's or the site's; the credit a flag.
   const ctx = { nowMs: NOW, approvals: new Set(["2100000000000000401"]), watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")) };
   const p = post("2100000000000000401", { name: "Quillbert", ticker: "QUILL", kind: "real", nameFrom: null, figure: null, lore: "Quillbert sleeps in the salad bowl." });
@@ -881,14 +890,14 @@ test("a real pet, approved to launch: its photo shows on its card and on its coi
   const ph = t.json(FILES.realPhotos).cats.QUILL;
   assert.deepEqual(ph, { realPhoto: { url: row.image, handle: "floppafan", post: row.url, alt: "Quillbert: the photo from @floppafan's post" }, source: "proof" });
   assert.equal((await pageOf(t)).find((x) => x.id === "QUILL")?.realPhoto?.url, row.image, "shown on its card");
-  // Hidden by the owner: the next prepare takes it off the card (none says why) and deploys; the coin keeps its picture (sent).
+  // Hidden by the owner: the next prepare takes it off the card (kept whole in `hidden`) and deploys; the coin keeps its picture (sent).
   fs.writeFileSync(path.join(t.root, FILES.photoHide), JSON.stringify({ note: "test", hide: [id] }));
   const logs = [];
   const p = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, log: (l) => logs.push(l) });
   assert.deepEqual([p.photos, p.deploy], [["QUILL"], true]);
   const photos = t.json(FILES.realPhotos);
   assert.ok(!("QUILL" in photos.cats));
-  assert.equal(photos.none.QUILL, `${HIDDEN_NOTE}${id}`);
+  assert.deepEqual(photos.hidden.QUILL, { postId: id, entry: ph });
   assert.equal((await pageOf(t)).find((x) => x.id === "QUILL")?.realPhoto ?? null, null, "off its card");
   assert.equal(t.json(row.metadataPath).image, row.image, "a launched coin's metadata is never rewritten");
   assert.ok(logs.some((l) => /QUILL is hidden/.test(l)));
@@ -897,7 +906,7 @@ test("a real pet, approved to launch: its photo shows on its card and on its coi
   const p2 = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
   assert.deepEqual(p2.photos, ["QUILL"]);
   assert.deepEqual(t.json(FILES.realPhotos).cats.QUILL, ph);
-  assert.ok(!("QUILL" in (t.json(FILES.realPhotos).none ?? {})));
+  assert.ok(!("hidden" in t.json(FILES.realPhotos)));
   // A typo in the file hides nothing and stops nothing.
   fs.writeFileSync(path.join(t.root, FILES.photoHide), "{ hide: [");
   const warn = [];
@@ -906,7 +915,7 @@ test("a real pet, approved to launch: its photo shows on its card and on its coi
   assert.ok(warn.some((l) => /^::warning.*photo-hide\.json/.test(l)));
 });
 
-test("a post hidden before it launches: its coin shows the site's own picture (no credit), and its photo goes to none, never to its card", async () => {
+test("a post hidden before it launches: its coin shows the site's own picture (no credit), and its photo waits in hidden, never on its card", async () => {
   const w = throwaway();
   const id = "2100000000000000421";
   const t = site({ wallet: w.address });
@@ -922,7 +931,7 @@ test("a post hidden before it launches: its coin shows the site's own picture (n
   assert.equal(meta.description, `Gloopington stares down the camera from the top of the fridge. ${FAN_TRIBUTE.character}`);
   const photos = t.json(FILES.realPhotos);
   assert.ok(!("GLOOP" in photos.cats));
-  assert.equal(photos.none.GLOOP, `${HIDDEN_NOTE}${id}`);
+  assert.deepEqual(photos.hidden.GLOOP, { postId: id, entry: { realPhoto: { url: row.image, handle: "floppafan", post: row.url, alt: "Sir Gloopington: the photo from @floppafan's post" }, source: "proof" } });
 });
 
 test("a prepared coin's picture follows data/photo-hide.json until it is sent", async () => {

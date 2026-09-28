@@ -1,40 +1,44 @@
 #!/usr/bin/env node
 /**
  * AUTOMATIC 3D MODELS FOR LAUNCHED CATS: the Models workflow's steps (.github/workflows/models.yml),
- * around the repository's own tools, each used as it is designed:
+ * around the repository's own tools, each used as it is designed. The workflow runs them in separate
+ * jobs, so that no job that installs a package holds a key it does not need or the push token:
  *
- *   node scripts/models.mjs pick        (no secret) choose at most MODELS_PER_RUN (1, at most 2) queued
- *                                       REBUILD entries of scripts/meshy.queue.json: the cats the sanctuary
- *                                       launched that have no model yet first; the rest of the queue only
- *                                       when MODELS_BACKLOG is "on". Never one whose post's photo the owner
- *                                       hides (data/photo-hide.json), one already made, one with views
- *                                       waiting for a person (meshy.state "views"), or one that failed
- *                                       MAX_TRIES times.
- *   node scripts/models.mjs meshy       (MESHY_API_KEY) scripts/meshy.mjs run KEY --reserve R for each:
- *                                       four-legged reference views from the entry's reference picture,
- *                                       Meshy multi-image-to-3D and its remesh far copy, recorded in
- *                                       scripts/cat-models.jobs.json. meshy.mjs stops before its balance
- *                                       would drop under the reserve (MODELS_MESHY_RESERVE, default 100).
- *   node scripts/models.mjs pack        (no secret) scripts/make-cat-models.py packs each new model into
- *                                       assets/models/cats/ (index.json, PROVENANCE.md), then the checks:
- *                                       the size budgets, a valid textured GLB, the garden's own rig
- *                                       (assets/world/catrig.js) on the model, and the repository's model
- *                                       tests (tests/catmodels, catrig, meshy). A model that fails is
- *                                       discarded (its files, its index row, its job entry put back), the
- *                                       failure recorded (retried at most MAX_TRIES times in all), and the
- *                                       cat keeps its portrait and the shared model.
- *   node scripts/models.mjs tripo       (TRIPO_API_KEY) scripts/tripo.mjs rig KEY --reserve R for each
- *                                       model that went live (Tripo's quadruped rig of the packed model,
- *                                       MODELS_TRIPO_RESERVE, default 100); skipped, with a log line, when
- *                                       the secret is missing. The site rigs its cats itself (catrig.js):
- *                                       Tripo's verdict and task are recorded, its rigged GLB is not used.
- *   node scripts/models.mjs preview     (no secret) scripts/render-cat-thumbs.mjs: a PNG of each new model
- *                                       in scripts/model-previews/ (headless Chromium; skipped if missing).
- *   node scripts/models.mjs summary     (no secret) the run in the job summary ($GITHUB_STEP_SUMMARY).
+ *   MESHY JOB (contents: read, installs nothing: this file and meshy.mjs are node built-ins)
+ *   node scripts/models.mjs pick        choose at most MODELS_PER_RUN (1, at most 2) queued REBUILD entries of
+ *                                       scripts/meshy.queue.json: the cats the sanctuary launched that have no
+ *                                       model yet first; the rest of the queue only when MODELS_BACKLOG is "on".
+ *                                       Never one whose post's photo the owner hides (data/photo-hide.json), one
+ *                                       already made, one with views waiting for a person, one past MAX_TRIES.
+ *   node scripts/models.mjs meshy       (MESHY_API_KEY) for each: a try is counted and saved FIRST (status
+ *                                       "started"), then scripts/meshy.mjs run KEY --reserve R (reference views
+ *                                       from the entry's picture, multi-image-to-3D, a remesh far copy, in
+ *                                       scripts/cat-models.jobs.json; meshy.mjs stops before its balance would drop
+ *                                       under MODELS_MESHY_RESERVE, default 100, and then no try is used).
+ *   PACK JOB (contents: read, no secret; packages installed with --ignore-scripts)
+ *   node scripts/models.mjs pack        scripts/make-cat-models.py packs each model Meshy made into
+ *                                       assets/models/cats/, then the checks: the size budgets, a valid textured
+ *                                       GLB, the garden's own rig (assets/world/catrig.js) on the model, and the
+ *                                       model tests. A model that fails is discarded (its files, index row and job
+ *                                       entry put back) and the try recorded failed; the cat keeps its portrait.
+ *   node scripts/models.mjs preview     scripts/render-cat-thumbs.mjs: a PNG of each new model in scripts/model-previews/.
+ *   TRIPO JOB (contents: read)
+ *   node scripts/models.mjs tripo       (TRIPO_API_KEY) scripts/tripo.mjs rig KEY --reserve R for each live model
+ *                                       (MODELS_TRIPO_RESERVE, default 100); skipped, with a log line, without the
+ *                                       key. The site rigs its cats itself: Tripo's verdict is recorded, its GLB unused.
+ *   COMMIT JOB (contents: write, installs nothing third-party; it always runs)
+ *   node scripts/models.mjs merge       takes from the other jobs' artifacts (MESHY_DIR, PACK_DIR, TRIPO_DIR) only
+ *                                       the picked cats' state rows (cleaned) and, for a live model, its two GLBs,
+ *                                       index and PROVENANCE rows, job entry and preview, each checked, then runs
+ *                                       the checks and model tests again; a try that did not finish (a job failed,
+ *                                       timed out or was cancelled) is recorded failed, and Meshy's state with it,
+ *                                       so no spend goes unrecorded and no cat is left "done" without its model.
+ *                                       Writes the job summary ($GITHUB_STEP_SUMMARY).
+ *   node scripts/models.mjs bundle DIR / unbundle DIR   the files that go between the jobs (bundlePaths), nothing else.
  *
- * The keys go from step to step in KEYS (the step outputs `keys`, `made`, `live`); every key is checked
- * against the queue again. State: scripts/models.state.json { note, cats: { KEY: { attempts, status,
- * error?, at, tasks?, tripo? } } } (status "live", "failed" or "gave-up"). No step here holds a wallet key.
+ * The keys go from job to job in KEYS (outputs `keys`, `made`, `live`); every key is checked against the queue
+ * again. State: scripts/models.state.json { note, cats: { KEY: { attempts, status, error?, at, tasks?, tripo? } } }
+ * (status "started", "made", "live", "failed" or "gave-up"). No step here holds a wallet key.
  */
 import fs from "node:fs";
 import os from "node:os";
@@ -42,7 +46,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { ordered } from "./meshy.mjs";
-import { photoHideOf, HIDDEN_NOTE } from "./lib/launcher.mjs";
+import { photoHideOf } from "./lib/launcher.mjs";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const FILES = Object.freeze({
@@ -117,8 +121,7 @@ export function selectEntries({ queue, meshyState = {}, state = { cats: {} }, ad
     if ((s?.attempts ?? 0) >= MAX_TRIES || s?.status === "gave-up") { skipped.push({ key: q.key, why: `failed ${s.attempts} times: a person looks (delete its scripts/models.state.json row to try again)` }); continue; }
     if (meshyState[q.key]?.status === "views") { skipped.push({ key: q.key, why: "its reference views wait for a person (meshy.state \"views\")" }); continue; }
     const post = launched.get(q.key);
-    const none = photos?.none?.[q.key];
-    if ((post && hidden.has(post)) || (typeof none === "string" && none.startsWith(HIDDEN_NOTE))) { skipped.push({ key: q.key, why: "its post's photo is hidden (data/photo-hide.json)" }); continue; }
+    if ((post && hidden.has(post)) || isObj(photos?.hidden?.[q.key])) { skipped.push({ key: q.key, why: "its post's photo is hidden (data/photo-hide.json)" }); continue; }
     if (isLaunched && !(modelKey in (index?.cats ?? {}))) first.push({ key: q.key, modelKey, launched: true });
     else if (isLaunched) skipped.push({ key: q.key, why: "has a model already" });
     else rest.push({ key: q.key, modelKey, launched: false });
@@ -133,14 +136,37 @@ export function selectEntries({ queue, meshyState = {}, state = { cats: {} }, ad
 export function stateOf(data) {
   return { note: STATE_NOTE, cats: isObj(data?.cats) ? structuredClone(data.cats) : {} };
 }
-/** One try's outcome for `key`: live (ok) or failed (attempts + 1; "gave-up" once MAX_TRIES are used). Returns the new row. */
-export function recordTry(state, key, { ok, error = null, at, tasks = null }) {
-  const prev = state.cats[key] ?? {};
-  const attempts = (prev.attempts ?? 0) + 1;
-  const row = { attempts, status: ok ? "live" : attempts >= MAX_TRIES ? "gave-up" : "failed", at, ...(error ? { error: String(error).slice(0, 400) } : {}), ...(tasks ? { tasks } : {}) };
+/** The statuses a row may have: "started" (a try counted before Meshy is called), "made" (Meshy done, not packed yet), then live, failed or gave-up. */
+export const STATUSES = Object.freeze(["started", "made", "live", "failed", "gave-up"]);
+/**
+ * A try, counted BEFORE Meshy is called (so a run that hangs, times out or is cancelled still counts it, and
+ * its state is committed): attempts + 1, status "started". Returns { row, prev } (prev: the row before, to put
+ * back when nothing was spent: the reserve).
+ */
+export function startTry(state, key, { at }) {
+  const prev = state.cats[key] ?? null;
+  const row = { attempts: (prev?.attempts ?? 0) + 1, status: "started", at, ...(prev?.tripo ? { tripo: prev.tripo } : {}) };
+  state.cats[key] = row;
+  return { row, prev };
+}
+/** The try's outcome, on the row startTry counted: "made" (Meshy done), live (ok), or failed ("gave-up" once MAX_TRIES are used). */
+export function finishTry(state, key, { ok, made = false, error = null, at, tasks = null }) {
+  const prev = state.cats[key] ?? { attempts: 1 };
+  const attempts = Math.max(1, prev.attempts ?? 1);
+  const row = { attempts, status: made ? "made" : ok ? "live" : attempts >= MAX_TRIES ? "gave-up" : "failed", at, ...(error ? { error: String(error).slice(0, 400) } : {}), ...(tasks ?? prev.tasks ? { tasks: tasks ?? prev.tasks } : {}) };
   if (prev.tripo) row.tripo = prev.tripo;
   state.cats[key] = row;
   return row;
+}
+/** A state row as the commit takes it from an artifact: only its known fields, bounded. Null when it is not one. */
+export function cleanRow(v) {
+  if (!isObj(v) || !Number.isInteger(v.attempts) || v.attempts < 1 || v.attempts > MAX_TRIES + 1 || !STATUSES.includes(v.status)) return null;
+  const text = (x, n) => (typeof x === "string" ? x.slice(0, n) : undefined);
+  const out = { attempts: v.attempts, status: v.status, at: text(v.at, 30) ?? "" };
+  if (text(v.error, 400)) out.error = text(v.error, 400);
+  if (Array.isArray(v.tasks)) out.tasks = v.tasks.filter((t) => typeof t === "string").slice(0, 8).map((t) => t.slice(0, 80));
+  if (isObj(v.tripo)) out.tripo = { status: text(v.tripo.status, 40) ?? "unknown", ...(typeof v.tripo.riggable === "boolean" ? { riggable: v.tripo.riggable } : {}), ...(text(v.tripo.task, 80) ? { task: text(v.tripo.task, 80) } : {}), ...(text(v.tripo.error, 200) ? { error: text(v.tripo.error, 200) } : {}) };
+  return out;
 }
 /**
  * What a meshy.mjs run did for `key`, from its state before and after: "made" (done, a new entry),
@@ -292,6 +318,11 @@ function restore(root, snap) {
     if (bytes === null) fs.rmSync(f, { force: true }); else fs.writeFileSync(f, bytes);
   }
 }
+/** The files that go between the jobs (scripts/models.mjs bundle/unbundle), for these model keys: the state, and each model's pieces. */
+export function bundlePaths(modelKeys) {
+  return [FILES.meshyState, FILES.state, FILES.tripoState, FILES.jobs, FILES.index, FILES.provenance,
+    ...modelKeys.filter((m) => KEY.test(m)).flatMap((m) => [`assets/models/cats/${m}.glb`, `assets/models/cats/${m}-lo.glb`, `${FILES.previews}/${m}.png`])];
+}
 /** The KEYS a step was given: those that are queue keys, in order, without repeats. */
 export function keysOf(env, queue) {
   return [...new Set(String(env?.KEYS ?? "").split(/[\s,]+/).filter(Boolean))].filter((k) => KEY.test(k) && queue?.cats?.[k]?.action === "rebuild");
@@ -335,50 +366,44 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
     const made = [];
     for (const key of keys) {
       const before = readJsonFile(file(FILES.meshyState), {})[key] ?? null;
+      // The try is counted, and saved, before any credit can be spent: a run that hangs or is cancelled still counts it.
+      const { prev } = startTry(state, key, { at });
+      saveState();
       const r = x("node", ["scripts/meshy.mjs", "run", key, "--limit", "1", "--only", "rebuild", "--reserve", String(reserve.value)]);
       const o = meshyOutcome(before, readJsonFile(file(FILES.meshyState), {})[key] ?? null);
-      if (o.outcome === "made") { made.push(key); log(`Models: ${key}: Meshy made its model (${o.credits ?? "?"} credits).`); }
-      else if (o.outcome === "failed") { const row = recordTry(state, key, { ok: false, error: `Meshy: ${o.error}`, at }); log(`::warning title=Models::${key}: Meshy failed (${String(o.error).slice(0, 200)}); try ${row.attempts} of ${MAX_TRIES}.`); }
-      else { log(`Models: ${key}: nothing made (the Meshy balance is at its reserve of ${reserve.value} credits, or the run stopped${r?.status ? `: exit ${r.status}` : ""}); no try is used.`); break; }
+      if (o.outcome === "made") { finishTry(state, key, { made: true, at, tasks: o.tasks }); made.push(key); log(`Models: ${key}: Meshy made its model (${o.credits ?? "?"} credits).`); }
+      else if (o.outcome === "failed") { const row = finishTry(state, key, { ok: false, error: `Meshy: ${o.error}`, at }); log(`::warning title=Models::${key}: Meshy failed (${String(o.error).slice(0, 200)}); try ${row.attempts} of ${MAX_TRIES}.`); }
+      else {
+        if (prev) state.cats[key] = prev; else delete state.cats[key];   // nothing was spent: no try
+        saveState();
+        log(`Models: ${key}: nothing made (the Meshy balance is at its reserve of ${reserve.value} credits, or the run stopped${r?.status ? `: exit ${r.status}` : ""}); no try is used.`);
+        break;
+      }
+      saveState();
     }
-    saveState();
     outputs.made = made.join(" ");
     return { code: 0, outputs };
   }
 
   if (cmd === "pack") {
     const live = [];
-    for (const key of keys) {
+    for (const key of keys.filter((k) => state.cats[k]?.status === "made")) {
       const m = mk(key);
       const snap = snapshot(root, [`assets/models/cats/${m}.glb`, `assets/models/cats/${m}-lo.glb`, FILES.index, FILES.provenance]);
       let problems = [];
       try {
         const p = x("python3", ["scripts/make-cat-models.py", "--gltfpack", env.GLTFPACK || "node_modules/.bin/gltfpack", m]);
         if (p?.status !== 0) problems.push(`the packer failed (exit ${p?.status})`);
-        else {
-          problems = await modelProblems(root, m, { R });
-          if (!problems.length) {
-            const t = x("node", ["--test", ...MODEL_TESTS]);
-            if (t?.status !== 0) problems.push(`the model tests failed (${MODEL_TESTS.join(", ")})`);
-          }
-        }
+        else problems = await checkModel(m);
       } catch (e) { problems.push(`packing stopped: ${e.message}`); }
-      const tasks = readJsonFile(file(FILES.meshyState), {})[key]?.tasks ?? null;
       if (!problems.length) {
-        recordTry(state, key, { ok: true, at, tasks });
+        finishTry(state, key, { ok: true, at });
         live.push(key);
         log(`Models: ${key}: its model passed every check and goes live.`);
         continue;
       }
-      // Discarded: its files and index row as they were, its job entry as before Meshy, Meshy's state "failed" (so it is tried again, bounded).
       restore(root, snap);
-      const jobs = readJsonFile(file(FILES.jobs), {});
-      writeJson(file(FILES.jobs), restoreJob(jobs, m));
-      const ms = readJsonFile(file(FILES.meshyState), {});
-      ms[key] = { ...(ms[key] ?? {}), status: "failed", error: `the model did not pass the checks: ${problems.join("; ")}`.slice(0, 400), at };
-      writeJson(file(FILES.meshyState), ms);
-      const row = recordTry(state, key, { ok: false, error: problems.join("; "), at, tasks });
-      log(`::warning title=Models::${key}: its model is discarded (${problems.join("; ").slice(0, 300)}); try ${row.attempts} of ${MAX_TRIES}. The cat keeps its portrait.`);
+      discard(key, problems);
     }
     saveState();
     outputs.live = live.join(" ");
@@ -408,7 +433,142 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
     return { code: 0, outputs };
   }
 
-  if (cmd === "summary") {
+  // Between jobs: the files a step made, copied to (bundle) or from (unbundle) an artifact folder; only these paths.
+  if (cmd === "bundle" || cmd === "unbundle") {
+    const dir = path.resolve(argv[1] ?? "");
+    if (!argv[1]) { log("Usage: node scripts/models.mjs bundle|unbundle DIR"); return { code: 2, outputs }; }
+    let n = 0;
+    for (const rel of bundlePaths(keys.map(mk))) {
+      const [from, to] = cmd === "bundle" ? [file(rel), path.join(dir, rel)] : [path.join(dir, rel), file(rel)];
+      if (!fs.existsSync(from) || !fs.statSync(from).isFile()) continue;
+      fs.mkdirSync(path.dirname(to), { recursive: true });
+      fs.copyFileSync(from, to);
+      n++;
+    }
+    log(`Models: ${cmd === "bundle" ? "bundled" : "took"} ${n} file(s).`);
+    return { code: 0, outputs };
+  }
+
+  if (cmd === "merge") {
+    const live = await merge();
+    outputs.live = live.join(" ");
+    return { code: 0, outputs };
+  }
+
+  if (cmd === "summary") { writeSummary([]); return { code: 0, outputs }; }
+
+  log("Usage: node scripts/models.mjs pick | meshy | pack | tripo | preview | bundle DIR | unbundle DIR | merge");
+  return { code: 2, outputs };
+
+  /** The checks a packed model must pass: modelProblems, then the model tests. */
+  async function checkModel(m) {
+    const problems = await modelProblems(root, m, { R });
+    if (problems.length) return problems;
+    const t = x("node", ["--test", ...MODEL_TESTS]);
+    return t?.status !== 0 ? [`the model tests failed (${MODEL_TESTS.join(", ")})`] : [];
+  }
+
+  /** A discarded model (its files already put back): its job entry as before Meshy, Meshy's state "failed" (tried again, bounded), the try's failure. */
+  function discard(key, problems) {
+    const jobs = readJsonFile(file(FILES.jobs), {});
+    writeJson(file(FILES.jobs), restoreJob(jobs, mk(key)));
+    const ms = readJsonFile(file(FILES.meshyState), {});
+    ms[key] = { ...(ms[key] ?? {}), status: "failed", error: `the model did not pass the checks: ${problems.join("; ")}`.slice(0, 400), at };
+    writeJson(file(FILES.meshyState), ms);
+    const row = finishTry(state, key, { ok: false, error: problems.join("; "), at });
+    log(`::warning title=Models::${key}: its model is discarded (${problems.join("; ").slice(0, 300)}); try ${row.attempts} of ${MAX_TRIES}. The cat keeps its portrait.`);
+  }
+
+  /**
+   * THE COMMIT JOB'S STEP (no third-party code, node built-ins only). From the artifacts of the Meshy, Pack and
+   * Tripo jobs (MESHY_DIR, PACK_DIR, TRIPO_DIR; any may be missing: a job that failed or was cancelled), for the
+   * cats picked (KEYS): their state rows (cleaned), and for a cat the Pack job made live, its two GLBs, its
+   * index and PROVENANCE rows, its job entry and its preview, each checked; then the checks and model tests run
+   * again here. A cat whose try did not finish (Meshy or Pack stopped) is recorded failed, and Meshy's state for it
+   * too (so it is tried again, bounded), never left "done" without its model. Returns the keys that go live.
+   */
+  async function merge() {
+    const dirs = [env.MESHY_DIR, env.PACK_DIR, env.TRIPO_DIR].filter((d) => d && fs.existsSync(d));
+    const latest = (rel) => { for (const d of [...dirs].reverse()) { const v = readJsonFile(path.join(d, rel), null); if (isObj(v)) return v; } return {}; };
+    const meshyState = readJsonFile(file(FILES.meshyState), {}), tripoState = readJsonFile(file(FILES.tripoState), {});
+    const artMeshy = latest(FILES.meshyState), artState = latest(FILES.state), artTripo = latest(FILES.tripoState);
+    const notes = [];
+    for (const key of keys) {
+      if (isObj(artMeshy[key])) meshyState[key] = artMeshy[key];
+      const row = cleanRow(artState.cats?.[key]);
+      if (row) state.cats[key] = row;
+      if (isObj(artTripo[mk(key)])) tripoState[mk(key)] = artTripo[mk(key)];
+    }
+    const live = [];
+    const pack = env.PACK_DIR && fs.existsSync(env.PACK_DIR) ? env.PACK_DIR : null;
+    for (const key of keys) {
+      const row = state.cats[key];
+      if (!row) continue;
+      if (row.status === "started" || row.status === "made") {
+        const why = row.status === "made" ? "Meshy made the model, but packing did not finish (the Pack job failed, timed out or was cancelled)" : "the Meshy step did not finish (it failed, timed out or was cancelled)";
+        const r = finishTry(state, key, { ok: false, error: why, at });
+        if (meshyState[key]?.status === "done" || row.status === "made") meshyState[key] = { ...(meshyState[key] ?? {}), status: "failed", error: why, at };
+        notes.push(`${key}: ${why}; try ${r.attempts} of ${MAX_TRIES}.`);
+        log(`::warning title=Models::${key}: ${why}; try ${r.attempts} of ${MAX_TRIES}.`);
+        continue;
+      }
+      if (row.status !== "live") continue;
+      const m = mk(key);
+      const snap = snapshot(root, [`assets/models/cats/${m}.glb`, `assets/models/cats/${m}-lo.glb`, FILES.index, FILES.provenance, FILES.jobs, `${FILES.previews}/${m}.png`]);
+      const problems = pack ? takeModel(pack, m) : ["the Pack job's files are missing"];
+      if (!problems.length) problems.push(...await checkModel(m));
+      if (problems.length) {
+        restore(root, snap);
+        const r = finishTry(state, key, { ok: false, error: `at the commit: ${problems.join("; ")}`, at });
+        meshyState[key] = { ...(meshyState[key] ?? {}), status: "failed", error: `the model did not pass the checks at the commit: ${problems.join("; ")}`.slice(0, 400), at };
+        notes.push(`${key}: discarded at the commit (${problems.join("; ")}); try ${r.attempts} of ${MAX_TRIES}.`);
+        log(`::warning title=Models::${key}: its model is discarded at the commit (${problems.join("; ").slice(0, 300)}).`);
+        continue;
+      }
+      live.push(key);
+    }
+    writeJson(file(FILES.meshyState), meshyState);
+    if (Object.keys(tripoState).length) writeJson(file(FILES.tripoState), tripoState);
+    saveState();
+    writeSummary(notes);
+    return live;
+  }
+
+  /** One live model from the Pack job's folder into the tree, each piece checked: [] or what is wrong. */
+  function takeModel(dir, m) {
+    const out = [];
+    for (const tag of ["", "-lo"]) {
+      const f = path.join(dir, `assets/models/cats/${m}${tag}.glb`);
+      if (!fs.existsSync(f)) { out.push(`${m}${tag}.glb is missing`); continue; }
+      const buf = fs.readFileSync(f);
+      if (buf.length > BUDGET.hdFull || buf.length < 20 || buf.readUInt32LE(0) !== 0x46546c67) { out.push(`${m}${tag}.glb is not a GLB within the budgets`); continue; }
+      fs.writeFileSync(file(`assets/models/cats/${m}${tag}.glb`), buf);
+    }
+    const idxRow = readJsonFile(path.join(dir, FILES.index), { cats: {} }).cats?.[m];
+    const okRow = isObj(idxRow) && Object.keys(idxRow).every((k) => ["len", "height", "width", "hd"].includes(k)) && ["len", "height", "width"].every((k) => Number.isFinite(idxRow[k])) && (idxRow.hd === undefined || idxRow.hd === true);
+    if (!okRow) out.push("its index.json row is missing or malformed");
+    else { const idx = readJsonFile(file(FILES.index), { version: 1, cats: {} }); idx.cats[m] = { ...idxRow }; writeJson(file(FILES.index), idx); }
+    const provRow = fs.existsSync(path.join(dir, FILES.provenance)) ? fs.readFileSync(path.join(dir, FILES.provenance), "utf8").split("\n").find((l) => l.startsWith(`| ${m} | `)) : null;
+    if (!provRow || !/^\| [A-Za-z0-9-]+ \| [^<>\n`]{1,600}\|$/.test(provRow)) out.push("its PROVENANCE.md row is missing or malformed");
+    else {
+      const lines = fs.readFileSync(file(FILES.provenance), "utf8").replace(/\n$/, "").split("\n");
+      const at2 = lines.findIndex((l) => l.startsWith(`| ${m} | `));
+      if (at2 >= 0) lines[at2] = provRow; else lines.push(provRow);
+      fs.writeFileSync(file(FILES.provenance), `${lines.join("\n")}\n`);
+    }
+    const job = readJsonFile(path.join(dir, FILES.jobs), {})[m];
+    if (!isObj(job) || typeof job.url !== "string") out.push("its job entry is missing");
+    else { const jobs = readJsonFile(file(FILES.jobs), {}); jobs[m] = job; writeJson(file(FILES.jobs), jobs); }
+    const png = path.join(dir, `${FILES.previews}/${m}.png`);
+    if (fs.existsSync(png)) {
+      const b = fs.readFileSync(png);
+      if (b.length < 1_000_000 && b.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) { fs.mkdirSync(file(FILES.previews), { recursive: true }); fs.writeFileSync(file(`${FILES.previews}/${m}.png`), b); }
+    }
+    return out;
+  }
+
+  /** The run in the job summary ($GITHUB_STEP_SUMMARY), with `notes` (tries that did not finish). */
+  function writeSummary(notes) {
     const repo = env.GITHUB_REPOSITORY, lines = ["## Models", ""];
     const jobs = readJsonFile(file(FILES.jobs), {}), index = readJsonFile(file(FILES.index), { cats: {} });
     if (!keys.length) lines.push("No queued cat to make this run.");
@@ -420,14 +580,11 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
       } else if (s && s.status !== "live") lines.push(`- **${key}**: ${s.status} (try ${s.attempts} of ${MAX_TRIES}): ${s.error ?? ""}`);
       else lines.push(`- **${key}**: nothing made this run (the credit reserve, or a missing key).`);
     }
+    if (notes.length) lines.push("", "**Did not finish:**", ...notes.map((n) => `- ${n}`));
     lines.push("", "A quick look at each new model is still wise: `node scripts/render-cat-thumbs.mjs OUT KEY` and `node scripts/render-cat-clips.mjs OUT.png KEY` (see scripts/CAT-MODELS.md).");
     const text = `${lines.join("\n")}\n`;
     if (env.GITHUB_STEP_SUMMARY) fs.appendFileSync(env.GITHUB_STEP_SUMMARY, text); else log(text);
-    return { code: 0, outputs };
   }
-
-  log("Usage: node scripts/models.mjs pick | meshy | pack | tripo | preview | summary");
-  return { code: 2, outputs };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

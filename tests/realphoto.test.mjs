@@ -24,9 +24,17 @@ const residents = async () => (await loadResidents({ fetchImpl: localFetch, base
 const fire = (el, type) => { for (const fn of el.listeners[type] ?? []) fn({}); };
 
 test("data/real-photos.json: only the four fields, pbs.twimg.com images, X post links, no cat both listed and left out", () => {
-  // A closed schema: shown photos (cats) and cats left without one (none: a reason, or HIDDEN_NOTE and the post data/photo-hide.json hides).
-  assert.deepEqual(Object.keys(PHOTOS).filter((k) => !["note", "checked", "cats", "none"].includes(k)), []);
+  // A closed schema: shown photos (cats), cats left without one (none: a reason), and photos the owner hides
+  // (data/photo-hide.json), kept whole to come back: hidden { T: { postId, entry } }, never shown.
+  assert.deepEqual(Object.keys(PHOTOS).filter((k) => !["note", "checked", "cats", "none", "hidden"].includes(k)), []);
   for (const [k, why] of Object.entries(PHOTOS.none || {})) assert.ok(typeof why === "string" && why.length > 0, k);
+  for (const [k, h] of Object.entries(PHOTOS.hidden || {})) {
+    assert.deepEqual(Object.keys(h).sort(), ["entry", "postId"], k);
+    assert.match(h.postId, /^\d{5,25}$/, k);
+    assert.deepEqual(Object.keys(h.entry).sort(), ["realPhoto", "source"], k);
+    assert.ok(realPhotoOf(h.entry.realPhoto), k);
+    assert.ok(!(k in PHOTOS.cats) && !(k in (PHOTOS.none || {})), `${k} is hidden, not also shown or left out`);
+  }
   const entries = Object.entries(PHOTOS.cats);
   assert.ok(entries.length >= 50, `${entries.length} real photos`);
   for (const [k, v] of entries) {
@@ -39,6 +47,12 @@ test("data/real-photos.json: only the four fields, pbs.twimg.com images, X post 
     assert.ok(!(k in (PHOTOS.none || {})), `${k} is not also in none`);
   }
   assert.equal(Object.keys(validateRealPhotos(PHOTOS)).length, entries.length);
+});
+
+test("a hidden photo (data/real-photos.json hidden) is never shown: the page reads cats only", () => {
+  const ph = { url: "https://pbs.twimg.com/media/abc.jpg", handle: "cat", post: "https://x.com/cat/status/2100000000000000001", alt: "a cat" };
+  const v = validateRealPhotos({ cats: { A: { realPhoto: ph, source: "proof" } }, hidden: { B: { postId: "2100000000000000001", entry: { realPhoto: ph, source: "proof" } } } });
+  assert.deepEqual(Object.keys(v), ["A"]);
 });
 
 test("realPhotoOf refuses images not on pbs.twimg.com and posts not on X", () => {
@@ -120,6 +134,6 @@ test("build-kits reads the reviewed real photos, so the Adopt panel logo matches
   const kits = JSON.parse(read("assets/kits/kits.json")).cats;
   for (const [t, k] of Object.entries(kits)) {
     if (PHOTOS.cats[t]) assert.equal(k.photo?.url, PHOTOS.cats[t].realPhoto.url, t);
-    if (PHOTOS.none?.[t]) assert.equal(k.photo, null, `${t} has no real photo in its kit`);
+    if (PHOTOS.none?.[t] || PHOTOS.hidden?.[t]) assert.equal(k.photo, null, `${t} has no real photo in its kit`);
   }
 });

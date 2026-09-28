@@ -106,10 +106,14 @@ export function modelBody(imageUrls) {
   return { image_urls: imageUrls.slice(0, 4), ai_model: "meshy-7.1", should_texture: true, should_remesh: true, target_polycount: 10000, target_formats: ["glb"] };
 }
 
+/** The longest one Meshy API call and one download may take: a hung request is aborted, never left to hold a run. */
+export const API_TIMEOUT_MS = 60_000;
+export const DOWNLOAD_TIMEOUT_MS = 5 * 60_000;
+
 async function api(method, route, body) {
   const key = process.env.MESHY_API_KEY;
   if (!key) throw new Error("MESHY_API_KEY is not set");
-  const r = await fetch(`${API}/${route}`, { method, headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+  const r = await fetch(`${API}/${route}`, { method, headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(API_TIMEOUT_MS) });
   const text = await r.text();
   if (!r.ok) throw new Error(`${method} ${route}: ${r.status} ${text.slice(0, 300)}`);
   return text ? JSON.parse(text) : {};
@@ -119,9 +123,11 @@ async function task(kind, body, log) {
   const { result: id } = await api("POST", kind, body);
   log(`  ${kind} task ${id}`);
   const t0 = Date.now();
-  for (;;) {
+  for (let misses = 0; ;) {
     await sleep(10_000);
-    const t = await api("GET", `${kind}/${id}`);
+    let t;
+    // A poll that times out or fails is asked again (three in a row give up): the task itself keeps running at Meshy.
+    try { t = await api("GET", `${kind}/${id}`); misses = 0; } catch (e) { if (++misses >= 3) throw e; continue; }
     if (t.status === "SUCCEEDED") return t;
     if (t.status === "FAILED" || t.status === "CANCELED") throw new Error(`${kind} ${id} ${t.status}: ${JSON.stringify(t.task_error ?? t).slice(0, 300)}`);
     if (Date.now() - t0 > 30 * 60_000) throw new Error(`${kind} ${id} still ${t.status} after 30 minutes`);
@@ -129,7 +135,7 @@ async function task(kind, body, log) {
 }
 
 async function download(url, file) {
-  const r = await fetch(url);
+  const r = await fetch(url, { signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT_MS) });
   if (!r.ok) throw new Error(`download ${url.slice(0, 80)}: ${r.status}`);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, Buffer.from(await r.arrayBuffer()));

@@ -36,10 +36,12 @@ const STATE = path.join(ROOT, "scripts/tripo.state.json");
 const readJson = (f, d) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : d);
 const writeJson = (f, v) => fs.writeFileSync(f, `${JSON.stringify(v, null, 1)}\n`);
 
+/** The longest one tripo CLI call may take (a rig task is minutes): a hung call is killed, never left to hold a run. */
+export const TRIPO_TIMEOUT_MS = 30 * 60_000;
 /** Runs the tripo CLI with --json and returns its final JSON line (throws with the CLI's message). */
-export function tripo(args, { run = execFileSync } = {}) {
+export function tripo(args, { run = execFileSync, timeoutMs = TRIPO_TIMEOUT_MS } = {}) {
   let out;
-  try { out = run("tripo", [...args, "--json", "--yes", "--quiet", "--no-open"], { encoding: "utf8", maxBuffer: 1 << 26, stdio: ["ignore", "pipe", "pipe"] }); }
+  try { out = run("tripo", [...args, "--json", "--yes", "--quiet", "--no-open"], { encoding: "utf8", maxBuffer: 1 << 26, stdio: ["ignore", "pipe", "pipe"], timeout: timeoutMs, killSignal: "SIGKILL" }); }
   catch (e) { const txt = String(e.stdout || "") + String(e.stderr || ""); throw new Error(`tripo ${args[0]} ${args[1] || ""}: ${lastJson(txt)?.error || txt.trim().split("\n").pop()}`); }
   const j = lastJson(out);
   if (!j) throw new Error(`tripo ${args.join(" ")}: no JSON in output`);
