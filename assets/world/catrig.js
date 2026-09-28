@@ -1748,6 +1748,9 @@ export function makeClips(rig, style = {}, fit = null) {
   // (and a mane or a ruff, a body thick about the shoulders for its head: bowed deep, the head drags
   // the mane's fur after it)
   const ruff = clamp01((rig.bodyR / Math.max(0.05, rig.headR) - 1.6) / 1.4);
+  // (licking the chest or a leg, the neck bows further than for a wash: those are down in front of the
+  // chest, below the shoulders, where a neck bowed only as far as a wash takes it can't bring the mouth)
+  const LICK_BOW = 1.65;
   const meet = (s, pt, to, lim = 1.1, rise = 0.6) => {
     const k = (1 - 0.7 * headBig) * (1 - 0.45 * shortNeck) * (1 - 0.4 * ruff), kk = k * Math.min(1, lim / 1.1); // (turned and pitched no further than bowed, for a bow held back by the fit)
     const P = [[0, sitHead[0] - lim * k, sitHead[0] + rise * k], [1, -0.7 * kk, 0.7 * kk], [2, -0.9 * kk, 0.3 * kk]];
@@ -1795,6 +1798,10 @@ export function makeClips(rig, style = {}, fit = null) {
     meet(s, MOUTH, endOf(s.legs.fR, "fR").add(V(-0.012, 0.01, 0)), 1.1 * groomBow, 0.6 * groomBow);
     return s;
   })();
+  // (a paw that, raised as far as this cat's leg and skin let it, still stops well short of the bowed
+  // mouth (a round or stubby cat, a toned-down move) would only wave in the air by the face: such a cat
+  // licks its chest and shoulder instead, as a cat whose forelegs are one piece does)
+  const pawWash = lift > 0.2 && headPoint(GROOM, MOUTH).distanceTo(endOf(GROOM.legs.fR, "fR")) < 0.36 * lt;
   const CHEEK = V(rig.headC.x + 0.05 * rig.headR, rig.headC.y + 0.1 * rig.headR, rig.zc - 0.75 * rig.headR);
   // (The wiping pose, found once: the paw as near the cheek of the tipped head as the arm goes with the
   // upper arm swung a little further up than for the lick and the elbow folded at most 150 degrees; a
@@ -1815,7 +1822,7 @@ export function makeClips(rig, style = {}, fit = null) {
   posed("groom", loopDur(2.4), 20, (u) => {
     const lick = Math.max(0, S(TAU * u * 3)) * (1 - win(u, 0.55, 0.62)), wipe = bump(u, 0.6, 0.98), down = win(u, 0.6, 0.7) * (1 - win(u, 0.9, 0.98));
     const s = sitSpec(u, { still: true });
-    if (lift > 0.2) {
+    if (pawWash) {
       // (the paw over the cheek from the ear down, as far as this cat's arm goes; the head tipped
       // down and into it, so the face rubs along the paw)
       s.neck = GROOM.neck.slice(); s.head = GROOM.head.slice();
@@ -1825,12 +1832,16 @@ export function makeClips(rig, style = {}, fit = null) {
       // (the cheek comes to the paw, from the ear down, as far as the neck goes)
       if (wk > 0) { const c = headPoint(s, CHEEK), e = endOf(s.legs.fR, "fR").addScaledVector(V(0, 1, 0), -0.25 * rig.headR * (1 - down)); meet(s, CHEEK, c.lerp(e, wk), 1.1 * groomBow, 0.6 * groomBow); }
     } else {
-      // (the chest just below the chin, then the right shoulder)
-      const side = holds(u, [[0.05, 0], [0.5, 0.45]], 0.12), B = bodyOf(s), t = B.top.fR;
+      // (the chest just below the chin, then the right shoulder: the chest drawn in a little and the head
+      // bowed right down into the fur, as far as a lick goes (LICK_BOW), and never back up off it: the
+      // chest is below the shoulders, where a head bowed only as far as a wash takes it can't get)
+      const side = holds(u, [[0.05, 0], [0.5, 0.45]], 0.12);
+      s.spine = [sitSpine - 0.05 * groomBow, 0, 0]; s.chest = [sitChest - 0.1 * groomBow, 0, 0];
+      const B = bodyOf(s), t = B.top.fR;
       const spot = V(lerp(B.che.x + 0.9 * rig.bodyR * 0.7, t.x + 0.25 * rig.bodyR, side), lerp(B.che.y + 0.1 * rig.bodyR, t.y - 0.15 * rig.bodyR, side), lerp(rig.zc, t.z - 0.4 * rig.bodyR, side));
-      s.neck = [sitHead[0] - 0.4 * groomBow, 0, 0]; s.head = [sitHead[1] - 0.6 * groomBow, 0, 0];
-      meet(s, MOUTH, spot, 0.9 * groomBow, 0.6 * groomBow);
-      s.head[0] += -0.12 * Math.max(0, S(TAU * u * 5)); s.head[2] = -0.3 * side;
+      s.neck = [sitHead[0] - 0.9 * groomBow, 0.3 * side, 0]; s.head = [sitHead[1] - 1.1 * groomBow, 0.15 * side, 0];
+      meet(s, MOUTH, spot, LICK_BOW * groomBow, -0.2 * groomBow);
+      s.head[0] += -0.1 * Math.max(0, S(TAU * u * 5)); s.head[2] = -0.3 * side;
     }
     return s;
   }, SIT, { enter: 0.5, exit: 0.4 });
@@ -1869,9 +1880,6 @@ export function makeClips(rig, style = {}, fit = null) {
     return best;
   };
   const alongLeg = (P, w) => { const i = Math.min(2, Math.floor(w)), t = w - i; return P[i].clone().lerp(P[i + 1], t); };
-  // (licking, the neck bows further than for a wash: the leg is down in front of the chest, below the
-  // shoulders, where a neck bowed only as far as a wash takes it can't bring the mouth)
-  const LICK_BOW = 1.65;
   const LICK = (() => {
     const a = amp("legLick"), up = (1 - round) * freeH * a;
     const lean = Math.min(1.3, sitPitch + 0.15 + 0.1 * up), phMax = 0.25 + 1.05 * up, Lh = K.legs.hL, r = rig.legs.hL.r;
