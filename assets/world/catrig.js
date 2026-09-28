@@ -779,13 +779,12 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
       if (!moved) break;
     }
   }
+  if (globalThis.__SEED) globalThis.__SEED({ seed, up, U, uid, names, nb, start, piece });
   const W = new Float32Array(U * B);
   for (let u = 0; u < U; u++) W[u * B + seed[u]] = 1;
   // Blur along the surface: rounds of averaging with the neighbours, as many as it takes to
   // spread about BLEND for this mesh's edge length.
-  if (nb) {
-    const e = G.elen;
-    const rounds = Math.max(2, Math.min(28, Math.round((BLEND / e) ** 2)));
+  const blur = (rounds) => {
     let A = W, T = new Float32Array(W);
     for (let r = 0; r < rounds; r++) {
       for (let u = 0; u < U; u++) {
@@ -802,7 +801,9 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
       [A, T] = [T, A];
     }
     W.set(A);
-  }
+  };
+  if (nb) blur(Math.max(2, Math.min(28, Math.round((BLEND / G.elen) ** 2))));
+  if (globalThis.__WST) globalThis.__WST("blur", W.slice(), B);
   // Each joint's two bones blended across the whole band of skin where they meet, by distance along
   // the skin from the line between them (one pass over the mesh from every such line): as wide as the
   // body is thick where it bends (the back, the neck), a leg's thickness at a hip, shoulder, knee or
@@ -906,22 +907,11 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
       for (let j = 0; j < c; j++) W[o + pb[u * NP + j]] = mass * pt[u * NP + j] * sc;
     }
   }
+  if (globalThis.__WST) globalThis.__WST("seams", W.slice(), B);
   // (and a last light blur, two rounds, over the bands: where three seams meet in one place (the groin, a
   // shoulder against the elbow) two points a hair apart can come out of the bands with a step between them,
   // and a step over next to nothing tears as any leg moves)
-  if (nb) {
-    let A = W, T = new Float32Array(W);
-    for (let r = 0; r < 2; r++) {
-      for (let u = 0; u < U; u++) {
-        const o = u * B, s0 = start[u], s1 = start[u + 1], k = s1 - s0, F = fam[seed[u]];
-        if (!k) continue;
-        const f = 0.5 / k;
-        for (let j = 0; j < F.length; j++) { const c = F[j]; let acc = 0; for (let s2 = s0; s2 < s1; s2++) acc += A[nb[s2] * B + c]; T[o + c] = A[o + c] * 0.5 + acc * f; }
-      }
-      [A, T] = [T, A];
-    }
-    W.set(A);
-  }
+  if (nb) blur(2);
   // The four strongest bones per point, shared by every copy of it.
   const idx = new Uint16Array(n * 4), wt = new Float32Array(n * 4);
   const ui = new Uint16Array(U * 4), uw = new Float32Array(U * 4);
@@ -2189,7 +2179,11 @@ export function makeClips(rig, style = {}, fit = null) {
     s.root = [-(pounce ? 0.42 : 0.3) * lt * gather - 0.22 * lt * land, 0, 0];
     s.pelvis = [pitch + 0.06 * gather, 0, 0]; s.chest = [-0.06 * gather + 0.05 * air, 0, 0];
     const B = bodyOf(s);
-    s.neck = [neckFor(B, restHed + s.root[0] * 0.8) * (1 - air) + (pounce ? -0.1 : 0.05) * air, 0, 0]; s.head = [0.05 - 0.2 * win(u, 0.55, 0.8) * (1 - win(u, 0.85, 1)), 0, 0];
+    // (the head held level as the body gathers and lands, but carried up with the body as it pitches up to
+    // spring and down to land, and in the air carried half with it: held level against the whole pitch,
+    // the neck would fold the head back into the shoulders at take-off)
+    const X = globalThis.__EXP || {}, carry = 0.6 * clamp01(Math.abs(pitch) / 0.4) * (X.carry ?? 1);
+    s.neck = [lerp(neckFor(B, restHed + s.root[0] * 0.8), B.aC + STAND.neck[0], carry) * (1 - air) + ((pounce ? -0.1 : 0.05) + (X.airK ?? 0.5) * B.aC) * air, 0, 0]; s.head = [0.05 - 0.2 * win(u, 0.55, 0.8) * (1 - win(u, 0.85, 1)), 0, 0];
     for (const k of KEYS) {
       const L = K.legs[k], t = B.top[k], r0 = rest(k);
       const lk = lerp(0.7, 1, amp("leap")), off = L.hind ? (pounce ? [-0.55 * lk, -0.55] : [0.05, -0.55]) : (pounce ? [0.62 * lk, -0.5] : [0.25 * lk, -0.6]);
@@ -2287,7 +2281,9 @@ export function makeClips(rig, style = {}, fit = null) {
   change("sitDown", STAND, SIT, {
     body: [[0.55, with_(STAND, halfSit(0.62))]],
     head: [[0.15, "A"]],
-    hL: [[0.05, "A"], [0.55, with_(STAND, { legs: { hL: leg(rest("hL").x, 0, -0.1, 0.25) } })]], hR: [[0.08, "A"], [0.58, with_(STAND, { legs: { hR: leg(rest("hR").x, 0, -0.1, 0.25) } })]],
+    // (the hocks come down to the ground as the sitting cat's do, the foot laid as flat as its thickness lets
+    // it lie on the lawn rather than in it)
+    hL: [[0.05, "A"], [0.55, with_(STAND, { legs: { hL: leg(rest("hL").x, 0.006, Math.min(-0.1, flatE("hL")), 0.25) } })]], hR: [[0.08, "A"], [0.58, with_(STAND, { legs: { hR: leg(rest("hR").x, 0.006, Math.min(-0.1, flatE("hR")), 0.25) } })]],
     // (each forepaw a real step back, lifted clear, not dragged)
     fL: [[0.5, "A"], [0.78, "B", 0.05]], fR: [[0.64, "A"], [0.94, "B", 0.05]],
     tail: [[0.55, with_(STAND, { tail: T(tailShape(-0.2), [0, 0, 0, 0]) })]],
@@ -2305,9 +2301,13 @@ export function makeClips(rig, style = {}, fit = null) {
   // Lying down: the front end goes down first (the forepaws reach forward, elbows to the ground: a
   // brief bow), then the hind end folds down; the paws last tucked under if that is how this cat lies.
   const sph = { fL: sphinx("fL", sphReach), fR: sphinx("fR", sphReach) };
-  const sphA = with_(STAND, { legs: sph }), sphB = with_(LOAF, { legs: sph });
+  // (the forelegs laid out for the bow, the front end at its lowest: resting on the lawn by their skin, as the
+  // loaf's do, not with the elbows sunk in it)
+  const bowBody = with_(STAND, { root: [loafLift * 0.35, loafShift * 0.5, 0], pelvis: [-0.28, 0, 0], spine: [0, 0, 0], chest: [0.06, 0, 0] });
+  const sphBow = bakeLegs(with_(bowBody, { legs: sph }), 0.3 * lt);
+  const sphA = with_(STAND, { legs: { fL: sphBow.fL, fR: sphBow.fR } }), sphB = with_(LOAF, { legs: sph });
   change("lieDown", STAND, LOAF, {
-    body: [[0.42, with_(STAND, { root: [loafLift * 0.35, loafShift * 0.5, 0], pelvis: [-0.28, 0, 0], spine: [0, 0, 0], chest: [0.06, 0, 0] })]],
+    body: [[0.42, bowBody]],
     head: [[0.2, "A"]],
     fL: [[0.08, "A"], [0.3, sphA, 0.04], ...(tuckLate ? [[0.52, sphB], [0.84, "B", 0.012]] : [])], fR: [[0.16, "A"], [0.38, sphA, 0.04], ...(tuckLate ? [[0.62, sphB], [0.98, "B", 0.012]] : [])],
     hL: [[0.4, "A"]], hR: [[0.44, "A"]],

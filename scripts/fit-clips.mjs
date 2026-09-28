@@ -90,8 +90,10 @@ if (isMainThread) {
     const rest = bones.map((b) => [b.position.clone(), b.quaternion.clone(), b.scale.clone()]);
     const reset = () => bones.forEach((b, i) => { b.position.copy(rest[i][0]); b.quaternion.copy(rest[i][1]); b.scale.copy(rest[i][2]); });
     const mixer = new THREE.AnimationMixer(sk.root);
-    // The worst the knob's clips do at this fit: the first measure over its limit, as "clip u measure value".
+    // The worst the knob's clips do at this fit: the worst measure against its limit (score, 1 at the
+    // limit) and, if over, where, as "clip u measure value".
     const worstOf = (clips, knob) => {
+      let score = 0, bad = null;
       for (const name of R.FIT_KNOBS[knob]) {
         const clip = clips[name];
         if (!clip || avoid.has(name)) continue;
@@ -100,21 +102,24 @@ if (isMainThread) {
           mixer.stopAllAction(); reset();
           const a = mixer.clipAction(clip); a.play(); a.time = Math.min(u, 0.9999) * clip.duration; mixer.update(0);
           const g = gauge(skinMatrices(sk, SM, THREE));
-          for (const m of ["sheet", "spike", "crush", "under"]) if (g[m] > FIT_TH[m]) return `${name} u${u} ${m} ${+g[m].toFixed(3)}`;
+          for (const m of ["sheet", "spike", "crush", "under"]) { const r = g[m] / FIT_TH[m]; if (r > score) { score = r; if (r > 1) bad = `${name} u${u} ${m} ${+g[m].toFixed(3)}`; } }
         }
       }
-      return null;
+      return { score, bad };
     };
-    const fit = {}, weak = {};
+    // (Each knob is turned down a level at a time until its clips keep the skin whole. One whose skin
+    // tears at every level keeps the level that tore it least (a smaller move is not always a kinder
+    // one), and is reported.)
+    const fit = {}, weak = {}, best = {};
     let pending = Object.keys(R.FIT_KNOBS).filter((k) => R.FIT_KNOBS[k].some((c) => !avoid.has(c)));
     for (let level = 0; level < LEVELS.length && pending.length; level++) {
       const clips = R.makeClips(rig, style || {}, fit);
       const failing = [];
-      for (const k of pending) { const bad = worstOf(clips, k); if (bad) failing.push([k, bad]); }
+      for (const k of pending) { const w = worstOf(clips, k); if (!best[k] || w.score < best[k].score) best[k] = { ...w, level }; if (w.bad) failing.push(k); }
       pending = [];
-      for (const [k, bad] of failing) {
+      for (const k of failing) {
         if (level + 1 < LEVELS.length) { fit[k] = LEVELS[level + 1]; pending.push(k); }
-        else weak[k] = bad;
+        else { weak[k] = best[k].bad; if (best[k].level) fit[k] = LEVELS[best[k].level]; else delete fit[k]; }
       }
       mixer.stopAllAction();
     }
