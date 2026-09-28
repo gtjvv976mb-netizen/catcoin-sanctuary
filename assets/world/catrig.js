@@ -912,6 +912,13 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
   // shoulder against the elbow) two points a hair apart can come out of the bands with a step between them,
   // and a step over next to nothing tears as any leg moves)
   if (nb) blur(2);
+  // (A paw's or a hind foot's own bone takes no skin more than half way up to the elbow or knee: a low-poly
+  // copy's long thin triangle, one edge from the paw right up to the elbow, would otherwise pass the paw's
+  // weight up the blur to the elbow, whose skin would then go out with the paw.)
+  if (!globalThis.__EXP?.noPawCap) for (const k of LK) {
+    const g = rig.legs[k], e = names.indexOf(legOf[k][2]), span = Math.max(1e-6, g.knee.y - g.low.y);
+    for (let u = 0; u < U; u++) { const t = (up[u * 3 + 1] - g.low.y) / span; if (t > 0.5) W[u * B + e] *= 1 - smooth((t - 0.5) / 0.35); }
+  }
   // The four strongest bones per point, shared by every copy of it.
   const idx = new Uint16Array(n * 4), wt = new Float32Array(n * 4);
   const ui = new Uint16Array(U * 4), uw = new Float32Array(U * 4);
