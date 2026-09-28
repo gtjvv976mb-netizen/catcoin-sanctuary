@@ -34,7 +34,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { credsFromEnv, uploadImage, createPost, XError } from "./lib/x-api.mjs";
-import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost, weightedLength, listCats, postImages, ingameShot, readJson, guardDraft } from "./announce.mjs";
+import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost, weightedLength, listCats, postImages, ingameShot, readJson, guardDraft, provedCollection } from "./announce.mjs";
 import { kitsOf, adoptionProblem, ownMints } from "./lib/adoptions.mjs";
 import { nameKey } from "../assets/ui/adoptables.js";
 
@@ -202,7 +202,8 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   if (summary.waited) { log(`Updates: not yet (${summary.waited}).`); return summary; }
 
   const collection = readJson(data("collection.json"), { cats: [] });
-  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), collection, readJson(data("adoptables.json"), { cats: [] }));
+  // Cats as the page shows them (validated collection); the raw file still marks every owner mint as ours below.
+  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), provedCollection(path.join(root, "data"), nowMs), readJson(data("adoptables.json"), { cats: [] }));
   const captions = readJson(data("lore.json"), {}).cats || {};
   const planned = readJson(data("planned.json"), { cats: [] }), adoptables = readJson(data("adoptables.json"), { cats: [] });
   const kits = new Map(kitsOf({ planned, adoptables }).map((k) => [k.key, k]));

@@ -49,6 +49,7 @@ import { checkFields } from "./lib/content-rules/content-rules.mjs";
 import { writeNextCat } from "./lib/next-cat.mjs";
 import { credsFromEnv, uploadImage, createPost, whoAmI, XError } from "./lib/x-api.mjs";
 import { provedLaunch } from "../assets/ui/adoptables.js";
+import { validateCollection, validateWallets } from "../assets/collection.js";
 
 export const SITE = "https://catcoinsanctuary.com/";
 export const HASHTAGS = ["#catcoin", "#CatsOfX"];
@@ -161,6 +162,16 @@ export function listCats(planned, collection = { cats: [] }, adoptables = { cats
       story: null, why: null, proof: null, portrait: null, launched: true, byMint: true });
   }
   return out;
+}
+
+/**
+ * data/collection.json as the page sees it: only entries validateCollection keeps (a listed wallet,
+ * active at the launch time, a known pair, closed fields), so the bots never call a coin launched
+ * that the site does not show.
+ */
+export function provedCollection(dataDir, nowMs = Date.now()) {
+  const wallets = validateWallets(readJson(path.join(dataDir, "wallets.json"), { launchers: [] }));
+  return { cats: validateCollection(readJson(path.join(dataDir, "collection.json"), { cats: [] }), { wallets, nowMs }).cats };
 }
 
 /** The company as a post names it: "State Street (SPDR S&P 500 ETF Trust)" -> "State Street". */
@@ -327,7 +338,7 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const config = { ...DEFAULT_CONFIG, ...readJson(data("announce-config.json"), {}), ...force };
   const state = readJson(data("announced.json"), { cats: {} });
   state.cats ||= {};
-  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), readJson(data("collection.json"), { cats: [] }), readJson(data("adoptables.json"), { cats: [] }));
+  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), provedCollection(path.join(root, "data"), now().getTime()), readJson(data("adoptables.json"), { cats: [] }));
   const creds = credsFromEnv(env);
   const mode = config.dryRun ? "dryRun" : creds ? "post" : "queue";
   const stamp = () => now().toISOString();

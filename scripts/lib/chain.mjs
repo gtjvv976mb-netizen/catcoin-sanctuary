@@ -207,7 +207,7 @@ export function proveLaunch(tx, { wallet, stocks = STOCK_PAIRS } = {}) {
   try { t = readTransaction(tx); } catch (e) { return no("unreadable", e.message); }
   const launches = t.instructions.filter(isLaunchIx);
   launchLike = launches.length > 0 || t.inner.some(isLaunchIx);
-  if (tx.meta.err !== null || (tx.meta.status && !("Ok" in tx.meta.status))) return no("failed", "the transaction failed on chain");
+  if (failedOnChain(tx.meta)) return no("failed", "the transaction failed on chain");
   if (t.feePayer !== wallet) return no("fee_payer", "the fee payer is not the listed wallet");
 
   if (launches.length === 0) {
@@ -328,6 +328,9 @@ const isPumpCreate = (ix) => ix.program === PUMPFUN_PROGRAM && [CREATE_V2_DISC, 
  * detail, launchLike }. `launch` is { mint, name, symbol, pair: SOL_PAIR, pool (the bonding curve),
  * payer, tx, time, launchpad: "pump.fun", uri }. "no_launch": the transaction creates no pump.fun coin.
  */
+/** Did the transaction fail? Any err, or a status that is not { Ok } (a malformed status counts as failed, never throws). */
+const failedOnChain = (meta) => meta.err !== null || (meta.status != null && (typeof meta.status !== "object" || !("Ok" in meta.status)));
+
 export function proveLaunchPump(tx, { wallet } = {}) {
   let launchLike = null;
   const no = (clause, detail) => ({ ok: false, clause, detail, launchLike });
@@ -337,7 +340,7 @@ export function proveLaunchPump(tx, { wallet } = {}) {
   try { t = readTransaction(tx); } catch (e) { return no("unreadable", e.message); }
   const creates = t.instructions.filter(isPumpCreate);
   launchLike = creates.length > 0 || t.inner.some(isPumpCreate);
-  if (tx.meta.err !== null || (tx.meta.status && !("Ok" in tx.meta.status))) return no("failed", "the transaction failed on chain");
+  if (failedOnChain(tx.meta)) return no("failed", "the transaction failed on chain");
   if (t.feePayer !== wallet) return no("fee_payer", "the fee payer is not the listed wallet");
   if (creates.length === 0) return no(launchLike ? "pump_cpi_launch" : "no_launch", launchLike ? "pump.fun's create was called by another program; only a direct launch is read" : "not a pump.fun launch");
   if (creates.length > 1) return no("pump_several_launches", "more than one pump.fun create in one transaction");

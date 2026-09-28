@@ -5,7 +5,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { ROOT } from "./helpers.mjs";
-import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft, releasesFile, PAUSED_REASON, addressIn, guardDraft } from "../scripts/announce.mjs";
+import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft, releasesFile, PAUSED_REASON, addressIn, guardDraft, provedCollection } from "../scripts/announce.mjs";
 import { proveLaunchPump } from "../scripts/lib/chain.mjs";
 import { pumpLaunch } from "./helpers.mjs";
 import { oauthHeader } from "../scripts/lib/x-api.mjs";
@@ -16,13 +16,15 @@ const PLANNED = read("data/planned.json");
 const CATS = listCats(PLANNED);
 const CREDS = { X_API_KEY: "k", X_API_SECRET: "s", X_ACCESS_TOKEN: "t", X_ACCESS_SECRET: "a" };
 
-function sandbox({ announced = { cats: {} }, config = {}, planned = PLANNED, queue = null, collection = { cats: [] }, adoptables = null } = {}) {
+function sandbox({ announced = { cats: {} }, config = {}, planned = PLANNED, queue = null, collection = { cats: [] }, adoptables = null, wallets = null } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "announce-"));
   fs.mkdirSync(path.join(dir, "data"));
   const w = (f, v) => fs.writeFileSync(path.join(dir, "data", f), JSON.stringify(v));
   w("planned.json", planned); w("collection.json", collection); w("announced.json", announced); w("announce-config.json", config);
   if (queue) w("release-queue.json", queue);
   if (adoptables) w("adoptables.json", adoptables);
+  // The bots read the collection as the page does (validated), so the test entries' payers are listed launchers unless a test says otherwise.
+  w("wallets.json", wallets ?? { launchers: [...new Set((collection.cats || []).map((e) => e?.payer).filter(Boolean))].map((address) => ({ address, since: "2020-01-01", label: "Test launcher" })) });
   return { dir, read: (f) => JSON.parse(fs.readFileSync(path.join(dir, "data", f), "utf8")) };
 }
 /** A fake X: records every request, answers each post with a new id. */
@@ -432,4 +434,29 @@ test("a proved pump.fun coin no adoptable claims is never picked, drafted or pos
   const r = await run({ root: s.dir, env: CREDS, fetchImpl: x, ...quiet });
   assert.deepEqual([r.drafts.length, r.posted.length, x.calls.length], [0, 0, 0]);
   assert.equal(s.read("announced.json").cats[PUMP_ENTRY.mint], undefined);
+});
+
+test("the bots read the collection as the page does: an entry validateCollection refuses is never listed or announced", async () => {
+  const at = (iso) => Date.parse(iso);
+  const listed = (since) => ({ launchers: [{ address: PUMP_ENTRY.payer, since, label: "Launcher" }] });
+  const s = sandbox({ planned: { stocks: PLANNED.stocks, cats: [] }, collection: { cats: [STONK_ENTRY] }, wallets: listed("2020-01-01") });
+  assert.deepEqual(provedCollection(path.join(s.dir, "data"), Date.now()).cats.map((e) => e.mint), [STONK_ENTRY.mint]);
+  // The same entry when its wallet was listed only after the launch, or with an unknown field: the page does not show it, so the bots never list it.
+  const late = sandbox({ planned: { stocks: PLANNED.stocks, cats: [] }, collection: { cats: [STONK_ENTRY] }, wallets: listed("2099-01-01"), config: { dryRun: false, perRun: 1, thread: false } });
+  assert.equal(provedCollection(path.join(late.dir, "data"), at("2099-06-01T00:00:00Z")).cats.length, 0);
+  const x = fakeX();
+  const r = await run({ root: late.dir, env: CREDS, fetchImpl: x, ...quiet });
+  assert.deepEqual([r.drafts.length, r.posted.length, x.calls.length], [0, 0, 0], "an unproved coin is never announced");
+  const odd = sandbox({ planned: { stocks: PLANNED.stocks, cats: [] }, collection: { cats: [{ ...STONK_ENTRY, extra: 1 }] } });
+  assert.equal(provedCollection(path.join(odd.dir, "data"), Date.now()).cats.length, 0);
+  assert.equal(provedCollection(path.join(odd.dir, "missing"), Date.now()).cats.length, 0, "no files: no cats");
+});
+
+test("no thread file waiting to be posted carries an address (post-thread.mjs holds such a thread)", () => {
+  for (const f of fs.readdirSync(path.join(ROOT, "data")).filter((n) => /^(intro-)?thread.*\.json$/.test(n))) {
+    const t = JSON.parse(fs.readFileSync(path.join(ROOT, "data", f), "utf8"));
+    if (t.ids) continue;
+    for (const p of t.posts || []) assert.equal(addressIn(p), null, `${f}: ${p.slice(0, 40)}`);
+  }
+  assert.match(fs.readFileSync(path.join(ROOT, "scripts", "post-thread.mjs"), "utf8"), /addressIn\(p\)/, "post-thread.mjs checks every post before posting");
 });

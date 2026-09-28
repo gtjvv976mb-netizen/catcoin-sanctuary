@@ -485,6 +485,13 @@ test("pump.fun REFUSED: the wrong wallet, a failed transaction, a newer version,
   assert.equal(proveLaunchPump(untimed, { wallet: PUMP_PAYER }).clause, "no_time");
   assert.equal(proveLaunchPump(null, { wallet: PUMP_PAYER }).clause, "unreadable");
   assert.equal(proveLaunchPump(launchTx("592bMtm5"), { wallet: GOOGL_LAUNCHER }).clause, "no_launch");
+  // A malformed status (an RPC answer that is not { Ok } / { Err }) is a refusal, never a crash, on both launchpads.
+  for (const status of ["Ok", 1, true, []]) {
+    const odd = createOnly(); odd.meta.status = status;
+    assert.equal(proveLaunchPump(odd, { wallet: PUMP_PAYER }).clause, "failed", JSON.stringify(status));
+    const oddLab = launchTx("2VJ6Eqt9"); oddLab.meta.status = status;
+    assert.equal(proveLaunch(oddLab, { wallet: GME_LAUNCHER }).clause, "failed", JSON.stringify(status));
+  }
 });
 
 test("pump.fun REFUSED: a create made through another program (CPI), and two creates in one transaction", () => {
