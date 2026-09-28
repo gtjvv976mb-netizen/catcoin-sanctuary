@@ -2303,7 +2303,9 @@ export function makeClips(rig, style = {}, fit = null) {
   // Standing up: the tail comes off the paws, the hind legs push the rump up and the body levels;
   // the forepaws step forward as the shoulders come over them.
   change("standUp", SIT, STAND, {
-    body: [[0.12, "A"], [0.5, with_(STAND, halfSit(0.5))]],
+    // (forelegs the model joined into one piece step forward before the chest is half way up: stepped
+    // while it rises over them, their shared skin creases at the armpits)
+    body: [[0.12, "A"], [freeF < 0.3 ? 0.62 : 0.5, with_(STAND, halfSit(0.5))]],
     head: [[0.1, "A"]],
     hL: [[0.1, "A"], [0.62, "B"]], hR: [[0.12, "A"], [0.64, "B"]],
     fL: [[0.36, "A"], [0.68, "B", 0.05]], fR: [[0.58, "A"], [0.92, "B", 0.05]],
@@ -2349,7 +2351,9 @@ export function makeClips(rig, style = {}, fit = null) {
   });
   // From lying to sitting: the forelegs push the chest up and the forepaws step back under it.
   change("lieToSit", LOAF, SIT, {
-    body: [[tuckLate ? 0.32 : 0.03, "A"], [tuckLate ? 0.62 : 0.5, low]],
+    // (forelegs the model joined into one piece push the chest right up first and only then step back under
+    // it: stepped back while the chest still rises over them, their shared skin creases at the armpits)
+    body: [[tuckLate ? 0.32 : 0.03, "A"], [tuckLate ? 0.62 : freeF < 0.3 ? 0.22 : 0.5, low]],
     head: [[0.05, "A"]],
     fL: [...(tuckLate ? [[0.29, sphB, 0.012]] : [[0.02, "A"]]), [tuckLate ? 0.35 : 0.2, sphB], [tuckLate ? 0.66 : 0.55, "B", 0.04]], fR: [...(tuckLate ? [[0.08, "A"], [0.38, sphB, 0.012]] : [[0.08, "A"]]), [tuckLate ? 0.44 : 0.35, sphB], [tuckLate ? 0.84 : 0.75, "B", 0.04]],
     tail: [[0.4, with_(LOAF, { tail: T(SIT_TAIL, [0, 0.2, 0.3, 0.3]) })]],
