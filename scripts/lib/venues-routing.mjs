@@ -26,9 +26,12 @@
  *   · a symbol that is not one of the stock pairs;
  *   · a coin data/pump-quotes.json does not list (pumpQuotes, pump.mjs validatePumpQuotes);
  *   · a listed coin while pump.mjs PUMP_QUOTE_VERIFIED is false (no coin-priced pump.fun launch has
- *     been recorded), unless the owner opts in (pumpQuoteOptIn: true; the launcher is meant to read
- *     it from a repository variable such as LAUNCH_PUMP_QUOTE=on, and to simulate such a launch
- *     before sending it, falling back to SOL if the simulation fails).
+ *     been recorded), unless the owner opts in (pumpQuoteOptIn: true; the launcher reads it from the
+ *     repository variable LAUNCH_PUMP_QUOTE=on, scripts/lib/launcher.mjs pumpQuoteOptIn, simulates
+ *     such a launch before sending it, and falls back to SOL if anything fails before the send).
+ * The launcher calls this through scripts/lib/venues.mjs chooseVenue, which maps the answer onto a
+ * registered venue and computes usedPairs (usedStockPairs over the files, plus its own launches'
+ * pairs that no file shows yet).
  */
 import { STOCK_PAIRS, isAddress, textProblem } from "../../assets/collection.js";
 import { PUMP_QUOTE_VERIFIED, quoteProblem } from "./pump.mjs";

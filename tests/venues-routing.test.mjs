@@ -11,6 +11,7 @@ import { TOKEN_2022_PROGRAM } from "../scripts/lib/programs.mjs";
 import { watchList, bigQueries, figureQueries } from "../scripts/scan-trending-cats.mjs";
 import { STOCK_PAIRS, validatePlanned } from "../assets/collection.js";
 import { ROOT, DATA_NOW } from "./helpers.mjs";
+import { serialize } from "../scripts/build-collection.mjs";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, "data", f), "utf8"));
 const WATCH = read("cat-watch.json");
@@ -87,7 +88,8 @@ test("watchLinksProblems and linkProblem: a tie is exactly one stock pair symbol
 test("usedStockPairs: one cat per stock pair, as the site keeps it for planned cats, plus proved launches and adoptables; today only tOpenAI and tKalshi are free", () => {
   const used = usedStockPairs({ planned: PLANNED, collection: read("collection.json"), adoptables: read("adoptables.json") });
   const free = STOCK_PAIRS.filter((s) => !used.has(s.mint)).map((s) => s.symbol);
-  assert.deepEqual(free, ["tOpenAI", "tKalshi"]);
+  // Only the two pairs no planned cat has can be free; the launcher may give one of them its StonkFun cat (then it is used too).
+  assert.ok(free.every((s) => ["tOpenAI", "tKalshi"].includes(s)), free.join(", "));
   for (const c of validatePlanned(PLANNED, { nowMs: DATA_NOW }).cats) assert.ok(used.has(c.pair.mint), `${c.ticker}'s pair`);
   // a proved StonkFun launch takes its pair; a pump.fun one (SOL) takes none; so does a launch sent but not yet proved (extra)
   const launched = usedStockPairs({ collection: { cats: [{ pair: pair("tOpenAI") }, { pair: { symbol: "SOL", mint: "So11111111111111111111111111111111111111112" }, launchpad: "pump.fun" }] } });
@@ -163,6 +165,17 @@ test("with the shipped data: every tied company launches on StonkFun exactly whe
     assert.deepEqual(v, usedPairs.has(p.mint) ? { id: "pump-sol", reason: "pair_taken" } : { id: "stonkfun", pair: p, from: "account", reason: "stock" }, handle);
     routes[handle] = v.id === "stonkfun" ? v.pair.symbol : v.id;
   }
-  if (WATCH.accountLinks.OpenAI) assert.equal(routes.OpenAI, "tOpenAI");
+  if (WATCH.accountLinks.OpenAI && !usedPairs.has(pair("tOpenAI").mint)) assert.equal(routes.OpenAI, "tOpenAI", "while tOpenAI has no cat");
   assert.deepEqual(chooseVenue(post({ catName: "Mochi" }), WATCH, { usedPairs, pumpQuotes }), { id: "pump-sol", reason: "default" }, "an ordinary cat: pump.fun in SOL");
+});
+
+test("data/pump-quotes.json ships empty and valid, written canonically (no coin-priced launch until the owner lists a coin and opts in)", () => {
+  const text = fs.readFileSync(path.join(ROOT, "data/pump-quotes.json"), "utf8");
+  const file = JSON.parse(text);
+  assert.equal(text, serialize(file));
+  assert.deepEqual(validatePumpQuotes(file), { quotes: [], refused: [] });
+  assert.deepEqual(Object.keys(file), ["note", "quotes"]);
+  assert.match(file.note, /unverified/);
+  assert.match(file.note, /opts in/);
+  assert.match(file.note, /never remove/);
 });

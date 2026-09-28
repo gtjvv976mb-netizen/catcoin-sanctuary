@@ -5,7 +5,10 @@
  *   node scripts/launch.mjs prepare   settle what was sent, then prepare at most ONE trending cat:
  *                                     its coin's metadata (coins/<postId>.json) and its ledger row
  *   node scripts/launch.mjs send      (the only phase with LAUNCH_WALLET_KEY) wait until the site serves
- *                                     the metadata, build, sign, simulate within the caps, send, confirm
+ *                                     the metadata, build (on pump.fun in SOL, on StonkFun in a stock
+ *                                     pair, or on pump.fun in a listed coin; any of the last two falls
+ *                                     back to SOL if it fails before the send), sign, simulate within
+ *                                     the caps, send, confirm
  *   node scripts/launch.mjs record    move each launched cat into the sanctuary (adoptables, the
  *                                     Collection's list, the 3D-model queue, its real photo, its X post)
  *
@@ -18,6 +21,8 @@
  *   SOLANA_RPC_URL            (prepare and send) the RPC; the public mainnet endpoint when unset
  *   LAUNCH_MAX_PER_DAY, LAUNCH_MAX_SOL_PER_LAUNCH, LAUNCH_MAX_SOL_PER_DAY, LAUNCH_MIN_BALANCE_SOL,
  *   LAUNCH_PRIORITY_MICROLAMPORTS   the caps (defaults 3, 0.03, 0.1, 0.02; 100000), clamped
+ *   LAUNCH_PUMP_QUOTE         (prepare and send) "on" opts in to pump.fun launches priced in a coin
+ *                             data/pump-quotes.json lists (unverified); anything else keeps them off
  *   GITHUB_OUTPUT             where the workflow reads pending, deploy, launched and recorded
  *
  * Neither the key nor the RPC URL is ever printed: every line goes through a scrubber that blanks

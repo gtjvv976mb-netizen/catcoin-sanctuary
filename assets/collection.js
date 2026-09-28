@@ -372,6 +372,23 @@ export function pairProblem(pair, { stocks = STOCK_PAIRS } = {}) {
   return null;
 }
 
+/* data/pump-quotes.json { note?, quotes: [{ symbol, mint, tokenProgram }] }: coins besides SOL a pump.fun launch may be
+   priced in (scripts/lib/pump.mjs). One rule for the builder, the bots and the page: closed fields, a plain symbol of
+   at most 16 bytes, no SOL (wrapped, or the zero key), no stock pair (a stock launches on StonkFun), nothing twice. */
+export const quoteProblem = (q) => (!isObject(q) ? "a quote is { mint, tokenProgram }" : !isAddress(q.mint) ? "the quote mint is not a base58 address"
+  : [SOL_PAIR.mint, "11111111111111111111111111111111"].includes(q.mint) ? "SOL is not a quote"
+    : /^Token(kegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA|zQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb)$/.test(q.tokenProgram) ? null : "the token program is not Token or Token-2022");
+export function validatePumpQuotes(d) {
+  const quotes = [], refused = [];
+  if (!isObject(d) || !Array.isArray(d.quotes) || extraKeys(d, ["note", "quotes"]).length || !["undefined", "string"].includes(typeof d.note)) return { quotes, refused: [{ index: null, detail: "pump-quotes must be { note, quotes }" }] };
+  d.quotes.forEach((q, index) => {
+    const o = isObject(q), x = o && extraKeys(q, ["symbol", "mint", "tokenProgram"])[0], s = o && textProblem(q.symbol, { maxBytes: 16 });
+    const bad = !o ? "not an object" : x ? `unknown field ${x}` : s ? `symbol: ${s}` : quoteProblem(q) || (pairByMint(q.mint) ? "a stock pair" : quotes.some((y) => y.mint === q.mint || y.symbol === q.symbol) && "listed twice");
+    if (bad) refused.push({ index, detail: bad }); else quotes.push(Object.freeze({ symbol: q.symbol, mint: q.mint, tokenProgram: q.tokenProgram }));
+  });
+  return { quotes, refused };
+}
+
 /** Why one collection entry may not be a resident, as { clause, detail }, or null. */
 export function entryProblem(e, { launchers, stocks = STOCK_PAIRS, quotes = [], nowMs = Date.now() }) {
   const no = (clause, detail) => ({ clause, detail });

@@ -7,9 +7,11 @@
  *      scripts/launch.mjs): a row "launched" and recorded in the sanctuary, whose cat in
  *      data/adoptables.json carries that very mint and transaction as its `launch`, and whose mint is
  *      in data/collection.json as validated (the hourly check proved it on chain; never on the
- *      launcher's word alone). The post (draftLaunch) names the cat, one lore line, that the
- *      sanctuary launched it on PumpFun, and the card link; never the mint or any address, never the
- *      @handle of the post the cat was found in. State: launchesPosted { TICKER: { … } };
+ *      launcher's word alone), and whose cat the announcer lists as launched by the page's own rule
+ *      (listCats: assets/ui/adoptables.js provedLaunch). The post (draftLaunch) names the cat, one
+ *      lore line, that the sanctuary launched it on its launchpad (PumpFun or StonkFun, from its
+ *      launch's launchpad), and the card link; never the mint or any address, never the @handle of
+ *      the post the cat was found in. State: launchesPosted { TICKER: { … } };
  *   1. an adoption not posted yet (data/adoptions.json: a coin a visitor launched from a sanctuary
  *      cat's own Adopt kit, the earliest per cat). The post is drafted here: the cat (and its owner,
  *      when a company or a show), the coin's name and ticker as the cat's kit gives them, the launchpad, "launched by a visitor from its kit", that the

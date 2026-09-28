@@ -177,15 +177,9 @@ test("the read-back of a coin-priced launch: its bonding curve must be priced in
   assert.deepEqual(checkPumpAccounts(solProof.launch, sol.accounts.get(sol.mint), sol.accounts.get(sol.curve)), { ok: true }, "a SOL curve is not read for a quote");
 });
 
-test("data/pump-quotes.json ships empty and valid, written canonically; validatePumpQuotes' rules", () => {
-  const text = fs.readFileSync(path.join(ROOT, "data/pump-quotes.json"), "utf8");
-  const file = JSON.parse(text);
-  assert.equal(text, serialize(file));
-  assert.deepEqual(validatePumpQuotes(file), { quotes: [], refused: [] });
-  assert.deepEqual(Object.keys(file), ["note", "quotes"]);
-  assert.match(file.note, /unverified/);
-  assert.match(file.note, /opts in/);
-  assert.match(file.note, /never remove/);
+/* (That data/pump-quotes.json ships empty is a content check: tests/venues-routing.test.mjs has it, so this file,
+   which gates the hourly Collection with the builder's own tests, never holds up the recording of a launch.) */
+test("validatePumpQuotes' rules (one rule for the builder, the bots and the page: assets/collection.js)", () => {
   const refused = (quotes, pattern) => {
     const r = validatePumpQuotes({ quotes });
     assert.equal(r.refused.length, 1, pattern.source);
@@ -202,6 +196,7 @@ test("data/pump-quotes.json ships empty and valid, written canonically; validate
   refused(["MEOW"], /not an object/);
   for (const bad of [null, [], { quotes: {} }, { quotes: [], extra: 1 }, { note: 5, quotes: [] }]) assert.equal(validatePumpQuotes(bad).refused[0].index, null);
   assert.ok(QUOTES.every(Object.isFrozen));
+  assert.deepEqual(validatePumpQuotes({ note: "x", quotes: [MEOW, PURR] }), { quotes: [MEOW, PURR], refused: [] });
 });
 
 test("the Collection's entry rules: a pump.fun entry may carry a listed coin as its pair, a StonkFun entry still only a stock pair; the fields stay closed", () => {

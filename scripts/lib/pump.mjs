@@ -47,8 +47,8 @@
  * the builder refuses any other, and so does the Collection's proof (chain.mjs proveLaunchPump).
  */
 import { createHash } from "node:crypto";
-import { base58Decode, base58Encode, isAddress, textProblem, httpsProblem, SOL_PAIR, STOCK_PAIRS } from "../../assets/collection.js";
-import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
+import { base58Decode, base58Encode, isAddress, textProblem, httpsProblem, quoteProblem, validatePumpQuotes } from "../../assets/collection.js";
+import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
 import {
   pda, ata, compileLegacyMessage, decodeLegacyMessage, decompileInstructions, setComputeUnitLimit, setComputeUnitPrice,
   signTransaction, serializeTransaction, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT, PACKET_DATA_SIZE,
@@ -86,7 +86,8 @@ export const MAX_PRIORITY_FEE_LAMPORTS = 5_000_000n;
  * Whether a coin-priced pump.fun launch has been seen to work end to end. It has not: no real
  * custom-quote create is recorded, only the SDK's source. While this is false, scripts/lib/
  * venues-routing.mjs chooses the "pump-quote" venue only when the owner opts in explicitly, and
- * the launcher is to simulate such a launch before sending it and fall back to SOL if it fails.
+ * the launcher (scripts/lib/launcher.mjs send) simulates such a launch before sending it and falls
+ * back to SOL if it, or anything else before the send, fails.
  */
 export const PUMP_QUOTE_VERIFIED = false;
 
@@ -103,21 +104,14 @@ const address = (value, what) => {
   return a;
 };
 
-/** The zero key: legacy SOL-priced curves store it as their quote mint. */
-const DEFAULT_KEY = SYSTEM_PROGRAM;
-
 /**
  * Why `quote` ({ mint, tokenProgram }, as data/pump-quotes.json lists it) cannot price a pump.fun
- * launch, or null. SOL is not a quote here (wrapped SOL and the zero key are what the SDK reads as
- * "priced in SOL"; a SOL launch has no quote at all), and the token program is one of the two.
+ * launch, or null. SOL is not a quote here (wrapped SOL and the zero key, which legacy SOL-priced
+ * curves store as their quote mint, are what the SDK reads as "priced in SOL"; a SOL launch has no
+ * quote at all), and the token program is one of the two. The rule lives in assets/collection.js,
+ * so the page reads data/pump-quotes.json by it too; it is re-exported here.
  */
-export function quoteProblem(quote) {
-  if (quote === null || typeof quote !== "object") return "a quote is { mint, tokenProgram }";
-  if (!isAddress(quote.mint)) return "the quote mint is not a base58 address";
-  if (quote.mint === SOL_PAIR.mint || quote.mint === DEFAULT_KEY) return "SOL is not a quote: a SOL-priced launch has none";
-  if (quote.tokenProgram !== TOKEN_PROGRAM && quote.tokenProgram !== TOKEN_2022_PROGRAM) return "the quote's token program must be the classic token program or Token-2022";
-  return null;
-}
+export { quoteProblem };
 
 /** The four remaining accounts that price a create_v2 in `quote` (see the header), in the SDK's order. */
 function quoteAccounts(mint, quote) {
@@ -254,7 +248,6 @@ export function decodeCreateV2(data) {
 /* ── data/pump-quotes.json: the coins a pump.fun launch may be priced in ─────────────────── */
 
 export const PUMP_QUOTE_FIELDS = Object.freeze(["symbol", "mint", "tokenProgram"]);
-const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 
 /**
  * data/pump-quotes.json: { note?, quotes: [{ symbol, mint, tokenProgram }] }, the coins (besides
@@ -264,29 +257,10 @@ const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
  * sanctuary's stock pairs (a company's stock launches on StonkFun, and a pump.fun coin priced in
  * a stock pair could take that pair's planned cat's card); no mint or symbol is listed twice.
  * Listing a coin here says nothing about pump.fun accepting it: pump.fun's own QuoteControl
- * account decides that on chain.
+ * account decides that on chain. The rule lives in assets/collection.js (the page reads the list
+ * by it, to show a coin-priced launch the Collection proved); it is re-exported here.
  */
-export function validatePumpQuotes(data) {
-  const quotes = [], refused = [];
-  if (!isObj(data) || !Array.isArray(data.quotes) || Object.keys(data).some((k) => !["note", "quotes"].includes(k))
-    || (data.note !== undefined && typeof data.note !== "string")) {
-    return { quotes, refused: [{ index: null, detail: "pump-quotes must be { note, quotes: [...] }" }] };
-  }
-  data.quotes.forEach((q, index) => {
-    const no = (detail) => refused.push({ index, detail });
-    if (!isObj(q)) return no("not an object");
-    const extra = Object.keys(q).filter((k) => !PUMP_QUOTE_FIELDS.includes(k));
-    if (extra.length) return no(`unknown field ${extra[0]}`);
-    const sym = textProblem(q.symbol, { maxBytes: 16 });
-    if (sym) return no(`symbol: ${sym}`);
-    const bad = quoteProblem(q);
-    if (bad) return no(bad);
-    if (STOCK_PAIRS.some((s) => s.mint === q.mint)) return no("a stock pair: a company's stock launches on StonkFun");
-    if (quotes.some((x) => x.mint === q.mint || x.symbol === q.symbol)) return no("this mint or symbol is listed twice");
-    quotes.push(Object.freeze({ symbol: q.symbol, mint: q.mint, tokenProgram: q.tokenProgram }));
-  });
-  return { quotes, refused };
-}
+export { validatePumpQuotes };
 
 /** The allowlisted quote for `quote` ({ mint, tokenProgram? }), as the list writes it; throws when it is not listed. */
 function listedQuote(quote, quotes) {

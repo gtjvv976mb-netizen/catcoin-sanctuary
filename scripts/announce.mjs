@@ -49,7 +49,7 @@ import { checkFields } from "./lib/content-rules/content-rules.mjs";
 import { writeNextCat } from "./lib/next-cat.mjs";
 import { credsFromEnv, uploadImage, createPost, whoAmI, XError } from "./lib/x-api.mjs";
 import { provedLaunch } from "../assets/ui/adoptables.js";
-import { validateCollection, validateWallets } from "../assets/collection.js";
+import { validateCollection, validateWallets, validatePumpQuotes } from "../assets/collection.js";
 
 export const SITE = "https://catcoinsanctuary.com/";
 export const HASHTAGS = ["#catcoin", "#CatsOfX"];
@@ -166,12 +166,14 @@ export function listCats(planned, collection = { cats: [] }, adoptables = { cats
 
 /**
  * data/collection.json as the page sees it: only entries validateCollection keeps (a listed wallet,
- * active at the launch time, a known pair, closed fields), so the bots never call a coin launched
- * that the site does not show.
+ * active at the launch time, a known pair, closed fields; a pump.fun coin priced in a coin only while
+ * data/pump-quotes.json lists it, as assets/residents.js reads it), so the bots never call a coin
+ * launched that the site does not show.
  */
 export function provedCollection(dataDir, nowMs = Date.now()) {
   const wallets = validateWallets(readJson(path.join(dataDir, "wallets.json"), { launchers: [] }));
-  return { cats: validateCollection(readJson(path.join(dataDir, "collection.json"), { cats: [] }), { wallets, nowMs }).cats };
+  const quotes = validatePumpQuotes(readJson(path.join(dataDir, "pump-quotes.json"), null)).quotes;
+  return { cats: validateCollection(readJson(path.join(dataDir, "collection.json"), { cats: [] }), { wallets, quotes, nowMs }).cats };
 }
 
 /** The company as a post names it: "State Street (SPDR S&P 500 ETF Trust)" -> "State Street". */

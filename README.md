@@ -62,7 +62,11 @@ proven on chain.
    re-derived with `scripts/lib/pump.mjs`, the wallet as creator, every option off (mayhem,
    cashback, creator fee, holder rewards), no dev buy and nothing else but ComputeBudget; then the
    mint's metadata (with no update authority left: nobody can rename the coin) and its bonding
-   curve are read back. Such an entry carries `"launchpad": "pump.fun"` and the pair SOL. An
+   curve are read back. Such an entry carries `"launchpad": "pump.fun"` and the pair SOL, or, for a
+   launch priced in a coin `data/pump-quotes.json` lists (unverified, off unless the owner opts
+   in; see "Launcher"), that coin as its pair: the page and the X bots read the same list, so they
+   show such a coin only while it is listed. Its StonkFun launches are proved as the owner's are
+   (no `launchpad` field, priced in their stock pair). An
    adoptable cat with a `launch` field in `data/adoptables.json` shows as **Launched by the
    sanctuary** only once `data/collection.json` holds a proved entry with that field's mint,
    transaction and launchpad that also carries the cat's own ticker (letter case aside) and coin
@@ -127,8 +131,30 @@ scan finds launches on its own; this is for when it is slow.
 
 The sanctuary launches trending cats itself: `.github/workflows/launch.yml` runs `scripts/launch.mjs`
 (the rules are in `scripts/lib/launcher.mjs`) every 20 minutes, by hand, and at once whenever the
-trend watch commits new candidates (`data/trending-cats.json`). It launches at most one cat a run
-on **pump.fun, priced in SOL, with no dev buy**: it never buys or sells anything.
+trend watch commits new candidates (`data/trending-cats.json`). It launches at most one cat a run,
+**with no dev buy**: it never buys or sells anything, on any launchpad.
+
+**Where (the owner's rule, `scripts/lib/venues.mjs` and `scripts/lib/venues-routing.mjs`):**
+
+- by default on **pump.fun, priced in SOL**;
+- a cat tied to a company whose stock is one of the 93 stock pairs on **StonkFun, priced in that
+  stock** (Raydium LaunchLab on StonkFun's standard platform, `scripts/lib/launchlab.mjs`), but only
+  when that pair has no sanctuary cat yet: one cat per pair, counting the planned cats, the proved
+  launches, the adoptables and the launcher's own launches not in `data/adoptables.json` yet (today
+  only tOpenAI and tKalshi are free, so most tied cats launch in SOL). The ties are in
+  `data/cat-watch.json`: a figure's `"stock"`, or `accountLinks` (a big account's X handle to its
+  stock) for the cat posts of that account;
+- a cat tied to a coin (`"pumpQuote"`) on **pump.fun, priced in that coin**, only when
+  `data/pump-quotes.json` lists the coin and the repository variable **`LAUNCH_PUMP_QUOTE`** is `on`
+  (no such launch has been recorded yet, so this venue is unverified and off by default).
+
+StonkFun's numbers come from its public pricing API, fetched right before each build (the raise
+follows the stock's price), bounded, and checked against LaunchLab's config read over the RPC. A
+StonkFun or coin-priced launch that fails at any step **before it is sent** (its pair taken
+meanwhile, the pricing, the config, the opt-in, the build, the simulation, a cost over the
+per-launch cap) goes out on pump.fun in SOL that run instead, and its ledger row says why
+(`fallback`); nothing ever falls back after a send. Every venue serves the same metadata, and a cat
+is only prepared when its coin and its X post would pass on pump.fun in SOL too.
 
 **Who it launches on its own: only watch-list cats.** A post the trend watch named after a
 `data/cat-watch.json` figure (`reading.nameFrom: "figure"`), or a cartoon or fiction cat that an X
@@ -142,23 +168,26 @@ would break the site's content rules. Newest post first.
 **How one launch goes** (each phase is committed before the next, and each is safe to run again
 after a crash at any point):
 
-1. *prepare* writes the coin's metadata to `coins/<postId>.json` (pump.fun's shape: name, symbol,
-   the lore line "From the Catcoin Sanctuary.", the post's picture hotlinked from pbs.twimg.com,
-   the cat's card as website, @catcosanctuary as twitter) and a "prepared" row in the ledger,
-   `data/sanctuary-launches.json`. The site is deployed so it serves that file.
+1. *prepare* chooses the venue, writes the coin's metadata to `coins/<postId>.json` (pump.fun's
+   shape, the same on every venue: name, symbol, the lore line "From the Catcoin Sanctuary.", the
+   post's picture hotlinked from pbs.twimg.com, the cat's card as website, @catcosanctuary as
+   twitter) and a "prepared" row in the ledger, `data/sanctuary-launches.json` (its venue, and the
+   cat priced in the venue's pair). The site is deployed so it serves that file.
 2. *send* (the only step with the key) waits until `https://catcoinsanctuary.com/coins/<postId>.json`
-   serves exactly the committed file, builds the launch, **simulates** it and sends it only if the
+   serves exactly the committed file, builds the launch on its venue (falling back to pump.fun in
+   SOL as above), **simulates** it and sends it only if the
    simulation passes, the wallet loses at most `LAUNCH_MAX_SOL_PER_LAUNCH`, the last 24 hours stay
    within `LAUNCH_MAX_SOL_PER_DAY` and `LAUNCH_MAX_PER_DAY`, and at least `LAUNCH_MIN_BALANCE_SOL`
    stays in the wallet. The row is written "sending" before the transaction goes out, then
    "launched" (its mint, its transaction, what it cost) or "failed".
 3. *record* moves the cat into the sanctuary: an adoptable in `data/adoptables.json` with its
-   `launch` (the card says "Launching…" until the hourly Collection proves the mint, then
-   "Launched by the sanctuary"), its transaction in `data/launches.json`, held from the announcer
+   `launch` (its launchpad and pair the venue's; the card says "Launching on …" until the hourly
+   Collection proves the mint, then "Launched by the sanctuary on …" with that launchpad's link),
+   its transaction in `data/launches.json`, held from the announcer
    in `data/announced.json`, a 3D model queued in `scripts/meshy.queue.json`, its real photo in
    `data/real-photos.json`, and its figure off the watch list. Then the Collection, Pages and
-   Announce are started. Its one X post ("… launched by the sanctuary on PumpFun", its lore line
-   and its card link; never the mint or the author's @handle) goes out through
+   Announce are started. Its one X post ("… launched by the sanctuary on PumpFun" or "on StonkFun",
+   its lore line and its card link; never the mint or the author's @handle) goes out through
    `scripts/post-updates.mjs` once the Collection has proved it.
 
 The coin's mint is derived from the wallet and the post (`deriveMintKeypair`), so one post can only
@@ -186,6 +215,8 @@ its transaction is sent (a known, unused address can be blocked by anyone who fu
    and writing nothing), then `on`. Optional caps, each clamped: `LAUNCH_MAX_PER_DAY` (3, at most
    10), `LAUNCH_MAX_SOL_PER_LAUNCH` (0.03, at most 0.1), `LAUNCH_MAX_SOL_PER_DAY` (0.1, at most
    0.5), `LAUNCH_MIN_BALANCE_SOL` (0.02, at least 0.01), `LAUNCH_PRIORITY_MICROLAMPORTS` (100000).
+   `LAUNCH_PUMP_QUOTE` `on` opts in to pump.fun launches priced in a listed coin (leave it unset
+   unless you have listed a coin in `data/pump-quotes.json` after checking it on chain).
 6. Optional, for a figure: `look`, `coat`, `owner` and `category` in its `data/cat-watch.json` entry
    make its card and its 3D model right from the start.
 
@@ -339,7 +370,10 @@ recorded fixtures keep a fixed one.
 | `page.test.mjs` | The page's scripts cannot write HTML from data, make no request to another host, and its security policy allows only its own origin. |
 | `site.test.mjs` | See below. |
 | `workflows.test.mjs` | Pinned actions, least-privilege permissions, and what each workflow runs. |
-| `launcher.test.mjs` | The automatic launcher: who it launches (the policy and every exclusion), the caps and the balance floor on a simulated balance, dry mode, the metadata it hosts and waits for, the ledger (never a mint before the send), every crash point (one post, one mint), recording the cat and its one X post, the key never in a log line, no dependency. |
+| `launcher.test.mjs` | The automatic launcher: who it launches (the policy and every exclusion), where (pump.fun in SOL, StonkFun in a free stock pair, pump.fun in a listed coin with the opt-in; one cat per pair), the fallback to SOL before a send and never after, the caps and the balance floor on a simulated balance, dry mode, the metadata it hosts and waits for, the ledger (never a mint before the send), every crash point (one post, one mint), recording the cat and its one X post, the key never in a log line, no dependency. |
+| `launchlab.test.mjs` | A StonkFun launch built and signed offline: StonkFun's pricing (two real answers) and its bounds, all six recorded launches rebuilt byte for byte, and the sign-time checks. |
+| `pump-quote.test.mjs` | A pump.fun launch priced in a listed coin, and the Collection's proof of one (also in `npm run test:builder`). |
+| `venues-routing.test.mjs` | The owner's routing rule, the ties in `data/cat-watch.json`, one cat per stock pair, and that `data/pump-quotes.json` ships empty. |
 | `launch.test.mjs` | The Launch workflow: pinned actions, permissions per job, the wallet key in one step only, no npm, a commit after each phase, dispatches from jobs that run no repository code. |
 
 `site.test.mjs` checks the site as a whole:

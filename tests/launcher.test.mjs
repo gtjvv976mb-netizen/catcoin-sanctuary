@@ -11,17 +11,19 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { randomBytes } from "node:crypto";
-import { ROOT, DATA_NOW } from "./helpers.mjs";
-import { base58Encode, validateCollection, validateWallets, isAddress } from "../assets/collection.js";
+import { ROOT, DATA_NOW, recordedAccounts } from "./helpers.mjs";
+import { base58Encode, base58Decode, validateCollection, validateWallets, isAddress, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes } from "../assets/collection.js";
 import { adoptableProblem, validateAdoptables, realPhotoOf, ADOPTABLE_CATEGORIES } from "../assets/ui/adoptables.js";
 import { coatProblem } from "../assets/collection.js";
 import { keypairFromSecret, deriveMintKeypair, transactionToJson, decodeTransaction, decompileInstructions } from "../scripts/lib/solana-tx.mjs";
 import { decodeCreateV2, PUMP } from "../scripts/lib/pump.mjs";
-import { proveLaunchPump, TOKEN_2022_PROGRAM, SYSTEM_PROGRAM } from "../scripts/lib/chain.mjs";
+import { proveLaunchPump, proveLaunch, TOKEN_2022_PROGRAM, SYSTEM_PROGRAM, LAUNCHLAB_PROGRAM } from "../scripts/lib/chain.mjs";
+import { PRICING_URL } from "../scripts/lib/launchlab.mjs";
+import { VENUE_IDS } from "../scripts/lib/venues-routing.mjs";
 import { createRpc } from "../scripts/lib/rpc.mjs";
-import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL } from "../scripts/lib/venues.mjs";
+import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
-  prepare, send, record, launchMode, launchCaps, walletFromEnv, policyOf, selectCandidate, candidateRow, validateLedger, ledgerText, rowProblem,
+  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, figuresAtHome, watchText, signatureOf, feeUpperBound,
   FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES,
 } from "../scripts/lib/launcher.mjs";
@@ -45,6 +47,15 @@ const FIGURE = { name: "Sir Gloopington", aliases: ["Gloopington"], kind: "meme"
   look: "A real grey tabby cat with a round face, long white whiskers and a very serious stare.", coat: { base: "grey", second: "", pattern: "tabby", eyes: "green" } };
 const WATCH = { note: "test", topAccounts: ["someaccount"], bigAccounts: ["otheraccount"], figures: [FIGURE, { name: "Plinko Cat", aliases: [], kind: "cartoon", ticker: "PLINKO" }] };
 const RPC_URL = "https://rpc.example.test/v1/?api-key=RPCKEY9f8e7d6c5b4a";
+/* The routes: the figure tied to a stock pair no planned cat has (tOpenAI: StonkFun's recorded pricing answer is for it), or to a
+   made-up coin (MEOW) a test lists in data/pump-quotes.json. */
+const STOCK = (({ symbol, mint }) => Object.freeze({ symbol, mint }))(STOCK_PAIRS.find((s) => s.symbol === "tOpenAI"));
+const MEOW = Object.freeze({ symbol: "MEOW", mint: "MEoWkY1hD4n8vUe8vNQ4yLzVz9Hq1zVQf7mH3ZcVb2p", tokenProgram: TOKEN_2022_PROGRAM });
+const MEOW_PAIR = Object.freeze({ symbol: MEOW.symbol, mint: MEOW.mint });
+const QUOTES = validatePumpQuotes({ quotes: [MEOW] }).quotes;
+const WATCH_TIED = { ...WATCH, figures: [{ ...FIGURE, stock: STOCK.symbol }, WATCH.figures[1]] };
+const WATCH_COIN = { ...WATCH, figures: [{ ...FIGURE, pumpQuote: MEOW_PAIR }, WATCH.figures[1]] };
+const PRICING = JSON.parse(readRoot("tests/fixtures/stonkfun-pricing.json"));
 
 /** A throwaway wallet: its keypair and its secret as base58 (64 bytes), a JSON array (64) and the seed as a JSON array (32). */
 function throwaway() {
@@ -69,7 +80,7 @@ function post(id, { h = 2, name = "Sir Gloopington", coin = name, ticker = "GLOO
 const trendingOf = (posts) => ({ note: "test", candidates: posts.map((p) => p.id), posts });
 
 /** A throwaway copy of the site's data (every data file, the 3D-model queue) with the launcher's wallet listed, and these trending posts. */
-function site({ posts = [post("2100000000000000001")], wallet = null, approve = [], listWallet = true, ledger = null } = {}) {
+function site({ posts = [post("2100000000000000001")], wallet = null, approve = [], listWallet = true, ledger = null, watch = WATCH, quotes = null } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "launcher-"));
   fs.cpSync(path.join(ROOT, "data"), path.join(root, "data"), { recursive: true });
   fs.mkdirSync(path.join(root, "scripts"));
@@ -78,7 +89,8 @@ function site({ posts = [post("2100000000000000001")], wallet = null, approve = 
   w("data/trending-cats.json", trendingOf(posts));
   w("data/launch-approvals.json", { note: "test", approve });
   w("data/sanctuary-launches.json", ledger ?? { note: LEDGER_NOTE, launches: [] });
-  w("data/cat-watch.json", watchText(WATCH));
+  w("data/cat-watch.json", watchText(watch));
+  if (quotes) w("data/pump-quotes.json", { note: "test", quotes });
   if (wallet && listWallet) {
     const ws = JSON.parse(readRoot("data/wallets.json"));
     ws.launchers.push({ address: wallet, since: "2026-09-01", label: "Auto launcher" });
@@ -91,10 +103,11 @@ function site({ posts = [post("2100000000000000001")], wallet = null, approve = 
 /**
  * A fake Solana (a JSON-RPC endpoint): balances, blockhashes, a simulation that costs `loss`, and a send that lands the
  * transaction (finalized, block time `time`) unless told otherwise: land "never" (it is dropped), "error" (it fails on
- * chain), `refuse` (preflight refuses it), `drop` (the connection fails every time). Every call is recorded.
+ * chain), `refuse` (preflight refuses it), `drop` (the connection fails every time); `simErrOnce` and `lossOnce` change
+ * the next simulation only. Every call is recorded.
  */
 function fakeSolana({ wallet, balance = 200_000_000, loss = 5_600_000, lastValid = 1150, height = 1000, time = NOW } = {}) {
-  const s = { balance, loss, lastValid, height, land: "finalize", refuse: null, drop: false, simErr: null, onSend: null };
+  const s = { balance, loss, lastValid, height, land: "finalize", refuse: null, drop: false, simErr: null, simErrOnce: null, lossOnce: null, onSend: null };
   const calls = [], txs = new Map(), statuses = new Map(), accounts = new Map(), history = new Map(), sent = [];
   async function fetchImpl(url, init) {
     const { id, method, params } = JSON.parse(init.body);
@@ -105,9 +118,12 @@ function fakeSolana({ wallet, balance = 200_000_000, loss = 5_600_000, lastValid
       case "getBalance": return ok({ context: ctx, value: s.balance });
       case "getLatestBlockhash": return ok({ context: ctx, value: { blockhash: base58Encode(randomBytes(32)), lastValidBlockHeight: s.lastValid } });
       case "getBlockHeight": return ok(s.height);
-      case "simulateTransaction":
-        return ok({ context: ctx, value: s.simErr ? { err: s.simErr, logs: [], accounts: [null] }
-          : { err: null, logs: [], unitsConsumed: 100_529, accounts: [{ lamports: s.balance - s.loss, owner: SYSTEM_PROGRAM, data: ["", "base64"], executable: false, rentEpoch: 0 }] } });
+      case "simulateTransaction": {
+        const simErr = s.simErr ?? s.simErrOnce, simLoss = s.lossOnce ?? s.loss;
+        s.simErrOnce = null; s.lossOnce = null;
+        return ok({ context: ctx, value: simErr ? { err: simErr, logs: [], accounts: [null] }
+          : { err: null, logs: [], unitsConsumed: 100_529, accounts: [{ lamports: s.balance - simLoss, owner: SYSTEM_PROGRAM, data: ["", "base64"], executable: false, rentEpoch: 0 }] } });
+      }
       case "sendTransaction": {
         if (s.drop) throw new TypeError("fetch failed");
         if (s.refuse) return new Response(JSON.stringify({ jsonrpc: "2.0", id, error: { code: -32002, message: s.refuse } }), { status: 200 });
@@ -168,6 +184,29 @@ function clock(start = NOW) {
 
 const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, ...extra });
 const quick = { metadataWaitMs: 60_000, metadataPollMs: 20_000, confirmWaitMs: 30_000, confirmPollMs: 3_000 };
+
+/** The residents the page shows for a throwaway site (assets/residents.js, then assets/ui/data.js), its warnings silenced. */
+async function pageOf(t) {
+  const localFetch = async (url) => { try { return new Response(fs.readFileSync(new URL(url).pathname), { status: 200 }); } catch { return new Response("", { status: 404 }); } };
+  const warn = console.warn; console.warn = () => {};
+  try { return (await loadResidents({ base: new URL(`file://${t.root}/`), nowMs: DATA_NOW, fetchImpl: localFetch })).map(normalize).filter(Boolean); } finally { console.warn = warn; }
+}
+
+/** The launch post scripts/post-updates.mjs sends for a throwaway site a day on (its gaps cleared, a fake X), or null. */
+async function launchPostOf(t) {
+  const X = { X_API_KEY: "k", X_API_SECRET: "s", X_ACCESS_TOKEN: "t", X_ACCESS_SECRET: "a" };
+  fs.writeFileSync(path.join(t.root, "data/announce-config.json"), JSON.stringify({ dryRun: false }));
+  fs.writeFileSync(path.join(t.root, "data/updates.json"), JSON.stringify({ ...t.json("data/updates.json"), lastPostedAt: null }));
+  fs.writeFileSync(path.join(t.root, "data/announced.json"), JSON.stringify({ cats: Object.fromEntries(Object.entries(t.json("data/announced.json").cats).map(([k, v]) => [k, { ...v, at: undefined }])) }));
+  fs.writeFileSync(path.join(t.root, "data/release-queue.json"), JSON.stringify({ ...t.json("data/release-queue.json"), lastReleaseAt: null }));
+  const tweets = [];
+  const xFetch = async (url, init) => {
+    if (url === "https://api.x.com/2/tweets") { tweets.push(JSON.parse(init.body).text); return new Response(JSON.stringify({ data: { id: String(900 + tweets.length) } }), { status: 201 }); }
+    return new Response(JSON.stringify({ data: { id: "m1" } }), { status: 200 });
+  };
+  const r = await postUpdates({ root: t.root, env: X, fetchImpl: xFetch, now: () => new Date(Math.max(Date.now(), NOW) + 24 * HOUR), log: () => {} });
+  return r.posted?.kind === "launch" ? tweets.at(-1) : null;
+}
 
 /** prepare, deploy the site, send, record: one launch, as the workflow runs it. */
 async function launchOnce(t, { env, sol, web, c = clock(), log = () => {} }) {
@@ -836,16 +875,344 @@ test("the ledger: closed rows, never a mint or a tx on a prepared row, one row i
   assert.equal(kept.at(-1).postId, finished[198].postId, "the oldest went");
 });
 
-test("venues: a registry the other stages extend; pump.fun priced in SOL for every cat today", () => {
-  assert.deepEqual(venueIds(), ["pump-sol"]);
-  assert.equal(chooseVenue(post("2100000000000000601"), null).id, "pump-sol");
+test("venues: pump.fun in SOL, StonkFun in a stock pair and pump.fun in a listed coin, registered once, the rule's ids; one metadata for all three", () => {
+  assert.deepEqual(venueIds(), ["pump-sol", "stonkfun", "pump-quote"]);
+  assert.deepEqual(venueIds(), [...VENUE_IDS], "the routing rule's venues are the registered ones");
   assert.equal(venueById("pump-sol"), PUMP_SOL);
-  assert.equal(venueById("stonkfun"), null);
+  assert.equal(venueById("stonkfun"), STONKFUN);
+  assert.equal(venueById("pump-quote"), PUMP_QUOTE);
+  assert.equal(venueById("raydium"), null);
   assert.deepEqual([PUMP_SOL.launchpad, PUMP_SOL.announceAs, PUMP_SOL.pair.symbol], ["pump.fun", "PumpFun", "SOL"]);
+  assert.deepEqual([STONKFUN.launchpad, STONKFUN.announceAs, STONKFUN.pair], ["stonkfun", "StonkFun", null]);
+  assert.deepEqual([PUMP_QUOTE.launchpad, PUMP_QUOTE.announceAs, PUMP_QUOTE.pair], ["pump.fun", "PumpFun", null]);
+  // The pairs each may launch in.
+  assert.equal(PUMP_SOL.pairProblem({ ...SOL_PAIR }), null);
+  assert.ok(PUMP_SOL.pairProblem(STOCK) && PUMP_SOL.pairProblem(MEOW_PAIR));
+  assert.equal(STONKFUN.pairProblem(STOCK), null);
+  assert.ok(STONKFUN.pairProblem({ ...SOL_PAIR }) && STONKFUN.pairProblem(MEOW_PAIR) && STONKFUN.pairProblem({ symbol: "STONK", mint: "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx" }));
+  assert.equal(PUMP_QUOTE.pairProblem(MEOW_PAIR), null);
+  assert.ok(PUMP_QUOTE.pairProblem({ ...SOL_PAIR }) && PUMP_QUOTE.pairProblem(STOCK) && PUMP_QUOTE.pairProblem({ ...MEOW_PAIR, tokenProgram: TOKEN_2022_PROGRAM }));
+  // The same metadata JSON on every venue, so a fallback to SOL before the send keeps the file its uri serves.
+  const input = { name: "Sir Gloopington", symbol: "GLOOP", description: "A test. From the Catcoin Sanctuary.", image: "https://pbs.twimg.com/media/x.jpg", website: "https://catcoinsanctuary.com/#cat=GLOOP", twitter: X_ACCOUNT, createdOn: SITE_ORIGIN };
+  for (const v of [STONKFUN, PUMP_QUOTE]) assert.equal(metadataText(v.metadata(input)), metadataText(PUMP_SOL.metadata(input)), v.id);
+  // StonkFun's text limits are LaunchLab's (a ticker of 10 at most: the sanctuary's own limit).
+  assert.equal(STONKFUN.textProblem({ name: "Sir Gloopington", symbol: "GLOOPINGTO", uri: metadataUri("2100000000000000601") }), null);
+  assert.match(STONKFUN.textProblem({ name: "Sir Gloopington", symbol: "GLOOPINGTON", uri: metadataUri("2100000000000000601") }), /10 bytes/);
   assert.throws(() => registerVenue({ ...PUMP_SOL }), /registered already/);
   assert.throws(() => registerVenue({ ...PUMP_SOL, id: "x-test", launchpad: "raydium" }), /launchpad/);
   assert.throws(() => registerVenue({ ...PUMP_SOL, id: "x-test2", prove: null }), /prove must be a function/);
+  assert.throws(() => registerVenue({ ...PUMP_SOL, id: "x-test3", pairProblem: undefined }), /pairProblem must be a function/);
   assert.match(PUMP_SOL.textProblem({ name: "A".repeat(33), symbol: "AB", uri: metadataUri("2100000000000000601") }), /32 bytes/);
+  // chooseVenue: a registered venue and the pair it prices the cat in; fails closed to SOL when a file is missing.
+  const files = { planned: JSON.parse(readRoot("data/planned.json")), collection: { cats: [] }, adoptables: { cats: [] } };
+  const tied = post("2100000000000000602");
+  assert.deepEqual(chooseVenue(tied, WATCH_TIED, files), { venue: STONKFUN, pair: STOCK, reason: "stock", from: "figure" });
+  assert.deepEqual(chooseVenue(tied, WATCH_TIED, { ...files, extraPairs: [STOCK.mint] }), { venue: PUMP_SOL, pair: { ...SOL_PAIR }, reason: "pair_taken" });
+  for (const missing of ["planned", "collection", "adoptables"]) {
+    assert.deepEqual(chooseVenue(tied, WATCH_TIED, { ...files, [missing]: null }), { venue: PUMP_SOL, pair: { ...SOL_PAIR }, reason: "pairs_unknown" }, missing);
+  }
+  assert.deepEqual(chooseVenue(post("2100000000000000603"), WATCH, files), { venue: PUMP_SOL, pair: { ...SOL_PAIR }, reason: "default" });
+  const coin = post("2100000000000000604");
+  assert.deepEqual(chooseVenue(coin, WATCH_COIN, { ...files, pumpQuotes: QUOTES, pumpQuoteOptIn: true }), { venue: PUMP_QUOTE, pair: MEOW_PAIR, reason: "pump_quote", from: "figure" });
+  assert.equal(chooseVenue(coin, WATCH_COIN, { ...files, pumpQuotes: QUOTES }).reason, "quote_unverified", "no opt-in: SOL");
+  assert.equal(chooseVenue(coin, WATCH_COIN, { ...files, pumpQuoteOptIn: true }).reason, "quote_not_listed", "not listed: SOL");
+  assert.equal(pumpQuoteOptIn({ LAUNCH_PUMP_QUOTE: "on" }), true);
+  assert.equal(pumpQuoteOptIn({ LAUNCH_PUMP_QUOTE: " ON " }), true);
+  for (const v of [undefined, "", "off", "yes", "true", "1"]) assert.equal(pumpQuoteOptIn({ LAUNCH_PUMP_QUOTE: v }), false, String(v));
+});
+
+/* ── routing: StonkFun, a coin-priced pump.fun launch, and the fallback to pump.fun in SOL ─────────── */
+
+test("routing a candidate: a figure tied to a free stock pair is prepared on StonkFun, priced in it; a pair any cat or any launch of the launcher's own holds, or unknown pairs, give pump.fun in SOL", () => {
+  const ADOPT = JSON.parse(readRoot("data/adoptables.json")), PLANNED = JSON.parse(readRoot("data/planned.json")), COLL = { cats: [] };
+  const ctx = (extra = {}) => ({ nowMs: NOW, approvals: new Set(), watch: WATCH_TIED, ledger: { launches: [] }, adoptables: freed(ADOPT), planned: PLANNED, collection: COLL, ...extra });
+  const p = post("2100000000000000801");
+  const { row, route } = candidateRow(p, ctx());
+  assert.equal(rowProblem(row), null);
+  assert.deepEqual([row.venue, row.cat.pair, route.reason, row.fallback], ["stonkfun", STOCK, "stock", undefined]);
+  assert.equal(adoptableProblem({ ...row.cat, launch: { mint: "11111111111111111111111111111112", tx: "1".repeat(64), launchpad: "stonkfun", at: "2026-09-25T17:00:00Z" } }), null);
+  assert.equal(metadataText(coinMetadata(row)), metadataText(coinMetadata({ ...row, venue: "pump-sol" })), "the same metadata as its fallback's");
+  const sol = (c) => { const r = candidateRow(p, c).row; return [r.venue, r.cat.pair.symbol]; };
+  const OTHER = { postId: "2100000000000000899", name: "Other Cat", coinName: "Other Cat", ticker: "OTHERCAT", attempts: 1, cat: { pair: STOCK } };
+  // One cat per stock pair: a planned cat, a proved launch, an adoptable, or a launch of the launcher's own that no file shows yet.
+  const other = ADOPT.cats[0];
+  assert.deepEqual(sol(ctx({ adoptables: { cats: [...freed(ADOPT).cats, { ...other, pair: STOCK }] } })), ["pump-sol", "SOL"]);
+  assert.deepEqual(sol(ctx({ collection: { cats: [{ pair: STOCK }] } })), ["pump-sol", "SOL"]);
+  assert.deepEqual(sol(ctx({ planned: { ...PLANNED, cats: [...PLANNED.cats, { ticker: "ZZZ", pair: STOCK }] } })), ["pump-sol", "SOL"]);
+  for (const status of ["prepared", "sending", "launched"]) {
+    assert.deepEqual(sol(ctx({ ledger: { launches: [{ ...OTHER, status }] } })), ["pump-sol", "SOL"], status);
+  }
+  assert.deepEqual(sol(ctx({ ledger: { launches: [{ ...OTHER, status: "failed", retry: true }] } })), ["pump-sol", "SOL"], "a row tried again keeps its pair");
+  assert.deepEqual(sol(ctx({ ledger: { launches: [{ ...OTHER, status: "failed", retry: false }] } })), ["stonkfun", STOCK.symbol], "a row failed for good holds none");
+  assert.deepEqual(sol(ctx({ ledger: { launches: [{ ...OTHER, status: "failed", retry: true, attempts: MAX_ATTEMPTS }] } })), ["stonkfun", STOCK.symbol], "nor one with no try left");
+  assert.deepEqual(pendingPairs({ launches: [{ postId: "a", status: "sending", cat: { pair: STOCK } }, { postId: "b", status: "prepared", cat: { pair: { ...SOL_PAIR } } }] }, { except: "a" }), [SOL_PAIR.mint]);
+  // A file that cannot be read: the pairs in use are unknown, so no stock pair is used.
+  assert.deepEqual(sol(ctx({ collection: null })), ["pump-sol", "SOL"]);
+  // Only a watch-list tie routes: the same cat untied, or tied to a symbol that is no stock pair, launches in SOL.
+  assert.deepEqual(sol(ctx({ watch: WATCH })), ["pump-sol", "SOL"]);
+  assert.deepEqual(sol(ctx({ watch: { ...WATCH, figures: [{ ...FIGURE, stock: "NOPE" }] } })), ["pump-sol", "SOL"]);
+  // The ledger row keeps its venue and pair together.
+  assert.match(rowProblem({ ...row, cat: { ...row.cat, pair: { ...SOL_PAIR } } }), /pair is not one stonkfun launches in/);
+  assert.match(rowProblem({ ...row, venue: "pump-sol" }), /pair is not one pump-sol launches in/);
+  assert.match(rowProblem({ ...row, fallback: "stonkfun: no" }), /fallback/, "a fallback only on pump.fun in SOL");
+  assert.equal(rowProblem({ ...row, venue: "pump-sol", cat: { ...row.cat, pair: { ...SOL_PAIR } }, fallback: "stonkfun: StonkFun answered HTTP 503" }), null);
+  // The X post is drafted for both launchpads: StonkFun, and PumpFun should it fall back.
+  assert.ok(draftLaunch({ id: "GLOOP", name: "Sir Gloopington" }, { coinName: "Sir Gloopington", ticker: "GLOOP", lore: p.reading.lore, launchpad: "stonkfun" }).text.includes("launched by the sanctuary on StonkFun"));
+});
+
+test("routing a candidate to a coin: pump.fun priced in a coin data/pump-quotes.json lists, only with the owner's opt-in (LAUNCH_PUMP_QUOTE)", () => {
+  const ctx = (extra = {}) => ({ nowMs: NOW, approvals: new Set(), watch: WATCH_COIN, ledger: { launches: [] }, adoptables: JSON.parse(readRoot("data/adoptables.json")),
+    planned: JSON.parse(readRoot("data/planned.json")), collection: { cats: [] }, pumpQuotes: QUOTES, pumpQuoteOptIn: true, ...extra });
+  const p = post("2100000000000000811");
+  const { row, route } = candidateRow(p, ctx());
+  assert.equal(rowProblem(row), null);
+  assert.deepEqual([row.venue, row.cat.pair, route.reason], ["pump-quote", MEOW_PAIR, "pump_quote"]);
+  assert.deepEqual([candidateRow(p, ctx({ pumpQuoteOptIn: false })).row.venue, candidateRow(p, ctx({ pumpQuoteOptIn: false })).route.reason], ["pump-sol", "quote_unverified"]);
+  assert.deepEqual([candidateRow(p, ctx({ pumpQuotes: [] })).row.venue, candidateRow(p, ctx({ pumpQuotes: [] })).route.reason], ["pump-sol", "quote_not_listed"]);
+});
+
+/** The site's stock pair for the StonkFun tests: tOpenAI, the one StonkFun's recorded pricing answer is for (no planned cat has it). */
+function freed(adoptables) { return { ...adoptables, cats: adoptables.cats.filter((c) => c.pair?.mint !== STOCK.mint) }; }
+
+/** A throwaway site whose watch-list figure is tied to the stock pair, with that pair free (whatever the shipped data holds). */
+function stonkSite(opts = {}) {
+  const t = site({ watch: WATCH_TIED, ...opts });
+  const a = t.json(FILES.adoptables), c = t.json(FILES.collection);
+  fs.writeFileSync(path.join(t.root, FILES.adoptables), `${JSON.stringify(freed(a), null, 2)}\n`);
+  fs.writeFileSync(path.join(t.root, FILES.collection), `${JSON.stringify({ ...c, cats: c.cats.filter((e) => e.pair?.mint !== STOCK.mint) }, null, 2)}\n`);
+  return t;
+}
+
+/**
+ * StonkFun's pricing API as the launcher reaches it (its recorded tOpenAI answer, observed "now" by `clock`), in front of the
+ * fake site; `status` other than 200 is an error answer. Every URL asked is kept. The fake Solana gets the GlobalConfig the answer
+ * names: LaunchLab's, for this stock (GMEx's recorded config with its quote mint set to the stock's).
+ */
+function stonkfunApi(web, sol, c, { status = 200, config = true } = {}) {
+  const api = { asked: [], status };
+  const answer = PRICING.answers.find((a) => a.body.data.quote.mint === STOCK.mint);
+  const configId = answer.body.data.curve.configId;
+  if (config) {
+    const gmex = recordedAccounts().get("2TygvvGwVLxpJaGfQkFtGFzgvRMQmcFi6fM6iceLTTpu");
+    const data = Buffer.from(gmex.data[0], "base64");
+    Buffer.from(base58Decode(STOCK.mint)).copy(data, 83);
+    sol.accounts.set(configId, { ...gmex, data: [data.toString("base64"), "base64"] });
+  }
+  api.fetchImpl = async (url, init) => {
+    if (!String(url).startsWith(PRICING_URL)) return web.fetchImpl(url, init);
+    api.asked.push(String(url));
+    if (api.status !== 200) return new Response(JSON.stringify({ error: { code: "unavailable" } }), { status: api.status });
+    const body = structuredClone(answer.body);
+    body.data.prices.observedAt = new Date(c.now()).toISOString();
+    return new Response(JSON.stringify(body), { status: 200 });
+  };
+  api.configId = configId;
+  return api;
+}
+
+test("a StonkFun launch end to end: priced in its free stock pair, StonkFun's pricing fetched right before the build and its config read back, simulated, sent, proved as the Collection proves it; recorded with launchpad stonkfun; the card links StonkFun; the X post says StonkFun; the pair is then taken", async () => {
+  const w = throwaway();
+  const t = stonkSite({ wallet: w.address });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  const api = stonkfunApi(web, sol, c);
+  const logs = [];
+  const p = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, log: (l) => logs.push(l) });
+  assert.equal(p.prepared, "2100000000000000001");
+  assert.ok(logs.some((l) => l.includes("on StonkFun, priced in tOpenAI (stock)")), logs.join("\n"));
+  assert.equal(api.asked.length, 0, "prepare never asks StonkFun: the pricing is fetched right before the build");
+  let row = t.json(FILES.ledger).launches[0];
+  assert.deepEqual([row.venue, row.cat.pair], ["stonkfun", STOCK]);
+  web.deployed = true;
+  const s = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
+  assert.deepEqual([s.outcome, s.launched, s.code], ["launched", true, 0]);
+  assert.deepEqual(api.asked, [`${PRICING_URL}?quoteMint=${STOCK.mint}`], "the pricing, once, for this stock");
+  const methods = sol.methods();
+  assert.ok(methods.indexOf("getMultipleAccounts") < methods.indexOf("simulateTransaction"));
+  assert.ok(sol.calls.some((x) => x.method === "getMultipleAccounts" && x.params[0][0] === api.configId), "the config StonkFun named, read back before the build");
+  assert.equal(sol.calls.filter((x) => x.method === "sendTransaction").length, 1);
+  // What went out is a StonkFun launch the Collection proves: the wallet's, priced in the stock, no dev buy, nothing else.
+  row = t.json(FILES.ledger).launches[0];
+  const tx = sol.txs.get(row.tx);
+  const proof = proveLaunch(structuredClone(tx), { wallet: w.address });
+  assert.ok(proof.ok, proof.detail);
+  assert.deepEqual([proof.launch.mint, proof.launch.pair, proof.launch.name, proof.launch.symbol, proof.launch.uri],
+    [deriveMintKeypair(w.kp, row.postId).publicKey, STOCK, "Sir Gloopington", "GLOOP", metadataUri(row.postId)]);
+  const programs = decompileInstructions(decodeTransaction(Buffer.from(sol.calls.find((x) => x.method === "sendTransaction").params[0], "base64")).message).map((ix) => ix.programId);
+  assert.deepEqual(programs, ["ComputeBudget111111111111111111111111111111", "ComputeBudget111111111111111111111111111111", LAUNCHLAB_PROGRAM], "compute budget and the initialize: no buy, no token account, no transfer");
+  assert.deepEqual([row.status, row.venue, row.cat.pair, row.fallback], ["launched", "stonkfun", STOCK, undefined]);
+  // Recorded: the adoptable is priced in the stock and launched on StonkFun.
+  const r = record({ io: t.io, env: ON(w), now: c.now, log: (l) => logs.push(l) });
+  assert.deepEqual(r.recorded, ["GLOOP"]);
+  const cat = t.json(FILES.adoptables).cats.find((x) => x.ticker === "GLOOP");
+  assert.deepEqual([cat.pair, cat.launch.launchpad, cat.launch.mint, cat.launch.tx], [STOCK, "stonkfun", row.mintPublic, row.tx]);
+  assert.ok(t.json(FILES.launches).launches.some((l) => l.tx === row.tx));
+  // The Collection proves it (a StonkFun entry: no launchpad field); the page shows it launched on StonkFun, on the cat's own card.
+  const L = proof.launch;
+  const collection = t.json(FILES.collection);
+  collection.cats.unshift({ mint: L.mint, name: L.name, symbol: L.symbol, pair: L.pair, pool: L.pool, payer: L.payer, tx: L.tx, time: L.time });
+  fs.writeFileSync(path.join(t.root, FILES.collection), JSON.stringify(collection));
+  assert.equal(validateCollection(collection, { wallets: validateWallets(t.json(FILES.wallets)), nowMs: DATA_NOW }).refused.length, 0);
+  const all = await pageOf(t);
+  const g = all.find((x) => x.id === "GLOOP");
+  assert.deepEqual([g.kind, g.sanctuaryLaunch?.status, g.sanctuaryLaunch?.launchpad, isLaunched(g), g.token.mint, g.pair.symbol], ["adoptable", "launched", "stonkfun", true, row.mintPublic, "tOpenAI"]);
+  assert.equal(g.explorer.stonkfun, `https://www.stonkfun.xyz/token/${row.mintPublic}`);
+  assert.equal(g.explorer.pumpfun, undefined);
+  assert.equal(all.filter((x) => x.token?.mint === row.mintPublic).length, 1, "one card, not a bare token card too");
+  // The X post names StonkFun.
+  const text = await launchPostOf(t);
+  assert.ok(text.includes("Sir Gloopington (GLOOP), launched by the sanctuary on StonkFun"), text);
+  assert.ok(!text.includes(row.mintPublic) && !/[1-9A-HJ-NP-Za-km-z]{32,44}/.test(text), "no address");
+  // One cat per stock pair: the next cat tied to the same stock launches in SOL.
+  const next = candidateRow(post("2100000000000000002", { name: "Plinko Cat", ticker: "PLINKO", figure: "Plinko Cat", lore: "Plinko Cat drops through the pegs." }),
+    { nowMs: c.now(), approvals: new Set(), watch: { ...WATCH_TIED, figures: [{ ...WATCH.figures[1], stock: STOCK.symbol }] }, ledger: t.json(FILES.ledger),
+      adoptables: t.json(FILES.adoptables), planned: t.json(FILES.planned), collection: t.json(FILES.collection) });
+  assert.deepEqual([next.row.venue, next.route.reason], ["pump-sol", "pair_taken"]);
+});
+
+test("the fallback, before the send only: StonkFun's pricing down, its config wrong, its simulation failing, its pair taken since prepare: the cat goes out on pump.fun in SOL that run, and the row says why", async () => {
+  const cases = [
+    ["pricing", (h) => { h.api.status = 503; }, /StonkFun answered HTTP 503/, 1],
+    ["config", (h) => { h.sol.accounts.delete(h.api.configId); }, /config for tOpenAI: the config is not a LaunchLab account/, 1],
+    ["simulation", (h) => { h.sol.s.simErrOnce = { InstructionError: [2, { Custom: 6001 }] }; }, /the simulation did not pass \(\{"InstructionError"/, 1],
+    ["cost", (h) => { h.sol.s.lossOnce = 40_000_000; }, /it would cost 0\.04\d* SOL, more than LAUNCH_MAX_SOL_PER_LAUNCH \(0\.03 SOL\)/, 1],
+    ["pair", (h) => { const a = h.t.json(FILES.adoptables); a.cats[0] = { ...a.cats[0], pair: STOCK }; fs.writeFileSync(path.join(h.t.root, FILES.adoptables), JSON.stringify(a)); }, /its stock pair tOpenAI has a sanctuary cat now/, 0],
+  ];
+  for (const [what, breakIt, why, pricingAsks] of cases) {
+    const w = throwaway();
+    const t = stonkSite({ wallet: w.address });
+    const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+    const api = stonkfunApi(web, sol, c);
+    await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now });
+    assert.equal(t.json(FILES.ledger).launches[0].venue, "stonkfun", what);
+    web.deployed = true;
+    breakIt({ t, sol, api });
+    const logs = [];
+    const s = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
+    assert.deepEqual([s.outcome, s.launched], ["launched", true], `${what}: ${logs.join("\n")}`);
+    assert.equal(api.asked.length, pricingAsks, what);
+    assert.ok(logs.some((l) => /StonkFun failed before anything was sent .*; it launches on pump\.fun in SOL this run\./.test(l)), what);
+    assert.equal(sol.calls.filter((x) => x.method === "sendTransaction").length, 1, `${what}: one send, on pump.fun`);
+    const row = t.json(FILES.ledger).launches[0];
+    assert.deepEqual([row.venue, row.cat.pair], ["pump-sol", { ...SOL_PAIR }], what);
+    assert.match(row.fallback, /^stonkfun: /, what);
+    assert.match(row.fallback, why, what);
+    assert.equal(rowProblem(row), null, what);
+    assert.ok(proveLaunchPump(structuredClone(sol.txs.get(row.tx)), { wallet: w.address }).ok, `${what}: a pump.fun launch in SOL`);
+    // The same metadata file served all along; recorded as a pump.fun cat in SOL; its post says PumpFun.
+    assert.equal(t.read(row.metadataPath), metadataText(coinMetadata(row)), what);
+    record({ io: t.io, env: ON(w), now: c.now });
+    const cat = t.json(FILES.adoptables).cats.find((x) => x.ticker === "GLOOP");
+    assert.deepEqual([cat.pair, cat.launch.launchpad], [{ ...SOL_PAIR }, "pump.fun"], what);
+  }
+});
+
+test("never a fallback after a send, and a fallback holds for its run only: a StonkFun launch that fails on chain or that the RPC refuses stays StonkFun; a SOL fallback whose own simulation fails leaves the row on StonkFun for its next try", async () => {
+  // Failed on chain: the row is failed (tried again later, same mint), still StonkFun; nothing else was sent.
+  for (const [what, breakIt] of [["on chain", (sol) => { sol.s.land = "error"; }], ["refused", (sol) => { sol.s.refuse = "Transaction simulation failed"; }]]) {
+    const w = throwaway();
+    const t = stonkSite({ wallet: w.address });
+    const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+    const api = stonkfunApi(web, sol, c);
+    await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now });
+    web.deployed = true;
+    breakIt(sol);
+    await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
+    const row = t.json(FILES.ledger).launches[0];
+    assert.deepEqual([row.status, row.venue, row.cat.pair, row.retry, row.fallback], ["failed", "stonkfun", STOCK, true, undefined], what);
+    assert.equal(sol.calls.filter((x) => x.method === "sendTransaction").length, 1, `${what}: sent once, never again on another venue`);
+  }
+  // Both simulations fail: nothing sent; the row keeps StonkFun, one attempt used.
+  const w = throwaway();
+  const t = stonkSite({ wallet: w.address });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  const api = stonkfunApi(web, sol, c);
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now });
+  web.deployed = true;
+  sol.s.simErr = { InstructionError: [0, "InsufficientFundsForRent"] };
+  const s = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
+  assert.equal(s.outcome, "simulation_failed");
+  assert.equal(sol.calls.filter((x) => x.method === "simulateTransaction").length, 2, "StonkFun's, then pump.fun's in SOL");
+  assert.ok(!sol.methods().includes("sendTransaction"));
+  const row = t.json(FILES.ledger).launches[0];
+  assert.deepEqual([row.status, row.venue, row.cat.pair, row.attempts, row.retry, row.fallback], ["failed", "stonkfun", STOCK, 1, true, undefined]);
+  assert.match(row.reason, /on pump\.fun in SOL, after its own venue failed/);
+  assert.equal(rowProblem(row), null);
+});
+
+test("dry mode on StonkFun: the pricing, the config and the simulation, nothing sent and nothing written; a lost commit after a fallback is recovered from the chain as the pump.fun launch it was", async () => {
+  const w = throwaway();
+  const t = stonkSite({ wallet: w.address });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  const api = stonkfunApi(web, sol, c);
+  const dry = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58 };
+  const logs = [];
+  const d = await send({ io: t.io, env: dry, rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
+  assert.deepEqual([d.outcome, d.venue], ["dry", "stonkfun"]);
+  assert.equal(api.asked.length, 1);
+  assert.ok(logs.some((l) => l.includes("simulates cleanly on StonkFun, priced in tOpenAI")), logs.join("\n"));
+  assert.ok(!sol.methods().includes("sendTransaction"));
+  assert.deepEqual(t.json(FILES.ledger).launches, []);
+  // Recovery: a StonkFun row fell back and went out on pump.fun in SOL, but the "sending" commit was lost.
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now });
+  const prepared = t.read(FILES.ledger);
+  web.deployed = true;
+  api.status = 500;
+  assert.equal((await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, ...quick })).outcome, "launched");
+  const sent = t.json(FILES.ledger).launches[0];
+  fs.writeFileSync(path.join(t.root, FILES.ledger), prepared);
+  assert.equal(t.json(FILES.ledger).launches[0].venue, "stonkfun");
+  api.status = 200;
+  const r = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
+  assert.equal(r.outcome, "recovered");
+  assert.equal(sol.calls.filter((x) => x.method === "sendTransaction").length, 1, "never sent twice");
+  const row = t.json(FILES.ledger).launches[0];
+  assert.deepEqual([row.status, row.venue, row.cat.pair, row.tx, row.mintPublic], ["launched", "pump-sol", { ...SOL_PAIR }, sent.tx, sent.mintPublic]);
+  assert.match(row.fallback, /^stonkfun: recovered on chain as a launch on pump\.fun in SOL/);
+  assert.equal(rowProblem(row), null);
+});
+
+test("a coin-priced pump.fun launch with the owner's opt-in: built for the listed coin, proved with the list, recorded priced in it, and shown launched by the page (which reads data/pump-quotes.json); the opt-in withdrawn before the send: SOL", async () => {
+  const w = throwaway();
+  const t = site({ wallet: w.address, watch: WATCH_COIN, quotes: [MEOW] });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  const env = ON(w, { LAUNCH_PUMP_QUOTE: "on" });
+  await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+  assert.deepEqual([t.json(FILES.ledger).launches[0].venue, t.json(FILES.ledger).launches[0].cat.pair], ["pump-quote", MEOW_PAIR]);
+  web.deployed = true;
+  const s = await send({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
+  assert.equal(s.outcome, "launched");
+  const row = t.json(FILES.ledger).launches[0];
+  const tx = structuredClone(sol.txs.get(row.tx));
+  assert.equal(proveLaunchPump(tx, { wallet: w.address }).clause, "pump_quote_not_allowed", "not a SOL launch");
+  const proof = proveLaunchPump(tx, { wallet: w.address, quotes: QUOTES });
+  assert.ok(proof.ok, proof.detail);
+  assert.deepEqual([row.venue, proof.launch.pair], ["pump-quote", MEOW_PAIR]);
+  record({ io: t.io, env, now: c.now });
+  const cat = t.json(FILES.adoptables).cats.find((x) => x.ticker === "GLOOP");
+  assert.deepEqual([cat.pair, cat.launch.launchpad], [MEOW_PAIR, "pump.fun"]);
+  // The Collection lists it with its coin as the pair; the page shows it launched while data/pump-quotes.json lists the coin.
+  const L = proof.launch;
+  const collection = t.json(FILES.collection);
+  collection.cats.unshift({ mint: L.mint, name: L.name, symbol: L.symbol, pair: L.pair, pool: L.pool, payer: L.payer, tx: L.tx, time: L.time, launchpad: L.launchpad });
+  fs.writeFileSync(path.join(t.root, FILES.collection), JSON.stringify(collection));
+  let g = (await pageOf(t)).find((x) => x.id === "GLOOP");
+  assert.deepEqual([g.sanctuaryLaunch.status, isLaunched(g), g.pair.symbol, g.explorer.pumpfun], ["launched", true, "MEOW", `https://pump.fun/coin/${row.mintPublic}`]);
+  assert.ok((await launchPostOf(t)).includes("launched by the sanctuary on PumpFun"));
+  fs.rmSync(path.join(t.root, FILES.pumpQuotes));
+  g = (await pageOf(t)).find((x) => x.id === "GLOOP");
+  assert.deepEqual([g.sanctuaryLaunch.status, isLaunched(g)], ["pending", false], "no list: the page does not show a coin-priced coin");
+
+  // The opt-in withdrawn between prepare and send: the cat goes out in SOL.
+  const w2 = throwaway();
+  const t2 = site({ wallet: w2.address, watch: WATCH_COIN, quotes: [MEOW] });
+  const sol2 = fakeSolana({ wallet: w2.address }), web2 = fakeSite(t2.root), c2 = clock();
+  await prepare({ io: t2.io, env: ON(w2, { LAUNCH_PUMP_QUOTE: "on" }), rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c2.now });
+  web2.deployed = true;
+  assert.equal((await send({ io: t2.io, env: ON(w2), rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c2.now, sleep: c2.sleep, ...quick })).outcome, "launched");
+  const row2 = t2.json(FILES.ledger).launches[0];
+  assert.deepEqual([row2.venue, row2.cat.pair], ["pump-sol", { ...SOL_PAIR }]);
+  assert.match(row2.fallback, /^pump-quote: the owner has not opted in/);
+  assert.ok(proveLaunchPump(structuredClone(sol2.txs.get(row2.tx)), { wallet: w2.address }).ok);
 });
 
 test("a signed launch's signature and fee bound, read from its bytes", async () => {

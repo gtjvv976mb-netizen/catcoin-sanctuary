@@ -15,8 +15,21 @@
  * pbs.twimg.com picture, and never one whose coin text, metadata or X post would break the site's
  * content rules (the post is drafted before the launch: scripts/post-updates.mjs draftLaunch).
  *
- * HOW. The venue (scripts/lib/venues.mjs; pump.fun priced in SOL today) builds and signs the launch;
- * the launcher never buys or sells anything. The coin's mint is derived from the wallet's seed and the
+ * WHERE (scripts/lib/venues.mjs chooseVenue, the owner's rule in scripts/lib/venues-routing.mjs): by
+ * default on pump.fun priced in SOL ("pump-sol"); a cat tied to a company with a stock pair (data/
+ * cat-watch.json: a figure's "stock", or accountLinks for the big account that posted it) on StonkFun
+ * priced in that stock ("stonkfun"), unless the pair already has a sanctuary cat (one cat per pair:
+ * planned, proved, adoptable, or one of the launcher's own launches not in data/adoptables.json yet);
+ * a cat tied to a coin data/pump-quotes.json lists on pump.fun priced in that coin ("pump-quote"),
+ * only while the owner opts in (the repository variable LAUNCH_PUMP_QUOTE=on). The venue is chosen at
+ * prepare and checked again at send: a StonkFun or coin-priced launch that fails at any step BEFORE it
+ * is sent (its pair taken meanwhile, the opt-in withdrawn, StonkFun's pricing or config, the build,
+ * the simulation, the per-launch cap) goes out on pump.fun in SOL for that run instead, and the row
+ * says why (`fallback`); nothing ever falls back after a send. Every venue serves the same metadata,
+ * and a cat is only prepared when its coin and its X post would pass on pump.fun in SOL too.
+ *
+ * HOW. The venue builds and signs the launch; the launcher never buys or sells anything (no dev buy,
+ * no trading, on every venue). The coin's mint is derived from the wallet's seed and the
  * post id (scripts/lib/solana-tx.mjs deriveMintKeypair), so one post can only ever make one coin: a
  * retry sends the same mint again, and the chain refuses a second create. The mint address is never
  * written or printed before its transaction is sent (a known, unused address can be pre-funded by
@@ -27,14 +40,16 @@
  * LEDGER_MAX rows (old finished rows are dropped first; none in flight ever is). A row:
  *   { postId, url, name, coinName, ticker, venue, policy, lore, image, metadataPath, status,
  *     preparedAt, attempts, cat, and, as it goes: tx, sentAt, lastValidBlockHeight, mintPublic,
- *     spentLamports, settledAt, launchedAt, recordedAt, retry, reason }
+ *     spentLamports, settledAt, launchedAt, recordedAt, retry, reason, fallback }
  *   status "prepared" (its metadata written; no tx, no mint) → "sending" (tx = the signed
  *   transaction's signature and its blockhash's lastValidBlockHeight, written BEFORE it is sent) →
  *   "launched" (settled: finalized and proved by the venue; mintPublic, spentLamports from the
  *   transaction's own balances, launchedAt = its block time) or "failed" (reason; retry: may be
- *   prepared again with the SAME mint, at most MAX_ATTEMPTS sends). `cat` is the adoptable row the
- *   cat gets once launched (data/adoptables.json, checked by assets/ui/adoptables.js before anything
- *   is prepared).
+ *   prepared again with the SAME mint, at most MAX_ATTEMPTS sends). `venue` is the registered venue
+ *   (its launchpad is the cat's launch.launchpad); `cat` is the adoptable row the cat gets once
+ *   launched (data/adoptables.json, checked by assets/ui/adoptables.js before anything is prepared),
+ *   priced in the venue's pair (SOL, the stock pair, or the listed coin); `fallback` says why a
+ *   StonkFun or coin-priced cat went out on pump.fun in SOL instead.
  *
  * THE PHASES (the workflow commits between them):
  *   prepare  settles "sending" rows by their signature (finalized: launched or failed; unknown after
@@ -42,9 +57,11 @@
  *            nothing in flight and the day's count not reached, prepares ONE new cat: its metadata
  *            file and its ledger row. data/launch-approvals.json is only read.
  *   send     (the only phase with the key) settles "sending" rows, then for the prepared row: checks
- *            the chain for its mint (a launch that happened but was never recorded is recovered, an
- *            address someone else touched fails for good), waits (bounded) until the site serves the
- *            committed metadata at its uri, builds, signs and SIMULATES the launch, and refuses unless
+ *            the chain for its mint on every venue (a launch that happened but was never recorded is
+ *            recovered, an address someone else touched fails for good), waits (bounded) until the site
+ *            serves the committed metadata at its uri, builds (StonkFun: its pricing fetched now and
+ *            its config read back), signs and SIMULATES the launch (falling back to pump.fun in SOL as
+ *            above), and refuses unless
  *            the simulation succeeds, the wallet's loss is within LAUNCH_MAX_SOL_PER_LAUNCH, the last
  *            24 hours' spend plus this one is within LAUNCH_MAX_SOL_PER_DAY and the balance stays at or
  *            above LAUNCH_MIN_BALANCE_SOL. In dry mode it stops there. Otherwise it writes the row
@@ -57,14 +74,15 @@
  *            trend watch's own checks expect of a cat that moved in.
  *
  * MODE (LAUNCH_ENABLED): "on" launches; "dry" builds and simulates but writes nothing new and sends
- * nothing (it still settles rows already sent); anything else does nothing at all.
+ * nothing (it still settles rows already sent); anything else does nothing at all. LAUNCH_PUMP_QUOTE
+ * "on" (a repository variable, never a secret) opts in to the unverified coin-priced pump.fun venue.
  */
-import { validateWallets, activeLauncher, isAddress, isSignature, textProblem, httpsProblem, coatProblem, parseTime, base58Encode, TICKER } from "../../assets/collection.js";
+import { validateWallets, activeLauncher, isAddress, isSignature, textProblem, httpsProblem, coatProblem, parseTime, base58Encode, TICKER, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes } from "../../assets/collection.js";
 import { adoptableProblem, validateAdoptables, tributeLine, ADOPTABLE_CATEGORIES, realPhotoOf } from "../../assets/ui/adoptables.js";
 import { keypairFromSecret, deriveMintKeypair, decodeCompactU16, decodeLegacyMessage, decompileInstructions, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT } from "./solana-tx.mjs";
 import { TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
 import { LAUNCH_DEFAULTS } from "./pump.mjs";
-import { venueById, chooseVenue } from "./venues.mjs";
+import { venueById, venueIds, chooseVenue, takenPairs, PUMP_SOL } from "./venues.mjs";
 import { coatFromLook } from "./coat.mjs";
 import { tickerFor } from "./read-cat-post.mjs";
 import { RpcError } from "./rpc.mjs";
@@ -87,6 +105,7 @@ export const FILES = Object.freeze({
   announced: "data/announced.json",
   realPhotos: "data/real-photos.json",
   collection: "data/collection.json",
+  pumpQuotes: "data/pump-quotes.json",
   meshy: "scripts/meshy.queue.json",
 });
 export const LAMPORTS_PER_SOL = 1_000_000_000;
@@ -127,6 +146,9 @@ export function launchMode(env = {}) {
   const v = String(env.LAUNCH_ENABLED ?? "").trim().toLowerCase();
   return v === "on" ? "on" : v === "dry" ? "dry" : "off";
 }
+
+/** LAUNCH_PUMP_QUOTE: "on" (letter case aside, as LAUNCH_ENABLED) opts in to the unverified coin-priced pump.fun venue; anything else does not. */
+export const pumpQuoteOptIn = (env = {}) => String(env.LAUNCH_PUMP_QUOTE ?? "").trim().toLowerCase() === "on";
 
 /**
  * The caps, from the repository variables, each with its default when unset or not a number and
@@ -239,7 +261,7 @@ export async function waitForMetadata({ fetchImpl, uri, text, now, sleep, waitMs
 export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
 const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "lore", "image", "metadataPath", "status", "preparedAt", "attempts", "cat",
-  "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason"];
+  "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback"];
 export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved"]);
 const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 const isTime = (t) => parseTime(t, { dayAllowed: false }) !== null;
@@ -264,6 +286,8 @@ export function rowProblem(r) {
   if (!isTime(r.preparedAt)) return "preparedAt must be YYYY-MM-DDTHH:MM:SSZ";
   if (!Number.isInteger(r.attempts) || r.attempts < 0 || r.attempts > MAX_ATTEMPTS) return `attempts must be 0..${MAX_ATTEMPTS}`;
   if (!isObj(r.cat) || r.cat.ticker !== r.ticker || adoptableProblem(r.cat)) return "cat must be the adoptable row the cat gets";
+  if (venueById(r.venue).pairProblem(r.cat.pair)) return `the cat's pair is not one ${r.venue} launches in`;
+  if (r.fallback !== undefined && (typeof r.fallback !== "string" || !r.fallback || r.fallback.length > 300 || r.venue !== PUMP_SOL.id)) return "fallback is why a launch went to pump.fun in SOL instead";
   for (const k of ["sentAt", "settledAt", "launchedAt", "recordedAt"]) if (r[k] !== undefined && !isTime(r[k])) return `${k} must be YYYY-MM-DDTHH:MM:SSZ`;
   if (r.spentLamports !== undefined && (!Number.isSafeInteger(r.spentLamports) || r.spentLamports < 0)) return "spentLamports must be a whole number";
   if (r.retry !== undefined && typeof r.retry !== "boolean") return "retry must be true or false";
@@ -435,29 +459,57 @@ export function candidateRow(post, ctx) {
   const taken = takenNames(ctx);
   for (const k of [name, coinName, ticker]) if (taken.has(k.toLowerCase())) return no(`${k} is already a sanctuary cat, or launched`);
   const figure = typeof post.figure === "string" ? figuresOf(ctx.watch).get(post.figure) ?? null : null;
-  const venue = chooseVenue(post, figure);
   const uri = metadataUri(String(post.id));
-  const bad = venue.textProblem({ name: coinName, symbol: ticker, uri });
+  // pump.fun in SOL is every route's fallback: the coin must launch there as named, wherever it is routed.
+  const bad = PUMP_SOL.textProblem({ name: coinName, symbol: ticker, uri });
   if (bad) return no(`the coin cannot be launched as named: ${bad}`);
-  // The adoptable row, checked with the whole file (a free id and ticker).
+  const route = routeOf(post, ctx);
+  let { venue, pair } = route, fallback;
+  const there = venue === PUMP_SOL ? null : venue.textProblem({ name: coinName, symbol: ticker, uri });
+  if (there) { fallback = `${venue.id}: the coin cannot be launched there as named (${there})`.slice(0, 300); venue = PUMP_SOL; pair = { ...SOL_PAIR }; }
+  // The adoptable row, checked with the whole file (a free id and ticker), priced in the venue's pair.
   const cats = ctx.adoptables?.cats ?? [];
-  const built = adoptableFor(post, { figure, pair: venue.pair, taken: { ids: new Set(cats.map((c) => c.id)) }, nowMs: ctx.nowMs });
+  const built = adoptableFor(post, { figure, pair, taken: { ids: new Set(cats.map((c) => c.id)) }, nowMs: ctx.nowMs });
   if (built.problem) return no(built.problem);
   const v = validateAdoptables({ cats: [...cats, built.cat] }, { taken: new Set((ctx.planned?.cats ?? []).map((c) => c.ticker)) });
   if (v.refused.some((x) => x.index === cats.length)) return no(`the adoptable row would be refused: ${v.refused.find((x) => x.index === cats.length).detail}`);
   const row = {
     postId: String(post.id), url: post.url, name, coinName, ticker, venue: venue.id, policy, ...(figure ? { figure: figure.name } : {}), lore, image,
-    metadataPath: metadataPath(String(post.id)), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat: built.cat,
+    metadataPath: metadataPath(String(post.id)), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat: built.cat, ...(fallback ? { fallback } : {}),
   };
   // The site's content rules: the metadata's description, and the X post, drafted now (a held post means no launch).
   const cited = [name, coinName, ticker, ...(figure ? [figure.name, ...(Array.isArray(figure.aliases) ? figure.aliases : [])] : [])];
   const meta = coinMetadata(row);
   const d = checkUpdate(meta.description, cited);
   if (!d.ok) return no(`the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
-  const post2 = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad: venue.launchpad, cited });
-  if (!post2.ok) return no(`its X post would be held (${post2.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
+  // The post names the launchpad: drafted for the venue's, and for pump.fun's (the fallback's).
+  for (const launchpad of new Set([venue.launchpad, PUMP_SOL.launchpad])) {
+    const post2 = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad, cited });
+    if (!post2.ok) return no(`its X post would be held (${post2.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
+  }
   if (rowProblem(row)) return no(`the ledger row would be malformed: ${rowProblem(row)}`);
-  return { row, post };
+  return { row, post, route: { venue: venue.id, pair: { ...pair }, reason: fallback ? "text" : route.reason } };
+}
+
+/**
+ * The pairs of the launcher's own launches, which data/adoptables.json may not show yet (prepared,
+ * sending, launched but not recorded or not proved) or which may still go out (a failed row that is
+ * tried again keeps its pair): every row's but one failed for good, and `except`'s. Mints.
+ */
+export function pendingPairs(ledger, { except = null } = {}) {
+  return (ledger?.launches ?? []).filter((r) => r?.postId !== except && !(r.status === "failed" && (!r.retry || r.attempts >= MAX_ATTEMPTS)))
+    .map((r) => r.cat?.pair?.mint).filter((m) => typeof m === "string");
+}
+
+/**
+ * Where a post launches (scripts/lib/venues.mjs chooseVenue, the owner's rule), from what the
+ * launcher reads: the sanctuary's files (data/planned.json, data/collection.json, data/adoptables.json,
+ * as the site reads them) and its own ledger's pairs for the one-cat-per-pair rule, the coins
+ * data/pump-quotes.json lists, and the owner's opt-in. Returns chooseVenue's { venue, pair, reason, from? }.
+ */
+export function routeOf(post, ctx) {
+  return chooseVenue(post, ctx.watch, { planned: ctx.planned, collection: ctx.collection, adoptables: ctx.adoptables, extraPairs: pendingPairs(ctx.ledger),
+    pumpQuotes: ctx.pumpQuotes ?? [], pumpQuoteOptIn: ctx.pumpQuoteOptIn === true });
 }
 
 /** The newest post that may launch: { row, post, skipped } or { row: null, skipped: [{ id, why }] }. Candidates and approved posts only. */
@@ -468,7 +520,7 @@ export function selectCandidate(ctx) {
   const skipped = [];
   for (const post of posts) {
     const c = candidateRow(post, ctx);
-    if (c.row) return { row: c.row, post, skipped };
+    if (c.row) return { row: c.row, post, route: c.route, skipped };
     skipped.push({ id: String(post.id), why: c.problem });
   }
   return { row: null, skipped };
@@ -565,7 +617,7 @@ const spentOf = (tx) => {
  * height is past the blockhash's lastValidBlockHeight (it can never land) → "failed" (retry);
  * otherwise unchanged. Returns { row, changed, note }.
  */
-export async function settleSending(row, { rpc, nowMs }) {
+export async function settleSending(row, { rpc, nowMs, quotes = [] }) {
   const venue = venueById(row.venue);
   const statuses = await rpc.getSignatureStatuses([row.tx]);
   const st = Array.isArray(statuses) ? statuses[0] : null;
@@ -580,7 +632,7 @@ export async function settleSending(row, { rpc, nowMs }) {
         note: `${row.ticker}: the launch failed on chain; it may be tried again with the same mint` };
     }
     const payer = tx.transaction?.message?.accountKeys?.[0];
-    const proof = venue.prove(tx, { wallet: payer });
+    const proof = venue.prove(tx, { wallet: payer, quotes });
     if (!proof.ok) {
       return { row: { ...row, status: "failed", spentLamports: spent, settledAt: ISO_SECONDS(nowMs), retry: false, reason: `the transaction is not a launch the venue proves (${proof.clause}): a person must look` }, changed: true,
         note: `${row.ticker}: the sent transaction does not prove as a launch (${proof.clause})` };
@@ -598,12 +650,13 @@ export async function settleSending(row, { rpc, nowMs }) {
 }
 
 /**
- * Is this mint on chain already? { state: "none" } (no account: send), { state: "launched", tx, proof }
- * (the coin exists and its create is the wallet's launch: recover it), { state: "foreign" } (the
- * address holds an account the launch did not make: never send), { state: "unknown" } (the coin exists
- * but its create was not found: a person must look).
+ * Is this mint on chain already? { state: "none" } (no account: send), { state: "launched", tx, proof,
+ * venue } (the coin exists and its create is the wallet's launch on `venue`, or, failing that, on any
+ * other registered venue, as a launch sent after a fallback whose commit was lost: recover it),
+ * { state: "foreign" } (the address holds an account the launch did not make: never send),
+ * { state: "unknown" } (the coin exists but its create was not found: a person must look).
  */
-export async function mintOnChain({ rpc, venue, wallet, mint }) {
+export async function mintOnChain({ rpc, venue, wallet, mint, quotes = [] }) {
   const [acc] = (await rpc.getMultipleAccounts([mint], { commitment: "confirmed" })) ?? [null];
   if (!acc) return { state: "none" };
   if (acc.owner !== TOKEN_2022_PROGRAM) return { state: "foreign", detail: "the mint's address already holds an account the launch did not make (someone funded it)" };
@@ -616,10 +669,13 @@ export async function mintOnChain({ rpc, venue, wallet, mint }) {
     if (list.length < 1000) break;
     before = list.at(-1).signature;
   }
+  const venues = [venue, ...venueIds().map(venueById).filter((v) => v !== venue)];
   for (const s of [...oldest].reverse().filter((x) => !x.err).slice(0, 5)) {
     const tx = await rpc.getTransaction(s.signature, { commitment: "confirmed" });
-    const proof = tx ? venue.prove(tx, { wallet }) : null;
-    if (proof?.ok && proof.launch.mint === mint) return { state: "launched", tx, proof };
+    for (const v of tx ? venues : []) {
+      const proof = v.prove(tx, { wallet, quotes });
+      if (proof?.ok && proof.launch.mint === mint) return { state: "launched", tx, proof, venue: v };
+    }
   }
   return { state: "unknown", detail: "the coin exists, but its launch transaction was not found" };
 }
@@ -641,14 +697,47 @@ const postAgeMs = (row, trending, nowMs) => {
   const t = Date.parse(p?.postedAt ?? row.cat?.proof?.date ?? "");
   return Number.isFinite(t) ? nowMs - t : Infinity;
 };
-function selectionContext(io, ledger, nowMs) {
+/**
+ * Why a row priced in a stock pair may not take it now, or null: another cat has that pair since the
+ * row was prepared (a planned cat, a Collection entry, an adoptable, another of the launcher's own
+ * launches), or the files that say so cannot be read. One cat per stock pair, checked again right
+ * before the send. A row priced in anything else (SOL, a listed coin) has nothing to check.
+ */
+function pairProblemNow(row, ctx) {
+  const mint = row.cat?.pair?.mint;
+  if (!STOCK_MINTS.has(mint)) return null;
+  if (![ctx.planned, ctx.collection, ctx.adoptables].every((f) => Array.isArray(f?.cats))) return "the stock pairs in use cannot be read";
+  const used = takenPairs({ planned: ctx.planned, collection: ctx.collection, adoptables: ctx.adoptables, extra: pendingPairs(ctx.ledger, { except: row.postId }) });
+  return used.has(mint) ? `its stock pair ${row.cat.pair.symbol} has a sanctuary cat now` : null;
+}
+const STOCK_MINTS = new Set(STOCK_PAIRS.map((p) => p.mint));
+
+/** Where a row launches, for the log: its venue, its pair and why (the route's reason, or its fallback). */
+const whereText = (row, route = null) => `on ${venueById(row.venue).label}, priced in ${row.cat.pair.symbol}${row.fallback ? ` (fallback: ${row.fallback})` : route?.reason ? ` (${route.reason})` : ""}`;
+
+/**
+ * data/pump-quotes.json's coins: `listed` (every valid row: what a coin-priced launch is proved with)
+ * and `usable` (the same, or none at all when any row is refused: a list the Collection's builder
+ * would stop on routes and builds nothing). A missing file lists none.
+ */
+function quotesOf(io, log = () => {}) {
+  const q = validatePumpQuotes(readJson(io, FILES.pumpQuotes, { quotes: [] }));
+  if (q.refused.length) log(`::warning title=Launcher::${FILES.pumpQuotes} is refused (${q.refused.map((x) => x.detail).join("; ").slice(0, 200)}); no cat is priced in a coin until it is fixed.`);
+  return { listed: q.quotes, usable: q.refused.length ? [] : q.quotes };
+}
+
+/** What choosing and routing a cat reads. A sanctuary file that is missing is null (the pairs in use are then unknown: no stock pair is used). */
+function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] } } = {}) {
   return {
     nowMs, ledger,
     trending: readJson(io, FILES.trending, { posts: [], candidates: [] }),
     approvals: approvalsOf(readJson(io, FILES.approvals, { approve: [] })),
     watch: readJson(io, FILES.watch, { figures: [] }),
-    adoptables: readJson(io, FILES.adoptables, { cats: [] }),
-    planned: readJson(io, FILES.planned, { cats: [] }),
+    adoptables: readJson(io, FILES.adoptables, null),
+    planned: readJson(io, FILES.planned, null),
+    collection: readJson(io, FILES.collection, null),
+    pumpQuotes: quotes.usable,
+    pumpQuoteOptIn: pumpQuoteOptIn(env),
   };
 }
 
@@ -666,16 +755,17 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
   const caps = launchCaps(env);
   for (const n of caps.notes) log(`::warning title=Launcher::${n}`);
   const ledger = validateLedger(readJson(io, FILES.ledger, null));
+  const quotes = quotesOf(io, log);
 
   // 1. Rows sent earlier: settled by their signature.
   for (const row of ledger.launches.filter((r) => r.status === "sending")) {
     try {
-      const s = await settleSending(row, { rpc, nowMs });
+      const s = await settleSending(row, { rpc, nowMs, quotes: quotes.listed });
       log(`Launcher: ${s.note}.`);
       if (s.changed) { replaceRow(ledger, s.row); out.changed = true; }
     } catch (e) { log(`::warning title=Launcher::could not settle ${row.ticker} yet (${scrub(e.message)}); the send phase tries again.`); }
   }
-  const ctx = selectionContext(io, ledger, nowMs);
+  const ctx = selectionContext(io, ledger, nowMs, { env, quotes });
 
   if (mode === "on" && !inFlight(ledger).length) {
     // 2. A failed row that may be tried again takes the next turn, with the same post (so the same mint).
@@ -709,14 +799,14 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
       for (const s of pick.skipped) log(`Launcher: post ${s.id} skipped: ${s.why}.`);
       if (!pick.row) log("Launcher: no trending cat to launch now.");
       else if (mode === "dry") {
-        log(`Launcher (dry run): would prepare ${pick.row.coinName} (${pick.row.ticker}) from ${pick.row.url} (${pick.row.policy}); nothing written.`);
+        log(`Launcher (dry run): would prepare ${pick.row.coinName} (${pick.row.ticker}) from ${pick.row.url} (${pick.row.policy}), ${whereText(pick.row, pick.route)}; nothing written.`);
         out.pending = true;
       } else {
         io.writeText(pick.row.metadataPath, metadataText(coinMetadata(pick.row)));
         ledger.launches.unshift(pick.row);
         out.changed = true;
         out.prepared = pick.row.postId;
-        log(`Launcher: prepared ${pick.row.coinName} (${pick.row.ticker}) from ${pick.row.url} (${pick.row.policy}); its metadata is ${metadataUri(pick.row.postId)}.`);
+        log(`Launcher: prepared ${pick.row.coinName} (${pick.row.ticker}) from ${pick.row.url} (${pick.row.policy}), ${whereText(pick.row, pick.route)}; its metadata is ${metadataUri(pick.row.postId)}.`);
       }
     }
   }
@@ -751,11 +841,12 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   const caps = launchCaps(env);
   for (const n of caps.notes) log(`::warning title=Launcher::${n}`);
   const ledger = validateLedger(readJson(io, FILES.ledger, null));
+  const quotes = quotesOf(io, log);
 
   // 1. Rows sent earlier.
   let settledAny = false;
   for (const row of ledger.launches.filter((r) => r.status === "sending")) {
-    const s = await settleSending(row, { rpc, nowMs });
+    const s = await settleSending(row, { rpc, nowMs, quotes: quotes.listed });
     log(`Launcher: ${s.note}.`);
     if (s.changed) { replaceRow(ledger, s.row); settledAny = true; if (s.row.status === "launched") out.launched = true; }
   }
@@ -763,14 +854,14 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   if (ledger.launches.some((r) => r.status === "sending")) { out.outcome = "sending"; return out; }
 
   // 2. The prepared row (in dry mode with none, the cat prepare would pick, in memory only).
-  const ctx = selectionContext(io, ledger, nowMs);
+  const ctx = selectionContext(io, ledger, nowMs, { env, quotes });
   let row = ledger.launches.find((r) => r.status === "prepared") ?? null;
   const virtual = !row && mode === "dry";
   if (virtual) {
     if (dayStats(ledger, nowMs, caps).count < caps.maxPerDay) row = selectCandidate(ctx).row;
   }
   if (!row) { log("Launcher: nothing prepared to send."); return out; }
-  const venue = venueById(row.venue);
+  let venue = venueById(row.venue);
   const dry = mode === "dry" ? "(dry run) " : "";
   // A prepared row that cannot go out (dry mode writes nothing).
   const fail = (reason, retry, extra = {}) => {
@@ -781,13 +872,17 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
 
   // 3. Is the coin on chain already (a launch never recorded, or an address someone else took)?
   const mint = deriveMintKeypair(wallet, row.postId);
-  const found = await mintOnChain({ rpc, venue, wallet: wallet.publicKey, mint: mint.publicKey });
+  const found = await mintOnChain({ rpc, venue, wallet: wallet.publicKey, mint: mint.publicKey, quotes: quotes.listed });
   if (found.state === "launched") {
-    log(`Launcher: ${dry}${row.ticker} is on chain already (${found.proof.launch.tx.slice(0, 12)}…): recorded as launched.`);
+    log(`Launcher: ${dry}${row.ticker} is on chain already (${found.proof.launch.tx.slice(0, 12)}…, ${found.venue.label}): recorded as launched.`);
     if (mode === "on") {
-      const done = { ...row, status: "launched", tx: found.proof.launch.tx, mintPublic: found.proof.launch.mint, spentLamports: (row.spentLamports ?? 0) + spentOf(found.tx),
+      // Recorded on the venue it launched on (a fallback whose "sending" commit was lost launched on pump.fun in SOL), priced in the pair it proved.
+      const moved = found.venue !== venue ? { venue: found.venue.id, cat: { ...row.cat, pair: { symbol: found.proof.launch.pair.symbol, mint: found.proof.launch.pair.mint } },
+        ...(found.venue === PUMP_SOL ? { fallback: row.fallback ?? `${row.venue}: recovered on chain as a launch on pump.fun in SOL` } : {}) } : {};
+      const done = { ...row, ...moved, status: "launched", tx: found.proof.launch.tx, mintPublic: found.proof.launch.mint, spentLamports: (row.spentLamports ?? 0) + spentOf(found.tx),
         settledAt: ISO_SECONDS(now()), launchedAt: found.proof.launch.time, sentAt: row.sentAt ?? found.proof.launch.time, attempts: Math.max(1, row.attempts) };
       delete done.retry; delete done.reason;
+      if (found.venue !== PUMP_SOL) delete done.fallback;
       replaceRow(ledger, done); saveLedger(io, ledger);
       out.launched = true;
     }
@@ -829,25 +924,57 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   }
   const bh = await rpc.getLatestBlockhash();
   if (!bh?.blockhash || !Number.isSafeInteger(bh.lastValidBlockHeight)) throw new LaunchError("the RPC gave no blockhash");
-  const built = await venue.build({ wallet: wallet.publicKey, mint: mint.publicKey, name: row.coinName, symbol: row.ticker, uri, recentBlockhash: bh.blockhash,
-    computeUnitPriceMicroLamports: caps.priorityMicroLamports }, { fetchImpl, rpc });
-  const signed = venue.sign(built, wallet, mint);
-  const signature = signatureOf(signed);
-  const sim = await rpc.simulateTransaction(signed, { addresses: [wallet.publicKey] });
-  const after = sim?.accounts?.[0]?.lamports;
-  if (!sim || sim.err !== null || !Number.isSafeInteger(after)) {
-    const why = !sim ? "no answer" : sim.err !== null ? errText(sim.err) : "no balance after it";
+  /** Build, sign and simulate `r` on its venue: { signed, simProblem, loss }. Throws what the venue's build or signing refuses. */
+  const attempt = async (r) => {
+    const v = venueById(r.venue);
+    const built = await v.build({ wallet: wallet.publicKey, mint: mint.publicKey, name: r.coinName, symbol: r.ticker, uri, pair: r.cat.pair, recentBlockhash: bh.blockhash,
+      computeUnitPriceMicroLamports: caps.priorityMicroLamports }, { fetchImpl, rpc, nowMs: now(), quotes: ctx.pumpQuotes, pumpQuoteOptIn: ctx.pumpQuoteOptIn });
+    const signed = v.sign(built, wallet, mint);
+    const sim = await rpc.simulateTransaction(signed, { addresses: [wallet.publicKey] });
+    const after = sim?.accounts?.[0]?.lamports;
+    const simProblem = !sim ? "no answer" : sim.err !== null ? errText(sim.err) : !Number.isSafeInteger(after) ? "no balance after it" : null;
+    return { signed, simProblem, loss: simProblem ? null : balance - after + feeUpperBound(signed) };
+  };
+  // A StonkFun or coin-priced launch that fails at any step before it is sent goes out on pump.fun in SOL
+  // for this run instead: its pair taken since it was prepared (one cat per pair), StonkFun's pricing or
+  // config, the opt-in or the coin's listing, the build, the signing checks, the simulation, or a cost over
+  // the per-launch cap. Never after a send: from "sending" on, a row keeps its venue.
+  const planned = row;
+  let tried = null;
+  if (venue !== PUMP_SOL) {
+    let why = null;
+    try {
+      why = pairProblemNow(row, ctx);
+      if (!why) {
+        tried = await attempt(row);
+        why = tried.simProblem ? `the simulation did not pass (${tried.simProblem})`
+          : tried.loss > caps.maxLamportsPerLaunch ? `it would cost ${sol(tried.loss)}, more than LAUNCH_MAX_SOL_PER_LAUNCH (${sol(caps.maxLamportsPerLaunch)})` : null;
+      }
+    } catch (e) { why = scrub(String(e?.message ?? e)).slice(0, 200); }
+    if (why) {
+      log(`::warning title=Launcher::${dry}${row.ticker}: ${venue.label} failed before anything was sent (${why}); it launches on pump.fun in SOL this run.`);
+      row = { ...row, venue: PUMP_SOL.id, cat: { ...row.cat, pair: { ...SOL_PAIR } }, fallback: `${venue.id}: ${why}`.slice(0, 300) };
+      venue = PUMP_SOL;
+      tried = null;
+    }
+  }
+  tried ??= await attempt(row);
+  const signed = tried.signed, signature = signatureOf(signed);
+  if (tried.simProblem) {
+    const why = tried.simProblem;
     log(`::warning title=Launcher::${dry}${row.ticker}: the simulation did not pass (${why}); nothing was sent.`);
-    fail(`the simulation did not pass: ${why}`, true, { attempts: Math.min(MAX_ATTEMPTS, row.attempts + 1) });
+    // A fallback holds for this run only: the row keeps the venue it was prepared on, for its next try.
+    row = planned;
+    fail(`the simulation did not pass${venue !== venueById(planned.venue) ? " on pump.fun in SOL, after its own venue failed" : ""}: ${why}`, true, { attempts: Math.min(MAX_ATTEMPTS, row.attempts + 1) });
     return { ...out, outcome: "simulation_failed" };
   }
-  const loss = balance - after + feeUpperBound(signed);
+  const loss = tried.loss;
   const capped = capProblem({ stats, caps, lossLamports: loss, balanceLamports: balance });
   const figures = `about ${sol(loss)} (cap ${sol(caps.maxLamportsPerLaunch)}), the last 24 hours ${sol(stats.lamports)} of ${sol(caps.maxLamportsPerDay)}, balance ${sol(balance)} (floor ${sol(caps.minBalanceLamports)})`;
   if (capped) { log(`Launcher: ${dry}${row.ticker} is not sent: ${capped}.`); return { ...out, outcome: "cap" }; }
   if (mode === "dry") {
-    log(`Launcher (dry run): ${row.coinName} (${row.ticker}) from ${row.url} simulates cleanly on ${venue.label}: ${figures}. Nothing was sent.`);
-    return { ...out, outcome: "dry" };
+    log(`Launcher (dry run): ${row.coinName} (${row.ticker}) from ${row.url} simulates cleanly ${whereText(row)}: ${figures}. Nothing was sent.`);
+    return { ...out, outcome: "dry", venue: row.venue };
   }
 
   // 7. Written "sending" BEFORE it goes out (the workflow commits it even if what follows fails).
@@ -872,13 +999,13 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   }
   row = { ...row, mintPublic: mint.publicKey };                    // sent: the address is public from here on
   replaceRow(ledger, row); saveLedger(io, ledger);
-  log(`Launcher: sent ${row.coinName} (${row.ticker}) on ${venue.label}: https://solscan.io/tx/${signature} (${figures}).`);
+  log(`Launcher: sent ${row.coinName} (${row.ticker}) ${whereText(row)}: https://solscan.io/tx/${signature} (${figures}).`);
 
   // 8. Confirm (bounded); an unsettled row is settled by a later run.
   const deadline = now() + confirmWaitMs;
   for (let tries = Math.max(1, Math.floor(confirmWaitMs / confirmPollMs)); ; tries--) {
     await sleep(confirmPollMs);
-    const s = await settleSending(row, { rpc, nowMs: now() });
+    const s = await settleSending(row, { rpc, nowMs: now(), quotes: quotes.listed });
     if (s.changed) {
       replaceRow(ledger, s.row); saveLedger(io, ledger);
       log(`Launcher: ${s.note}.`);
@@ -956,7 +1083,7 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     if (!files.photos.cats[T] && !(T in (files.photos.none ?? {})) && realPhotoOf(photo)) files.photos.cats[T] = { realPhoto: photo, source: "proof" };
     replaceRow(ledger, { ...row, recordedAt: ISO_SECONDS(nowMs) });
     out.recorded.push(T);
-    log(`Launcher: ${row.name} (${T}) moves into the sanctuary; its X post waits for the Collection to prove ${row.tx.slice(0, 12)}….`);
+    log(`Launcher: ${row.name} (${T}), launched ${whereText(row)}, moves into the sanctuary; its X post ("launched by the sanctuary on ${venue.announceAs}") waits for the Collection to prove ${row.tx.slice(0, 12)}….`);
   }
   // The watch list lets go of the figures that live in the sanctuary now (the trend watch no longer looks for them).
   if (out.recorded.length && isObj(files.watch) && Array.isArray(files.watch.figures)) {

@@ -49,7 +49,7 @@
    rejects, so the page can say the list could not be loaded rather than show a launched cat as
    not launched. Every text reaches the page as data; the page sets it with textContent. */
 
-import { validateCollection, validateWallets, validatePlanned, validateFamous, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
+import { validateCollection, validateWallets, validatePlanned, validateFamous, validatePumpQuotes, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
 import { validateAdoptables, adoptableCard, validateLore, lorePath, validateRealPhotos, nameKey, provedLaunch } from "./ui/adoptables.js";
 
 const NO_RESEARCH = Object.freeze({
@@ -159,13 +159,14 @@ async function getJson(fetchImpl, url) {
  * @param {number} [o.nowMs]
  */
 export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...a), base = new URL("../", import.meta.url), nowMs = Date.now() } = {}) {
-  const [plannedFile, collectionFile, walletsFile] = await Promise.all([
+  const [plannedFile, collectionFile, walletsFile, quotesFile] = await Promise.all([
     getJson(fetchImpl, new URL("data/planned.json", base)),
     getJson(fetchImpl, new URL("data/collection.json", base)),
     getJson(fetchImpl, new URL("data/wallets.json", base)),
+    getJson(fetchImpl, new URL("data/pump-quotes.json", base)).catch(() => null), // optional
   ]);
   const planned = validatePlanned(plannedFile, { nowMs });
-  const collection = validateCollection(collectionFile, { wallets: validateWallets(walletsFile), nowMs });
+  const collection = validateCollection(collectionFile, { wallets: validateWallets(walletsFile), quotes: validatePumpQuotes(quotesFile).quotes, nowMs });
   const left = planned.refused.length + collection.refused.length;
   if (left && typeof console !== "undefined") console.warn(`${left} ${left === 1 ? "entry was" : "entries were"} left out`, planned.refused, collection.refused);
   let stock = mergeResidents({ planned, cats: collection.cats });

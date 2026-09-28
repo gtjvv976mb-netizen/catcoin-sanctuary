@@ -1,15 +1,25 @@
 # The sanctuary's automatic launcher (scripts/launch.mjs, scripts/lib/launcher.mjs): every 20 minutes,
 # by hand, and whenever the trend watch commits new candidates (its next job dispatches this one), it
-# launches at most one trending cat on pump.fun, priced in SOL, with no dev buy: it never buys or
-# sells anything. Only watch-list cats launch on their own (a data/cat-watch.json figure, or a cartoon
-# or fiction cat that an X trend named or a big account posted); any other cat waits until the owner
-# lists its post in data/launch-approvals.json. Never a sensitive cat, one already in the sanctuary, a
-# second coin for one post (its mint is derived from the post), or a launch past the caps.
+# launches at most one trending cat, with no dev buy: it never buys or sells anything. Only watch-list
+# cats launch on their own (a data/cat-watch.json figure, or a cartoon or fiction cat that an X trend
+# named or a big account posted); any other cat waits until the owner lists its post in
+# data/launch-approvals.json. Never a sensitive cat, one already in the sanctuary, a second coin for
+# one post (its mint is derived from the post), or a launch past the caps.
+#
+# Where (scripts/lib/venues.mjs, the owner's rule in scripts/lib/venues-routing.mjs): on pump.fun priced
+# in SOL by default; a cat tied to a company whose stock is a stock pair with no sanctuary cat yet (one
+# cat per pair) on StonkFun priced in that stock (its pricing fetched from StonkFun's public API right
+# before the build, its config read back over the RPC); a cat tied to a coin data/pump-quotes.json lists
+# on pump.fun priced in that coin, only while LAUNCH_PUMP_QUOTE is on. A StonkFun or coin-priced launch
+# that fails at any step before it is sent (pricing, config, build, simulation) goes out on pump.fun in
+# SOL for that run instead; nothing falls back after a send.
 #
 # Repository variables: LAUNCH_ENABLED "on" launches, "dry" builds and simulates only (nothing is sent
 # and nothing new is written), anything else (or unset) stops every job here. The caps, each clamped:
 # LAUNCH_MAX_PER_DAY (3), LAUNCH_MAX_SOL_PER_LAUNCH (0.03), LAUNCH_MAX_SOL_PER_DAY (0.1),
 # LAUNCH_MIN_BALANCE_SOL (0.02, what must be left after a launch), LAUNCH_PRIORITY_MICROLAMPORTS.
+# LAUNCH_PUMP_QUOTE "on" opts in to pump.fun launches priced in a listed coin (unverified: no such launch
+# has been recorded); anything else keeps them off. A variable, never a secret.
 #
 # The jobs, in order:
 #   prepare   settles what was sent before, then prepares at most one cat: its ledger row
@@ -18,7 +28,8 @@
 #   metadata  when the prepared cat's metadata is not served yet, deploys the site (runs no code of
 #             the repository's; it may only start workflow runs).
 #   launch    waits (bounded) until the site serves the committed metadata, then builds, signs,
-#             simulates and sends the launch within the caps, and commits the ledger (even when the
+#             simulates and sends the launch within the caps (falling back to pump.fun in SOL before
+#             the send, as above), and commits the ledger (even when the
 #             send step failed, so a transaction sent is never forgotten); then records a launched cat
 #             in the sanctuary (data/adoptables.json, data/launches.json, the 3D-model queue, its real
 #             photo, held from the announcer: its X post is scripts/post-updates.mjs's, once the
@@ -66,12 +77,13 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
-      - run: node --test tests/launcher.test.mjs tests/launch.test.mjs
+      - run: node --test tests/launcher.test.mjs tests/launch.test.mjs tests/launchlab.test.mjs tests/pump-quote.test.mjs
       - name: Settle what was sent, then prepare at most one cat
         id: prepare
         env:
           LAUNCH_ENABLED: ${{ vars.LAUNCH_ENABLED }}
           LAUNCH_MAX_PER_DAY: ${{ vars.LAUNCH_MAX_PER_DAY }}
+          LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
         run: node scripts/launch.mjs prepare
       - name: Commit the prepared cat
@@ -121,7 +133,7 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
-      - run: node --test tests/launcher.test.mjs tests/launch.test.mjs
+      - run: node --test tests/launcher.test.mjs tests/launch.test.mjs tests/launchlab.test.mjs tests/pump-quote.test.mjs
       - name: Send the launch (the only step with the wallet key)
         id: send
         env:
@@ -131,6 +143,7 @@ jobs:
           LAUNCH_MAX_SOL_PER_DAY: ${{ vars.LAUNCH_MAX_SOL_PER_DAY }}
           LAUNCH_MIN_BALANCE_SOL: ${{ vars.LAUNCH_MIN_BALANCE_SOL }}
           LAUNCH_PRIORITY_MICROLAMPORTS: ${{ vars.LAUNCH_PRIORITY_MICROLAMPORTS }}
+          LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
           LAUNCH_WALLET_KEY: ${{ secrets.LAUNCH_WALLET_KEY }}
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
         run: node scripts/launch.mjs send

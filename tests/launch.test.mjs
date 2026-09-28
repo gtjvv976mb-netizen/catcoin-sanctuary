@@ -60,14 +60,18 @@ test("launch workflow: the wallet key is in the send step only; the RPC URL in p
   assert.ok(!/^ {0,4}env:/m.test(W));
   // The send step: the mode and the caps as repository variables, beside the key.
   for (const v of ["LAUNCH_ENABLED", "LAUNCH_MAX_PER_DAY", "LAUNCH_MAX_SOL_PER_LAUNCH", "LAUNCH_MAX_SOL_PER_DAY", "LAUNCH_MIN_BALANCE_SOL"]) assert.match(snd, new RegExp(`${v}: \\$\\{\\{ vars\\.${v} \\}\\}`), v);
+  // The owner's opt-in to coin-priced pump.fun launches: a repository variable where the venue is chosen (prepare) and
+  // checked again before the send, never a secret.
+  for (const step of [prep, snd]) assert.match(step, /LAUNCH_PUMP_QUOTE: \$\{\{ vars\.LAUNCH_PUMP_QUOTE \}\}/);
+  assert.ok(!/secrets\.LAUNCH_PUMP_QUOTE/.test(W));
   assert.match(stepNamed(/node scripts\/launch\.mjs record/), /LAUNCH_ENABLED: \$\{\{ vars\.LAUNCH_ENABLED \}\}/);
   assert.ok(!/secrets\./.test(stepNamed(/node scripts\/launch\.mjs record/)), "record needs no secret");
 });
 
-test("launch workflow: no dependency is installed (the launcher is plain node); its own tests run before prepare and before send", () => {
+test("launch workflow: no dependency is installed (the launcher is plain node); its own tests, and its builders' (StonkFun, coin-priced pump.fun), run before prepare and before send", () => {
   assert.ok(!/\bnpm\b/.test(W), "no npm: no package reaches the job that holds the key");
   assert.ok(!/node_modules/.test(W));
-  for (const name of ["prepare", "launch"]) assert.match(job(name), /- run: node --test tests\/launcher\.test\.mjs tests\/launch\.test\.mjs\n[\s\S]*node scripts\/launch\.mjs (prepare|send)/, name);
+  for (const name of ["prepare", "launch"]) assert.match(job(name), /- run: node --test tests\/launcher\.test\.mjs tests\/launch\.test\.mjs tests\/launchlab\.test\.mjs tests\/pump-quote\.test\.mjs\n[\s\S]*node scripts\/launch\.mjs (prepare|send)/, name);
   assert.match(job("prepare"), /node scripts\/launch\.mjs prepare/);
   assert.match(job("launch"), /node scripts\/launch\.mjs send[\s\S]*node scripts\/launch\.mjs record/);
 });

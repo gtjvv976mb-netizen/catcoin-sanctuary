@@ -84,7 +84,7 @@ function indexRefs() {
 
 const CSS_URLS = [...read("assets/site.css").matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]);
 const MODELS = ["assets/models/sanctuary.glb", ...["cat", "ginger"].flatMap((c) => ["sit", "walk", "loaf", "stretch", "sleep"].map((p) => `assets/models/${c}-${p}.glb`))];
-const DATA = ["data/planned.json", "data/collection.json", "data/wallets.json"];
+const DATA = ["data/planned.json", "data/collection.json", "data/wallets.json", "data/pump-quotes.json"];
 
 /** The first view: the page, its stylesheet and fonts, every module, the models and the data. Portraits load later, one card or list row at a time. */
 function firstView() {
@@ -258,8 +258,12 @@ test("page weight: the first view stays within budget", () => {
   // coin's own pair, name and symbol on a sanctuary-launched card (data.js), a pump.fun coin's own
   // disclaimer and launchpad row with no stock-cat block (residents.js, card.js), and no Adopt
   // button on the "New cat" banner for a cat that cannot be adopted (newcat.js). Stage 2 had left
-  // 72 bytes spare.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 696 * 1024, "the page's own scripts over 696 KB");
+  // 72 bytes spare; then from 696 KB to 698 KB for the launcher's routing, ~1.8 KB: the page now
+  // reads data/pump-quotes.json (residents.js), so a pump.fun coin the launcher priced in a listed
+  // coin and the Collection proved shows as launched, checked by the one rule the builder and the
+  // bots use (quoteProblem and validatePumpQuotes, moved from scripts/lib/pump.mjs to
+  // assets/collection.js). 29 bytes were spare before it, 219 after.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 698 * 1024, "the page's own scripts over 698 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
