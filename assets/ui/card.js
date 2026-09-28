@@ -221,23 +221,22 @@ function viralityWhen(v) {
   }
 }
 
-/** The ticker as a card shows it: a cashtag only for a launched token. A planned cat's ticker is
-    only a plan, and a token found under it elsewhere is not this cat. */
 /** The ticker a planned cat will launch with: its launchTicker if it has one, else its key. */
 export const plannedTicker = (r) => r.launchTicker || r.ticker;
 
+/** The ticker as a card shows it: a cashtag only for a coin; a planned ticker is only a plan. */
 export function tickerLabel(r) {
   if (!r.ticker) return "";
   if (isAdopted(r)) return `$${r.adoption.symbol}`;
   if (isFamous(r)) return `$${r.ticker}`;
-  return isLaunched(r) ? `$${r.ticker}` : r.ticker;
+  return isLaunched(r) ? `$${plannedTicker(r)}` : r.ticker;
 }
 
 export function badgeFor(r) {
   if (r.example) return el("span", "badge badge-example", "Example, not a token");
   if (isFamous(r)) return el("span", "badge badge-famous", "Hall of Fame");
   if (isAdopted(r)) return el("span", "badge badge-adopted", "Adopted");
-  if (isAdoptable(r)) return el("span", "badge badge-planned", "Not launched yet");
+  if (isAdoptable(r) && !isLaunched(r)) return el("span", "badge badge-planned", r.sanctuaryLaunch ? "Launching…" : "Not launched yet");
   return isLaunched(r) ? el("span", "badge badge-launched", "Launched") : el("span", "badge badge-planned", "Not launched yet");
 }
 
@@ -322,22 +321,32 @@ export function createCard({ root, onClose, onInset }) {
     return copy;
   }
 
-  /* An adopted cat's coin: when and where it was launched, its name and mint (copyable), its pages
-     for that mint only, and the warning that no other token is it. */
-  function adoptedInto(sec, r) {
-    const a = r.adoption, pad = a.launchpad === "pump.fun" ? "pump.fun" : "StonkFun";
-    sec.append(el("p", "card-adopted", `Adopted by the community: launched from this cat's kit on ${pad} on ${dateText(a.createdAt)}. The sanctuary did not launch it and does not run it.`));
+  /* A coin: what it is, its name, mint (copyable) and pages for that mint only; no other token is it. */
+  function coinInto(sec, lead, mint, name, symbol, pages, whose) {
+    sec.append(el("p", "card-adopted", lead));
     const coin = el("span"), m = el("span", "card-ca"), dl = el("dl", "card-dl"), ul = el("ul", "card-list card-links");
-    coin.append(`${a.name} `, el("span", "mono", `$${a.symbol}`));
-    m.append(el("span", "mono", shortMint(a.mint)), " ", copyButton(a.mint, "mint address"));
-    m.title = a.mint;
+    coin.append(`${name} `, el("span", "mono", `$${symbol}`));
+    m.append(el("span", "mono", shortMint(mint)), " ", copyButton(mint, "mint address"));
+    m.title = mint;
     const row = rowsOf(dl);
     row("Coin", coin);
     row("Mint", m);
-    for (const [label, url] of [[pad, a.launchpad === "pump.fun" ? `https://pump.fun/coin/${a.mint}` : `https://www.stonkfun.xyz/token/${a.mint}`], ["DexScreener", `https://dexscreener.com/solana/${a.mint}`]]) {
-      const li = el("li"); li.append(link(url, `On ${label} ↗`)); ul.append(li);
-    }
-    sec.append(dl, ul, el("p", "card-note card-warn", "Only the mint shown here is this cat's adopted coin. Any other token with this name or ticker is not it."));
+    for (const [label, url] of pages) if (url) { const li = el("li"); li.append(link(url, `On ${label} ↗`)); ul.append(li); }
+    sec.append(dl, ul, el("p", "card-note card-warn", `Only the mint shown here is this cat's ${whose}coin. Any other token with this name or ticker is not it.`));
+  }
+  const padName = (p) => (p === "pump.fun" ? p : "StonkFun");
+  /* An adopted cat's coin: a stranger launched it from the kit. */
+  function adoptedInto(sec, r) {
+    const a = r.adoption, pad = padName(a.launchpad);
+    coinInto(sec, `Adopted by the community: launched from this cat's kit on ${pad} on ${dateText(a.createdAt)}. The sanctuary did not launch it and does not run it.`, a.mint, a.name, a.symbol,
+      [[pad, a.launchpad === "pump.fun" ? `https://pump.fun/coin/${a.mint}` : `https://www.stonkfun.xyz/token/${a.mint}`], ["DexScreener", `https://dexscreener.com/solana/${a.mint}`]], "adopted ");
+  }
+  /* A coin the sanctuary launched, once proved on Solana. */
+  function sanctuaryInto(sec, r) {
+    const pad = padName(r.sanctuaryLaunch.launchpad), x = r.explorer ?? {};
+    if (!isLaunched(r)) return sec.append(el("p", "adopt-cta", `Launching on ${pad}… Its coin shows here once proved on Solana.`));
+    coinInto(sec, `Launched by the sanctuary on ${pad}${r.token.launchedAt ? ` on ${dateText(r.token.launchedAt)}` : ""}.`, r.token.mint, r.coinName || r.name, plannedTicker(r),
+      [[pad, x.pumpfun ?? x.stonkfun], ["Solscan", x.token], ["Solscan (the launch)", x.tx]], "");
   }
 
   /* A famous cat coin's card: its logo, who the cat is and its lore, its warnings, the coin (market
@@ -457,9 +466,9 @@ export function createCard({ root, onClose, onInset }) {
     titles.append(kick);
     titles.append(nameOf(r));
     const tick = el("p", "card-ticker");
-    const adopted = isAdopted(r);
-    const t = el("span", adopted ? "mono" : "card-planned-ticker", adopted ? tickerLabel(r) : "Planned ticker ");
-    if (!adopted) t.append(el("span", "mono", plannedTicker(r)));
+    const adopted = isAdopted(r), has = adopted || isLaunched(r);
+    const t = el("span", has ? "mono" : "card-planned-ticker", has ? tickerLabel(r) : "Planned ticker ");
+    if (!has) t.append(el("span", "mono", plannedTicker(r)));
     tick.append(t, badgeFor(r));
     titles.append(tick);
     titles.append(newDoing());
@@ -488,6 +497,7 @@ export function createCard({ root, onClose, onInset }) {
 
     const st = section("Status", "card-adopt");
     if (adopted) adoptedInto(st, r);
+    else if (r.sanctuaryLaunch) sanctuaryInto(st, r);
     else {
       st.append(el("p", "adopt-cta", "Not launched yet — adopt it now."));
       st.append(adoptButton(r));
@@ -528,7 +538,7 @@ export function createCard({ root, onClose, onInset }) {
     if (isFamous(r) || isAdoptable(r)) {
       if (isFamous(r)) famousBody(r, head, body); else adoptableBody(r, head, body);
       const foot = el("p", "card-disclaimer", isFamous(r) ? r.disclaimer || `Not affiliated with ${r.name} or its team. Not financial advice.`
-        : `${r.tribute} ${isAdopted(r) ? "Not launched or run by the sanctuary" : "Not launched"} and not financial advice.`);
+        : `${r.tribute} ${isLaunched(r) ? "Launched by the sanctuary. Not" : isAdopted(r) ? "Not launched or run by the sanctuary and not" : "Not launched and not"} financial advice.`);
       root.append(grip, close, head, body, foot);
       setTall(false);
       return;
@@ -564,7 +574,7 @@ export function createCard({ root, onClose, onInset }) {
     real.append(realHead);
     if (r.who) for (const p of r.who.split(/\n{2,}/)) real.append(el("p", null, p));
     else real.append(el("p", "card-none", "Nothing sourced yet."));
-    who.append(real);
+    if (r.stock) who.append(real);   // a pump.fun coin has no stock
     body.append(who);
 
     /* Proof: the X post (or, when there is none, the page) that links the cat to its company. */
@@ -630,7 +640,8 @@ export function createCard({ root, onClose, onInset }) {
       m.append(r.explorer?.token ? link(r.explorer.token, shortMint(r.token.mint), "mono") : el("span", "mono", shortMint(r.token.mint)), " ", copyButton(r.token.mint, "mint address"));
       row("Mint", m);
       if (r.explorer?.tx) row("Launch", link(r.explorer.tx, "The launch on Solscan"));
-      if (r.explorer?.stonkfun) row("StonkFun", link(r.explorer.stonkfun, "Its StonkFun page"));
+      const pad = r.explorer?.pumpfun ? "pump.fun" : "StonkFun", page = r.explorer?.pumpfun || r.explorer?.stonkfun;
+      if (page) row(pad, link(page, `Its ${pad} page`));
       if (r.plannedName) row("Planned as", r.plannedName);
     } else {
       const st = el("span");

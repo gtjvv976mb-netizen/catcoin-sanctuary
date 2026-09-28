@@ -17,6 +17,17 @@
  * the new mint and the launch's global config back (getMultipleAccounts) and keeps the cat only
  * when the mint's own metadata carries the same name and symbol and the config is for that stock.
  *
+ * PUMP.FUN. The sanctuary's automatic launcher launches on pump.fun (a SOL-priced create_v2, no dev
+ * buy; scripts/lib/pump.mjs). A transaction that is not a LaunchLab launch is proved again as
+ * such a launch (chain.mjs proveLaunchPump: every account re-derived with pump.mjs's own
+ * derivations, nothing else in the transaction but ComputeBudget), its mint and bonding curve are
+ * read back (checkPumpAccounts), and it is listed exactly like a StonkFun launch, with
+ * launchpad "pump.fun", pair SOL and its bonding curve as the pool. Listed launches
+ * (data/launches.json) may be pump.fun launches too. A pump.fun launch priced in a coin is read
+ * only when data/pump-quotes.json (optional; pump.mjs validatePumpQuotes) lists that coin, and its
+ * pair is then that coin; a malformed list stops the run, and a coin must stay listed as long as
+ * a cat priced in it is in the collection (like a wallet in data/wallets.json).
+ *
  * It never drops a cat. The existing file must validate as a whole before anything is read
  * (a cat whose wallet was removed from wallets.json stops the run; give the wallet an `until`
  * date instead), the new file must validate as a whole and still hold every cat it held, and
@@ -56,7 +67,8 @@ import {
   validateCollection, validateWallets, entryProblem, compareEntries,
   isAddress, isSignature, parseTime, blockTimeToIso, textProblem, MAX_CATS,
 } from "../assets/collection.js";
-import { proveLaunch, checkLaunchAccounts, signaturesVerify } from "./lib/chain.mjs";
+import { proveLaunch, proveLaunchPump, checkLaunchAccounts, checkPumpAccounts, signaturesVerify } from "./lib/chain.mjs";
+import { validatePumpQuotes } from "./lib/pump.mjs";
 import { createRpc, PUBLIC_RPC, UNSUPPORTED_VERSION } from "./lib/rpc.mjs";
 
 export const FILES = Object.freeze({
@@ -64,6 +76,7 @@ export const FILES = Object.freeze({
   collection: "data/collection.json",
   state: "data/collection-state.json",
   launches: "data/launches.json",
+  pumpQuotes: "data/pump-quotes.json",
 });
 export const PAGE = 1000;                 // getSignaturesForAddress's largest page
 export const MAX_PAGES = 200;             // pages of new signatures read for one wallet in one run (200,000)
@@ -186,8 +199,14 @@ export async function buildCollection({ root, rpc, log = () => {}, nowMs = Date.
     const r = wallets.refused[0];
     throw new BuildError(`data/wallets.json: ${r.index === null ? "" : `launcher ${r.index + 1}: `}${r.detail}`);
   }
+  const pumpQuotes = validatePumpQuotes(readJson(root, FILES.pumpQuotes, { quotes: [] }).value);
+  if (pumpQuotes.refused.length) {
+    const r = pumpQuotes.refused[0];
+    throw new BuildError(`data/pump-quotes.json: ${r.index === null ? "" : `quote ${r.index + 1}: `}${r.detail}`);
+  }
+  const quotes = pumpQuotes.quotes;
   const collectionFile = readJson(root, FILES.collection, { cats: [] });
-  const before = validateCollection(collectionFile.value, { wallets, nowMs });
+  const before = validateCollection(collectionFile.value, { wallets, quotes, nowMs });
   if (before.refused.length) {
     const r = before.refused[0];
     throw new BuildError(`data/collection.json no longer validates (${r.index === null ? "" : `cat ${r.index + 1}: `}${r.detail}). `
@@ -219,7 +238,8 @@ export async function buildCollection({ root, rpc, log = () => {}, nowMs = Date.
 
   /** Proves `tx` for `wallet` and, if it is a new launch, reads it back and lists it. Records refusals in `row`'s log. */
   async function consider(tx, wallet, row) {
-    const proof = proveLaunch(tx, { wallet });
+    let proof = proveLaunch(tx, { wallet });
+    if (!proof.ok && proof.clause === "no_launch") proof = proveLaunchPump(tx, { wallet, quotes }); // not LaunchLab: a pump.fun launch?
     if (!proof.ok) {
       if (proof.launchLike) refused.push(row(proof.clause, proof.detail));
       else if (proof.clause === "unreadable" || proof.clause === "tx_version") unread.push(row(proof.clause, proof.detail));
@@ -227,13 +247,13 @@ export async function buildCollection({ root, rpc, log = () => {}, nowMs = Date.
     }
     if (known.has(proof.launch.mint)) return proof;
     if (!signaturesVerify(tx)) throw new BuildError(`the launch ${proof.launch.tx.slice(0, 12)}… as the RPC gave it does not carry valid signatures; nothing was written`);
-    const L = proof.launch;
-    const accounts = await rpc.getMultipleAccounts([L.mint, L.globalConfig]);
+    const L = proof.launch, pump = L.launchpad === "pump.fun";
+    const accounts = await rpc.getMultipleAccounts([L.mint, pump ? L.pool : L.globalConfig]);
     if (!Array.isArray(accounts) || accounts.length !== 2) throw new BuildError("getMultipleAccounts answered in an unexpected shape");
-    if (!accounts[0] || !accounts[1]) throw new BuildError(`the RPC did not return the new mint or its config for ${L.tx.slice(0, 12)}…; the next run tries again`);
-    const check = checkLaunchAccounts(L, accounts[0], accounts[1]);
-    const entry = { mint: L.mint, name: L.name, symbol: L.symbol, pair: L.pair, pool: L.pool, payer: L.payer, tx: L.tx, time: L.time };
-    const problem = check.ok ? entryProblem(entry, { launchers: wallets.launchers, nowMs }) : check;
+    if (!accounts[0] || !accounts[1]) throw new BuildError(`the RPC did not return the new mint or its ${pump ? "bonding curve" : "config"} for ${L.tx.slice(0, 12)}…; the next run tries again`);
+    const check = (pump ? checkPumpAccounts : checkLaunchAccounts)(L, accounts[0], accounts[1]);
+    const entry = { mint: L.mint, name: L.name, symbol: L.symbol, pair: L.pair, pool: L.pool, payer: L.payer, tx: L.tx, time: L.time, ...(pump ? { launchpad: L.launchpad } : {}) };
+    const problem = check.ok ? entryProblem(entry, { launchers: wallets.launchers, quotes, nowMs }) : check;
     if (problem) refused.push(row(problem.clause, problem.detail));
     // (A name read off the chain is never at the start of a log line, where it could pass for a workflow command.)
     else { added.push(entry); known.add(entry.mint); knownTx.add(entry.tx); log(`New cat: ${entry.name} (${entry.symbol}), paired with ${entry.pair.symbol}, moves in.`); }
@@ -304,7 +324,7 @@ export async function buildCollection({ root, rpc, log = () => {}, nowMs = Date.
   const cats = [...before.cats, ...added].sort(compareEntries);
   if (cats.length > MAX_CATS) throw new BuildError(`the collection would hold ${cats.length} cats, more than ${MAX_CATS}; nothing was written`);
   const next = { cats };
-  const after = validateCollection(next, { wallets, nowMs });
+  const after = validateCollection(next, { wallets, quotes, nowMs });
   if (after.refused.length || after.cats.length !== cats.length) throw new BuildError(`the new collection does not validate (${after.refused[0]?.detail ?? "a cat went missing"}); nothing was written`);
   const kept = new Set(after.cats.map((c) => c.mint));
   if (before.cats.some((c) => !kept.has(c.mint))) throw new BuildError("a cat would have been dropped; nothing was written");

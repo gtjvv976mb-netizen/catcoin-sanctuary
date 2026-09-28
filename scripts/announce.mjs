@@ -9,8 +9,8 @@
  * first with why the cat looks the way it does and the proof's link.
  *
  * Every draft must be <= 280 characters and pass the agency's content rules
- * (scripts/lib/content-rules, vendored) plus a no-price-talk rule; a draft that fails is held as
- * "needs_review" and never posted.
+ * (scripts/lib/content-rules, vendored) plus a no-price-talk rule, and name no Solana address
+ * (guardDraft, the last line before X); a draft that fails is held as "needs_review" and never posted.
  *
  * data/announce-config.json:
  *   dryRun          true: only write data/announce-queue.json as a preview; nothing is recorded.
@@ -41,6 +41,14 @@
  *
  * An adoptable cat held as "adoptable cat: announcing paused" is released by queueing it. A queue
  * entry with shown: true is a cat the site already shows: the queue orders its X post and never hides it.
+ *
+ * THE SANCTUARY'S OWN LAUNCHES (scripts/launch.mjs) are never this bot's to post: their X post is
+ * scripts/post-updates.mjs's launch post. A cat with a `launch` field is held by rule ("adoptable cat:
+ * announcing paused", recorded here when this file is next saved; the launcher never writes
+ * data/announced.json, so the two workflows never race on it), and a coin the launcher made
+ * (sanctuaryCoins: a tx or mint in its ledger or noted "Sanctuary launcher:" in data/launches.json, or
+ * the coin name and ticker of a ledger row) is never listed on its own by mint, even while the
+ * Collection has proved it before the launcher recorded the cat.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -48,6 +56,8 @@ import { fileURLToPath } from "node:url";
 import { checkFields } from "./lib/content-rules/content-rules.mjs";
 import { writeNextCat } from "./lib/next-cat.mjs";
 import { credsFromEnv, uploadImage, createPost, whoAmI, XError } from "./lib/x-api.mjs";
+import { provedLaunch } from "../assets/ui/adoptables.js";
+import { validateCollection, validateWallets, validatePumpQuotes } from "../assets/collection.js";
 
 export const SITE = "https://catcoinsanctuary.com/";
 export const HASHTAGS = ["#catcoin", "#CatsOfX"];
@@ -93,6 +103,25 @@ export function checkPost(text, cited = []) {
   return { ok: violations.length === 0, violations };
 }
 
+/** A Solana address or signature: a base58 run of 32 characters or more, standing on its own. */
+export const ADDRESS = /(?<![1-9A-HJ-NP-Za-km-z])[1-9A-HJ-NP-Za-km-z]{32,}(?![1-9A-HJ-NP-Za-km-z])/;
+/** The first address in `text` outside the `allowed` strings, or null. */
+export function addressIn(text, allowed = []) {
+  let rest = String(text ?? "");
+  for (const a of allowed.filter(Boolean)) rest = rest.split(a).join(" ");
+  return ADDRESS.exec(rest)?.[0] ?? null;
+}
+/**
+ * The last line before X, in both posters (this file and scripts/post-updates.mjs): a draft ({ ok,
+ * posts } or { ok, text }) with an address anywhere in its text is held, never posted. The one place a
+ * mint may stand is `allowed`: the card link of an owner-launched StonkFun coin no cat has (listCats
+ * byMint), whose card's id is its mint, as before this guard.
+ */
+export function guardDraft(d, allowed = []) {
+  const hit = d.ok ? (d.posts ?? [{ text: d.text }]).map((p) => addressIn(p.text, allowed)).find(Boolean) : null;
+  return hit ? { ...d, ok: false, ...(d.posts ? { posts: [] } : { text: null }), violations: [{ rule: "address", term: `${hit.slice(0, 6)}…`, field: "post" }] } : d;
+}
+
 const sentences = (s) => String(s ?? "").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z"'(])/).filter(Boolean);
 const clip = (s, max) => {
   if (s.length <= max) return s;
@@ -101,8 +130,18 @@ const clip = (s, max) => {
 };
 const shortName = (name) => String(name).split(/\s+the\s+/i)[0].trim();
 
-/** Every cat the sanctuary has: planned ones by ticker, adopted-but-unplanned ones by mint. */
-export function listCats(planned, collection = { cats: [] }, adoptables = { cats: [] }) {
+/**
+ * Every cat the sanctuary has: planned ones by ticker, owner-launched StonkFun coins that no cat has by
+ * mint (byMint: their card link carries the mint). An adoptable with a `launch` field is the
+ * sanctuary's own (sanctuary: true), launched once the Collection proves its coin by the page's own
+ * rule (assets/ui/adoptables.js provedLaunch: that mint, tx and launchpad, under the cat's own coin
+ * name and ticker; one coin is one cat's). A coin a `launch` field names is never listed on its own
+ * (the page shows it on that cat's card or not at all), and neither is a pump.fun coin no adoptable
+ * claims: it is held until one does, never announced as a stranger's cat of SOL.
+ */
+export function listCats(planned, collection = { cats: [] }, adoptables = { cats: [] }, { sanctuaryCoin = () => false } = {}) {
+  const entries = (collection.cats || []).filter((e) => e && typeof e === "object");
+  const named = new Set((adoptables.cats || []).map((c) => c?.launch?.mint).filter(Boolean));
   const stocks = new Map((planned.stocks || []).map((s) => [s.pair.mint, s]));
   const out = [];
   const tickers = new Set();
@@ -112,19 +151,68 @@ export function listCats(planned, collection = { cats: [] }, adoptables = { cats
     out.push({ key: c.ticker, id: c.ticker, name: c.name, ticker: c.ticker, symbol: c.pair.symbol, company: s?.company ?? null,
       story: c.story, why: c.whyLook, proof: c.proof ?? null, portrait: c.portrait ?? null, launched: false });
   }
+  const ofPlanned = (e) => tickers.has(`${e.pair?.mint} ${String(e.symbol).toUpperCase()}`);
+  // A coin is one cat's: a planned cat's, or the first adoptable's it is proved for (as on the page).
+  const used = new Set(entries.filter(ofPlanned).map((e) => e.mint));
   // Adoptable cats (verified lore from companies, people, shows); the lore picture is the post image.
   for (const c of adoptables.cats || []) {
+    const e = provedLaunch(c, entries.filter((x) => !used.has(x.mint)));
+    if (e) used.add(e.mint);
     out.push({ key: c.ticker, id: c.ticker, name: c.name, ticker: c.ticker, symbol: c.pair?.symbol ?? "STONK", company: c.owner ?? null,
-      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore?.image ?? (typeof c.lore === "string" ? c.lore : `assets/lore/${c.ticker}.webp`), launched: false, adoptable: true });
+      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore?.image ?? (typeof c.lore === "string" ? c.lore : `assets/lore/${c.ticker}.webp`),
+      launched: !!e, adoptable: true, ...(c.launch ? { sanctuary: true } : {}) });
   }
-  for (const e of collection.cats || []) {
-    const launchedPlanned = tickers.has(`${e.pair?.mint} ${String(e.symbol).toUpperCase()}`);
-    if (launchedPlanned) continue;       // the planned cat, already listed (and announced) under its ticker
+  for (const e of entries) {
+    // The planned or adoptable cat's, listed under its ticker; a pump.fun (any non-StonkFun) coin no adoptable claims is held,
+    // and so is a coin the sanctuary's launcher made (`sanctuaryCoin`) that no adoptable names yet.
+    if (ofPlanned(e) || named.has(e.mint) || e.launchpad !== undefined || sanctuaryCoin(e)) continue;
     const s = stocks.get(e.pair?.mint);
     out.push({ key: e.mint, id: e.mint, name: e.name, ticker: e.symbol, symbol: e.pair?.symbol ?? null, company: s?.company ?? null,
-      story: null, why: null, proof: null, portrait: null, launched: true });
+      story: null, why: null, proof: null, portrait: null, launched: true, byMint: true });
   }
   return out;
+}
+
+/**
+ * data/collection.json as the page sees it: only entries validateCollection keeps (a listed wallet,
+ * active at the launch time, a known pair, closed fields; a pump.fun coin priced in a coin only while
+ * data/pump-quotes.json lists it, as assets/residents.js reads it), so the bots never call a coin
+ * launched that the site does not show.
+ */
+export function provedCollection(dataDir, nowMs = Date.now()) {
+  const wallets = validateWallets(readJson(path.join(dataDir, "wallets.json"), { launchers: [] }));
+  // Optional, and edited by hand: unreadable, it lists no coin (as assets/residents.js reads it), never stopping the bots.
+  let quoteFile = null;
+  try { quoteFile = readJson(path.join(dataDir, "pump-quotes.json"), null); } catch { quoteFile = null; }
+  const quotes = validatePumpQuotes(quoteFile).quotes;
+  return { cats: validateCollection(readJson(path.join(dataDir, "collection.json"), { cats: [] }), { wallets, quotes, nowMs }).cats };
+}
+
+/**
+ * Whether a data/collection.json entry is a coin the sanctuary's own launcher made: its tx or mint is
+ * a row's in data/sanctuary-launches.json (`ledger`: the tx is written "sending" before it goes out),
+ * its tx is noted "Sanctuary launcher:" in data/launches.json (`launches`), or its name and symbol are a
+ * ledger row's coin name and ticker (a send whose commit was lost). A predicate for listCats.
+ */
+export function sanctuaryCoins(ledger, launches) {
+  const rows = Array.isArray(ledger?.launches) ? ledger.launches.filter((r) => r && typeof r === "object") : [];
+  const txs = new Set([...rows.map((r) => r.tx), ...(Array.isArray(launches?.launches) ? launches.launches : [])
+    .filter((l) => typeof l?.note === "string" && l.note.startsWith("Sanctuary launcher:")).map((l) => l.tx)].filter((x) => typeof x === "string"));
+  const mints = new Set(rows.map((r) => r.mintPublic).filter((x) => typeof x === "string"));
+  const coins = new Set(rows.filter((r) => typeof r.ticker === "string" && typeof r.coinName === "string").map((r) => `${r.coinName}\u0000${r.ticker.toUpperCase()}`));
+  return (e) => txs.has(e?.tx) || mints.has(e?.mint) || coins.has(`${e?.name}\u0000${String(e?.symbol ?? "").toUpperCase()}`);
+}
+
+/**
+ * A cat the sanctuary launched itself (listCats `sanctuary`: an adoptable with a `launch`) that
+ * data/announced.json has no entry for is held by rule, as every new adoptable is: its X post is
+ * scripts/post-updates.mjs's launch post, and queueing it in data/release-queue.json releases it, as
+ * any paused adoptable. `state` (data/announced.json as read) is changed in place; returns it.
+ */
+export function holdSanctuaryCats(cats, state) {
+  state.cats ||= {};
+  for (const c of cats) if (c?.sanctuary && !state.cats[c.key]) state.cats[c.key] = { status: "held", reason: PAUSED_REASON };
+  return state;
 }
 
 /** The company as a post names it: "State Street (SPDR S&P 500 ETF Trust)" -> "State Street". */
@@ -144,7 +232,8 @@ export function draft(cat, { thread = true, ingame = false } = {}) {
   const company = companyShort(cat.company);
   const owner = cat.adoptable ? (company || cat.name) : company ? `${company}'s ${cat.symbol}` : cat.symbol;
   const cited = [cat.adoptable ? cat.name : null, company, cat.company, cat.symbol, cat.proof?.author, cat.proof?.handle && `@${cat.proof.handle}`, cat.proof?.url, link, SITE];
-  const status = cat.launched ? "🎉 Adopted! Its owner has launched it 🚀" : "🔓 No coin yet: be the first to adopt it 👇";
+  const status = cat.sanctuary ? (cat.launched ? "🚀 Launched by the sanctuary" : "🚀 Its coin is on the way")
+    : cat.launched ? "🎉 Adopted! Its owner has launched it 🚀" : "🔓 No coin yet: be the first to adopt it 👇";
   const credit = proofCredit(cat.proof);
   const caption = LORE_CAPTIONS[cat.key];
   const lores = [...(caption ? [`📸 ${caption}`] : []), ...sentences(cat.story).slice(0, 1).map((s) => `📜 ${s}`), ""];
@@ -290,7 +379,9 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const config = { ...DEFAULT_CONFIG, ...readJson(data("announce-config.json"), {}), ...force };
   const state = readJson(data("announced.json"), { cats: {} });
   state.cats ||= {};
-  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), readJson(data("collection.json"), { cats: [] }), readJson(data("adoptables.json"), { cats: [] }));
+  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), provedCollection(path.join(root, "data"), now().getTime()), readJson(data("adoptables.json"), { cats: [] }),
+    { sanctuaryCoin: sanctuaryCoins(readJson(data("sanctuary-launches.json"), { launches: [] }), readJson(data("launches.json"), { launches: [] })) });
+  holdSanctuaryCats(cats, state);
   const creds = credsFromEnv(env);
   const mode = config.dryRun ? "dryRun" : creds ? "post" : "queue";
   const stamp = () => now().toISOString();
@@ -321,7 +412,7 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
 
   for (const [i, cat] of chosen.entries()) {
     const prev = state.cats[cat.key];
-    const d = draft(cat, { thread: config.thread, ingame: fs.existsSync(path.join(root, ingameShot(cat.key))) });
+    const d = guardDraft(draft(cat, { thread: config.thread, ingame: fs.existsSync(path.join(root, ingameShot(cat.key))) }), cat.byMint ? [cardLink(cat.id)] : []);
     const entry = { key: cat.key, name: cat.name, card: cardLink(cat.id), from: prev?.status ?? "new", ok: d.ok, violations: d.violations,
       posts: d.posts.map((p) => ({ text: p.text, length: weightedLength(p.text), image: p.image ?? null, intent: intentLink(p.text) })) };
     summary.drafts.push(entry);

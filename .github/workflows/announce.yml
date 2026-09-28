@@ -7,7 +7,8 @@
 # data/announce-queue.json.
 #
 # In the same step, after the announcer, scripts/post-updates.mjs posts at most one more thing: a
-# cat's adoption not posted yet (data/adoptions.json), else the next approved site update in
+# coin the sanctuary's launcher launched (data/sanctuary-launches.json) once the Collection has
+# proved it, else a cat's adoption not posted yet (data/adoptions.json), else the next approved site update in
 # data/updates.json, at least minGapMinutes after its last post and 15 minutes after the
 # announcer's. Both always run; the step fails if either failed.
 #

@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { ROOT } from "./helpers.mjs";
-import { kitsOf, sameKit, matchAdoption, adoptionRecord, mergeAdoptions, checkAdoptions, adoptionProblem, linkKey, KITS_LIVE, NOTE } from "../scripts/lib/adoptions.mjs";
+import { kitsOf, ownMints, sameKit, matchAdoption, adoptionRecord, mergeAdoptions, checkAdoptions, adoptionProblem, linkKey, KITS_LIVE, NOTE } from "../scripts/lib/adoptions.mjs";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
 const MINT = (n) => `${"So1anaMint".padEnd(38, "x")}${String(n).padStart(4, "0")}`.replace(/[0OIl]/g, "9");
@@ -32,6 +32,20 @@ test("the kits: each cat's name and ticker as the Adopt panel gives them, its st
   assert.equal(warm.storyStart, "warmspotnapsintheonepatchofsunthatreache", "the story without the card's coin line");
   assert.equal(warm.tokenSha256, null, "a hash that is not one is ignored");
   assert.equal(kitsOf({}).length, 0);
+});
+
+test("a cat the sanctuary launches itself (a launch field) has no kit: no launch, however much of the kit it repeats, is its adoption; its coin is the owner's own (A)", () => {
+  const launched = { mint: MINT(7), tx: "5".repeat(88), launchpad: "pump.fun", at: "2026-09-27T08:30:00Z" };
+  const c = cats();
+  c.adoptables.cats[0] = { ...c.adoptables.cats[0], launch: launched };
+  const kits = kitsOf(c);
+  assert.deepEqual(kits.map((k) => k.key), ["WARMSPOT"]);
+  const clone = launch({ mint: MINT(8), description: STORY, twitter: PROOF, website: "https://catcoinsanctuary.com/#cat=NEKOBUS", imageSha256: SHA });
+  assert.equal(matchAdoption(clone, kits), null);
+  assert.equal(matchAdoption(clone, kitsOf(cats()))?.key, "NEKOBUS", "control: the same launch adopts a cat with no launch field");
+  assert.deepEqual(ownMints({ collection: { cats: [{ mint: MINT(1) }, { mint: MINT(7) }] }, adoptables: c.adoptables }), [MINT(1), MINT(7)]);
+  assert.deepEqual(ownMints({ adoptables: c.adoptables }), [MINT(7)], "a launch field's mint before the Collection proves it");
+  assert.deepEqual(ownMints({}), []);
 });
 
 test("an adoption: the kit's ticker and name, and at least one more piece of the kit", () => {

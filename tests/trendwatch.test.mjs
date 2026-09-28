@@ -173,19 +173,48 @@ test("X reads are budgeted: paced by day within the month, each search asks for 
   assert.deepEqual(t2.candidates, t.candidates, "the last list is kept");
 });
 
-test("trend watch workflow: pinned actions, contents: write for the scan, secrets only in the scan step, the next-run job runs no repository code", async () => {
+test("trend watch workflow: pinned actions, contents: write for the scan, secrets only in the scan step, the launcher and next-run jobs run no repository code", async () => {
   const fs = await import("node:fs");
   const W = fs.readFileSync(new URL("../.github/workflows/trendwatch.yml", import.meta.url), "utf8");
   assert.deepEqual([...W.matchAll(/uses:\s*(\S+)\s*#\s*(\S+)/g)].map((m) => `${m[1]} ${m[2]}`), ["actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 v7.0.1", "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 v7.0.0"]);
   assert.match(W, /^permissions: \{\}$/m);
-  assert.deepEqual([...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim()), ["contents: write", "actions: write"]);
+  assert.deepEqual([...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim()), ["contents: write", "actions: write", "actions: write"]);
   const withSecrets = W.split(/\n      - /).filter((s) => /secrets\./.test(s));
   assert.equal(withSecrets.length, 1);
   assert.match(withSecrets[0], /node scripts\/scan-trending-cats\.mjs/);
   assert.deepEqual([...new Set([...W.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))].sort(), ["ANTHROPIC_API_KEY", "X_ACCESS_SECRET", "X_ACCESS_TOKEN", "X_API_KEY", "X_API_SECRET"]);
-  assert.ok(!/SECRET_KEY|WALLET|PRIVATE/i.test(W), "no wallet key: launching stays a person's decision");
+  assert.ok(!/SECRET_KEY|WALLET|PRIVATE/i.test(W), "no wallet key: the trend watch never signs anything (the launcher is launch.yml)");
+  const launcher = W.slice(W.indexOf("\n  launcher:"), W.indexOf("\n  next:"));
   const next = W.slice(W.indexOf("\n  next:"));
-  assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(next));
+  for (const job of [launcher, next]) assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(job));
+  // A commit that brings new candidates starts the launcher at once (LAUNCH_ENABLED on or dry), from a job of its own: it waits for
+  // nothing, TRENDWATCH_CHAIN=off does not stop it, and a failed dispatch cannot stop the chain (the next job does not need it).
+  assert.match(W, /outputs:\n\s+candidates: \$\{\{ steps\.commit\.outputs\.candidates \}\}/);
+  assert.match(W, /id: commit\n/);
+  assert.match(W, /if \[ "\$fresh" -gt 0 \]; then echo "candidates=true" >> "\$GITHUB_OUTPUT"; fi\n\n  launcher:/, "set only after the push");
+  assert.match(launcher, /\n  launcher:\n    needs: scan\n    if: \$\{\{ !cancelled\(\) && needs\.scan\.outputs\.candidates == 'true' && \(vars\.LAUNCH_ENABLED == 'on' \|\| vars\.LAUNCH_ENABLED == 'dry'\) \}\}\n/);
+  assert.match(launcher, /env:\n\s+GH_TOKEN: \$\{\{ github\.token \}\}\n\s+REPO: \$\{\{ github\.repository \}\}\n\s+run: gh workflow run launch\.yml -R "\$REPO" --ref main\n/);
+  assert.ok(!/TRENDWATCH_CHAIN|sleep/.test(launcher), "never behind the chain's switch or its wait");
+  assert.ok(!next.includes("launch.yml"), "the chain's job never dispatches the launcher, so a failed dispatch cannot skip the chain's step");
+  assert.match(next, /\n  next:\n    needs: scan\n/, "the chain needs only the scan");
+});
+
+test("trend watch workflow: the commit step counts the candidates the commit adds (git and jq, as the runner has them)", { skip: process.platform === "win32" }, async () => {
+  const fs = await import("node:fs"), os = await import("node:os"), path = await import("node:path"), { execFileSync } = await import("node:child_process");
+  const W = fs.readFileSync(new URL("../.github/workflows/trendwatch.yml", import.meta.url), "utf8");
+  const lines = W.match(/\n {10}(fresh=\$\(comm[^\n]*\\\n[^\n]*)\n/)[1].replace(/\\\n\s*/, "");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "tw-"));
+  const git = (...a) => execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", ...a], { cwd: dir, encoding: "utf8" });
+  const put = (v) => { fs.mkdirSync(path.join(dir, "data"), { recursive: true }); fs.writeFileSync(path.join(dir, "data/trending-cats.json"), JSON.stringify(v)); };
+  const count = () => execFileSync("bash", ["-eo", "pipefail", "-c", `${lines}\necho "$fresh"`], { cwd: dir, encoding: "utf8" }).trim();
+  git("init", "-q");
+  put({ candidates: ["1", "2"] }); git("add", "."); git("commit", "-qm", "a");
+  put({ candidates: ["2", "1"] });
+  assert.equal(count(), "0", "the same candidates: nothing new");
+  put({ candidates: ["3", "1"] });
+  assert.equal(count(), "1", "one new candidate");
+  put({ posts: [] });
+  assert.equal(count(), "0", "no candidates at all");
 });
 
 /* ---------- lenses: one X search a run, chosen for being first ---------- */
@@ -666,10 +695,24 @@ test("big accounts: any account with 1,000,000+ followers counts on any lens; to
   assert.deepEqual(bigQueries(["x1", "x2"]), ["(from:x1 OR from:x2) " + BIG_TERMS + " -is:retweet"], "no top list: as before");
 });
 
-test("data/cat-watch.json: every query built from it fits X's 512 characters and covers every handle and figure; no figure is a sanctuary cat", async () => {
+test("data/cat-watch.json as shipped (edited by hand): whatever it holds, watchList cleans it and every query fits X's 512 characters", async () => {
+  const fs = await import("node:fs");
+  let raw = null;
+  try { raw = JSON.parse(fs.readFileSync(new URL("../data/cat-watch.json", import.meta.url), "utf8").replace(/^\uFEFF/, "")); } catch { /* read as empty lists by the trend watch */ }
+  const w = watchList(raw);
+  for (const q of [...bigQueries(w.bigAccounts, w.topAccounts), ...figureQueries(w.figures)]) assert.ok(q.length <= MAX_QUERY, `${q.length} characters`);
+  for (const odd of [{ topAccounts: ["@someone", "someone"], bigAccounts: ["someone"] }, { figures: [{ name: "Tom", aliases: ["Tom"], kind: "Cartoon" }] }, {}, [], null]) {
+    const x = watchList(odd);
+    for (const q of [...bigQueries(x.bigAccounts, x.topAccounts), ...figureQueries(x.figures)]) assert.ok(q.length <= MAX_QUERY);
+  }
+});
+
+test("the watch list (the curated copy tests/fixtures/cat-watch.json): every query fits X's 512 characters and covers every handle and figure; no figure is a sanctuary cat", async () => {
   const fs = await import("node:fs");
   const read = (f) => JSON.parse(fs.readFileSync(new URL(`../data/${f}`, import.meta.url), "utf8"));
-  const raw = read("cat-watch.json");
+  // The shipped data/cat-watch.json is edited by hand and only has to be readable (watchList cleans it; see the next test),
+  // so its content never stops npm test or a Pages deploy; these rules are checked on the curated copy.
+  const raw = JSON.parse(fs.readFileSync(new URL("./fixtures/cat-watch.json", import.meta.url), "utf8"));
   const sanctuary = [...read("adoptables.json").cats, ...read("planned.json").cats].flatMap((c) => [c.name, c.coinName, c.ticker, c.launchTicker]).filter(Boolean).map((s) => String(s).toLowerCase());
   const names = new Set(sanctuary);
   assert.ok(names.size > 100, "the sanctuary's names are read");
@@ -706,6 +749,8 @@ test("data/cat-watch.json: every query built from it fits X's 512 characters and
     "My grumpy cat Biscuit refuses to share the bed", "top cat energy today", "such a polite cat", "a spinning cat video", "my happy cat", "Andrew Garfield at the premiere"]) {
     assert.equal(figureIn(text, w.figures)?.name ?? null, null, text);
   }
-  assert.deepEqual(["Grumpy Cat is back", "Tom and Jerry marathon", "Floppa stares", "Garfield the cat hates Mondays", "OIIAI Cat on repeat", "Happy Happy Happy Cat"].map((text) => figureIn(text, w.figures)?.name),
-    ["Grumpy Cat", "Tom", "Big Floppa", "Garfield", "OIIA Cat", "Happy Cat"]);
+  // (A figure the sanctuary's launcher launched has moved into the sanctuary and left the list: only the ones still listed are looked for.)
+  const named = [["Grumpy Cat is back", "Grumpy Cat"], ["Tom and Jerry marathon", "Tom"], ["Floppa stares", "Big Floppa"], ["Garfield the cat hates Mondays", "Garfield"],
+    ["OIIAI Cat on repeat", "OIIA Cat"], ["Happy Happy Happy Cat", "Happy Cat"]].filter(([, name]) => raw.figures.some((f) => f.name === name));
+  assert.deepEqual(named.map(([text]) => figureIn(text, w.figures)?.name), named.map(([, name]) => name));
 });
