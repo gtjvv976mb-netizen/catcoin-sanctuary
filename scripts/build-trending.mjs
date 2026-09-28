@@ -34,7 +34,7 @@ import { checkTrending, clean } from "../assets/ui/trending.js";
 import { credsFromEnv, getPosts, XError } from "./lib/x-api.mjs";
 import { detectCat } from "./lib/content-rules/catdetect.mjs";
 import { checkFields } from "./lib/content-rules/content-rules.mjs";
-import { kitsOf, sameKit, matchAdoption, adoptionRecord, adoptionProblem, mergeAdoptions, checkAdoptions, NOTE as ADOPTIONS_NOTE } from "./lib/adoptions.mjs";
+import { kitsOf, ownMints, sameKit, matchAdoption, adoptionRecord, adoptionProblem, mergeAdoptions, checkAdoptions, NOTE as ADOPTIONS_NOTE } from "./lib/adoptions.mjs";
 
 export const DS_BATCH = 30;
 export const PAGE = 50;
@@ -74,9 +74,9 @@ export const crude = (name, symbol) => CRUDE.test(`${name} ${symbol}`) || checkF
 
 const norm = (s) => String(s || "").normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
 
-/** What a copycat is matched against: every sanctuary cat's tickers and coin name. */
+/** What a copycat is matched against: every sanctuary cat's tickers and coin name; `ours`, the sanctuary's own coins (ownMints). */
 export function catIndex({ planned = { cats: [] }, adoptables = { cats: [] }, collection = { cats: [] } }) {
-  const tickers = new Map(), names = new Map(), ours = new Set((collection.cats || []).map((c) => c.mint));
+  const tickers = new Map(), names = new Map(), ours = new Set(ownMints({ collection, adoptables }));
   for (const c of planned.cats || []) if (c.ticker) tickers.set(c.ticker.toUpperCase(), c.ticker);
   for (const c of adoptables.cats || []) {
     tickers.set(c.ticker.toUpperCase(), c.ticker);
@@ -171,7 +171,8 @@ export async function imageSha256(fetchImpl, url) {
 /**
  * The launches that are a cat's adoption, as data/adoptions.json records (mergeAdoptions keeps the
  * earliest per cat). A picture is read only for a launch with a kit's name and ticker, and not for
- * a cat already `adopted`: a later launch of its kit is a copycat whatever it carries.
+ * a cat already `adopted`: a later launch of its kit is a copycat whatever it carries. A cat the
+ * sanctuary launches itself has no kit (kitsOf), so a clone of its coin is a copycat, never its adoption.
  */
 export async function adoptionsIn(launched, { kits, collectionMints, ownerWallets, adopted = new Set(), fetchImpl, foundAt, log = () => {} }) {
   const out = [], taken = new Set(adopted), shas = new Map();
@@ -228,10 +229,11 @@ export async function fresh({ prev, idx, adopt, fetchImpl, nowMs, pause, log }) 
   // Every adoption and copycat, and the newest KEEP_MAX other cat coins (thousands launch a day).
   const keep = [...live.filter(marked), ...live.filter((r) => !marked(r)).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)).slice(0, KEEP_MAX)];
   // The same name and ticker launched over and over (spam) is one row: the biggest, with how many there are.
-  // An adoption is always a row of its own: its kit's later launches are copycats.
+  // An adoption is always a row of its own: its kit's later launches are copycats. So is the sanctuary's
+  // own coin (idx.ours): never counted among its copies.
   const groups = new Map();
   for (const r of keep) {
-    const k = r.adoptedOf ? `adopted|${r.mint}` : `${norm(r.name)}|${String(r.symbol).toUpperCase()}`;
+    const k = r.adoptedOf ? `adopted|${r.mint}` : idx.ours.has(r.mint) ? `own|${r.mint}` : `${norm(r.name)}|${String(r.symbol).toUpperCase()}`;
     const g = groups.get(k);
     if (!g) { groups.set(k, { ...r, count: 1 }); continue; }
     g.count += 1;
@@ -278,7 +280,7 @@ export async function buildTrending({ data, env = {}, fetchImpl = (...a) => glob
   const idx = catIndex(data);
   const names = new Map([...(data.planned.cats || []).map((c) => [c.ticker, c.name]), ...(data.adoptables.cats || []).map((c) => [c.ticker, c.name])]);
   const adopt = {
-    kits: kitsOf({ planned: data.planned, adoptables: data.adoptables, kits: data.kits }), collectionMints: (data.collection.cats || []).map((c) => c.mint),
+    kits: kitsOf({ planned: data.planned, adoptables: data.adoptables, kits: data.kits }), collectionMints: ownMints(data),
     ownerWallets: (data.wallets?.launchers || []).map((w) => w.address), adoptions: data.adoptions?.adoptions || [],
   };
   const act = await activity({ famous: data.famous, collection: data.collection, fetchImpl, pause });

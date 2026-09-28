@@ -15,7 +15,7 @@
 
    data/collection.json  { "cats": [ entry, … ] }, newest first
    entry  { mint, name, symbol, pair: { symbol, mint }, pool, payer, tx, time, launchpad? }
-       launchpad "pump.fun": pair SOL_PAIR; absent (StonkFun): a stock pair
+       launchpad "pump.fun": pair SOL_PAIR or a listed quote (opts.quotes); absent (StonkFun): a stock pair
        mint, pool, payer, pair.mint: base58, 32 bytes; tx: base58, 64 bytes
        time: the launch's block time, "YYYY-MM-DDTHH:MM:SSZ"
    data/wallets.json  { "launchers": [ { address, since, label, until? } ] }
@@ -373,7 +373,7 @@ export function pairProblem(pair, { stocks = STOCK_PAIRS } = {}) {
 }
 
 /** Why one collection entry may not be a resident, as { clause, detail }, or null. */
-export function entryProblem(e, { launchers, stocks = STOCK_PAIRS, nowMs = Date.now() }) {
+export function entryProblem(e, { launchers, stocks = STOCK_PAIRS, quotes = [], nowMs = Date.now() }) {
   const no = (clause, detail) => ({ clause, detail });
   if (!isObject(e)) return no("shape", "not an object");
   const extra = extraKeys(e, ENTRY_FIELDS);
@@ -386,7 +386,7 @@ export function entryProblem(e, { launchers, stocks = STOCK_PAIRS, nowMs = Date.
   if (symbol) return no("symbol", `symbol: ${symbol}`);
   const pump = e.launchpad === "pump.fun";
   if (e.launchpad !== undefined && !pump) return no("launchpad", "an unknown launchpad");
-  const pair = pairProblem(e.pair, { stocks: pump ? [SOL_PAIR] : stocks });
+  const pair = pairProblem(e.pair, { stocks: pump ? [SOL_PAIR, ...quotes] : stocks });
   if (pair) return no("pair", pair);
   if (new Set([e.mint, e.pool, e.pair.mint]).size !== 3) return no("accounts", "mint, pool and pair must be different accounts");
   const timeMs = parseTime(e.time, { dayAllowed: false });
@@ -406,10 +406,11 @@ const copyEntry = (e) => ({
 
 /**
  * The resident tokens in a collection file. `wallets` is data/wallets.json as read (or its
- * validateWallets result). Returns { cats, refused: [{ index, mint, clause, detail }] }: `cats`
- * are clean copies, deduplicated by mint (and by transaction), newest first, at most `max`.
+ * validateWallets result); the other options are entryProblem's. Returns { cats, refused:
+ * [{ index, mint, clause, detail }] }: `cats` are clean copies, deduplicated by mint (and by
+ * transaction), newest first, at most `max`.
  */
-export function validateCollection(data, { wallets, stocks = STOCK_PAIRS, max = MAX_CATS, nowMs = Date.now() } = {}) {
+export function validateCollection(data, { wallets, max = MAX_CATS, ...opts } = {}) {
   const launchers = Array.isArray(wallets?.launchers) && wallets.launchers.every((l) => typeof l.sinceMs === "number")
     ? wallets.launchers : validateWallets(wallets).launchers;
   const refused = [];
@@ -418,7 +419,7 @@ export function validateCollection(data, { wallets, stocks = STOCK_PAIRS, max = 
   }
   const good = [];
   data.cats.forEach((e, index) => {
-    const p = entryProblem(e, { launchers, stocks, nowMs });
+    const p = entryProblem(e, { ...opts, launchers });
     if (p) refused.push({ index, mint: typeof e?.mint === "string" ? e.mint.slice(0, 44) : null, ...p });
     else good.push({ index, entry: copyEntry(e) });
   });

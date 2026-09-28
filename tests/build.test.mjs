@@ -12,7 +12,7 @@ import {
   GME_LAUNCHER, GOOGL_LAUNCHER, GME_LAUNCH, GOOGL_LAUNCH, ANTHROPIC_LAUNCHER, IREN_LAUNCHER, OWNER, ROOT,
   PUMPFUN, pumpLaunch, token2022MintData, PUMP_COIN,
 } from "./helpers.mjs";
-import { PUMP } from "../scripts/lib/pump.mjs";
+import { SYSTEM_PROGRAM } from "../scripts/lib/chain.mjs";
 
 const NOW = Date.parse("2026-09-25T18:00:00Z");
 const GOOGL_WALLET = { address: GOOGL_LAUNCHER, since: "2026-09-01", label: "GOOGLx launcher" };
@@ -434,7 +434,7 @@ test("pump.fun: the recorded real launch with its dev buy is refused (pump_dev_b
 test("pump.fun: a mint whose metadata does not match is refused; a bonding curve the RPC does not return stops the run and writes nothing", async () => {
   const L = pumpLaunch();
   const accounts = new Map(L.accounts);
-  accounts.set(L.mint, { ...accounts.get(L.mint), data: [token2022MintData({ mint: L.mint, updateAuthority: PUMP.mintAuthority, ...PUMP_COIN, symbol: "GULL" }).toString("base64"), "base64"] });
+  accounts.set(L.mint, { ...accounts.get(L.mint), data: [token2022MintData({ mint: L.mint, updateAuthority: SYSTEM_PROGRAM, ...PUMP_COIN, symbol: "GULL" }).toString("base64"), "base64"] });
   const bad = pumpSite(L, { accounts });
   const r = await run(bad.root, bad.fake());
   assert.equal(r.added.length, 0);
@@ -445,6 +445,23 @@ test("pump.fun: a mint whose metadata does not match is refused; a bonding curve
   const before = snapshot(missing.root);
   await assert.rejects(run(missing.root, missing.fake()), /bonding curve/);
   assert.deepEqual(snapshot(missing.root), before);
+});
+
+test("pump.fun: a malformed bonding-curve answer from the RPC is a refusal, not a crash; a mint whose metadata a stranger could rename is refused (review findings I, H)", async () => {
+  const L = pumpLaunch();
+  for (const data of [[], [null], [123, "base64"]]) {
+    const accounts = new Map(L.accounts);
+    accounts.set(L.curve, { ...accounts.get(L.curve), data });
+    const s = pumpSite(L, { accounts });
+    const r = await run(s.root, s.fake());
+    assert.deepEqual([r.added.length, r.refused.map((x) => x.clause)], [0, ["bonding_curve"]], JSON.stringify(data));
+  }
+  const accounts = new Map(L.accounts);
+  accounts.set(L.mint, { ...accounts.get(L.mint), data: [token2022MintData({ mint: L.mint, updateAuthority: GME_LAUNCHER, ...PUMP_COIN }).toString("base64"), "base64"] });
+  const s = pumpSite(L, { accounts });
+  const r = await run(s.root, s.fake());
+  assert.deepEqual([r.added.length, r.refused.map((x) => x.clause)], [0, ["metadata"]]);
+  assert.match(r.refused[0].detail, /renamed/);
 });
 
 test("pump.fun: a launch whose signatures do not verify stops the run (the RPC cannot pass off another launch)", async () => {

@@ -93,6 +93,36 @@ test("cat coins by name or ticker; crude names are left out; copycats by ticker,
   assert.equal(copycatOf({ mint: "ours", symbol: "CATBUS", name: "Nekobasu" }, ours), null, "the cat's own launch is not a copy");
 });
 
+test("a cat the sanctuary launches itself (a launch field): its own coin is never a copycat, even before the Collection proves it; a clone of it is (A)", () => {
+  const launch = { mint: MINT(40), tx: "5".repeat(88), launchpad: "pump.fun", at: "2026-09-27T08:59:00Z" };
+  const idx = catIndex({ ...data(), adoptables: { cats: data().adoptables.cats.map((c) => ({ ...c, launch })) } });
+  assert.equal(copycatOf({ mint: MINT(40), symbol: "CATBUS", name: "Nekobasu" }, idx), null, "the sanctuary's own coin, not yet in the collection");
+  assert.equal(copycatOf({ mint: MINT(41), symbol: "CATBUS", name: "Nekobasu" }, idx), "NEKOBUS", "a clone of it");
+  assert.equal(copycatOf({ mint: MINT(40), symbol: "CATBUS", name: "Nekobasu" }, catIndex(data())), "NEKOBUS", "control: without the launch field it would be one");
+});
+
+test("build: a clone of the sanctuary's own coin, repeating every piece of the kit, is a copycat, never recorded (or posted) as the cat's adoption; the sanctuary's coin is its own row (A)", async () => {
+  const launch = { mint: MINT(40), tx: "5".repeat(88), launchpad: "pump.fun", at: "2026-09-27T08:59:00Z" };
+  const d = { ...data(), adoptables: { cats: data().adoptables.cats.map((c) => ({ ...c, launch })) } };
+  const kit = { name: "Nekobasu", symbol: "CATBUS", description: STORY, twitter: PROOF, website: "https://catcoinsanctuary.com/#cat=NEKOBUS", image_uri: "https://ipfs.io/ipfs/kit" };
+  const launched = [
+    { mint: MINT(40), ...kit, created_timestamp: NOW - 60_000, creator: MINT(96), usd_market_cap: 9000 },   // the sanctuary's launcher, its wallet not listed yet
+    { mint: MINT(41), ...kit, created_timestamp: NOW - 55_000, creator: CREATOR, usd_market_cap: 100 },      // a stranger's clone, 5 s later
+  ];
+  const { fn, calls } = fakeFetch({ launched });
+  const { trending: t, adoptions } = await buildTrending({ data: d, fetchImpl: fn, nowMs: NOW, pause: 0 });
+  assert.deepEqual(adoptions.adoptions, [], "no adoption recorded");
+  const rows = t.fresh.all;
+  assert.deepEqual(rows.filter((r) => r.mint === MINT(41)).map((r) => [r.copycatOf, r.adoptedOf]), [["NEKOBUS", undefined]]);
+  assert.deepEqual(rows.filter((r) => r.mint === MINT(40)).map((r) => [r.copycatOf ?? null, r.adoptedOf ?? null]), [[null, null]]);
+  const shown = t.fresh.items.filter((r) => [MINT(40), MINT(41)].includes(r.mint));
+  assert.deepEqual(shown.map((r) => [r.mint, r.copycatOf ?? null, r.count]).sort(), [[MINT(40), null, 1], [MINT(41), "NEKOBUS", 1]].sort(), "the sanctuary's coin is not counted among its copies");
+  assert.ok(!calls.some((u) => u.startsWith("https://ipfs.io/")), "no kit to match: no picture read");
+  // Control: without the launch field, the first of the two is the cat's adoption.
+  const ctl = await buildTrending({ data: data(), fetchImpl: fakeFetch({ launched }).fn, nowMs: NOW, pause: 0 });
+  assert.deepEqual(ctl.adoptions.adoptions.map((a) => [a.key, a.mint]), [["NEKOBUS", MINT(40)]]);
+});
+
 test("build: movers by volume from the Hall of Fame; new cat coins grouped, crude and non-cat ones out, adoptions then copycats first; X without keys", async () => {
   const { fn } = fakeFetch();
   const { trending: t, adoptions } = await buildTrending({ data: data(), fetchImpl: fn, nowMs: NOW, pause: 0 });

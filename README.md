@@ -61,10 +61,18 @@ proven on chain.
    (`scripts/lib/chain.mjs` `proveLaunchPump`): one direct `create_v2` priced in SOL, every account
    re-derived with `scripts/lib/pump.mjs`, the wallet as creator, every option off (mayhem,
    cashback, creator fee, holder rewards), no dev buy and nothing else but ComputeBudget; then the
-   mint's metadata and its bonding curve are read back. Such an entry carries `"launchpad":
-   "pump.fun"` and the pair SOL. An adoptable cat with a `launch` field in `data/adoptables.json`
-   shows as **Launched by the sanctuary** only once its mint is in `data/collection.json`
-   ("Launching…" until then), and that coin gets no card of its own.
+   mint's metadata (with no update authority left: nobody can rename the coin) and its bonding
+   curve are read back. Such an entry carries `"launchpad": "pump.fun"` and the pair SOL. An
+   adoptable cat with a `launch` field in `data/adoptables.json` shows as **Launched by the
+   sanctuary** only once `data/collection.json` holds a proved entry with that field's mint,
+   transaction and launchpad that also carries the cat's own ticker (letter case aside) and coin
+   name (letter case, accents and punctuation aside), and no other cat took that coin first. That one rule
+   (`assets/ui/adoptables.js` `provedLaunch`) is what the page and the X announcer both use. Until
+   then the cat shows "Launching…". Either way it has no Adopt button, a stranger's coin is never
+   its adoption, and a coin a `launch` field names gets no card of its own. The announcer never
+   lists a pump.fun coin that no adoptable claims, and both X posters hold any draft that names a
+   Solana address (the one exception: the card link of an owner-launched StonkFun coin that no cat
+   has, whose card is keyed by its mint).
 4. **On the page.** A launch whose pair and ticker match a planned cat (letter case aside) takes
    that cat. The badge turns to **Launched**, a gold coin turns above the cat's head, and the
    card shows the mint, the launch and the GMGN and FOMO buy links. A launch that matches no

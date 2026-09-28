@@ -29,10 +29,26 @@
  *   15 program                   pump.fun itself
  * Every PDA's seeds and program are the IDL's; each one re-derives to the fixture's account in
  * tests/launcher-tx.test.mjs, and the flags equal the fixture's message flags.
+ *
+ * A COIN-PRICED LAUNCH (pump.fun's Custom Pairs; stage 4, UNVERIFIED: no real one is recorded, so
+ * PUMP_QUOTE_VERIFIED is false). As the official SDK builds it (@pump-fun/pump-sdk 2.0.0,
+ * src/sdk.ts createV2Instruction and createV2QuoteRemainingAccounts, src/pda.ts QUOTE_CONTROL_PDA
+ * and quoteAta, read 2026-09-28), a quote other than SOL changes no byte of the data and appends
+ * four remaining accounts after the sixteen:
+ *   16 quote_mint                      (readonly)
+ *   17 associated_quote_bonding_curve  (writable) the quote's associated token account of the
+ *                                      bonding curve, under the quote's own token program
+ *   18 quote_token_program             (readonly) the classic token program or Token-2022, the
+ *                                      program that owns the quote mint (the program checks: 6063)
+ *   19 QuoteControl                    (readonly) PDA["quote-control"] of pump.fun, the account
+ *                                      that lists the quote mints create_v2 accepts
+ * A quote admitted through QuoteControl cannot be used with mayhem mode (6071), which this module
+ * never turns on anyway. Which quotes may be launched is data/pump-quotes.json (validatePumpQuotes):
+ * the builder refuses any other, and so does the Collection's proof (chain.mjs proveLaunchPump).
  */
 import { createHash } from "node:crypto";
-import { base58Decode, base58Encode, isAddress, textProblem, httpsProblem } from "../../assets/collection.js";
-import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
+import { base58Decode, base58Encode, isAddress, textProblem, httpsProblem, SOL_PAIR, STOCK_PAIRS } from "../../assets/collection.js";
+import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
 import {
   pda, ata, compileLegacyMessage, decodeLegacyMessage, decompileInstructions, setComputeUnitLimit, setComputeUnitPrice,
   signTransaction, serializeTransaction, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT, PACKET_DATA_SIZE,
@@ -47,6 +63,7 @@ export const PUMP = Object.freeze({
   mayhemProgram: "MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e",
   mayhemGlobalParams: "13ec7XdrjF3h3YcqBTFDSReRcUFwbCnJaAQspM4j6DDJ", // PDA["global-params"] of the mayhem program
   mayhemSolVault: "BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s",     // PDA["sol-vault"] of the mayhem program
+  quoteControl: "6z6GDdfb2AjR9ZhJmAUQ5cipJCVxQvLJhB2H8mCwTFBP",      // PDA["quote-control"] (the SDK's QUOTE_CONTROL_PDA)
   system: SYSTEM_PROGRAM,
   token2022: TOKEN_2022_PROGRAM,
   ataProgram: ATA_PROGRAM,
@@ -60,13 +77,25 @@ export const CREATE_V2_LIMITS = Object.freeze({ name: 32, symbol: 13, uri: 200 }
 
 /** The launch's defaults: create_v2 alone used 100,529 compute units in the recorded launch. */
 export const LAUNCH_DEFAULTS = Object.freeze({ computeUnitLimit: 200_000, computeUnitPriceMicroLamports: 100_000 });
+/** A coin-priced create is heavier (the SDK: "Token-quoted creates are heavy"); no real one is recorded, so the limit is generous. */
+export const QUOTE_LAUNCH_COMPUTE_UNIT_LIMIT = 300_000;
 /** The most a launch may bid in priority fees (limit × price), in lamports: 0.005 SOL. A guard against a slipped digit. */
 export const MAX_PRIORITY_FEE_LAMPORTS = 5_000_000n;
+
+/**
+ * Whether a coin-priced pump.fun launch has been seen to work end to end. It has not: no real
+ * custom-quote create is recorded, only the SDK's source. While this is false, scripts/lib/
+ * venues-routing.mjs chooses the "pump-quote" venue only when the owner opts in explicitly, and
+ * the launcher is to simulate such a launch before sending it and fall back to SOL if it fails.
+ */
+export const PUMP_QUOTE_VERIFIED = false;
 
 export const bondingCurve = (mint) => pda(["utf8:bonding-curve", mint], PUMP.program);
 export const associatedBondingCurve = (mint) => ata(bondingCurve(mint), mint, TOKEN_2022_PROGRAM);
 export const mayhemState = (mint) => pda(["utf8:mayhem-state", mint], PUMP.mayhemProgram);
 export const mayhemTokenVault = (mint) => ata(PUMP.mayhemSolVault, mint, TOKEN_2022_PROGRAM);
+/** The bonding curve's token account for a quote { mint, tokenProgram } (the SDK's quoteAta(bondingCurvePda(mint), …)). */
+export const associatedQuoteBondingCurve = (mint, quote) => ata(bondingCurve(mint), quote.mint, quote.tokenProgram);
 
 const address = (value, what) => {
   const a = typeof value === "string" ? value : value?.publicKey; // an address, or a keypair
@@ -74,10 +103,41 @@ const address = (value, what) => {
   return a;
 };
 
-/** The sixteen account metas of create_v2 for a new `mint` paid by `user`, in the program's order. */
-export function createV2Accounts(mint, user) {
-  const m = (pubkey, isWritable = false, isSigner = false) => ({ pubkey, isSigner, isWritable });
+/** The zero key: legacy SOL-priced curves store it as their quote mint. */
+const DEFAULT_KEY = SYSTEM_PROGRAM;
+
+/**
+ * Why `quote` ({ mint, tokenProgram }, as data/pump-quotes.json lists it) cannot price a pump.fun
+ * launch, or null. SOL is not a quote here (wrapped SOL and the zero key are what the SDK reads as
+ * "priced in SOL"; a SOL launch has no quote at all), and the token program is one of the two.
+ */
+export function quoteProblem(quote) {
+  if (quote === null || typeof quote !== "object") return "a quote is { mint, tokenProgram }";
+  if (!isAddress(quote.mint)) return "the quote mint is not a base58 address";
+  if (quote.mint === SOL_PAIR.mint || quote.mint === DEFAULT_KEY) return "SOL is not a quote: a SOL-priced launch has none";
+  if (quote.tokenProgram !== TOKEN_PROGRAM && quote.tokenProgram !== TOKEN_2022_PROGRAM) return "the quote's token program must be the classic token program or Token-2022";
+  return null;
+}
+
+/** The four remaining accounts that price a create_v2 in `quote` (see the header), in the SDK's order. */
+function quoteAccounts(mint, quote) {
+  const bad = quoteProblem(quote);
+  if (bad) throw new TypeError(bad);
   return [
+    { pubkey: quote.mint, isSigner: false, isWritable: false },
+    { pubkey: associatedQuoteBondingCurve(mint, quote), isSigner: false, isWritable: true },
+    { pubkey: quote.tokenProgram, isSigner: false, isWritable: false },
+    { pubkey: PUMP.quoteControl, isSigner: false, isWritable: false },
+  ];
+}
+
+/**
+ * The account metas of create_v2 for a new `mint` paid by `user`, in the program's order: the
+ * sixteen, then (with a `quote`) the four that price the coin in it.
+ */
+export function createV2Accounts(mint, user, quote = null) {
+  const m = (pubkey, isWritable = false, isSigner = false) => ({ pubkey, isSigner, isWritable });
+  const accounts = [
     m(mint, true, true),
     m(PUMP.mintAuthority),
     m(bondingCurve(mint), true),
@@ -95,23 +155,25 @@ export function createV2Accounts(mint, user) {
     m(PUMP.eventAuthority),
     m(PUMP.program),
   ];
+  return quote === null ? accounts : [...accounts, ...quoteAccounts(mint, quote)];
 }
 
 /**
  * Why a coin's name, symbol or metadata uri may not be launched, or null. The name and symbol
  * must be plain text the sanctuary would show (assets/collection.js textProblem: no link, markup,
- * control or hidden character) within create_v2's byte limits; the uri must be a link the
- * sanctuary itself would make (assets/collection.js httpsProblem: https to a named host, no
- * credentials) that starts with "https://", is at most 200 bytes and holds no space, control
- * character, markup or quote (< > " ' ` \), since it is written on-chain for good.
+ * control or hidden character) within create_v2's byte limits (or `limits`, for another
+ * launchpad); the uri must be a link the sanctuary itself would make (assets/collection.js
+ * httpsProblem: https to a named host, no credentials) that starts with "https://", is at most
+ * 200 bytes and holds no space, control character, markup or quote (< > " ' ` \), since it is
+ * written on-chain for good.
  */
-export function launchTextProblem({ name, symbol, uri } = {}) {
-  const n = textProblem(name, { maxBytes: CREATE_V2_LIMITS.name });
+export function launchTextProblem({ name, symbol, uri } = {}, limits = CREATE_V2_LIMITS) {
+  const n = textProblem(name, { maxBytes: limits.name });
   if (n) return `the name: ${n}`;
-  const s = textProblem(symbol, { maxBytes: CREATE_V2_LIMITS.symbol });
+  const s = textProblem(symbol, { maxBytes: limits.symbol });
   if (s) return `the symbol: ${s}`;
   if (typeof uri !== "string" || !uri.startsWith("https://")) return "the uri must start with https://";
-  if (Buffer.byteLength(uri, "utf8") > CREATE_V2_LIMITS.uri) return `the uri is longer than ${CREATE_V2_LIMITS.uri} bytes`;
+  if (Buffer.byteLength(uri, "utf8") > limits.uri) return `the uri is longer than ${limits.uri} bytes`;
   if (/[\s\p{Cc}\p{Cf}]/u.test(uri)) return "the uri holds a space or a control character";
   if (/[<>"'`\\]/.test(uri)) return "the uri holds markup or a quote (< > \" ' ` \\)";
   const bad = httpsProblem(uri);
@@ -128,10 +190,12 @@ const borshString = (s) => {
 
 /**
  * pump.fun create_v2 as an instruction { programId, keys, data } for a new `mint` paid by `user`,
- * with `creator` (who earns the creator fees) written into the data. Throws on a bad address, a
- * default creator, a name, symbol or uri that launchTextProblem refuses, or a non-boolean mayhemMode.
+ * with `creator` (who earns the creator fees) written into the data, priced in SOL or (with
+ * `quote`, { mint, tokenProgram }) in that coin. Throws on a bad address, a default creator, a
+ * name, symbol or uri that launchTextProblem refuses, a non-boolean mayhemMode, a quote that
+ * quoteProblem refuses, and mayhem mode with a quote (the program refuses it: 6071).
  */
-export function createV2Instruction({ mint, user, creator, name, symbol, uri, mayhemMode = false } = {}) {
+export function createV2Instruction({ mint, user, creator, name, symbol, uri, mayhemMode = false, quote = null } = {}) {
   mint = address(mint, "the mint");
   user = address(user, "the user");
   creator = address(creator, "the creator");
@@ -140,6 +204,9 @@ export function createV2Instruction({ mint, user, creator, name, symbol, uri, ma
   const bad = launchTextProblem({ name, symbol, uri });
   if (bad) throw new RangeError(bad);
   if (typeof mayhemMode !== "boolean") throw new TypeError("mayhemMode is true or false");
+  if (quote !== null && quoteProblem(quote)) throw new TypeError(quoteProblem(quote));
+  if (quote !== null && mayhemMode) throw new Error("a coin-priced launch cannot be a mayhem-mode coin (6071)");
+  if (quote !== null && [mint, user].includes(quote.mint)) throw new Error("the quote must be another coin");
   const data = Buffer.concat([
     Buffer.from(CREATE_V2_DISC, "hex"),
     borshString(name), borshString(symbol), borshString(uri),
@@ -149,7 +216,7 @@ export function createV2Instruction({ mint, user, creator, name, symbol, uri, ma
     Buffer.alloc(8),         // creator_fee_bps: OptionU64(0), the standard fee schedule
     Buffer.from([0]),        // is_holder_reward: OptionBool(false), a regular coin
   ]);
-  return { programId: PUMP.program, keys: createV2Accounts(mint, user), data: new Uint8Array(data) };
+  return { programId: PUMP.program, keys: createV2Accounts(mint, user, quote), data: new Uint8Array(data) };
 }
 
 /**
@@ -184,20 +251,69 @@ export function decodeCreateV2(data) {
   return out;
 }
 
+/* ── data/pump-quotes.json: the coins a pump.fun launch may be priced in ─────────────────── */
+
+export const PUMP_QUOTE_FIELDS = Object.freeze(["symbol", "mint", "tokenProgram"]);
+const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+
+/**
+ * data/pump-quotes.json: { note?, quotes: [{ symbol, mint, tokenProgram }] }, the coins (besides
+ * SOL) a pump.fun launch may be priced in. Returns { quotes: [frozen copies], refused: [{ index,
+ * detail }] }. The fields are closed; the symbol is plain text of at most 16 bytes (what a
+ * Collection entry's pair symbol may be); the mint passes quoteProblem and is not one of the
+ * sanctuary's stock pairs (a company's stock launches on StonkFun, and a pump.fun coin priced in
+ * a stock pair could take that pair's planned cat's card); no mint or symbol is listed twice.
+ * Listing a coin here says nothing about pump.fun accepting it: pump.fun's own QuoteControl
+ * account decides that on chain.
+ */
+export function validatePumpQuotes(data) {
+  const quotes = [], refused = [];
+  if (!isObj(data) || !Array.isArray(data.quotes) || Object.keys(data).some((k) => !["note", "quotes"].includes(k))
+    || (data.note !== undefined && typeof data.note !== "string")) {
+    return { quotes, refused: [{ index: null, detail: "pump-quotes must be { note, quotes: [...] }" }] };
+  }
+  data.quotes.forEach((q, index) => {
+    const no = (detail) => refused.push({ index, detail });
+    if (!isObj(q)) return no("not an object");
+    const extra = Object.keys(q).filter((k) => !PUMP_QUOTE_FIELDS.includes(k));
+    if (extra.length) return no(`unknown field ${extra[0]}`);
+    const sym = textProblem(q.symbol, { maxBytes: 16 });
+    if (sym) return no(`symbol: ${sym}`);
+    const bad = quoteProblem(q);
+    if (bad) return no(bad);
+    if (STOCK_PAIRS.some((s) => s.mint === q.mint)) return no("a stock pair: a company's stock launches on StonkFun");
+    if (quotes.some((x) => x.mint === q.mint || x.symbol === q.symbol)) return no("this mint or symbol is listed twice");
+    quotes.push(Object.freeze({ symbol: q.symbol, mint: q.mint, tokenProgram: q.tokenProgram }));
+  });
+  return { quotes, refused };
+}
+
+/** The allowlisted quote for `quote` ({ mint, tokenProgram? }), as the list writes it; throws when it is not listed. */
+function listedQuote(quote, quotes) {
+  const q = (Array.isArray(quotes) ? quotes : []).find((x) => x?.mint === quote?.mint);
+  if (!q || quoteProblem(q)) throw new Error("the quote is not one data/pump-quotes.json lists");
+  if (quote.tokenProgram !== undefined && quote.tokenProgram !== q.tokenProgram) throw new Error("the quote's token program is not the one data/pump-quotes.json lists");
+  return Object.freeze({ symbol: q.symbol, mint: q.mint, tokenProgram: q.tokenProgram });
+}
+
 /**
  * Build the launch: a legacy transaction, paid by `wallet` (who is also the coin's creator),
  * holding SetComputeUnitLimit, SetComputeUnitPrice and create_v2 for `mint`, and nothing else.
- * `wallet` and `mint` are addresses or keypairs (only the public keys are read). Returns a frozen
- * { messageBytes, signers (the addresses that must sign, in the message's order: [wallet, mint]),
- * instructions, wallet, mint, message }. Throws on anything create_v2 or the fee guard refuses.
+ * `wallet` and `mint` are addresses or keypairs (only the public keys are read). Priced in SOL,
+ * or with `quote` ({ mint } or { symbol, mint }) in that coin, which must be one of `quotes` (data/
+ * pump-quotes.json's list, validatePumpQuotes; its token program is taken from there). Returns a
+ * frozen { messageBytes, signers (the addresses that must sign, in the message's order: [wallet,
+ * mint]), instructions, wallet, mint, quote (null, or { symbol, mint, tokenProgram }), message }.
+ * Throws on anything create_v2 or the fee guard refuses.
  */
 export function buildLaunchTransaction({
-  wallet, mint, name, symbol, uri, recentBlockhash,
-  computeUnitLimit = LAUNCH_DEFAULTS.computeUnitLimit,
+  wallet, mint, name, symbol, uri, recentBlockhash, quote = null, quotes = [],
+  computeUnitLimit = quote === null ? LAUNCH_DEFAULTS.computeUnitLimit : QUOTE_LAUNCH_COMPUTE_UNIT_LIMIT,
   computeUnitPriceMicroLamports = LAUNCH_DEFAULTS.computeUnitPriceMicroLamports,
 } = {}) {
   wallet = address(wallet, "the wallet");
   mint = address(mint, "the mint");
+  const q = quote === null ? null : listedQuote(quote, quotes);
   if (!Number.isInteger(computeUnitLimit) || computeUnitLimit < 1 || computeUnitLimit > MAX_COMPUTE_UNIT_LIMIT) {
     throw new RangeError(`a compute-unit limit is 1..${MAX_COMPUTE_UNIT_LIMIT}`);
   }
@@ -211,27 +327,28 @@ export function buildLaunchTransaction({
   const instructions = [
     setComputeUnitLimit(computeUnitLimit),
     setComputeUnitPrice(price),
-    createV2Instruction({ mint, user: wallet, creator: wallet, name, symbol, uri }),
+    createV2Instruction({ mint, user: wallet, creator: wallet, name, symbol, uri, quote: q }),
   ];
   const message = compileLegacyMessage({ payer: wallet, recentBlockhash, instructions });
   const signers = message.accountKeys.slice(0, message.header.numRequiredSignatures);
   const size = 1 + 64 * signers.length + message.bytes.length;
   if (size > PACKET_DATA_SIZE) throw new RangeError(`the launch would be ${size} bytes; Solana takes at most ${PACKET_DATA_SIZE}`);
-  checkLaunchMessage(message.bytes, { wallet, mint });
-  return Object.freeze({ messageBytes: message.bytes, signers, instructions, wallet, mint, message });
+  checkLaunchMessage(message.bytes, { wallet, mint, quote: q });
+  return Object.freeze({ messageBytes: message.bytes, signers, instructions, wallet, mint, quote: q, message });
 }
 
 /**
  * Check, from the bytes alone, that a message is a launch this module would build: paid by
  * `wallet`, signed by exactly [wallet, mint], holding at most one SetComputeUnitLimit and one
  * SetComputeUnitPrice (no accounts, the 5- and 9-byte forms) and exactly one create_v2 whose
- * sixteen accounts and flags are createV2Accounts(mint, wallet), whose creator is the wallet and
- * whose options are all off, and no other instruction. The compute budget is read too: a limit is
- * 1..1,400,000 and the priority fee (limit × price) is at most MAX_PRIORITY_FEE_LAMPORTS; with no
- * limit, 200,000 units for every instruction (at most 1,400,000) are assumed, never less than the
- * runtime's default. Returns the decoded create_v2 arguments; throws with the reason otherwise.
+ * accounts and flags are createV2Accounts(mint, wallet, quote) (sixteen, or twenty with a quote),
+ * whose creator is the wallet and whose options are all off, and no other instruction. The
+ * compute budget is read too: a limit is 1..1,400,000 and the priority fee (limit × price) is at
+ * most MAX_PRIORITY_FEE_LAMPORTS; with no limit, 200,000 units for every instruction (at most
+ * 1,400,000) are assumed, never less than the runtime's default. Returns the decoded create_v2
+ * arguments; throws with the reason otherwise.
  */
-export function checkLaunchMessage(messageBytes, { wallet, mint } = {}) {
+export function checkLaunchMessage(messageBytes, { wallet, mint, quote = null } = {}) {
   const msg = decodeLegacyMessage(messageBytes);
   const signers = msg.accountKeys.slice(0, msg.header.numRequiredSignatures);
   if (signers.length !== 2 || signers[0] !== wallet || signers[1] !== mint) throw new Error("the signers are not [wallet, mint]");
@@ -259,7 +376,7 @@ export function checkLaunchMessage(messageBytes, { wallet, mint } = {}) {
     throw new Error(`a priority fee of ${priorityFee} lamports is more than the ${MAX_PRIORITY_FEE_LAMPORTS} this launcher allows`);
   }
   if (!create) throw new Error("no create_v2");
-  const want = createV2Accounts(mint, wallet);
+  const want = createV2Accounts(mint, wallet, quote);
   if (create.keys.length !== want.length || create.keys.some((k, i) => k.pubkey !== want[i].pubkey || k.isSigner !== want[i].isSigner || k.isWritable !== want[i].isWritable)) {
     throw new Error("create_v2's accounts are not the ones for this mint and wallet");
   }
@@ -283,7 +400,7 @@ export function signLaunchTransaction(built, walletKeypair, mintKeypair) {
   if (walletKeypair?.publicKey !== built.wallet) throw new Error("the wallet keypair is not the launch's wallet");
   if (mintKeypair?.publicKey !== built.mint) throw new Error("the mint keypair is not the launch's mint");
   const messageBytes = Uint8Array.from(built.messageBytes); // what is checked is what is signed and sent
-  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint });
+  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint, quote: built.quote ?? null });
   const signatures = signTransaction(messageBytes, [walletKeypair, mintKeypair]);
   return Buffer.from(serializeTransaction(messageBytes, signatures)).toString("base64");
 }

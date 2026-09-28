@@ -143,7 +143,8 @@ export function launchProblem(l) {
     : !(ms > 0) || new Date(ms).toISOString().replace(".000Z", "Z") !== l.at ? "launch at must be YYYY-MM-DDTHH:MM:SSZ" : null;
 }
 
-/** The file, checked: { cats, refused: [{ index, detail }] }. `taken` is a set of tickers already used elsewhere (the planned cats). */
+/** The file, checked: { cats, refused: [{ index, detail }] }. `taken` is a set of tickers already used elsewhere (the planned cats).
+ *  A launch mint named twice drops no cat (provedLaunch picks). */
 export function validateAdoptables(data, { taken = new Set() } = {}) {
   if (!isObj(data) || !Array.isArray(data.cats)) return { cats: [], refused: [{ index: null, detail: "adoptables must be { cats: [...] }" }] };
   const cats = [], refused = [];
@@ -152,10 +153,17 @@ export function validateAdoptables(data, { taken = new Set() } = {}) {
     if (p) return refused.push({ index, detail: `${c?.ticker ?? index}: ${p}` });
     if (taken.has(c.ticker) || cats.some((x) => x.ticker === c.ticker)) return refused.push({ index, detail: `${c.ticker}: ticker used twice` });
     if (cats.some((x) => x.id === c.id)) return refused.push({ index, detail: `${c.id}: id used twice` });
-    if (c.launch && cats.some((x) => x.launch?.mint === c.launch.mint)) return refused.push({ index, detail: `${c.ticker}: launch mint used twice` });
     cats.push(c);
   });
   return { cats, refused };
+}
+
+/** The one rule (page and X bots) for "the sanctuary launched cat c": the proved entry with its launch's
+ *  mint, tx and launchpad and the cat's own ticker and coin name (case, accents aside), or null. */
+export function provedLaunch(c, entries) {
+  const l = c?.launch, n = nameKey(c?.coinName || c?.name);
+  return (l && n && entries.find((e) => e?.mint === l.mint && e.tx === l.tx && (e.launchpad ?? "stonkfun") === l.launchpad
+    && String(e.symbol).toUpperCase() === (c.launchTicker || c.ticker) && nameKey(e.name) === n)) || null;
 }
 
 /** An adoptable cat as a resident (the shape assets/ui/data.js reads). */

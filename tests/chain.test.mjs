@@ -6,7 +6,7 @@ import {
   proveLaunch, checkLaunchAccounts, readTokenMetadata, decodeInitialize, pda, isOnCurve, poolAddress, vaultAddress, curveRuleAddress,
   IX, GLOBAL_CONFIG_DISC, LAUNCHLAB_PROGRAM, LAUNCHLAB_AUTHORITY, LAUNCHLAB_EVENT_AUTHORITY, STONKFUN_PLATFORM, STONKFUN_PLATFORM_REWARD,
   signaturesVerify, messageBytes, proveLaunchPump, checkPumpAccounts, BONDING_CURVE_DISC, SOL_PAIR,
-  SYSTEM_PROGRAM, TOKEN_PROGRAM, COMPUTE_BUDGET_PROGRAM,
+  SYSTEM_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM,
 } from "../scripts/lib/chain.mjs";
 import { PUMP, CREATE_V2_DISC, createV2Accounts, decodeCreateV2, bondingCurve, anchorDiscriminator } from "../scripts/lib/pump.mjs";
 import { base58Decode, base58Encode, STOCK_PAIRS, XSTOCKS } from "../assets/collection.js";
@@ -485,6 +485,13 @@ test("pump.fun REFUSED: the wrong wallet, a failed transaction, a newer version,
   assert.equal(proveLaunchPump(untimed, { wallet: PUMP_PAYER }).clause, "no_time");
   assert.equal(proveLaunchPump(null, { wallet: PUMP_PAYER }).clause, "unreadable");
   assert.equal(proveLaunchPump(launchTx("592bMtm5"), { wallet: GOOGL_LAUNCHER }).clause, "no_launch");
+  // A malformed status (an RPC answer that is not { Ok } / { Err }) is a refusal, never a crash, on both launchpads.
+  for (const status of ["Ok", 1, true, []]) {
+    const odd = createOnly(); odd.meta.status = status;
+    assert.equal(proveLaunchPump(odd, { wallet: PUMP_PAYER }).clause, "failed", JSON.stringify(status));
+    const oddLab = launchTx("2VJ6Eqt9"); oddLab.meta.status = status;
+    assert.equal(proveLaunch(oddLab, { wallet: GME_LAUNCHER }).clause, "failed", JSON.stringify(status));
+  }
 });
 
 test("pump.fun REFUSED: a create made through another program (CPI), and two creates in one transaction", () => {
@@ -566,10 +573,43 @@ test("pump.fun read-back: refuses a mint whose metadata differs or can be rename
   assert.equal(checkPumpAccounts(launch, null, curve).clause, "metadata");
   const renamable = { ...mint, data: [token2022MintData({ mint: L.mint, updateAuthority: L.wallet, ...PUMP_COIN }).toString("base64"), "base64"] };
   assert.match(checkPumpAccounts(launch, renamable, curve).detail, /rename/);
-  const another = { ...mint, data: [token2022MintData({ mint: PUMP_MINT, updateAuthority: PUMP.mintAuthority, ...PUMP_COIN }).toString("base64"), "base64"] };
+  const another = { ...mint, data: [token2022MintData({ mint: PUMP_MINT, updateAuthority: SYSTEM_PROGRAM, ...PUMP_COIN }).toString("base64"), "base64"] };
   assert.equal(checkPumpAccounts(launch, another, curve).clause, "metadata");
   assert.equal(checkPumpAccounts(launch, mint, null).clause, "bonding_curve");
   assert.equal(checkPumpAccounts(launch, mint, { ...curve, owner: SYSTEM_PROGRAM }).clause, "bonding_curve");
   assert.equal(checkPumpAccounts(launch, mint, { ...curve, data: [Buffer.alloc(151).toString("base64"), "base64"] }).clause, "bonding_curve");
   assert.equal(checkPumpAccounts({ ...launch, pool: GME_LAUNCHER }, mint, curve).clause, "bonding_curve");
+});
+
+test("pump.fun read-back: the metadata's update authority must be None (32 zero bytes), as create_v2 leaves it on chain; any key that could rename the coin is refused", () => {
+  // The recorded real launch: pump.fun's create_v2 calls Token-2022's UpdateAuthority
+  // (spl_token_metadata_interface:update_the_authority) with 32 zero bytes: no one can rename the coin.
+  const tx = recordedPump(), keys = pumpKeys(tx);
+  const ua = createHash("sha256").update("spl_token_metadata_interface:update_the_authority").digest().subarray(0, 8).toString("hex");
+  assert.equal(ua, "d7e4a6e45464567b");
+  const inner = tx.meta.innerInstructions.flatMap((g) => g.instructions).filter((ix) => keys[ix.programIdIndex] === TOKEN_2022_PROGRAM)
+    .map((ix) => Buffer.from(base58Decode(ix.data, 2000))).filter((d) => d.subarray(0, 8).toString("hex") === ua);
+  assert.equal(inner.length, 1);
+  assert.equal(base58Encode(inner[0].subarray(8, 40)), SYSTEM_PROGRAM, "the new update authority is None");
+  const L = pumpLaunch(), { launch } = proveLaunchPump(L.tx, { wallet: L.wallet });
+  const curve = L.accounts.get(L.curve);
+  const mintWith = (updateAuthority) => ({ ...L.accounts.get(L.mint), data: [token2022MintData({ mint: L.mint, updateAuthority, ...PUMP_COIN }).toString("base64"), "base64"] });
+  assert.deepEqual(checkPumpAccounts(launch, mintWith(SYSTEM_PROGRAM), curve), { ok: true });
+  for (const [who, key] of [["a stranger", "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM"], ["pump.fun's mint authority", PUMP.mintAuthority], ["pump.fun itself", PUMP.program], ["the wallet", L.wallet]]) {
+    const r = checkPumpAccounts(launch, mintWith(key), curve);
+    assert.equal(r.clause, "metadata", who);
+    assert.match(r.detail, /rename/, who);
+  }
+});
+
+test("pump.fun read-back: a malformed RPC answer (no data, a null, a number, an array) is refused, never thrown out of the builder", () => {
+  const L = pumpLaunch(), { launch } = proveLaunchPump(L.tx, { wallet: L.wallet });
+  const mint = L.accounts.get(L.mint), curve = L.accounts.get(L.curve);
+  for (const data of [[], [null], [123, "base64"], [undefined, "base64"], [{}, "base64"], [[1, 2, 3], "base64"]]) {
+    let r;
+    assert.doesNotThrow(() => { r = checkPumpAccounts(launch, mint, { ...curve, data }); }, JSON.stringify(data));
+    assert.equal(r.clause, "bonding_curve", JSON.stringify(data));
+    assert.doesNotThrow(() => { r = checkPumpAccounts(launch, { ...mint, data }, curve); }, JSON.stringify(data));
+    assert.equal(r.clause, "metadata", JSON.stringify(data));
+  }
 });

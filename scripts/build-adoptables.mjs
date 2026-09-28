@@ -14,6 +14,14 @@
  * a silhouette in the cat's coat colours. Its lore picture is assets/lore/<TICKER>.webp with the caption
  * from data/lore.json, when both exist; otherwise lore is null. New cats are recorded in data/announced.json as "held"
  * (no auto-posting yet); an existing record is never changed.
+ *
+ * The sanctuary's own launches survive a rebuild: a cat in the current data/adoptables.json with a
+ * `launch` field (written by the automatic launcher) keeps it. When the research still has that cat
+ * (same id) under the same ticker, name, coin name and launch ticker, the fresh row takes the
+ * `launch` field; when it names the cat otherwise, the current row is kept whole in its place, and
+ * when the research no longer picks it (or never had it: the launcher added it) it is kept whole after
+ * the fresh ones: the coin exists on chain under that name and ticker. A current file that cannot be
+ * read stops the run (nothing is written).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -92,21 +100,47 @@ export function adoptableFrom(r, { root, captions = loreCaptions(root) }) {
   };
 }
 
+/** The fields a launched coin was made with: a rebuild that changes one keeps the current row whole. */
+const LAUNCH_IDENTITY = ["ticker", "name", "coinName", "launchTicker"];
+
+/** The current data/adoptables.json's cats ([] when there is none yet). */
+function currentCats(root) {
+  const file = path.join(root, "data/adoptables.json");
+  let cur;
+  try { cur = JSON.parse(fs.readFileSync(file, "utf8")); } catch (e) {
+    if (e.code === "ENOENT") return [];
+    throw new AdoptablesError("data/adoptables.json is not readable JSON; nothing was written (its launch fields would be lost)");
+  }
+  if (!Array.isArray(cur?.cats)) throw new AdoptablesError("data/adoptables.json has no cats list; nothing was written (its launch fields would be lost)");
+  return cur.cats;
+}
+
+/** The fresh rows with the sanctuary's launches carried over from the current file (see above). */
+export function keepLaunches(picked, current, log = () => {}) {
+  const out = [...picked], tail = [];
+  for (const c of current) {
+    if (!c || typeof c !== "object" || c.launch === undefined) continue;
+    const i = out.findIndex((x) => x.id === c.id);
+    if (i >= 0 && LAUNCH_IDENTITY.every((k) => out[i][k] === c[k])) { out[i] = { ...out[i], launch: c.launch }; continue; }
+    if (i >= 0) { out[i] = c; log(`${c.ticker}: launched by the sanctuary as ${c.coinName} (${c.launchTicker || c.ticker}); its current row is kept, not the research's.`); continue; }
+    log(`${c.ticker}: launched by the sanctuary; kept though the research no longer picks it.`);
+    tail.push(c);
+  }
+  return [...out, ...tail];
+}
+
 export function buildAdoptables({ root, source, top = 25, checked = new Date().toISOString().slice(0, 10), log = () => {} }) {
   let rows;
   try { rows = JSON.parse(fs.readFileSync(source, "utf8")); } catch { throw new AdoptablesError(`${source} is not readable JSON`); }
   if (!Array.isArray(rows)) throw new AdoptablesError(`${source} is not a list`);
-  const picked = [];
+  const fresh = [];
   const captions = loreCaptions(root);
   for (const r of rows) {
-    if (picked.length >= top) break;
+    if (fresh.length >= top) break;
     if (!usable(r)) { log(`${r?.id}: skipped (${r?.confidence === "low" ? "low confidence" : "look not settled"}).`); continue; }
-    picked.push(adoptableFrom(r, { root, captions }));
+    fresh.push(adoptableFrom(r, { root, captions }));
   }
-  // A cat the sanctuary's launcher launched (its `launch`, scripts/launch.mjs) is never dropped: it stays as it is.
-  let current = [];
-  try { current = JSON.parse(fs.readFileSync(path.join(root, "data/adoptables.json"), "utf8")).cats ?? []; } catch { current = []; }
-  for (const c of current) if (c?.launch && !picked.some((p) => p.ticker === c.ticker)) picked.push(c);
+  const picked = keepLaunches(fresh, currentCats(root), log);
   const planned = JSON.parse(fs.readFileSync(path.join(root, "data/planned.json"), "utf8"));
   const taken = new Set(planned.cats.map((c) => c.ticker));
   const data = {

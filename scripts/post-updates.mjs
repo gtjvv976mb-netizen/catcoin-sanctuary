@@ -23,9 +23,10 @@
  * data/release-queue.json lastReleaseAt), so the account never posts twice in a row in a hurry.
  *
  * Every draft must be <= 280 characters and pass the announcer's checks (checkPost: the content
- * rules and no price talk), carry at most one link, and that link the site's own. A draft that fails
- * is "held" and never posted. The rules refuse "$" before a letter and the word "pump" (so
- * "pump.fun" too), so a ticker is written without its "$" and pump.fun is named "PumpFun".
+ * rules and no price talk), carry at most one link, and that link the site's own, and name no
+ * Solana address (announce.mjs guardDraft, the last line before X). A draft that fails is "held"
+ * and never posted. The rules refuse "$" before a letter and the word "pump" (so "pump.fun" too),
+ * so a ticker is written without its "$" and pump.fun is named "PumpFun".
  *
  * State lives in data/updates.json: each update's status, adoptionsPosted { key: { … } } for the
  * adoptions and launchesPosted { key: { … } } for the sanctuary's launches. An item is marked "posting" (and the file saved) before its post goes out, and "posted"
@@ -40,10 +41,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { credsFromEnv, uploadImage, createPost, XError } from "./lib/x-api.mjs";
-import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost, weightedLength, listCats, postImages, ingameShot, readJson } from "./announce.mjs";
-import { kitsOf, adoptionProblem } from "./lib/adoptions.mjs";
+import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost, weightedLength, listCats, postImages, ingameShot, readJson, guardDraft, provedCollection } from "./announce.mjs";
+import { kitsOf, adoptionProblem, ownMints } from "./lib/adoptions.mjs";
 import { nameKey } from "../assets/ui/adoptables.js";
-import { validateCollection, validateWallets, isAddress } from "../assets/collection.js";
+import { isAddress } from "../assets/collection.js";
 
 export const DEFAULT_GAP_MINUTES = 180;
 /** Minutes to leave after the announcer's last post. */
@@ -189,14 +190,16 @@ const retryable = (s) => !s || s.status === "queued" || (s.status === "failed" &
  * The sanctuary's own launches that may be announced (data/sanctuary-launches.json rows), earliest
  * first: "launched" and recorded, the cat in `adoptables` (data/adoptables.json's cats) carrying that
  * very mint and transaction as its launch, the mint `proved` (in data/collection.json as validated),
- * not held for review, and not posted (or retryable). [{ kind: "launch", id: TICKER, launch, cat }].
+ * the announcer's cat `launched` by the page's own rule (listCats: assets/ui/adoptables.js
+ * provedLaunch, that mint, tx and launchpad under the cat's coin name and ticker), not held for
+ * review, and not posted (or retryable). [{ kind: "launch", id: TICKER, launch, cat }].
  */
 export function launchItems(updates, launches, { cats, adoptables = [], proved = new Set(), heldKeys = new Set() }) {
   const byKey = new Map(cats.map((c) => [c.key, c]));
   const done = updates.launchesPosted || {};
   return (Array.isArray(launches) ? launches : [])
     .filter((r) => r?.status === "launched" && typeof r.recordedAt === "string" && typeof r.ticker === "string" && isAddress(r.mintPublic) && proved.has(r.mintPublic))
-    .filter((r) => { const a = adoptables.find((c) => c?.ticker === r.ticker); return a?.launch?.mint === r.mintPublic && a.launch.tx === r.tx && byKey.get(r.ticker)?.sanctuary; })
+    .filter((r) => { const a = adoptables.find((c) => c?.ticker === r.ticker); return a?.launch?.mint === r.mintPublic && a.launch.tx === r.tx && byKey.get(r.ticker)?.sanctuary && byKey.get(r.ticker)?.launched; })
     .filter((r) => !heldKeys.has(r.ticker) && retryable(done[r.ticker]))
     .sort((a, b) => Date.parse(a.launchedAt ?? a.recordedAt) - Date.parse(b.launchedAt ?? b.recordedAt))
     .map((r) => ({ kind: "launch", id: r.ticker, launch: r, cat: byKey.get(r.ticker) }));
@@ -205,7 +208,9 @@ export function launchItems(updates, launches, { cats, adoptables = [], proved =
 /**
  * What may go out, in order: the sanctuary's own launches (launchItems), then adoptions not posted yet
  * (earliest launch first), then approved, queued updates in file order. An adoption of a cat the
- * sanctuary does not have, or of a mint the owner launched (data/collection.json), is not one.
+ * sanctuary does not have, of a cat the sanctuary launches itself (listCats `sanctuary`: it is not
+ * adoptable, as the site shows it), or of a mint the owner launched (data/collection.json, or an
+ * adoptable's `launch` field), is not one.
  */
 export function candidates(updates, adoptions, { cats, kits = null, ownMints = new Set(), ownWallets = new Set(), heldKeys = new Set(), launches = [], adoptables = [], proved = new Set() }) {
   const byKey = new Map(cats.map((c) => [c.key, c]));
@@ -214,7 +219,7 @@ export function candidates(updates, adoptions, { cats, kits = null, ownMints = n
   // Not the owner's own launch or wallet, and not a cat the announcer holds for its content (paused adoptables are fine).
   // With the kits: the coin carries its cat's kit name and ticker, as the site checks it (assets/residents.js).
   const ofKit = (a) => { const k = kits?.get(a.key); return !kits || (!!k && nameKey(a.name) === nameKey(k.name) && a.symbol.trim().toUpperCase() === k.ticker); };
-  const real = (adoptions?.adoptions || []).filter((a) => validAdoption(a) && !ownMints.has(a.mint) && !ownWallets.has(a.creator) && byKey.has(a.key) && !heldKeys.has(a.key) && ofKit(a))
+  const real = (adoptions?.adoptions || []).filter((a) => validAdoption(a) && !ownMints.has(a.mint) && !ownWallets.has(a.creator) && byKey.has(a.key) && !byKey.get(a.key).sanctuary && !heldKeys.has(a.key) && ofKit(a))
     .sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
   const out = [...ours, ...real.filter((a) => retryable(done[a.key]))
     .map((a) => ({ kind: "adoption", id: a.key, adoption: a, cat: byKey.get(a.key), first: a === real[0] }))];
@@ -273,7 +278,9 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   if (summary.waited) { log(`Updates: not yet (${summary.waited}).`); return summary; }
 
   const collection = readJson(data("collection.json"), { cats: [] });
-  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), collection, readJson(data("adoptables.json"), { cats: [] }));
+  // Cats as the page shows them (validated collection); the raw file still marks every owner mint as ours below.
+  const provedCats = provedCollection(path.join(root, "data"), nowMs).cats;
+  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), { cats: provedCats }, readJson(data("adoptables.json"), { cats: [] }));
   const captions = readJson(data("lore.json"), {}).cats || {};
   const planned = readJson(data("planned.json"), { cats: [] }), adoptables = readJson(data("adoptables.json"), { cats: [] });
   const kits = new Map(kitsOf({ planned, adoptables }).map((k) => [k.key, k]));
@@ -283,9 +290,9 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const walletsFile = readJson(data("wallets.json"), { launchers: [] });
   const ownWallets = new Set((walletsFile.launchers || []).map((w) => w.address));
   // A sanctuary launch is announced only once the hourly check has proved its mint (the collection as the page validates it).
-  const proved = new Set(validateCollection(collection, { wallets: validateWallets(walletsFile), nowMs }).cats.map((c) => c.mint));
+  const proved = new Set(provedCats.map((c) => c.mint));
   const ledger = readJson(data("sanctuary-launches.json"), { launches: [] });
-  const list = candidates(updates, readJson(data("adoptions.json"), { adoptions: [] }), { cats, kits, ownMints: new Set((collection.cats || []).map((c) => c.mint)), ownWallets, heldKeys,
+  const list = candidates(updates, readJson(data("adoptions.json"), { adoptions: [] }), { cats, kits, ownMints: new Set(ownMints({ collection, adoptables })), ownWallets, heldKeys,
     launches: ledger.launches || [], adoptables: adoptables.cats || [], proved });
   log(`Updates: ${mode} mode; ${list.filter((c) => c.kind === "launch").length} launch(es), ${list.filter((c) => c.kind === "adoption").length} adoption(s) and ${list.filter((c) => c.kind === "update").length} update(s) waiting.`);
 
@@ -295,11 +302,12 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
       : (updates.adoptionsPosted[item.id] ||= { mint: item.adoption.mint }));
   const launchpadOf = (key) => (adoptables.cats || []).find((c) => c.ticker === key)?.launch?.launchpad;
   for (const item of list) {
-    const d = item.kind === "update"
+    // The last line before X (announce.mjs guardDraft): no address in a post.
+    const d = guardDraft(item.kind === "update"
       ? { ...checkUpdate(item.post.text), text: item.post.text }
       : item.kind === "launch"
         ? draftLaunch(item.cat, { coinName: item.launch.coinName, ticker: item.launch.ticker, lore: item.launch.lore ?? null, launchpad: launchpadOf(item.id) })
-        : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first });
+        : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first }));
     summary.drafts.push({ kind: item.kind, id: item.id, ok: d.ok, text: d.text, length: d.text ? weightedLength(d.text) : null, violations: d.violations });
     if (!d.ok) {
       summary.held.push(item.id);
