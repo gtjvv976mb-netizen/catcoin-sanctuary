@@ -1405,7 +1405,7 @@ export class CatHerd {
         // Its character: how it moves (the clips in its style) and how big it is drawn.
         const style = this.styleOf(cat), k = Math.min(2, Math.max(0.5, style?.scale || 1));
         o = { cat, group, hi: null, lo: null, dims, legs, fit, s: ownScale(dims) * k, style, rig, sk, mixer, clips: null, anim: null, actions: {}, u: { hl: { value: 0 } }, near: false, drawOwn: false, dc: 0, size: { len: 0, height: 0, width: 0 } };
-        o.perUnit = cyclesPerUnit(rig, o.s, style || undefined);
+        o.perUnit = cyclesPerUnit(rig, o.s, style || undefined, fit); // (its fit's shorter stride, if any, as its clips take)
         this.own.set(catId, o);
         this.ownRank.push(o);
         // Its clips a moment later, in a task of their own (so a model arriving doesn't hold up one

@@ -1142,7 +1142,9 @@ function tailTo(K, p, B, dirs, side = [0, 0, 0, 0]) {
 
 /** How far a cat's body moves in one walk cycle, in model units, in its own style's stride (a trot,
     run or stalk cycle covers 1 / GAIT_RATE[gait] times as much). */
-export const walkStride = (rig, style) => 1.1 * rig.legTop * (style ? clipStyle(style).stride : 1);
+export const walkStride = (rig, style, fit = null) => 1.1 * rig.legTop * (style ? clipStyle(style).stride : 1) * fitOf(fit, "gait");
+/** A model's fit (makeClips' third argument) for knob k: 0.3..1, 1 when unsaid. */
+const fitOf = (fit, k) => { const v = fit ? fit[k] : undefined; return typeof v === "number" && Number.isFinite(v) ? Math.min(1, Math.max(0.3, v)) : 1; };
 /** The renderer steps trot, run and stalk cycles this much slower (or faster) per unit walked. */
 export const GAIT_RATE = { walk: 1, trot: 0.8, run: 0.55, stalk: 1.3 };
 /** How far (rad) a cat turns on the spot in one cycle of its "pivot" clip. */
@@ -1205,7 +1207,7 @@ const unflat = (v) => ({ root: [v[0], v[1], v[2], v[3]], pelvis: [v[4], v[5], v[
 
 /** The knobs a model's fit (makeClips' third argument) may turn down, and the clips each one governs:
     scripts/fit-clips.mjs measures them, one model at a time, on the far copy's own skin. */
-export const FIT_KNOBS = { groom: ["groom"], legLick: ["legLick"], earScratch: ["earScratch"], beckon: ["beckon"], hindStand: ["hindStand"], scratch: ["scratch"], flop: ["flop"], roll: ["roll"], sleep: ["sleep", "curlUp", "wake"], stretch: ["stretch"], leap: ["hop", "pounce"], stalk: ["stalk"], dab: ["dab"] };
+export const FIT_KNOBS = { gait: ["walk", "trot", "run"], groom: ["groom"], legLick: ["legLick"], earScratch: ["earScratch"], beckon: ["beckon"], hindStand: ["hindStand"], scratch: ["scratch"], flop: ["flop"], roll: ["roll"], sleep: ["sleep", "curlUp", "wake"], stretch: ["stretch"], leap: ["hop", "pounce"], stalk: ["stalk"], dab: ["dab"] };
 
 /**
  * The clip set for one rig, in a cat's own style (optional; see DEFAULT_STYLE). Every leg is posed by
@@ -1222,7 +1224,7 @@ export function makeClips(rig, style = {}, fit = null) {
   // unsaid), measured offline on the far copy's triangles by scripts/fit-clips.mjs (assets/models/cats/fit.json):
   // a paw comes up less far, a body rears or rolls less, a sleeper curls less, where the full move would
   // stretch this model's skin into a sheet.
-  const amp = (k) => { const v = fit ? fit[k] : undefined; return typeof v === "number" && Number.isFinite(v) ? Math.min(1, Math.max(0.3, v)) : 1; };
+  const amp = (k) => fitOf(fit, k);
   const K = kinematics(rig), lt = rig.legTop, bh = rig.yt - rig.yb;
   const clips = {};
   const S = Math.sin, C = Math.cos, PI = Math.PI;
@@ -1235,7 +1237,9 @@ export function makeClips(rig, style = {}, fit = null) {
   // A heavy cat (one that sways) stands and walks with its paws a little wider apart.
   const wide = 0.015 * st.sway;
   const planted = (k) => leg(rest(k).x, 0, restE(k), 0, wide);
-  const stride0 = walkStride(rig, st);
+  // (a model whose skin won't take a full stride (its fit's gait: long fur standing in for a leg, a body
+  // on stubs) takes shorter, lower steps, more of them for the ground covered: cyclesPerUnit with the same fit)
+  const stride0 = walkStride(rig, st, fit), stepLift = st.lift * amp("gait");
   // How heavy-bodied the cat is (0 slim or ordinary .. 1 round): a round cat can't get a hind paw up
   // to its ear or past its head, and its skin won't stretch that far either.
   const heavy = Math.min(1, clamp01(((rig.bodyW || rig.W * 0.7) / lt - 0.75) / 0.45) + st.sway * 0.4);
@@ -1559,7 +1563,7 @@ export function makeClips(rig, style = {}, fit = null) {
       if (f < g.duty) { x = r0.x + sweep * (0.5 - f / g.duty); y = 0; }
       else {
         const s = (f - g.duty) / (1 - g.duty), sh = g.swing ? g.swing(s) : [smooth(s), S(PI * s) ** 0.8];
-        x = r0.x + sweep * (sh[0] - 0.5); y = g.lift * st.lift * lt * sh[1]; e = L.a[2] + (L.hind ? 0.45 : -0.6) * S(PI * s);
+        x = r0.x + sweep * (sh[0] - 0.5); y = g.lift * stepLift * lt * sh[1]; e = L.a[2] + (L.hind ? 0.45 : -0.6) * S(PI * s) * amp("gait");
       }
       spec.legs[k] = leg(x, y, e, 0, wide);
     }
@@ -1608,7 +1612,7 @@ export function makeClips(rig, style = {}, fit = null) {
       const L = K.legs[k], f = (((u + ph[k]) % 1) + 1) % 1, rx = rest(k).x - cx, rz = L.toe.z + L.side * wide - cz;
       let b, y = 0, e = L.a[2];
       if (f < duty) b = th * (0.5 - f / duty);
-      else { const w = (f - duty) / (1 - duty); b = th * (smooth(w) - 0.5); y = 0.08 * st.lift * lt * S(PI * w) ** 0.8; e += (L.hind ? 0.35 : -0.45) * S(PI * w); }
+      else { const w = (f - duty) / (1 - duty); b = th * (smooth(w) - 0.5); y = 0.08 * stepLift * lt * S(PI * w) ** 0.8; e += (L.hind ? 0.35 : -0.45) * S(PI * w); }
       const x = cx + rx * C(b) + rz * S(b), zz = cz - rx * S(b) + rz * C(b);
       spec.legs[k] = leg(x, y, e, 0, (zz - L.toe.z) * L.side);
     }
@@ -1849,7 +1853,7 @@ export function makeClips(rig, style = {}, fit = null) {
     const B = bodyOf(s), Lh = K.legs.hL, t = B.top.hL, ph = 0.25 + 0.75 * up;
     const foot = V(t.x + Lh.reach * 0.86 * C(ph), Math.max(0.03, t.y + Lh.reach * 0.86 * S(ph)), 0);
     s.legs.hL = leg(foot.x, foot.y, ph + 0.35, 0.3, 0.05);
-    s.legs.hR = leg(rest("hR").x - 0.02, 0.015, -0.06, 0.35);
+    s.legs.hR = leg(rest("hR").x - 0.02, 0.015, Math.min(-0.06, flatE("hR")), 0.35); // (the foot laid as flat as its thickness lets it lie on the lawn)
     s.legs.fL = leg(s.legs.fL[0] + 0.02, 0, restE("fL"), 0, 0.06);
     const hip = V(t.x, t.y, K.legs.hL.toe.z), f3 = endOf(s.legs.hL, "hL"), at = hip.lerp(f3, 0.35 + 0.3 * slide), bowL = amp("legLick");
     s.neck = [sitHead[0] - 0.6 * bowL, -0.3, 0]; s.head = [sitHead[1] - 0.8 * bowL, -0.15, 0];
@@ -1885,7 +1889,7 @@ export function makeClips(rig, style = {}, fit = null) {
     const f = E0.foot.clone().addScaledVector(E0.dir, -0.045 * lt / 0.5 * (0.5 + 0.5 * sc)).add(V(0, 0.012 * sc, 0));
     const Lh = K.legs.hL;
     s.legs.hL = leg(f.x, f.y, Math.atan2(E0.dir.y, E0.dir.x) + 0.3, 0.15, (f.z - Lh.toe.z) * Lh.side);
-    s.legs.hR = leg(rest("hR").x - 0.01, 0.015, -0.06, 0.35);
+    s.legs.hR = leg(rest("hR").x - 0.01, 0.015, Math.min(-0.06, flatE("hR")), 0.35);
     s.head[0] += 0.03 * sc; s.head[2] += 0.04 * sc;
     return s;
   }, SIT, { enter: 0.62, exit: 0.45 });
@@ -2154,7 +2158,7 @@ export function makeClips(rig, style = {}, fit = null) {
     const legsAt = KEYS.map((kk) => ({ k: kk, f: (((phi + g.phase[kk]) % 1) + 1) % 1 }));
     const stance = legsAt.filter((q) => q.f < g.duty && Math.abs(A0.legs[q.k][0] - rest(q.k).x) > 0.012).sort((p, q) => q.f - p.f);
     const when = {}; stance.forEach((q, i) => { when[q.k] = [0.06 + i * 0.22, 0.06 + i * 0.22 + 0.4]; });
-    const h = Math.max(0.03, 0.05 * st.lift) * lt;
+    const h = Math.max(0.03, 0.05 * stepLift) * lt;
     clip(`stop:${name}:${k}`, dur, 30, (u) => {
       const w = smooth(u / 0.85);
       for (let i = 0; i < 47; i++) v[i] = lerp(a0[i], b0[i], w);
@@ -2378,7 +2382,7 @@ export function makeClips(rig, style = {}, fit = null) {
 }
 
 /** How many walk cycles per unit of ground covered, for a cat drawn at `scale` (model units -> world)
-    walking in its own style (its stride). */
-export function cyclesPerUnit(rig, scale, style) {
-  return 1 / Math.max(0.02, walkStride(rig, style) * scale);
+    walking in its own style (its stride) and its model's fit (the same fit as its clips'). */
+export function cyclesPerUnit(rig, scale, style, fit = null) {
+  return 1 / Math.max(0.02, walkStride(rig, style, fit) * scale);
 }
