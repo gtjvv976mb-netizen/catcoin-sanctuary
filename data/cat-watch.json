@@ -4,6 +4,21 @@
   "elonmusk", "cz_binance", "VitalikButerin", "saylor", "aeyakovenko", "rajgokal", "solana", "pumpdotfun", "a1lon9",
   "blknoiz06", "MustStopMurad", "frankdegods", "cb_doge", "DogeDesigner", "WatcherGuru"
  ],
+ "linksNote": "Ties for the automatic launcher's venue (scripts/lib/venues-routing.mjs chooseVenue), edited by hand: the owner may add, change or remove any. A cat tied to a company that has a tokenized stock launches on StonkFun priced in that stock; a cat tied to a coin pump.fun offers as a quote launches on pump.fun priced in that coin; any other cat launches on pump.fun priced in SOL. accountLinks: an X handle without @ (a company; watched or not: any big account a search finds counts) and its tie, { \"stock\": a symbol of assets/collection.js STOCK_PAIRS } or { \"pumpQuote\": { \"symbol\", \"mint\" } }; it holds for that account's cat posts. A figure may carry the same \"stock\" or \"pumpQuote\" field; it holds when the post's cat is that figure, and is tried before the account's. Seeded only with the watched companies whose stock is one of the 93 stock pairs (checked in tests/venues-routing.test.mjs); people are not tied. OpenAI is tied to tOpenAI, the Tessera token, because the OPENAI PreStock already has a planned cat, and a stock pair that already has a sanctuary cat is not used again (one cat per pair): such a cat launches in SOL instead (today only tOpenAI and tKalshi are free). No pumpQuote is seeded: a coin is used only when data/pump-quotes.json lists it and the owner opts in, for example { \"pumpQuote\": { \"symbol\": \"PUMP\", \"mint\": \"<its mint>\" } } on pumpdotfun.",
+ "accountLinks": {
+  "SpaceX": { "stock": "SPCXx" },
+  "Tesla": { "stock": "TSLAx" },
+  "YouTube": { "stock": "GOOGLx" },
+  "Google": { "stock": "GOOGLx" },
+  "instagram": { "stock": "METAx" },
+  "OpenAI": { "stock": "tOpenAI" },
+  "Xbox": { "stock": "MSFTx" },
+  "McDonalds": { "stock": "MCDx" },
+  "Wendys": { "stock": "WEN" },
+  "CocaCola": { "stock": "KOx" },
+  "Nike": { "stock": "NKE" },
+  "coinbase": { "stock": "COINx" }
+ },
  "bigAccounts": [
   "taylorswift13", "justinbieber", "rihanna", "katyperry", "ladygaga", "ArianaGrande", "selenagomez", "MileyCyrus", "ddlovato",
   "britneyspears", "jtimberlake", "Harry_Styles", "Drake", "NICKIMINAJ", "iamcardib", "SnoopDogg", "BTS_twt", "shakira",

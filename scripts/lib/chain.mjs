@@ -41,7 +41,7 @@
 import { createHash, createPublicKey, verify as verifySignature } from "node:crypto";
 import { STOCK_PAIRS, SOL_PAIR, base58Decode, base58Encode, isAddress, isSignature, blockTimeToIso } from "../../assets/collection.js";
 import { PUMPFUN_PROGRAM, SYSTEM_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
-import { PUMP, CREATE_V2_DISC, createV2Accounts, decodeCreateV2, bondingCurve } from "./pump.mjs";
+import { PUMP, CREATE_V2_DISC, createV2Accounts, decodeCreateV2, bondingCurve, quoteProblem } from "./pump.mjs";
 
 /* ── pinned ids (bots/lib/verified.mjs, read off mainnet 2026-09-24) ─────────────────── */
 export const LAUNCHLAB_PROGRAM = "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj";
@@ -302,10 +302,15 @@ function otherInstructionProblem(ix, { wallet, mint, quote, quoteProgram, pool, 
    mayhem mode false, cashback false, creator_fee_bps 0, holder reward false. Any other option
    value is refused (clause pump_mayhem or pump_options), because the builder never writes one and a
    coin with them is not the plain coin the sanctuary shows. A trailing option the transaction
-   leaves out is read as off, as the program itself reads it, so it is the same coin. Only a
-   SOL-priced launch is read (no remaining accounts after the sixteen: a coin-quoted pump.fun launch
-   is refused as pump_not_sol until a later stage proves it). Every other top-level instruction must
-   be a ComputeBudget one with no accounts and the byte forms otherInstructionProblem allows.
+   leaves out is read as off, as the program itself reads it, so it is the same coin. A SOL-priced
+   launch has no remaining accounts after the sixteen. A COIN-PRICED launch (pump.fun's Custom
+   Pairs; unverified, see pump.mjs PUMP_QUOTE_VERIFIED) is read only when its quote mint is one of
+   `quotes` (data/pump-quotes.json, validatePumpQuotes) and its four remaining accounts are exactly
+   the ones pump.mjs appends for that quote (the quote mint, the bonding curve's token account for
+   it under the listed token program, that program, pump.fun's QuoteControl PDA); the entry's pair
+   is then that quote. Any other create with more than sixteen accounts is refused (pump_not_sol,
+   or pump_quote_not_allowed for an unlisted quote). Every other top-level instruction must be a
+   ComputeBudget one with no accounts and the byte forms otherInstructionProblem allows.
 
    A DEV BUY IS REFUSED (clause pump_dev_buy): the launcher never buys its own coin, so a create
    followed by buy / buy_v2 / buy_exact_sol_in is not one of its launches. The recorded real launch
@@ -324,11 +329,13 @@ const isPumpCreate = (ix) => ix.program === PUMPFUN_PROGRAM && [CREATE_V2_DISC, 
 
 /**
  * Whether `tx` (a getTransaction answer, encoding json) is a pump.fun launch made by `wallet` as the
- * sanctuary's launcher makes it (see above). Returns { ok: true, launch } or { ok: false, clause,
- * detail, launchLike }. `launch` is { mint, name, symbol, pair: SOL_PAIR, pool (the bonding curve),
- * payer, tx, time, launchpad: "pump.fun", uri }. "no_launch": the transaction creates no pump.fun coin.
+ * sanctuary's launcher makes it (see above). `quotes` are the coins a launch may be priced in
+ * besides SOL (data/pump-quotes.json, validated; none by default). Returns { ok: true, launch } or
+ * { ok: false, clause, detail, launchLike }. `launch` is { mint, name, symbol, pair (SOL_PAIR, or
+ * the listed quote's { symbol, mint }), pool (the bonding curve), payer, tx, time, launchpad:
+ * "pump.fun", uri }. "no_launch": the transaction creates no pump.fun coin.
  */
-export function proveLaunchPump(tx, { wallet } = {}) {
+export function proveLaunchPump(tx, { wallet, quotes = [] } = {}) {
   let launchLike = null;
   const no = (clause, detail) => ({ ok: false, clause, detail, launchLike });
   if (!tx || typeof tx !== "object" || !tx.meta) return no("unreadable", "no transaction, or no status");
@@ -347,12 +354,16 @@ export function proveLaunchPump(tx, { wallet } = {}) {
   let args;
   try { args = decodeCreateV2(create.data); } catch (e) { return no("pump_decode", e.message); }
   const a = create.accounts;
-  if (a.length > 16) return no("pump_not_sol", `${a.length} accounts: a launch priced in a coin, not in SOL`);
-  if (a.length !== 16) return no("pump_wrong_accounts", `${a.length} accounts; create_v2 has 16`);
+  const listed = a.length === 20 ? (Array.isArray(quotes) ? quotes : []).find((q) => q?.mint === a[16]) : undefined;
+  const quote = listed && !quoteProblem(listed) ? listed : null;
+  if (a.length === 20 && !quote) return no("pump_quote_not_allowed", "priced in a coin data/pump-quotes.json does not list");
+  if (a.length > 16 && !quote) return no("pump_not_sol", `${a.length} accounts: a launch priced in a coin, not in SOL`);
+  if (a.length < 16) return no("pump_wrong_accounts", `${a.length} accounts; create_v2 has 16`);
   const mint = a[0];
   if (a[5] !== wallet) return no("pump_payer", "the create's user is not the listed wallet");
   if (mint === wallet) return no("pump_wrong_accounts", "the mint is the wallet");
-  const want = createV2Accounts(mint, wallet).map((k) => k.pubkey);
+  if (quote && [mint, wallet].includes(quote.mint)) return no("pump_wrong_accounts", "the quote is the mint or the wallet");
+  const want = createV2Accounts(mint, wallet, quote).map((k) => k.pubkey);
   const wrong = want.findIndex((k, i) => a[i] !== k);
   if (wrong >= 0) return no("pump_wrong_accounts", `account ${wrong} is not the one create_v2 derives for this mint and wallet`);
   if (!t.isSigner(mint)) return no("pump_mint_unsigned", "the new mint did not sign");
@@ -371,11 +382,15 @@ export function proveLaunchPump(tx, { wallet } = {}) {
   return {
     ok: true,
     launch: {
-      mint, name: args.name, symbol: args.symbol, pair: { ...SOL_PAIR }, pool: a[2],
+      mint, name: args.name, symbol: args.symbol, pair: quote ? { symbol: quote.symbol, mint: quote.mint } : { ...SOL_PAIR }, pool: a[2],
       payer: wallet, tx: t.signature, time: blockTimeToIso(tx.blockTime), launchpad: "pump.fun", uri: args.uri,
     },
   };
 }
+
+/** Where a BondingCurve account keeps its quote mint (the SDK's IDL, @pump-fun/pump-sdk 2.0.0): the
+    discriminator, five u64 reserves and supply, complete (bool), creator, is_mayhem_mode, is_cashback_coin. */
+export const BONDING_CURVE_QUOTE_OFFSET = 8 + 5 * 8 + 1 + 32 + 1 + 1;
 
 /**
  * Cross-check a proved pump.fun launch against the chain as it is now: `mintAccount` and
@@ -384,7 +399,9 @@ export function proveLaunchPump(tx, { wallet } = {}) {
  * name and symbol create_v2 wrote, and whose update authority is not the launching wallet (pump.fun
  * holds it, so the coin cannot be renamed; which pump.fun account holds it is not pinned: no
  * pump.fun mint account is recorded). The bonding curve must be PDA["bonding-curve", mint], exist,
- * be owned by pump.fun and carry BondingCurve's account discriminator.
+ * be owned by pump.fun and carry BondingCurve's account discriminator. For a coin-priced launch
+ * (a pair that is not SOL) the bonding curve must also name that quote mint, at the offset the
+ * SDK's IDL gives (no real coin-priced curve is recorded: that layout is the SDK's, unverified).
  */
 export function checkPumpAccounts(launch, mintAccount, curveAccount) {
   const no = (clause, detail) => ({ ok: false, clause, detail });
@@ -396,7 +413,12 @@ export function checkPumpAccounts(launch, mintAccount, curveAccount) {
   if (meta.name !== launch.name || meta.symbol !== launch.symbol) return no("metadata_mismatch", "the mint's metadata does not carry the name and symbol the launch wrote");
   if (launch.pool !== bondingCurve(launch.mint)) return no("bonding_curve", "the pool is not the mint's bonding curve");
   if (!curveAccount || curveAccount.owner !== PUMP.program || !Array.isArray(curveAccount.data)) return no("bonding_curve", "the bonding curve is not a pump.fun account on chain");
-  if (Buffer.from(curveAccount.data[0], "base64").subarray(0, 8).toString("hex") !== BONDING_CURVE_DISC) return no("bonding_curve", "not a pump.fun BondingCurve account");
+  const curve = Buffer.from(curveAccount.data[0], "base64");
+  if (curve.subarray(0, 8).toString("hex") !== BONDING_CURVE_DISC) return no("bonding_curve", "not a pump.fun BondingCurve account");
+  if (launch.pair && launch.pair.mint !== SOL_PAIR.mint) {
+    const at = BONDING_CURVE_QUOTE_OFFSET;
+    if (curve.length < at + 32 || base58Encode(curve.subarray(at, at + 32)) !== launch.pair.mint) return no("bonding_curve", "the bonding curve is not priced in the launch's quote");
+  }
   return { ok: true };
 }
 
