@@ -1074,7 +1074,13 @@ function legTo(K, p, B, k, toe, end = null, twist = 0, dz = 0) {
   // frame as it passes, and whip the leg round. So within two offsets of that height the in-plane
   // offset follows the toe's own offset across instead, and the plane stays upright; further off it
   // is the rest offset again, and the plane leans as a leg does.)
-  const r2 = ty * ty + tz * tz, zt = tz + (zt0 - tz) * smooth(Math.abs(ty) / (2 * Math.abs(zt0) + 1e-6));
+  // (and the further the toe is out of the leg's rest line across, the wider that band: a paw raised to
+  // the shoulder's height a little out to the side (batting at the water) would otherwise lean the
+  // leg's plane over one way just below the shoulder and the other way just above it, and flip the
+  // whole leg over in a frame as it passes; no wider than a third of the leg, where a leg lying out to
+  // the side along the ground keeps its lean)
+  const W = Math.min(2 * Math.abs(zt0) + 3 * Math.abs(tz - zt0), Math.max(2 * Math.abs(zt0), 0.35 * L.reach)) + 1e-6;
+  const r2 = ty * ty + tz * tz, zt = tz + (zt0 - tz) * smooth(Math.abs(ty) / W);
   const Y = (ty < 0 ? -1 : 1) * Math.sqrt(Math.max(1e-8, r2 - zt * zt));
   let rho = Math.atan2(tz, ty) - Math.atan2(zt, Y);
   rho = Math.atan2(Math.sin(rho), Math.cos(rho));
@@ -1413,8 +1419,12 @@ export function makeClips(rig, style = {}, fit = null) {
   // first and then swings round (a paw leaves the ground and then travels); reaching out, it swings
   // first and then straightens (a paw comes over its place and then down onto it). It swings round
   // by the front, never up over the back.
+  // (`lift`, per leg: a paw taken off the ground up to a raised place, or put back, is drawn in towards
+  // the body on its way, by that share of the leg's reach half way, as a paw is picked up: swung straight
+  // out along its arc it would sweep low over the lawn, and a furry cat's forelegs drag their fur into
+  // a sheet between them.)
   const mixV = new Float64Array(47);
-  const mix = (A, B, w) => {
+  const mix = (A, B, w, lift = null) => {
     const a = flat(A), b = flat(B), v = mixV;
     for (let i = 0; i < 47; i++) v[i] = a[i] + (b[i] - a[i]) * w;
     const BA = bodyOf(A), BB = bodyOf(B), BM = bodyOf(unflat(v));
@@ -1427,7 +1437,10 @@ export function makeClips(rig, style = {}, fit = null) {
       // (but a leg folding right up, to under half its reach (a paw brought to the face), goes straight there,
       // radius and angle together: folded first, its elbow would stick out behind and drag the flank's skin)
       if (Math.abs(rb - ra) > 0.08 * L.reach && !(rb < ra && rb < 0.55 * L.reach)) { const early = smooth(w / 0.65), late = smooth((w - 0.35) / 0.65); if (rb < ra) { wr = early; wt = late; } else { wr = late; wt = early; } }
-      const r = ra + (rb - ra) * wr, th = ta + (tb - ta) * wt;
+      // (such a paw comes up under the chest first, then reaches out: its swing round a little late)
+      const lk = lift && lift[k] ? lift[k] : 0;
+      if (lk) wt = rb > ra - 0.3 * L.reach && tb > ta ? smooth((w - 0.2) / 0.8) : wt;
+      const r = ra + (rb - ra) * wr - lk * L.reach * S(PI * w), th = ta + (tb - ta) * wt;
       v[i0] = hm.x + r * C(th); v[i0 + 1] = hm.y + r * S(th);
       for (let j = 2; j < 5; j++) v[i0 + j] = a[i0 + j] + (b[i0 + j] - a[i0 + j]) * wt;
     }
@@ -1440,9 +1453,9 @@ export function makeClips(rig, style = {}, fit = null) {
     const enter = (o.enter ?? 0.5) * Math.min(1.25, tempo), dur = enter + cyc;
     const at = (t) => {
       const s = spec(((((t - enter) / cyc) % 1) + 1) % 1);
-      return t >= enter ? s : mix(base, s, smoother(t / enter));
+      return t >= enter ? s : mix(base, s, smoother(t / enter), o.lift);
     };
-    POSED[name] = { at, cyc, enter, dur, base, exit: o.exit ?? 0.45, to: o.to || {}, posture: ACTIONS[name].posture };
+    POSED[name] = { at, cyc, enter, dur, base, exit: o.exit ?? 0.45, to: o.to || {}, posture: ACTIONS[name].posture, lift: o.lift || null };
     clip(name, dur, fps, (v) => pose(at(v * dur)), { fade: o.fade ?? 0.2, enter, cyc, exits: true });
     POSED[name].times = clips[name].tracks[0].times;
   };
@@ -1464,7 +1477,7 @@ export function makeClips(rig, style = {}, fit = null) {
     const tw = wrapP(t0), warm = () => { FOLD.on = true; let prev = 0; for (const t of P.times) { if (t >= tw - 1e-6) break; FOLD.dt = t - prev; pose(P.at(t)); prev = t; } FOLD.on = false; return Math.max(1e-3, tw - prev); };
     c = sampleClip(key, dur, 30, (v) => {
       const B = Q ? Q.at(Q.enter + (((((v - 1) * dur) % Q.cyc) + Q.cyc) % Q.cyc)) : P.base;
-      return pose(mix(P.at(wrapP(t0 + v * dur)), B, smoother(v)));
+      return pose(mix(P.at(wrapP(t0 + v * dur)), B, smoother(v), Q ? null : P.lift));
     }, { loop: false, kind: "once", posture: P.posture, dur, fade: 0.1, exitOf: name, into: Q ? to : null, at: Q ? Q.enter : 0 }, warm);
     // (and its first key is the mannerism's own frame at that moment, between two of its keys as the
     // mixer shows it, so the way out begins on the very frame on screen)
@@ -2195,17 +2208,28 @@ export function makeClips(rig, style = {}, fit = null) {
   };
   clip("hop", 0.6, 40, (u) => leap(u, false), { loop: false, dur: 0.6, fade: 0.1 });
   clip("pounce", 0.6, 40, (u) => leap(u, true), { loop: false, dur: 0.6, fade: 0.1 });
-  // Claws on the cat tree: reared up, paws high on the trunk pulling down in turn.
+  // Claws on the cat tree: reared up against the trunk on its hind legs, the forelegs reaching out
+  // nearly straight to the bark, the paws pulling down it in turn.
+  // (The forelegs reach the trunk straight out from the shoulders, not folded up to the face: an elbow
+  // folded double, or a foreleg swung far up past the chest, tears the skin at the elbow and the armpit
+  // of most models. The body rears up to meet them, so the shoulder turns no further than a stride's
+  // reach; a cat whose skin won't take the full rear (its fit) rears less and reaches lower on the
+  // trunk, the shoulder turning no further for it.)
   posed("scratch", loopDur(1.2), 24, (u) => {
-    const a = S(TAU * u), rear = 0.9 * (1 - 0.45 * headBig) * amp("scratch");
+    const X = globalThis.__EXP || {};
+    const a = S(TAU * u), rear = (X.rear ?? 1.1) * (1 - 0.45 * headBig) * amp("scratch"), phi = X.phiAbs ?? (X.phi0 ?? 0.4) - (X.phiK ?? 0.8) * ((X.rear ?? 1.1) - rear);
     const s = standSpec(0, { still: true }); s.root = [-0.04, 0, 0]; s.pelvis = [rear, 0, 0]; s.spine = [0.05, 0, 0]; s.chest = [0, 0, 0]; s.neck = [rear * 0.3, 0, 0]; s.head = [rear * 0.2, 0, 0];
     const B = bodyOf(s);
     for (const k of ["hL", "hR"]) s.legs[k] = leg(rest(k).x + 0.03, 0, restE(k));
-    const hi = lerp(0.35, 1, amp("scratch")); // (a cat whose skin won't take the full reach scratches lower on the trunk)
-    for (const k of ["fL", "fR"]) { const t = B.top[k], L = K.legs[k], sd = k === "fL" ? a : -a; s.legs[k] = leg(t.x + L.reach * lerp(0.7, 0.55, hi), t.y + L.reach * (0.45 + 0.25 * sd) * hi, PI / 2 - 0.3); }
+    for (const k of ["fL", "fR"]) {
+      // (the bark 0.9 of the leg's reach out from the shoulder, phi above level; each paw drawn down a
+      // tenth of the reach and back towards the body, in turn, the paw flat against the trunk)
+      const t = B.top[k], L = K.legs[k], sd = k === "fL" ? a : -a;
+      s.legs[k] = leg(t.x + L.reach * (0.9 * C(phi) - 0.1 * (0.5 - 0.5 * sd)), t.y + L.reach * (0.9 * S(phi) + 0.1 * sd), X.pe ?? 1.0);
+    }
     s.tail = T([PI + 0.6, PI + 0.4, PI + 0.2, PI], [0, 0.15 * S(TAU * u), 0.2 * S(TAU * u), 0.25 * S(TAU * u)]);
     return s;
-  }, STAND, { enter: 0.55, exit: 0.55 });
+  }, STAND, { enter: 0.6, exit: 0.55, lift: { fL: 0.3, fR: 0.3 } });
 
   /* ── Posture changes ── */
   // plan[part] = keys [u, spec | "A" | "B", step height?] between the implied [0, A] and [1, B]
