@@ -255,7 +255,11 @@ test("page weight: the first view stays within budget", () => {
   // (Then, 2026-09-27, to 980 KB for the skin of the whole herd: catrig.js seeds the neck's own skin, blends
   // every seam a bone's skin has with its neighbours', not only the nearest, and rests heads by their skin;
   // with the behaviour sim's fixes of the same round.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 980 * 1024, "the page's own scripts over 980 KB");
+  // (Then, 2026-09-28, to 1010 KB (999 KB measured) for the herd survey's last fixes: each model's own fit and
+  // leg labels read with its far copy (world.js, catviews.js), the clips' shorter steps, straight-armed claws
+  // on the trunk and paws lifted clear on the way (catrig.js), and the sims keeping each cat to what its own
+  // model can show (cats.js, meadow.js, catmotion.js).)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1010 * 1024, "the page's own scripts over 1010 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
