@@ -1,0 +1,4 @@
+{
+ "note": "The Models workflow's record (scripts/models.mjs, .github/workflows/models.yml): per queued cat, how many automatic tries it has had (at most MAX_TRIES), and whether its model went live, failed (tried again) or gave up (a person looks). Delete a cat's row to let it be tried again.",
+ "cats": {}
+}

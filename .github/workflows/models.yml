@@ -1,0 +1,145 @@
+# Automatic 3D models for the cats the sanctuary launches (scripts/models.mjs, around the repository's
+# own tools: scripts/meshy.mjs, scripts/make-cat-models.py, scripts/tripo.mjs, scripts/render-cat-thumbs.mjs;
+# see scripts/CAT-MODELS.md). Daily, by hand, and after a launch is recorded (the Launch workflow's publish
+# job dispatches it). Each run makes at most MODELS_PER_RUN (1, at most 2) queued rebuilds from
+# scripts/meshy.queue.json: launched cats with no model first; the rest of the queue only while
+# MODELS_BACKLOG is on. Never a cat whose post's photo the owner hides (data/photo-hide.json).
+#
+# The pipeline, one step each: Meshy (four-legged reference views from the entry's reference picture,
+# multi-image-to-3D, a remesh far copy) → the packer (make-cat-models.py: normalized, textured, gltfpack,
+# assets/models/cats/<KEY>.glb and -lo.glb, index.json, PROVENANCE.md) → the checks (the size budgets, a
+# valid textured GLB, the garden's rig on the model, and tests/catmodels, catrig and meshy) → Tripo's
+# quadruped rig of the packed model (recorded; the site rigs its cats itself) → a preview PNG
+# (scripts/model-previews/) → the job summary. A model that fails the checks is discarded and recorded
+# (scripts/models.state.json; at most 2 tries a cat), and the cat keeps its portrait and the shared model.
+#
+# Repository variables: MODELS_ENABLED "on" runs it (anything else, or unset, runs nothing);
+# MODELS_MESHY_RESERVE and MODELS_TRIPO_RESERVE, the credits each tool keeps (100 by default, as the
+# scripts); MODELS_PER_RUN (1 or 2); MODELS_BACKLOG "on" to rebuild queued cats that have a model already.
+# Secrets: MESHY_API_KEY only in the Meshy step, TRIPO_API_KEY only in the Tripo step (skipped with a
+# log line when it is missing). No wallet key is anywhere near this workflow, so npm packages may be
+# installed here (pinned versions).
+#
+# The checkout keeps no credentials; the push hands the workflow token to git for that one command.
+# The site is then deployed by a job that runs no code of the repository's.
+name: Models
+
+on:
+  schedule:
+    - cron: "41 5 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: models
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: ${{ vars.MODELS_ENABLED == 'on' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    permissions:
+      contents: write
+    outputs:
+      live: ${{ steps.pack.outputs.live }}
+      pushed: ${{ steps.commit.outputs.pushed }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: node --test tests/models.test.mjs tests/meshy.test.mjs
+      - name: Choose the cats to make
+        id: pick
+        env:
+          MODELS_PER_RUN: ${{ vars.MODELS_PER_RUN }}
+          MODELS_BACKLOG: ${{ vars.MODELS_BACKLOG }}
+        run: node scripts/models.mjs pick
+      - name: Install the model tools
+        if: ${{ steps.pick.outputs.keys != '' }}
+        run: |
+          npm ci --no-audit --no-fund
+          npm i --no-save --no-audit --no-fund gltfpack@1.3.0 @gltf-transform/core@4.5.1 @gltf-transform/extensions@4.5.1 @gltf-transform/functions@4.5.1 meshoptimizer@1.3.0
+          npm i -g --no-audit --no-fund tripo-cli@0.5.1 playwright@1.63.0
+          playwright install --with-deps chromium
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install --quiet numpy==2.4.6 pillow==12.3.0
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+      - name: Make the models with Meshy (the only step with the Meshy key)
+        id: meshy
+        if: ${{ steps.pick.outputs.keys != '' }}
+        env:
+          KEYS: ${{ steps.pick.outputs.keys }}
+          MODELS_MESHY_RESERVE: ${{ vars.MODELS_MESHY_RESERVE }}
+          MESHY_API_KEY: ${{ secrets.MESHY_API_KEY }}
+        run: node scripts/models.mjs meshy
+      - name: Pack and check the new models
+        id: pack
+        if: ${{ steps.meshy.outputs.made != '' }}
+        env:
+          KEYS: ${{ steps.meshy.outputs.made }}
+          GLTFPACK: node_modules/.bin/gltfpack
+        run: node scripts/models.mjs pack
+      - name: Rig the new models with Tripo (the only step with the Tripo key)
+        if: ${{ steps.pack.outputs.live != '' }}
+        env:
+          KEYS: ${{ steps.pack.outputs.live }}
+          MODELS_TRIPO_RESERVE: ${{ vars.MODELS_TRIPO_RESERVE }}
+          TRIPO_API_KEY: ${{ secrets.TRIPO_API_KEY }}
+        run: node scripts/models.mjs tripo
+      - name: Render a preview of each new model
+        if: ${{ steps.pack.outputs.live != '' }}
+        timeout-minutes: 15
+        env:
+          KEYS: ${{ steps.pack.outputs.live }}
+        run: node scripts/models.mjs preview
+      - name: Summary
+        if: ${{ !cancelled() && steps.pick.outputs.keys != '' }}
+        env:
+          KEYS: ${{ steps.pick.outputs.keys }}
+        run: node scripts/models.mjs summary
+      - name: Commit the models
+        id: commit
+        if: ${{ !cancelled() && steps.pick.outputs.keys != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PACKED: ${{ steps.pack.outcome }}
+          LIVE: ${{ steps.pack.outputs.live }}
+        run: |
+          for f in scripts/meshy.state.json scripts/models.state.json scripts/tripo.state.json; do
+            if [ -e "$f" ]; then git add -- "$f"; fi
+          done
+          if [ "$PACKED" = "success" ]; then
+            git add -- assets/models/cats assets/models/PROVENANCE.md scripts/cat-models.jobs.json
+            if [ -d scripts/model-previews ]; then git add -- scripts/model-previews; fi
+          fi
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Models: new 3D models for launched cats"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+          if [ -n "$LIVE" ]; then echo "pushed=true" >> "$GITHUB_OUTPUT"; fi
+
+  pages:
+    needs: build
+    if: ${{ !cancelled() && needs.build.outputs.pushed == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Deploy the site with the new models
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: gh workflow run pages.yml -R "$REPO" --ref main

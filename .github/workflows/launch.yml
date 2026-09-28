@@ -36,8 +36,9 @@
 #             photo; the announcer holds it by rule, since its X post is scripts/post-updates.mjs's
 #             once the Collection has proved it, so data/announced.json is never committed here and
 #             never raced with the Announce workflow) and commits that.
-#   publish   once that commit is pushed, starts the Collection, Pages and Announce (runs no code of
-#             the repository's; it may only start workflow runs). Pages deploys at once; a Collection
+#   publish   once that commit is pushed, starts the Collection, Pages, Announce and Models (the new
+#             cat's 3D model, while MODELS_ENABLED is on) (runs no code of the repository's; it may only
+#             start workflow runs). Pages deploys at once; a Collection
 #             or Announce run that is already chained (each keeps one run going, waiting in its own
 #             concurrency group) takes the new run's place in the queue, so the proof and the X post
 #             come with the Collection's hourly rhythm (within about an hour), not at once.
@@ -203,7 +204,7 @@ jobs:
     permissions:
       actions: write
     steps:
-      - name: Start the Collection, Pages and Announce for the new cat
+      - name: Start the Collection, Pages, Announce and Models for the new cat
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
@@ -211,3 +212,4 @@ jobs:
           gh workflow run collection.yml -R "$REPO" --ref main
           gh workflow run pages.yml -R "$REPO" --ref main
           gh workflow run announce.yml -R "$REPO" --ref main
+          gh workflow run models.yml -R "$REPO" --ref main
