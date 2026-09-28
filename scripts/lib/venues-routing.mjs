@@ -21,6 +21,8 @@
  *   · a stock pair that already has a sanctuary cat (usedPairs; one cat per pair, the rule
  *     assets/collection.js validatePlanned keeps for planned cats; usedStockPairs computes it):
  *     today 91 of the 93 pairs have a planned cat, and only tOpenAI and tKalshi are free;
+ *   · any stock pair when the caller did not say which pairs are taken (usedPairs missing, or not
+ *     a Set or a list): the rule fails closed, so a pair is never given a second cat by omission;
  *   · a symbol that is not one of the stock pairs;
  *   · a coin data/pump-quotes.json does not list (pumpQuotes, pump.mjs validatePumpQuotes);
  *   · a listed coin while pump.mjs PUMP_QUOTE_VERIFIED is false (no coin-priced pump.fun launch has
@@ -137,21 +139,24 @@ export function usedStockPairs({ planned, collection, adoptables, extra = [] } =
 /**
  * The venue for a data/trending-cats.json post (`candidate`) under the owner's rule, with
  * data/cat-watch.json as read (`watch`). Options: `usedPairs` (usedStockPairs, a Set or a list of
- * mints), `pumpQuotes` (data/pump-quotes.json's validated list), `pumpQuoteOptIn` (the owner's
- * explicit opt-in to the unverified coin-priced pump.fun venue), `stocks` (STOCK_PAIRS). Returns
+ * mints; REQUIRED for a stock tie: without it no stock pair is used), `pumpQuotes`
+ * (data/pump-quotes.json's validated list), `pumpQuoteOptIn` (the owner's explicit opt-in to the
+ * unverified coin-priced pump.fun venue), `stocks` (STOCK_PAIRS). Returns
  *   { id: "stonkfun", pair: { symbol, mint }, from, reason: "stock" }
  *   { id: "pump-quote", quote: { symbol, mint }, tokenProgram, from, reason: "pump_quote" }
  *   { id: "pump-sol", reason }  reason: "default" (no tie), or why the first tie could not be used:
- *     "pair_taken", "quote_not_listed", "quote_unverified"
+ *     "pair_taken", "pairs_unknown" (no usedPairs given), "quote_not_listed", "quote_unverified"
  * Never throws: anything malformed is no tie.
  */
-export function chooseVenue(candidate, watch, { usedPairs = [], pumpQuotes = [], pumpQuoteOptIn = false, stocks = STOCK_PAIRS } = {}) {
-  const used = usedPairs instanceof Set ? usedPairs : new Set(Array.isArray(usedPairs) ? usedPairs : []);
+export function chooseVenue(candidate, watch, options) {
+  const { usedPairs, pumpQuotes = [], pumpQuoteOptIn = false, stocks = STOCK_PAIRS } = isObj(options) ? options : {};
+  const used = usedPairs instanceof Set ? usedPairs : Array.isArray(usedPairs) ? new Set(usedPairs) : null; // null: unknown, fail closed
   const listed = Array.isArray(pumpQuotes) ? pumpQuotes : [];
   let why = null;
   for (const link of venueLinks(candidate, watch, { stocks })) {
     if (link.stock !== undefined) {
       const pair = stocks.find((s) => s.symbol === link.stock);
+      if (used === null) { why ??= "pairs_unknown"; continue; }
       if (!used.has(pair.mint)) return { id: "stonkfun", pair: { symbol: pair.symbol, mint: pair.mint }, from: link.from, reason: "stock" };
       why ??= "pair_taken";
       continue;

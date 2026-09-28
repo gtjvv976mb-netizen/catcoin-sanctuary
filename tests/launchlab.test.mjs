@@ -11,6 +11,7 @@ import path from "node:path";
 import { randomBytes } from "node:crypto";
 import {
   PRICING_URL, PRICING_MAX_AGE_MS, LAUNCHLAB_LIMITS, LAUNCH_DEFAULTS, MAX_PRIORITY_FEE_LAMPORTS, PricingError,
+  STANDARD_SUPPLY, STANDARD_SALE, STANDARD_RAISE_SOL, RAISE_TOLERANCE,
   fetchPricing, pricingFromAnswer, checkPricingConfig, encodeInitializeData, initializeAccounts, initializeWithToken2022Instruction,
   buildInitializeWithToken2022, buildLaunchTransaction, checkLaunchMessage, signLaunchTransaction,
 } from "../scripts/lib/launchlab.mjs";
@@ -59,8 +60,10 @@ function recorded(a) {
   const data = Buffer.from(base58Decode(ix.data, 2000));
   return { tx, ix, data, acc: ix.accounts.map((i) => keys[i]), metas: ix.accounts.map((i) => ({ pubkey: keys[i], ...flagsOf(tx, i) })), args: decodeInitialize(data), tail: data.subarray(-10) };
 }
-/** A pricing answer in StonkFun's shape carrying a recorded launch's own numbers. */
+/** A pricing answer in StonkFun's shape carrying a recorded launch's own numbers. The prices at the
+    time of the launch were not recorded: they are made up (SOL at $100) so that its raise is worth 85 SOL. */
 function answerOf({ acc, args }, { observedAt = "2026-09-24T20:00:00.000Z" } = {}) {
+  const solUsd = 100, quoteUsd = (85 * solUsd * 1e8) / Number(args.raise);
   return {
     data: {
       quote: { mint: acc[7], symbol: pairOf(acc[7])?.symbol ?? "X", decimals: 8, tokenProgram: acc[11] },
@@ -72,7 +75,7 @@ function answerOf({ acc, args }, { observedAt = "2026-09-24T20:00:00.000Z" } = {
       platform: { standard: STONKFUN_PLATFORM, reward: STONKFUN_PLATFORM_REWARD },
       curveRule: { standard: curveRuleAddress(STONKFUN_PLATFORM, acc[2]), reward: curveRuleAddress(STONKFUN_PLATFORM_REWARD, acc[2]) },
       modes: { standard: { transferFee: null } },
-      prices: { observedAt },
+      prices: { solUsd, quoteUsd, observedAt },
     },
   };
 }
@@ -120,8 +123,16 @@ test("StonkFun's pricing (two real answers): fetched from its public endpoint, e
     quote: { mint: "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc", symbol: "GMEX", decimals: 8, tokenProgram: TOKEN_2022_PROGRAM },
     configId: "2TygvvGwVLxpJaGfQkFtGFzgvRMQmcFi6fM6iceLTTpu", curveRule: curveRuleAddress(STONKFUN_PLATFORM, "2TygvvGwVLxpJaGfQkFtGFzgvRMQmcFi6fM6iceLTTpu"),
     supply: 1_000_000_000_000_000n, totalSellA: 793_100_000_000_000n, raise: 43_540_640_192n, baseDecimals: 6, migrateType: 1, cpmmCreatorFeeOn: 0,
-    observedAt: GMEX.body.data.prices.observedAt,
+    prices: { solUsd: GMEX.body.data.prices.solUsd, quoteUsd: GMEX.body.data.prices.quoteUsd }, observedAt: GMEX.body.data.prices.observedAt,
   });
+  assert.ok(Object.isFrozen(p.prices));
+  assert.deepEqual([STANDARD_SUPPLY, STANDARD_SALE, STANDARD_RAISE_SOL, RAISE_TOLERANCE], [p.supply, p.totalSellA, 85, 0.02]);
+  // both real answers: the raise is 85 SOL at the answer's own prices, in the quote's own decimals (to within 1e-11)
+  for (const a of PRICING.answers) {
+    const d = a.body.data;
+    assert.match(d.raise.basis, /85 SOL/);
+    assert.ok(Math.abs(Number(d.raise.raw) / (85 * d.prices.solUsd / d.prices.quoteUsd * 10 ** d.quote.decimals) - 1) < 1e-10, d.quote.symbol);
+  }
   // the config StonkFun names for GMEx is the GlobalConfig of the recorded real GMEx launch, and the recorded account says so
   const gme = proveLaunch(launchTx("2VJ6Eqt9"), { wallet: GME_LAUNCHER }).launch;
   assert.equal(p.configId, gme.globalConfig);
@@ -163,6 +174,29 @@ test("pricing answers that are refused: other ids, another quote or program, ano
   refused((d) => { d.raise.minimumRaw = "99999999999999"; }, /its own minimum/);
   refused((d) => { d.curve.totalSellA = d.curve.supply; }, /sale must be/);
   refused((d) => { d.curve.totalSellA = "0"; }, /sale must be/);
+  // absurd numbers that are whole u64s: an off-standard supply or sale, a raise not worth 85 SOL (review: each was built and signed before)
+  const U64_MAX = "18446744073709551615";
+  refused((d) => { d.curve.supply = "2"; d.curve.totalSellA = "1"; }, /standard one/);
+  refused((d) => { d.curve.supply = U64_MAX; d.curve.totalSellA = "1"; }, /standard one/);
+  refused((d) => { d.curve.supply = U64_MAX; }, /standard one/);
+  refused((d) => { d.curve.totalSellA = "793100000000001"; }, /standard one/);
+  refused((d) => { d.raise.raw = "1"; }, /not worth 85 SOL/);
+  refused((d) => { d.raise.raw = "1"; delete d.raise.minimumRaw; }, /not worth 85 SOL/);
+  refused((d) => { d.raise.raw = U64_MAX; }, /not worth 85 SOL/);
+  refused((d) => { d.raise.raw = String(Math.round(Number(d.raise.raw) * 1.03)); }, /not worth 85 SOL/);
+  refused((d) => { d.raise.raw = String(Math.round(Number(d.raise.raw) * 0.97)); }, /not worth 85 SOL/);
+  refused((d) => { d.quote.decimals = 9; }, /not worth 85 SOL/); // the same raw raise in another quote's decimals is ten times too much
+  refused((d) => { d.prices.solUsd = d.prices.solUsd * 2; }, /not worth 85 SOL/);
+  for (const bad of [0, -120, "120.5", null, undefined, true]) {
+    refused((d) => { d.prices.solUsd = bad; }, /not positive numbers/);
+    refused((d) => { d.prices.quoteUsd = bad; }, /not positive numbers/);
+  }
+  refused((d) => { d.prices.quoteUsd = 1e-320; }, /not worth 85 SOL/); // a subnormal price: the expected raise is not a finite number
+  for (const f of [1.015, 0.985]) {
+    const body = structuredClone(GMEX.body);
+    body.data.raise.raw = String(Math.round(Number(body.data.raise.raw) * f));
+    assert.doesNotThrow(() => pricingFromAnswer(body, mint, { nowMs: at + 1000 }), `a raise ${f} times 85 SOL is within 2%`);
+  }
   refused((d) => { d.curve.vesting.totalLockedAmount = "1"; }, /vests nothing/);
   refused((d) => { delete d.curve.vesting; }, /vests nothing/);
   refused((d) => { d.curve.cpmmCreatorFeeOn = 2; }, /cpmmCreatorFeeOn/);
@@ -344,6 +378,13 @@ test("a message with anything but the plain launch is refused at sign time and n
   assert.doesNotThrow(() => passes([setComputeUnitLimit(200_000), setComputeUnitPrice(25_000_000), init]));
   // checked against the pricing it was built with: another raise for the same bytes is refused
   assert.throws(() => checkLaunchMessage(built.messageBytes, { wallet: wallet.publicKey, mint: mint.publicKey, pair: GMEX_PAIR, pricing: { ...pricing, raise: pricing.raise + 1n } }), /data is not the one/);
+  // a built launch carrying an absurd curve (a raise of 1, an off-standard supply) is never signed
+  for (const bad of [{ raise: 1n }, { supply: 2n, totalSellA: 1n }]) {
+    let calls = 0;
+    const spy = (kp) => ({ publicKey: kp.publicKey, sign: (b) => { calls++; return kp.sign(b); } });
+    assert.throws(() => signLaunchTransaction({ ...built, pricing: { ...built.pricing, ...bad } }, spy(wallet), spy(mint)), /not what fetchPricing returns/);
+    assert.equal(calls, 0);
+  }
   // a launch is only signed by its own wallet and mint
   assert.throws(() => signLaunchTransaction(built, attacker, mint), /wallet/);
   assert.throws(() => signLaunchTransaction(built, wallet, attacker), /mint/);
@@ -380,6 +421,12 @@ test("the builder refuses: a pair that is not a stock pair, pricing for another 
     "pricing for tOpenAI on the GMEx pair": [{ pricing: pricingOf(TOPENAI) }, /another quote/],
     "a curve rule that is not the config's": [{ pricing: { ...pricing, curveRule: STONKFUN_PLATFORM } }, /not what fetchPricing returns/],
     "a sale as large as the supply": [{ pricing: { ...pricing, totalSellA: pricing.supply } }, /not what fetchPricing returns/],
+    "an off-standard supply and sale": [{ pricing: { ...pricing, supply: 2n, totalSellA: 1n } }, /not what fetchPricing returns/],
+    "a raise of 1": [{ pricing: { ...pricing, raise: 1n } }, /not what fetchPricing returns/],
+    "a raise of u64::MAX": [{ pricing: { ...pricing, raise: 2n ** 64n - 1n } }, /not what fetchPricing returns/],
+    "no prices": [{ pricing: { ...pricing, prices: undefined } }, /not what fetchPricing returns/],
+    "prices that make a raise of 1 look right": [{ pricing: { ...pricing, raise: 1n, prices: { solUsd: 0, quoteUsd: 1 } } }, /not what fetchPricing returns/],
+    "no quote decimals": [{ pricing: { ...pricing, quote: { ...pricing.quote, decimals: undefined } } }, /not what fetchPricing returns/],
     "a raise as a number": [{ pricing: { ...pricing, raise: 5 } }, /not what fetchPricing returns/],
     "a classic-token quote": [{ pricing: { ...pricing, quote: { ...pricing.quote, tokenProgram: TOKEN_PROGRAM } } }, /not what fetchPricing returns/],
     "no pricing": [{ pricing: undefined }, /not what fetchPricing returns/],

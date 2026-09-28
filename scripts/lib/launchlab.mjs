@@ -12,7 +12,12 @@
  * the supply and the part sold on the curve, the curve's migration (cpmm) and creator-fee setting,
  * and the platform and curve-rule ids. StonkFun adopts (lists, forwards fees for) only a pool built
  * to exactly that shape. Every field is checked (pricingFromAnswer), and the program, the platforms
- * and the curve rules must be chain.mjs's pinned ids and PDAs, or the answer is refused. The config
+ * and the curve rules must be chain.mjs's pinned ids and PDAs, or the answer is refused. The
+ * numbers are bounded too, so a buggy or tampered answer cannot launch an absurd curve: the supply
+ * and the sale must be StonkFun's standard ones (STANDARD_SUPPLY, STANDARD_SALE: both real answers
+ * and all six recorded launches), and the raise must be worth 85 SOL (STANDARD_RAISE_SOL, the
+ * answer's own raise.basis) at the answer's own SOL and quote prices, within RAISE_TOLERANCE (in
+ * both real answers it is within 1e-11 of 85 × solUsd / quoteUsd × 10^decimals). The config
  * itself can be read back before a launch (checkPricingConfig: LaunchLab's GlobalConfig for that
  * very quote). tests/fixtures/stonkfun-pricing.json keeps two real answers.
  *
@@ -73,6 +78,14 @@ export const LAUNCHLAB_LIMITS = Object.freeze({ name: 32, symbol: 10, uri: 200 }
 export const BASE_DECIMALS = 6;
 /** migrate_type 1: the curve graduates to Raydium CPMM ("cpmm"), the only one StonkFun adopts. */
 export const MIGRATE_CPMM = 1;
+/** StonkFun's standard supply and the part sold on the curve, raw (6 decimals: 1,000,000,000 and 793,100,000 coins):
+    both real pricing answers and all six recorded launches have exactly these. Any other is refused. */
+export const STANDARD_SUPPLY = 1_000_000_000_000_000n;
+export const STANDARD_SALE = 793_100_000_000_000n;
+/** The raise is sized to be worth this many SOL ("Sized so this launch is worth the same as the default 85 SOL raise.", raise.basis). */
+export const STANDARD_RAISE_SOL = 85;
+/** How far a raise may be from STANDARD_RAISE_SOL at the answer's own prices (the real answers: within 1e-11). */
+export const RAISE_TOLERANCE = 0.02;
 /** The launch's defaults: the initialize alone used 91,866 compute units in the recorded IREN launch (5egBA4T2). */
 export const LAUNCH_DEFAULTS = Object.freeze({ computeUnitLimit: 200_000, computeUnitPriceMicroLamports: 100_000 });
 
@@ -80,6 +93,18 @@ const U64_MAX = 2n ** 64n - 1n;
 /** What follows the None tag of Option<TransferFeeExtensionParams> in StonkFun's own launches: ten zero bytes. */
 const NONE_TAIL = new Uint8Array(10);
 const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+const isPrice = (n) => typeof n === "number" && Number.isFinite(n) && n > 0;
+
+/** Why a raise is not worth STANDARD_RAISE_SOL (within RAISE_TOLERANCE) at `solUsd` and `quoteUsd` for a quote of `decimals`, or null. */
+function raiseProblem(raise, { solUsd, quoteUsd } = {}, decimals) {
+  if (!isPrice(solUsd) || !isPrice(quoteUsd)) return "the prices of SOL and of the quote are not positive numbers";
+  const expected = (STANDARD_RAISE_SOL * solUsd / quoteUsd) * 10 ** decimals;
+  const ratio = Number(raise) / expected;
+  if (!(Number.isFinite(expected) && expected > 0 && Math.abs(ratio - 1) <= RAISE_TOLERANCE)) {
+    return `the raise is not worth ${STANDARD_RAISE_SOL} SOL at the answer's own prices (${Number.isFinite(ratio) ? `${ratio.toFixed(4)} times that` : "unreadable"})`;
+  }
+  return null;
+}
 
 export class PricingError extends Error { constructor(message) { super(message); this.name = "PricingError"; } }
 
@@ -96,13 +121,15 @@ function rawAmount(v) {
  * StonkFun's pricing answer (the parsed JSON body) for `quoteMint`, checked field by field and
  * reduced to what a launch needs: a frozen { quote: { mint, symbol, decimals, tokenProgram },
  * configId, curveRule (the standard platform's), supply, totalSellA, raise (BigInts), baseDecimals,
- * migrateType (1), cpmmCreatorFeeOn (0 or 1), observedAt }. Refused (PricingError): another quote; a
- * quote that is not a Token-2022 mint; another program than LaunchLab; a platform or a curve rule
- * that is not the pinned one (or its PDA for that config); a curve that is not the constant one,
- * that does not migrate to cpmm, or whose base does not have 6 decimals; a supply, sale or raise
- * that is not a whole u64 (0 < sale < supply, raise > 0 and not below its own minimum); any vesting;
- * a standard mode with a transfer fee; prices observed more than `maxAgeMs` before `nowMs` or in its
- * future.
+ * migrateType (1), cpmmCreatorFeeOn (0 or 1), prices: { solUsd, quoteUsd }, observedAt }. Refused
+ * (PricingError): another quote; a quote that is not a Token-2022 mint; another program than
+ * LaunchLab; a platform or a curve rule that is not the pinned one (or its PDA for that config); a
+ * curve that is not the constant one, that does not migrate to cpmm, or whose base does not have 6
+ * decimals; a supply, sale or raise that is not a whole u64 (0 < sale < supply, raise > 0 and not
+ * below its own minimum); a supply or sale that is not StonkFun's standard one; a raise not worth
+ * 85 SOL (within 2%) at the answer's own prices, or prices that are not positive numbers; any
+ * vesting; a standard mode with a transfer fee; prices observed more than `maxAgeMs` before `nowMs`
+ * or in its future.
  */
 export function pricingFromAnswer(body, quoteMint, { nowMs = Date.now(), maxAgeMs = PRICING_MAX_AGE_MS } = {}) {
   const bad = (why) => { throw new PricingError(`StonkFun's pricing for ${String(quoteMint).slice(0, 8)}…: ${why}`); };
@@ -125,6 +152,9 @@ export function pricingFromAnswer(body, quoteMint, { nowMs = Date.now(), maxAgeM
   if (!(totalSellA > 0n && totalSellA < supply)) bad("the sale must be above 0 and below the supply");
   if (raise <= 0n) bad("the raise must be above 0");
   if (r.minimumRaw !== undefined && !(rawAmount(r.minimumRaw) <= raise)) bad("the raise is below its own minimum");
+  if (supply !== STANDARD_SUPPLY || totalSellA !== STANDARD_SALE) bad("the supply or the sale is not StonkFun's standard one (1,000,000,000 coins, 793,100,000 on the curve)");
+  const raiseBad = raiseProblem(raise, prices, q.decimals);
+  if (raiseBad) bad(raiseBad);
   const v = c.vesting;
   if (!isObj(v) || ["totalLockedAmount", "cliffPeriod", "unlockPeriod"].some((k) => rawAmount(v[k]) !== 0n)) bad("a launch here vests nothing");
   if (c.cpmmCreatorFeeOn !== 0 && c.cpmmCreatorFeeOn !== 1) bad("cpmmCreatorFeeOn is not 0 or 1");
@@ -140,7 +170,7 @@ export function pricingFromAnswer(body, quoteMint, { nowMs = Date.now(), maxAgeM
   return Object.freeze({
     quote: Object.freeze({ mint: q.mint, symbol: q.symbol, decimals: q.decimals, tokenProgram: q.tokenProgram }),
     configId: c.configId, curveRule: rule.standard, supply, totalSellA, raise, baseDecimals: BASE_DECIMALS, migrateType: MIGRATE_CPMM,
-    cpmmCreatorFeeOn: c.cpmmCreatorFeeOn, observedAt: prices.observedAt,
+    cpmmCreatorFeeOn: c.cpmmCreatorFeeOn, prices: Object.freeze({ solUsd: prices.solUsd, quoteUsd: prices.quoteUsd }), observedAt: prices.observedAt,
   });
 }
 
@@ -190,9 +220,11 @@ export function checkPricingConfig(pricing, configAccount) {
 /** Why `pricing` is not one pricingFromAnswer would return (re-checked wherever it is used), or null. */
 function pricingProblem(p) {
   if (!isObj(p) || !isObj(p.quote) || !isAddress(p.quote.mint) || p.quote.tokenProgram !== TOKEN_2022_PROGRAM) return "the pricing's quote";
+  if (!Number.isInteger(p.quote.decimals) || p.quote.decimals < 0 || p.quote.decimals > 18) return "the pricing's quote";
   if (!isAddress(p.configId) || p.curveRule !== curveRuleAddress(STONKFUN_PLATFORM, p.configId)) return "the pricing's config or curve rule";
   const big = (n) => typeof n === "bigint" && n >= 0n && n <= U64_MAX;
-  if (![p.supply, p.totalSellA, p.raise].every(big) || !(p.totalSellA > 0n && p.totalSellA < p.supply) || p.raise <= 0n) return "the pricing's supply, sale or raise";
+  if (![p.supply, p.totalSellA, p.raise].every(big) || p.supply !== STANDARD_SUPPLY || p.totalSellA !== STANDARD_SALE || p.raise <= 0n) return "the pricing's supply, sale or raise";
+  if (!isObj(p.prices) || raiseProblem(p.raise, p.prices, p.quote.decimals)) return "the pricing's raise for its prices";
   if (p.baseDecimals !== BASE_DECIMALS || p.migrateType !== MIGRATE_CPMM || ![0, 1].includes(p.cpmmCreatorFeeOn)) return "the pricing's curve";
   return null;
 }
@@ -299,7 +331,7 @@ export function buildInitializeWithToken2022({ wallet, mint, pair, name, symbol,
 /* ── the transaction ──────────────────────────────────────────────────────────────────── */
 
 /** A frozen copy of what a launch was built with, so the check at sign time reads the same numbers. */
-const freezePricing = (p) => Object.freeze({ ...p, quote: Object.freeze({ ...p.quote }) });
+const freezePricing = (p) => Object.freeze({ ...p, quote: Object.freeze({ ...p.quote }), prices: Object.freeze({ ...p.prices }) });
 
 /**
  * Build the launch: a legacy transaction paid by `wallet` (who is also the coin's creator), holding

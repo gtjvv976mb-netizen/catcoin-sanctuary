@@ -13,7 +13,7 @@ import {
   PUMP, PUMP_QUOTE_VERIFIED, QUOTE_LAUNCH_COMPUTE_UNIT_LIMIT, createV2Instruction, createV2Accounts, bondingCurve, associatedQuoteBondingCurve,
   buildLaunchTransaction, signLaunchTransaction, checkLaunchMessage, validatePumpQuotes, quoteProblem,
 } from "../scripts/lib/pump.mjs";
-import { proveLaunchPump, proveLaunch, checkPumpAccounts, signaturesVerify, BONDING_CURVE_DISC, BONDING_CURVE_QUOTE_OFFSET } from "../scripts/lib/chain.mjs";
+import { proveLaunchPump, proveLaunch, checkPumpAccounts, signaturesVerify, BONDING_CURVE_DISC, BONDING_CURVE_QUOTE_OFFSET, STONKFUN_PLATFORM } from "../scripts/lib/chain.mjs";
 import { keypairFromSecret, deriveMintKeypair, transactionToJson, decodeTransaction, decompileInstructions, compileLegacyMessage, ata, pda } from "../scripts/lib/solana-tx.mjs";
 import { SYSTEM_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "../scripts/lib/programs.mjs";
 import { entryProblem, validateCollection, validateWallets, STOCK_PAIRS, SOL_PAIR, base58Decode, base58Encode } from "../assets/collection.js";
@@ -163,6 +163,16 @@ test("the read-back of a coin-priced launch: its bonding curve must be priced in
   assert.match(checkPumpAccounts(launch, L.accounts.get(L.mint), other.accounts.get(other.curve)).detail, /not priced in the launch's quote/);
   const short = { ...L.accounts.get(L.curve), data: [Buffer.from(BONDING_CURVE_DISC, "hex").toString("base64"), "base64"] };
   assert.equal(checkPumpAccounts(launch, L.accounts.get(L.mint), short).clause, "bonding_curve");
+  // a malformed curve answer is refused, never thrown, on the coin-priced path too; the mint's update authority must be None there as well
+  for (const data of [[42], [], [null], [{}, "base64"]]) {
+    let r;
+    assert.doesNotThrow(() => { r = checkPumpAccounts(launch, L.accounts.get(L.mint), { owner: PUMP.program, data }); }, JSON.stringify(data));
+    assert.equal(r.clause, "bonding_curve", JSON.stringify(data));
+  }
+  for (const key of [PUMP.mintAuthority, STONKFUN_PLATFORM, L.wallet]) {
+    const mintWith = { ...L.accounts.get(L.mint), data: [token2022MintData({ mint: L.mint, updateAuthority: key, ...PUMP_COIN }).toString("base64"), "base64"] };
+    assert.match(checkPumpAccounts(launch, mintWith, L.accounts.get(L.curve)).detail, /rename/, key);
+  }
   const sol = pumpLaunch(), solProof = proveLaunchPump(sol.tx, { wallet: sol.wallet });
   assert.deepEqual(checkPumpAccounts(solProof.launch, sol.accounts.get(sol.mint), sol.accounts.get(sol.curve)), { ok: true }, "a SOL curve is not read for a quote");
 });

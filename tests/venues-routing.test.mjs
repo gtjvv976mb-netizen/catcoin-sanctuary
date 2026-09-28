@@ -46,6 +46,10 @@ test("data/cat-watch.json's ties: every stock is one of the stock pairs, only wa
   }
   assert.ok(!WATCH.figures.some((f) => f.stock !== undefined || f.pumpQuote !== undefined), "no figure's company has a stock pair today");
   assert.match(WATCH.linksNote, /the owner may add, change or remove/);
+  // written on one line, in the inline form the launcher's writer (stage 3, watchText) gives an object's value, so a rewrite keeps the file as it is
+  const inline = (v) => (Array.isArray(v) ? `[${v.map(inline).join(", ")}]`
+    : v !== null && typeof v === "object" ? `{ ${Object.entries(v).map(([k, x]) => `${JSON.stringify(k)}: ${inline(x)}`).join(", ")} }` : JSON.stringify(v));
+  assert.ok(fs.readFileSync(path.join(ROOT, "data/cat-watch.json"), "utf8").includes(`\n "accountLinks": ${inline(WATCH.accountLinks)},\n`), "accountLinks is one inline line");
   // the trend watch ignores the ties: its lists and queries are exactly what they are without them
   const names = new Set([...read("adoptables.json").cats, ...PLANNED.cats].flatMap((c) => [c.name, c.coinName, c.ticker, c.launchTicker]).filter(Boolean).map((s) => String(s).toLowerCase()));
   const bare = structuredClone(WATCH);
@@ -96,6 +100,7 @@ test("usedStockPairs: one cat per stock pair, as the site keeps it for planned c
 
 test("chooseVenue: SOL by default; a company's stock on StonkFun unless its pair has a cat; a figure's tie before its account's; a listed coin only with the owner's opt-in", () => {
   const free = { usedPairs: new Set() };
+  assert.deepEqual(chooseVenue(post(), TEST_WATCH), { id: "pump-sol", reason: "default" }, "no tie: no options needed");
   assert.deepEqual(chooseVenue(post(), TEST_WATCH, free), { id: "pump-sol", reason: "default" });
   assert.deepEqual(chooseVenue(post({ bigAccount: "openai" }), TEST_WATCH, free), { id: "stonkfun", pair: pair("tOpenAI"), from: "account", reason: "stock" });
   assert.deepEqual(chooseVenue(post({ bigAccount: "Tesla" }), TEST_WATCH, { usedPairs: [pair("TSLAx").mint] }), { id: "pump-sol", reason: "pair_taken" });
@@ -125,7 +130,7 @@ test("chooseVenue: SOL by default; a company's stock on StonkFun unless its pair
     { id: "pump-quote", quote: { symbol: "MEOW", mint: MEOW.mint }, tokenProgram: TOKEN_2022_PROGRAM, from: "account", reason: "pump_quote" });
   const tom = post({ figure: "Tom", catName: "Tom", nameFrom: "figure" });
   assert.equal(chooseVenue(tom, TEST_WATCH, { pumpQuotes: QUOTES, pumpQuoteOptIn: true }).from, "figure");
-  assert.deepEqual(chooseVenue(post({ figure: "Tom", catName: "Tom", nameFrom: "figure", bigAccount: "OpenAI" }), TEST_WATCH, { pumpQuotes: QUOTES }),
+  assert.deepEqual(chooseVenue(post({ figure: "Tom", catName: "Tom", nameFrom: "figure", bigAccount: "OpenAI" }), TEST_WATCH, { ...free, pumpQuotes: QUOTES }),
     { id: "stonkfun", pair: pair("tOpenAI"), from: "account", reason: "stock" }, "an unusable coin tie falls through to the account's stock");
 
   // malformed ties and junk are no tie, and nothing throws
@@ -134,7 +139,16 @@ test("chooseVenue: SOL by default; a company's stock on StonkFun unless its pair
   for (const [c, w] of [[null, null], [42, "x"], [post({ bigAccount: "OpenAI" }), { accountLinks: [] }], [{ bigAccount: {}, figure: 5, reading: "x" }, TEST_WATCH], [post({ figure: "Nyan Cat", nameFrom: "figure" }), { figures: "x" }]]) {
     assert.deepEqual(chooseVenue(c, w), { id: "pump-sol", reason: "default" });
   }
-  assert.deepEqual(chooseVenue(post({ bigAccount: "OpenAI" }), TEST_WATCH, { usedPairs: "junk" }).id, "stonkfun");
+  // which pairs are taken must be said: without a Set or a list of mints a stock tie is never used (fails closed; review)
+  const openai = post({ bigAccount: "OpenAI" });
+  for (const opts of [undefined, null, {}, { usedPairs: undefined }, { usedPairs: null }, { usedPairs: "junk" }, { usedPairs: 5 }, { usedPairs: new Map([[pair("tOpenAI").mint, 1]]) }, { usedPairs: {} }]) {
+    assert.deepEqual(chooseVenue(openai, TEST_WATCH, opts), { id: "pump-sol", reason: "pairs_unknown" }, String(opts && JSON.stringify(opts)));
+  }
+  assert.deepEqual(chooseVenue(openai, TEST_WATCH), { id: "pump-sol", reason: "pairs_unknown" }, "the registry's two-argument call");
+  assert.deepEqual(chooseVenue(openai, TEST_WATCH, { usedPairs: [] }).id, "stonkfun", "an empty list: every pair is free");
+  assert.deepEqual(chooseVenue(both, TEST_WATCH, {}), { id: "pump-sol", reason: "pairs_unknown" }, "neither the figure's nor the account's stock");
+  assert.deepEqual(chooseVenue(post({ figure: "Tom", catName: "Tom", nameFrom: "figure", bigAccount: "OpenAI" }), TEST_WATCH, { pumpQuotes: QUOTES, pumpQuoteOptIn: true }).id, "pump-quote",
+    "a coin tie does not depend on the stock pairs");
   for (const c of [post(), post({ bigAccount: "OpenAI" }), pumpPost]) assert.ok(VENUE_IDS.includes(chooseVenue(c, TEST_WATCH, { pumpQuotes: QUOTES, pumpQuoteOptIn: true }).id));
   assert.deepEqual(venueLinks(both, TEST_WATCH), [{ from: "figure", stock: "tKalshi" }, { from: "account", stock: "tOpenAI" }]);
 });
