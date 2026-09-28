@@ -1841,24 +1841,82 @@ export function makeClips(rig, style = {}, fit = null) {
     s.legs.fL = leg(s.legs.fL[0] + a * 0.02, a * h * lt, restE("fL") - a * 0.5); s.legs.fR = leg(s.legs.fR[0] + b * 0.02, b * h * lt, restE("fR") - b * 0.5);
     return s;
   }, SIT, { enter: 0.3, exit: 0.3 });
-  // Licking a hind leg: sat back a little on the haunches, one hind leg out in front (a slim cat's
-  // well up, the "cello"; a round one's out low along the ground), the head down to it licking
-  // along the inside of the leg in long strokes; the forepaw on that side braced out wide.
-  posed("legLick", loopDur(2.4), 20, (u) => {
-    const lick = Math.max(0, S(TAU * u * 4)), slide = 0.5 - 0.5 * C(TAU * u);
-    const s = sitSpec(u, { still: true }), up = (1 - round) * freeH * amp("legLick");
-    const lean = Math.min(1.3, sitPitch + 0.15 + 0.1 * up);
-    s.pelvis = [lean, 0.12, 0.1]; s.spine = [sitSpine - 0.12, 0.1, 0]; s.chest = [sitChest - 0.14, 0.12, 0.02]; s.root[0] = groundAt(s) + 0.012;
-    const B = bodyOf(s), Lh = K.legs.hL, t = B.top.hL, ph = 0.25 + 0.75 * up;
-    const foot = V(t.x + Lh.reach * 0.86 * C(ph), Math.max(0.03, t.y + Lh.reach * 0.86 * S(ph)), 0);
-    s.legs.hL = leg(foot.x, foot.y, ph + 0.35, 0.3, 0.05);
+  // Licking a hind leg: sat back on the rump, the back curled forward over the belly and round to
+  // the leg's side, one hind leg raised in front (a slim cat's well up, its foot by the face: the
+  // "cello"; a round one's lower, the knee up by the chest), the head bowed down and round to it,
+  // licking along the leg in long strokes while the leg is held still for the tongue; the other
+  // hind foot laid on the lawn, the forepaw on the leg's side braced out wide.
+  // (the pose found once: the head bowed as far as this cat's neck goes, the leg then placed, no
+  // higher than it goes, where its foot or shin passes nearest the mouth, and the head then brought
+  // to the leg: the mouth on the leg, not staring out over it)
+  // (where a leg's joints are for a spec's leg g on the body B: [hip, knee, hock, toe] in the world)
+  const q1_ = new THREE.Quaternion(), q2_ = new THREE.Quaternion(), q3_ = new THREE.Quaternion(), lp_ = {};
+  const legPts = (B, k, g) => {
+    legTo(K, lp_, B, k, { x: g[0], y: g[1] }, g[2], g[3], g[4]);
+    const r = rig.legs[k], T0 = B.top[k], [n1, n2, n3] = LEG[k];
+    q1_.fromArray(lp_[n1].q).premultiply(T0.q); q2_.copy(q1_).multiply(qEuler(lp_[n2], Q2)); q3_.copy(q2_).multiply(qEuler(lp_[n3], Q2));
+    const top = V(T0.x, T0.y, T0.z), knee = V().subVectors(r.knee, r.top).applyQuaternion(q1_).add(top);
+    const hock = V().subVectors(r.low, r.knee).applyQuaternion(q2_).add(knee), toe = V().subVectors(r.toe, r.low).applyQuaternion(q3_).add(hock);
+    return [top, knee, hock, toe];
+  };
+  // (the point of a leg's line (from the hip down, the thigh's front half on) nearest p: [point, distance, place along it 0..3])
+  const nearLeg = (P, p) => {
+    let best = null;
+    for (let i = 0; i < 3; i++) {
+      const a = P[i], ab = V().subVectors(P[i + 1], a), t = clamp01(V().subVectors(p, a).dot(ab) / Math.max(1e-9, ab.lengthSq())), q = a.clone().addScaledVector(ab, t), d = q.distanceTo(p);
+      if ((i || t > 0.5) && (!best || d < best[1])) best = [q, d, i + t];
+    }
+    return best;
+  };
+  const alongLeg = (P, w) => { const i = Math.min(2, Math.floor(w)), t = w - i; return P[i].clone().lerp(P[i + 1], t); };
+  // (licking, the neck bows further than for a wash: the leg is down in front of the chest, below the
+  // shoulders, where a neck bowed only as far as a wash takes it can't bring the mouth)
+  const LICK_BOW = 1.65;
+  const LICK = (() => {
+    const a = amp("legLick"), up = (1 - round) * freeH * a;
+    const lean = Math.min(1.3, sitPitch + 0.15 + 0.1 * up), phMax = 0.25 + 1.05 * up, Lh = K.legs.hL, r = rig.legs.hL.r;
+    const k = (1 - 0.7 * headBig) * (1 - 0.45 * shortNeck) * (1 - 0.4 * ruff), c = 0.8 * a;
+    const s = sitSpec(0, { still: true });
+    s.pelvis = [lean, 0.12, 0.06]; s.spine = [sitSpine - 0.12 - 0.4 * c, -0.08 * a, 0]; s.chest = [sitChest - 0.14 - 0.6 * c, -0.12 * a, 0.04 * a]; s.root[0] = groundAt(s) + 0.012;
     s.legs.hR = leg(rest("hR").x - 0.02, 0.015, Math.min(-0.06, flatE("hR")), 0.35); // (the foot laid as flat as its thickness lets it lie on the lawn)
     s.legs.fL = leg(s.legs.fL[0] + 0.02, 0, restE("fL"), 0, 0.06);
-    const hip = V(t.x, t.y, K.legs.hL.toe.z), f3 = endOf(s.legs.hL, "hL"), at = hip.lerp(f3, 0.35 + 0.3 * slide), bowL = amp("legLick");
-    s.neck = [sitHead[0] - 0.6 * bowL, -0.3, 0]; s.head = [sitHead[1] - 0.8 * bowL, -0.15, 0];
-    meet(s, MOUTH, at, 1.1 * bowL, 0.6 * bowL);
-    s.head[0] += -0.1 * lick; s.head[2] = -0.2;
-    s.tail = T([PI + 1.0, PI + 0.3, PI + 0.05, PI], [0, -0.3, -0.4, -0.3 + S(TAU * u) * 0.1]);
+    s.tail = T([PI + 1.0, PI + 0.3, PI + 0.05, PI], [0, -0.3, -0.4, -0.3]);
+    const BL = bodyOf(s), t = BL.top.hL;
+    let out = null;
+    // the head bowed down and round to the leg's side, as far as this cat's neck goes and the leg can come
+    // up to meet it: of a deep bow and shallower ones, the one whose mouth the raised leg's foot or shin
+    // comes nearest (a shallower bow only for a leg that comes that much nearer)
+    for (const b of [1, 0.85, 0.7, 0.55, 0.4]) {
+      s.neck = [sitHead[0] - LICK_BOW * a * k * b, -(0.1 + 0.3 * b) * k, 0]; s.head = [s.neck[0] + (sitHead[1] - sitHead[0]) - 0.5 * a * k * b, -(0.05 + 0.15 * b) * k, -0.2];
+      const M = headPoint(s, MOUTH);
+      // the leg: of the ways it goes up (raised no higher than this cat's leg goes: ph, from the hip), the
+      // one whose foot or shin passes nearest the mouth (a little lower preferred: no higher than needed)
+      let best = null;
+      for (let i = 0; i <= 7; i++) for (let j = 0; j <= 4; j++) for (let e = 0; e <= 2; e++) for (const dz of [0.05, -0.02, -0.09]) {
+        const ph = -0.1 + (phMax + 0.1) * i / 7, ext = Lh.reach * (0.6 + 0.35 * j / 4);
+        const g = leg(t.x + ext * C(ph), Math.max(0.03, t.y + ext * S(ph)), ph + 0.2 + 0.35 * e, 0.3, dz);
+        const d = nearLeg(legPts(BL, "hL", g), M)[1] + 0.04 * lt * (ph + 0.1) / (phMax + 0.1);
+        if (!best || d < best[0]) best = [d, g];
+      }
+      s.legs.hL = best[1];
+      const P = legPts(BL, "hL", best[1]), [, dd, w] = nearLeg(P, M), cost = Math.max(0, dd - r) + 0.3 * lt * (1 - b);
+      if (!out || cost < out.cost) out = { s: { ...s, neck: s.neck.slice(), head: s.head.slice(), legs: { ...s.legs } }, P, w, r, d: dd, b, cost };
+    }
+    // (and the head, licking, bows deeper or turns, but never comes up off the leg)
+    out.rise = (out.s.neck[0] + 0.08 - sitHead[0]) / Math.max(0.05, k);
+    return out;
+  })();
+  posed("legLick", loopDur(2.4), 20, (u) => {
+    const lick = Math.max(0, S(TAU * u * 4)), slide = 0.5 - 0.5 * C(TAU * u), L0 = LICK.s;
+    const s = { ...L0, root: L0.root.slice(), pelvis: L0.pelvis.slice(), spine: L0.spine.slice(), chest: L0.chest.slice(), neck: L0.neck.slice(), head: L0.head.slice(), legs: { ...L0.legs }, tail: L0.tail.slice() };
+    s.spine[0] += S(TAU * u * 3) * 0.008;
+    s.tail[7] += S(TAU * u) * 0.1;
+    // (the tongue's strokes run up the leg from below the place the mouth came to, the head following:
+    // the mouth on the leg's skin, not its bone)
+    const w = Math.max(0.5, Math.min(2.9, LICK.w + 0.35 - 0.7 * slide)), q = alongLeg(LICK.P, w), hp = headPoint(s, MOUTH);
+    const to = q.addScaledVector(V().subVectors(hp, q).normalize(), LICK.r * 1.05);
+    meet(s, MOUTH, to, LICK_BOW * amp("legLick"), LICK.rise);
+    s.head[0] += -0.08 * lick;
     return s;
   }, SIT, { enter: 0.75, exit: 0.55 });
   // Ear scratch: leaning over onto one haunch, the head tipped down and round towards the hind paw,
