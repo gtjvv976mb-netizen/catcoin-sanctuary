@@ -32,7 +32,8 @@
  *                 proveLaunchPump. The default, and the fallback of the other two.
  *   "stonkfun"    Raydium LaunchLab's initialize_with_token_2022 on StonkFun's standard platform, priced
  *                 in the cat's stock pair (scripts/lib/launchlab.mjs): StonkFun's pricing is fetched right
- *                 before the build (its raise follows the stock's price), its GlobalConfig is read back
+ *                 before the build (its raise follows the stock's price), its SOL and stock prices are
+ *                 anchored on DexScreener (launchlab.mjs anchorPricing), its GlobalConfig is read back
  *                 over the RPC (checkPricingConfig), and the message is checked again at sign time
  *                 (pricing bounds, proveLaunch on the unsigned message). Proved by chain.mjs proveLaunch.
  *   "pump-quote"  pump.fun's create_v2 priced in a coin data/pump-quotes.json lists (pump.fun's Custom
@@ -46,7 +47,7 @@
  */
 import { SOL_PAIR, STOCK_PAIRS, pairProblem as stockPairProblem, isAddress, textProblem as plainTextProblem } from "../../assets/collection.js";
 import { buildLaunchTransaction as buildPump, signLaunchTransaction as signPump, unsignedLaunchTransaction as unsignedPump, launchTextProblem } from "./pump.mjs";
-import { fetchPricing, checkPricingConfig, buildLaunchTransaction as buildLaunchLab, signLaunchTransaction as signLaunchLab, unsignedLaunchTransaction as unsignedLaunchLab, LAUNCHLAB_LIMITS } from "./launchlab.mjs";
+import { fetchPricing, anchorPricing, checkPricingConfig, buildLaunchTransaction as buildLaunchLab, signLaunchTransaction as signLaunchLab, unsignedLaunchTransaction as unsignedLaunchLab, LAUNCHLAB_LIMITS } from "./launchlab.mjs";
 import { proveLaunch, proveLaunchPump } from "./chain.mjs";
 import { chooseVenue as route, usedStockPairs } from "./venues-routing.mjs";
 
@@ -107,6 +108,8 @@ export const STONKFUN = registerVenue({
   build: async ({ wallet, mint, name, symbol, uri, pair, recentBlockhash, computeUnitPriceMicroLamports }, { fetchImpl, rpc, nowMs } = {}) => {
     // The raise follows the stock's price: fetched now, right before the build, and bounded (launchlab.mjs pricingFromAnswer).
     const pricing = await fetchPricing(pair.mint, fetchImpl, { nowMs });
+    // Its SOL and stock prices, anchored independently on DexScreener (within 15%): an answer whose prices are wrong along with its raise is refused.
+    await anchorPricing(pricing, fetchImpl);
     // The GlobalConfig StonkFun names, read back: LaunchLab's, for this very stock, the constant curve.
     const [config] = (await rpc.getMultipleAccounts([pricing.configId])) ?? [null];
     const c = checkPricingConfig(pricing, config);

@@ -3,7 +3,8 @@
  * StonkFun's standard platform, priced in one of the sanctuary's stock pairs (assets/collection.js
  * STOCK_PAIRS): exactly the launch scripts/lib/chain.mjs proveLaunch records, and nothing else: no
  * dev buy, no token account, no transfer. Stage 4 of the launcher. No dependencies (node:crypto,
- * through solana-tx.mjs); the only network call is fetchPricing, through the fetch it is given.
+ * through solana-tx.mjs); the only network calls are fetchPricing and anchorPricing, through the
+ * fetch they are given.
  *
  * THE NUMBERS come from StonkFun's public API (no key; https://www.stonkfun.xyz/developers, read
  * 2026-09-27 and 2026-09-28): GET /api/public/v1/launchlab/pricing?quoteMint=<mint> (fetchPricing)
@@ -17,13 +18,17 @@
  * STANDARD_SALE: both real answers and all six recorded launches), and the raise must be worth 85 SOL
  * (STANDARD_RAISE_SOL, the answer's own raise.basis) at the answer's own SOL and quote prices, within
  * RAISE_TOLERANCE (in both real answers it is within 1e-11 of 85 × solUsd / quoteUsd × 10^decimals).
- * That bound catches a raise that disagrees with its own prices; it does NOT catch an answer whose
- * prices are wrong along with its raise (a stock price 1000 times too low and a raise 1000 times too
- * high pass it). Nothing the launcher reads anchors the stock's price independently: the GlobalConfig's
- * min_quote_fund_raising is 1 in every recorded config, and one cat per stock pair means the
- * sanctuary never has an earlier raise for the same config. Such a launch buys nothing (no dev buy),
- * so what a wrong feed at StonkFun can cost is the coin's curve and its stock pair, not the wallet's
- * SOL beyond the launch's own fees and rent. The config
+ * That bound alone only catches a raise that disagrees with its own prices (a stock price 1000 times
+ * too low and a raise 1000 times too high would pass it; the GlobalConfig's min_quote_fund_raising is
+ * 1 in every recorded config, and one cat per stock pair means no earlier raise for the same config).
+ * So BOTH prices are anchored independently right before a StonkFun build (anchorPricing): SOL's
+ * and the quote's USD prices are fetched from DexScreener (DEXSCREENER_TOKENS_URL/<mint>, the
+ * endpoint scripts/refresh-famous.mjs uses; the most liquid pair with the mint as its base and a
+ * usable priceUsd), and each must be within PRICE_ANCHOR_TOLERANCE (±15%) of the answer's solUsd and
+ * quoteUsd. On any failure (DexScreener unreachable, no usable pair, a mismatch) it throws
+ * PricingError, the StonkFun build is refused, and the launcher falls back to pump.fun in SOL before
+ * anything is sent (scripts/lib/launcher.mjs send). The raise is then worth 85 SOL at prices two
+ * sources agree on. Either way the launch buys nothing (no dev buy). The config
  * itself can be read back before a launch (checkPricingConfig: LaunchLab's GlobalConfig for that
  * very quote). tests/fixtures/stonkfun-pricing.json keeps two real answers.
  *
@@ -111,6 +116,13 @@ function raiseProblem(raise, { solUsd, quoteUsd } = {}, decimals) {
   }
   return null;
 }
+
+/** DexScreener's tokens endpoint on Solana (public, no key): GET <this>/<mint> answers with the pairs that trade the mint. */
+export const DEXSCREENER_TOKENS_URL = "https://api.dexscreener.com/tokens/v1/solana";
+/** SOL's mint (wrapped SOL), as DexScreener names it. */
+export const WRAPPED_SOL_MINT = "So11111111111111111111111111111111111111112";
+/** How far DexScreener's price may be from the pricing answer's own, for SOL and for the quote (a fraction). */
+export const PRICE_ANCHOR_TOLERANCE = 0.15;
 
 export class PricingError extends Error { constructor(message) { super(message); this.name = "PricingError"; } }
 
@@ -205,6 +217,57 @@ export async function fetchPricing(quoteMint, fetchImpl = globalThis.fetch, { no
   }
   if (body === undefined) throw new PricingError("StonkFun's answer is not JSON");
   return pricingFromAnswer(body, quoteMint, { nowMs, maxAgeMs });
+}
+
+/**
+ * `mint`'s USD price on DexScreener through `fetchImpl`: the most liquid pair (liquidity.usd) whose
+ * base token is `mint` and whose priceUsd is a positive number. Throws PricingError when DexScreener
+ * cannot be reached, answers with an error status, something that is not a short JSON list, or no
+ * such pair.
+ */
+export async function dexScreenerPriceUsd(mint, fetchImpl = globalThis.fetch, { timeoutMs = 20_000 } = {}) {
+  if (!isAddress(mint)) throw new TypeError("the mint is not a base58 address");
+  if (typeof fetchImpl !== "function") throw new TypeError("dexScreenerPriceUsd needs a fetch function");
+  let res, text;
+  try {
+    res = await fetchImpl(`${DEXSCREENER_TOKENS_URL}/${mint}`, { method: "GET", headers: { accept: "application/json" }, redirect: "error", signal: AbortSignal.timeout(timeoutMs) });
+    text = await res.text();
+  } catch (e) {
+    throw new PricingError(`DexScreener could not be reached (${e?.name === "TimeoutError" ? "timed out" : "network error"})`);
+  }
+  if (!res.ok) throw new PricingError(`DexScreener answered HTTP ${res.status}`);
+  if (typeof text !== "string" || text.length > 4 * MAX_ANSWER_CHARS) throw new PricingError("DexScreener's answer is not a short text");
+  let pairs;
+  try { pairs = JSON.parse(text); } catch { throw new PricingError("DexScreener's answer is not JSON"); }
+  if (isObj(pairs) && Array.isArray(pairs.pairs)) pairs = pairs.pairs;
+  if (!Array.isArray(pairs)) throw new PricingError("DexScreener's answer is not a list of pairs");
+  const usable = pairs.filter((p) => isObj(p) && p.chainId === "solana" && p.baseToken?.address === mint && isPrice(Number(p.priceUsd)) && /^\d+(\.\d+)?(e-?\d+)?$/i.test(String(p.priceUsd)));
+  if (!usable.length) throw new PricingError(`DexScreener has no pair with a price for ${mint.slice(0, 8)}…`);
+  const liq = (p) => (typeof p.liquidity?.usd === "number" && Number.isFinite(p.liquidity.usd) ? p.liquidity.usd : 0);
+  const top = usable.reduce((a, b) => (liq(b) > liq(a) ? b : a));
+  return Number(top.priceUsd);
+}
+
+/**
+ * Anchor a fetchPricing answer's two prices independently, right before a StonkFun build: SOL's and
+ * the quote's USD prices on DexScreener (dexScreenerPriceUsd), each within PRICE_ANCHOR_TOLERANCE of
+ * the answer's own solUsd and quoteUsd. Returns { solUsd, quoteUsd } (DexScreener's); throws
+ * PricingError on any failure, so the StonkFun build is refused (the launcher then falls back to
+ * pump.fun in SOL before anything is sent).
+ */
+export async function anchorPricing(pricing, fetchImpl = globalThis.fetch, { timeoutMs } = {}) {
+  const quoteMint = pricing?.quote?.mint, prices = pricing?.prices;
+  if (!isAddress(quoteMint) || !isPrice(prices?.solUsd) || !isPrice(prices?.quoteUsd)) throw new PricingError("the pricing has no quote or no prices to anchor");
+  const out = {};
+  for (const [key, mint, label] of [["solUsd", WRAPPED_SOL_MINT, "SOL"], ["quoteUsd", quoteMint, pricing.quote.symbol ?? "the quote"]]) {
+    const dex = await dexScreenerPriceUsd(mint, fetchImpl, { timeoutMs });
+    const ratio = prices[key] / dex;
+    if (!(Number.isFinite(ratio) && Math.abs(ratio - 1) <= PRICE_ANCHOR_TOLERANCE)) {
+      throw new PricingError(`StonkFun's ${label} price (${prices[key]} USD) is not within ${PRICE_ANCHOR_TOLERANCE * 100}% of DexScreener's (${dex} USD)`);
+    }
+    out[key] = dex;
+  }
+  return out;
 }
 
 /**

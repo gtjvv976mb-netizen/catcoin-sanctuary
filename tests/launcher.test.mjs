@@ -18,14 +18,14 @@ import { coatProblem } from "../assets/collection.js";
 import { keypairFromSecret, deriveMintKeypair, transactionToJson, decodeTransaction, decompileInstructions } from "../scripts/lib/solana-tx.mjs";
 import { decodeCreateV2, PUMP } from "../scripts/lib/pump.mjs";
 import { proveLaunchPump, proveLaunch, TOKEN_2022_PROGRAM, SYSTEM_PROGRAM, LAUNCHLAB_PROGRAM } from "../scripts/lib/chain.mjs";
-import { PRICING_URL } from "../scripts/lib/launchlab.mjs";
+import { PRICING_URL, DEXSCREENER_TOKENS_URL, WRAPPED_SOL_MINT } from "../scripts/lib/launchlab.mjs";
 import { VENUE_IDS } from "../scripts/lib/venues-routing.mjs";
 import { createRpc } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
-  otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION,
+  otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
 } from "../scripts/lib/launcher.mjs";
 import { main, fsStore, scrubber } from "../scripts/launch.mjs";
 import { draftLaunch, checkUpdate, ADDRESS_LIKE, run as postUpdates } from "../scripts/post-updates.mjs";
@@ -1051,7 +1051,9 @@ function stonkSite(opts = {}) {
  * names: LaunchLab's, for this stock (GMEx's recorded config with its quote mint set to the stock's).
  */
 function stonkfunApi(web, sol, c, { status = 200, config = true } = {}) {
-  const api = { asked: [], status };
+  // DexScreener (the prices anchored before a StonkFun build) answers with the answer's own prices unless told
+  // otherwise: dex "down" (HTTP 503), "none" (no pair), or a factor the quote's DexScreener price is scaled by.
+  const api = { asked: [], dexAsked: [], status, dex: 1 };
   const answer = PRICING.answers.find((a) => a.body.data.quote.mint === STOCK.mint);
   const configId = answer.body.data.curve.configId;
   if (config) {
@@ -1061,6 +1063,18 @@ function stonkfunApi(web, sol, c, { status = 200, config = true } = {}) {
     sol.accounts.set(configId, { ...gmex, data: [data.toString("base64"), "base64"] });
   }
   api.fetchImpl = async (url, init) => {
+    if (String(url).startsWith(DEXSCREENER_TOKENS_URL)) {
+      api.dexAsked.push(String(url));
+      if (api.dex === "down") return new Response("unavailable", { status: 503 });
+      const mint = String(url).slice(DEXSCREENER_TOKENS_URL.length + 1);
+      const isSol = mint === WRAPPED_SOL_MINT;
+      const price = isSol ? answer.body.data.prices.solUsd : answer.body.data.prices.quoteUsd * (api.dex === "none" ? 1 : api.dex);
+      const pairs = api.dex === "none" ? [] : [
+        { chainId: "solana", pairAddress: "thin", baseToken: { address: mint }, priceUsd: String(price * 3), liquidity: { usd: 10 } },
+        { chainId: "solana", pairAddress: "deep", baseToken: { address: mint }, priceUsd: String(price), liquidity: { usd: 5_000_000 } },
+      ];
+      return new Response(JSON.stringify(pairs), { status: 200 });
+    }
     if (!String(url).startsWith(PRICING_URL)) return web.fetchImpl(url, init);
     api.asked.push(String(url));
     if (api.status !== 200) return new Response(JSON.stringify({ error: { code: "unavailable" } }), { status: api.status });
@@ -1088,6 +1102,7 @@ test("a StonkFun launch end to end: priced in its free stock pair, StonkFun's pr
   const s = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
   assert.deepEqual([s.outcome, s.launched, s.code], ["launched", true, 0]);
   assert.deepEqual(api.asked, [`${PRICING_URL}?quoteMint=${STOCK.mint}`], "the pricing, once, for this stock");
+  assert.deepEqual(api.dexAsked, [`${DEXSCREENER_TOKENS_URL}/${WRAPPED_SOL_MINT}`, `${DEXSCREENER_TOKENS_URL}/${STOCK.mint}`], "both prices anchored on DexScreener before the build");
   const methods = sol.methods();
   assert.ok(methods.indexOf("getMultipleAccounts") < methods.indexOf("simulateTransaction"));
   assert.ok(sol.calls.some((x) => x.method === "getMultipleAccounts" && x.params[0][0] === api.configId), "the config StonkFun named, read back before the build");
@@ -1131,9 +1146,14 @@ test("a StonkFun launch end to end: priced in its free stock pair, StonkFun's pr
   assert.deepEqual([next.row.venue, next.route.reason], ["pump-sol", "pair_taken"]);
 });
 
-test("the fallback, before the send only: StonkFun's pricing down, its config wrong, its simulation failing, its pair taken since prepare: the cat goes out on pump.fun in SOL that run, and the row says why", async () => {
+test("the fallback, before the send only: StonkFun's pricing down, its prices not anchored on DexScreener (down, no pair, a quote price 20% off or scaled by 1e-6 or 1e6), its config wrong, its simulation failing, its pair taken since prepare: the cat goes out on pump.fun in SOL that run, and the row says why", async () => {
   const cases = [
     ["pricing", (h) => { h.api.status = 503; }, /StonkFun answered HTTP 503/, 1],
+    ["DexScreener down", (h) => { h.api.dex = "down"; }, /DexScreener answered HTTP 503/, 1],
+    ["DexScreener no pair", (h) => { h.api.dex = "none"; }, /DexScreener has no pair with a price/, 1],
+    ["quote price 20% off", (h) => { h.api.dex = 1.2; }, /price .* is not within 15% of DexScreener's/, 1],
+    ["quote price scaled by 1e-6", (h) => { h.api.dex = 1e-6; }, /price .* is not within 15% of DexScreener's/, 1],
+    ["quote price scaled by 1e6", (h) => { h.api.dex = 1e6; }, /price .* is not within 15% of DexScreener's/, 1],
     ["config", (h) => { h.sol.accounts.delete(h.api.configId); }, /config for tOpenAI: the config is not a LaunchLab account/, 1],
     ["simulation", (h) => { h.sol.s.simErrOnce = { InstructionError: [2, { Custom: 6001 }] }; }, /the simulation did not pass \(\{"InstructionError"/, 1],
     ["cost", (h) => { h.sol.s.lossOnce = 40_000_000; }, /it would cost 0\.04\d* SOL, more than LAUNCH_MAX_SOL_PER_LAUNCH \(0\.03 SOL\)/, 1],
@@ -1399,6 +1419,51 @@ test("a send answered with an error only after the client posted it again (its f
     // Settled by its signature: launched; the post never goes out twice.
     await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
     assert.deepEqual([t.json(FILES.ledger).launches[0].status, sol.sent.length], ["launched", 1], what);
+  }
+});
+
+test("only a definite preflight or validation failure (-32002, -32602) to the first post is a refusal: an internal error (-32603) to a post that went out and landed keeps the row \"sending\" and settles as launched; one that never landed is failed only by the chain check (its blockhash's expiry)", async () => {
+  for (const [what, code, lands, expect] of [
+    ["-32603 Internal error, landed", -32603, true, { first: "sending", settled: "launched" }],
+    ["-32603 Internal error, never landed", -32603, false, { first: "sending", settled: "failed" }],
+    ["-32000 server error, landed", -32000, true, { first: "sending", settled: "launched" }],
+    ["-32002 preflight failure", -32002, false, { first: "refused" }],
+    ["-32602 invalid params", -32602, false, { first: "refused" }],
+  ]) {
+    const w = throwaway();
+    const t = site({ wallet: w.address });
+    const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+    await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+    web.deployed = true;
+    if (!lands) sol.s.land = "never";
+    let posts = 0;
+    const answering = async (url, init) => {
+      const b = JSON.parse(init.body);
+      if (b.method !== "sendTransaction") return sol.fetchImpl(url, init);
+      posts++;
+      if (code !== -32002 && code !== -32602) await sol.fetchImpl(url, init);   // it reached the node and went out
+      return new Response(JSON.stringify({ jsonrpc: "2.0", id: b.id, error: { code, message: code === -32603 ? "Internal error" : "some error" } }), { status: 200 });
+    };
+    const rpc = createRpc({ url: "https://rpc.example.test", fetchImpl: answering, delayMs: 0, backoffMs: 0, retries: 1 });
+    const r = await send({ io: t.io, env: ON(w), rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
+    assert.equal(posts, 1, what);
+    const row = t.json(FILES.ledger).launches[0];
+    if (expect.first === "refused") {
+      assert.deepEqual([r.outcome, row.status, row.retry, row.tx], ["refused", "failed", true, undefined], what);
+      continue;
+    }
+    assert.deepEqual([r.outcome, r.code, row.status, typeof row.tx, Number.isSafeInteger(row.lastValidBlockHeight)], ["sending", 1, "sending", "string", true], `${what}: never "refused, nothing went out"`);
+    assert.ok(takenNames({ ledger: validateLedger(t.json(FILES.ledger)) }).has("gloop"), `${what}: the name is held`);
+    // Days later (past the post's 48 hours): still settled only by the chain, never closed without a check.
+    c.t += 72 * 3_600_000;
+    if (!lands) sol.s.height = row.lastValidBlockHeight + 1;
+    const statusCalls = sol.methods().filter((m) => m === "getSignatureStatuses").length;
+    await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+    assert.ok(sol.methods().filter((m) => m === "getSignatureStatuses").length > statusCalls, `${what}: a chain check`);
+    const settled = t.json(FILES.ledger).launches.find((x) => x.postId === row.postId);
+    assert.equal(settled.status, expect.settled, what);
+    assert.equal(sol.sent.length, 1, `${what}: the post never goes out twice`);
+    if (!lands) assert.match(settled.reason, /expired/, what);
   }
 });
 
@@ -1734,8 +1799,9 @@ test("the CLI's outputs for the workflow: pending, deploy, launched, recorded", 
 /* ── the shipped files ────────────────────────────────────────────────────────────────── */
 
 /**
- * What the shipped-files test asks of data/launch-approvals.json, which the owner edits by hand (README): its shape,
- * never its layout. An object with an optional note and `approve`, a list of X status ids as strings (a JSON number
+ * The shape the README tells the owner to write data/launch-approvals.json in (checked on fixtures only: the shipped
+ * file is the owner's, and npm test gates every Pages deploy; the launcher reads a file it cannot parse as empty, with a
+ * warning, and ignores an extra key or a malformed id), never its layout. An object with an optional note and `approve`, a list of X status ids as strings (a JSON number
  * that long loses its last digits). Null, or the problem.
  */
 function approvalsFileProblem(text) {
@@ -1748,11 +1814,11 @@ function approvalsFileProblem(text) {
   return null;
 }
 
-test("shipped: the approvals the owner writes by hand are checked for their shape only: the README's own form, on one line or many, with or without the note", () => {
+test("the approvals the owner writes by hand (fixtures): the README's own form, literally, on one line or many, with or without a note, are read by the launcher", () => {
   const form = /`(\{ "approve": \["<post id>"\] \})`/.exec(readRoot("README.md"))?.[1];
   assert.ok(form, "the README shows how to approve a post");
   const id = "2100000000000000777";
-  const note = JSON.parse(readRoot(FILES.approvals)).note;
+  const note = "Posts the owner approves for the automatic launcher.";
   for (const text of [form.replace("<post id>", id), `{ "note": ${JSON.stringify(note)}, "approve": ["${id}"] }\n`, `{\n  "note": ${JSON.stringify(note)},\n  "approve": ["${id}", "2100000000000000778"]\n}\n`,
     `${JSON.stringify({ note, approve: [id] }, null, 2)}\n`, `{"approve":[]}`]) {
     assert.equal(approvalsFileProblem(text), null, text);
@@ -1763,12 +1829,50 @@ test("shipped: the approvals the owner writes by hand are checked for their shap
   }
 });
 
-test("shipped: the ledger, the approvals and every coin's metadata are valid (the ledger and the coins canonical); every row's metadata file is there (exact while in flight)", () => {
+test("a typo, a BOM, an extra key or a number id in data/launch-approvals.json never stops the launcher: it reads what it can, or reads the file as empty with a warning (fixtures)", async () => {
+  const id = "2100000000000000777";
+  for (const [text, approved, warns] of [
+    [`{ "approve": ["${id}"] }`, [id], false],                                      // the README's form, literally
+    [`\uFEFF{ "approve": ["${id}"] }\n`, [id], false],                              // a BOM
+    [`{ "note": "x", "approve": ["${id}"], "mine": true }`, [id], false],            // an extra key
+    [`{ "approve": [${id}, "abc"] }`, [], false],                                  // a number (its digits lost) and a non-id: left out
+    [`{ "approve": ["${id}",], }`, [], true],                                      // a typo: read as empty
+    [`{ "aprove": ["${id}"] }`, [], false],                                        // a misspelt key: nothing approved
+  ]) {
+    const w = throwaway();
+    const t = site({ wallet: w.address });
+    fs.writeFileSync(path.join(t.root, FILES.approvals), text);
+    const logs = [];
+    assert.deepEqual([...approvalsOf(readOwned(t.io, FILES.approvals, { approve: [] }, (l) => logs.push(l)))], approved, text);
+    assert.equal(logs.some((l) => /^::warning.*launch-approvals\.json is not valid JSON; it is read as empty/.test(l)), warns, text);
+    const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root);
+    await assert.doesNotReject(prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: clock().now }), text);
+  }
+});
+
+test("record never stops on a data/cat-watch.json the owner broke: the cat is recorded, the file left as it is, a warning", async () => {
+  const w = throwaway();
+  const t = site({ wallet: w.address });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+  web.deployed = true;
+  assert.equal((await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, ...quick })).outcome, "launched");
+  const broken = '\uFEFF{ "figures": [ { "name": "Nyan Cat" }, ] }\n';
+  fs.writeFileSync(path.join(t.root, FILES.watch), broken);
+  const logs = [];
+  assert.deepEqual(record({ io: t.io, env: ON(w), now: c.now, log: (l) => logs.push(l) }).recorded, ["GLOOP"]);
+  assert.equal(t.read(FILES.watch), broken, "left as the owner wrote it");
+  assert.ok(logs.some((l) => /^::warning.*cat-watch\.json is not valid JSON/.test(l)), logs.join("\n"));
+});
+
+test("shipped: the ledger and every coin's metadata are valid (the ledger and the coins canonical); every row's metadata file is there (exact while in flight)", () => {
   const ledgerRaw = readRoot(FILES.ledger);
   const ledger = validateLedger(JSON.parse(ledgerRaw));
   assert.equal(ledgerText(ledger), ledgerRaw);
-  // The owner edits the approvals by hand: their shape, never their bytes.
-  assert.equal(approvalsFileProblem(readRoot(FILES.approvals)), null);
+  // The approvals are the owner's (edited by hand): only what the launcher needs, which always holds (read, or read as empty with a warning).
+  const logs = [];
+  const approvals = readOwned(fsStore(ROOT), FILES.approvals, { approve: [] }, (l) => logs.push(l));
+  assert.ok(approvalsOf(approvals) instanceof Set && logs.every((l) => /^::warning.*read as empty/.test(l)));
   // A row in flight is sent only with its exact metadata; a launched coin's file is never rewritten (its uri points to it for good).
   for (const row of ledger.launches) {
     if (row.status === "prepared" || row.status === "sending") assert.equal(readRoot(row.metadataPath), metadataText(coinMetadata(row)), row.postId);

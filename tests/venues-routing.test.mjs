@@ -12,9 +12,19 @@ import { watchList, bigQueries, figureQueries } from "../scripts/scan-trending-c
 import { STOCK_PAIRS, validatePlanned } from "../assets/collection.js";
 import { ROOT, DATA_NOW } from "./helpers.mjs";
 import { serialize } from "../scripts/build-collection.mjs";
+import { watchText, readOwned, FILES } from "../scripts/lib/launcher.mjs";
+import { fsStore } from "../scripts/launch.mjs";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, "data", f), "utf8"));
-const WATCH = read("cat-watch.json");
+/*
+ * data/cat-watch.json and data/pump-quotes.json are edited by hand, and npm test gates every Pages deploy (the
+ * launcher's coins are served by Pages): no test here asserts anything of the SHIPPED files but what the launcher
+ * needs of them, which always holds (it parses, or the launcher warns and reads it as empty). The ties' rules are
+ * tested on tests/fixtures/cat-watch.json, a copy of the file as seeded, never on the owner's current file.
+ */
+const WATCH = JSON.parse(fs.readFileSync(path.join(ROOT, "tests/fixtures/cat-watch.json"), "utf8"));
+/** An owner-edited data file as the launcher reads it (scripts/lib/launcher.mjs readOwned): unreadable, `fallback` and a warning. */
+const owned = (rel, fallback) => { const logs = []; return { value: readOwned(fsStore(ROOT), rel, fallback, (l) => logs.push(l)), logs }; };
 const PLANNED = read("planned.json");
 const pair = (symbol) => { const p = STOCK_PAIRS.find((s) => s.symbol === symbol); return { symbol: p.symbol, mint: p.mint }; };
 const MEOW = Object.freeze({ symbol: "MEOW", mint: "MEoWkY1hD4n8vUe8vNQ4yLzVz9Hq1zVQf7mH3ZcVb2p", tokenProgram: TOKEN_2022_PROGRAM });
@@ -51,24 +61,24 @@ function watchTieProblems(watch) {
   return out;
 }
 
-/** What the shipped-files tests ask of data/pump-quotes.json, which the owner edits by hand: valid, every row accepted (the Collection's builder stops on a refused one), its note kept. Returns the problems. */
+/** A data/pump-quotes.json text an owner might write: valid, every row accepted (the Collection's builder stops on a refused one). Returns the problems. Checked on fixtures only, never on the shipped file. */
 function pumpQuotesFileProblems(text) {
   let file;
   try { file = JSON.parse(text); } catch { return ["not JSON"]; }
   const v = validatePumpQuotes(file), out = v.refused.map((r) => `row ${r.index}: ${r.detail}`);
   if (!Array.isArray(file?.quotes)) out.push("quotes is not a list");
-  for (const re of [/unverified/, /opts in/, /never remove/]) if (!re.test(file?.note ?? "")) out.push(`the note no longer says ${re}`);
   return out;
 }
 
-test("data/cat-watch.json's ties: every stock is one of the stock pairs, only watched companies are tied, no politician; seeded with stocks only; watchList and every query are unchanged by them", () => {
+test("data/cat-watch.json's ties (as seeded: tests/fixtures/cat-watch.json): every stock is one of the stock pairs, only watched companies are tied, no politician; seeded with stocks only; watchList and every query are unchanged by them", () => {
   assert.deepEqual(watchTieProblems(WATCH), []);
   const links = Object.entries(WATCH.accountLinks);
   assert.ok(links.length >= 10, "the companies with a stock pair are seeded");
   assert.match(WATCH.linksNote, /the owner may add, change or remove/);
   // The owner's edits the note allows pass the same check, however the file is laid out: a coin tie (with the opt-in), a
-  // figure tied to a stock, the one-line accountLinks wrapped over several lines.
-  const text = fs.readFileSync(path.join(ROOT, "data/cat-watch.json"), "utf8");
+  // figure tied to a stock, the one-line accountLinks wrapped over several lines. The one-line layout is made here (the
+  // launcher's own writer, watchText), never taken from a file the owner may have laid out otherwise.
+  const text = watchText(WATCH);
   const wrapped = text.replace(/\n "accountLinks": \{ /, '\n "accountLinks": {\n  ').replace(/\}, "([A-Za-z0-9_]+)": \{/g, '},\n  "$1": {');
   const edited = { ...JSON.parse(wrapped), accountLinks: { ...WATCH.accountLinks, pumpdotfun: { pumpQuote: { symbol: "MEOW", mint: MEOW.mint } } },
     figures: WATCH.figures.map((f, i) => (i === 0 ? { ...f, stock: "tOpenAI" } : f)), bigAccounts: [...WATCH.bigAccounts, "pumpdotfun"] };
@@ -179,9 +189,9 @@ test("chooseVenue: SOL by default; a company's stock on StonkFun unless its pair
   assert.deepEqual(venueLinks(both, TEST_WATCH), [{ from: "figure", stock: "tKalshi" }, { from: "account", stock: "tOpenAI" }]);
 });
 
-test("with the shipped data: every tied company launches on StonkFun exactly when its pair is free (today only OpenAI, on tOpenAI), otherwise in SOL", () => {
+test("with the seeded ties and the shipped sanctuary data: every tied company launches on StonkFun exactly when its pair is free (today only OpenAI, on tOpenAI), otherwise in SOL", () => {
   const usedPairs = usedStockPairs({ planned: PLANNED, collection: read("collection.json"), adoptables: read("adoptables.json") });
-  const pumpQuotes = validatePumpQuotes(read("pump-quotes.json")).quotes;
+  const pumpQuotes = validatePumpQuotes(owned(FILES.pumpQuotes, { quotes: [] }).value).quotes;
   const routes = {};
   for (const [handle, link] of Object.entries(WATCH.accountLinks)) {
     const v = chooseVenue(post({ bigAccount: handle, catName: "Mochi" }), WATCH, { usedPairs, pumpQuotes });
@@ -193,13 +203,62 @@ test("with the shipped data: every tied company launches on StonkFun exactly whe
   assert.deepEqual(chooseVenue(post({ catName: "Mochi" }), WATCH, { usedPairs, pumpQuotes }), { id: "pump-sol", reason: "default" }, "an ordinary cat: pump.fun in SOL");
 });
 
-test("data/pump-quotes.json is valid, every row accepted, its note kept; a coin the owner lists (as the note says, however it is laid out) passes the same check (no coin-priced launch until the owner lists one and opts in)", () => {
-  const text = fs.readFileSync(path.join(ROOT, "data/pump-quotes.json"), "utf8");
-  assert.deepEqual(pumpQuotesFileProblems(text), []);
-  const file = JSON.parse(text);
+test("a data/pump-quotes.json the owner writes (as its note says, however it is laid out) passes; a refused row is found (no coin-priced launch until the owner lists one and opts in)", () => {
+  const file = { note: "The coins a sanctuary pump.fun launch may be priced in, edited by hand.", quotes: [] };
+  assert.deepEqual(pumpQuotesFileProblems(serialize(file)), []);
   const bonk = { symbol: "BONK", mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263", tokenProgram: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" };
   assert.deepEqual(pumpQuotesFileProblems(serialize({ ...file, quotes: [bonk] })), []);
   assert.deepEqual(pumpQuotesFileProblems(JSON.stringify({ ...file, quotes: [bonk] })), [], "on one line");
+  assert.deepEqual(pumpQuotesFileProblems(JSON.stringify({ quotes: [bonk] })), [], "with no note");
   assert.match(pumpQuotesFileProblems(serialize({ ...file, quotes: [{ ...bonk, tokenProgram: "nope" }] })).join(), /row 0/, "a refused row (the Collection's builder would stop)");
   assert.match(pumpQuotesFileProblems(serialize({ ...file, quotes: [{ symbol: "SOL", mint: "So11111111111111111111111111111111111111112", tokenProgram: bonk.tokenProgram }] })).join(), /row 0/);
+});
+
+test("owner-edited files never stop the launcher: a typo, a BOM, an extra key or any layout in data/cat-watch.json or data/pump-quotes.json is read as empty with a warning, or read as it is (fixtures)", () => {
+  const dir = fs.mkdtempSync(path.join(ROOT, "tests", ".tmp-owned-"));
+  try {
+    const io = fsStore(dir);
+    fs.mkdirSync(path.join(dir, "data"));
+    const readAs = (rel, text, fallback) => { fs.writeFileSync(path.join(dir, rel), text); const logs = []; return { value: readOwned(io, rel, fallback, (l) => logs.push(l)), logs }; };
+    const bonk = { symbol: "BONK", mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263", tokenProgram: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" };
+    // Unreadable: read as empty, with a warning.
+    for (const [rel, text, fallback] of [[FILES.pumpQuotes, '{ "quotes": [ { "symbol": "BONK", } ] ', { quotes: [] }], [FILES.watch, '{ "figures": [ { "name": "Nyan Cat" }, ] }', { figures: [] }]]) {
+      const r = readAs(rel, text, fallback);
+      assert.deepEqual(r.value, fallback, rel);
+      assert.ok(r.logs.some((l) => /^::warning.*is not valid JSON; it is read as empty/.test(l)), rel);
+    }
+    // A BOM, an extra key, another layout: read as it is, no warning.
+    const q = readAs(FILES.pumpQuotes, `\uFEFF${JSON.stringify({ quotes: [bonk] }, null, 4)}`, { quotes: [] });
+    assert.deepEqual([validatePumpQuotes(q.value).quotes.map((x) => x.symbol), q.logs], [["BONK"], []]);
+    // An extra key there is refused by the one rule the builder and the page share: the launcher then warns and prices no cat in a coin (quotesOf).
+    const x = readAs(FILES.pumpQuotes, JSON.stringify({ quotes: [bonk], extra: 1 }), { quotes: [] });
+    assert.deepEqual([validatePumpQuotes(x.value).quotes, validatePumpQuotes(x.value).refused.length > 0], [[], true]);
+    const w = readAs(FILES.watch, `\uFEFF${JSON.stringify({ ...WATCH, myNotes: "x" }, null, 2)}`, { figures: [] });
+    assert.deepEqual([w.value.accountLinks, w.logs], [WATCH.accountLinks, []]);
+    assert.equal(chooseVenue(post({ bigAccount: "OpenAI", catName: "Mochi" }), w.value, { usedPairs: [] }).id, "stonkfun", "its ties still route");
+    // A tie the owner got wrong is skipped by the router, never a stop.
+    const bad = { ...WATCH, accountLinks: { ...WATCH.accountLinks, OpenAI: { stock: "NOPE" } } };
+    assert.deepEqual(chooseVenue(post({ bigAccount: "OpenAI", catName: "Mochi" }), bad, { usedPairs: [] }), { id: "pump-sol", reason: "default" });
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+test("the shipped data/cat-watch.json and data/pump-quotes.json: only what the launcher needs (it reads them, or warns and reads them as empty), whatever their layout: as they are, pretty-printed or re-wrapped", () => {
+  for (const [rel, fallback] of [[FILES.watch, { figures: [] }], [FILES.pumpQuotes, { quotes: [] }]]) {
+    const r = owned(rel, fallback);
+    assert.ok(r.logs.length === 0 || r.logs.every((l) => /^::warning.*read as empty/.test(l)), rel);
+    if (r.value === fallback) continue;                              // unreadable: the launcher reads it as empty, and so do these tests
+    for (const text of [JSON.stringify(r.value, null, 2), JSON.stringify(r.value), rel === FILES.watch ? watchText(r.value) : serialize(r.value)]) {
+      assert.doesNotThrow(() => (rel === FILES.watch ? chooseVenue(post({ bigAccount: "OpenAI", catName: "Mochi" }), JSON.parse(text), { usedPairs: [] }) : validatePumpQuotes(JSON.parse(text))), rel);
+    }
+  }
+  // The seeded ties' test wraps a one-line layout made by construction: however the real file is laid out, it still wraps.
+  const real = owned(FILES.watch, null).value;
+  if (real && typeof real === "object" && !Array.isArray(real)) {
+    for (const layout of [JSON.stringify(real, null, 2), JSON.stringify(real)]) {
+      const text = watchText(JSON.parse(layout));
+      const wrapped = text.replace(/\n "accountLinks": \{ /, '\n "accountLinks": {\n  ').replace(/\}, "([A-Za-z0-9_]+)": \{/g, '},\n  "$1": {');
+      if (Object.keys(real.accountLinks ?? {}).length) assert.notEqual(wrapped, text);
+      assert.deepEqual(JSON.parse(wrapped), JSON.parse(text));
+    }
+  }
 });

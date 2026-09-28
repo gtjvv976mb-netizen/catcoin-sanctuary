@@ -177,7 +177,7 @@ test("the read-back of a coin-priced launch: its bonding curve must be priced in
   assert.deepEqual(checkPumpAccounts(solProof.launch, sol.accounts.get(sol.mint), sol.accounts.get(sol.curve)), { ok: true }, "a SOL curve is not read for a quote");
 });
 
-/* (That data/pump-quotes.json ships empty is a content check: tests/venues-routing.test.mjs has it, so this file,
+/* (data/pump-quotes.json is the owner's, edited by hand: no test asserts its content (tests/venues-routing.test.mjs checks the owner's forms on fixtures), and this file,
    which gates the hourly Collection with the builder's own tests, never holds up the recording of a launch.) */
 test("validatePumpQuotes' rules (one rule for the builder, the bots and the page: assets/collection.js)", () => {
   const refused = (quotes, pattern) => {

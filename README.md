@@ -149,9 +149,10 @@ trend watch commits new candidates (`data/trending-cats.json`). It launches at m
   (no such launch has been recorded yet, so this venue is unverified and off by default).
 
 StonkFun's numbers come from its public pricing API, fetched right before each build (the raise
-follows the stock's price), bounded, and checked against LaunchLab's config read over the RPC. A
+follows the stock's price), bounded, its SOL and stock prices anchored independently on DexScreener
+(each within 15%), and checked against LaunchLab's config read over the RPC. A
 StonkFun or coin-priced launch that fails at any step **before it is sent** (its pair taken
-meanwhile, the pricing, the config, the opt-in, the build, the simulation, a cost over the
+meanwhile, the pricing or its DexScreener anchor, the config, the opt-in, the build, the simulation, a cost over the
 per-launch cap) goes out on pump.fun in SOL that run instead, and its ledger row says why
 (`fallback`); nothing ever falls back after a send. Every venue serves the same metadata, and a cat
 is only prepared when its coin and its X post would pass on pump.fun in SOL too.

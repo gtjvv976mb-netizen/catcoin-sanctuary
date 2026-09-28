@@ -70,9 +70,11 @@
  *            24 hours' spend plus this one is within LAUNCH_MAX_SOL_PER_DAY and the balance stays at or
  *            above LAUNCH_MIN_BALANCE_SOL. In dry mode it stops there, having signed nothing. Otherwise,
  *            the wallet still listed, it signs, writes the row "sending", sends, and confirms with
- *            bounded polling. An error the RPC answers to the first and only post is a refusal (failed,
- *            nothing went out); any other failure of the send leaves the row "sending", settled later
- *            by its signature.
+ *            bounded polling. Only a definite preflight or validation failure (REFUSAL_CODES: -32002,
+ *            -32602) answered to the first and only post is a refusal (failed, nothing went out);
+ *            any other error, or no answer, leaves the row "sending" with its tx, settled later by a
+ *            chain check (its signature, or its blockhash's expiry). A row that ever went out is
+ *            never closed as failed without that chain check.
  *   record   for each launched row not recorded yet: its tx in data/launches.json (the Collection proves
  *            it first), the cat in data/adoptables.json with its `launch` (which the announcer holds by
  *            rule: the X post is scripts/post-updates.mjs's, once the Collection has proved the mint;
@@ -383,9 +385,13 @@ export function collectionRoom({ collection, planned, ledger }) {
 
 /* ── choosing a cat ────────────────────────────────────────────────────────────────────── */
 
-/** data/launch-approvals.json { note, approve: [postIds] } as a Set of post ids (malformed entries left out). */
+/**
+ * data/launch-approvals.json { note, approve: [postIds] } as a Set of post ids (malformed entries left out, and so is
+ * an id written as a JSON number past 2^53: its last digits are lost, so it would name another post).
+ */
 export function approvalsOf(data) {
-  return new Set((Array.isArray(data?.approve) ? data.approve : []).map((v) => String(v ?? "").trim()).filter((v) => X_POST_ID.test(v)));
+  return new Set((Array.isArray(data?.approve) ? data.approve : []).filter((v) => typeof v === "string" || Number.isSafeInteger(v))
+    .map((v) => String(v).trim()).filter((v) => X_POST_ID.test(v)));
 }
 
 /** The watch-list figures (data/cat-watch.json), by name. */
@@ -783,7 +789,7 @@ export async function mintOnChain({ rpc, venue, wallet, mint, row, others = [], 
 const readJson = (io, rel, fallback) => {
   const text = io.readText(rel);
   if (text === null || text === undefined) return fallback;
-  try { return JSON.parse(text); } catch { throw new LaunchError(`${rel} is not valid JSON`); }
+  try { return JSON.parse(text.replace(/^\uFEFF/, "")); } catch { throw new LaunchError(`${rel} is not valid JSON`); }
 };
 const json2 = (v) => `${JSON.stringify(v, null, 2)}\n`;
 const json1 = (v) => `${JSON.stringify(v, null, 1)}\n`;
@@ -831,7 +837,7 @@ function quotesOf(io, log = () => {}) {
  * data/cat-watch.json, data/pump-quotes.json): unreadable, it is read as `fallback` (no approvals, no
  * figures, no coins) with a warning, so a typo there never stops the launcher from settling what it sent.
  */
-const readOwned = (io, rel, fallback, log) => {
+export const readOwned = (io, rel, fallback, log = () => {}) => {
   try { return readJson(io, rel, fallback); } catch (e) { log(`::warning title=Launcher::${e.message}; it is read as empty until it is fixed.`); return fallback; }
 };
 
@@ -938,6 +944,16 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
 export const TRANSIENT_SIMULATION = Object.freeze(["BlockhashNotFound", "AccountInUse"]);
 /** A send refused as a copy of a transaction the chain already has: it went out. */
 const ALREADY_PROCESSED = /already (?:been )?processed/i;
+/**
+ * The JSON-RPC error codes that prove a sendTransaction was never accepted: -32002
+ * (SendTransactionPreflightFailure: the node simulated it and refused it before forwarding it) and
+ * -32602 (invalid params: the transaction could not be decoded or sanitized). Nothing else is a refusal.
+ */
+export const REFUSAL_CODES = Object.freeze([-32002, -32602]);
+/** Whether a sendTransaction error proves nothing went out: a REFUSAL_CODES answer to the first and only post, not "already processed". */
+export function isRefusal(e) {
+  return e instanceof RpcError && REFUSAL_CODES.includes(e.code) && e.posts === 1 && !ALREADY_PROCESSED.test(String(e.message));
+}
 /** A serialized transaction's message (base64 in, base64 out): what its signatures sign. */
 function messageOf(base64) {
   const bytes = Buffer.from(base64, "base64");
@@ -1147,10 +1163,12 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     if (sig !== signature) log(`::warning title=Launcher::the RPC named the transaction ${String(sig).slice(0, 12)}…, not ${signature.slice(0, 12)}…`);
   } catch (e) {
     const why = scrub(String(e?.message ?? e));                    // what reaches the log and the ledger (committed) never carries a secret
-    // A refusal is an error the node answered to the FIRST and only post of the transaction (its preflight refused it, so
-    // nothing went out). An error answered to a repeated post (the first may have gone out before its answer was lost), or
-    // one saying the chain already has it, is no refusal: the row stays "sending" and is settled by its signature.
-    if (e instanceof RpcError && e.code !== null && e.posts === 1 && !ALREADY_PROCESSED.test(String(e.message))) {
+    // A refusal is ONLY a definite preflight or validation failure (REFUSAL_CODES) the node answered to the FIRST and only
+    // post of the transaction: it was never accepted, so nothing went out. Any other error (an internal error, say: the
+    // node may have forwarded it before failing), an error answered to a repeated post (the first may have gone out before
+    // its answer was lost), one saying the chain already has it, or no answer at all is no refusal: the row stays
+    // "sending" with its tx and lastValidBlockHeight and is settled by a chain check (its signature, or its blockhash's expiry).
+    if (isRefusal(e)) {
       log(`::warning title=Launcher::${row.ticker}: the RPC refused the launch (${why}); nothing went out.`);
       row = { ...row, status: "failed", retry: true, reason: `the RPC refused it: ${why}`.slice(0, 300), settledAt: ISO_SECONDS(now()) };
       delete row.tx; delete row.lastValidBlockHeight;
@@ -1203,7 +1221,7 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     collection: readJson(io, FILES.collection, { cats: [] }),
     photos: readJson(io, FILES.realPhotos, { cats: {} }),
     meshy: readJson(io, FILES.meshy, { cats: {} }),
-    watch: readJson(io, FILES.watch, null),
+    watch: readOwned(io, FILES.watch, null, log),                 // edited by hand: unreadable, left as it is (a warning)
   };
   const before = Object.fromEntries(Object.entries(files).map(([k, v]) => [k, JSON.stringify(v)]));
   const plannedTickers = new Set((files.planned.cats ?? []).map((c) => c.ticker));

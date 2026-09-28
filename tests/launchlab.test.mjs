@@ -11,8 +11,8 @@ import path from "node:path";
 import { randomBytes } from "node:crypto";
 import {
   PRICING_URL, PRICING_MAX_AGE_MS, LAUNCHLAB_LIMITS, LAUNCH_DEFAULTS, MAX_PRIORITY_FEE_LAMPORTS, PricingError,
-  STANDARD_SUPPLY, STANDARD_SALE, STANDARD_RAISE_SOL, RAISE_TOLERANCE,
-  fetchPricing, pricingFromAnswer, checkPricingConfig, encodeInitializeData, initializeAccounts, initializeWithToken2022Instruction,
+  STANDARD_SUPPLY, STANDARD_SALE, STANDARD_RAISE_SOL, RAISE_TOLERANCE, DEXSCREENER_TOKENS_URL, WRAPPED_SOL_MINT, PRICE_ANCHOR_TOLERANCE,
+  fetchPricing, anchorPricing, dexScreenerPriceUsd, pricingFromAnswer, checkPricingConfig, encodeInitializeData, initializeAccounts, initializeWithToken2022Instruction,
   buildInitializeWithToken2022, buildLaunchTransaction, checkLaunchMessage, signLaunchTransaction,
 } from "../scripts/lib/launchlab.mjs";
 import {
@@ -41,6 +41,62 @@ function fakeFetch(body, { status = 200, text } = {}) {
 }
 /** The pricing a real answer gives, read one second after StonkFun wrote it. */
 const pricingOf = (a) => pricingFromAnswer(structuredClone(a.body), a.body.data.quote.mint, { nowMs: Date.parse(a.body.data.prices.observedAt) + 1000 });
+
+/* ── the prices, anchored on DexScreener ─────────────────────────────────────────────────── */
+
+/** A fake DexScreener: each mint's pairs as `prices` gives them ({ mint: priceUsd }), a deep pair and a thin one at 3 times the price; `status` for an outage. Records every URL asked. */
+function fakeDex(prices, { status = 200, throws = false } = {}) {
+  const asked = [];
+  const fetchImpl = async (url) => {
+    asked.push(String(url));
+    if (throws) throw new TypeError("fetch failed");
+    if (!String(url).startsWith(`${DEXSCREENER_TOKENS_URL}/`)) throw new Error(`no network: ${url}`);
+    if (status !== 200) return new Response("busy", { status });
+    const mint = String(url).slice(DEXSCREENER_TOKENS_URL.length + 1), price = prices[mint];
+    const pairs = price === undefined ? [] : [
+      { chainId: "solana", baseToken: { address: mint }, quoteToken: { address: "x" }, priceUsd: String(price * 3), liquidity: { usd: 100 } },
+      { chainId: "solana", baseToken: { address: mint }, quoteToken: { address: "y" }, priceUsd: String(price), liquidity: { usd: 9_000_000 } },
+      { chainId: "solana", baseToken: { address: "other" }, quoteToken: { address: mint }, priceUsd: "0.0001", liquidity: { usd: 99_000_000 } },
+    ];
+    return new Response(JSON.stringify(pairs), { status: 200 });
+  };
+  return { fetchImpl, asked };
+}
+
+test("both prices of a StonkFun answer are anchored on DexScreener before a build: matching prices pass; an answer whose quote price and raise are scaled together (1e-6..1e6) passes its own raise bound but is refused here; DexScreener down or with no pair: refused (the launcher then falls back to pump.fun in SOL); no network", async () => {
+  assert.equal(DEXSCREENER_TOKENS_URL, "https://api.dexscreener.com/tokens/v1/solana");
+  assert.equal(PRICE_ANCHOR_TOLERANCE, 0.15);
+  for (const a of PRICING.answers) {
+    const mint = a.body.data.quote.mint, at = Date.parse(a.body.data.prices.observedAt) + 1000;
+    const { solUsd, quoteUsd } = a.body.data.prices;
+    const p = pricingOf(a);
+    const ok = fakeDex({ [WRAPPED_SOL_MINT]: solUsd, [mint]: quoteUsd });
+    assert.deepEqual(await anchorPricing(p, ok.fetchImpl), { solUsd, quoteUsd }, "the most liquid pair with the mint as its base");
+    assert.deepEqual(ok.asked, [`${DEXSCREENER_TOKENS_URL}/${WRAPPED_SOL_MINT}`, `${DEXSCREENER_TOKENS_URL}/${mint}`]);
+    // Within 15% either way: passes; past it: refused.
+    for (const f of [0.9, 1.1]) await anchorPricing(p, fakeDex({ [WRAPPED_SOL_MINT]: solUsd * f, [mint]: quoteUsd / f }).fetchImpl);
+    await assert.rejects(anchorPricing(p, fakeDex({ [WRAPPED_SOL_MINT]: solUsd * 1.3, [mint]: quoteUsd }).fetchImpl), (e) => e instanceof PricingError && /SOL price .* not within 15%/.test(e.message));
+    await assert.rejects(anchorPricing(p, fakeDex({ [WRAPPED_SOL_MINT]: solUsd, [mint]: quoteUsd * 0.8 }).fetchImpl), (e) => e instanceof PricingError && /not within 15%/.test(e.message));
+    // The probe: raise and quoteUsd scaled by f and 1/f pass the answer's own bound, and are refused once anchored.
+    for (const f of [1e-6, 1e-3, 0.5, 2, 1e3, 1e6]) {
+      const body = structuredClone(a.body);
+      body.data.raise.raw = String(BigInt(Math.round(Number(body.data.raise.raw) * f)));
+      body.data.prices.quoteUsd = quoteUsd / f;
+      let scaled;
+      try { scaled = pricingFromAnswer(body, mint, { nowMs: at }); } catch { continue; }   // (a raise under its own minimum is refused already)
+      await assert.rejects(anchorPricing(scaled, ok.fetchImpl), (e) => e instanceof PricingError && /not within 15%/.test(e.message), `scaled by ${f}`);
+    }
+    // DexScreener down, unreachable, not JSON, or no pair with a price: refused.
+    await assert.rejects(anchorPricing(p, fakeDex({}, { status: 503 }).fetchImpl), /DexScreener answered HTTP 503/);
+    await assert.rejects(anchorPricing(p, fakeDex({}, { throws: true }).fetchImpl), /DexScreener could not be reached/);
+    await assert.rejects(anchorPricing(p, fakeDex({ [WRAPPED_SOL_MINT]: solUsd }).fetchImpl), /no pair with a price/);
+    await assert.rejects(anchorPricing(p, async () => new Response("<html>", { status: 200 })), /not JSON/);
+    await assert.rejects(anchorPricing(p, async () => new Response(JSON.stringify([{ chainId: "solana", baseToken: { address: WRAPPED_SOL_MINT }, priceUsd: "abc" }]), { status: 200 })), /no pair with a price/);
+    await assert.rejects(anchorPricing({ ...p, prices: undefined }, ok.fetchImpl), /no prices/);
+  }
+  assert.equal(await dexScreenerPriceUsd(WRAPPED_SOL_MINT, fakeDex({ [WRAPPED_SOL_MINT]: 150 }).fetchImpl), 150);
+  await assert.rejects(dexScreenerPriceUsd("nope", fakeDex({}).fetchImpl), TypeError);
+});
 
 /* ── the recorded launches' initialize, and their message flags ─────────────────────────── */
 
