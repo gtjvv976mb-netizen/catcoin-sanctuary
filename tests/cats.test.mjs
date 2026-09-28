@@ -345,6 +345,22 @@ if (!isMainThread) {
     assert.deepEqual(trace(), trace());
   });
 
+  test("a cat whose own model can't show an action (traits.avoid, traits.js MODEL_LIMITS) never shows it, in the garden or the Hall", async () => {
+    const { MODEL_LIMITS } = await import("../assets/world/traits.js");
+    const limits = Object.values(MODEL_LIMITS).map((m) => m.avoid);
+    assert.ok(limits.length >= 4 && limits.every((a) => a.length && a.every((x) => ACTIONS[x])), "MODEL_LIMITS names real actions");
+    // (every other cat one with a limit, in turn: standing only, or Pusheen's no-paw-to-the-face)
+    const residents = Array.from({ length: 40 }, (_, i) => ({ id: `CAT${i}`, name: `Cat ${i}`, traits: { sleepy: 0.8, playful: 0.8, hunter: 0.8, avoid: i % 2 ? limits[(i >> 1) % limits.length] : [] } }));
+    const check = (cats, label) => { for (const c of cats) for (const x of c.traits.avoid || []) assert.notEqual(c.motion.action, x, `${label} ${c.id} shows ${x}, which its model can't`); };
+    const sim = createSanctuary({ residents, reduced: false, critters: null });
+    const seen = new Set();
+    for (let f = 0; f < 180 / DT; f++) { sim.update(DT); if (f % 3 === 0) { check(sim.cats, "garden"); for (const c of sim.cats) if (c.traits.avoid?.length) seen.add(c.motion.action); } }
+    assert.ok(seen.has("stand") && [...seen].some((a) => ACTIONS[a].kind === "gait"), "they still stand about and walk");
+    const m = createMeadow({ residents: residents.slice(0, 16), startIndex: 247 });
+    const H = L.HALL_OF_FAME; m.setFocus(H.x, H.z, H.x, H.z + 20);
+    for (let f = 0; f < 180 / DT; f++) { m.update(DT); if (f % 3 === 0) check(m.cats, "Hall"); }
+  });
+
   test("with reduced motion every cat settles still, and later gets up properly", () => {
     const residents = Array.from({ length: 30 }, (_, i) => ({ id: `CAT${i}`, name: `Cat ${i}` }));
     const sim = createSanctuary({ residents, reduced: true, critters: null });

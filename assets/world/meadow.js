@@ -85,7 +85,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
   function makeCat(r, home, rnd) {
     const t = traitsFrom(r.traits), style = { tempo: 1, ...(r.style && typeof r.style === "object" ? r.style : {}) };
     const old = t.age === "senior", kit = t.age === "kitten", sig = t.signature;
-    const j = () => rnd.range(0.93, 1.07);
+    const j = () => rnd.range(0.93, 1.07), start = allowedAction(t, "sit"); // (sitting, or standing if its own model can't sit)
     const c = {
       id: r.id, name: r.name, model: r.model === "ginger" ? "ginger" : "cat", index: 0, tier: r.tier, meadow: true, hall: true,
       rnd, home, traits: t, style, gentle: t.flags.includes("gentle"), size: sizeOf({ style }),
@@ -101,15 +101,15 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
         fidget: clamp(0.25 + 0.25 * t.energy + 0.15 * t.curious - 0.15 * t.sleepy, 0.12, 0.6),
       },
       x: home.x, y: 0, z: home.z, yaw: rnd.range(-Math.PI, Math.PI), speed: 0,
-      posture: "sit",
-      motion: { action: "sit", posture: "sit", gait: null, u: null, odometer: 0, yawRate: 0, look: null, since: 0 },
-      pose: "sit", poseSince: 0, prevPose: "sit",
+      posture: start,
+      motion: { action: start, posture: start, gait: null, u: null, odometer: 0, yawRate: 0, look: null, since: 0 },
+      pose: POSTURE_POSE[start] || "sit", poseSince: 0, prevPose: POSTURE_POSE[start] || "sit",
       anim: { bob: 0, pitch: 0, pivot: 0, roll: 0, rollY: 0, sx: 1, sy: 1, sz: 1 }, rollS: 0,
       plan: [], si: 0, st: 0, started: false, kind: "rest", clip: null, dest: null,
       phase: rnd.range(0, 100), stride: 0, doing: SAY.look, moving: false,
       acc: 0, hidden: true, appear: 0, state: "frozen",
-      px: home.x, pz: home.z, pyaw: 0, wa: "sit", wu: null, stalk: false, runIntent: false, pivoting: false, brakeT: Infinity,
-      gaitSince: 0, moveSince: 0, slowFor: 0, stopUntil: 0, lookAt: { x: 0, y: 0, z: 0 }, lookOn: false, hopPitch: 0, wantV: 0, lastWa: "sit", crowdT: 0,
+      px: home.x, pz: home.z, pyaw: 0, wa: start, wu: null, stalk: false, runIntent: false, pivoting: false, brakeT: Infinity,
+      gaitSince: 0, moveSince: 0, slowFor: 0, stopUntil: 0, lookAt: { x: 0, y: 0, z: 0 }, lookOn: false, hopPitch: 0, wantV: 0, lastWa: start, crowdT: 0,
     };
     return c;
   }
@@ -420,9 +420,9 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
   function settleAll() {
     for (const c of cats) {
       c.x = c.home.x; c.z = c.home.z; c.dest = null;
-      const pose = c.rnd.pick(["sit", "loaf", "sleep", "loaf"]);
+      const pose = allowedAction(c.traits, c.rnd.pick(["sit", "loaf", "sleep", "loaf"])); // (one whose model can't sit or lie stands)
       snapMotion(c, pose, time);
-      c.doing = pose === "sleep" ? SAY.sleep : pose === "sit" ? SAY.look : SAY.loaf;
+      c.doing = pose === "sleep" ? SAY.sleep : pose === "loaf" ? SAY.loaf : SAY.look;
       c.plan = [hold(pose, Infinity, c.doing, { fidget: false })]; c.si = 0; c.started = true; c.st = 0; c.fid = null;
       c.clip = null; c.speed = 0; c.moving = false; c.kind = "rest";
       c.y = L.groundHeight(c.x, c.z);

@@ -43,12 +43,16 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const TH = { sheet: 700, spike: 0.2, crush: 0.3, under: 0.05, swing: 0.3, pop: 40 };
 /** Clips posed on their own (u at four points): the everyday ones (sit, groom, loaf, curlUp, sleep) and
     those the survey found broken on at least a tenth of the herd's far copies. */
-export const CLIPS = ["sit", "groom", "loaf", "curlUp", "sleep", "wake", "legLick", "earScratch", "roll", "hindStand", "stalk", "pounce", "sitToLie", "lieToSit"];
+export const CLIPS = ["sit", "groom", "loaf", "curlUp", "sleep", "wake", "legLick", "earScratch", "roll", "hindStand", "stalk", "pounce", "sitToLie", "lieToSit",
+  // (and those the final survey round found broken on a tenth of the herd or more: claws on the trunk, a hop
+  // (the head folded into the shoulders at take-off), sitting and lying down (the hocks and elbows sunk in
+  // the lawn), and the gaits of the models that can do little else)
+  "scratch", "hop", "sitDown", "lieDown", "getUp", "walk", "trot"];
 /** Sequences the controller is run through (as the sims play them; posture changes as their clips). */
 export const SEQS = [
   ["sit", "groom", "sit"], ["sit", "legLick", "sit"], ["sit", "earScratch", "sit"], ["sit", "beckon", "sit"],
   ["loaf", "flop", "roll", "flop", "loaf"], ["flop", "getUp", "stand"], ["loaf", "roll", "loaf"], ["loaf", "dab", "loaf"],
-  ["stand", "hindStand", "stand"], ["loaf", "curlUp", "sleep", "wake", "loaf"],
+  ["stand", "hindStand", "stand"], ["loaf", "curlUp", "sleep", "wake", "loaf"], ["stand", "scratch", "stand"],
 ];
 
 if (isMainThread) {

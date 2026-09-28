@@ -390,24 +390,25 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       knead: clamp(0.15 + 0.35 * t.social + 0.25 * t.sleepy + (sig === "lapClaim" ? 0.5 : 0), 0.05, 0.95),
       fidget: clamp(0.25 + 0.25 * t.energy + 0.15 * t.curious - 0.15 * t.sleepy, 0.12, 0.6),
     };
-    const need = (bias = 0) => clamp(rnd.range(0.05, 0.85) + bias, 0.02, 0.95);
+    const need = (bias = 0) => clamp(rnd.range(0.05, 0.85) + bias, 0.02, 0.95), start = allowedAction(t, "sit");
     const needs = { sleep: need((t.sleepy - 0.5) * 0.4), hunger: need((t.foodie - 0.5) * 0.2), thirst: need(), play: need((t.playful - 0.5) * 0.3), groom: need(), social: need((t.social - 0.5) * 0.2), explore: need((t.curious - 0.5) * 0.2) };
     return {
       id: r.id, name: r.name, model: r.model === "ginger" ? "ginger" : "cat", index: i,
       rnd, traits: t, style, tune, p, needs, size: sizeOf({ style }),
       kitten: kit, gentle, blind, lazy: t.energy < 0.3 || (old && t.energy < 0.45),
       x: 0, y: 0, z: 0, yaw: rnd.range(-Math.PI, Math.PI), speed: 0,
-      posture: "sit",
-      motion: { action: "sit", posture: "sit", gait: null, u: null, odometer: 0, yawRate: 0, look: null, since: 0 },
-      pose: "sit", poseSince: 0, prevPose: "sit",
+      // (it starts sitting, or standing if its own model can't sit: traits.avoid)
+      posture: start,
+      motion: { action: start, posture: start, gait: null, u: null, odometer: 0, yawRate: 0, look: null, since: 0 },
+      pose: POSTURE_POSE[start] || "sit", poseSince: 0, prevPose: POSTURE_POSE[start] || "sit",
       anim: { bob: 0, pitch: 0, pivot: 0, roll: 0, rollY: 0, sx: 1, sy: 1, sz: 1 }, rollS: 0,
       act: null, last: null, lastZoom: -999, chaseCool: 0, holds: new Set(), dest: null, perch: null, cool: {},
       phase: rnd.range(0, 100), stride: 0, doing: SAY.look, moving: false, route: null, stall: 0, waitUntil: 0, stopUntil: 0, px: 0, pz: 0, pyaw: 0,
       // What this tick's step wants shown ("move" for travel: the gait picks the clip), and how far through it is.
-      detour: null, stallX: 0, stallZ: 0, wa: "sit", wu: null, stalk: false, runIntent: false, pivoting: false, gaitSince: 0, moveSince: 0, slowFor: 0, brakeT: Infinity,
+      detour: null, stallX: 0, stallZ: 0, wa: start, wu: null, stalk: false, runIntent: false, pivoting: false, gaitSince: 0, moveSince: 0, slowFor: 0, brakeT: Infinity,
       lookAt: { x: 0, y: 0, z: 0 }, lookOn: false, greetedBy: null, greetUntil: 0, snubFrom: null, snubUntil: 0, hopPitch: 0,
       // (the speed its step asks for, how much of its step another cat's body or a prop took back and for how long)
-      wantV: 0, lastWa: "sit", held: 0, heldProp: 0, heldT: 0, crowdBy: null, crowdT: 0, ySettle: false, hardSum: 0, squeezeT: 0,
+      wantV: 0, lastWa: start, held: 0, heldProp: 0, heldT: 0, crowdBy: null, crowdT: 0, ySettle: false, hardSum: 0, squeezeT: 0,
     };
   }
 
@@ -1539,7 +1540,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         cat.pivoting = step.turning;
       }
       step.still = cat.speed < 0.03 && !cat.pivoting ? (step.still || 0) + dt : 0;
-      if (step.still > SIT_AFTER && !lead.moving) { carryOn(act, step, true); return nextStep(act, step); }
+      if (step.still > SIT_AFTER && !lead.moving && canDo(cat.traits, "sit")) { carryOn(act, step, true); return nextStep(act, step); } // (one whose model can't sit keeps standing)
       return false;
     }
     step.still = 0; step.turning = false;
@@ -1963,7 +1964,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         cat.x = p.x; cat.z = p.z; cat.y = 0;
         pose = cat.rnd.pick(["loaf", "sit", "sleep", "sit"]);
       }
-      snapMotion(cat, pose, time);
+      snapMotion(cat, allowedAction(cat.traits, pose), time); // (one whose model can't sit or lie stands)
       cat.dest = { x: cat.x, z: cat.z };
       cat.moving = false; cat.speed = 0;
       cat.doing = s ? s.say : pose === "sleep" ? SAY.napGrass : pose === "sit" ? SAY.look : SAY.rest;

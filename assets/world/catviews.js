@@ -29,7 +29,7 @@ import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
 import { AMBIENT } from "./ambient.js";
 import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit, GAIT_RATE, PIVOT_TURN, STOPS } from "./catrig.js";
-import { ACTIONS, NEUTRAL_TRAITS, transitionPath } from "./catmotion.js";
+import { ACTIONS, NEUTRAL_TRAITS, allowedAction, transitionPath } from "./catmotion.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { lookOf } from "./looks.js";
 
@@ -764,6 +764,7 @@ export function animState(o, cat) {
     breathK: 1 + 0.2 * (t.energy - 0.5) + (kit ? 0.15 : 0) - (t.build === "chunky" ? 0.06 : 0),
     stiff: old ? 1.15 : kit ? 0.85 : 1,
     gentle: flags.includes("gentle"),
+    traits: t, avoid: Array.isArray(t.avoid) && t.avoid.length ? new Set(t.avoid) : null,
   };
   A.bp = rnd(A) * TAU; A.bp0 = rnd(A) * TAU;
   return A;
@@ -838,6 +839,9 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
   else { action = clipFor(cat); odo = (cat.stride || 0) / 5.2; }
   if (still) { action = m && m.posture ? BASE[m.posture] : STILL_CLIP[cat.pose] || "sit"; look = null; }
   if (!o.clips[action]) action = BASE[ACTIONS[action]?.posture] || "stand";
+  // (what this cat's own model can't show (traits.avoid) the sims never ask for; should one, it shows the
+  // nearest plain pose it can instead)
+  if (A.avoid && A.avoid.has(action)) action = allowedAction(A.traits, action);
   const def = ACTIONS[action], kind = def ? def.kind : "loop", key = kind === "gait" ? "gait" : action;
   // The gaits' own weights: the gait the cat is in takes whatever the others leave, and they ease
   // out over ANIM.gaitBlend from where each one was (so even a gait that flickers can't pop).

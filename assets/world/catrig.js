@@ -779,7 +779,6 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
       if (!moved) break;
     }
   }
-  if (globalThis.__SEED) globalThis.__SEED({ seed, up, U, uid, names, nb, start, piece });
   const W = new Float32Array(U * B);
   for (let u = 0; u < U; u++) W[u * B + seed[u]] = 1;
   // Blur along the surface: rounds of averaging with the neighbours, as many as it takes to
@@ -803,7 +802,6 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
     W.set(A);
   };
   if (nb) blur(Math.max(2, Math.min(28, Math.round((BLEND / G.elen) ** 2))));
-  if (globalThis.__WST) globalThis.__WST("blur", W.slice(), B);
   // Each joint's two bones blended across the whole band of skin where they meet, by distance along
   // the skin from the line between them (one pass over the mesh from every such line): as wide as the
   // body is thick where it bends (the back, the neck), a leg's thickness at a hip, shoulder, knee or
@@ -907,7 +905,6 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
       for (let j = 0; j < c; j++) W[o + pb[u * NP + j]] = mass * pt[u * NP + j] * sc;
     }
   }
-  if (globalThis.__WST) globalThis.__WST("seams", W.slice(), B);
   // (and a last light blur, two rounds, over the bands: where three seams meet in one place (the groin, a
   // shoulder against the elbow) two points a hair apart can come out of the bands with a step between them,
   // and a step over next to nothing tears as any leg moves)
@@ -915,7 +912,7 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
   // (A paw's or a hind foot's own bone takes no skin more than half way up to the elbow or knee: a low-poly
   // copy's long thin triangle, one edge from the paw right up to the elbow, would otherwise pass the paw's
   // weight up the blur to the elbow, whose skin would then go out with the paw.)
-  if (!globalThis.__EXP?.noPawCap) for (const k of LK) {
+  if (nb) for (const k of LK) {
     const g = rig.legs[k], e = names.indexOf(legOf[k][2]), span = Math.max(1e-6, g.knee.y - g.low.y);
     for (let u = 0; u < U; u++) { const t = (up[u * 3 + 1] - g.low.y) / span; if (t > 0.5) W[u * B + e] *= 1 - smooth((t - 0.5) / 0.35); }
   }
@@ -2193,8 +2190,8 @@ export function makeClips(rig, style = {}, fit = null) {
     // (the head held level as the body gathers and lands, but carried up with the body as it pitches up to
     // spring and down to land, and in the air carried half with it: held level against the whole pitch,
     // the neck would fold the head back into the shoulders at take-off)
-    const X = globalThis.__EXP || {}, carry = 0.6 * clamp01(Math.abs(pitch) / 0.4) * (X.carry ?? 1);
-    s.neck = [lerp(neckFor(B, restHed + s.root[0] * 0.8), B.aC + STAND.neck[0], carry) * (1 - air) + ((pounce ? -0.1 : 0.05) + (X.airK ?? 0.5) * B.aC) * air, 0, 0]; s.head = [0.05 - 0.2 * win(u, 0.55, 0.8) * (1 - win(u, 0.85, 1)), 0, 0];
+    const carry = 0.6 * clamp01(Math.abs(pitch) / 0.4);
+    s.neck = [lerp(neckFor(B, restHed + s.root[0] * 0.8), B.aC + STAND.neck[0], carry) * (1 - air) + ((pounce ? -0.1 : 0.05) + 0.5 * B.aC) * air, 0, 0]; s.head = [0.05 - 0.2 * win(u, 0.55, 0.8) * (1 - win(u, 0.85, 1)), 0, 0];
     for (const k of KEYS) {
       const L = K.legs[k], t = B.top[k], r0 = rest(k);
       const lk = lerp(0.7, 1, amp("leap")), off = L.hind ? (pounce ? [-0.55 * lk, -0.55] : [0.05, -0.55]) : (pounce ? [0.62 * lk, -0.5] : [0.25 * lk, -0.6]);
@@ -2221,8 +2218,9 @@ export function makeClips(rig, style = {}, fit = null) {
   // reach; a cat whose skin won't take the full rear (its fit) rears less and reaches lower on the
   // trunk, the shoulder turning no further for it.)
   posed("scratch", loopDur(1.2), 24, (u) => {
-    const X = globalThis.__EXP || {};
-    const a = S(TAU * u), rear = (X.rear ?? 1.1) * (1 - 0.45 * headBig) * amp("scratch"), phi = X.phiAbs ?? (X.phi0 ?? 0.4) - (X.phiK ?? 0.8) * ((X.rear ?? 1.1) - rear);
+    // (the forelegs 0.4 rad above level at the full rear, and lower by most of what the rear falls short
+    // of it: the shoulder turns about as far whatever the rear)
+    const a = S(TAU * u), rear = 1.1 * (1 - 0.45 * headBig) * amp("scratch"), phi = 0.4 - 0.8 * (1.1 - rear);
     const s = standSpec(0, { still: true }); s.root = [-0.04, 0, 0]; s.pelvis = [rear, 0, 0]; s.spine = [0.05, 0, 0]; s.chest = [0, 0, 0]; s.neck = [rear * 0.3, 0, 0]; s.head = [rear * 0.2, 0, 0];
     const B = bodyOf(s);
     for (const k of ["hL", "hR"]) s.legs[k] = leg(rest(k).x + 0.03, 0, restE(k));
@@ -2230,7 +2228,7 @@ export function makeClips(rig, style = {}, fit = null) {
       // (the bark 0.9 of the leg's reach out from the shoulder, phi above level; each paw drawn down a
       // tenth of the reach and back towards the body, in turn, the paw flat against the trunk)
       const t = B.top[k], L = K.legs[k], sd = k === "fL" ? a : -a;
-      s.legs[k] = leg(t.x + L.reach * (0.9 * C(phi) - 0.1 * (0.5 - 0.5 * sd)), t.y + L.reach * (0.9 * S(phi) + 0.1 * sd), X.pe ?? 1.0);
+      s.legs[k] = leg(t.x + L.reach * (0.9 * C(phi) - 0.1 * (0.5 - 0.5 * sd)), t.y + L.reach * (0.9 * S(phi) + 0.1 * sd), 1.0);
     }
     s.tail = T([PI + 0.6, PI + 0.4, PI + 0.2, PI], [0, 0.15 * S(TAU * u), 0.2 * S(TAU * u), 0.25 * S(TAU * u)]);
     return s;
