@@ -31,12 +31,12 @@ const MIN = 60_000;
 const JPEG = Buffer.from([0xff, 0xd8, 0xff, 0xe0]);
 
 /** A throwaway root: the shipped updates and adoptions, Catbus as the only cat, its pictures and the updates' images. */
-function sandbox({ updates = UPDATES, adoptions = ADOPTIONS, announced = { cats: {} }, queue = { cats: [] }, config = { dryRun: false } } = {}) {
+function sandbox({ updates = UPDATES, adoptions = ADOPTIONS, announced = { cats: {} }, queue = { cats: [] }, config = { dryRun: false }, adoptables = { cats: ADOPTABLES.cats.filter((c) => c.ticker === "NEKOBUS") } } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "updates-"));
   const w = (f, v) => { fs.mkdirSync(path.dirname(path.join(dir, f)), { recursive: true }); fs.writeFileSync(path.join(dir, f), Buffer.isBuffer(v) ? v : JSON.stringify(v, null, 2) + "\n"); };
   w("data/updates.json", updates); w("data/adoptions.json", adoptions); w("data/announced.json", announced); w("data/release-queue.json", queue);
   w("data/announce-config.json", config); w("data/planned.json", { stocks: [], cats: [] }); w("data/collection.json", { cats: [] });
-  w("data/adoptables.json", { cats: ADOPTABLES.cats.filter((c) => c.ticker === "NEKOBUS") }); w("data/lore.json", { cats: { NEKOBUS: CAPTIONS.NEKOBUS } });
+  w("data/adoptables.json", adoptables); w("data/lore.json", { cats: { NEKOBUS: CAPTIONS.NEKOBUS } });
   for (const f of ["assets/lore/NEKOBUS.webp", "assets/ingame/NEKOBUS.jpg", ...updates.posts.map((p) => p.image).filter(Boolean)]) w(f, JPEG);
   return { dir, read: (f) => JSON.parse(fs.readFileSync(path.join(dir, "data", f), "utf8")), raw: (f) => fs.readFileSync(path.join(dir, "data", f), "utf8") };
 }
@@ -326,4 +326,64 @@ test("announce workflow: post-updates.mjs runs in the one step with the X secret
   assert.deepEqual(step({ FAIL_ANNOUNCE: "3" }), { code: 3, ran: ["post-thread.mjs", "announce.mjs", "post-updates.mjs"] });
   assert.deepEqual(step({ FAIL_UPDATES: "1" }), { code: 1, ran: ["post-thread.mjs", "announce.mjs", "post-updates.mjs"] });
   assert.deepEqual(step({ FAIL_THREAD: "2" }), { code: 2, ran: ["post-thread.mjs", "announce.mjs", "post-updates.mjs"] }, "a refused thread never holds up the cats");
+});
+
+/* ── Review fixes: a cat the sanctuary launches itself is never "adopted by a visitor" (A); the last line before X (D) ── */
+
+const SANCT_MINT = "Gu11GadotMint1111111111111111111111111111pum";
+const SANCT_LAUNCH = { mint: SANCT_MINT, tx: "5".repeat(88), launchpad: "pump.fun", at: "2026-09-28T10:00:00Z" };
+const withLaunch = (ticker, launch = SANCT_LAUNCH) => ({ cats: ADOPTABLES.cats.map((c) => (c.ticker === ticker ? { ...c, launch } : c)) });
+
+test("candidates: no adoption of a cat the sanctuary launches itself (launched or still launching), and no adoption of a coin a launch field names (A)", () => {
+  const a = ADOPTIONS.adoptions[0];
+  const updates = { posts: [{ id: "u1", approved: true, status: "queued" }] };
+  assert.deepEqual(candidates(updates, ADOPTIONS, { cats: CATS }).map((c) => c.id), [a.key, "u1"], "control");
+  for (const collection of [{ cats: [] }, COLLECTION]) {
+    const cats = listCats(read("data/planned.json"), collection, withLaunch(a.key));
+    assert.equal(cats.find((c) => c.key === a.key).sanctuary, true);
+    assert.deepEqual(candidates(updates, ADOPTIONS, { cats }).map((c) => c.id), ["u1"]);
+  }
+  // A clone of the sanctuary's coin recorded for another cat, and the sanctuary's own coin: never one.
+  const other = ADOPTABLES.cats.find((c) => c.ticker !== a.key);
+  const own = { ...a, key: other.ticker, name: other.coinName || other.name, symbol: other.launchTicker || other.ticker, mint: SANCT_MINT };
+  assert.deepEqual(candidates(updates, { adoptions: [own] }, { cats: CATS }).map((c) => c.id), [other.ticker, "u1"], "control");
+  assert.deepEqual(candidates(updates, { adoptions: [own] }, { cats: CATS, ownMints: new Set([SANCT_MINT]) }).map((c) => c.id), ["u1"]);
+});
+
+test("run: an adoption of a cat with a launch field is never posted, and a launch field's mint is the owner's own coin (A)", async () => {
+  const s = sandbox({ adoptables: withLaunch("NEKOBUS") });
+  const x = fakeX();
+  const r = await run({ root: s.dir, env: CREDS, fetchImpl: x, now: at(T0), ...quiet });
+  assert.deepEqual([r.posted.kind, r.posted.id], ["update", UPDATES.posts[0].id]);
+  assert.deepEqual(x.tweets().map((t) => t.text), [UPDATES.posts[0].text], "no \"ADOPTED! … launched by a visitor\" post");
+  assert.equal(s.read("updates.json").adoptionsPosted.NEKOBUS, undefined);
+  // Another cat's launch field names the adopted coin's mint: it is the sanctuary's coin, not a visitor's.
+  const other = ADOPTABLES.cats.find((c) => c.ticker !== "NEKOBUS");
+  const s2 = sandbox({ adoptables: { cats: [...ADOPTABLES.cats.filter((c) => c.ticker === "NEKOBUS"), { ...other, launch: { ...SANCT_LAUNCH, mint: ADOPTIONS.adoptions[0].mint } }] } });
+  const r2 = await run({ root: s2.dir, env: CREDS, fetchImpl: fakeX(), now: at(T0), ...quiet });
+  assert.equal(r2.posted.kind, "update");
+  assert.equal(s2.read("updates.json").adoptionsPosted.NEKOBUS, undefined);
+});
+
+test("the last line before X: an update or adoption draft naming a Solana address is held, never posted (D)", async () => {
+  const mint = "7Yk3fQeW9sPzD4nV2mXcR8tLbH6uJgA1oKqE5iNwTy3p";
+  const posts = [
+    { id: "ca", text: `🐾 The new coin: ${mint}\n${SITE}\n#catcoin`, approved: true, status: "queued", postedAt: null, tweet: null },
+    { id: "good", text: `🐾 A new cat moves in every hour\n${SITE}\n#catcoin`, approved: true, status: "queued", postedAt: null, tweet: null },
+  ];
+  assert.equal(checkUpdate(posts[0].text).ok, true, "the other checks let it through");
+  const s = sandbox({ updates: { ...UPDATES, posts }, adoptions: { adoptions: [] } });
+  const x = fakeX();
+  const r = await run({ root: s.dir, env: CREDS, fetchImpl: x, now: at(T0), ...quiet });
+  assert.deepEqual(r.held, ["ca"]);
+  assert.equal(r.posted.id, "good");
+  assert.ok(!x.tweets().some((t) => t.text.includes(mint)));
+  const st = s.read("updates.json").posts[0];
+  assert.equal(st.status, "held");
+  assert.deepEqual(st.violations.map((v) => v.rule), ["address"]);
+  // Dry run: held too, nothing logged as a post.
+  const logs = [];
+  const d = await run({ root: sandbox({ updates: { ...UPDATES, posts }, adoptions: { adoptions: [] }, config: { dryRun: true } }).dir, env: CREDS, fetchImpl: fakeX(), now: at(T0), log: (m) => logs.push(m) });
+  assert.deepEqual(d.held, ["ca"]);
+  assert.ok(!logs.some((m) => m.includes(mint) && /would post/.test(m)));
 });

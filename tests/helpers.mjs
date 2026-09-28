@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { base58Decode, base58Encode } from "../assets/collection.js";
 import { keypairFromSecret, deriveMintKeypair, transactionToJson } from "../scripts/lib/solana-tx.mjs";
 import { PUMP, buildLaunchTransaction, signLaunchTransaction, bondingCurve } from "../scripts/lib/pump.mjs";
-import { BONDING_CURVE_DISC, TOKEN_2022_PROGRAM } from "../scripts/lib/chain.mjs";
+import { BONDING_CURVE_DISC, TOKEN_2022_PROGRAM, SYSTEM_PROGRAM } from "../scripts/lib/chain.mjs";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -129,7 +129,9 @@ export const readDataJson = (root, name) => JSON.parse(readData(root, name));
 
 /* ── A pump.fun launch as the sanctuary's launcher makes it (scripts/lib/pump.mjs), signed with
    throwaway keys (a constant filler seed: no real wallet), in getTransaction's json shape, with
-   the two accounts the Collection reads back (the mint and its bonding curve), made up to match. */
+   the two accounts the Collection reads back (the mint and its bonding curve), made up to match:
+   the mint's metadata has no update authority (None, 32 zero bytes: SYSTEM_PROGRAM), as create_v2
+   leaves it on chain (tests/fixtures/pumpfun-create.json, Token-2022 UpdateAuthority to None). */
 
 /** A Token-2022 mint account's bytes with a TokenMetadata extension (the layout chain.mjs readTokenMetadata reads). */
 export function token2022MintData({ mint, updateAuthority, name, symbol, uri }) {
@@ -156,7 +158,7 @@ export function pumpLaunch({ seedByte = 7, postId = "1971234567890123456", block
   const curve = bondingCurve(mint.publicKey);
   const accounts = new Map([
     [mint.publicKey, { owner: TOKEN_2022_PROGRAM, lamports: 1, executable: false, rentEpoch: 0,
-      data: [token2022MintData({ mint: mint.publicKey, updateAuthority: PUMP.mintAuthority, ...coin }).toString("base64"), "base64"] }],
+      data: [token2022MintData({ mint: mint.publicKey, updateAuthority: SYSTEM_PROGRAM, ...coin }).toString("base64"), "base64"] }],
     [curve, { owner: PUMP.program, lamports: 1, executable: false, rentEpoch: 0,
       data: [Buffer.concat([Buffer.from(BONDING_CURVE_DISC, "hex"), Buffer.alloc(143)]).toString("base64"), "base64"] }],
   ]);

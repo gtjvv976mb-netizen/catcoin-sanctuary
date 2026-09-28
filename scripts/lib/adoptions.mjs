@@ -52,11 +52,13 @@ export function linkKey(u) {
 }
 
 /**
- * Every cat's kit as the matcher needs it: [{ key, name, ticker, storyStart, proofUrl, cardUrl, tokenSha256 }].
- * `kits` is assets/kits/kits.json, when read (the token pictures' hashes).
+ * Every adoptable cat's kit as the matcher needs it: [{ key, name, ticker, storyStart, proofUrl, cardUrl, tokenSha256 }].
+ * `kits` is assets/kits/kits.json, when read (the token pictures' hashes). A cat the sanctuary launches
+ * itself (an adoptable with a `launch` field) has none: it is not adoptable, as the page shows it
+ * (assets/ui/adopt.js canAdopt), so no stranger's coin is ever its adoption.
  */
 export function kitsOf({ planned = { cats: [] }, adoptables = { cats: [] }, kits = null } = {}) {
-  const cats = [...(planned.cats || []), ...(adoptables.cats || []).map((c) => ({ ...c, description: c.story }))];
+  const cats = [...(planned.cats || []), ...(adoptables.cats || []).filter((c) => !c?.launch).map((c) => ({ ...c, description: c.story }))];
   return cats.filter((c) => c?.ticker).map((c) => {
     const kit = launchKit(c, { site: SITE });
     const story = norm(loreText(c)).slice(0, STORY_START);
@@ -65,6 +67,11 @@ export function kitsOf({ planned = { cats: [] }, adoptables = { cats: [] }, kits
       proofUrl: c.proof?.url || null, cardUrl: kit.website, tokenSha256: SHA.test(sha ?? "") ? sha : null };
   });
 }
+
+/** The sanctuary's own coins: every launch the Collection proved, and every coin an adoptable's `launch`
+ *  field names (the sanctuary's launcher wrote it, proved yet or not). Never an adoption or a copycat. */
+export const ownMints = ({ collection = { cats: [] }, adoptables = { cats: [] } } = {}) =>
+  [...new Set([...(collection?.cats || []).map((c) => c?.mint), ...(adoptables?.cats || []).map((c) => c?.launch?.mint)].filter(Boolean))];
 
 /** The kits whose ticker and name this launch carries (almost always none, or one). */
 export function sameKit(launch, kits) {

@@ -113,3 +113,45 @@ test("build: takes the strongest cats, skips low confidence and unsettled looks,
   fs.writeFileSync(path.join(root, "data/planned.json"), JSON.stringify({ stocks: [], cats: [{ ticker: "LARRY10" }] }));
   assert.throws(() => buildAdoptables({ root, source: src, top: 2 }), AdoptablesError);
 });
+
+test("build: a rebuild keeps the sanctuary's launches: a launch field survives, a changed name or ticker keeps the launched row, a cat the research dropped (or the launcher added) stays; an unreadable file stops it (K)", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "adopt-launch-"));
+  fs.mkdirSync(path.join(root, "data")); fs.mkdirSync(path.join(root, "assets/portraits"), { recursive: true });
+  fs.writeFileSync(path.join(root, "data/planned.json"), JSON.stringify({ stocks: [], cats: [] }));
+  fs.writeFileSync(path.join(root, "data/announced.json"), JSON.stringify({ cats: {} }));
+  const row = (id, ticker, extra = {}) => ({
+    id, catName: id, category: "viral", owner: "Someone", story: "A very well known cat whose story is long enough to show.",
+    proof: { x: [{ url: `https://x.com/someone/status/1234567${id.length}`, handle: "@someone", date: "2024-01-02", text: "A post about the cat." }], web: [] },
+    existingCoin: null, suggestedName: id, suggestedTicker: ticker, look: "Orange tabby cat with white chest; green eyes.", pairSuggestion: "STONK", confidence: "high", ...extra,
+  });
+  const src = path.join(root, "src.json");
+  const put = (rows) => fs.writeFileSync(src, JSON.stringify(rows));
+  const launch = (n) => ({ mint: `${"LaunchMint".padEnd(40, "x")}${n}`.replace(/[0OIl]/g, "9"), tx: String(n).repeat(88).slice(0, 88).replace(/0/g, "9"), launchpad: "pump.fun", at: "2026-09-28T10:00:00Z" });
+  put([row("alpha", "ALPHACAT"), row("beta", "BETACAT"), row("gamma", "GAMMACAT")]);
+  const first = buildAdoptables({ root, source: src, top: 3, checked: "2026-09-28" });
+  // The launcher writes launch fields (and adds a cat of its own).
+  const cur = structuredClone(first.data);
+  cur.cats[0].launch = launch(1);
+  cur.cats[1].launch = launch(2);
+  const own = { ...structuredClone(cur.cats[2]), id: "delta", ticker: "DELTACAT", name: "delta", coinName: "delta", launch: launch(3) };
+  cur.cats.push(own);
+  fs.writeFileSync(path.join(root, "data/adoptables.json"), JSON.stringify(cur, null, 2));
+  // The research renames beta's coin and drops gamma; alpha is unchanged.
+  put([row("alpha", "ALPHACAT"), row("beta", "BETACAT", { suggestedName: "Beta the Great" })]);
+  const logs = [];
+  const r = buildAdoptables({ root, source: src, top: 3, checked: "2026-09-29", log: (m) => logs.push(m) });
+  const written = JSON.parse(fs.readFileSync(path.join(root, "data/adoptables.json"), "utf8"));
+  assert.deepEqual(written, r.data);
+  assert.deepEqual(written.cats.map((c) => [c.ticker, c.launch?.mint ?? null]), [["ALPHACAT", launch(1).mint], ["BETACAT", launch(2).mint], ["DELTACAT", launch(3).mint]]);
+  assert.equal(written.cats[1].coinName, "beta", "the coin exists on chain under its launched name: the launched row is kept");
+  assert.ok(!written.cats.some((c) => c.ticker === "GAMMACAT"), "a dropped cat with no launch goes");
+  assert.equal(logs.filter((m) => /launched by the sanctuary/.test(m)).length, 2);
+  assert.deepEqual(validateAdoptables(written).refused, []);
+  // Rebuilt again from the same research: nothing changes.
+  buildAdoptables({ root, source: src, top: 3, checked: "2026-09-29" });
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(root, "data/adoptables.json"), "utf8")), written);
+  // A current file that cannot be read: nothing is written.
+  fs.writeFileSync(path.join(root, "data/adoptables.json"), "{ not json");
+  assert.throws(() => buildAdoptables({ root, source: src, top: 3 }), /launch fields would be lost/);
+  assert.equal(fs.readFileSync(path.join(root, "data/adoptables.json"), "utf8"), "{ not json");
+});

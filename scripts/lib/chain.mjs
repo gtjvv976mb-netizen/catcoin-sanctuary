@@ -381,22 +381,30 @@ export function proveLaunchPump(tx, { wallet } = {}) {
  * Cross-check a proved pump.fun launch against the chain as it is now: `mintAccount` and
  * `curveAccount` are getMultipleAccounts answers (base64) for launch.mint and launch.pool (the
  * bonding curve). The mint must be a Token-2022 mint whose own metadata names it and carries the
- * name and symbol create_v2 wrote, and whose update authority is not the launching wallet (pump.fun
- * holds it, so the coin cannot be renamed; which pump.fun account holds it is not pinned: no
- * pump.fun mint account is recorded). The bonding curve must be PDA["bonding-curve", mint], exist,
- * be owned by pump.fun and carry BondingCurve's account discriminator.
+ * name and symbol create_v2 wrote, and whose metadata has NO update authority (None, which the
+ * extension stores as 32 zero bytes and readTokenMetadata reads as SYSTEM_PROGRAM), so nobody, the
+ * wallet, pump.fun or a stranger, can rename the coin. That is what create_v2 does: in the recorded
+ * real launch (tests/fixtures/pumpfun-create.json) pump.fun's create calls Token-2022's
+ * UpdateAuthority (spl_token_metadata_interface:update_the_authority, d7e4a6e45464567b) with 32 zero
+ * bytes. The bonding curve must be PDA["bonding-curve", mint], exist, be owned by pump.fun and carry
+ * BondingCurve's account discriminator. A malformed account (data not [base64 string, …]) is refused.
  */
 export function checkPumpAccounts(launch, mintAccount, curveAccount) {
   const no = (clause, detail) => ({ ok: false, clause, detail });
+  const bytes = (acc) => { if (typeof acc.data[0] !== "string") throw new DecodeError("the account's data is not base64"); return Buffer.from(acc.data[0], "base64"); };
   if (!mintAccount || mintAccount.owner !== TOKEN_2022_PROGRAM || !Array.isArray(mintAccount.data)) return no("metadata", "the mint is not a Token-2022 account on chain");
   let meta;
-  try { meta = readTokenMetadata(Buffer.from(mintAccount.data[0], "base64")); } catch (e) { return no("metadata", e.message); }
+  try { meta = readTokenMetadata(bytes(mintAccount)); } catch (e) { return no("metadata", e.message); }
   if (meta.mint !== launch.mint) return no("metadata", "the mint's metadata names another mint");
-  if (meta.updateAuthority === launch.payer) return no("metadata", "the launching wallet can rename the coin");
+  if (meta.updateAuthority !== SYSTEM_PROGRAM) {
+    return no("metadata", meta.updateAuthority === launch.payer ? "the launching wallet can rename the coin" : "the coin can still be renamed: its metadata's update authority is not None");
+  }
   if (meta.name !== launch.name || meta.symbol !== launch.symbol) return no("metadata_mismatch", "the mint's metadata does not carry the name and symbol the launch wrote");
   if (launch.pool !== bondingCurve(launch.mint)) return no("bonding_curve", "the pool is not the mint's bonding curve");
   if (!curveAccount || curveAccount.owner !== PUMP.program || !Array.isArray(curveAccount.data)) return no("bonding_curve", "the bonding curve is not a pump.fun account on chain");
-  if (Buffer.from(curveAccount.data[0], "base64").subarray(0, 8).toString("hex") !== BONDING_CURVE_DISC) return no("bonding_curve", "not a pump.fun BondingCurve account");
+  let head;
+  try { head = bytes(curveAccount).subarray(0, 8).toString("hex"); } catch (e) { return no("bonding_curve", e.message); }
+  if (head !== BONDING_CURVE_DISC) return no("bonding_curve", "not a pump.fun BondingCurve account");
   return { ok: true };
 }
 

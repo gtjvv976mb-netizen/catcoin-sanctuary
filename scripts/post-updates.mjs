@@ -16,9 +16,10 @@
  * data/release-queue.json lastReleaseAt), so the account never posts twice in a row in a hurry.
  *
  * Every draft must be <= 280 characters and pass the announcer's checks (checkPost: the content
- * rules and no price talk), carry at most one link, and that link the site's own. A draft that fails
- * is "held" and never posted. The rules refuse "$" before a letter and the word "pump" (so
- * "pump.fun" too), so a ticker is written without its "$" and pump.fun is named "PumpFun".
+ * rules and no price talk), carry at most one link, and that link the site's own, and name no
+ * Solana address (announce.mjs guardDraft, the last line before X). A draft that fails is "held"
+ * and never posted. The rules refuse "$" before a letter and the word "pump" (so "pump.fun" too),
+ * so a ticker is written without its "$" and pump.fun is named "PumpFun".
  *
  * State lives in data/updates.json: each update's status, and adoptionsPosted { key: { … } } for the
  * adoptions. An item is marked "posting" (and the file saved) before its post goes out, and "posted"
@@ -33,8 +34,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { credsFromEnv, uploadImage, createPost, XError } from "./lib/x-api.mjs";
-import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost, weightedLength, listCats, postImages, ingameShot, readJson } from "./announce.mjs";
-import { kitsOf, adoptionProblem } from "./lib/adoptions.mjs";
+import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost, weightedLength, listCats, postImages, ingameShot, readJson, guardDraft } from "./announce.mjs";
+import { kitsOf, adoptionProblem, ownMints } from "./lib/adoptions.mjs";
 import { nameKey } from "../assets/ui/adoptables.js";
 
 export const DEFAULT_GAP_MINUTES = 180;
@@ -132,8 +133,9 @@ const retryable = (s) => !s || s.status === "queued" || (s.status === "failed" &
 
 /**
  * What may go out, in order: adoptions not posted yet (earliest launch first), then approved, queued
- * updates in file order. An adoption of a cat the sanctuary does not have, or of a mint the owner
- * launched (data/collection.json), is not one.
+ * updates in file order. An adoption of a cat the sanctuary does not have, of a cat the sanctuary
+ * launches itself (listCats `sanctuary`: it is not adoptable, as the site shows it), or of a mint the
+ * owner launched (data/collection.json, or an adoptable's `launch` field), is not one.
  */
 export function candidates(updates, adoptions, { cats, kits = null, ownMints = new Set(), ownWallets = new Set(), heldKeys = new Set() }) {
   const byKey = new Map(cats.map((c) => [c.key, c]));
@@ -141,7 +143,7 @@ export function candidates(updates, adoptions, { cats, kits = null, ownMints = n
   // Not the owner's own launch or wallet, and not a cat the announcer holds for its content (paused adoptables are fine).
   // With the kits: the coin carries its cat's kit name and ticker, as the site checks it (assets/residents.js).
   const ofKit = (a) => { const k = kits?.get(a.key); return !kits || (!!k && nameKey(a.name) === nameKey(k.name) && a.symbol.trim().toUpperCase() === k.ticker); };
-  const real = (adoptions?.adoptions || []).filter((a) => validAdoption(a) && !ownMints.has(a.mint) && !ownWallets.has(a.creator) && byKey.has(a.key) && !heldKeys.has(a.key) && ofKit(a))
+  const real = (adoptions?.adoptions || []).filter((a) => validAdoption(a) && !ownMints.has(a.mint) && !ownWallets.has(a.creator) && byKey.has(a.key) && !byKey.get(a.key).sanctuary && !heldKeys.has(a.key) && ofKit(a))
     .sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
   const out = real.filter((a) => retryable(done[a.key]))
     .map((a) => ({ kind: "adoption", id: a.key, adoption: a, cat: byKey.get(a.key), first: a === real[0] }));
@@ -208,15 +210,16 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const announced = readJson(data("announced.json"), { cats: {} });
   const heldKeys = new Set(Object.entries(announced.cats || {}).filter(([, v]) => ["held", "needs_review"].includes(v?.status) && v.reason !== "adoptable cat: announcing paused").map(([k]) => k));
   const ownWallets = new Set((readJson(data("wallets.json"), { launchers: [] }).launchers || []).map((w) => w.address));
-  const list = candidates(updates, readJson(data("adoptions.json"), { adoptions: [] }), { cats, kits, ownMints: new Set((collection.cats || []).map((c) => c.mint)), ownWallets, heldKeys });
+  const list = candidates(updates, readJson(data("adoptions.json"), { adoptions: [] }), { cats, kits, ownMints: new Set(ownMints({ collection, adoptables })), ownWallets, heldKeys });
   log(`Updates: ${mode} mode; ${list.filter((c) => c.kind === "adoption").length} adoption(s) and ${list.filter((c) => c.kind === "update").length} update(s) waiting.`);
 
   // The record an item's state lives in: the update itself, or its adoptionsPosted row.
   const recOf = (item) => (item.kind === "update" ? item.post : (updates.adoptionsPosted[item.id] ||= { mint: item.adoption.mint }));
   for (const item of list) {
-    const d = item.kind === "update"
+    // The last line before X (announce.mjs guardDraft): no address in a post.
+    const d = guardDraft(item.kind === "update"
       ? { ...checkUpdate(item.post.text), text: item.post.text }
-      : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first });
+      : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first }));
     summary.drafts.push({ kind: item.kind, id: item.id, ok: d.ok, text: d.text, length: d.text ? weightedLength(d.text) : null, violations: d.violations });
     if (!d.ok) {
       summary.held.push(item.id);

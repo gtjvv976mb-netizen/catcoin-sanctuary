@@ -50,7 +50,7 @@
    not launched. Every text reaches the page as data; the page sets it with textContent. */
 
 import { validateCollection, validateWallets, validatePlanned, validateFamous, links, buyLinks, coatFromMint, compareEntries, pairByMint } from "./collection.js";
-import { validateAdoptables, adoptableCard, validateLore, lorePath, validateRealPhotos, nameKey } from "./ui/adoptables.js";
+import { validateAdoptables, adoptableCard, validateLore, lorePath, validateRealPhotos, nameKey, provedLaunch } from "./ui/adoptables.js";
 
 const NO_RESEARCH = Object.freeze({
   company: "", realCat: { name: null, who: "", basis: "", linkType: "none", strength: "none", linked: false }, links: [], virality: [], checked: null, disclaimer: "",
@@ -127,6 +127,8 @@ export function mergeResidents({ planned, cats }) {
     plannedName: null,
     planned: false,
     ...card(research.get(e.pair.mint), e.pair.mint),
+    // pump.fun: priced in SOL, no stock behind it
+    ...(e.launchpad && { pair: { ...e.pair }, disclaimer: "The coin is not affiliated with pump.fun. It has no intrinsic value and is not financial advice." }),
     description: "",
     look: "",
     whyLook: "",
@@ -187,11 +189,11 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
   try {
     const a = validateAdoptables(await getJson(fetchImpl, new URL("data/adoptables.json", base)), { taken: new Set(planned.cats.map((c) => c.ticker)) });
     if (a.refused.length && typeof console !== "undefined") console.warn(`${a.refused.length} adoptable cats were left out`, a.refused);
-    const taken = new Set(stock.filter((r) => r.planned && r.token.mint).map((r) => r.token.mint));
-    adoptable = a.cats.map((c) => adoptableResident(c, collection.cats.filter((e) => !taken.has(e.mint))));
-    // One card per cat: the coin's bare token card goes.
-    const own = new Set(adoptable.map((r) => r.token.mint).filter(Boolean));
-    stock = stock.filter((r) => r.planned || !own.has(r.token.mint));
+    // One coin, one cat; a coin a launch names has no bare card.
+    const used = new Set(stock.filter((r) => r.planned && r.token.mint).map((r) => r.token.mint));
+    adoptable = a.cats.map((c) => { const r = adoptableResident(c, collection.cats.filter((e) => !used.has(e.mint))); used.add(r.token.mint); return r; });
+    const named = new Set(a.cats.map((c) => c.launch?.mint));
+    stock = stock.filter((r) => r.planned || !named.has(r.token.mint));
   } catch (e) { if (typeof console !== "undefined") console.warn("The adoptable cats could not be read", e); }
   // The adopted cats (data/adoptions.json): optional. A missing or bad file adopts nothing.
   try {
@@ -218,12 +220,10 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
 }
 
 /** An adoptable's card. One the sanctuary launched (c.launch) gets sanctuaryLaunch: { status, launchpad }:
- *  "launched" only when that mint, tx and launchpad are in the proved collection (`cats`), else "pending". */
+ *  "launched" (in its coin's pair) only when provedLaunch finds its coin in `cats`, else "pending". */
 export function adoptableResident(c, cats) {
-  const r = adoptableCard(c), l = c.launch;
-  if (!l) return r;
-  const e = cats.find((x) => x.mint === l.mint && x.tx === l.tx && (x.launchpad ?? "stonkfun") === l.launchpad);
-  return { ...r, sanctuaryLaunch: { status: e ? "launched" : "pending", launchpad: l.launchpad }, ...(e && launchedToken(e)) };
+  const r = adoptableCard(c), e = provedLaunch(c, cats);
+  return c.launch ? { ...r, sanctuaryLaunch: { status: e ? "launched" : "pending", launchpad: c.launch.launchpad }, ...(e && { ...launchedToken(e), pair: { ...e.pair } }) } : r;
 }
 
 /* data/adoptions.json, checked again: a row needs a well-formed mint and creator, a known
