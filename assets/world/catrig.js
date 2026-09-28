@@ -2234,7 +2234,8 @@ export function makeClips(rig, style = {}, fit = null) {
   // tucked against itself); for moves where no paw bears weight.
   const change = (name, A, B, plan = {}) => {
     // (forelegs the model joined into one piece step together: one stepping alone would tear the other's skin)
-    if (freeF < 0.3 && plan.fL && plan.fR && plan.fL.length === plan.fR.length) { plan.fL = plan.fL.map((k) => [k[0], k[1], k[2] && k[2] * 0.4]); plan.fR = plan.fR.map((k, i) => [plan.fL[i][0], k[1], k[2] && k[2] * 0.4]); }
+    // (whatever their own schedules: the right foreleg then keeps to the left's keys, each key's pose its own)
+    if (freeF < 0.3 && plan.fL && plan.fR) { plan.fL = plan.fL.map((k) => [k[0], k[1], k[2] && Math.max(Math.min(k[2], 0.012), k[2] * 0.4)]); plan.fR = plan.fL.map((k) => k.slice()); }
     const a = flat(A), b = flat(B), ev = [];
     for (const [part, i0, i1] of PARTS) {
       const keys = [[0, "A"], ...(plan[part] || []), [1, "B"]], leg = part.length === 2, rel = leg && plan.rel;
@@ -2300,7 +2301,9 @@ export function makeClips(rig, style = {}, fit = null) {
   });
   // Lying down: the front end goes down first (the forepaws reach forward, elbows to the ground: a
   // brief bow), then the hind end folds down; the paws last tucked under if that is how this cat lies.
-  const sph = { fL: sphinx("fL", sphReach), fR: sphinx("fR", sphReach) };
+  // (the sphinx forelegs a cat that lies with its paws tucked brings out on the way down and up, resting on
+  // the lawn by their skin, as the loaf's own legs do)
+  const sph = (() => { const g = bakeLegs(with_(LOAF, { legs: { fL: sphinx("fL", sphReach), fR: sphinx("fR", sphReach) } })); return { fL: g.fL, fR: g.fR }; })();
   // (the forelegs laid out for the bow, the front end at its lowest: resting on the lawn by their skin, as the
   // loaf's do, not with the elbows sunk in it)
   const bowBody = with_(STAND, { root: [loafLift * 0.35, loafShift * 0.5, 0], pelvis: [-0.28, 0, 0], spine: [0, 0, 0], chest: [0.06, 0, 0] });
