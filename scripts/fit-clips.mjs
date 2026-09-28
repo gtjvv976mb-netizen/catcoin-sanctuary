@@ -10,7 +10,7 @@
    test's (tests/catrig-herd.test.mjs, scripts/lib/skingauge.mjs), with a margin: no sheet of skin
    stretched past 2.5x larger than 600 (1e-4 units^2; 860 on the full copy, whose finer triangles chain a
    crease into a longer patch), no edge drawn out by more than 0.18, the head squeezed by no more than
-   0.27, no more than 4.5% of the skin under the ground, at nine moments of each clip the knob governs. A
+   0.27, no more than 4.5% of the skin under the ground, at twelve moments of each clip the knob governs. A
    smaller move is not always a kinder one: a knob that tears at every level keeps the level that tore it
    least, and is reported: that cat's model may not be able to show the action at all, and traits.js
    MODEL_LIMITS should then say so (the sims never give it).
@@ -37,7 +37,7 @@ export const FIT_TH_FULL = { ...FIT_TH, sheet: 860 };
 /** How much of a move is tried, in turn. */
 export const LEVELS = [1, 0.8, 0.62, 0.45, 0.3];
 /** Where along a clip the skin is gauged (loops; once-through moves and posture changes). */
-const U_LOOP = [0.05, 0.1, 0.2, 0.35, 0.5, 0.6, 0.75, 0.85, 0.95], U_ONCE = [0.15, 0.3, 0.5, 0.7, 0.85, 1];
+const U_LOOP = [0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.35, 0.5, 0.6, 0.75, 0.85, 0.95], U_ONCE = [0.15, 0.3, 0.5, 0.7, 0.85, 1];
 
 if (isMainThread) {
   const argv = process.argv.slice(2), opt = (k) => { const i = argv.indexOf(`--${k}`); return i < 0 ? null : argv[i + 1] ?? true; };

@@ -1203,7 +1203,7 @@ const unflat = (v) => ({ root: [v[0], v[1], v[2], v[3]], pelvis: [v[4], v[5], v[
   legs: { hL: Array.from(v.subarray(19, 24)), hR: Array.from(v.subarray(24, 29)), fL: Array.from(v.subarray(29, 34)), fR: Array.from(v.subarray(34, 39)) }, tail: Array.from(v.subarray(39, 47)) });
 
 /** The knobs a model's fit (makeClips' third argument) may turn down, and the clips each one governs:
-    scripts/fit-clips.mjs measures them, one model at a time, on the far copy's own skin. */
+    scripts/fit-clips.mjs measures them, one model at a time, on its far and full copies' own skin. */
 export const FIT_KNOBS = { gait: ["walk", "trot", "run"], groom: ["groom"], legLick: ["legLick"], earScratch: ["earScratch"], beckon: ["beckon"], hindStand: ["hindStand"], scratch: ["scratch"], flop: ["flop"], roll: ["roll"], sleep: ["sleep", "curlUp", "wake"], stretch: ["stretch"], leap: ["hop", "pounce"], stalk: ["stalk"], dab: ["dab"] };
 
 /**
@@ -1218,9 +1218,9 @@ export const FIT_KNOBS = { gait: ["walk", "trot", "run"], groom: ["groom"], legL
 export function makeClips(rig, style = {}, fit = null) {
   const st = clipStyle(style), tempo = st.tempo;
   // How far this model's own skin lets each mannerism go (FIT_KNOBS: 0.3..1 of the full move, 1 when
-  // unsaid), measured offline on the far copy's triangles by scripts/fit-clips.mjs (assets/models/cats/fit.json):
-  // a paw comes up less far, a body rears or rolls less, a sleeper curls less, where the full move would
-  // stretch this model's skin into a sheet.
+  // unsaid), measured offline on the model's own triangles by scripts/fit-clips.mjs (assets/models/cats/fit.json):
+  // a paw comes up less far, a body rears or rolls less, a sleeper curls less, a stride is shorter, where the
+  // full move would stretch this model's skin into a sheet.
   const amp = (k) => fitOf(fit, k);
   const K = kinematics(rig), lt = rig.legTop, bh = rig.yt - rig.yb;
   const clips = {};
@@ -1713,7 +1713,9 @@ export function makeClips(rig, style = {}, fit = null) {
   }
   const SIT = sitSpec(0);
   clip("sit", loopDur(8), 10, (u) => pose(sitSpec(u)));
-  clip("look", loopDur(6), 12, (u) => { const s = sitSpec(u, { still: true }), g = holds(u, [[0.05, 0.7], [0.3, 0.2], [0.5, -0.65], [0.75, -0.1], [0.92, 0]], 0.05);
+  // (a cat with a deep ruff for its head turns its head less far: the ruff's skin would twist with it)
+  const lookK = 1 - 0.4 * clamp01((rig.bodyR / Math.max(0.05, rig.headR) - 1.6) / 1.4);
+  clip("look", loopDur(6), 12, (u) => { const s = sitSpec(u, { still: true }), g = lookK * holds(u, [[0.05, 0.7], [0.3, 0.2], [0.5, -0.65], [0.75, -0.1], [0.92, 0]], 0.05);
     s.neck = [sitHead[0] + 0.12, g, 0]; s.head = [sitHead[1] + 0.1, g * 0.35, holds(u, [[0.1, 0.18], [0.3, 0], [0.55, -0.15], [0.75, 0]], 0.06)]; return pose(s); }, { fade: 0.25 });
   clip("pant", loopDur(1), 24, (u) => { const s = sitSpec(u, { still: true }); s.spine = [sitSpine + S(TAU * u * 3) * 0.03, 0, 0]; s.head[0] = sitHead[1] - 0.12; return pose(s); }, { fade: 0.25 });
   // Sitting mannerisms that bring a paw and the head together (grooming, licking a leg, scratching an
@@ -1934,7 +1936,7 @@ export function makeClips(rig, style = {}, fit = null) {
     return leg(lerp(near, flat, clamp01((reach - 0.35) / 0.5)), 0.015, e);
   };
   const tucked = (k, f) => { const t = loafB.top[k], L = K.legs[k]; return leg(t.x + (L.l[1] + L.l[2]) * 0.45 * (1 - f) - 0.01 * f, 0.02, -(PI - 0.05)); };
-  const tuck = st.loafTuck, tuckLate = tuck >= 0.5, sphReach = 0.85 - 0.5 * Math.min(0.5, tuck);
+  const tuck = Math.max(st.loafTuck, stubby >= 0.9 ? 0.85 : 0), tuckLate = tuck >= 0.5, sphReach = stubby >= 0.9 ? 0.35 : 0.85 - 0.5 * Math.min(0.5, tuck);
   const loafFront = (k) => (tuckLate ? tucked(k, (tuck - 0.5) * 2) : sphinx(k, sphReach));
   let loafLegs = { hL: leg(rest("hL").x, 0.012, flatE("hL"), 0.45), hR: leg(rest("hR").x, 0.012, flatE("hR"), 0.45), fL: loafFront("fL"), fR: loafFront("fR") };
   const loafSpec = (u = 0, o = {}) => {

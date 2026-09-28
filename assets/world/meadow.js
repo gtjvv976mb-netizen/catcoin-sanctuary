@@ -21,7 +21,7 @@
 
 import { makeRandom } from "./rng.js";
 import * as L from "./layout.js";
-import { ACTIONS, FIDGETS, SIGNATURES, allowedAction, pickFidget, transDur, transitionPath } from "./catmotion.js";
+import { ACTIONS, FIDGETS, SIGNATURES, allowedAction, canDo, pickFidget, transDur, transitionPath } from "./catmotion.js";
 import { BODY, HALF_LEN, SHUFFLE, UNWIND, V_MIN, animateShared, bodyGap, circleStep, leadFidget, pathGap, publishMotion, sizeOf, snapMotion, traitsFrom, unwindFor } from "./cats.js";
 
 /** Distances (from the point the camera looks at, and from the camera itself). */
@@ -190,6 +190,11 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       sun: c.gentle ? 0 : 0.06 * (0.4 + t.sleepy + t.playful * 0.5),
     };
     if (c.kind && w[c.kind]) w[c.kind] *= 0.5; // not the same again, as a rule
+    // (what its own model can't show (traits.avoid) it doesn't set out to do: it would only stand there)
+    if (!canDo(t, "groom")) w.groom = 0;
+    if (!canDo(t, "loaf")) w.loaf = 0;
+    if (!canDo(t, "sleep") && !canDo(t, "loaf")) w.nap = 0;
+    if (!canDo(t, "flop")) w.sun = 0;
     let r = rnd.next() * Object.values(w).reduce((s, v) => s + v, 0), kind = "look";
     for (const [k, v] of Object.entries(w)) { r -= v; if (r <= 0) { kind = k; break; } }
     if (kind === "stroll") {

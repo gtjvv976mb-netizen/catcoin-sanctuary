@@ -407,14 +407,17 @@ export function textsOf(r, extra = {}) {
 /** What a resident's own 3D model cannot show without its skin tearing (measured over every clip by the
     herd survey behind tests/catrig-herd.test.mjs): the actions (catmotion.js ACTIONS) the sims never give
     it and the view never shows for it (catviews shows the posture's plain pose, or standing, instead).
-    Keyed by id; `why` says what the model is. Everything a model can do it still does: these four keep
-    to standing and walking (and Pusheen to its loaf), as the models allow. */
+    Keyed by id; `why` says what the model is. Everything a model can do it still does: three keep to
+    standing and walking, Pusheen to its loaf, and MILLRACE only skips two ways of washing. */
 const STANDING_ONLY = ["sit", "look", "pant", "groom", "legLick", "earScratch", "knead", "beckon", "chatter", "yawn", "loaf", "dab", "flop", "roll", "sleep", "hop", "pounce", "sitDown", "standUp", "lieDown", "getUp", "sitToLie", "lieToSit", "curlUp", "wake", "hindStand", "scratch", "headBunt", "crouch", "wiggle", "stretch", "stalk"];
 export const MODEL_LIMITS = {
   NEKOBUS: { avoid: STANDING_ONLY, why: "the Catbus: a bus on twelve legs; it stands, walks and runs, and does nothing a bus cannot" },
   ATCHOUMCAT: { avoid: STANDING_ONLY, why: "floor-length fur stands in for the hind legs in the model: only standing and walking hold together" },
   JITTERPAW: { avoid: STANDING_ONLY, why: "fur modelled as loose spiky shards, which come apart in any fold" },
   PUSHEENX: { avoid: ["groom", "legLick", "earScratch", "beckon", "hindStand", "scratch", "stretch", "dab", "flop", "roll", "hop", "pounce", "sleep", "curlUp", "wake", "crouch", "wiggle"], why: "Pusheen: stub legs on a loaf of a body; no paw reaches the face, and it neither rolls over nor curls up (it dozes in its loaf)" },
+  // (the final survey round: its full copy's tail root, modelled lying along the ground from the hip, twists
+  // into a sheet when a hind leg comes up to the ear or is lifted to lick, even at 0.3 of the move)
+  MILLRACE: { avoid: ["earScratch", "legLick"], why: "its tail lies along the ground from the hip: a hind leg raised to the ear or to lick twists the tail's root" },
 };
 const avoidOf = (r) => { const m = MODEL_LIMITS[r?.id] ?? MODEL_LIMITS[r?.ticker]; return m ? m.avoid.slice() : null; };
 

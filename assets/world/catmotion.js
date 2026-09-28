@@ -162,7 +162,7 @@ export function allowedAction(traits, action) {
 /** A fidget for a cat holding `posture`, by trait-weighted chance; rnd() gives 0..1. Null if none fits. */
 export function pickFidget(traits, posture, rnd) {
   const t = { ...NEUTRAL_TRAITS, ...(traits || {}) };
-  const options = Object.entries(FIDGETS).filter(([, f]) => f.postures.includes(posture) && canDo(t, f)).map(([name, f]) => [name, Math.max(0, f.weight(t))]).filter(([name]) => canDo(t, name));
+  const options = Object.entries(FIDGETS).filter(([name, f]) => f.postures.includes(posture) && canDo(t, name)).map(([name, f]) => [name, Math.max(0, f.weight(t))]);
   const sig = t.signature && SIGNATURES[t.signature];
   if (sig && ACTIONS[sig]?.posture === posture && canDo(t, sig)) options.push([sig, 1.2]);
   const total = options.reduce((s, [, w]) => s + w, 0);

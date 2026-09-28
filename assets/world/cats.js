@@ -563,6 +563,9 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   }
 
   function build(cat, kind) {
+    // (A cat whose own model can't lie down or wash (traits.avoid) doesn't go off to nap or to wash: it
+    // would only stand there.)
+    if (((kind === "nap" || kind === "pile") && !canDo(cat.traits, "sleep") && !canDo(cat.traits, "loaf")) || (kind === "groom" && !canDo(cat.traits, "groom"))) return null;
     const rnd = cat.rnd, t = cat.traits, steps = [...leavePerch(cat)];
     const act = { kind, steps, i: 0, t: 0, reason: SAY.look, ignore: new Set() };
     switch (kind) {
