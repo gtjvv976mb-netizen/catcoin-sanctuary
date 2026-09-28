@@ -143,11 +143,13 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
     }
     return true;
   }
-  /** The cat whose body `c` would be in, standing at (x, z) facing yaw in `pose` (closer than `room`); null if none. */
+  /** The cat whose body `c` would be in, standing at (x, z) facing yaw in `pose` (closer than `room`);
+      null if none. Every other cat counts at least at its walking length: one sitting or curled up
+      there will stand up there, and needs the room. */
   function crowdedBy(c, x, z, yaw, pose, room = 0) {
     for (const o of cats) {
       if (o === c || Math.abs(o.x - x) > 2.5 || Math.abs(o.z - z) > 2.5) continue;
-      if (bodyGap(c, x, z, yaw, pose, o) < room) return o;
+      if (bodyGap(c, x, z, yaw, pose, o, HALF_LEN[o.pose] > HALF_LEN.walk ? o.pose : "walk") < room) return o;
     }
     return null;
   }
@@ -279,10 +281,11 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       if (uw) { c.plan.splice(c.si, 0, hold(uw.action, uw.dur, s.doing || c.doing, { fidget: false })); return true; }
       const want = postureFor(c, s);
       if (want && want !== c.posture) {
-        // (Sitting or lying down where it stands, but in another cat's body there: it steps clear first.)
+        // (Sitting or lying down where it stands, but in another cat's body there, or where its body
+        // standing up again would be in one: it steps clear first.)
         if (c.posture === "stand" && s.type === "hold" && !s.roomed) {
           s.roomed = true;
-          const q = crowdedBy(c, c.x, c.z, c.yaw, POSTURE_POSE[want], -0.02) && clearNear(c, POSTURE_POSE[want]);
+          const q = (crowdedBy(c, c.x, c.z, c.yaw, POSTURE_POSE[want], -0.02) || crowdedBy(c, c.x, c.z, c.yaw, "walk", -0.02)) && clearNear(c, POSTURE_POSE[want]);
           if (q) { c.dest = q; c.plan.splice(c.si, 0, { type: "go", x: q.x, z: q.z, doing: s.doing || c.doing }); return true; }
         }
         const path = transitionPath(c.posture, want);
@@ -332,7 +335,9 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
         if (c.speed <= 0) return next();
         return false;
       case "circle":
-        // Round before lying down: an even slow walk round a tight circle, braking in its last step (as in the garden).
+        // Round before lying down: an even slow walk round a tight circle, braking in its last step (as in
+        // the garden); a cat that has only just stopped stands its moment first.
+        if (time < c.stopUntil) return false;
         if (circleStep(c, s, dt)) return next();
         return false;
       case "hold": {

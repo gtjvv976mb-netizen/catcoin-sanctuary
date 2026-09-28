@@ -142,8 +142,10 @@ export const FIDGETS = {
 /** A signature move from a cat's own story (traits.signature) and the action that plays it. */
 export const SIGNATURES = { beckon: "beckon", hindStand: "hindStand", loaf: "loaf", wash: "groom", boxSit: "sit", headTilt: "look", stareDown: "look", sphinxWatch: "loaf", ringCurl: "sleep", drapeLean: "flop", lapClaim: "knead", spin: "stand", slowBlink: "sit", popMouth: "sit", blep: "sit" };
 
-/** Neutral traits (every value 0.5, an ordinary adult) for cats with none. */
-export const NEUTRAL_TRAITS = { energy: 0.5, sleepy: 0.5, playful: 0.5, bold: 0.5, social: 0.5, grumpy: 0.5, proud: 0.5, grace: 0.5, curious: 0.5, hunter: 0.5, vocal: 0.5, foodie: 0.5, age: "adult", build: "normal", legs: "normal", size: "medium", flags: [], signature: null };
+/** Neutral traits (every value 0.5, an ordinary adult) for cats with none. `avoid`: actions (keys of
+    ACTIONS) this cat's own model cannot show without its skin tearing (traits.js MODEL_LIMITS): the sims
+    never give them, and the view shows the posture's plain pose, or standing, instead. */
+export const NEUTRAL_TRAITS = { energy: 0.5, sleepy: 0.5, playful: 0.5, bold: 0.5, social: 0.5, grumpy: 0.5, proud: 0.5, grace: 0.5, curious: 0.5, hunter: 0.5, vocal: 0.5, foodie: 0.5, age: "adult", build: "normal", legs: "normal", size: "medium", flags: [], signature: null, avoid: [] };
 
 /** A fidget for a cat holding `posture`, by trait-weighted chance; rnd() gives 0..1. Null if none fits. */
 export function pickFidget(traits, posture, rnd) {

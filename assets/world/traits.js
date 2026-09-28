@@ -404,6 +404,20 @@ export function textsOf(r, extra = {}) {
   };
 }
 
+/** What a resident's own 3D model cannot show without its skin tearing (measured over every clip by the
+    herd survey behind tests/catrig-herd.test.mjs): the actions (catmotion.js ACTIONS) the sims never give
+    it and the view never shows for it (catviews shows the posture's plain pose, or standing, instead).
+    Keyed by id; `why` says what the model is. Everything a model can do it still does: these four keep
+    to standing and walking (and Pusheen to its loaf), as the models allow. */
+const STANDING_ONLY = ["sit", "look", "pant", "groom", "legLick", "earScratch", "knead", "beckon", "chatter", "yawn", "loaf", "dab", "flop", "roll", "sleep", "hop", "pounce", "sitDown", "standUp", "lieDown", "getUp", "sitToLie", "lieToSit", "curlUp", "wake", "hindStand", "scratch", "headBunt", "crouch", "wiggle", "stretch", "stalk"];
+export const MODEL_LIMITS = {
+  NEKOBUS: { avoid: STANDING_ONLY, why: "the Catbus: a bus on twelve legs; it stands, walks and runs, and does nothing a bus cannot" },
+  ATCHOUMCAT: { avoid: STANDING_ONLY, why: "floor-length fur stands in for the hind legs in the model: only standing and walking hold together" },
+  JITTERPAW: { avoid: STANDING_ONLY, why: "fur modelled as loose spiky shards, which come apart in any fold" },
+  PUSHEENX: { avoid: ["groom", "legLick", "earScratch", "beckon", "hindStand", "scratch", "stretch", "dab", "flop", "roll", "hop", "pounce", "sleep", "curlUp", "wake", "crouch", "wiggle"], why: "Pusheen: stub legs on a loaf of a body; no paw reaches the face, and it neither rolls over nor curls up (it dozes in its loaf)" },
+};
+const avoidOf = (r) => { const m = MODEL_LIMITS[r?.id] ?? MODEL_LIMITS[r?.ticker]; return m ? m.avoid.slice() : null; };
+
 /** A resident's traits read from its words, with its memorial mark and any hand override (and `why`). */
 export function deriveTraits(r, extra = {}) {
   const o = TRAIT_OVERRIDES[r?.id] ?? TRAIT_OVERRIDES[r?.ticker];
@@ -414,6 +428,8 @@ export function deriveTraits(r, extra = {}) {
     t.flags = FLAGS.filter((f) => t.flags.includes(f) || f === "memorial" || f === "gentle");
     t.why.memorial = "in loving memory";
   }
+  const a = avoidOf(r);
+  if (a) { t.avoid = a; t.why.avoid = (MODEL_LIMITS[r?.id] ?? MODEL_LIMITS[r?.ticker]).why; }
   return applyOverride(t, o);
 }
 

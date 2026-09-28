@@ -10,7 +10,8 @@
    - onto its back (roll) only from lying on its side (flop) held a moment, and off its back only
      onto its side again; onto its side only from a loaf (never straight out of lying down);
    - gaits change at most once in half a second;
-   - nothing sits, lies or sleeps while it is moving;
+   - nothing sits, lies or sleeps while it is moving, and no body turns while it sits, lies or
+     changes posture (a turn on the spot ends before the sitting down that follows starts);
    - no creeping: a gait is never shown while the cat moves slower than a real step (0.15 units/s
      over the ground, not turning on the spot) for longer than a gait's shortest showing;
    - no cat walks into another's body (bodies as big as the cats are drawn), and cats don't stay
@@ -33,16 +34,18 @@ const SECONDS = 120;
 const base = (p) => (p === "move" || p === "air" ? "stand" : p);
 const RESTING = new Set(["sit", "lie", "sleep"]);
 
-/** Cats meant to be touching: a cheek rub, a friend followed or visited, a nap pile. */
-const together = (a, b) => (a.act && (a.act.nuzzle === b || a.act.mate === b || a.act.kind === "pile")) || (b.act && (b.act.nuzzle === a || b.act.mate === a || b.act.kind === "pile"));
-/** The longest a gait may be seen while the cat creeps (its shortest showing, MIN_SHOW.move, and a few frames). */
-const CREEP_MAX = MIN_SHOW.move + 0.1;
+/** Cats meant to be touching: a cheek rub with a friend visited, a nap pile (not a chase's pair: they never sit down in each other). */
+const together = (a, b) => (a.act && (a.act.nuzzle === b || a.act.kind === "pile")) || (b.act && (b.act.nuzzle === a || b.act.kind === "pile"));
+/** The longest a gait may be seen while the cat creeps: a cat stopped dead (held by another's body, or
+    waiting with nowhere to go) is shown moving at most a real step's worth (0.25 s, publishMotion) and a
+    few frames, never a gait's whole shortest showing frozen mid-stride. */
+const CREEP_MAX = 0.32;
 
 /** Watches cats' motion tick by tick; returns plain numbers and the first few examples of anything wrong.
     With `bodies`, it also watches the cats' bodies (drawn size) against each other. */
 function watcher(cats, { bodies = false } = {}) {
   const S = cats.map((c) => ({ action: c.motion.action, since: -Infinity, gait: c.motion.gait, gaitAt: -Infinity, odo: c.motion.odometer, x: c.x, z: c.z, yaw: c.yaw, sleep: 0, fast: 0, creep: 0 }));
-  const out = { cats: cats.length, changes: 0, changesNoTrans: 0, short: 0, skips: 0, unsettled: 0, fastGaits: 0, restMoving: 0, invalid: 0, jumps: 0, rollSkips: 0, creeps: 0, creepMax: 0, walkInto: 0, longOverlaps: 0, examples: [] };
+  const out = { cats: cats.length, changes: 0, changesNoTrans: 0, short: 0, skips: 0, unsettled: 0, fastGaits: 0, restMoving: 0, invalid: 0, jumps: 0, rollSkips: 0, creeps: 0, creepMax: 0, spins: 0, walkInto: 0, longOverlaps: 0, examples: [] };
   const note = (kind, c, what) => { if (out.examples.length < 12) out.examples.push(`${kind} ${c.id}: ${what}`); };
   const overlap = new Map();
   function tick(now, dt) {
@@ -60,6 +63,9 @@ function watcher(cats, { bodies = false } = {}) {
         if (s.creep > 0.2) { out.creepMax = Math.max(out.creepMax, s.creep); if (s.creep > CREEP_MAX) { out.creeps++; note("creeping", c, `${m.action === s.action ? "" : s.action + " "}shown at under 0.15 units/s for ${s.creep.toFixed(2)} s`); } }
         s.creep = 0;
       }
+      // Spinning: a body turning while it sits, lies or changes posture (a turn's last tick must not
+      // share a tick with the sitting down that follows it).
+      if (!c.hidden && A && (RESTING.has(m.posture) || A.kind === "trans") && yr > 0.5) { out.spins++; note("turning while down", c, `${m.action} at ${yr.toFixed(1)} rad/s`); }
       s.x = c.x; s.z = c.z; s.yaw = c.yaw;
       if (m.odometer - s.odo > 1e-6 && RESTING.has(m.posture)) { out.restMoving++; note("resting while moving", c, m.action); }
       s.odo = m.odometer;
@@ -182,11 +188,12 @@ if (!isMainThread) {
     assert.equal(o.jumps, 0, `cats jumping across the ground:\n  ${why}`);
     assert.equal(o.rollSkips, 0, `over onto its back or side without the pose that leads there:\n  ${why}`);
     assert.equal(o.creeps, 0, `a gait shown while creeping (the longest ${o.creepMax.toFixed(2)} s):\n  ${why}`);
+    assert.equal(o.spins, 0, `a body turning while it sits, lies or changes posture:\n  ${why}`);
     const perMin = o.changes / o.cats / o.minutes;
     assert.ok(perMin <= 8, `${perMin.toFixed(2)} changes per cat per minute (at most 8)`);
   }
   /** Bodies: nobody walks into a resting cat; cats in each other for a second or more are rare. */
-  function assertBodies(o, { longOverlaps = 12 } = {}) {
+  function assertBodies(o, { longOverlaps = 6 } = {}) {
     const why = o.examples.join("\n  ");
     assert.ok(o.walkInto < 0.5, `cats on the move deep in a resting cat's body for ${o.walkInto.toFixed(2)} s:\n  ${why}`);
     assert.ok(o.longOverlaps <= longOverlaps, `${o.longOverlaps} pairs of cats in each other for a second or more (at most ${longOverlaps}):\n  ${why}`);

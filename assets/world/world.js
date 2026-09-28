@@ -29,6 +29,7 @@ import { buildResearch } from "./research.js";
 import { createSanctuary } from "./cats.js";
 import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
+import { decodeLegs } from "./catrig.js";
 import { traitsOf, styleOf } from "./traits.js";
 import { HOUSE, GARDEN, MEADOW, HALL_OF_FAME, BRIDGES, EASEL, groundHeight } from "./layout.js";
 import { modelIdFor } from "../ui/models.js";
@@ -728,6 +729,16 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const LOAD_DIST = 70;
   const ownFrustum = new THREE.Frustum(), ownPv = new THREE.Matrix4(), ownP = new THREE.Vector3();
   const loadGlb = (f) => loader.loadAsync(`assets/models/cats/${encodeURIComponent(f)}.glb`).then((g) => g.scene).catch(() => null);
+  // Leg labels made offline for the cats whose legs the model fuses (assets/models/cats/<KEY>.legs.json,
+  // scripts/cowork-legs.mjs; legs-index.json lists them): fetched with the far copy, kept for the full one.
+  const legsIndex = fetch("assets/models/cats/legs-index.json").then((r) => (r.ok ? r.json() : null)).then((j) => new Set(j?.v === 1 && Array.isArray(j.cats) ? j.cats : [])).catch(() => new Set());
+  const loadLegs = async (f) => {
+    if (!(await legsIndex).has(f)) return null;
+    try {
+      const j = await (await fetch(`assets/models/cats/${encodeURIComponent(f)}.legs.json`)).json();
+      return j?.v === 1 ? { far: j.far ? decodeLegs(j.far, j.nlo) : null, full: j.full ? decodeLegs(j.full, j.n) : null } : null;
+    } catch { return null; }
+  };
   /* A budget for the full models' GPU memory: at most tier.hiMax of them are kept (the farthest
      is freed, and queued again, to make room), and their textures are shrunk to tier.hiTex. */
   const tierQ = q;
@@ -772,9 +783,9 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
       if (q.stage === 1 && q.id !== chosenId && !makeRoomForHi(q)) { q.wait = now + 3000; continue; }
       q.busy = true; ownState.loading++;
       jobs.push((async () => {
-        const root = await loadGlb(q.file + (q.stage === 0 ? "-lo" : ""));
+        const [root, legs] = await Promise.all([loadGlb(q.file + (q.stage === 0 ? "-lo" : "")), q.stage === 0 ? loadLegs(q.file) : null]);
         if (root && q.stage === 1) shrinkTextures(root, tierQ.hiTex);
-        if (root) { herd.attachOwn(q.id, q.stage === 0 ? { lo: root, dims: q.dims } : { hi: root, dims: q.dims }); requestRender(); }
+        if (root) { herd.attachOwn(q.id, q.stage === 0 ? { lo: root, dims: q.dims, legs } : { hi: root, dims: q.dims }); requestRender(); }
         ownState.loading--; q.busy = false;
         if (q.stage === 0) q.stage = 1; else { ownState.queue.splice(ownState.queue.indexOf(q), 1); if (root) ownState.hi.push(q); }
       })());

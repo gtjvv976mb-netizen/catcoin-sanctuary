@@ -136,6 +136,13 @@ function underside(pos, index, x, z, yMin) {
   return best;
 }
 
+/** The tail's thickness: the spread of the ring of points half way along it (0.012 .. 0.08). */
+function tailR0(tailRing, tailPts, tailBase, span) {
+  const ring = tailRing || tailPts.filter((p) => { const dd = p.distanceTo(tailBase); return dd > span * 0.35 && dd < span * 0.65; });
+  if (ring.length > 6) { const c = mean(ring); return Math.max(0.012, Math.min(0.08, pct(ring.map((p) => p.distanceTo(c)), 0.7))); }
+  return 0.025;
+}
+
 /** The bone layout for a normalized standing cat (positions: Float32Array of x,y,z; `index`, the
     mesh's triangles, optional: with it the belly line is found on the surface itself). */
 export function findRig(pos, index = null) {
@@ -181,7 +188,7 @@ export function findRig(pos, index = null) {
     }
     if (hits.length >= 6) yb = Math.max(0.12 * H, pct(hits, 0.3));
   }
-  let yt = Math.max(yb + 0.1, pct(mid.map((p) => p.y), 0.97));
+  let yt = Math.max(yb + 0.1, pct(mid.map((p) => p.y), 0.97)), headOver = false;
   // A big cartoon head can sit right over the body (chibi cats): then the body's cross-section,
   // going up, narrows at the neck and widens again into the head. The back is at the neck.
   {
@@ -208,15 +215,16 @@ export function findRig(pos, index = null) {
       }
     }
     if (cut > 0) yt = Math.max(yb + 0.1, yb + (cut + 0.5) * step);
+    headOver = cut > 0;
   }
-  const yMid = (yb + yt) / 2;
+  let yMid = (yb + yt) / 2;
   // The body's width across the middle (for a cat rolled onto its side).
   const midZ = P.filter((p) => p.x > hindX + 0.25 * d && p.x < frontX - 0.25 * d && p.y > yb && p.y < yt).map((p) => p.z);
   const bodyW = midZ.length > 12 ? pct(midZ, 0.97) - pct(midZ, 0.03) : (z1 - z0) * 0.7;
   // Head: the high points ahead of the middle of the body.
-  const headPts = P.filter((p) => p.x > (frontX + hindX) / 2 && p.y > yt - 0.02);
-  const headC = headPts.length > 10 ? mean(headPts) : V(frontX + 0.2 * d, yt + 0.15, zc);
-  const noseX = Math.max(headC.x + 0.05, pct(headPts.map((p) => p.x), 0.98));
+  let headPts = P.filter((p) => p.x > (frontX + hindX) / 2 && p.y > yt - 0.02);
+  let headC = headPts.length > 10 ? mean(headPts) : V(frontX + 0.2 * d, yt + 0.15, zc);
+  let noseX = Math.max(headC.x + 0.05, pct(headPts.map((p) => p.x), 0.98));
   // Tail: from behind the rump to its furthest point, in four joints.
   const tailBase = V(hindX - 0.22 * d, yb + 0.72 * (yt - yb), zc);
   // (A tail may hang down: low points count too, unless they are by a hind leg or at the ground.)
@@ -269,6 +277,23 @@ export function findRig(pos, index = null) {
       tailRing = ring(0.5, Lg / 24); if (tailRing.length < 6) tailRing = ring(0.5, Lg / 12);
     }
   }
+  // A tail carried up over the back reaches into the middle of the body's points and would pass for the
+  // back itself, putting the back line, the spine and the hips too high (a sitting cat's bottom then
+  // stays up off the ground): with the tail followed, the back is found again without it (unless the
+  // back was set at a neck's narrowing, which the tail does not reach).
+  if (!headOver && tailPts.length > 20 && span > 0.12 * (x1 - x0)) {
+    const tr = Math.max(2 * tailR0(tailRing, tailPts, tailBase, span), 0.03), nearTail = (p) => { for (let k = 1; k <= 4; k++) if (segDist(p, tail[k - 1], tail[k]) < tr) return true; return false; };
+    const ys = mid.filter((p) => !nearTail(p)).map((p) => p.y);
+    if (ys.length > 30) {
+      const yt2 = Math.max(yb + 0.1, pct(ys, 0.97));
+      if (yt2 < yt - 0.02) {
+        yt = yt2; yMid = (yb + yt) / 2;
+        headPts = P.filter((p) => p.x > (frontX + hindX) / 2 && p.y > yt - 0.02 && !nearTail(p));
+        headC = headPts.length > 10 ? mean(headPts) : V(frontX + 0.2 * d, yt + 0.15, zc);
+        noseX = Math.max(headC.x + 0.05, pct(headPts.map((p) => p.x), 0.98));
+      }
+    }
+  }
   // Legs: each leg's centre line, found from slices of the mesh around its paw (so the joints sit
   // inside the leg even when the model's legs are straight columns or bent), from the paw up to
   // the belly; the top joint (hip or shoulder) sits up inside the body, as a real cat's does.
@@ -315,20 +340,23 @@ export function findRig(pos, index = null) {
     // forearm, and a short paw (front). Each joint sits on the leg's own centre line.
     const topY = yb + (front ? 0.5 : 0.45) * (yt - yb);
     const knee = at(topY * (front ? 0.58 : 0.6)), low = at(topY * (front ? 0.17 : 0.25)), up = at(Math.min(yb * 0.9, topY * 0.8));
-    const r = rAt(Math.min(yb * 0.6, topY * 0.45));
+    // (measured low on the leg, below the skirt of fur a long-haired cat's belly hangs down to, and
+    // never more than a tenth of the cat's height: a fur skirt taken for a fat leg would make the
+    // leg's bones take the flank above it)
+    const r = Math.min(0.1 * H, rAt(Math.min(yb * 0.45, topY * 0.35))), rMid = Math.max(0.02, Math.min(legR * 0.6, rAt(Math.min(yb * 0.6, topY * 0.45))));
     const top = V(up.x + (front ? -0.03 : 0.03) * d, topY, zc + (up.z - zc) * 0.6);
     const kn = V(knee.x + (front ? -0.01 : 0.02) * d, knee.y, knee.z), lo = V(low.x + (front ? 0 : -0.02) * d, low.y, low.z);
     // (the knee in front of the line from hip to hock, the elbow behind the one from shoulder to wrist,
     // as a cat's bend: so the leg folds the way its own joints do, and stands as the model does)
     const lx = top.x + (lo.x - top.x) * (top.y - kn.y) / Math.max(1e-6, top.y - lo.y);
     kn.x = front ? Math.min(kn.x, lx - 0.012) : Math.max(kn.x, lx + 0.012);
-    legs[k] = { top, knee: kn, low: lo, toe: V(paw.x + (front ? 0.035 : 0.03), 0, paw.z), r: Math.max(0.02, Math.min(legR * 0.6, r)) };
+    // (rMid: the leg's thickness half way up, fur skirt and all, for telling the leg's own skin from
+    // the body's when the skin is sampled)
+    legs[k] = { top, knee: kn, low: lo, toe: V(paw.x + (front ? 0.035 : 0.03), 0, paw.z), r: Math.max(0.02, Math.min(legR * 0.6, r)), rMid };
   }
   // Thickness of the body, neck, head and tail, for weighting skin by distance relative to size.
   const headR = Math.max(0.06, pct(headPts.map((p) => p.distanceTo(headC)), 0.6));
-  let tailR = 0.025;
-  { const ring = tailRing || tailPts.filter((p) => { const dd = p.distanceTo(tailBase); return dd > span * 0.35 && dd < span * 0.65; });
-    if (ring.length > 6) { const c = mean(ring); tailR = Math.max(0.012, Math.min(0.08, pct(ring.map((p) => p.distanceTo(c)), 0.7))); } }
+  const tailR = tailR0(tailRing, tailPts, tailBase, span);
   const legTop = (legs.hL.top.y + legs.hR.top.y + legs.fL.top.y + legs.fR.top.y) / 4;
   // Legs the model has joined together (forelegs modelled as one column, paws touching): how far
   // down (a share of the belly's height) the left and right leg of each pair meet. 1: apart right
@@ -353,16 +381,23 @@ export function findRig(pos, index = null) {
   const skin = (() => {
     const step = Math.max(1, Math.floor(n / 900)), pts = [], bone = [], LK = ["hL", "hR", "fL", "fR"], SEG = { h: ["thigh", "shin", "foot"], f: ["arm", "forearm", "paw"] };
     const neck = V(frontX + 0.04 * d, yb + 0.5 * (yt - yb) + 0.25 * (yt - yb), zc), hj = V(frontX + 0.14 * d + (headC.x - frontX) * 0.35, (yt + headC.y) / 2, zc);
-    const hd = V().subVectors(hj, neck), hp = neck.clone().addScaledVector(hd, 0.3); hd.z = 0; hd.normalize();
+    const hd = V().subVectors(hj, neck), hp = neck.clone().addScaledVector(hd, 0.3); headPlane(hd);
     const body = [["pelvis", V(hindX + 0.05 * d, 0, 0)], ["spine", V((frontX + hindX) / 2, 0, 0)], ["chest", V(frontX - 0.05 * d, 0, 0)]];
+    // (a tail hanging down to the ground behind the rump would be taken for the rump's own skin, and hold
+    // a sitting cat's bottom up off the ground: nothing near the tail's own line, behind the hips, counts)
+    const nearTail = (p) => { if (p.x > hindX || tailStub) return false; const rr = Math.max(2 * tailR, 0.03); for (let k = 1; k <= 4; k++) if (segDist(p, tail[k - 1], tail[k]) < rr) return true; return false; };
     for (let i = 0; i < n; i += step) {
       const p = P[i];
       if (p.x < hindX - 0.22 * d && p.y > yb) continue; // (the tail is laid on the ground by its own joints)
+      if (nearTail(p)) continue;
       let nm = null;
       if (p.y < yb) {
         let bk = null, bd = Infinity;
-        for (const k of LK) { const g = legs[k], line = p.y > g.knee.y ? [g.knee, g.top] : p.y > g.low.y ? [g.low, g.knee] : [g.toe, g.low], t = Math.max(0, Math.min(1, (p.y - line[0].y) / Math.max(1e-6, line[1].y - line[0].y))); const dd = Math.hypot(p.x - (line[0].x + (line[1].x - line[0].x) * t), p.z - (line[0].z + (line[1].z - line[0].z) * t)) / Math.max(0.03, g.r); if (dd < bd) { bd = dd; bk = k; } }
+        for (const k of LK) { const g = legs[k], line = p.y > g.knee.y ? [g.knee, g.top] : p.y > g.low.y ? [g.low, g.knee] : [g.toe, g.low], t = Math.max(0, Math.min(1, (p.y - line[0].y) / Math.max(1e-6, line[1].y - line[0].y))); const dd = Math.hypot(p.x - (line[0].x + (line[1].x - line[0].x) * t), p.z - (line[0].z + (line[1].z - line[0].z) * t)) / Math.max(0.03, g.rMid); if (dd < bd) { bd = dd; bk = k; } }
         if (bk && bd < 1.8) { const g = legs[bk], s = SEG[bk[0]]; nm = `${p.y > g.knee.y ? s[0] : p.y > g.low.y ? s[1] : s[2]}.${bk[1]}`; }
+        // (a fat paw, a boot or a shoe, wider than the leg above it: the leg's end all the same, so a
+        // folded paw is rested on the ground by all of it)
+        else if (bk && bd < 4 && p.y < legs[bk].low.y) nm = `${SEG[bk[0]][2]}.${bk[1]}`;
         else if (p.y < 0.6 * yb || (p.y < 0.9 * yb && bd < 3.5)) continue; // (low down, off every leg's line but by one: a leg's all the same, not the body's)
       }
       if (!nm && (p.x - hp.x) * hd.x + (p.y - hp.y) * hd.y > 0 && (p.y > hj.y || p.distanceTo(headC) < 1.4 * headR + 0.02)) nm = "head";
@@ -379,10 +414,40 @@ export function findRig(pos, index = null) {
     pelvis: V(hindX + 0.05 * d, yMid, zc), chest: V(frontX - 0.05 * d, yMid, zc), spine: V((frontX + hindX) / 2, yMid, zc),
     neck: V(frontX + 0.04 * d, yMid + 0.25 * (yt - yb), zc), headJoint: V(frontX + 0.14 * d + (headC.x - frontX) * 0.35, (yt + headC.y) / 2, zc),
     legTop, legLen: legTop, legJoin, skin,
+    // Whether the head sits right over the body (the back was found at the neck's narrowing): then
+    // the head's round reaches back over the body; otherwise skin behind the neck is back, not head.
+    headOver,
   };
 }
 
 const LEGS = [["thigh", "shin", "foot", "h"], ["arm", "forearm", "paw", "f"]];
+
+/** How far round the head (in head radii from its centre) skin on the head's side of the neck plane
+    still counts as head: hair or a crest swept back off the head. */
+const HEAD_ROUND = 1.3;
+/** The normal of the plane across the neck that the head begins at: the way from the neck joint to
+    the head joint in the side view (`hd` turned in place: z dropped, unit length). */
+function headPlane(hd) { hd.z = 0; return hd.normalize(); }
+/** Whether a point lies on the neck itself: within NECK_R body radii of the line from the neck joint
+    to the head joint, along the neck's length (a little short of the head joint). A head carried high
+    on a thick neck or a ruff puts the nape and the top of the neck on the head's side of the neck
+    plane and inside the head's round; without this they would go to the head (or, behind the plane,
+    to the chest), leaving the neck bone no skin, and the neck's whole turn would fall on one seam. */
+const NECK_R = 0.9, NECK_T = [0, 0.9];
+function onNeck(p, rig, nd, nl) {
+  const dx = p.x - rig.neck.x, dy = p.y - rig.neck.y, dz = p.z - rig.neck.z, t = (dx * nd.x + dy * nd.y) / nl;
+  if (t < NECK_T[0] || t > NECK_T[1]) return false;
+  const px = dx - t * nl * nd.x, py = dy - t * nl * nd.y;
+  return Math.hypot(px, py, dz) < NECK_R * rig.bodyR;
+}
+/** A ruff beside the neck: alongside most of the neck's length, within 1.7 body radii of its line, and
+    outside the head's own round (0.95 of its radius from its centre). */
+function onNeckWide(p, rig, nd, nl) {
+  const dx = p.x - rig.neck.x, dy = p.y - rig.neck.y, dz = p.z - rig.neck.z, t = (dx * nd.x + dy * nd.y) / nl;
+  if (t < 0 || t > 0.85 || p.distanceTo(rig.headC) < 0.95 * rig.headR || p.x < rig.neck.x - 0.6 * rig.bodyR) return false;
+  const px = dx - t * nl * nd.x, py = dy - t * nl * nd.y;
+  return Math.hypot(px, py, dz) < 1.7 * rig.bodyR;
+}
 
 /** The skeleton for a rig: bones placed at the rig's joints, rest rotations all identity. */
 export function buildSkeleton(rig) {
@@ -421,6 +486,23 @@ const _v1 = V(), _v2 = V(), _v3 = V();
 /** How far skin weights blend across a joint, in model units (the model is 1 tall). */
 export const BLEND = 0.055;
 
+/** Leg labels from a <KEY>.legs.json run-length string ("b120,03,b5,1": b = not a leg, 0-3 = hL, hR,
+    fL, fR, each with a count) for a copy of n points: a Uint8Array (255 = not a leg), or null if the
+    runs don't add up to n. */
+export function decodeLegs(str, n) {
+  const out = new Uint8Array(n).fill(255);
+  let i = 0;
+  for (const tok of String(str).split(",")) {
+    const m = /^([0-3b])(\d*)$/.exec(tok);
+    if (!m) return null;
+    const c = m[2] ? +m[2] : 1;
+    if (i + c > n) return null;
+    if (m[1] !== "b") out.fill(+m[1], i, i + c);
+    i += c;
+  }
+  return i === n ? out : null;
+}
+
 /**
  * Skin weights for positions (Float32Array) against a rig and its skeleton; `index` (the mesh's
  * triangle indices, optional) lets the weights be smoothed along the surface. Returns { index, weight }.
@@ -431,15 +513,21 @@ export const BLEND = 0.055;
  * Then the weights are blurred across the surface (the mesh welded where Meshy cut its UVs), so
  * a joint bends over a band of skin instead of tearing along the line between two bones.
  */
-export function skinWeights(pos, rig, sk, index = null) {
+export function skinWeights(pos, rig, sk, index = null, legs = null) {
   const bonesList = sk.skeleton.bones, names = bonesList.map((b) => b.name), B = names.length;
   const seg = {}, rad = {};
-  const endOf = { head: V(rig.noseX, rig.headC.y, rig.zc), tail4: rig.tail[4], chest: rig.neck, root: rig.pelvis };
+  // The body's three bones share its skin in thirds along its length (rump and loins, the middle,
+  // the chest and shoulders), whatever the joints' places: the chest joint sits at the shoulders,
+  // where the back bends into the neck, and a chest whose skin began there would own a hand's width
+  // of the back and leave the loins against the nape, a step of two joints' turn at one seam.
+  const yMid = rig.yMid ?? (rig.yb + rig.yt) / 2, cut1 = V(rig.hindX + 0.38 * rig.d, yMid, rig.zc), cut2 = V(rig.hindX + 0.68 * rig.d, yMid, rig.zc);
+  const startOf = { spine: cut1, chest: cut2 };
+  const endOf = { head: V(rig.noseX, rig.headC.y, rig.zc), tail4: rig.tail[4], pelvis: cut1, spine: cut2, chest: rig.neck, root: rig.pelvis };
   for (const b of bonesList) {
     const kid = b.children.find((c) => c.isBone && !c.name.startsWith("tail") && !/^(thigh|arm)/.test(c.name)) || b.children.find((c) => c.isBone);
     let end = endOf[b.name] || (kid ? kid.userData.at : null);
     if (!end && /^(foot|paw)/.test(b.name)) end = rig.legs[(b.name.startsWith("foot") ? "h" : "f") + b.name.slice(-1)].toe;
-    seg[b.name] = [b.userData.at, end || b.userData.at];
+    seg[b.name] = [startOf[b.name] || b.userData.at, end || b.userData.at];
     const leg = /\.(L|R)$/.test(b.name) ? rig.legs[(/^(thigh|shin|foot)/.test(b.name) ? "h" : "f") + b.name.slice(-1)] : null;
     rad[b.name] = leg ? leg.r * (/^(thigh|arm)/.test(b.name) ? 1.6 : 1) : b.name.startsWith("tail") ? rig.tailR : b.name === "head" ? rig.headR : b.name === "neck" ? rig.bodyR * 0.8 : rig.bodyR;
   }
@@ -452,7 +540,8 @@ export function skinWeights(pos, rig, sk, index = null) {
   // The head's side of a plane across the neck (a third of the way to the head joint): points
   // there go to the neck and head only, however far back a big cartoon head reaches.
   const hd = V().subVectors(rig.headJoint, rig.neck), hp = rig.neck.clone().addScaledVector(hd, 0.3);
-  hd.z = 0; hd.normalize();
+  const nl = Math.max(1e-6, Math.hypot(hd.x, hd.y)); headPlane(hd);
+  const neckI = names.indexOf("neck");
   const info = bonesList.map((b, i) => {
     const nm = b.name, lr = nm.match(/\.(L|R)$/);
     return { i, a: seg[nm][0], b: seg[nm][1], r: rad[nm], root: nm === "root", tail: nm.startsWith("tail"), head: nm === "head", headOk: nm === "head" || nm === "neck", side: lr ? lr[1] : null, hind: /^(thigh|shin|foot)/.test(nm) };
@@ -474,7 +563,16 @@ export function skinWeights(pos, rig, sk, index = null) {
   // generated model's legs can be fat, bent or fused to a low belly; the mesh still says where
   // one leg ends.
   let piece = null;
-  if (nb) {
+  // Leg labels made offline (assets/models/cats/<KEY>.legs.json by scripts/cowork-legs.mjs, from a
+  // rigging service's own split of the model; one per point: 0-3 = hL, hR, fL, fR, 255 = not a leg)
+  // stand in for the split grown from the paws, for the cats whose legs the model fuses (paws
+  // touching, forelegs webbed into one column) where that split webs them together.
+  if (legs && legs.length === n) {
+    piece = new Int8Array(U).fill(-1);
+    for (let i = 0; i < n; i++) if (legs[i] < 4) piece[uid[i]] = legs[i];
+    piece.fused = true; piece.given = true;
+  }
+  if (nb && !piece) {
     // The points each paw stands on (each point to its nearest paw only).
     const pawPts = LK.map(() => []);
     for (let u = 0; u < U; u++) {
@@ -547,10 +645,15 @@ export function skinWeights(pos, rig, sk, index = null) {
     // (Past the plane, and either above the head joint or near the head: where the head sits nearly
     // straight above the neck the plane is almost level, and the top of the shoulders behind it is
     // back, not head; hair or a crest swept back high off the head is still head.)
-    const headSide = (p.x - hp.x) * hd.x + (p.y - hp.y) * hd.y > 0 && (p.y > rig.headJoint.y || p.distanceTo(rig.headC) < 1.4 * rig.headR + 0.02), under = p.y < rig.yb - 0.01;
-    // Inside a leg's column (below the top of the leg): that leg's bones only.
+    // (A head sitting right over the body (headOver) begins at the neck's narrowing all round, its back
+    // half hanging over the back: there everything above that line and inside the head's round is head.)
+    const inRound = p.distanceTo(rig.headC) < HEAD_ROUND * rig.headR + 0.02;
+    const headSide = ((p.x - hp.x) * hd.x + (p.y - hp.y) * hd.y > 0 && (p.y > rig.headJoint.y || (inRound && (rig.headOver || p.x > rig.neck.x - 0.25 * rig.headR)))) || (rig.headOver && inRound && p.y > rig.yt + 0.01), under = p.y < rig.yb - 0.01;
+    // Inside a leg's column (below the top of the leg): that leg's bones only. (Above the knee a
+    // point must also lie within the leg's own column: a long-haired cat's belly fur hangs below its
+    // belly line and grows into the leg's piece from the paw, and would go up with a lifted leg.)
     let inLeg = piece ? (piece[u] >= 0 ? LK[piece[u]] : null) : null;
-    if (inLeg && piece.fused && p.y > rig.legs[inLeg].knee.y && colDist(inLeg, p) > 1.3) inLeg = null;
+    if (inLeg && !piece.given && p.y > rig.legs[inLeg].knee.y && colDist(inLeg, p) > (piece.fused ? 1.3 : 1.6)) inLeg = null;
     if (!piece && !headSide && p.y < rig.legTop) {
       let bestc = Infinity;
       for (const k of LK) {
@@ -565,7 +668,7 @@ export function skinWeights(pos, rig, sk, index = null) {
     let best = 0, bd = Infinity;
     for (const f of info) {
       if (f.root) continue;
-      if (inLeg) { if (!legOf[inLeg].includes(names[f.i])) continue; }
+      if (inLeg) { if (!legOf[inLeg].includes(names[f.i]) || (/^(thigh|arm)/.test(names[f.i]) && p.y < rig.legs[inLeg].knee.y - 0.01)) continue; } // (below the knee, the shin's or forearm's, however thick the thigh)
       else if (f.tail) { if (p.x > rig.pelvis.x || (tg && tg[u] < Infinity && tg[u] > tRoot * 1.04 + 0.005)) continue; }
       else if (headSide) { if (!f.headOk) continue; }
       else if (f.head) continue;
@@ -576,11 +679,40 @@ export function skinWeights(pos, rig, sk, index = null) {
       const dd = segDist(p, f.a, f.b) / f.r;
       if (dd < bd) { bd = dd; best = f.i; }
     }
+    // The neck's own skin: on the neck (see onNeck), whether on the head's side of the plane (the
+    // nape under a high-held head) or behind it (the throat and the top of the neck above the
+    // shoulders, which by distance alone would go to the chest).
+    // (and, on the head's side of the plane, a ruff beside the neck: alongside the neck's length yet
+    // outside the head's round, whatever its thickness, it is neck, not head: a head bowed to a paw would
+    // otherwise carry the ruff's skin away from the shoulders')
+    if (!inLeg && neckI > 0 && !info[best].tail && (onNeck(p, rig, hd, nl) || (headSide && onNeckWide(p, rig, hd, nl))) && (headSide || ((p.x - rig.neck.x) * hd.x + (p.y - rig.neck.y) * hd.y > 0 && p.y > rig.neck.y - 0.3 * rig.bodyR))) best = neckI;
     // (Well out along the tail, it is tail whatever lies nearer.)
     // (A piece of the tail the model left unjoined, a tuft or a tip, goes to the bone it is nearest.)
     if (tg && !inLeg && tg[u] < tRoot * 0.8) best = tailBand(u);
     else if (tg && info[best].tail && tg[u] < Infinity) best = tailBand(u);
     seed[u] = best;
+  }
+  // A tail the model has laid against the body (its tip resting on the rump, a curl against a flank or
+  // a hind leg): well out along it, its skin shares edges with the body's, and any swing of it would tear
+  // them. Noted on the rig (tailTouch) for the clips, which then move such a tail only a little.
+  // (or its end curled back onto its own root: tail4 against tail1 or tail2)
+  if (nb && tg) {
+    const tk = names.map((nm) => (/^tail[34]$/.test(nm) ? 1 : /^(pelvis|spine|chest|thigh\.|shin\.)/.test(nm) ? 2 : /^tail[12]$/.test(nm) ? 3 : 0));
+    const t4 = names.indexOf("tail4");
+    let c = 0;
+    for (let u = 0; u < U && c < 10; u++) { const a = seed[u]; if (tk[a] !== 1) continue; for (let s2 = start[u]; s2 < start[u + 1]; s2++) { const b = tk[seed[nb[s2]]]; if (b === 2 || (b === 3 && a === t4)) c++; } }
+    if (c >= 10) rig.tailTouch = true;
+  }
+  // Whether a foreleg's skin touches a hind leg's (the paws set together under a short round body).
+  let touchFH = false;
+  if (nb) {
+    const endOfBone = names.map((nm) => (/^(thigh|shin|foot)\./.test(nm) ? 1 : /^(arm|forearm|paw)\./.test(nm) ? 2 : 0));
+    // (touching below the knees, legs against legs: the pieces of an ordinary cat's legs meet only along
+    // the strip of belly they grew up to, which is no reason to blend a hind leg into a foreleg)
+    const kneeY = Math.min(...LK.map((k) => rig.legs[k].knee.y));
+    let touches = 0;
+    for (let u = 0; u < U && touches < 6; u++) { if (up[u * 3 + 1] > kneeY) continue; for (let s2 = start[u]; s2 < start[u + 1]; s2++) { const v = nb[s2], e1 = endOfBone[seed[u]], e2 = endOfBone[seed[v]]; if (e1 && e2 && e1 !== e2 && up[v * 3 + 1] <= kneeY) touches++; } }
+    touchFH = touches >= 6;
   }
   // Weight can only spread to a bone's family (parent, grandparent, children, grandchildren,
   // siblings): a joint blends the bones that meet there, never far-off ones.
@@ -593,6 +725,8 @@ export function skinWeights(pos, rig, sk, index = null) {
     // skin between them stretches evenly as one steps, instead of tearing along the seam.)
     const lr = b.name.match(/^(thigh|shin|foot|arm|forearm|paw)\.(L|R)$/), own = [...set];
     if (lr) { const o = lr[2] === "L" ? "R" : "L", hind = /^(thigh|shin|foot)$/.test(lr[1]); for (const nm of hind ? ["thigh", "shin", "foot"] : ["arm", "forearm", "paw"]) set.add(sk.bones[`${nm}.${o}`]); }
+    // (So do a foreleg and a hind leg the model has set touching, stumpy legs close under a round body.)
+    if (lr && touchFH) for (const nm of /^(thigh|shin|foot)$/.test(lr[1]) ? ["arm", "forearm", "paw"] : ["thigh", "shin", "foot"]) for (const sd of ["L", "R"]) set.add(sk.bones[`${nm}.${sd}`]);
     const F = [...set].map((x) => bonesList.indexOf(x)).filter((j) => j > 0);
     F.own = own.map((x) => bonesList.indexOf(x)).filter((j) => j > 0);
     return F;
@@ -655,36 +789,73 @@ export function skinWeights(pos, rig, sk, index = null) {
     const kind = names.map((nm) => (nm === "head" ? "head" : ["pelvis", "spine", "chest", "neck"].includes(nm) ? "body" : /^(thigh|arm)/.test(nm) ? "top" : /^(shin|foot|forearm|paw)/.test(nm) ? "leg" : nm.startsWith("tail") ? "tail" : "root"));
     const legRad = names.map((nm) => { const m = nm.match(/^(thigh|shin|foot|arm|forearm|paw)\.(L|R)$/); return m ? rig.legs[(/^(thigh|shin|foot)$/.test(m[1]) ? "h" : "f") + m[2]].r : 0; });
     const bodyR = Math.max(0.06, rig.bodyR);
+    // (A hip or shoulder sits up inside the body, and the skin of the flank between the belly line and
+    // the joint goes with the leg's top bone as much as with the body: so on the body's side the band
+    // is as deep as the joint is above the belly line, not a thin leg's width, which would fold a cat
+    // rearing up or raising a paw along a crease and tear it into a sheet.)
+    const flank = names.map((nm) => { const m = nm.match(/^(thigh|arm)\.(L|R)$/); return m ? Math.max(0, rig.legs[(m[1] === "thigh" ? "h" : "f") + m[2]].top.y - rig.yb) : 0; });
+    // (and on the leg's side, down half the thigh's or upper arm's length: the skin over a hip or a
+    // shoulder moves less than the knee's, and a rearing or a leg lifted to the ear turns the joint a
+    // whole right angle and more)
+    const thigh = names.map((nm) => { const m = nm.match(/^(thigh|arm)\.(L|R)$/); if (!m) return 0; const g = rig.legs[(m[1] === "thigh" ? "h" : "f") + m[2]]; return Math.max(0, g.top.y - g.knee.y); });
     // (how far into bone a's side the blend with bone b reaches)
-    const width = (a, b) => 1.5 * (kind[a] === "head" ? 0.25 * rig.headR : kind[a] === "body" && kind[b] === "body" ? bodyR : kind[a] === "body" && kind[b] === "head" ? 0.8 * bodyR : kind[a] === "tail" || kind[b] === "tail" ? 2 * rig.tailR : 1.2 * Math.max(legRad[a], legRad[b], 0.03));
-    const dist = new Float64Array(U).fill(Infinity), other = new Int16Array(U).fill(-1), heap = [];
+    const width = (a, b) => 1.5 * (kind[a] === "head" ? 0.25 * rig.headR : kind[a] === "body" && kind[b] === "body" ? bodyR : kind[a] === "body" && kind[b] === "head" ? 0.8 * bodyR : kind[a] === "tail" || kind[b] === "tail" ? 2 * rig.tailR : kind[a] === "body" && kind[b] === "top" ? Math.max(1.2 * legRad[b], 0.6 * flank[b], 0.036) : kind[a] === "top" && kind[b] === "body" ? Math.max(1.2 * legRad[a], 0.5 * thigh[a], 0.03) : 1.2 * Math.max(legRad[a], legRad[b], 0.03));
+    const heap = [];
     const push = (u, d) => { heap.push([d, u]); let i = heap.length - 1; while (i > 0) { const j = (i - 1) >> 1; if (heap[j][0] <= heap[i][0]) break; [heap[i], heap[j]] = [heap[j], heap[i]]; i = j; } };
     const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length) { heap[0] = last; let i = 0; for (;;) { const a = 2 * i + 1, b = a + 1; let m = i; if (a < heap.length && heap[a][0] < heap[m][0]) m = a; if (b < heap.length && heap[b][0] < heap[m][0]) m = b; if (m === i) break; [heap[i], heap[m]] = [heap[m], heap[i]]; i = m; } } return top; };
     const el = (u, v) => Math.hypot(up[u * 3] - up[v * 3], up[u * 3 + 1] - up[v * 3 + 1], up[u * 3 + 2] - up[v * 3 + 2]);
-    for (let u = 0; u < U; u++) for (let s2 = start[u]; s2 < start[u + 1]; s2++) { const v = nb[s2], a = seed[u], b = seed[v]; if (a !== b && inF[a].has(b)) { const d = el(u, v) / 2; if (d < dist[u]) { dist[u] = d; other[u] = b; push(u, d); } } }
-    while (heap.length) {
-      const [d, u] = pop(); if (d > dist[u]) continue;
-      for (let s2 = start[u]; s2 < start[u + 1]; s2++) { const v = nb[s2]; if (seed[v] !== seed[u]) continue; const nd = d + el(u, v); if (nd < dist[v]) { dist[v] = nd; other[v] = other[u]; push(v, nd); } }
-    }
     // (A shin or forearm against the belly or the chest, not jointed to it, blends into the bone
-    // between them, the thigh or the upper arm, which then bends the skin between them as one joint does.)
+    // between them, the thigh or the upper arm, which then bends the skin between them as one joint
+    // does; so do two body bones a joint apart, the spine against the nape, the head against the chest.)
     const par = bonesList.map((bb) => (bb.parent?.isBone ? bonesList.indexOf(bb.parent) : -1));
     const partner = (a, b) => {
-      if (!((kind[a] === "leg" && kind[b] === "body") || (kind[b] === "leg" && kind[a] === "body"))) return b;
+      const legBody = (kind[a] === "leg" && kind[b] === "body") || (kind[b] === "leg" && kind[a] === "body");
+      const bodyBody = (kind[a] === "body" || kind[a] === "head") && (kind[b] === "body" || kind[b] === "head");
+      if (!legBody && !bodyBody) return b;
       return par[par[a]] === b ? par[a] : par[par[b]] === a ? par[b] : b;
     };
+    // Every seam a bone's skin has with another's, and how far along the skin each point of it is from
+    // that seam (one search per seam, over that bone's own points): a point near two seams (the back
+    // above the hips, between the loins and the chest; the belly between two legs) then blends with
+    // both, by its distance from each, instead of with whichever is nearer, which would give two
+    // neighbouring points two different partners and tear the edge between them.
+    const seams = new Map(); // "a,bo" -> [u, d, ...]
+    for (let u = 0; u < U; u++) for (let s2 = start[u]; s2 < start[u + 1]; s2++) {
+      const v = nb[s2], a = seed[u], c = seed[v];
+      if (a === c || !inF[a].has(c)) continue;
+      const bo = partner(a, c); if (bo <= 0) continue;
+      const k = a * B + bo; let L = seams.get(k); if (!L) seams.set(k, (L = [])); L.push(u, el(u, v) / 2);
+    }
+    const dist = new Float64Array(U), NP = 4, pb = new Int16Array(U * NP).fill(-1), pt = new Float32Array(U * NP), pn = new Uint8Array(U);
+    for (const [k, L] of seams) {
+      const a = Math.floor(k / B), bo = k - a * B, Rw = width(a, bo), Rh = Rw * 0.35;
+      dist.fill(Infinity); heap.length = 0;
+      for (let i = 0; i < L.length; i += 2) if (L[i + 1] < dist[L[i]]) { dist[L[i]] = L[i + 1]; push(L[i], L[i + 1]); }
+      while (heap.length) {
+        const [d, u] = pop(); if (d > dist[u] || d >= Rw) continue;
+        for (let s2 = start[u]; s2 < start[u + 1]; s2++) { const v = nb[s2]; if (seed[v] !== a) continue; const nd = d + el(u, v); if (nd < dist[v]) { dist[v] = nd; push(v, nd); } }
+      }
+      for (let u = 0; u < U; u++) {
+        if (!(dist[u] < Rw)) continue;
+        // (inside the head's round, where the face is, the band stays narrow: a turned head keeps its shape;
+        // the nape and the back of the skull, behind the head's centre, bend over the full band, else a
+        // head bowed to a paw on a short thick neck folds its skin along a crease and tears it into a hood)
+        const inHead = Math.hypot(up[u * 3] - rig.headC.x, up[u * 3 + 1] - rig.headC.y, up[u * 3 + 2] - rig.headC.z) < rig.headR * 1.1 && (up[u * 3] - rig.headC.x) * hd.x + (up[u * 3 + 1] - rig.headC.y) * hd.y > -0.3 * rig.headR, R = inHead ? Rh : Rw;
+        if (!(dist[u] < R)) continue;
+        const t = 0.5 * (1 - smooth(dist[u] / R)), c = pn[u];
+        if (c < NP) { pb[u * NP + c] = bo; pt[u * NP + c] = t; pn[u] = c + 1; }
+        else { let m = 0; for (let j = 1; j < NP; j++) if (pt[u * NP + j] < pt[u * NP + m]) m = j; if (t > pt[u * NP + m]) { pb[u * NP + m] = bo; pt[u * NP + m] = t; } }
+      }
+    }
     for (let u = 0; u < U; u++) {
-      const a = seed[u];
-      if (other[u] < 0) continue;
-      const bo = partner(a, other[u]);
-      if (bo <= 0) continue;
-      // (inside the head's round, where the face is, the band stays narrow: a turned head keeps its shape)
-      const inHead = Math.hypot(up[u * 3] - rig.headC.x, up[u * 3 + 1] - rig.headC.y, up[u * 3 + 2] - rig.headC.z) < rig.headR * 1.1;
-      const Rw = width(a, other[u]) * (inHead ? 0.35 : 1);
-      if (!(dist[u] < Rw)) continue;
-      const o = u * B, b = W[o + a] + W[o + bo], t = 0.5 * (1 - smooth(dist[u] / Rw));
-      if (b <= 1e-4) continue;
-      W[o + a] = b * (1 - t); W[o + bo] = b * t;
+      const c = pn[u]; if (!c) continue;
+      const a = seed[u], o = u * B;
+      let tot = 0, mass = W[o + a];
+      for (let j = 0; j < c; j++) { tot += pt[u * NP + j]; mass += W[o + pb[u * NP + j]]; }
+      if (mass <= 1e-4) continue;
+      const sc = tot > 0.5 ? 0.5 / tot : 1; // (the bone's own skin keeps at least half of itself)
+      W[o + a] = mass * (1 - tot * sc);
+      for (let j = 0; j < c; j++) W[o + pb[u * NP + j]] = mass * pt[u * NP + j] * sc;
     }
   }
   // The four strongest bones per point, shared by every copy of it.
@@ -722,6 +893,8 @@ export function clipStyle(style) {
   return s;
 }
 
+/** legTo's memory of each leg's direction from the key before, while a clip is being sampled. */
+const FOLD = { on: false, dt: 1 / 30, st: { hL: { has: false, th: 0 }, hR: { has: false, th: 0 }, fL: { has: false, th: 0 }, fR: { has: false, th: 0 } } };
 const E = new THREE.Euler(), Q = new THREE.Quaternion(), Q1 = new THREE.Quaternion(), Q2 = new THREE.Quaternion(), V1 = V(), V2 = V();
 const AX = V(1, 0, 0), AY = V(0, 1, 0), AZ = V(0, 0, 1);
 const qEuler = (r, out) => out.setFromEuler(E.set(r[2] || 0, r[1] || 0, r[0] || 0, "ZYX"));
@@ -731,7 +904,7 @@ const qEuler = (r, out) => out.setFromEuler(E.set(r[2] || 0, r[1] || 0, r[0] || 
  * (a mannerism's loop, which begins with its way in, ends where its cycle starts: `ud.enter` s in);
  * `ud` goes to clip.userData ({ loop, kind, posture, dur, fade, enter, cyc }).
  */
-function sampleClip(name, dur, fps, fn, ud = {}) {
+function sampleClip(name, dur, fps, fn, ud = {}, warm = null) {
   const loop = ud.loop !== false && !ud.enter;
   // (A mannerism's way in is keyed at 30 a second, its cycle at the clip's own rate.)
   const n0 = ud.enter ? Math.max(2, Math.ceil(ud.enter * 30)) : 0, n1 = Math.max(2, Math.round((dur - (ud.enter || 0)) * fps));
@@ -741,7 +914,13 @@ function sampleClip(name, dur, fps, fn, ud = {}) {
   for (let f = 0; f < frames; f++) {
     const u = f < n0 ? (f / n0) * (ud.enter / dur) : ((ud.enter || 0) + ((f - n0) / n1) * (dur - (ud.enter || 0))) / dur;
     times[f] = u * dur;
+    // (`warm`, for a clip that carries on from the middle of another: poses that clip's keys up to
+    // there first, so the legs' memory of their way (legTo) is as it was in it, and this one begins
+    // exactly on its frame)
+    if (f === 0) { for (const k in FOLD.st) FOLD.st[k].has = false; FOLD.dt = (warm && warm()) || 1 / 30; } else FOLD.dt = times[f] - times[f - 1];
+    FOLD.on = true;
     const pose = fn(loop && f === frames - 1 ? 0 : u);
+    FOLD.on = false;
     if (!names) { names = Object.keys(pose).filter((k) => k !== "lift" && k !== "shift" && k !== "side"); per = names.map(() => new Float32Array(frames * 4)); }
     for (let i = 0; i < names.length; i++) {
       const r = pose[names[i]], a = per[i], o = f * 4;
@@ -780,7 +959,9 @@ export function kinematics(rig) {
   }
   const tail = [];
   for (let k = 1; k <= 4; k++) tail.push({ a: ang(rig.tail[k - 1], rig.tail[k]), l: len2(rig.tail[k - 1], rig.tail[k]) });
-  return { legs, tail, stub: !!rig.tailStub, P0: rig.pelvis, S0: rig.spine, C0: rig.chest, N0: rig.neck, H0: rig.headJoint, T0: rig.tail[0] };
+  // (a tail modelled lying against the body (skinWeights' tailTouch) swings only a little: free is how
+  // much of a pose's tail curve it takes)
+  return { legs, tail, stub: !!rig.tailStub, free: rig.tailTouch ? 0.3 : 1, P0: rig.pelvis, S0: rig.spine, C0: rig.chest, N0: rig.neck, H0: rig.headJoint, T0: rig.tail[0] };
 }
 
 /** Forward kinematics of the body: where the hips, shoulders, neck and head end up for a pose's root
@@ -823,8 +1004,14 @@ function legTo(K, p, B, k, toe, end = null, twist = 0, dz = 0) {
   const rx = wx * cp - wz * sp;
   // Where the toe must be from the hip: ty down (or up), tz across; the leg's own rest offsets across
   // (zk to the knee, zt to the toe) stay as they are in its plane.
-  const ty = toe.y - T.y, tz = wx * sp + wz * cp, zk = L.knee.z - L.top.z, zt = L.toe.z - L.top.z;
-  const r2 = ty * ty + tz * tz, Y = (ty < 0 ? -1 : 1) * Math.sqrt(Math.max(1e-8, r2 - zt * zt));
+  const ty = toe.y - T.y, tz = wx * sp + wz * cp, zk = L.knee.z - L.top.z, zt0 = L.toe.z - L.top.z;
+  // (Near the hip's height the plane's lean is ill-conditioned: with the toe's rest offset across held
+  // in the plane, a toe a little further in or out than at rest would lean the plane right over for a
+  // frame as it passes, and whip the leg round. So within two offsets of that height the in-plane
+  // offset follows the toe's own offset across instead, and the plane stays upright; further off it
+  // is the rest offset again, and the plane leans as a leg does.)
+  const r2 = ty * ty + tz * tz, zt = tz + (zt0 - tz) * smooth(Math.abs(ty) / (2 * Math.abs(zt0) + 1e-6));
+  const Y = (ty < 0 ? -1 : 1) * Math.sqrt(Math.max(1e-8, r2 - zt * zt));
   let rho = Math.atan2(tz, ty) - Math.atan2(zt, Y);
   rho = Math.atan2(Math.sin(rho), Math.cos(rho));
   // In the leg's plane: x as in the side view, Y along the leaning "down".
@@ -833,8 +1020,17 @@ function legTo(K, p, B, k, toe, end = null, twist = 0, dz = 0) {
   // A leg folded right up has its end almost at the hip, where the way to it means nothing (it
   // would swing about from one frame to the next): there the folded leg eases to lie as a cat's
   // does, a hind leg forward along the belly, a foreleg down under the chest.
-  const wf = d < 2 * dmin ? 1 - smooth(d / (2 * dmin)) : 0, fx = L.hind ? 0.95 : -0.3, fy = L.hind ? -0.3 : -0.95;
-  const th = wf ? Math.atan2((ly / Math.max(d, 1e-9)) * (1 - wf) + fy * wf, (dx / Math.max(d, 1e-9)) * (1 - wf) + fx * wf) : Math.atan2(ly, dx);
+  const foldR = 2 * dmin, wf = d < foldR ? 1 - smooth(d / foldR) : 0, fx = L.hind ? 0.95 : -0.3, fy = L.hind ? -0.3 : -0.95;
+  let th = wf ? Math.atan2((ly / Math.max(d, 1e-9)) * (1 - wf) + fy * wf, (dx / Math.max(d, 1e-9)) * (1 - wf) + fx * wf) : Math.atan2(ly, dx);
+  // (While a clip is sampled, key by key, a leg whose end is near its hip (a hind leg folded flat under
+  // a shallow body) turns from where it was the key before, at most so far a key: near the hip the way
+  // to the end means little and would spin the leg round as the end passes by; a planted paw's end
+  // stays where it is, so this changes nothing for it.)
+  // (so much a key of 1/30 s; a key further from the one before may turn further: the same rate whatever
+  // the clip's own rate, and a frame between two keys turns only its share)
+  const FS = FOLD.st[k], nearR = 0.3 * L.reach;
+  if (FOLD.on && d < nearR && FS.has) { const lim = (0.08 + 0.6 * (d / nearR)) * Math.min(3, FOLD.dt * 30), dth = Math.atan2(Math.sin(th - FS.th), Math.cos(th - FS.th)); th = FS.th + Math.max(-lim, Math.min(lim, dth)); }
+  FS.th = th; FS.has = true;
   const A = Math.acos(Math.max(-1, Math.min(1, (l1 * l1 + c * c - l2 * l2) / (2 * l1 * c))));
   const a1 = L.hind ? th + A : th - A;
   const kx = l1 * Math.cos(a1), ky = l1 * Math.sin(a1);
@@ -864,8 +1060,8 @@ function tailTo(K, p, B, dirs, side = [0, 0, 0, 0]) {
   for (let k = 0; k < 4; k++) {
     // Pitched to its direction in the side view, then swung out sideways (the same swing whichever
     // way the model's tail pointed at rest).
-    const T = K.tail[k], w = dirs[k] - T.a, rel = T.a + w - prev;
-    Q1.setFromAxisAngle(AZ, rel).multiply(Q2.setFromAxisAngle(AY, -(side[k] || 0))).multiply(Q2.setFromAxisAngle(AZ, -T.a));
+    const T = K.tail[k], w = (dirs[k] - T.a) * K.free, rel = T.a + w - prev;
+    Q1.setFromAxisAngle(AZ, rel).multiply(Q2.setFromAxisAngle(AY, -(side[k] || 0) * K.free)).multiply(Q2.setFromAxisAngle(AZ, -T.a));
     p[`tail${k + 1}`] = { q: Q1.toArray() };
     prev = w;
   }
@@ -965,6 +1161,14 @@ export function makeClips(rig, style = {}) {
   // short neck, bows less (swung far down it would go into the body or the ground, and its collar up
   // over its face); it gets down to the ground by crouching instead.
   const headBig = clamp01((rig.headR / Math.max(0.1, lt) - 0.42) / 0.4), bow = 1 - 0.45 * headBig;
+  // How stubby the legs are for the body (0 an ordinary cat .. 1 a chibi, or a long-haired cat whose belly
+  // fur hangs to its paws): the legs' free length below the belly line against the body's depth. Such a
+  // cat's leg bones own its flank and belly skin, which a leg swung far (a paw to the face, the forelegs
+  // folded under a crouch, a rearing) would tear; and it is deep-bodied (deep) when its body is round for
+  // its height: a ball already, which curls up less.
+  const stubby = clamp01((0.6 - rig.yb / Math.max(0.05, bh)) / 0.4), deep = clamp01((rig.bodyR / Math.max(0.1, lt) - 0.4) / 0.25);
+  // (all told, how round the cat is: wide, deep or short-legged, its legs' skin one with its flanks)
+  const round = clamp01(heavy + 0.6 * Math.max(deep, stubby));
   const clip = (name, dur, fps, fn, ud = {}) => (clips[name] = sampleClip(name, dur, fps, fn, { kind: ACTIONS[name]?.kind, posture: ACTIONS[name]?.posture, ...ud }));
   const loopDur = (s) => s * tempo;
   const T = (dirs, sides) => [...dirs, ...sides];
@@ -1002,12 +1206,14 @@ export function makeClips(rig, style = {}) {
   };
   // A resting pose's folded legs, each raised just enough that its skin rests on the ground rather than
   // in it (a forepaw tucked under the chest goes up into the chest's fur, not down into the lawn).
-  const bakeLegs = (s) => {
+  // (`cap`: at most this much of a raise for a leg: a paw whose fur hangs below it is not held up in the
+  // air for the sake of its fur, which the grass hides)
+  const bakeLegs = (s, cap = Infinity) => {
     const out = { ...s.legs };
     if (!hasSkin) return out;
     for (let it = 0; it < 2; it++) {
       const p = pose({ ...s, legs: out }), B = body(K, { lift: s.root[0], shift: s.root[1], side: s.root[2], pelvis: s.pelvis, spine: s.spine, chest: s.chest }, s.neck[0]);
-      for (const k of KEYS) { const g = out[k]; if (g[1] > 0.25 * lt) continue; const lo = legLow(p, B, k); if (lo < -0.004) out[k] = [g[0], g[1] - 0.002 - lo, g[2], g[3], g[4]]; }
+      for (const k of KEYS) { const g = out[k]; if (g[1] > 0.25 * lt) continue; const lo = legLow(p, B, k); if (lo < -0.004) out[k] = [g[0], Math.min(s.legs[k][1] + cap, g[1] - 0.002 - lo), g[2], g[3], g[4]]; }
     }
     return out;
   };
@@ -1146,6 +1352,7 @@ export function makeClips(rig, style = {}) {
     };
     POSED[name] = { at, cyc, enter, dur, base, exit: o.exit ?? 0.45, to: o.to || {}, posture: ACTIONS[name].posture };
     clip(name, dur, fps, (v) => pose(at(v * dur)), { fade: o.fade ?? 0.2, enter, cyc, exits: true });
+    POSED[name].times = clips[name].tracks[0].times;
   };
   // The way out of a mannerism from `t` s into its clip: the move carries on as it eases back to the
   // plain pose (or into the loop of mannerism `to`, arriving at its cycle's start), so it leaves at the
@@ -1160,10 +1367,16 @@ export function makeClips(rig, style = {}) {
     if (c) return c;
     const t0 = k / 30, dur = Q ? P.to[to] ?? Math.max(P.exit, Q.enter) : P.exit;
     const wrapP = (tt) => (tt < P.dur ? tt : P.enter + ((tt - P.enter) % P.cyc));
+    // (the mannerism's own keys up to this moment are posed first (sampleClip's warm), so the way out
+    // begins exactly on the clip's frame: a leg folded near its hip keeps the way it was going)
+    const tw = wrapP(t0), warm = () => { FOLD.on = true; let prev = 0; for (const t of P.times) { if (t >= tw - 1e-6) break; FOLD.dt = t - prev; pose(P.at(t)); prev = t; } FOLD.on = false; return Math.max(1e-3, tw - prev); };
     c = sampleClip(key, dur, 30, (v) => {
       const B = Q ? Q.at(Q.enter + (((((v - 1) * dur) % Q.cyc) + Q.cyc) % Q.cyc)) : P.base;
       return pose(mix(P.at(wrapP(t0 + v * dur)), B, smoother(v)));
-    }, { loop: false, kind: "once", posture: P.posture, dur, fade: 0.1, exitOf: name, into: Q ? to : null, at: Q ? Q.enter : 0 });
+    }, { loop: false, kind: "once", posture: P.posture, dur, fade: 0.1, exitOf: name, into: Q ? to : null, at: Q ? Q.enter : 0 }, warm);
+    // (and its first key is the mannerism's own frame at that moment, between two of its keys as the
+    // mixer shows it, so the way out begins on the very frame on screen)
+    for (const tr of c.tracks) { const src = clips[name].tracks.find((t) => t.name === tr.name); if (src) tr.values.set(src.createInterpolant().evaluate(tw), 0); }
     exits.set(key, c);
     if (exits.size > 12) exits.delete(exits.keys().next().value);
     return c;
@@ -1202,6 +1415,9 @@ export function makeClips(rig, style = {}) {
     for (const q of rig.under) { const [, dy] = rot2(q.x - K.P0.x, q.y - K.P0.y, pitch); lo = Math.min(lo, K.P0.y + dy); }
     return clear - lo;
   };
+  // (As ground, for a spec whose body is also yawed or rolled: the lift that rests its torso's skin at
+  // `clear`; a rump rolled onto one haunch would otherwise dip its side into the lawn.)
+  const groundAt = (s, clear = 0.012) => (hasSkin ? clear - 0.008 - lowTorso(body(K, { lift: 0, shift: s.root[1], side: s.root[2], pelvis: s.pelvis, spine: s.spine, chest: s.chest })) : ground(s.pelvis[0], clear, s.spine[0], s.chest[0]));
   // The neck pitch (in the world) that puts the head joint at height y.
   const Ln = Math.hypot(K.H0.x - K.N0.x, K.H0.y - K.N0.y), phi0 = Math.atan2(K.H0.y - K.N0.y, K.H0.x - K.N0.x);
   const neckFor = (B, y) => Math.asin(Math.max(-1, Math.min(1, (y - B.nec.y) / Ln))) - phi0;
@@ -1222,7 +1438,8 @@ export function makeClips(rig, style = {}) {
   // over the leg that carries them, and the tail sways a beat behind.
   const gaitSpec = (u, g) => {
     const stride = stride0 / g.rate, sweep = stride * g.duty;
-    const lower = (g.crouch + st.crouch * 0.5) * lt + bend(sweep);
+    // (a stubby or deep-bodied cat creeps less low: its folded forelegs would drag its flank)
+    const lower = (g.crouch * (1 - 0.6 * round) + st.crouch * 0.5) * lt + bend(sweep);
     const bob = g.bob * st.bob * lt, sway = 1 + st.sway * 2.5;
     const lift = -lower - bob * (1 - C(TAU * (u - (g.hi ?? 0.31)) * (g.bobs ?? 2))) / 2;
     const rollP = g.roll * sway * C(TAU * (u - (g.rollAt ?? 0.81))), yawP = g.yaw * sway * C(TAU * u);
@@ -1310,16 +1527,17 @@ export function makeClips(rig, style = {}) {
   }, STAND, { enter: 0.45, exit: 0.4 });
   // Up on the hind legs to see over something: body upright, forepaws curled in front of the chest.
   posed("hindStand", loopDur(3), 12, (u) => {
-    // (a big cartoon head, heavy up top, rears up less: bolt upright it reads as falling over backwards)
-    const XF = globalThis.__CR || {};
-    const s = standSpec(u, { still: true }), rear = (XF.hsRear ?? 1.25) * (1 - 0.45 * headBig), b = S(TAU * u) * 0.03;
+    // (sat up like a meerkat: the hocks down flat on the ground where the feet stood, the hips just above
+    // them, so the thighs stay folded rather than turning a right angle against the hips; a big cartoon
+    // head, heavy up top, rears up less: bolt upright it reads as falling over backwards)
+    const s = standSpec(u, { still: true }), rear = 1.1 * (1 - 0.45 * headBig) * (1 - 0.35 * round), b = S(TAU * u) * 0.03;
     const Bq = body(K, { pelvis: [rear, 0, 0], spine: [0, 0, 0], chest: [0, 0, 0] }, 0);
     const hipX = (Bq.top.hL.x + Bq.top.hR.x) / 2, footX = (rest("hL").x + rest("hR").x) / 2;
-    const hh = XF.hsPlant ? (K.legs.hL.l[0] + K.legs.hL.l[1]) * (XF.hsH ?? 0.8) + rig.legs.hL.r : K.legs.hL.reach * 0.86;
-    s.root = [-(Bq.top.hL.y - hh), footX - hipX - 0.02 + (XF.hsPlant ? -(XF.hsBack ?? 0.1) * lt : 0), 0]; s.pelvis = [rear + b, 0, S(TAU * u) * 0.02]; s.spine = [0.05, 0, 0]; s.chest = [0.05 - b, 0, 0];
+    const hh = (K.legs.hL.l[0] + K.legs.hL.l[1]) * (0.8 - 0.15 * round) + rig.legs.hL.r;
+    s.root = [-(Bq.top.hL.y - hh), footX - hipX - 0.02 - 0.1 * lt, 0]; s.pelvis = [rear + b, 0, S(TAU * u) * 0.02]; s.spine = [0.05, 0, 0]; s.chest = [0.05 - b, 0, 0];
     const g = holds(u, [[0.1, 0.5], [0.45, -0.4], [0.8, 0]], 0.06);
     s.neck = [0.35, g, 0]; s.head = [0.1, g * 0.4, 0];
-    for (const k of ["hL", "hR"]) s.legs[k] = XF.hsPlant ? leg(rest(k).x, 0.012, flatE(k), 0.25) : leg(rest(k).x, 0, restE(k) + 0.25, 0.15);
+    for (const k of ["hL", "hR"]) s.legs[k] = leg(rest(k).x, 0.012, flatE(k), 0.25);
     const B = bodyOf(s);
     for (const k of ["fL", "fR"]) { const t = B.top[k], R = K.legs[k].reach, bat = k === "fL" ? S(TAU * u * 2) * 0.01 : 0; s.legs[k] = leg(t.x + R * 0.28, t.y - R * 0.42 + bat, -PI / 2 - 0.5); }
     s.tail = T([PI + 0.5, PI + 0.9, PI + 0.3, PI - 0.1], [0, 0.1 * S(TAU * u), 0.2 * S(TAU * u - 0.8), 0.3 * S(TAU * u - 1.6)]);
@@ -1333,39 +1551,62 @@ export function makeClips(rig, style = {}) {
   const reachF = (K.legs.fL.reach + K.legs.fR.reach) / 2, lh3 = (K.legs.hL.l[2] + K.legs.hR.l[2]) / 2;
   const hindX = (rest("hL").x + rest("hR").x) / 2;
   const tallFrac = 0.8 + 0.16 * st.sitTall;
-  let aWant = null, aCap = 0.05;
+  // (and the hips no higher than the folded hind legs hold them, hocks on the ground: a deep body
+  // pitched up on its rump would otherwise stand the cat on its hind feet)
+  const hipMax = 0.75 * (K.legs.hL.l[0] + K.legs.hL.l[1]) + rig.legs.hL.r;
+  let aWant = null, aCap = 0.05, aHip = 0.05;
   for (let a = 0.05; a <= 1.051; a += 0.02) {
     const B = body(K, { lift: ground(a), pelvis: [a, 0, 0], spine: [0, 0, 0], chest: [0, 0, 0] }), y = (B.top.fL.y + B.top.fR.y) / 2;
     if (y <= reachF * 0.97) aCap = a;
+    if ((B.top.hL.y + B.top.hR.y) / 2 <= hipMax) aHip = a;
     if (aWant === null && y > reachF * tallFrac) aWant = a;
   }
-  let sitPitch = Math.max(0.05, Math.min(aWant ?? 1.05, aCap)), sitBend = 0;
+  let sitPitch = Math.max(0.05, Math.min(aWant ?? 1.05, aCap, aHip)), sitBend = 0;
   // A cat sits with its back well up (40 degrees and more; a regal one near upright). A long body
   // on short legs can't pitch up that far in one straight line (its shoulders would rise past
   // where its forelegs reach the ground), so, as such a cat does, its back curves: the rump and
   // loins steep, the chest leaning back less.
-  const aMin = 0.7 + 0.25 * st.sitTall;
+  const aMin = Math.min(0.7 + 0.25 * st.sitTall, Math.max(0.3, aHip));
   if (sitPitch < aMin) {
     const sh = (b) => { const B = body(K, { lift: ground(aMin), pelvis: [aMin, 0, 0], spine: [-b, 0, 0], chest: [-0.6 * b, 0, 0] }); return (B.top.fL.y + B.top.fR.y) / 2; };
     let b = 0;
     while (b < (aMin - 0.15) / 1.6 && sh(b) > reachF * tallFrac) b += 0.02;
     sitPitch = aMin; sitBend = b;
   }
-  const sitSpine = 0.04 - sitBend, sitChest = 0.02 - 0.6 * sitBend, sitLift = ground(sitPitch, 0.012, sitSpine, sitChest);
+  const sitSpine = 0.04 - sitBend, sitChest = 0.02 - 0.6 * sitBend;
+  let sitLift = ground(sitPitch, 0.012, sitSpine, sitChest);
   const sitBody = { lift: sitLift, pelvis: [sitPitch, 0, 0], spine: [sitSpine, 0, 0], chest: [sitChest, 0, 0] };
   const sitB0 = body(K, sitBody);
-  const sitShift = hindX - ((sitB0.top.hL.x + sitB0.top.hR.x) / 2 + 0.95 * lh3);
-  const sitB = body(K, { ...sitBody, shift: sitShift });
+  let sitShift = hindX - ((sitB0.top.hL.x + sitB0.top.hR.x) / 2 + 0.95 * lh3);
+  let sitB = body(K, { ...sitBody, shift: sitShift });
   const sitFront = (k) => { const t = sitB.top[k], R = K.legs[k].reach * 0.985; return t.x + Math.sqrt(Math.max(0, R * R - t.y * t.y)) + 0.005; };
   const sitHead = [0.25 * sitPitch + 0.06 + (st.sitTall - 0.5) * 0.2 + st.head * 0.5, 0.25 * sitPitch - 0.04 + (st.sitTall - 0.5) * 0.1 + st.head * 0.3];
   const SIT_TAIL = [PI + 1.25, PI + 0.25, PI - 0.05, PI - 0.1], SIT_SIDE = [0, 0.5, 0.7, 0.6];
+  let sitLegs = null;
   const sitSpec = (u = 0, o = {}) => {
     const br = S(TAU * u * 3), g = o.still ? 0 : glance(u, 0.3);
     return { root: [sitLift, sitShift, 0], pelvis: [sitPitch, 0, 0], spine: [sitSpine + br * 0.01, 0, 0], chest: [sitChest, 0, 0],
       neck: [sitHead[0], g, 0], head: [sitHead[1], g * 0.5, o.still ? 0 : tilt(u, 0.12)],
-      legs: { hL: leg(rest("hL").x, 0.012, Math.min(-0.22, flatE("hL")), 0.2), hR: leg(rest("hR").x, 0.012, Math.min(-0.22, flatE("hR")), 0.2), fL: leg(sitFront("fL"), 0, restE("fL")), fR: leg(sitFront("fR"), 0, restE("fR")) },
+      legs: sitLegs ? { ...sitLegs } : { hL: leg(rest("hL").x, 0.012, Math.min(-0.22, flatE("hL")), 0.2), hR: leg(rest("hR").x, 0.012, Math.min(-0.22, flatE("hR")), 0.2), fL: leg(sitFront("fL"), 0, restE("fL")), fR: leg(sitFront("fR"), 0, restE("fR")) },
       tail: T(SIT_TAIL, [SIT_SIDE[0], SIT_SIDE[1], SIT_SIDE[2] + S(TAU * u) * 0.08, SIT_SIDE[3] + S(TAU * u * 2) * 0.15]) };
   };
+  // (A long-legged cat whose hips sit low, its rump on the ground: with a hock right under the hip, or
+  // behind it, the hind leg folds flat and its knee goes through the ground. The hocks go forward of the
+  // hips, the body a little further back over its feet, until both knees clear the ground; the body
+  // comes up for what is left. Then each folded leg is rested on the ground by its skin, not its bones.)
+  // (the knee, and how far the hock lies below the hip: a hock up at the hip's height folds the leg
+  // backwards, the knee behind the hip)
+  const foldOf = (p, B, k) => { const g = rig.legs[k], T = B.top[k]; lq1.fromArray(p[LEG[k][0]].q).premultiply(T.q); lq2.copy(lq1).multiply(qEuler(p[LEG[k][1]], Q2)); const ky = T.y + lv.subVectors(g.knee, g.top).applyQuaternion(lq1).y; return [ky, T.y - (ky + lv.subVectors(g.low, g.knee).applyQuaternion(lq2).y)]; };
+  const hindCap = 0.02 + 0.5 * (rig.legs.hL.r + rig.legs.hR.r) / 2;
+  sitLegs = bakeLegs(sitSpec(0), hindCap);
+  for (let it = 0, back = 0; it < 24; it++) {
+    const s = sitSpec(0, { still: true }), p = pose(s), B = bodyOf(s), L = foldOf(p, B, "hL"), R = foldOf(p, B, "hR");
+    const knee = Math.min(L[0], R[0]), drop = Math.min(L[1], R[1]), want = 0.1 * (K.legs.hL.l[0] + K.legs.hL.l[1]);
+    if (knee >= 0.02 && drop >= want) break;
+    if (back < 0.3 * lt) { sitShift -= 0.03 * lt; back += 0.03 * lt; } else sitLift += Math.max(0.02 - knee, want - drop, 0.01);
+    sitB = body(K, { ...sitBody, lift: sitLift, shift: sitShift });
+    sitLegs = null; sitLegs = bakeLegs(sitSpec(0), hindCap);
+  }
   const SIT = sitSpec(0);
   clip("sit", loopDur(8), 10, (u) => pose(sitSpec(u)));
   clip("look", loopDur(6), 12, (u) => { const s = sitSpec(u, { still: true }), g = holds(u, [[0.05, 0.7], [0.3, 0.2], [0.5, -0.65], [0.75, -0.1], [0.92, 0]], 0.05);
@@ -1378,7 +1619,7 @@ export function makeClips(rig, style = {}) {
   // short legs) to its chest; one whose forelegs the model joined into one piece hardly lifts a
   // forepaw alone at all (it licks its chest and shoulder instead).
   const freeF = smooth(((rig.legJoin?.f ?? 1) - 0.3) / 0.5), freeH = smooth(((rig.legJoin?.h ?? 1) - 0.3) / 0.5);
-  const lift = freeF * (1 - 0.55 * heavy);
+  const lift = freeF * (1 - 0.55 * heavy) * (1 - 0.5 * stubby);
   const MOUTH = V(rig.noseX - 0.25 * rig.headR, rig.headC.y - 0.35 * rig.headR, rig.zc);
   // A foreleg posed by its joints, from the shoulder: the upper arm swung forward from hanging
   // straight down by a1, the forearm folded up from it by a2, the paw turned up by a3 (radians, side
@@ -1393,8 +1634,14 @@ export function makeClips(rig, style = {}) {
   // comes as near as it can to `to`: the neck's pitch and turn, and the head's pitch, found by a
   // few rounds of trying each a little either way. `lim`: how far the neck may bend down from the
   // chest (rad).
+  // (A head as big as its neck is long, on a ruff: bowed as far as an ordinary cat's, its nape's skin
+  // parts from the shoulders' into a hood. Such a head bows less; the paw meets it higher.)
+  const shortNeck = clamp01((1 - Math.hypot(K.H0.x - K.N0.x, K.H0.y - K.N0.y) / Math.max(0.05, rig.headR)) / 0.25);
+  // (and a mane or a ruff, a body thick about the shoulders for its head: bowed deep, the head drags
+  // the mane's fur after it)
+  const ruff = clamp01((rig.bodyR / Math.max(0.05, rig.headR) - 1.6) / 1.4);
   const meet = (s, pt, to, lim = 1.1, rise = 0.6) => {
-    const k = 1 - 0.7 * headBig;
+    const k = (1 - 0.7 * headBig) * (1 - 0.45 * shortNeck) * (1 - 0.4 * ruff);
     const P = [[0, sitHead[0] - lim * k, sitHead[0] + rise * k], [1, -0.7 * k, 0.7 * k], [2, -0.9 * k, 0.3 * k]];
     const get = (j) => (j === 0 ? s.neck[0] : j === 1 ? s.neck[1] : s.head[0] - s.neck[0]);
     const set = (j, v) => { if (j === 0) { const r = s.head[0] - s.neck[0]; s.neck[0] = v; s.head[0] = v + r; } else if (j === 1) { s.neck[1] = v; s.head[1] = v * 0.5; } else s.head[0] = s.neck[0] + v; };
@@ -1421,7 +1668,7 @@ export function makeClips(rig, style = {}) {
     const m = headPoint(s, MOUTH), a1max = 0.3 + 0.5 * lift;
     let best = [0.3, 1.6], bd = Infinity;
     for (let i = 0; i <= 10; i++) for (let j = 0; j <= 12; j++) {
-      const a1 = a1max * i / 10, a2 = 1.2 + 1.42 * j / 12, g = armUp(s, "fR", a1, a2, 0.45, 0.55), e = endOf(g, "fR");
+      const a1 = a1max * i / 10, a2 = 1.2 + 1.25 * j / 12, g = armUp(s, "fR", a1, a2, 0.45, 0.55), e = endOf(g, "fR");
       const dd = e.distanceTo(m) + 0.02 * a1; // (of equally near poses, the one with the arm less swung up)
       if (dd < bd) { bd = dd; best = [a1, a2]; }
     }
@@ -1439,17 +1686,34 @@ export function makeClips(rig, style = {}) {
     return s;
   })();
   const CHEEK = V(rig.headC.x + 0.05 * rig.headR, rig.headC.y + 0.1 * rig.headR, rig.zc - 0.75 * rig.headR);
+  // (The wiping pose, found once: the paw as near the cheek of the tipped head as the arm goes with the
+  // upper arm swung a little further up than for the lick and the elbow folded at most 150 degrees; a
+  // paw dragged the rest of the way to the cheek would tear the skin of the shoulder and the elbow.)
+  const armFor = (s, k, to, a1max, a2max, a3, in_) => {
+    let best = [0.3, 1.6], bd = Infinity;
+    for (let i = 0; i <= 10; i++) for (let j = 0; j <= 12; j++) {
+      const a1 = a1max * i / 10, a2 = 1.2 + (a2max - 1.2) * j / 12, dd = endOf(armUp(s, k, a1, a2, a3, in_), k).distanceTo(to) + 0.02 * a1;
+      if (dd < bd) { bd = dd; best = [a1, a2]; }
+    }
+    return best;
+  };
+  const wipeArm = (() => {
+    const s = sitSpec(0, { still: true }); s.neck = GROOM.neck.slice(); s.head = GROOM.head.slice();
+    s.neck[0] -= 0.12; s.neck[2] = -0.12; s.head[0] -= 0.08; s.head[1] -= 0.2; s.head[2] = -0.4;
+    return armFor(s, "fR", headPoint(s, CHEEK), groomArm[0] + 0.2, 2.45, 0.85, 0.55);
+  })();
   posed("groom", loopDur(2.4), 20, (u) => {
     const lick = Math.max(0, S(TAU * u * 3)) * (1 - win(u, 0.55, 0.62)), wipe = bump(u, 0.6, 0.98), down = win(u, 0.6, 0.7) * (1 - win(u, 0.9, 0.98));
     const s = sitSpec(u, { still: true });
     if (lift > 0.2) {
-      // (the paw over the cheek from the ear down, as far as this cat's paw goes; the head tipped
+      // (the paw over the cheek from the ear down, as far as this cat's arm goes; the head tipped
       // down and into it, so the face rubs along the paw)
       s.neck = GROOM.neck.slice(); s.head = GROOM.head.slice();
       s.neck[0] -= 0.12 * wipe; s.neck[2] = -0.12 * wipe; s.head[0] += -0.1 * lick - 0.08 * wipe; s.head[1] -= 0.2 * wipe; s.head[2] = -0.4 * wipe;
-      const lk = GROOM.legs.fR, from = endOf(lk, "fR"), c = headPoint(s, CHEEK).addScaledVector(V(0, 1, 0), 0.25 * rig.headR * (1 - down));
-      const to = from.clone().lerp(c, wipe * clamp01((lift - 0.35) / 0.5)), L = K.legs.fR;
-      s.legs.fR = leg(to.x, to.y, lk[2] + 0.4 * wipe + 0.12 * lick, 0.15, (to.z - L.toe.z) * L.side);
+      const wk = wipe * clamp01((lift - 0.35) / 0.5);
+      s.legs.fR = armUp(s, "fR", lerp(groomArm[0], wipeArm[0], wk), lerp(groomArm[1], wipeArm[1], wk), 0.45 + 0.4 * wipe + 0.12 * lick, 0.55);
+      // (the cheek comes to the paw, from the ear down, as far as the neck goes)
+      if (wk > 0) { const c = headPoint(s, CHEEK), e = endOf(s.legs.fR, "fR").addScaledVector(V(0, 1, 0), -0.25 * rig.headR * (1 - down)); meet(s, CHEEK, c.lerp(e, wk)); }
     } else {
       // (the chest just below the chin, then the right shoulder)
       const side = holds(u, [[0.05, 0], [0.5, 0.45]], 0.12), B = bodyOf(s), t = B.top.fR;
@@ -1472,10 +1736,9 @@ export function makeClips(rig, style = {}) {
   // along the inside of the leg in long strokes; the forepaw on that side braced out wide.
   posed("legLick", loopDur(2.4), 20, (u) => {
     const lick = Math.max(0, S(TAU * u * 4)), slide = 0.5 - 0.5 * C(TAU * u);
-    const XF = globalThis.__CR || {};
-    const s = sitSpec(u, { still: true }), up = (1 - heavy) * freeH * (XF.llUp ?? 1);
+    const s = sitSpec(u, { still: true }), up = (1 - round) * freeH;
     const lean = Math.min(1.3, sitPitch + 0.15 + 0.1 * up);
-    s.pelvis = [lean, 0.12, 0.1]; s.root[0] = ground(lean) + 0.012; s.spine = [sitSpine - 0.12, 0.1, 0]; s.chest = [sitChest - 0.14, 0.12, 0.02];
+    s.pelvis = [lean, 0.12, 0.1]; s.spine = [sitSpine - 0.12, 0.1, 0]; s.chest = [sitChest - 0.14, 0.12, 0.02]; s.root[0] = groundAt(s) + 0.012;
     const B = bodyOf(s), Lh = K.legs.hL, t = B.top.hL, ph = 0.25 + 0.75 * up;
     const foot = V(t.x + Lh.reach * 0.86 * C(ph), Math.max(0.03, t.y + Lh.reach * 0.86 * S(ph)), 0);
     s.legs.hL = leg(foot.x, foot.y, ph + 0.35, 0.3, 0.05);
@@ -1483,7 +1746,7 @@ export function makeClips(rig, style = {}) {
     s.legs.fL = leg(s.legs.fL[0] + 0.02, 0, restE("fL"), 0, 0.06);
     const hip = V(t.x, t.y, K.legs.hL.toe.z), f3 = endOf(s.legs.hL, "hL"), at = hip.lerp(f3, 0.35 + 0.3 * slide);
     s.neck = [sitHead[0] - 0.6, -0.3, 0]; s.head = [sitHead[1] - 0.8, -0.15, 0];
-    meet(s, MOUTH, at, XF.llLim ?? 1.1);
+    meet(s, MOUTH, at, 1.1);
     s.head[0] += -0.1 * lick; s.head[2] = -0.2;
     s.tail = T([PI + 1.0, PI + 0.3, PI + 0.05, PI], [0, -0.3, -0.4, -0.3 + S(TAU * u) * 0.1]);
     return s;
@@ -1494,15 +1757,16 @@ export function makeClips(rig, style = {}) {
   const EAR = V(rig.headC.x - 0.3 * rig.headR, rig.headC.y + 0.45 * rig.headR, rig.zc + 0.55 * rig.headR);
   const earPose = (() => {
     const s = sitSpec(0, { still: true });
-    s.pelvis = [sitPitch - 0.08, 0, -0.12]; s.root[0] = ground(sitPitch - 0.08) + 0.012; s.chest = [sitChest, -0.12, 0.1];
+    s.pelvis = [sitPitch - 0.08, 0, -0.12]; s.chest = [sitChest, -0.12, 0.1]; s.root[0] = groundAt(s) + 0.012;
     const kb = 1 - 0.6 * headBig;
     s.neck = [sitHead[0] - 0.55 * kb, -0.45 * kb, 0.35 * kb]; s.head = [sitHead[1] - 0.4 * kb, -0.2 * kb, 0.6 * kb];
     const hip = bodyOf(s).top.hL, Lh = K.legs.hL, H0 = V(hip.x, hip.y, hip.z);
-    const XF = globalThis.__CR || {};
-    const far = Lh.reach * ((XF.esFar ?? 0.95) - 0.35 * heavy);
-    const clampTo = (q) => { const d = V().subVectors(q, H0), l = d.length(); return l > far ? H0.clone().addScaledVector(d, far / l) : q; };
+    const far = Lh.reach * (0.85 - 0.35 * round);
+    // (the paw comes up outside the flank, never in through the body: no nearer the middle than it
+    // stands, whatever side of the head the ear is on)
+    const clampTo = (q) => { const d = V().subVectors(q, H0), l = d.length(), f = l > far ? H0.clone().addScaledVector(d, far / l) : q.clone(); f.z = Math.max(f.z, Lh.toe.z + 0.02, rig.zc + 0.5 * (rig.bodyW || rig.W * 0.7) + 0.02); return f; };
     // the head comes down to where the paw can get, then the paw goes to the ear
-    meet(s, EAR, clampTo(headPoint(s, EAR)), XF.esLim ?? 1.2, 0.1);
+    meet(s, EAR, clampTo(headPoint(s, EAR)), 1.2, 0.1);
     const ear = headPoint(s, EAR), foot = clampTo(ear);
     return { s, foot, dir: V().subVectors(foot, H0).normalize() };
   })();
@@ -1513,7 +1777,7 @@ export function makeClips(rig, style = {}) {
     // (strokes along the leg, about 5% of the cat's height, the head giving a little with each)
     const f = E0.foot.clone().addScaledVector(E0.dir, -0.045 * lt / 0.5 * (0.5 + 0.5 * sc)).add(V(0, 0.012 * sc, 0));
     const Lh = K.legs.hL;
-    s.legs.hL = leg(f.x, f.y, Math.atan2(E0.dir.y, E0.dir.x) + 0.5, 0.2, (f.z - Lh.toe.z) * Lh.side);
+    s.legs.hL = leg(f.x, f.y, Math.atan2(E0.dir.y, E0.dir.x) + 0.3, 0.15, (f.z - Lh.toe.z) * Lh.side);
     s.legs.hR = leg(rest("hR").x - 0.01, 0.015, -0.06, 0.35);
     s.head[0] += 0.03 * sc; s.head[2] += 0.04 * sc;
     return s;
@@ -1591,11 +1855,41 @@ export function makeClips(rig, style = {}) {
      if it were upright. ── */
   // The head down on the ground (or just clear of it): `set` turns the neck from `lo` (into the
   // ground) towards `hi` only as far as it takes.
+  // (The head's lowest point is found from its own skin's outermost points, so ears and a chin rest on
+  // the ground rather than going into it; without a skin sample, from its round. A head that can't be
+  // got clear even at `hi`, a big head on a body rolled right over, is lifted clear body and all.)
+  const HSK = SKIN.head ? Float64Array.from(Array.from({ length: SKIN.head.length / 3 }, (_, i) => i).filter((i) => Math.hypot(SKIN.head[i * 3] + K.H0.x - rig.headC.x, SKIN.head[i * 3 + 1] + K.H0.y - rig.headC.y, SKIN.head[i * 3 + 2] + K.H0.z - rig.headC.z) < 1.3 * rig.headR + 0.02).flatMap((i) => [SKIN.head[i * 3], SKIN.head[i * 3 + 1], SKIN.head[i * 3 + 2]])) : null, hpt = V();
+  // (and the neck's: the sample's points along the neck, from the neck joint most of the way to the head
+  // joint, which turn with the neck: a long or thick neck, a ruff, would otherwise go through the ground
+  // under a head laid down beside a body rolled onto its back)
+  const NSK = (() => {
+    if (!rig.skin) return null;
+    const P = rig.skin.pts, out = [], nd = V().subVectors(K.H0, K.N0), nl = Math.max(1e-6, nd.length()); nd.divideScalar(nl);
+    for (let i = 0; i < P.length / 3; i++) {
+      const px = P[i * 3] - K.N0.x, py = P[i * 3 + 1] - K.N0.y, pz = P[i * 3 + 2] - K.N0.z, t = (px * nd.x + py * nd.y + pz * nd.z) / nl;
+      if (t < 0.05 || t > 0.9) continue;
+      if (Math.hypot(px - t * nl * nd.x, py - t * nl * nd.y, pz - t * nl * nd.z) < 1.2 * rig.bodyR) out.push(px, py, pz);
+    }
+    return Float64Array.from(out);
+  })();
+  const hq = new THREE.Quaternion(), hqN = new THREE.Quaternion();
+  const headLow = (s) => {
+    if (!HSK || HSK.length < 9) return headPoint(s, rig.headC).y - rig.headR * 0.95;
+    // (the head's frame once, then its sample points through it)
+    const B = bodyOf(s, true);
+    qEuler([s.neck[0] - B.aC, s.neck[1], s.neck[2]], hqN).premultiply(B.qC);
+    qEuler([s.head[0] - s.neck[0], s.head[1], s.head[2]], hq).premultiply(hqN);
+    const hy = hpt.subVectors(K.H0, K.N0).applyQuaternion(hqN).y + B.nec.y;
+    let lo = Infinity;
+    for (let i = 0; i < HSK.length; i += 3) { const y = hpt.set(HSK[i], HSK[i + 1], HSK[i + 2]).applyQuaternion(hq).y; if (y < lo) lo = y; }
+    lo += hy;
+    if (NSK) for (let i = 0; i < NSK.length; i += 3) { const y = hpt.set(NSK[i], NSK[i + 1], NSK[i + 2]).applyQuaternion(hqN).y + B.nec.y; if (y < lo) lo = y; }
+    return lo;
+  };
   const headOnGround = (s, set, lo, hi, clear = 0.012) => {
-    const low = () => headPoint(s, rig.headC).y - rig.headR * 0.95;
-    set(hi); if (low() < clear) return;
-    set(lo); if (low() >= clear) return;
-    for (let i = 0; i < 10; i++) { const m = (lo + hi) / 2; set(m); if (low() >= clear) hi = m; else lo = m; }
+    set(hi); const top = headLow(s); if (top < clear) { s.root[0] += clear - top; return; }
+    set(lo); if (headLow(s) >= clear) return;
+    for (let i = 0; i < 10; i++) { const m = (lo + hi) / 2; set(m); if (headLow(s) >= clear) hi = m; else lo = m; }
     set(hi);
   };
   // Flop: on its side in the sun, legs out loose, head down on its cheek, a slow stretch now and then.
@@ -1615,7 +1909,8 @@ export function makeClips(rig, style = {}) {
     return s;
   }, LOAF, { enter: 0.8, exit: 0.8, to: { roll: 0.75 } });
   // Rolling on its back: paws curled up, wriggling from shoulder to shoulder, head rubbing the ground.
-  const ROLL = 2.55;
+  // (A big cartoon head can't lie face-up under a body rolled onto its back: such a cat rolls less far.)
+  const ROLL = 2.55 - 0.7 * headBig;
   posed("roll", loopDur(3), 15, (u) => {
     const w = S(TAU * u), w2 = S(TAU * u * 2), r = ROLL + 0.22 * w;
     const s = { root: [loafLift, loafShift, 0, r], pelvis: [0, 0, 0], spine: [0, 0, -0.18 * w], chest: [0.05, 0, -0.12 * w],
@@ -1624,7 +1919,8 @@ export function makeClips(rig, style = {}) {
     const B = bodyOf(s);
     for (const k of KEYS) {
       const L = K.legs[k], t = B.top[k], paddle = (k === "fL" ? w2 : k === "fR" ? -w2 : 0) * 0.04;
-      s.legs[k] = L.hind ? leg(t.x + L.reach * 0.3, t.y - L.reach * 0.5, -0.4, 0.3) : leg(t.x + L.reach * 0.25 + paddle, t.y - L.reach * 0.35 + paddle, -PI / 2 - 0.7, 0.2);
+      // (the forepaws curled loosely, the elbows not folded right up: a tight fold tears the skin over them)
+      s.legs[k] = L.hind ? leg(t.x + L.reach * 0.3, t.y - L.reach * 0.5, -0.4, 0.3) : leg(t.x + L.reach * 0.3 + paddle, t.y - L.reach * 0.48 + paddle, -PI / 2 - 0.5, 0.2);
     }
     headOnGround(s, (v) => { s.neck[0] = v; s.head[0] = v + 0.2; }, 0.4, -1.4);
     return s;
@@ -1648,8 +1944,24 @@ export function makeClips(rig, style = {}) {
   // round the hind legs towards the nose; breathing slowly. Seen from above a C, from the belly side
   // paws and a sleeping face, from the back a round back and the tail. A big cartoon head curls less; a
   // round body (no waist to bend) lies less far over.
-  const SLEEP_ROLL = 1.25 - 0.25 * heavy, curl = (1 - 0.45 * headBig) * (1 - 0.3 * heavy);
-  const sleepSpec = (u = 0) => {
+  const SLEEP_ROLL = 1.25 - 0.25 * heavy, curl = (1 - 0.45 * headBig) * (1 - 0.3 * heavy) * (1 - 0.5 * deep);
+  // A round cat (deep-bodied, wide or stubby: no waist to curl, and rolled onto its side it reads as a
+  // featureless log) sleeps in its loaf instead, as such cats do: the chin down on the forepaws, the
+  // back rounded a little, the tail wrapped along its flank; curling up and waking are then the head
+  // going down and coming up.
+  const loafSleep = round >= 0.4;
+  const sleepSpec = loafSleep ? (u = 0) => {
+    const b = S(TAU * u * 2) * 0.008;
+    const s = loafSpec(0, { still: true });
+    s.spine = [0.06 + b, 0, 0]; s.chest = [0.06 - b * 0.5, 0, 0];
+    s.tail = T([PI + 1.2, PI + 1.0, PI + 0.8, PI + 0.55], [0, 0.6, 0.9, 1.05]);
+    // (the neck down, the face kept nearly level, chin tucked, so the chin rests on the paws)
+    const pawTop = 0.02 + rig.legs.fL.r + rig.legs.fR.r;
+    s.neck = [-0.9 * bow, 0, 0]; s.head = [-0.35 * bow, 0, 0];
+    const d0 = s.head[0] - s.neck[0];
+    headOnGround(s, (v) => { s.neck[0] = v; s.head[0] = v + d0; }, -1.3 * bow, -0.1, pawTop);
+    return s;
+  } : (u = 0) => {
     const b = S(TAU * u * 2) * 0.012, cr = C(SLEEP_ROLL), sr = S(SLEEP_ROLL);
     // (each joint turned about the upright of the world, which for a body lying over is its belly's way)
     const bend = (th, br = 0) => [-th * sr + br, th * cr, 0];
@@ -1661,12 +1973,11 @@ export function makeClips(rig, style = {}) {
       // (in the body's own frame: hind knees drawn up, forelegs bent at the wrist in front of the chest;
       // the upper pair a little further forward, as they lie on the lower)
       const L = K.legs[k], up = k[1] === "R", R0 = L.reach;
-      const XF = globalThis.__CR || {};
-      s.legs[k] = L.hind ? fromRel(B, k, [R0 * ((XF.slHx ?? 0.38) + (up ? 0.06 : 0)), -R0 * (XF.slHy ?? 0.42), -0.25, 0.25, up ? 0.03 : -0.03]) : fromRel(B, k, [R0 * (0.3 + (up ? 0.06 : 0)), -R0 * 0.5, -1.25, 0, up ? 0.02 : -0.03]);
+      s.legs[k] = L.hind ? fromRel(B, k, [R0 * (0.38 + (up ? 0.06 : 0)), -R0 * 0.42, -0.25, 0.25, up ? 0.03 : -0.03]) : fromRel(B, k, [R0 * (0.3 + (up ? 0.06 : 0)), -R0 * 0.5, -1.25, 0, up ? 0.02 : -0.03]);
     }
     // (the head down until it rests on the ground)
     const d0 = s.head[0] - s.neck[0];
-    headOnGround(s, (v) => { s.neck[0] = v; s.head[0] = v + d0; }, B.aC - 1.2, B.aC + 0.3, (globalThis.__CR || {}).slHc ?? 0.012);
+    headOnGround(s, (v) => { s.neck[0] = v; s.head[0] = v + d0; }, B.aC - 1.2, B.aC + 0.3);
     return s;
   };
   const SLEEP = sleepSpec(0);
@@ -1901,7 +2212,7 @@ export function makeClips(rig, style = {}) {
   // back rounds, its legs coming along folded against it, the tail sweeping round; last the head
   // settles onto the ground. (The legs are keyed in their hips' and shoulders' own frames, so they
   // go round with the body instead of being left behind on the ground.)
-  const SLEEP_UP = with_(SLEEP, { neck: [SLEEP.neck[0] + 0.55 * curl, SLEEP.neck[1] * 0.6, 0], head: [SLEEP.head[0] + 0.75 * curl, SLEEP.head[1] * 0.6, 0.05] });
+  const SLEEP_UP = loafSleep ? with_(SLEEP, { neck: LOAF.neck.slice(), head: LOAF.head.slice() }) : with_(SLEEP, { neck: [SLEEP.neck[0] + 0.55 * curl, SLEEP.neck[1] * 0.6, 0], head: [SLEEP.head[0] + 0.75 * curl, SLEEP.head[1] * 0.6, 0.05] });
   change("curlUp", LOAF, SLEEP, {
     rel: true,
     fL: [[0.1, "A"], [0.78, "B"]], fR: [[0.16, "A"], [0.82, "B"]],

@@ -91,6 +91,9 @@ if (isMainThread) {
   const T = await import(pathToFileURL(path.join(ROOT, "assets/world/traits.js")).href);
   const INDEX = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/models/cats/index.json"), "utf8")).cats;
   const TABLE = JSON.parse(fs.readFileSync(path.join(ROOT, "data/traits.json"), "utf8")).cats;
+  // (the cats with leg labels made offline, assets/models/cats/<KEY>.legs.json, skinned with them as the page does)
+  const LEGS = new Set((() => { try { const j = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/models/cats/legs-index.json"), "utf8")); return j.v === 1 ? j.cats : []; } catch { return []; } })());
+  const legsOf = (key) => { if (!LEGS.has(key)) return null; const j = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/models/cats", `${key}.legs.json`), "utf8")); return j.v === 1 && j.far ? R.decodeLegs(j.far, j.nlo) : null; };
   const out = [];
   for (const key of workerData.keys) {
     try { out.push(checkCat(key)); } catch (e) { out.push({ key, error: String(e && e.stack || e).split("\n").slice(0, 3).join(" | ") }); }
@@ -190,7 +193,7 @@ if (isMainThread) {
   function checkCat(key) {
     const t0 = performance.now(), ms = {};
     const lo = readModel(path.join(ROOT, "assets/models/cats", `${key}-lo.glb`));
-    const rig = R.findRig(lo.pos, lo.index), sk = R.buildSkeleton(rig), w = R.skinWeights(lo.pos, rig, sk, lo.index);
+    const rig = R.findRig(lo.pos, lo.index), sk = R.buildSkeleton(rig), w = R.skinWeights(lo.pos, rig, sk, lo.index, legsOf(key));
     const traits = T.traitsOf({ id: key }, TABLE), style = T.styleOf(traits), clips = R.makeClips(rig, style || {});
     const bones = sk.skeleton.bones, inv = sk.skeleton.boneInverses, SM = new Float64Array(bones.length * 16), m4 = new THREE.Matrix4();
     const gauge = skinGauge(lo.pos, lo.index, w, bones.map((b) => b.name), rig);

@@ -1385,10 +1385,11 @@ export class CatHerd {
    * Gives a cat its own model. `lo` (the far copy) may come first and `hi` later, or both at once;
    * either may be null. `dims` is the model's { len, height, width } from index.json.
    */
-  attachOwn(catId, { hi = null, lo = null, dims }) {
+  attachOwn(catId, { hi = null, lo = null, dims, legs = null }) { // legs: { far, full } leg labels per copy (catrig decodeLegs), optional
     const cat = this.sim.byId(catId);
     if (!cat) return false;
     let o = this.own.get(catId);
+    if (o && legs) o.legs = legs;
     const add = (root, tag) => {
       const f = flatMesh(root);
       if (!f) return null;
@@ -1402,7 +1403,7 @@ export class CatHerd {
         const mixer = new THREE.AnimationMixer(sk.root);
         // Its character: how it moves (the clips in its style) and how big it is drawn.
         const style = this.styleOf(cat), k = Math.min(2, Math.max(0.5, style?.scale || 1));
-        o = { cat, group, hi: null, lo: null, dims, s: ownScale(dims) * k, style, rig, sk, mixer, clips: null, anim: null, actions: {}, u: { hl: { value: 0 } }, near: false, drawOwn: false, dc: 0, size: { len: 0, height: 0, width: 0 } };
+        o = { cat, group, hi: null, lo: null, dims, legs, s: ownScale(dims) * k, style, rig, sk, mixer, clips: null, anim: null, actions: {}, u: { hl: { value: 0 } }, near: false, drawOwn: false, dc: 0, size: { len: 0, height: 0, width: 0 } };
         o.perUnit = cyclesPerUnit(rig, o.s, style || undefined);
         this.own.set(catId, o);
         this.ownRank.push(o);
@@ -1410,7 +1411,7 @@ export class CatHerd {
         // frame for its rig, skin and clips all at once); until then it is drawn from the shared models.
         setTimeout(() => this.readyOwn(o), 0);
       }
-      const { index, weight } = skinWeights(f.pos, o.rig, o.sk, f.geometry.index ? f.geometry.index.array : null);
+      const { index, weight } = skinWeights(f.pos, o.rig, o.sk, f.geometry.index ? f.geometry.index.array : null, o.legs?.[tag] || null);
       f.geometry.setAttribute("skinIndex", index);
       f.geometry.setAttribute("skinWeight", weight);
       f.geometry.computeBoundingSphere();
