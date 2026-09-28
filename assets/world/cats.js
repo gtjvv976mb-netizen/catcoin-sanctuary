@@ -287,6 +287,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   // way there and give up, again and again).
   const standable = (p, id) => nav.pointFree(p.x, p.z, nav.clearR - 0.02, id ? new Set([id]) : null);
   const BOWLS = L.BOWLS.filter((b) => standable(b.stand, b.id));
+  /** Every bowl and dish in the garden, by id. */
+  const RIM_OF = new Map([...L.BOWLS, ...L.WATERS].map((b) => [b.id, b]));
   const WATERS = L.WATERS.filter((w) => standable(w.stand, w.id));
   const POND_SPOTS = L.POND_SPOTS.filter((p) => standable(p));
   const PILE_SLOTS = L.NAP_PILES.flatMap((p) => p.slots.map((_, k) => ({ id: `${p.id}#${k}`, pile: p, k, ...L.slotAt(p, k) })));
@@ -536,7 +538,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     }
     return [
       { type: "turn", yaw: yawTo(g.x - cat.x, g.z - cat.z), doing: SAY.hopDown },
-      { type: "hop", x: g.x, z: g.z, y: 0, air: 0.36 + p.y * 0.1, apex: 0.16, doing: SAY.hopDown, then: () => { release(cat, p.id); cat.perch = null; } },
+      { type: "hop", x: g.x, z: g.z, y: 0, air: 0.36 + p.y * 0.1, apex: 0.16, doing: SAY.hopDown, down: p, then: () => { release(cat, p.id); cat.perch = null; } },
     ];
   }
 
@@ -1096,13 +1098,33 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     // it can, else waits on a moment rather than walk into it again, and after a while of that gives
     // up the walk. (No step or two into it and back, over and over: a blip, or a cat pushing.)
     if (cat.speed < 0.05) {
-      let o = bodyAhead(cat, dx, dz, act) || turnBlocked(cat, yawTo(dx, dz), act) || propAhead(cat, dx, dz, ignore);
+      // (stepping out from against another cat, that one's body doesn't hold it back: it is leaving it;
+      // squeezing out of a knot of cats, no standing one does (a sitting or lying cat is never walked through))
+      const skip = D && D.escape ? D.from : null, ghost = !!(D && D.ghost);
+      let o = bodyAhead(cat, dx, dz, act, skip, ghost) || turnBlocked(cat, yawTo(dx, dz), act, skip, ghost) || propAhead(cat, dx, dz, ignore);
       if (o) {
         if (!D && o !== true && !o.moving) {
           // (The way round only if its first steps are clear too; standing in the other's body
           // already, first a step out of it.)
           const A = bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, o) < -0.05 ? clearSpot(cat, o, "walk") : aside(cat, o);
           if (A) { const ax = A.x - cat.x, az = A.z - cat.z; if (!bodyAhead(cat, ax, az, act) && !propAhead(cat, ax, az, ignore)) { cat.detour = { x: A.x, z: A.z, until: time + 3 }; dx = ax; dz = az; o = null; } }
+        }
+        // (Waited a moment already, and still hemmed in (pressed against another cat, one that came up
+        // close while it sat, or squeezed between two, its way round blocked too): it steps out, away
+        // from the one it is pressed against, to the first clear spot of a few tried round that way, and
+        // goes on from there, as a cat squeezes out of a tight spot; two cats pressed together would
+        // otherwise wait on each other for good.)
+        // (In another cat's body already, it steps out at once. Jammed in a knot of cats for a few
+        // seconds with no clear way out of the one it is in, it squeezes out between them all the same:
+        // for that step out, the bodies round it don't hold it back (a moment's brush past, rather than
+        // two cats standing in each other for good).)
+        if (o) {
+          const jam = (cat.jamT || 0) > 1.4;
+          if (!(D && D.escape) || (jam && !D.ghost)) {
+            const E = stepOut(cat, o, act, ignore, (R.waited || 0) >= 0.9, jam);
+            if (E) { cat.detour = E; dx = E.x - cat.x; dz = E.z - cat.z; o = null; if (E.ghost) cat.jamT = 0; }
+          }
+          if (o) cat.jamT = inBody(cat) ? (cat.jamT || 0) + WAIT_ON : 0;
         }
         if (o) {
           // (Up against a prop, it finds its way again from where it stands.)
@@ -1172,14 +1194,56 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     return null;
   }
 
+  /** The cat (passing, or standing there) whose body this one's would be in if it stood up (or woke and lay out:
+      its body at `pose`'s length) where it sits or lies, when it is not in it already (null if none). */
+  function risesInto(cat, pose = "walk") {
+    for (const o of cats) {
+      if (o === cat || o.y > 0.3 || o.perch || together(cat, o)) continue;
+      if (Math.abs(o.x - cat.x) > 0.8 * (cat.size + o.size) || Math.abs(o.z - cat.z) > 0.8 * (cat.size + o.size)) continue;
+      if (bodyGap(cat, cat.x, cat.z, cat.yaw, pose, o) < -0.06 && bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, o) > -0.06) return o;
+    }
+    return null;
+  }
+
+  /** Where a cat in another's body (the one it is most in), or pressed against `o` a while (`waited`), steps out to: away
+      from it, or up to 90 degrees either side of that, 0.7 of a body on, the first such spot that is clear
+      of props and of every other cat's body; null if none. The detour it makes of it (`escape`, `from`). */
+  /** Whether a cat is in another's body (more than a brush). */
+  function inBody(cat) {
+    for (const c of cats) { if (c !== cat && c.y <= 0.3 && !c.perch && !together(cat, c) && Math.abs(c.x - cat.x) < 1.6 && Math.abs(c.z - cat.z) < 1.6 && bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, c) < -0.05) return true; }
+    return false;
+  }
+  function stepOut(cat, o, act, ignore, waited, force = false) {
+    let from = null, worst = -0.05;
+    for (const c of cats) {
+      if (c === cat || c.y > 0.3 || c.perch || together(cat, c) || Math.abs(c.x - cat.x) > 1.6 || Math.abs(c.z - cat.z) > 1.6) continue;
+      const g = bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, c);
+      if (g < worst) { worst = g; from = c; }
+    }
+    if (!from) return null;
+    // (straight on the way it faces first, if that leads away from the other: no turning round inside
+    // its body; but not along it, which takes it out slowly)
+    const base = Math.atan2(cat.z - from.z, cat.x - from.x), k = 0.7 * Math.max(1, cat.size), head = Math.atan2(-Math.sin(cat.yaw), Math.cos(cat.yaw));
+    const ways = Math.cos(head - base) > 0.5 ? [head, base] : [base];
+    for (const a of [...ways, base + 0.5, base - 0.5, base + 1, base - 1, base + 1.5, base - 1.5]) {
+      const x = cat.x + Math.cos(a) * k, z = cat.z + Math.sin(a) * k;
+      if (!nav.pointFree(x, z, L.CAT.clearR, act && act.ignoreNow) || !nav.segmentClear(cat.x, cat.z, x, z, withContaining(ignore, cat), nav.bodyR)) continue;
+      const yaw = Math.atan2(-(z - cat.z), x - cat.x);
+      let clear = true;
+      for (const c of cats) { if (c === cat || c === from || c.y > 0.3 || c.perch || together(cat, c) || Math.abs(c.x - x) > 1.6 || Math.abs(c.z - z) > 1.6) continue; if (bodyGap(cat, x, z, yaw, "walk", c) < (force && c.posture === "stand" ? -0.08 : 0.02)) { clear = false; break; } }
+      if (clear && bodyGap(cat, x, z, yaw, "walk", from) > bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, from) + 0.05) return { x, z, until: time + 2.5, escape: true, from, ghost: force };
+    }
+    return null;
+  }
+
   /** The cat another's body would swing into as it turns on the spot towards `want` (its first few
       degrees of the turn), if any: standing close beside one, a cat can't swing its hind end through it. */
-  function turnBlocked(cat, want, act) {
+  function turnBlocked(cat, want, act, skip = null, standOk = false) {
     const left = wrapAngle(want - cat.yaw);
     if (Math.abs(left) < 0.2) return null;
     const yaw = cat.yaw + Math.sign(left) * 0.15;
     for (const o of cats) {
-      if (o === cat || o.y > 0.3 || o.perch || (act && (act.lead === o || act.mate === o || act.nuzzle === o))) continue;
+      if (o === cat || o === skip || (standOk && o.posture === "stand") || o.y > 0.3 || o.perch || (act && (act.lead === o || act.mate === o || act.nuzzle === o))) continue;
       if (Math.abs(o.x - cat.x) > 0.8 * (cat.size + o.size) || Math.abs(o.z - cat.z) > 0.8 * (cat.size + o.size)) continue;
       const g = bodyGap(cat, cat.x, cat.z, yaw, cat.pose, o);
       if (g < -0.02 && g < bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, o) - 0.01) return o;
@@ -1220,10 +1284,10 @@ export function createSanctuary({ residents, reduced = false, critters = null })
 
   /** The cat whose body this one (standing) would walk straight into with its next step or so in
       direction (dx, dz), if any (not the one it follows or plays with). */
-  function bodyAhead(cat, dx, dz, act) {
+  function bodyAhead(cat, dx, dz, act, skip = null, standOk = false) {
     const l = Math.hypot(dx, dz) || 1, h = HALF_LEN.walk * cat.size, fx = Math.cos(cat.yaw) * h, fz = -Math.sin(cat.yaw) * h, ax = cat.x + (dx / l) * 0.12, az = cat.z + (dz / l) * 0.12;
     for (const o of cats) {
-      if (o === cat || o.y > 0.3 || o.perch || (act && (act.lead === o || act.mate === o || act.nuzzle === o))) continue;
+      if (o === cat || o === skip || (standOk && o.posture === "stand") || o.y > 0.3 || o.perch || (act && (act.lead === o || act.mate === o || act.nuzzle === o))) continue;
       const reach = 0.8 * (cat.size + o.size) + 0.15;
       if (Math.abs(o.x - cat.x) > reach || Math.abs(o.z - cat.z) > reach) continue;
       const oh = (HALF_LEN[o.pose] || 0.3) * o.size, ox = Math.cos(o.yaw) * oh, oz = -Math.sin(o.yaw) * oh, min = BODY * (cat.size + o.size);
@@ -1273,9 +1337,11 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     return out;
   }
 
+  // (but a bowl or a water dish only when it stands right over it: at a bowl's stand, inside its
+  // clearance, a cat that went on to ignore the bowl would walk off straight over it, or stop in it)
   const withContaining = (ignore, cat) => {
     const s = new Set(ignore || []);
-    for (const id of nav.containing(cat.x, cat.z)) s.add(id);
+    for (const id of nav.containing(cat.x, cat.z)) { const b = RIM_OF.get(id); if (!b || Math.hypot(cat.x - b.x, cat.z - b.z) < b.r + 0.2) s.add(id); }
     return s;
   };
 
@@ -1336,14 +1402,40 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         // (Sitting or lying down where it stands, but in another cat's body there, or where its body
         // standing up again would be in one: it steps clear first.)
         if (cat.posture === "stand" && step.type === "hold" && !step.roomed && !cat.perch) {
-          step.roomed = true;
           const o = crowding(cat, cat.x, cat.z, cat.yaw, POSTURE_POSE[want], -0.04) || crowding(cat, cat.x, cat.z, cat.yaw, "walk", -0.04);
           const s = o && clearSpot(cat, o, POSTURE_POSE[want]);
-          if (s) { cat.dest = s; act.steps.splice(act.i, 0, go(s, "stroll", 0.1, step.doing || act.reason)); return true; }
+          if (s) { step.roomed = true; cat.dest = s; act.steps.splice(act.i, 0, go(s, "stroll", 0.1, step.doing || act.reason)); return true; }
+          // (in another cat's body with nowhere clear to step to (landed from a hop right by one, say): it
+          // stands a moment for the other to move on, rather than sit down in it; a few times, then it may)
+          if (o && bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, o) < -0.05 && (step.roomWait = (step.roomWait || 0) + 1) < 4) { act.steps.splice(act.i, 0, hold("stand", 0.6, step.doing || act.reason, { fidget: false })); return true; }
+          step.roomed = true;
+        }
+        // (Getting up (or waking and stretching out) where its body, longer then, would be in another cat's:
+        // one that came up close while it sat or lay (sitting, a cat is short; standing, long). It stays as
+        // it is a while longer, for the other to move on, rather than rise into it and leave the two of
+        // them in each other; several times, then it gets up all the same.)
+        if (!cat.perch && (step.rise || 0) < 8 && (HALF_LEN[POSTURE_POSE[want]] || 0.3) > (HALF_LEN[cat.pose] || 0.3) + 0.05) {
+          const o = risesInto(cat, POSTURE_POSE[want]);
+          // (one standing there, free to go, is asked to move over (makeRoom), as a cat about to get up
+          // makes the other step back)
+          if (o) { step.rise = (step.rise || 0) + 1; if (o.posture === "stand" && time - o.motion.since > 0.6) makeRoom(o, cat); act.steps.splice(act.i, 0, hold(POSTURE_LOOP[cat.posture], 0.8, step.doing || act.reason, { fidget: false })); return true; }
         }
         const path = transitionPath(cat.posture, want);
         if (path.length) {
           act.steps.splice(act.i, 0, ...path.map((name) => ({ type: "trans", name, dur: transDur(name, tempoOf(cat)), doing: step.doing })));
+          return true;
+        }
+      }
+      // (Hopping down from a perch onto a spot another cat has come and settled on since it chose it:
+      // another clear spot by the perch's foot, or it waits up there a moment for the cat to move on.)
+      if (step.type === "hop" && step.down && crowding(cat, step.x, step.z, yawTo(step.x - cat.x, step.z - cat.z), "walk", 0.05)) {
+        const g = step.down.ground;
+        for (let k = 0; k < 12; k++) {
+          const a = cat.rnd.range(0, Math.PI * 2), d = cat.rnd.range(0.45, 1), q = { x: g.x + Math.cos(a) * d, z: g.z + Math.sin(a) * d };
+          if (nav.pointFree(q.x, q.z, L.CAT.clearR) && nav.segmentClear(g.x, g.z, q.x, q.z, null, nav.bodyR) && !crowding(cat, q.x, q.z, yawTo(q.x - cat.x, q.z - cat.z), "walk", 0.05)) { step.x = q.x; step.z = q.z; break; }
+        }
+        if (crowding(cat, step.x, step.z, yawTo(step.x - cat.x, step.z - cat.z), "walk", 0.05) && (step.waits = (step.waits || 0) + 1) < 6) {
+          act.steps.splice(act.i, 0, hold("stand", 0.8, SAY.hopDown, { fidget: false }));
           return true;
         }
       }
@@ -1730,6 +1822,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         const b = cats[j], reach = 0.8 * (a.size + b.size);
         if (Math.abs(b.x - a.x) > reach || Math.abs(b.z - a.z) > reach) continue;
         if (b.y > 0.3 || b.perch) continue;
+        // (one squeezing out of a knot of cats (stepOut, `ghost`) brushes past the standing ones round it)
+        if ((a.detour && a.detour.ghost && !b.moving && b.posture === "stand") || (b.detour && b.detour.ghost && !a.moving && a.posture === "stand")) continue;
         const am = a.moving || turning(a), bm = b.moving || turning(b);
         const still = !am && !bm, body = BODY * (a.size + b.size);
         const cp = closestPoints(seg[i * 4], seg[i * 4 + 1], seg[i * 4 + 2], seg[i * 4 + 3], seg[j * 4], seg[j * 4 + 1], seg[j * 4 + 2], seg[j * 4 + 3]);
@@ -1770,8 +1864,12 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       const c = cats[i];
       let px = push[i * 2], pz = push[i * 2 + 1];
       // (moved over after a moment in another cat's space)
-      if (c.crowdBy) { c.crowdT = (c.crowdT || 0) + dt; if (c.crowdT > CROWD_WAIT) { c.crowdT = 0; makeRoom(c, c.crowdBy); } }
-      else c.crowdT = 0;
+      // (and if that cat can't get out of it, hemmed in, the other one, sitting or lying there awake, gets
+      // up and moves over instead: two cats never stay in each other for good)
+      if (c.crowdBy) {
+        c.crowdT = (c.crowdT || 0) + dt; c.crowdLong = (c.crowdLong || 0) + dt;
+        if (c.crowdT > CROWD_WAIT) { c.crowdT = 0; const o = c.crowdBy; if (c.crowdLong > 2.5 && (o.posture === "sit" || o.posture === "lie")) makeRoom(o, c); else makeRoom(c, o); }
+      } else { c.crowdT = 0; c.crowdLong = 0; }
       let hx = hard[i * 2], hz = hard[i * 2 + 1];
       if (px === 0 && pz === 0 && hx === 0 && hz === 0) { c.held = 0; continue; }
       // Turning on the spot squeezed between two (its body swinging into both; what one takes back
@@ -2049,6 +2147,9 @@ export function publishMotion(cat, dt, time) {
     // Once on the move it is shown moving at least MIN_SHOW.move, even if it pulls up at once; but
     // one stopped dead (held by a body, or waiting with nowhere to go) is not left frozen mid-stride
     // beyond a real step's showing: it stands, and its legs square up.
+    // (Brought up short out of a run or a trot, all but stopped, it stands: it doesn't drop into a walk
+    // on the way, a walk that would only be seen frozen, its legs going nowhere.)
+    if (!cat.pivoting && real < 0.1 && v < 0.1 && gait && m.gait && RANK[gait] < RANK[m.gait] && RANK[m.gait] > RANK.walk) gait = null;
     const dead = !cat.pivoting && real < 0.03 && (held || !(cat.wantV > 0));
     if (!gait && m.gait && time - cat.gaitSince < MIN_SHOW.move && !(dead && time - m.since >= 0.25)) gait = m.gait;
     if (cat.pivoting) { odo += Math.abs(turned) * PIVOT_ARC; if (m.gait && gait) gait = m.gait; } // turning on the spot in the gait it has
