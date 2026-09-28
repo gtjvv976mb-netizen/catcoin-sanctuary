@@ -1844,7 +1844,7 @@ export function makeClips(rig, style = {}, fit = null) {
       s.head[0] += -0.1 * Math.max(0, S(TAU * u * 5)); s.head[2] = -0.3 * side;
     }
     return s;
-  }, SIT, { enter: 0.5, exit: 0.4 });
+  }, SIT, { enter: 0.65, exit: 0.4 }); // (the paw lifted with care: quicker, a kitten's forearm snapped up)
   // Kneading: the forepaws treading in turn, eyes half shut.
   posed("knead", loopDur(1.2), 24, (u) => {
     const a = Math.max(0, S(TAU * u)), b = Math.max(0, -S(TAU * u)), h = 0.06 * (0.4 + 0.6 * freeF);
@@ -2121,13 +2121,14 @@ export function makeClips(rig, style = {}, fit = null) {
     const L = K.legs[k], t = B.top[k], a = L.hind ? B.aP : B.aC, w = V1.set(r[0], r[1], r[4]).applyQuaternion(t.q);
     return leg(t.x + w.x, t.y + w.y, r[2] + a, r[3], (t.z + w.z - L.toe.z) * L.side);
   };
-  // Curled up asleep: lying on its left side, the back rounded towards the belly in one curve (the
+  // Curled up asleep: lying half over on its left side, the back rounded towards the belly in one curve (the
   // loins, chest and neck each taking a share, so no one joint folds the skin), the head come down to
   // rest on the ground by its forepaws, the legs drawn up loosely against the belly, the tail wrapped
   // round the hind legs towards the nose; breathing slowly. Seen from above a C, from the belly side
-  // paws and a sleeping face, from the back a round back and the tail. A big cartoon head curls less; a
+  // paws and a sleeping face, from the back a round back, the head and the tail (rolled right over onto
+  // its side, the back seen from behind was a long smooth log). A big cartoon head curls less; a
   // round body (no waist to bend) lies less far over.
-  const SLEEP_ROLL = 1.25 - 0.25 * heavy, curl = (1 - 0.45 * headBig) * (1 - 0.3 * heavy) * (1 - 0.5 * deep) * amp("sleep");
+  const SLEEP_ROLL = 0.8 - 0.15 * heavy, curl = (1 - 0.45 * headBig) * (1 - 0.3 * heavy) * (1 - 0.5 * deep) * amp("sleep");
   // A round cat (deep-bodied, wide or stubby: no waist to curl, and rolled onto its side it reads as a
   // featureless log) sleeps in its loaf instead, as such cats do: the chin down on the forepaws, the
   // back rounded a little, the tail wrapped along its flank; curling up and waking are then the head
@@ -2149,9 +2150,10 @@ export function makeClips(rig, style = {}, fit = null) {
     const b = S(TAU * u * 2) * 0.012, cr = C(SLEEP_ROLL), sr = S(SLEEP_ROLL);
     // (each joint turned about the upright of the world, which for a body lying over is its belly's way)
     const bend = (th, br = 0) => [-th * sr + br, th * cr, 0];
-    const s = { root: [loafLift, loafShift, 0, SLEEP_ROLL], pelvis: [0, 0, 0], spine: bend(0.5 * curl, b), chest: bend(0.55 * curl, -b * 0.5), neck: [0, 0, 0], head: [0, 0, 0],
+    const CK = 1.3;
+    const s = { root: [loafLift, loafShift, 0, SLEEP_ROLL], pelvis: [0, 0, 0], spine: bend(0.5 * curl * CK, b), chest: bend(0.55 * curl * CK, -b * 0.5), neck: [0, 0, 0], head: [0, 0, 0],
       legs: {}, tail: T([PI + 1.1, PI + 1.8, PI + 2.4, PI + 2.9], [-0.3, -0.15, -0.05, 0]) };
-    const B = bodyOf(s), nk = 0.6 * curl, hd = 0.35 * curl;
+    const B = bodyOf(s), nk = 0.6 * curl * CK, hd = 0.35 * curl * CK;
     s.neck = [B.aC - nk * sr, nk * cr, 0]; s.head = [s.neck[0] - hd * sr, hd * cr * 0.8, -0.25];
     for (const k of KEYS) {
       // (in the body's own frame: hind knees drawn up, forelegs bent at the wrist in front of the chest;

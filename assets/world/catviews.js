@@ -728,6 +728,12 @@ const _AX = new THREE.Vector3(1, 0, 0), _AY = new THREE.Vector3(0, 1, 0), _AZ = 
 
 /** A cat's animation state for its own model: clip weights, the gait phase, and its layers, tuned
     by its character (cat.traits, 0..1 each; see traits.js). */
+const clamp01v = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
+/** A rig's ruff (0..1: a body thick about the shoulders for its head), cartoon head (0..1: big for its
+    legs) and short neck (0..1: a neck shorter than the head is round), as catrig.js reckons them. */
+const ruffOf = (rig) => clamp01v((rig.bodyR / Math.max(0.05, rig.headR) - 1.6) / 1.4);
+const bigHeadOf = (rig) => clamp01v((rig.headR / Math.max(0.1, rig.legTop) - 0.42) / 0.4);
+const shortNeckOf = (rig) => (rig.headJoint && rig.neck ? clamp01v((1 - Math.hypot(rig.headJoint.x - rig.neck.x, rig.headJoint.y - rig.neck.y) / Math.max(0.05, rig.headR)) / 0.25) : 0);
 export function animState(o, cat) {
   const t = { ...NEUTRAL_TRAITS, ...(cat.traits || {}) }, rig = o.rig, bones = o.sk.bones;
   const kit = t.age === "kitten", old = t.age === "senior", flags = Array.isArray(t.flags) ? t.flags : [];
@@ -765,9 +771,11 @@ export function animState(o, cat) {
     stiff: old ? 1.15 : kit ? 0.85 : 1,
     gentle: flags.includes("gentle"),
     traits: t, avoid: Array.isArray(t.avoid) && t.avoid.length ? new Set(t.avoid) : null,
-    // (a cat with a deep ruff for its head, or a big cartoon head on a short neck, looks less far aside: the
-    // ruff's skin would twist with the head, the big head's nape fold into its shoulders)
-    lookYaw: ANIM.lookYaw * (1 - 0.4 * Math.min(1, Math.max(0, (rig.bodyR / Math.max(0.05, rig.headR) - 1.6) / 1.4))) * (1 - 0.3 * Math.min(1, Math.max(0, (rig.headR / Math.max(0.1, rig.legTop) - 0.42) / 0.4))),
+    // (a cat with a deep ruff for its head, or a big cartoon head, or a head on a neck shorter than itself,
+    // looks less far aside, and less far up or down: the ruff's skin would twist with the head, the big
+    // head's or the short neck's nape fold into its shoulders and squeeze the head)
+    lookYaw: ANIM.lookYaw * (1 - 0.4 * ruffOf(rig)) * (1 - 0.3 * bigHeadOf(rig)) * (1 - 0.35 * shortNeckOf(rig)),
+    lookPitch: ANIM.lookPitch * (1 - 0.25 * bigHeadOf(rig)) * (1 - 0.3 * shortNeckOf(rig)),
   };
   A.bp = rnd(A) * TAU; A.bp0 = rnd(A) * TAU;
   return A;
@@ -1105,7 +1113,7 @@ function lookLayer(o, cat, A, b, dt, now, look, g, snap, cam) {
   }
   let wantY, wantP;
   if (want) {
-    const dY = clipY + clampA(wrapA(tY - clipY), A.lookYaw), dP = clipP + clampA(tP - clipP, ANIM.lookPitch);
+    const dY = clipY + clampA(wrapA(tY - clipY), A.lookYaw), dP = clipP + clampA(tP - clipP, A.lookPitch);
     const eY = wrapA(dY - A.goalY), eP = dP - A.goalP;
     // A glance: to a new target, one that has moved well off, or (after a hold) to where the eyes
     // have drifted off it.
@@ -1113,7 +1121,7 @@ function lookLayer(o, cat, A, b, dt, now, look, g, snap, cam) {
       A.goalY = dY; A.goalP = dP; A.sacc = now; A.hold = 0.6 + rnd(A) * 1.8;
     }
     A.aimed = true;
-    wantY = clampA(wrapA(A.goalY - clipY), A.lookYaw); wantP = clampA(A.goalP - clipP, ANIM.lookPitch);
+    wantY = clampA(wrapA(A.goalY - clipY), A.lookYaw); wantP = clampA(A.goalP - clipP, A.lookPitch);
   } else { A.aimed = false; wantY = clampA(A.yr * 0.3, 0.5); wantP = 0; }
   if (snap) { A.oy = wantY; A.op = wantP; A.oyv = A.opv = 0; }
   else { const ts = want ? A.saccT : 0.3; damp(A, "oy", "oyv", wantY, ts, dt); damp(A, "op", "opv", wantP, ts, dt); }

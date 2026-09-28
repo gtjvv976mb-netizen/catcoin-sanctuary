@@ -53,7 +53,14 @@ export const SEQS = [
   ["sit", "groom", "sit"], ["sit", "legLick", "sit"], ["sit", "earScratch", "sit"], ["sit", "beckon", "sit"],
   ["loaf", "flop", "roll", "flop", "loaf"], ["flop", "getUp", "stand"], ["loaf", "roll", "loaf"], ["loaf", "dab", "loaf"],
   ["stand", "hindStand", "stand"], ["loaf", "curlUp", "sleep", "wake", "loaf"], ["stand", "scratch", "stand"],
+  // (and the changes the live page shows most that none of the above plays (the final verifier's count
+  // over 180 s: standUp>walk, walk>sitDown, walk>lieDown, getUp>walk, walk>sniff, greet>headBunt,
+  // sitDown>knead, lieToSit>groom, pounce and hop>sitDown); a gait walks the cat on at its pace)
+  ["sit", "standUp", "walk", "sitDown", "knead", "sit"], ["stand", "walk", "lieDown", "loaf"], ["loaf", "getUp", "walk", "sniff", "stand"],
+  ["stand", "greet", "headBunt", "stand"], ["loaf", "lieToSit", "groom", "sit"], ["stand", "pounce", "sitDown", "sit"], ["stand", "hop", "sitDown", "sit"],
 ];
+/** How fast a gait in SEQS walks the cat on (units a second, as the sims pace them). */
+const GAIT_V = { walk: 0.9, trot: 1.8, run: 2.8, stalk: 0.35 };
 
 if (isMainThread) {
   const index = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/models/cats/index.json"), "utf8")).cats;
@@ -249,7 +256,9 @@ if (isMainThread) {
           const secs = moves ? clips[act].duration : si === 0 ? 0.3 : si === seq.length - 1 ? 0.8 : 1.0, label = si ? `${seq[si - 1]}>${act}` : act, nf = Math.round(secs / DT);
           for (let f = 0; f < nf; f++, frame++) {
             if (f === 0 && si && !moves) o.anim.r = (Math.imul((Math.floor(phase * 4294967296) - 1013904223) >>> 0, INVA) >>> 0) || 1;
-            Object.assign(cat.motion, { action: act, posture: M.ACTIONS[act].posture, u: moves ? (f + 1) / nf : null });
+            const gv = kind === "gait" ? GAIT_V[act] || 0.9 : 0;
+            Object.assign(cat.motion, { action: act, posture: M.ACTIONS[act].posture, u: moves ? (f + 1) / nf : null, gait: kind === "gait" ? act : null });
+            cat.speed = gv; cat.x += gv * DT; cat.motion.odometer += gv * DT;
             now += DT;
             V.animateOwn(o, cat, now, 0, false, null);
             const live = Object.values(o.actions).filter((a) => a.isScheduled() && a.weight > 1e-3);

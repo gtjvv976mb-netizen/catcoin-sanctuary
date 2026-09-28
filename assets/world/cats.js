@@ -1225,9 +1225,10 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     // its body; but not along it, which takes it out slowly)
     const base = Math.atan2(cat.z - from.z, cat.x - from.x), k = 0.7 * Math.max(1, cat.size), head = Math.atan2(-Math.sin(cat.yaw), Math.cos(cat.yaw));
     const ways = Math.cos(head - base) > 0.5 ? [head, base] : [base];
+    const ign = withContaining(ignore, cat);
     for (const a of [...ways, base + 0.5, base - 0.5, base + 1, base - 1, base + 1.5, base - 1.5]) {
       const x = cat.x + Math.cos(a) * k, z = cat.z + Math.sin(a) * k;
-      if (!nav.pointFree(x, z, L.CAT.clearR, act && act.ignoreNow) || !nav.segmentClear(cat.x, cat.z, x, z, withContaining(ignore, cat), nav.bodyR)) continue;
+      if (!nav.pointFree(x, z, L.CAT.clearR, act && act.ignoreNow) || !nav.segmentClear(cat.x, cat.z, x, z, ign, nav.bodyR)) continue;
       const yaw = Math.atan2(-(z - cat.z), x - cat.x);
       let clear = true;
       for (const c of cats) { if (c === cat || c === from || c.y > 0.3 || c.perch || together(cat, c) || Math.abs(c.x - x) > 1.6 || Math.abs(c.z - z) > 1.6) continue; if (bodyGap(cat, x, z, yaw, "walk", c) < (force && c.posture === "stand" ? -0.08 : 0.02)) { clear = false; break; } }
