@@ -82,7 +82,10 @@ test("launch workflow: a commit after each phase, the token handed to git for th
   const [c1, c2, c3] = commits;
   assert.match(c1, /git add -- data\/sanctuary-launches\.json coins\n/);
   assert.match(c2, /git add -- data\/sanctuary-launches\.json\n/);
-  assert.match(c3, /git add -- data\/sanctuary-launches\.json data\/adoptables\.json data\/announced\.json data\/launches\.json data\/real-photos\.json data\/cat-watch\.json scripts\/meshy\.queue\.json\n/);
+  assert.match(c3, /git add -- data\/sanctuary-launches\.json data\/adoptables\.json data\/launches\.json data\/real-photos\.json data\/cat-watch\.json scripts\/meshy\.queue\.json\n/);
+  // data/announced.json is the Announce workflow's alone (it holds the launcher's cats by rule): committed here, it raced
+  // Announce's own commit, whose single rebase could then fail after its X post went out.
+  assert.ok(!/announced\.json/.test(W.replace(/^#.*$/gm, "")), "the Launch workflow never commits data/announced.json");
   for (const c of commits) {
     assert.match(c, /if git diff --cached --quiet; then echo "Nothing changed\."; exit 0; fi/);
     assert.match(c, /GH_TOKEN: \$\{\{ github\.token \}\}/);
@@ -93,7 +96,10 @@ test("launch workflow: a commit after each phase, the token handed to git for th
   // The launch is committed even when the send step failed (a sent transaction is never forgotten); the record step and its commit follow only that commit.
   assert.match(c2, /id: commit-send\n\s+if: \$\{\{ !cancelled\(\) \}\}/);
   assert.match(stepNamed(/node scripts\/launch\.mjs record/), /if: \$\{\{ !cancelled\(\) && steps\.commit-send\.outcome == 'success' \}\}/);
-  assert.match(c3, /if: \$\{\{ !cancelled\(\) && steps\.commit-send\.outcome == 'success' \}\}/);
+  assert.match(c3, /id: commit-record\n\s+if: \$\{\{ !cancelled\(\) && steps\.commit-send\.outcome == 'success' \}\}/);
+  // "recorded" (what starts publish) is set by that commit's step, and only once its push went through (bash -e stops the step on a failed push).
+  assert.match(c3, /RECORDED: \$\{\{ steps\.record\.outputs\.recorded \}\}/);
+  assert.match(c3, /push origin HEAD:main\n\s+fi\n\s+if \[ "\$RECORDED" = "true" \]; then echo "recorded=true" >> "\$GITHUB_OUTPUT"; fi\n/);
   // Static commit messages: nothing from the data reaches the shell.
   for (const c of commits) assert.match(c, /commit -q -m "Launch: [a-z' ]+"/);
 });
@@ -105,7 +111,7 @@ test("launch workflow: the dispatching jobs run no code of the repository's: the
   for (const w of ["collection.yml", "pages.yml", "announce.yml"]) assert.match(pub, new RegExp(`gh workflow run ${w.replace(".", "\\.")} -R "\\$REPO" --ref main`), w);
   // The outputs the jobs read come from the launcher's own steps.
   assert.match(job("prepare"), /outputs:\n\s+pending: \$\{\{ steps\.prepare\.outputs\.pending \}\}\n\s+deploy: \$\{\{ steps\.prepare\.outputs\.deploy \}\}/);
-  assert.match(job("launch"), /outputs:\n\s+recorded: \$\{\{ steps\.record\.outputs\.recorded \}\}/);
+  assert.match(job("launch"), /outputs:\n\s+recorded: \$\{\{ steps\.commit-record\.outputs\.recorded \}\}/, "publish starts only for a cat whose record reached main");
   assert.match(stepNamed(/node scripts\/launch\.mjs prepare/), /id: prepare\n/);
   assert.match(stepNamed(/node scripts\/launch\.mjs record/), /id: record\n/);
 });

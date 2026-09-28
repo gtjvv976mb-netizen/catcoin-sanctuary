@@ -173,25 +173,30 @@ test("X reads are budgeted: paced by day within the month, each search asks for 
   assert.deepEqual(t2.candidates, t.candidates, "the last list is kept");
 });
 
-test("trend watch workflow: pinned actions, contents: write for the scan, secrets only in the scan step, the next-run job runs no repository code", async () => {
+test("trend watch workflow: pinned actions, contents: write for the scan, secrets only in the scan step, the launcher and next-run jobs run no repository code", async () => {
   const fs = await import("node:fs");
   const W = fs.readFileSync(new URL("../.github/workflows/trendwatch.yml", import.meta.url), "utf8");
   assert.deepEqual([...W.matchAll(/uses:\s*(\S+)\s*#\s*(\S+)/g)].map((m) => `${m[1]} ${m[2]}`), ["actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 v7.0.1", "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 v7.0.0"]);
   assert.match(W, /^permissions: \{\}$/m);
-  assert.deepEqual([...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim()), ["contents: write", "actions: write"]);
+  assert.deepEqual([...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim()), ["contents: write", "actions: write", "actions: write"]);
   const withSecrets = W.split(/\n      - /).filter((s) => /secrets\./.test(s));
   assert.equal(withSecrets.length, 1);
   assert.match(withSecrets[0], /node scripts\/scan-trending-cats\.mjs/);
   assert.deepEqual([...new Set([...W.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))].sort(), ["ANTHROPIC_API_KEY", "X_ACCESS_SECRET", "X_ACCESS_TOKEN", "X_API_KEY", "X_API_SECRET"]);
   assert.ok(!/SECRET_KEY|WALLET|PRIVATE/i.test(W), "no wallet key: the trend watch never signs anything (the launcher is launch.yml)");
+  const launcher = W.slice(W.indexOf("\n  launcher:"), W.indexOf("\n  next:"));
   const next = W.slice(W.indexOf("\n  next:"));
-  assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(next));
-  // A commit that brings new candidates starts the launcher at once (LAUNCH_ENABLED on or dry), from the next job, before its wait.
+  for (const job of [launcher, next]) assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(job));
+  // A commit that brings new candidates starts the launcher at once (LAUNCH_ENABLED on or dry), from a job of its own: it waits for
+  // nothing, TRENDWATCH_CHAIN=off does not stop it, and a failed dispatch cannot stop the chain (the next job does not need it).
   assert.match(W, /outputs:\n\s+candidates: \$\{\{ steps\.commit\.outputs\.candidates \}\}/);
   assert.match(W, /id: commit\n/);
-  assert.match(W, /if \[ "\$fresh" -gt 0 \]; then echo "candidates=true" >> "\$GITHUB_OUTPUT"; fi\n\n  next:/, "set only after the push");
-  assert.match(next, /if: \$\{\{ needs\.scan\.outputs\.candidates == 'true' && \(vars\.LAUNCH_ENABLED == 'on' \|\| vars\.LAUNCH_ENABLED == 'dry'\) \}\}\n\s+env:\n\s+GH_TOKEN: \$\{\{ github\.token \}\}\n\s+REPO: \$\{\{ github\.repository \}\}\n\s+run: gh workflow run launch\.yml -R "\$REPO" --ref main\n/);
-  assert.ok(next.indexOf("gh workflow run launch.yml") < next.indexOf("sleep"), "the launcher starts before the 20-minute wait");
+  assert.match(W, /if \[ "\$fresh" -gt 0 \]; then echo "candidates=true" >> "\$GITHUB_OUTPUT"; fi\n\n  launcher:/, "set only after the push");
+  assert.match(launcher, /\n  launcher:\n    needs: scan\n    if: \$\{\{ !cancelled\(\) && needs\.scan\.outputs\.candidates == 'true' && \(vars\.LAUNCH_ENABLED == 'on' \|\| vars\.LAUNCH_ENABLED == 'dry'\) \}\}\n/);
+  assert.match(launcher, /env:\n\s+GH_TOKEN: \$\{\{ github\.token \}\}\n\s+REPO: \$\{\{ github\.repository \}\}\n\s+run: gh workflow run launch\.yml -R "\$REPO" --ref main\n/);
+  assert.ok(!/TRENDWATCH_CHAIN|sleep/.test(launcher), "never behind the chain's switch or its wait");
+  assert.ok(!next.includes("launch.yml"), "the chain's job never dispatches the launcher, so a failed dispatch cannot skip the chain's step");
+  assert.match(next, /\n  next:\n    needs: scan\n/, "the chain needs only the scan");
 });
 
 test("trend watch workflow: the commit step counts the candidates the commit adds (git and jq, as the runner has them)", { skip: process.platform === "win32" }, async () => {

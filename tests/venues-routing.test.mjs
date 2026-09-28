@@ -34,23 +34,47 @@ const TEST_WATCH = {
   accountLinks: { OpenAI: { stock: "tOpenAI" }, Tesla: { stock: "TSLAx" }, pumpdotfun: { pumpQuote: { symbol: "MEOW", mint: MEOW.mint } }, BadCo: { stock: "TSLAx", pumpQuote: { symbol: "MEOW", mint: MEOW.mint } } },
 };
 
-test("data/cat-watch.json's ties: every stock is one of the stock pairs, only watched companies are tied, no politician, no coin seeded; watchList and every query are unchanged by them", () => {
-  assert.deepEqual(watchLinksProblems(WATCH), []);
+/**
+ * What the shipped-files tests ask of data/cat-watch.json's ties, which the owner edits by hand (its linksNote: "the owner
+ * may add, change or remove"): every tie valid (watchLinksProblems), on a watched account, never a politician's or a
+ * person's. Never the file's layout, nor which ties there are today: npm test gates every Pages deploy, and the launcher's
+ * coins are served by Pages. Returns the problems.
+ */
+function watchTieProblems(watch) {
+  const out = [...watchLinksProblems(watch)].map((p) => (typeof p === "string" ? p : JSON.stringify(p)));
+  const watched = new Set([...(watch.topAccounts ?? []), ...(watch.bigAccounts ?? [])].map((h) => h.toLowerCase()));
+  for (const [handle, link] of Object.entries(watch.accountLinks ?? {})) {
+    if (!watched.has(handle.toLowerCase())) out.push(`${handle} is not a watched account`);
+    if (/^(BarackObama|JoeBiden|realDonaldTrump|POTUS|WhiteHouse|KamalaHarris|elonmusk|saylor|BillGates)$/i.test(handle)) out.push(`${handle}: no politician, no person`);
+    if (link.stock !== undefined && !STOCK_PAIRS.some((s) => s.symbol === link.stock)) out.push(`${handle}: ${link.stock} is not a stock pair`);
+  }
+  return out;
+}
+
+/** What the shipped-files tests ask of data/pump-quotes.json, which the owner edits by hand: valid, every row accepted (the Collection's builder stops on a refused one), its note kept. Returns the problems. */
+function pumpQuotesFileProblems(text) {
+  let file;
+  try { file = JSON.parse(text); } catch { return ["not JSON"]; }
+  const v = validatePumpQuotes(file), out = v.refused.map((r) => `row ${r.index}: ${r.detail}`);
+  if (!Array.isArray(file?.quotes)) out.push("quotes is not a list");
+  for (const re of [/unverified/, /opts in/, /never remove/]) if (!re.test(file?.note ?? "")) out.push(`the note no longer says ${re}`);
+  return out;
+}
+
+test("data/cat-watch.json's ties: every stock is one of the stock pairs, only watched companies are tied, no politician; seeded with stocks only; watchList and every query are unchanged by them", () => {
+  assert.deepEqual(watchTieProblems(WATCH), []);
   const links = Object.entries(WATCH.accountLinks);
   assert.ok(links.length >= 10, "the companies with a stock pair are seeded");
-  const watched = new Set([...WATCH.topAccounts, ...WATCH.bigAccounts].map((h) => h.toLowerCase()));
-  for (const [handle, link] of links) {
-    assert.ok(watched.has(handle.toLowerCase()), `${handle} is a watched account`);
-    assert.ok(!/^(BarackObama|JoeBiden|realDonaldTrump|POTUS|WhiteHouse|KamalaHarris|elonmusk|saylor|BillGates)$/i.test(handle), `${handle}: no politician, no person`);
-    assert.deepEqual(Object.keys(link), ["stock"], `${handle}: no pumpQuote is seeded`);
-    assert.ok(STOCK_PAIRS.some((s) => s.symbol === link.stock), `${handle}: ${link.stock} is a stock pair`);
-  }
-  assert.ok(!WATCH.figures.some((f) => f.stock !== undefined || f.pumpQuote !== undefined), "no figure's company has a stock pair today");
   assert.match(WATCH.linksNote, /the owner may add, change or remove/);
-  // written on one line, in the inline form the launcher's writer (stage 3, watchText) gives an object's value, so a rewrite keeps the file as it is
-  const inline = (v) => (Array.isArray(v) ? `[${v.map(inline).join(", ")}]`
-    : v !== null && typeof v === "object" ? `{ ${Object.entries(v).map(([k, x]) => `${JSON.stringify(k)}: ${inline(x)}`).join(", ")} }` : JSON.stringify(v));
-  assert.ok(fs.readFileSync(path.join(ROOT, "data/cat-watch.json"), "utf8").includes(`\n "accountLinks": ${inline(WATCH.accountLinks)},\n`), "accountLinks is one inline line");
+  // The owner's edits the note allows pass the same check, however the file is laid out: a coin tie (with the opt-in), a
+  // figure tied to a stock, the one-line accountLinks wrapped over several lines.
+  const text = fs.readFileSync(path.join(ROOT, "data/cat-watch.json"), "utf8");
+  const wrapped = text.replace(/\n "accountLinks": \{ /, '\n "accountLinks": {\n  ').replace(/\}, "([A-Za-z0-9_]+)": \{/g, '},\n  "$1": {');
+  const edited = { ...JSON.parse(wrapped), accountLinks: { ...WATCH.accountLinks, pumpdotfun: { pumpQuote: { symbol: "MEOW", mint: MEOW.mint } } },
+    figures: WATCH.figures.map((f, i) => (i === 0 ? { ...f, stock: "tOpenAI" } : f)), bigAccounts: [...WATCH.bigAccounts, "pumpdotfun"] };
+  assert.notEqual(wrapped, text, "the test really wraps it");
+  assert.deepEqual(watchTieProblems(edited), []);
+  assert.deepEqual(watchTieProblems({ ...WATCH, accountLinks: { ...WATCH.accountLinks, elonmusk: { stock: "TSLAx" } }, bigAccounts: [...WATCH.bigAccounts, "elonmusk"] }), ["elonmusk: no politician, no person"]);
   // the trend watch ignores the ties: its lists and queries are exactly what they are without them
   const names = new Set([...read("adoptables.json").cats, ...PLANNED.cats].flatMap((c) => [c.name, c.coinName, c.ticker, c.launchTicker]).filter(Boolean).map((s) => String(s).toLowerCase()));
   const bare = structuredClone(WATCH);
@@ -169,13 +193,13 @@ test("with the shipped data: every tied company launches on StonkFun exactly whe
   assert.deepEqual(chooseVenue(post({ catName: "Mochi" }), WATCH, { usedPairs, pumpQuotes }), { id: "pump-sol", reason: "default" }, "an ordinary cat: pump.fun in SOL");
 });
 
-test("data/pump-quotes.json ships empty and valid, written canonically (no coin-priced launch until the owner lists a coin and opts in)", () => {
+test("data/pump-quotes.json is valid, every row accepted, its note kept; a coin the owner lists (as the note says, however it is laid out) passes the same check (no coin-priced launch until the owner lists one and opts in)", () => {
   const text = fs.readFileSync(path.join(ROOT, "data/pump-quotes.json"), "utf8");
+  assert.deepEqual(pumpQuotesFileProblems(text), []);
   const file = JSON.parse(text);
-  assert.equal(text, serialize(file));
-  assert.deepEqual(validatePumpQuotes(file), { quotes: [], refused: [] });
-  assert.deepEqual(Object.keys(file), ["note", "quotes"]);
-  assert.match(file.note, /unverified/);
-  assert.match(file.note, /opts in/);
-  assert.match(file.note, /never remove/);
+  const bonk = { symbol: "BONK", mint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263", tokenProgram: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" };
+  assert.deepEqual(pumpQuotesFileProblems(serialize({ ...file, quotes: [bonk] })), []);
+  assert.deepEqual(pumpQuotesFileProblems(JSON.stringify({ ...file, quotes: [bonk] })), [], "on one line");
+  assert.match(pumpQuotesFileProblems(serialize({ ...file, quotes: [{ ...bonk, tokenProgram: "nope" }] })).join(), /row 0/, "a refused row (the Collection's builder would stop)");
+  assert.match(pumpQuotesFileProblems(serialize({ ...file, quotes: [{ symbol: "SOL", mint: "So11111111111111111111111111111111111111112", tokenProgram: bonk.tokenProgram }] })).join(), /row 0/);
 });

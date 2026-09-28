@@ -52,23 +52,31 @@
  *   StonkFun or coin-priced cat went out on pump.fun in SOL instead.
  *
  * THE PHASES (the workflow commits between them):
- *   prepare  settles "sending" rows by their signature (finalized: launched or failed; unknown after
- *            the blockhash expired: failed, retry), prepares a retryable failed row again, or, with
- *            nothing in flight and the day's count not reached, prepares ONE new cat: its metadata
- *            file and its ledger row. data/launch-approvals.json is only read.
- *   send     (the only phase with the key) settles "sending" rows, then for the prepared row: checks
- *            the chain for its mint on every venue (a launch that happened but was never recorded is
- *            recovered, an address someone else touched fails for good), waits (bounded) until the site
- *            serves the committed metadata at its uri, builds (StonkFun: its pricing fetched now and
- *            its config read back), signs and SIMULATES the launch (falling back to pump.fun in SOL as
- *            above), and refuses unless
+ *   prepare  settles "sending" rows by their signature (finalized: launched or failed; finalized with
+ *            no error but not proved yet: still "sending", a person told; unknown after the blockhash
+ *            expired: failed, retry) and saves that at once, prepares a retryable failed row again, or,
+ *            with nothing in flight, the day's count not reached and room left under the Collection's
+ *            MAX_CATS (collectionRoom), prepares ONE new cat: its metadata file and its ledger row.
+ *            data/launch-approvals.json is only read (unreadable: no approvals, a warning).
+ *   send     (the only phase with the key) settles "sending" rows, then for the prepared row: looks for
+ *            a launch of its post on chain (its mint's create in the wallet's own history, on every
+ *            venue, or a create with its metadata uri in another launcher wallet's: a launch that
+ *            happened but was never recorded is recovered; an address someone else touched fails for
+ *            good), waits (bounded) until the site serves the committed metadata at its uri, builds
+ *            (StonkFun: its pricing fetched now and its config read back) and SIMULATES the launch
+ *            UNSIGNED (falling back to pump.fun in SOL as above; a simulation the RPC node could not
+ *            run uses no attempt), and refuses unless
  *            the simulation succeeds, the wallet's loss is within LAUNCH_MAX_SOL_PER_LAUNCH, the last
  *            24 hours' spend plus this one is within LAUNCH_MAX_SOL_PER_DAY and the balance stays at or
- *            above LAUNCH_MIN_BALANCE_SOL. In dry mode it stops there. Otherwise it writes the row
- *            "sending", sends, and confirms with bounded polling.
+ *            above LAUNCH_MIN_BALANCE_SOL. In dry mode it stops there, having signed nothing. Otherwise,
+ *            the wallet still listed, it signs, writes the row "sending", sends, and confirms with
+ *            bounded polling. An error the RPC answers to the first and only post is a refusal (failed,
+ *            nothing went out); any other failure of the send leaves the row "sending", settled later
+ *            by its signature.
  *   record   for each launched row not recorded yet: its tx in data/launches.json (the Collection proves
- *            it first), the cat in data/adoptables.json with its `launch`, held in data/announced.json
- *            (the X post is scripts/post-updates.mjs's, once the Collection has proved the mint), a 3D
+ *            it first), the cat in data/adoptables.json with its `launch` (which the announcer holds by
+ *            rule: the X post is scripts/post-updates.mjs's, once the Collection has proved the mint;
+ *            data/announced.json is the Announce workflow's alone and never written here), a 3D
  *            model queued in scripts/meshy.queue.json, its hotlinked real photo in data/real-photos.json,
  *            and its figure (and any other figure now in the sanctuary) off data/cat-watch.json, as the
  *            trend watch's own checks expect of a cat that moved in.
@@ -77,16 +85,15 @@
  * nothing (it still settles rows already sent); anything else does nothing at all. LAUNCH_PUMP_QUOTE
  * "on" (a repository variable, never a secret) opts in to the unverified coin-priced pump.fun venue.
  */
-import { validateWallets, activeLauncher, isAddress, isSignature, textProblem, httpsProblem, coatProblem, parseTime, base58Encode, TICKER, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes } from "../../assets/collection.js";
+import { validateWallets, activeLauncher, isAddress, isSignature, textProblem, httpsProblem, coatProblem, parseTime, base58Encode, TICKER, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes, MAX_CATS } from "../../assets/collection.js";
 import { adoptableProblem, validateAdoptables, tributeLine, ADOPTABLE_CATEGORIES, realPhotoOf } from "../../assets/ui/adoptables.js";
 import { keypairFromSecret, deriveMintKeypair, decodeCompactU16, decodeLegacyMessage, decompileInstructions, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT } from "./solana-tx.mjs";
-import { TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
+import { TOKEN_PROGRAM, TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
 import { LAUNCH_DEFAULTS } from "./pump.mjs";
-import { venueById, venueIds, chooseVenue, takenPairs, PUMP_SOL } from "./venues.mjs";
+import { venueById, venueIds, chooseVenue, takenPairs, PUMP_SOL, PUMP_QUOTE } from "./venues.mjs";
 import { coatFromLook } from "./coat.mjs";
 import { tickerFor } from "./read-cat-post.mjs";
 import { RpcError } from "./rpc.mjs";
-import { PAUSED_REASON } from "../announce.mjs";
 import { draftLaunch, checkUpdate } from "../post-updates.mjs";
 
 /* ── constants ─────────────────────────────────────────────────────────────────────────── */
@@ -213,7 +220,8 @@ export function walletProblem(address, walletsFile, nowMs) {
 export const walletInstructions = (address, nowMs) => [
   `To let this wallet launch, add it to "launchers" in data/wallets.json (keep the rows already there) and commit to main:`,
   `  { "address": "${address}", "since": "${ISO_SECONDS(nowMs).slice(0, 10)}", "label": "Auto launcher" }`,
-  `"since" must be at or before its first launch; retire it later with an "until" date, never by deleting the row.`,
+  `"since" must be at or before its first launch; retire it later with an "until" date, never by deleting the row. Keep the label "Auto launcher"`,
+  `(or "Auto launcher 2" and so on): before a post is launched with one key, every other wallet so labelled is searched for a launch of it.`,
   `If that is not the wallet you meant, the repository secret LAUNCH_WALLET_KEY holds another wallet's key.`,
 ];
 
@@ -353,6 +361,24 @@ export function capProblem({ stats, caps, lossLamports, balanceLamports }) {
   if (stats.lamports + lossLamports > caps.maxLamportsPerDay) return `the last 24 hours' ${sol(stats.lamports)} plus ${sol(lossLamports)} is more than LAUNCH_MAX_SOL_PER_DAY (${sol(caps.maxLamportsPerDay)})`;
   if (balanceLamports - lossLamports < caps.minBalanceLamports) return `the wallet's ${sol(balanceLamports)} would fall under LAUNCH_MIN_BALANCE_SOL (${sol(caps.minBalanceLamports)}) after ${sol(lossLamports)}`;
   return null;
+}
+
+/** Room the launcher leaves under the Collection's MAX_CATS besides the planned cats': for coins it cannot foresee (an owner's own launch). */
+export const COLLECTION_MARGIN = 10;
+/**
+ * How many more cats the launcher may add to data/collection.json. The Collection's builder stops
+ * (and proves nothing new) once the file would hold more than MAX_CATS, so the launcher keeps under
+ * it: MAX_CATS less the entries there, the launcher's own launches not there yet (sending, or
+ * launched and not proved), the planned cats with no entry yet (their room is kept for them) and
+ * COLLECTION_MARGIN. Null when data/collection.json or data/planned.json cannot be read.
+ */
+export function collectionRoom({ collection, planned, ledger }) {
+  if (!Array.isArray(collection?.cats) || !Array.isArray(planned?.cats)) return null;
+  const txs = new Set(collection.cats.map((e) => e?.tx));
+  const keys = new Set(collection.cats.map((e) => `${e?.pair?.mint} ${String(e?.symbol ?? "").toUpperCase()}`));
+  const ours = (ledger?.launches ?? []).filter((r) => (r.status === "sending" || r.status === "launched") && !txs.has(r.tx)).length;
+  const plannedLeft = planned.cats.filter((c) => !keys.has(`${c?.pair?.mint} ${String(c?.ticker ?? "").toUpperCase()}`)).length;
+  return MAX_CATS - collection.cats.length - ours - plannedLeft - COLLECTION_MARGIN;
 }
 
 /* ── choosing a cat ────────────────────────────────────────────────────────────────────── */
@@ -612,10 +638,36 @@ const spentOf = (tx) => {
 };
 
 /**
+ * Every quote list a row's launch may be proved with: data/pump-quotes.json's (`quotes`) and, for a
+ * coin-priced row, also its own pair as the row saved it (under either token program), so a coin
+ * taken off the list after the send still settles as the launch that was sent.
+ */
+function quoteListsFor(row, quotes = []) {
+  const pair = row?.cat?.pair;
+  if (row?.venue !== PUMP_QUOTE.id || !isAddress(pair?.mint)) return [quotes];
+  const others = quotes.filter((q) => q?.mint !== pair.mint);
+  return [quotes, ...[TOKEN_PROGRAM, TOKEN_2022_PROGRAM].map((tokenProgram) => [...others, { symbol: pair.symbol, mint: pair.mint, tokenProgram }])];
+}
+/** `venue`'s proof of `tx` for `row` with `wallet` as the payer: the first quote list that proves it, else the first refusal. */
+function proveFor(venue, tx, { wallet, row, quotes }) {
+  let first = null;
+  for (const list of quoteListsFor(row, quotes)) {
+    const p = venue.prove(tx, { wallet, quotes: list });
+    if (p?.ok) return p;
+    first ??= p;
+  }
+  return first ?? { ok: false, clause: "unreadable" };
+}
+
+/**
  * Settle a "sending" row by its signature: finalized and proved by its venue → "launched" (mint,
  * spend, block time); finalized with an error → "failed" (retry); unknown once the finalized block
  * height is past the blockhash's lastValidBlockHeight (it can never land) → "failed" (retry);
- * otherwise unchanged. Returns { row, changed, note }.
+ * otherwise unchanged. A transaction finalized WITHOUT an error that the venue does not prove (no
+ * block time yet, an unreadable answer, a coin taken off data/pump-quotes.json since) is a coin that
+ * exists: the row stays "sending" (it keeps its name, its pair and its place in the day's count, and
+ * no new cat is prepared) and `unproved` says a person must look if the proof never passes; it is
+ * tried again every run. Returns { row, changed, note, unproved? }.
  */
 export async function settleSending(row, { rpc, nowMs, quotes = [] }) {
   const venue = venueById(row.venue);
@@ -632,10 +684,10 @@ export async function settleSending(row, { rpc, nowMs, quotes = [] }) {
         note: `${row.ticker}: the launch failed on chain; it may be tried again with the same mint` };
     }
     const payer = tx.transaction?.message?.accountKeys?.[0];
-    const proof = venue.prove(tx, { wallet: payer, quotes });
+    const proof = proveFor(venue, tx, { wallet: payer, row, quotes });
     if (!proof.ok) {
-      return { row: { ...row, status: "failed", spentLamports: spent, settledAt: ISO_SECONDS(nowMs), retry: false, reason: `the transaction is not a launch the venue proves (${proof.clause}): a person must look` }, changed: true,
-        note: `${row.ticker}: the sent transaction does not prove as a launch (${proof.clause})` };
+      return { row, changed: false, unproved: true,
+        note: `${row.ticker}: its transaction is finalized with no error, but ${venue.label} does not prove it as a launch (${proof.clause}); it stays "sending" (its name, its pair and its place in the day's count held, no new cat prepared) and the proof is tried again every run: a person must look if it never passes` };
     }
     const done = { ...row, status: "launched", mintPublic: proof.launch.mint, spentLamports: spent, settledAt: ISO_SECONDS(nowMs), launchedAt: proof.launch.time };
     delete done.retry; delete done.reason;
@@ -649,35 +701,81 @@ export async function settleSending(row, { rpc, nowMs, quotes = [] }) {
   return { row, changed: false, note: `${row.ticker}: not seen yet; waiting until its blockhash expires` };
 }
 
+/** How many pages (1,000 signatures each) of a launcher wallet's history are read, back to the row's preparedAt, looking for its launch. */
+export const WALLET_HISTORY_PAGES = 10;
 /**
- * Is this mint on chain already? { state: "none" } (no account: send), { state: "launched", tx, proof,
- * venue } (the coin exists and its create is the wallet's launch on `venue`, or, failing that, on any
- * other registered venue, as a launch sent after a fallback whose commit was lost: recover it),
- * { state: "foreign" } (the address holds an account the launch did not make: never send),
- * { state: "unknown" } (the coin exists but its create was not found: a person must look).
+ * The label walletInstructions gives the launcher's own wallets in data/wallets.json. Before a row
+ * is sent with one key, the history of every OTHER wallet so labelled (active since the row was
+ * prepared) is searched for a launch of the same post: a send made with a key since rotated away,
+ * whose record was lost, is recovered instead of launching the post a second time under a new mint.
  */
-export async function mintOnChain({ rpc, venue, wallet, mint, quotes = [] }) {
-  const [acc] = (await rpc.getMultipleAccounts([mint], { commitment: "confirmed" })) ?? [null];
-  if (!acc) return { state: "none" };
-  if (acc.owner !== TOKEN_2022_PROGRAM) return { state: "foreign", detail: "the mint's address already holds an account the launch did not make (someone funded it)" };
-  // The coin exists: its create is the oldest successful transaction naming the mint.
-  let before, oldest = [];
-  for (let page = 0; page < 10; page++) {
-    const list = await rpc.getSignaturesForAddress(mint, { before, limit: 1000, commitment: "confirmed" });
-    if (!Array.isArray(list) || !list.length) break;
-    oldest = list;
-    if (list.length < 1000) break;
+export const LAUNCHER_LABEL = /^auto launcher\b/i;
+
+/** The other launcher wallets (LAUNCHER_LABEL) data/wallets.json lists that could have sent a row prepared at `sinceMs`, by `nowMs`. */
+export function otherLauncherWallets(walletsFile, current, { sinceMs, nowMs }) {
+  return validateWallets(walletsFile ?? {}).launchers
+    .filter((l) => l.address !== current && LAUNCHER_LABEL.test(String(l.label ?? "").trim()) && l.sinceMs <= nowMs && (l.untilMs === null || l.untilMs > sinceMs))
+    .map((l) => l.address);
+}
+
+/**
+ * The launch in `wallet`'s own history (newest first, back to `sinceMs`) that `match`es, proved on
+ * every venue with that wallet as its payer. A launcher wallet's history is short (its launches and
+ * their fees), unlike a busy coin's, whose create can sit under thousands of trades. Returns
+ * { found: { tx, proof, venue } }, { found: null } (read back to `sinceMs`: none), or { found: null,
+ * incomplete: true } (a history too long to read, or a transaction the RPC did not give).
+ */
+async function launchInWallet({ rpc, wallet, venues, match, sinceMs, row, quotes }) {
+  let before, missed = false;
+  for (let page = 0; page < WALLET_HISTORY_PAGES; page++) {
+    const list = await rpc.getSignaturesForAddress(wallet, { before, limit: 1000, commitment: "confirmed" });
+    if (!Array.isArray(list) || !list.length) return { found: null, incomplete: missed };
+    for (const s of list) {
+      if (Number.isInteger(s?.blockTime) && s.blockTime * 1000 < sinceMs) return { found: null, incomplete: missed };
+      if (!s || s.err || typeof s.signature !== "string") continue;
+      const tx = await rpc.getTransaction(s.signature, { commitment: "confirmed" });
+      if (!tx) { missed = true; continue; }
+      for (const v of venues) {
+        const proof = proveFor(v, tx, { wallet, row, quotes });
+        if (proof.ok && match(proof.launch)) return { found: { tx, proof, venue: v } };
+      }
+    }
+    if (list.length < 1000) return { found: null, incomplete: missed };
     before = list.at(-1).signature;
   }
+  return { found: null, incomplete: true };
+}
+
+/**
+ * Has this row's post been launched already? { state: "none" } (send), { state: "launched", tx,
+ * proof, venue, wallet } (the coin exists and its create is a launch of the post: recover it),
+ * { state: "foreign" } (the mint's address holds an account the launch did not make: never send),
+ * { state: "unknown" } (it cannot be told: a person must look; nothing is sent).
+ *   The mint derived from the current wallet: an account there is looked up in the WALLET's own
+ *   history since the row was prepared (a create proved on `venue` or, failing that, on any other
+ *   venue: a launch sent after a fallback whose commit was lost), never in the coin's own history,
+ *   which trading can make too long to read.
+ *   No account there: the other launcher wallets (`others`, otherLauncherWallets) are searched the
+ *   same way for a launch whose uri is this post's metadata (every launch of a post carries it).
+ */
+export async function mintOnChain({ rpc, venue, wallet, mint, row, others = [], quotes = [] }) {
   const venues = [venue, ...venueIds().map(venueById).filter((v) => v !== venue)];
-  for (const s of [...oldest].reverse().filter((x) => !x.err).slice(0, 5)) {
-    const tx = await rpc.getTransaction(s.signature, { commitment: "confirmed" });
-    for (const v of tx ? venues : []) {
-      const proof = v.prove(tx, { wallet, quotes });
-      if (proof?.ok && proof.launch.mint === mint) return { state: "launched", tx, proof, venue: v };
-    }
+  const prepared = Date.parse(row?.preparedAt ?? "");
+  const sinceMs = Number.isFinite(prepared) ? prepared - HOUR_MS : 0;
+  const [acc] = (await rpc.getMultipleAccounts([mint], { commitment: "confirmed" })) ?? [null];
+  if (acc) {
+    if (acc.owner !== TOKEN_2022_PROGRAM) return { state: "foreign", detail: "the mint's address already holds an account the launch did not make (someone funded it)" };
+    const r = await launchInWallet({ rpc, wallet, venues, sinceMs, row, quotes, match: (l) => l.mint === mint });
+    if (r.found) return { state: "launched", ...r.found, wallet };
+    return { state: "unknown", detail: "the coin exists, but its launch was not found in the wallet's history since the row was prepared" };
   }
-  return { state: "unknown", detail: "the coin exists, but its launch transaction was not found" };
+  const uri = metadataUri(row.postId);
+  for (const other of others) {
+    const r = await launchInWallet({ rpc, wallet: other, venues, sinceMs, row, quotes, match: (l) => l.uri === uri });
+    if (r.found) return { state: "launched", ...r.found, wallet: other };
+    if (r.incomplete) return { state: "unknown", detail: `the history of the launcher wallet ${other} since the row was prepared could not be read to its end, so an earlier launch of this post by it cannot be ruled out` };
+  }
+  return { state: "none" };
 }
 
 /* ── the phases ────────────────────────────────────────────────────────────────────────── */
@@ -718,21 +816,32 @@ const whereText = (row, route = null) => `on ${venueById(row.venue).label}, pric
 /**
  * data/pump-quotes.json's coins: `listed` (every valid row: what a coin-priced launch is proved with)
  * and `usable` (the same, or none at all when any row is refused: a list the Collection's builder
- * would stop on routes and builds nothing). A missing file lists none.
+ * would stop on routes and builds nothing). A missing file lists none; so does one that is not JSON
+ * (edited by hand: a warning, and no cat is priced in a coin; a coin-priced row already sent is still
+ * proved with its own saved pair, settleSending).
  */
 function quotesOf(io, log = () => {}) {
-  const q = validatePumpQuotes(readJson(io, FILES.pumpQuotes, { quotes: [] }));
+  const q = validatePumpQuotes(readOwned(io, FILES.pumpQuotes, { quotes: [] }, log));
   if (q.refused.length) log(`::warning title=Launcher::${FILES.pumpQuotes} is refused (${q.refused.map((x) => x.detail).join("; ").slice(0, 200)}); no cat is priced in a coin until it is fixed.`);
   return { listed: q.quotes, usable: q.refused.length ? [] : q.quotes };
 }
 
+/**
+ * A file the owner edits by hand that only CHOOSING or ROUTING a cat reads (data/launch-approvals.json,
+ * data/cat-watch.json, data/pump-quotes.json): unreadable, it is read as `fallback` (no approvals, no
+ * figures, no coins) with a warning, so a typo there never stops the launcher from settling what it sent.
+ */
+const readOwned = (io, rel, fallback, log) => {
+  try { return readJson(io, rel, fallback); } catch (e) { log(`::warning title=Launcher::${e.message}; it is read as empty until it is fixed.`); return fallback; }
+};
+
 /** What choosing and routing a cat reads. A sanctuary file that is missing is null (the pairs in use are then unknown: no stock pair is used). */
-function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] } } = {}) {
+function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }, log = () => {} } = {}) {
   return {
     nowMs, ledger,
     trending: readJson(io, FILES.trending, { posts: [], candidates: [] }),
-    approvals: approvalsOf(readJson(io, FILES.approvals, { approve: [] })),
-    watch: readJson(io, FILES.watch, { figures: [] }),
+    approvals: approvalsOf(readOwned(io, FILES.approvals, { approve: [] }, log)),
+    watch: readOwned(io, FILES.watch, { figures: [] }, log),
     adoptables: readJson(io, FILES.adoptables, null),
     planned: readJson(io, FILES.planned, null),
     collection: readJson(io, FILES.collection, null),
@@ -757,15 +866,16 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
   const ledger = validateLedger(readJson(io, FILES.ledger, null));
   const quotes = quotesOf(io, log);
 
-  // 1. Rows sent earlier: settled by their signature.
+  // 1. Rows sent earlier: settled by their signature, and saved at once (before any file the owner edits is read).
   for (const row of ledger.launches.filter((r) => r.status === "sending")) {
     try {
       const s = await settleSending(row, { rpc, nowMs, quotes: quotes.listed });
-      log(`Launcher: ${s.note}.`);
+      log(s.unproved ? `::error title=Launcher::${s.note}.` : `Launcher: ${s.note}.`);
       if (s.changed) { replaceRow(ledger, s.row); out.changed = true; }
     } catch (e) { log(`::warning title=Launcher::could not settle ${row.ticker} yet (${scrub(e.message)}); the send phase tries again.`); }
   }
-  const ctx = selectionContext(io, ledger, nowMs, { env, quotes });
+  if (out.changed) saveLedger(io, ledger);
+  const ctx = selectionContext(io, ledger, nowMs, { env, quotes, log });
 
   if (mode === "on" && !inFlight(ledger).length) {
     // 2. A failed row that may be tried again takes the next turn, with the same post (so the same mint).
@@ -790,11 +900,14 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     if (io.readText(row.metadataPath) !== text) { io.writeText(row.metadataPath, text); out.changed = true; }
   }
 
-  // 4. Nothing in flight: at most one new cat.
+  // 4. Nothing in flight: at most one new cat, while the day's count and the Collection's room allow it.
   if (!inFlight(ledger).length) {
     const stats = dayStats(ledger, nowMs, caps);
+    const room = collectionRoom(ctx);
     if (stats.count >= caps.maxPerDay) log(`Launcher: ${stats.count} launch(es) in the last 24 hours; LAUNCH_MAX_PER_DAY is ${caps.maxPerDay}, so no new cat now.`);
-    else {
+    else if (room === null || room < 1) {
+      log(`::warning title=Launcher::${room === null ? `${FILES.collection} or ${FILES.planned} cannot be read` : `${FILES.collection} is near its ${MAX_CATS} cats (the Collection's hard cap, past which it proves nothing new), with room kept for the planned cats and ${COLLECTION_MARGIN} more`}; no new cat is prepared.`);
+    } else {
       const pick = selectCandidate(ctx);
       for (const s of pick.skipped) log(`Launcher: post ${s.id} skipped: ${s.why}.`);
       if (!pick.row) log("Launcher: no trending cat to launch now.");
@@ -821,9 +934,26 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
   return out;
 }
 
+/** Simulation errors that say nothing about the launch (the RPC node's view of the chain lagged): the row stays prepared and uses no attempt; the next run simulates again (within the post's 48 hours). */
+export const TRANSIENT_SIMULATION = Object.freeze(["BlockhashNotFound", "AccountInUse"]);
+/** A send refused as a copy of a transaction the chain already has: it went out. */
+const ALREADY_PROCESSED = /already (?:been )?processed/i;
+/** A serialized transaction's message (base64 in, base64 out): what its signatures sign. */
+function messageOf(base64) {
+  const bytes = Buffer.from(base64, "base64");
+  const { value: n, size } = decodeCompactU16(bytes, 0);
+  return bytes.subarray(size + 64 * n).toString("base64");
+}
+/** The later of two times (YYYY-MM-DDTHH:MM:SSZ), either of which may be missing. */
+const laterTime = (a, b) => [a, b].filter(isTime).sort((x, y) => Date.parse(y) - Date.parse(x))[0];
+
 /**
  * SEND (the key). Returns { mode, outcome, launched, code }: code 1 when a person must look (the
- * wallet is not listed, the metadata file was edited, the RPC failed), else 0.
+ * wallet is not listed, the metadata file was edited, the RPC failed, a sent launch is not proved),
+ * else 0. The launch is SIMULATED UNSIGNED (every signature slot zero-filled, sigVerify false) and
+ * signed only once the simulation, the caps, the dry-mode stop and the wallet's listing have all
+ * passed, right before it is written "sending" and sent: nothing signed ever leaves the runner but
+ * through sendTransaction, in "on" mode.
  */
 export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep = (ms) => new Promise((r) => setTimeout(r, ms)), log = () => {},
   metadataWaitMs = METADATA_WAIT_MS, metadataPollMs = METADATA_POLL_MS, confirmWaitMs = CONFIRM_WAIT_MS, confirmPollMs = CONFIRM_POLL_MS, scrub = (t) => t }) {
@@ -832,7 +962,8 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   if (mode === "off") { log("Launcher: off (LAUNCH_ENABLED is neither on nor dry); nothing done."); out.outcome = "off"; return out; }
   const wallet = walletFromEnv(env.LAUNCH_WALLET_KEY);
   const nowMs = now();
-  const unlisted = walletProblem(wallet.publicKey, readJson(io, FILES.wallets, { launchers: [] }), nowMs);
+  const walletsFile = readJson(io, FILES.wallets, { launchers: [] });
+  const unlisted = walletProblem(wallet.publicKey, walletsFile, nowMs);
   if (unlisted) {
     log(`::error title=Launcher::${unlisted}. Nothing was sent.`);
     for (const line of walletInstructions(wallet.publicKey, nowMs)) log(line);
@@ -844,17 +975,22 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   const quotes = quotesOf(io, log);
 
   // 1. Rows sent earlier.
-  let settledAny = false;
+  let settledAny = false, unproved = false;
   for (const row of ledger.launches.filter((r) => r.status === "sending")) {
     const s = await settleSending(row, { rpc, nowMs, quotes: quotes.listed });
-    log(`Launcher: ${s.note}.`);
+    log(s.unproved ? `::error title=Launcher::${s.note}.` : `Launcher: ${s.note}.`);
+    if (s.unproved) unproved = true;
     if (s.changed) { replaceRow(ledger, s.row); settledAny = true; if (s.row.status === "launched") out.launched = true; }
   }
   if (settledAny) saveLedger(io, ledger);
-  if (ledger.launches.some((r) => r.status === "sending")) { out.outcome = "sending"; return out; }
+  if (ledger.launches.some((r) => r.status === "sending")) {
+    out.outcome = unproved ? "unproved" : "sending";
+    if (unproved) out.code = 1;
+    return out;
+  }
 
   // 2. The prepared row (in dry mode with none, the cat prepare would pick, in memory only).
-  const ctx = selectionContext(io, ledger, nowMs, { env, quotes });
+  const ctx = selectionContext(io, ledger, nowMs, { env, quotes, log });
   let row = ledger.launches.find((r) => r.status === "prepared") ?? null;
   const virtual = !row && mode === "dry";
   if (virtual) {
@@ -870,18 +1006,22 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     row = next;
   };
 
-  // 3. Is the coin on chain already (a launch never recorded, or an address someone else took)?
+  // 3. Is the post launched on chain already (a launch never recorded, by this wallet or by one of the
+  //    launcher's earlier wallets, or an address someone else took)?
   const mint = deriveMintKeypair(wallet, row.postId);
-  const found = await mintOnChain({ rpc, venue, wallet: wallet.publicKey, mint: mint.publicKey, quotes: quotes.listed });
+  const prepared = Date.parse(row.preparedAt);
+  const others = otherLauncherWallets(walletsFile, wallet.publicKey, { sinceMs: (Number.isFinite(prepared) ? prepared : nowMs) - HOUR_MS, nowMs });
+  const found = await mintOnChain({ rpc, venue, wallet: wallet.publicKey, mint: mint.publicKey, row, others, quotes: quotes.listed });
   if (found.state === "launched") {
-    log(`Launcher: ${dry}${row.ticker} is on chain already (${found.proof.launch.tx.slice(0, 12)}…, ${found.venue.label}): recorded as launched.`);
+    log(`Launcher: ${dry}${row.ticker} is on chain already (${found.proof.launch.tx.slice(0, 12)}…, ${found.venue.label}${found.wallet !== wallet.publicKey ? `, sent by the launcher wallet ${found.wallet}` : ""}): recorded as launched.`);
     if (mode === "on") {
       // Recorded on the venue it launched on (a fallback whose "sending" commit was lost launched on pump.fun in SOL), priced in the pair it proved.
       const moved = found.venue !== venue ? { venue: found.venue.id, cat: { ...row.cat, pair: { symbol: found.proof.launch.pair.symbol, mint: found.proof.launch.pair.mint } },
         ...(found.venue === PUMP_SOL ? { fallback: row.fallback ?? `${row.venue}: recovered on chain as a launch on pump.fun in SOL` } : {}) } : {};
+      // Its time in the rolling 24 hours is its own block time (a sentAt left from an earlier, failed attempt would drop it from the day's count early).
       const done = { ...row, ...moved, status: "launched", tx: found.proof.launch.tx, mintPublic: found.proof.launch.mint, spentLamports: (row.spentLamports ?? 0) + spentOf(found.tx),
-        settledAt: ISO_SECONDS(now()), launchedAt: found.proof.launch.time, sentAt: row.sentAt ?? found.proof.launch.time, attempts: Math.max(1, row.attempts) };
-      delete done.retry; delete done.reason;
+        settledAt: ISO_SECONDS(now()), launchedAt: found.proof.launch.time, sentAt: laterTime(row.sentAt, found.proof.launch.time), attempts: Math.max(1, row.attempts) };
+      delete done.retry; delete done.reason; delete done.lastValidBlockHeight;
       if (found.venue !== PUMP_SOL) delete done.fallback;
       replaceRow(ledger, done); saveLedger(io, ledger);
       out.launched = true;
@@ -913,7 +1053,7 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     }
   }
 
-  // 6. The day's count, then build, sign and simulate.
+  // 6. The day's count, then build and simulate UNSIGNED.
   const stats = dayStats(ledger, nowMs, caps);
   if (stats.count >= caps.maxPerDay) { log(`Launcher: ${stats.count} launch(es) in the last 24 hours (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}); ${row.ticker} waits.`); return { ...out, outcome: "cap" }; }
   const balance = await rpc.getBalance(wallet.publicKey);
@@ -924,21 +1064,27 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   }
   const bh = await rpc.getLatestBlockhash();
   if (!bh?.blockhash || !Number.isSafeInteger(bh.lastValidBlockHeight)) throw new LaunchError("the RPC gave no blockhash");
-  /** Build, sign and simulate `r` on its venue: { signed, simProblem, loss }. Throws what the venue's build or signing refuses. */
+  /**
+   * Build `r` on its venue and simulate it UNSIGNED (the venue's sign-time checks run first; its
+   * signature slots are zero-filled): { venue, built, unsigned, simProblem, transient, loss }.
+   * Throws what the venue's build or checks refuse.
+   */
   const attempt = async (r) => {
     const v = venueById(r.venue);
     const built = await v.build({ wallet: wallet.publicKey, mint: mint.publicKey, name: r.coinName, symbol: r.ticker, uri, pair: r.cat.pair, recentBlockhash: bh.blockhash,
       computeUnitPriceMicroLamports: caps.priorityMicroLamports }, { fetchImpl, rpc, nowMs: now(), quotes: ctx.pumpQuotes, pumpQuoteOptIn: ctx.pumpQuoteOptIn });
-    const signed = v.sign(built, wallet, mint);
-    const sim = await rpc.simulateTransaction(signed, { addresses: [wallet.publicKey] });
+    const unsigned = v.unsigned(built);
+    const sim = await rpc.simulateTransaction(unsigned, { addresses: [wallet.publicKey] });
     const after = sim?.accounts?.[0]?.lamports;
     const simProblem = !sim ? "no answer" : sim.err !== null ? errText(sim.err) : !Number.isSafeInteger(after) ? "no balance after it" : null;
-    return { signed, simProblem, loss: simProblem ? null : balance - after + feeUpperBound(signed) };
+    const transient = !!simProblem && (!sim || (typeof sim.err === "string" && TRANSIENT_SIMULATION.includes(sim.err)));
+    return { venue: v, built, unsigned, simProblem, transient, loss: simProblem ? null : balance - after + feeUpperBound(unsigned) };
   };
   // A StonkFun or coin-priced launch that fails at any step before it is sent goes out on pump.fun in SOL
   // for this run instead: its pair taken since it was prepared (one cat per pair), StonkFun's pricing or
   // config, the opt-in or the coin's listing, the build, the signing checks, the simulation, or a cost over
-  // the per-launch cap. Never after a send: from "sending" on, a row keeps its venue.
+  // the per-launch cap. Never after a send: from "sending" on, a row keeps its venue. A simulation the RPC
+  // node could not run (TRANSIENT_SIMULATION) is no failure of the venue's: the row waits for the next run.
   const planned = row;
   let tried = null;
   if (venue !== PUMP_SOL) {
@@ -947,7 +1093,7 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
       why = pairProblemNow(row, ctx);
       if (!why) {
         tried = await attempt(row);
-        why = tried.simProblem ? `the simulation did not pass (${tried.simProblem})`
+        why = tried.transient ? null : tried.simProblem ? `the simulation did not pass (${tried.simProblem})`
           : tried.loss > caps.maxLamportsPerLaunch ? `it would cost ${sol(tried.loss)}, more than LAUNCH_MAX_SOL_PER_LAUNCH (${sol(caps.maxLamportsPerLaunch)})` : null;
       }
     } catch (e) { why = scrub(String(e?.message ?? e)).slice(0, 200); }
@@ -959,9 +1105,13 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     }
   }
   tried ??= await attempt(row);
-  const signed = tried.signed, signature = signatureOf(signed);
   if (tried.simProblem) {
     const why = tried.simProblem;
+    if (tried.transient) {
+      // Nothing about the launch: the row stays prepared (on its own venue), no attempt used; bounded by the post's age.
+      log(`::warning title=Launcher::${dry}${row.ticker}: the simulation could not be run (${why}: the RPC node's view of the chain, not the launch); nothing was sent and no attempt is used; the next run tries again.`);
+      return { ...out, outcome: "simulation_failed" };
+    }
     log(`::warning title=Launcher::${dry}${row.ticker}: the simulation did not pass (${why}); nothing was sent.`);
     // A fallback holds for this run only: the row keeps the venue it was prepared on, for its next try.
     row = planned;
@@ -973,11 +1123,22 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   const figures = `about ${sol(loss)} (cap ${sol(caps.maxLamportsPerLaunch)}), the last 24 hours ${sol(stats.lamports)} of ${sol(caps.maxLamportsPerDay)}, balance ${sol(balance)} (floor ${sol(caps.minBalanceLamports)})`;
   if (capped) { log(`Launcher: ${dry}${row.ticker} is not sent: ${capped}.`); return { ...out, outcome: "cap" }; }
   if (mode === "dry") {
-    log(`Launcher (dry run): ${row.coinName} (${row.ticker}) from ${row.url} simulates cleanly ${whereText(row)}: ${figures}. Nothing was sent.`);
+    log(`Launcher (dry run): ${row.coinName} (${row.ticker}) from ${row.url} simulates cleanly ${whereText(row)}: ${figures}. Nothing was signed or sent.`);
     return { ...out, outcome: "dry", venue: row.venue };
   }
 
-  // 7. Written "sending" BEFORE it goes out (the workflow commits it even if what follows fails).
+  // 7. The wallet must still be an active launcher now (the metadata wait above may have taken minutes):
+  //    a launch sent after its "until" could never be proved.
+  const late = walletProblem(wallet.publicKey, walletsFile, now());
+  if (late) {
+    log(`::error title=Launcher::${late} now. Nothing was sent.`);
+    return { ...out, outcome: "wallet_not_listed", code: 1 };
+  }
+
+  // 8. Signed only now, the very message simulated; written "sending" BEFORE it goes out (the workflow commits it even if what follows fails).
+  const signed = tried.venue.sign(tried.built, wallet, mint);
+  if (messageOf(signed) !== messageOf(tried.unsigned)) throw new LaunchError("the signed launch is not the transaction that was simulated; nothing was sent");
+  const signature = signatureOf(signed);
   row = { ...row, status: "sending", tx: signature, sentAt: ISO_SECONDS(now()), lastValidBlockHeight: bh.lastValidBlockHeight, attempts: row.attempts + 1 };
   for (const k of ["retry", "reason", "settledAt", "mintPublic"]) delete row[k];
   replaceRow(ledger, row); saveLedger(io, ledger);
@@ -986,8 +1147,10 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     if (sig !== signature) log(`::warning title=Launcher::the RPC named the transaction ${String(sig).slice(0, 12)}…, not ${signature.slice(0, 12)}…`);
   } catch (e) {
     const why = scrub(String(e?.message ?? e));                    // what reaches the log and the ledger (committed) never carries a secret
-    if (e instanceof RpcError && e.code !== null) {
-      // The node answered with an error: its preflight refused the transaction, so nothing went out.
+    // A refusal is an error the node answered to the FIRST and only post of the transaction (its preflight refused it, so
+    // nothing went out). An error answered to a repeated post (the first may have gone out before its answer was lost), or
+    // one saying the chain already has it, is no refusal: the row stays "sending" and is settled by its signature.
+    if (e instanceof RpcError && e.code !== null && e.posts === 1 && !ALREADY_PROCESSED.test(String(e.message))) {
       log(`::warning title=Launcher::${row.ticker}: the RPC refused the launch (${why}); nothing went out.`);
       row = { ...row, status: "failed", retry: true, reason: `the RPC refused it: ${why}`.slice(0, 300), settledAt: ISO_SECONDS(now()) };
       delete row.tx; delete row.lastValidBlockHeight;
@@ -1001,7 +1164,7 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   replaceRow(ledger, row); saveLedger(io, ledger);
   log(`Launcher: sent ${row.coinName} (${row.ticker}) ${whereText(row)}: https://solscan.io/tx/${signature} (${figures}).`);
 
-  // 8. Confirm (bounded); an unsettled row is settled by a later run.
+  // 9. Confirm (bounded); an unsettled row is settled by a later run.
   const deadline = now() + confirmWaitMs;
   for (let tries = Math.max(1, Math.floor(confirmWaitMs / confirmPollMs)); ; tries--) {
     await sleep(confirmPollMs);
@@ -1012,7 +1175,12 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
       if (s.row.status === "launched") { out.launched = true; log(`Launcher: ${s.row.coinName} (${s.row.ticker}) is launched: its mint is ${s.row.mintPublic}.`); }
       return { ...out, outcome: s.row.status };
     }
-    if (tries <= 1 || now() + confirmPollMs > deadline) { log(`Launcher: ${s.note}; a later run settles it.`); return { ...out, outcome: "sending" }; }
+    if (tries <= 1 || now() + confirmPollMs > deadline) {
+      // Landed but still not proved when the wait ends (an answer with no block time yet, say): kept "sending", a person told.
+      if (s.unproved) { log(`::error title=Launcher::${s.note}.`); return { ...out, outcome: "unproved", code: 1 }; }
+      log(`Launcher: ${s.note}; a later run settles it.`);
+      return { ...out, outcome: "sending" };
+    }
   }
 }
 
@@ -1031,7 +1199,6 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
   const files = {
     adoptables: readJson(io, FILES.adoptables, { cats: [] }),
     planned: readJson(io, FILES.planned, { cats: [] }),
-    announced: readJson(io, FILES.announced, { cats: {} }),
     launches: readJson(io, FILES.launches, { launches: [] }),
     collection: readJson(io, FILES.collection, { cats: [] }),
     photos: readJson(io, FILES.realPhotos, { cats: {} }),
@@ -1061,9 +1228,8 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
       }
       files.adoptables = next;
     }
-    // Held from the announcer (its X post is scripts/post-updates.mjs's launch post).
-    files.announced.cats ??= {};
-    if (!files.announced.cats[T]) files.announced.cats[T] = { status: "held", reason: PAUSED_REASON };
+    // Held from the announcer by its own rule (scripts/announce.mjs holds every cat with a `launch`: its X post is
+    // scripts/post-updates.mjs's launch post). data/announced.json is the Announce workflow's alone: never written here.
     // Listed for the Collection, which proves it first (proved rows of the launcher's are dropped: the list holds at most 200).
     const rows = (files.launches.launches ?? []).filter((l) => !(typeof l.note === "string" && l.note.startsWith("Sanctuary launcher:") && proved.has(l.tx)));
     if (!rows.some((l) => l.tx === row.tx) && !proved.has(row.tx)) rows.push({ tx: row.tx, note: `Sanctuary launcher: ${T}` });
@@ -1095,7 +1261,7 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     }
   }
   // Each file only if it changed; the ledger last, so a crash before it only repeats this phase.
-  const write = [["adoptables", FILES.adoptables, json2], ["announced", FILES.announced, json2], ["launches", FILES.launches, json2], ["photos", FILES.realPhotos, json2], ["meshy", FILES.meshy, json1], ["watch", FILES.watch, watchText]];
+  const write = [["adoptables", FILES.adoptables, json2], ["launches", FILES.launches, json2], ["photos", FILES.realPhotos, json2], ["meshy", FILES.meshy, json1], ["watch", FILES.watch, watchText]];
   for (const [k, rel, fmt] of write) if (JSON.stringify(files[k]) !== before[k]) io.writeText(rel, fmt(files[k]));
   if (out.recorded.length) saveLedger(io, ledger);
   return out;

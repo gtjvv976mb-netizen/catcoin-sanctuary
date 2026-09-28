@@ -379,5 +379,18 @@ export function signLaunchTransaction(built, walletKeypair, mintKeypair) {
   return Buffer.from(serializeTransaction(messageBytes, signatures)).toString("base64");
 }
 
+/**
+ * The same launch UNSIGNED: every signature slot zero-filled, after the very checks
+ * signLaunchTransaction makes (checkLaunchMessage on a copy of the bytes), base64. What the
+ * launcher simulates (sigVerify false): nothing signed leaves the runner before the send itself,
+ * so a simulation, a dry run or a cap refusal can never be replayed by the RPC's operator.
+ */
+export function unsignedLaunchTransaction(built) {
+  if (!built || !(built.messageBytes instanceof Uint8Array)) throw new TypeError("unsignedLaunchTransaction takes what buildLaunchTransaction returned");
+  const messageBytes = Uint8Array.from(built.messageBytes);
+  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint, quote: built.quote ?? null });
+  return Buffer.from(serializeTransaction(messageBytes, [0, 1].map(() => new Uint8Array(64)))).toString("base64");
+}
+
 /** sha256("global:<name>")[0..8] as hex: an Anchor instruction discriminator. */
 export const anchorDiscriminator = (name) => createHash("sha256").update(`global:${name}`).digest().subarray(0, 8).toString("hex");

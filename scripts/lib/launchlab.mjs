@@ -13,11 +13,17 @@
  * and the platform and curve-rule ids. StonkFun adopts (lists, forwards fees for) only a pool built
  * to exactly that shape. Every field is checked (pricingFromAnswer), and the program, the platforms
  * and the curve rules must be chain.mjs's pinned ids and PDAs, or the answer is refused. The
- * numbers are bounded too, so a buggy or tampered answer cannot launch an absurd curve: the supply
- * and the sale must be StonkFun's standard ones (STANDARD_SUPPLY, STANDARD_SALE: both real answers
- * and all six recorded launches), and the raise must be worth 85 SOL (STANDARD_RAISE_SOL, the
- * answer's own raise.basis) at the answer's own SOL and quote prices, within RAISE_TOLERANCE (in
- * both real answers it is within 1e-11 of 85 × solUsd / quoteUsd × 10^decimals). The config
+ * numbers are bounded too: the supply and the sale must be StonkFun's standard ones (STANDARD_SUPPLY,
+ * STANDARD_SALE: both real answers and all six recorded launches), and the raise must be worth 85 SOL
+ * (STANDARD_RAISE_SOL, the answer's own raise.basis) at the answer's own SOL and quote prices, within
+ * RAISE_TOLERANCE (in both real answers it is within 1e-11 of 85 × solUsd / quoteUsd × 10^decimals).
+ * That bound catches a raise that disagrees with its own prices; it does NOT catch an answer whose
+ * prices are wrong along with its raise (a stock price 1000 times too low and a raise 1000 times too
+ * high pass it). Nothing the launcher reads anchors the stock's price independently: the GlobalConfig's
+ * min_quote_fund_raising is 1 in every recorded config, and one cat per stock pair means the
+ * sanctuary never has an earlier raise for the same config. Such a launch buys nothing (no dev buy),
+ * so what a wrong feed at StonkFun can cost is the coin's curve and its stock pair, not the wallet's
+ * SOL beyond the launch's own fees and rent. The config
  * itself can be read back before a launch (checkPricingConfig: LaunchLab's GlobalConfig for that
  * very quote). tests/fixtures/stonkfun-pricing.json keeps two real answers.
  *
@@ -450,4 +456,16 @@ export function signLaunchTransaction(built, walletKeypair, mintKeypair) {
   checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint, pair: built.pair, pricing: built.pricing });
   const signatures = signTransaction(messageBytes, [walletKeypair, mintKeypair]);
   return Buffer.from(serializeTransaction(messageBytes, signatures)).toString("base64");
+}
+
+/**
+ * The same launch UNSIGNED (as pump.mjs unsignedLaunchTransaction): every signature slot
+ * zero-filled, after the very checks signLaunchTransaction makes, base64. What the launcher
+ * simulates, so nothing signed leaves the runner before the send itself.
+ */
+export function unsignedLaunchTransaction(built) {
+  if (!built || !(built.messageBytes instanceof Uint8Array)) throw new TypeError("unsignedLaunchTransaction takes what buildLaunchTransaction returned");
+  const messageBytes = Uint8Array.from(built.messageBytes);
+  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint, pair: built.pair, pricing: built.pricing });
+  return Buffer.from(serializeTransaction(messageBytes, [0, 1].map(() => new Uint8Array(64)))).toString("base64");
 }

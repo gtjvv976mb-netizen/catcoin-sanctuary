@@ -159,8 +159,8 @@ is only prepared when its coin and its X post would pass on pump.fun in SOL too.
 **Who it launches on its own: only watch-list cats.** A post the trend watch named after a
 `data/cat-watch.json` figure (`reading.nameFrom: "figure"`), or a cartoon or fiction cat that an X
 trend named or a big account posted. Anything else (a real pet, a name the rules guessed) waits for
-you: add its post id to `data/launch-approvals.json` (`{ "approve": ["<post id>"] }`; for someone's
-pet, ask its owner first). An approved post still meets every other rule. It never launches a
+you: add its post id to `data/launch-approvals.json` (`{ "approve": ["<post id>"] }`, the id in quotes, laid
+out as you like; for someone's pet, ask its owner first). An approved post still meets every other rule. It never launches a
 sensitive cat, one already in the sanctuary (a planned or adoptable cat's name or ticker), one in
 its ledger, a post older than 48 hours or without a picture, or a cat whose coin text or X post
 would break the site's content rules. Newest post first.
@@ -175,18 +175,24 @@ after a crash at any point):
    cat priced in the venue's pair). The site is deployed so it serves that file.
 2. *send* (the only step with the key) waits until `https://catcoinsanctuary.com/coins/<postId>.json`
    serves exactly the committed file, builds the launch on its venue (falling back to pump.fun in
-   SOL as above), **simulates** it and sends it only if the
+   SOL as above), **simulates** it unsigned (it is signed only right before it is sent, so nothing
+   signed ever reaches the RPC but the send itself) and sends it only if the
    simulation passes, the wallet loses at most `LAUNCH_MAX_SOL_PER_LAUNCH`, the last 24 hours stay
-   within `LAUNCH_MAX_SOL_PER_DAY` and `LAUNCH_MAX_PER_DAY`, and at least `LAUNCH_MIN_BALANCE_SOL`
-   stays in the wallet. The row is written "sending" before the transaction goes out, then
-   "launched" (its mint, its transaction, what it cost) or "failed".
+   within `LAUNCH_MAX_SOL_PER_DAY` and `LAUNCH_MAX_PER_DAY`, at least `LAUNCH_MIN_BALANCE_SOL`
+   stays in the wallet, and the wallet is still an active launcher. The row is written "sending"
+   before the transaction goes out, then "launched" (its mint, its transaction, what it cost) or
+   "failed". A send whose answer is unclear stays "sending" until its signature settles it, and a
+   launch that landed but is not proved yet stays "sending" too (the run fails so a person looks):
+   the launcher never forgets a coin that exists. It also stops preparing cats well before the
+   Collection's cap of 500 (keeping room for every planned cat).
 3. *record* moves the cat into the sanctuary: an adoptable in `data/adoptables.json` with its
    `launch` (its launchpad and pair the venue's; the card says "Launching on …" until the hourly
    Collection proves the mint, then "Launched by the sanctuary on …" with that launchpad's link),
-   its transaction in `data/launches.json`, held from the announcer
-   in `data/announced.json`, a 3D model queued in `scripts/meshy.queue.json`, its real photo in
+   its transaction in `data/launches.json` (the announcer holds it by its own rule; the launcher
+   never writes `data/announced.json`), a 3D model queued in `scripts/meshy.queue.json`, its real photo in
    `data/real-photos.json`, and its figure off the watch list. Then the Collection, Pages and
-   Announce are started. Its one X post ("… launched by the sanctuary on PumpFun" or "on StonkFun",
+   Announce are started (Pages at once; the Collection and Announce keep their own hourly chains, so
+   the proof and the post come within about an hour). Its one X post ("… launched by the sanctuary on PumpFun" or "on StonkFun",
    its lore line and its card link; never the mint or the author's @handle) goes out through
    `scripts/post-updates.mjs` once the Collection has proved it.
 
@@ -210,6 +216,9 @@ its transaction is sent (a known, unused address can be blocked by anyone who fu
    ```json
    { "address": "<the launcher's address>", "since": "2026-09-28", "label": "Auto launcher" }
    ```
+   Keep the label "Auto launcher" (or "Auto launcher 2" and so on): before a post is launched with
+   one key, every other wallet so labelled is searched for a launch of the same post, so changing
+   `LAUNCH_WALLET_KEY` can never launch a post twice.
 5. Repository variables (Settings → Secrets and variables → Actions → Variables):
    **`LAUNCH_ENABLED`** `dry` first (each run builds and simulates the next cat and logs it, sending
    and writing nothing), then `on`. Optional caps, each clamped: `LAUNCH_MAX_PER_DAY` (3, at most
@@ -373,7 +382,7 @@ recorded fixtures keep a fixed one.
 | `launcher.test.mjs` | The automatic launcher: who it launches (the policy and every exclusion), where (pump.fun in SOL, StonkFun in a free stock pair, pump.fun in a listed coin with the opt-in; one cat per pair), the fallback to SOL before a send and never after, the caps and the balance floor on a simulated balance, dry mode, the metadata it hosts and waits for, the ledger (never a mint before the send), every crash point (one post, one mint), recording the cat and its one X post, the key never in a log line, no dependency. |
 | `launchlab.test.mjs` | A StonkFun launch built and signed offline: StonkFun's pricing (two real answers) and its bounds, all six recorded launches rebuilt byte for byte, and the sign-time checks. |
 | `pump-quote.test.mjs` | A pump.fun launch priced in a listed coin, and the Collection's proof of one (also in `npm run test:builder`). |
-| `venues-routing.test.mjs` | The owner's routing rule, the ties in `data/cat-watch.json`, one cat per stock pair, and that `data/pump-quotes.json` ships empty. |
+| `venues-routing.test.mjs` | The owner's routing rule, the ties in `data/cat-watch.json` (valid, however they are laid out), one cat per stock pair, and that every row of `data/pump-quotes.json` is accepted. |
 | `launch.test.mjs` | The Launch workflow: pinned actions, permissions per job, the wallet key in one step only, no npm, a commit after each phase, dispatches from jobs that run no repository code. |
 
 `site.test.mjs` checks the site as a whole:

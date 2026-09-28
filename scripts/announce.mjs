@@ -41,6 +41,14 @@
  *
  * An adoptable cat held as "adoptable cat: announcing paused" is released by queueing it. A queue
  * entry with shown: true is a cat the site already shows: the queue orders its X post and never hides it.
+ *
+ * THE SANCTUARY'S OWN LAUNCHES (scripts/launch.mjs) are never this bot's to post: their X post is
+ * scripts/post-updates.mjs's launch post. A cat with a `launch` field is held by rule ("adoptable cat:
+ * announcing paused", recorded here when this file is next saved; the launcher never writes
+ * data/announced.json, so the two workflows never race on it), and a coin the launcher made
+ * (sanctuaryCoins: a tx or mint in its ledger or noted "Sanctuary launcher:" in data/launches.json, or
+ * the coin name and ticker of a ledger row) is never listed on its own by mint, even while the
+ * Collection has proved it before the launcher recorded the cat.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -131,7 +139,7 @@ const shortName = (name) => String(name).split(/\s+the\s+/i)[0].trim();
  * (the page shows it on that cat's card or not at all), and neither is a pump.fun coin no adoptable
  * claims: it is held until one does, never announced as a stranger's cat of SOL.
  */
-export function listCats(planned, collection = { cats: [] }, adoptables = { cats: [] }) {
+export function listCats(planned, collection = { cats: [] }, adoptables = { cats: [] }, { sanctuaryCoin = () => false } = {}) {
   const entries = (collection.cats || []).filter((e) => e && typeof e === "object");
   const named = new Set((adoptables.cats || []).map((c) => c?.launch?.mint).filter(Boolean));
   const stocks = new Map((planned.stocks || []).map((s) => [s.pair.mint, s]));
@@ -155,8 +163,9 @@ export function listCats(planned, collection = { cats: [] }, adoptables = { cats
       launched: !!e, adoptable: true, ...(c.launch ? { sanctuary: true } : {}) });
   }
   for (const e of entries) {
-    // The planned or adoptable cat's, listed under its ticker; a pump.fun (any non-StonkFun) coin no adoptable claims is held.
-    if (ofPlanned(e) || named.has(e.mint) || e.launchpad !== undefined) continue;
+    // The planned or adoptable cat's, listed under its ticker; a pump.fun (any non-StonkFun) coin no adoptable claims is held,
+    // and so is a coin the sanctuary's launcher made (`sanctuaryCoin`) that no adoptable names yet.
+    if (ofPlanned(e) || named.has(e.mint) || e.launchpad !== undefined || sanctuaryCoin(e)) continue;
     const s = stocks.get(e.pair?.mint);
     out.push({ key: e.mint, id: e.mint, name: e.name, ticker: e.symbol, symbol: e.pair?.symbol ?? null, company: s?.company ?? null,
       story: null, why: null, proof: null, portrait: null, launched: true, byMint: true });
@@ -172,8 +181,38 @@ export function listCats(planned, collection = { cats: [] }, adoptables = { cats
  */
 export function provedCollection(dataDir, nowMs = Date.now()) {
   const wallets = validateWallets(readJson(path.join(dataDir, "wallets.json"), { launchers: [] }));
-  const quotes = validatePumpQuotes(readJson(path.join(dataDir, "pump-quotes.json"), null)).quotes;
+  // Optional, and edited by hand: unreadable, it lists no coin (as assets/residents.js reads it), never stopping the bots.
+  let quoteFile = null;
+  try { quoteFile = readJson(path.join(dataDir, "pump-quotes.json"), null); } catch { quoteFile = null; }
+  const quotes = validatePumpQuotes(quoteFile).quotes;
   return { cats: validateCollection(readJson(path.join(dataDir, "collection.json"), { cats: [] }), { wallets, quotes, nowMs }).cats };
+}
+
+/**
+ * Whether a data/collection.json entry is a coin the sanctuary's own launcher made: its tx or mint is
+ * a row's in data/sanctuary-launches.json (`ledger`: the tx is written "sending" before it goes out),
+ * its tx is noted "Sanctuary launcher:" in data/launches.json (`launches`), or its name and symbol are a
+ * ledger row's coin name and ticker (a send whose commit was lost). A predicate for listCats.
+ */
+export function sanctuaryCoins(ledger, launches) {
+  const rows = Array.isArray(ledger?.launches) ? ledger.launches.filter((r) => r && typeof r === "object") : [];
+  const txs = new Set([...rows.map((r) => r.tx), ...(Array.isArray(launches?.launches) ? launches.launches : [])
+    .filter((l) => typeof l?.note === "string" && l.note.startsWith("Sanctuary launcher:")).map((l) => l.tx)].filter((x) => typeof x === "string"));
+  const mints = new Set(rows.map((r) => r.mintPublic).filter((x) => typeof x === "string"));
+  const coins = new Set(rows.filter((r) => typeof r.ticker === "string" && typeof r.coinName === "string").map((r) => `${r.coinName}\u0000${r.ticker.toUpperCase()}`));
+  return (e) => txs.has(e?.tx) || mints.has(e?.mint) || coins.has(`${e?.name}\u0000${String(e?.symbol ?? "").toUpperCase()}`);
+}
+
+/**
+ * A cat the sanctuary launched itself (listCats `sanctuary`: an adoptable with a `launch`) that
+ * data/announced.json has no entry for is held by rule, as every new adoptable is: its X post is
+ * scripts/post-updates.mjs's launch post, and queueing it in data/release-queue.json releases it, as
+ * any paused adoptable. `state` (data/announced.json as read) is changed in place; returns it.
+ */
+export function holdSanctuaryCats(cats, state) {
+  state.cats ||= {};
+  for (const c of cats) if (c?.sanctuary && !state.cats[c.key]) state.cats[c.key] = { status: "held", reason: PAUSED_REASON };
+  return state;
 }
 
 /** The company as a post names it: "State Street (SPDR S&P 500 ETF Trust)" -> "State Street". */
@@ -340,7 +379,9 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const config = { ...DEFAULT_CONFIG, ...readJson(data("announce-config.json"), {}), ...force };
   const state = readJson(data("announced.json"), { cats: {} });
   state.cats ||= {};
-  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), provedCollection(path.join(root, "data"), now().getTime()), readJson(data("adoptables.json"), { cats: [] }));
+  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), provedCollection(path.join(root, "data"), now().getTime()), readJson(data("adoptables.json"), { cats: [] }),
+    { sanctuaryCoin: sanctuaryCoins(readJson(data("sanctuary-launches.json"), { launches: [] }), readJson(data("launches.json"), { launches: [] })) });
+  holdSanctuaryCats(cats, state);
   const creds = credsFromEnv(env);
   const mode = config.dryRun ? "dryRun" : creds ? "post" : "queue";
   const stamp = () => now().toISOString();

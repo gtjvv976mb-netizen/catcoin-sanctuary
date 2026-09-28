@@ -1,5 +1,5 @@
 # The sanctuary's automatic launcher (scripts/launch.mjs, scripts/lib/launcher.mjs): every 20 minutes,
-# by hand, and whenever the trend watch commits new candidates (its next job dispatches this one), it
+# by hand, and whenever the trend watch commits new candidates (its launcher job dispatches this one), it
 # launches at most one trending cat, with no dev buy: it never buys or sells anything. Only watch-list
 # cats launch on their own (a data/cat-watch.json figure, or a cartoon or fiction cat that an X trend
 # named or a big account posted); any other cat waits until the owner lists its post in
@@ -32,10 +32,14 @@
 #             the send, as above), and commits the ledger (even when the
 #             send step failed, so a transaction sent is never forgotten); then records a launched cat
 #             in the sanctuary (data/adoptables.json, data/launches.json, the 3D-model queue, its real
-#             photo, held from the announcer: its X post is scripts/post-updates.mjs's, once the
-#             Collection has proved it) and commits that.
-#   publish   after a cat moved in, starts the Collection (to prove it), Pages and Announce (runs no
-#             code of the repository's; it may only start workflow runs).
+#             photo; the announcer holds it by rule, since its X post is scripts/post-updates.mjs's
+#             once the Collection has proved it, so data/announced.json is never committed here and
+#             never raced with the Announce workflow) and commits that.
+#   publish   once that commit is pushed, starts the Collection, Pages and Announce (runs no code of
+#             the repository's; it may only start workflow runs). Pages deploys at once; a Collection
+#             or Announce run that is already chained (each keeps one run going, waiting in its own
+#             concurrency group) takes the new run's place in the queue, so the proof and the X post
+#             come with the Collection's hourly rhythm (within about an hour), not at once.
 #
 # Secrets: LAUNCH_WALLET_KEY, the dedicated launch wallet's secret key, only in the send step;
 # SOLANA_RPC_URL (optional; the public RPC otherwise) in the prepare and send steps. The wallet must be
@@ -124,7 +128,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      recorded: ${{ steps.record.outputs.recorded }}
+      recorded: ${{ steps.commit-record.outputs.recorded }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -171,11 +175,13 @@ jobs:
           LAUNCH_ENABLED: ${{ vars.LAUNCH_ENABLED }}
         run: node scripts/launch.mjs record
       - name: Commit the sanctuary's new cat
+        id: commit-record
         if: ${{ !cancelled() && steps.commit-send.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ github.token }}
+          RECORDED: ${{ steps.record.outputs.recorded }}
         run: |
-          git add -- data/sanctuary-launches.json data/adoptables.json data/announced.json data/launches.json data/real-photos.json data/cat-watch.json scripts/meshy.queue.json
+          git add -- data/sanctuary-launches.json data/adoptables.json data/launches.json data/real-photos.json data/cat-watch.json scripts/meshy.queue.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Launch: a launched cat moves into the sanctuary"
@@ -186,6 +192,7 @@ jobs:
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
             git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
           fi
+          if [ "$RECORDED" = "true" ]; then echo "recorded=true" >> "$GITHUB_OUTPUT"; fi
 
   publish:
     needs: launch

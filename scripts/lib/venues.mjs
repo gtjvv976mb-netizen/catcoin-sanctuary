@@ -6,7 +6,7 @@
  * coin's text limits, the pairs it may be priced in, its metadata, the transaction, the signing, the
  * proof read back off the chain).
  *
- * A venue is { id, launchpad, label, announceAs, pair, pairProblem, textProblem, metadata, build, sign, prove }:
+ * A venue is { id, launchpad, label, announceAs, pair, pairProblem, textProblem, metadata, build, unsigned, sign, prove }:
  *   id           the key a ledger row (data/sanctuary-launches.json) keeps: "pump-sol", "stonkfun", "pump-quote";
  *   launchpad    what data/adoptables.json's `launch.launchpad` and data/collection.json's
  *                `launchpad` say ("pump.fun" | "stonkfun"; a StonkFun entry has none);
@@ -21,6 +21,9 @@
  *                the coin's uri serves (the launcher hosts it at coins/<postId>.json);
  *   build({ wallet, mint, name, symbol, uri, pair, recentBlockhash, computeUnitPriceMicroLamports }, ctx)
  *                (async; ctx = { fetchImpl, rpc, nowMs, quotes, pumpQuoteOptIn }) the unsigned launch;
+ *   unsigned(built)  the same transaction with its signature slots zero-filled, base64, after the very
+ *                checks sign makes: what the launcher simulates, so nothing signed leaves the runner
+ *                before the send itself;
  *   sign(built, walletKeypair, mintKeypair)  the signed transaction, base64 (re-checked at sign time);
  *   prove(tx, { wallet, quotes })  the Collection's own proof of a getTransaction answer (scripts/lib/chain.mjs).
  *
@@ -42,14 +45,14 @@
  * served at its uri (tests/launcher.test.mjs checks the three agree).
  */
 import { SOL_PAIR, STOCK_PAIRS, pairProblem as stockPairProblem, isAddress, textProblem as plainTextProblem } from "../../assets/collection.js";
-import { buildLaunchTransaction as buildPump, signLaunchTransaction as signPump, launchTextProblem } from "./pump.mjs";
-import { fetchPricing, checkPricingConfig, buildLaunchTransaction as buildLaunchLab, signLaunchTransaction as signLaunchLab, LAUNCHLAB_LIMITS } from "./launchlab.mjs";
+import { buildLaunchTransaction as buildPump, signLaunchTransaction as signPump, unsignedLaunchTransaction as unsignedPump, launchTextProblem } from "./pump.mjs";
+import { fetchPricing, checkPricingConfig, buildLaunchTransaction as buildLaunchLab, signLaunchTransaction as signLaunchLab, unsignedLaunchTransaction as unsignedLaunchLab, LAUNCHLAB_LIMITS } from "./launchlab.mjs";
 import { proveLaunch, proveLaunchPump } from "./chain.mjs";
 import { chooseVenue as route, usedStockPairs } from "./venues-routing.mjs";
 
 const VENUES = new Map();
 const VENUE_ID = /^[a-z][a-z0-9-]{1,31}$/;
-const FUNCTIONS = ["pairProblem", "textProblem", "metadata", "build", "sign", "prove"];
+const FUNCTIONS = ["pairProblem", "textProblem", "metadata", "build", "unsigned", "sign", "prove"];
 
 /** Add a venue to the registry (an id is registered once). Returns the frozen venue. */
 export function registerVenue(venue) {
@@ -86,6 +89,7 @@ export const PUMP_SOL = registerVenue({
   metadata,
   build: async ({ wallet, mint, name, symbol, uri, recentBlockhash, computeUnitPriceMicroLamports }) =>
     buildPump({ wallet, mint, name, symbol, uri, recentBlockhash, ...priceText(computeUnitPriceMicroLamports) }),
+  unsigned: (built) => unsignedPump(built),
   sign: (built, walletKeypair, mintKeypair) => signPump(built, walletKeypair, mintKeypair),
   prove: (tx, { wallet }) => proveLaunchPump(tx, { wallet }),
 });
@@ -109,6 +113,7 @@ export const STONKFUN = registerVenue({
     if (!c.ok) throw new Error(`StonkFun's config for ${pair.symbol}: ${c.detail}`);
     return buildLaunchLab({ wallet, mint, pair, name, symbol, uri, pricing, recentBlockhash, ...priceText(computeUnitPriceMicroLamports) });
   },
+  unsigned: (built) => unsignedLaunchLab(built),
   sign: (built, walletKeypair, mintKeypair) => signLaunchLab(built, walletKeypair, mintKeypair),
   prove: (tx, { wallet }) => proveLaunch(tx, { wallet }),
 });
@@ -131,6 +136,7 @@ export const PUMP_QUOTE = registerVenue({
     if (!listed || listed.symbol !== pair.symbol) throw new Error(`${pair.symbol} is not a coin data/pump-quotes.json lists under that symbol`);
     return buildPump({ wallet, mint, name, symbol, uri, recentBlockhash, quote: { mint: pair.mint }, quotes, ...priceText(computeUnitPriceMicroLamports) });
   },
+  unsigned: (built) => unsignedPump(built),
   sign: (built, walletKeypair, mintKeypair) => signPump(built, walletKeypair, mintKeypair),
   prove: (tx, { wallet, quotes = [] }) => {
     const p = proveLaunchPump(tx, { wallet, quotes });
