@@ -19,7 +19,7 @@
    herd test and the survey do the same, so what is measured is what is shown. Re-run after changing
    catrig.js or repacking a model:
 
-     node scripts/fit-clips.mjs [--only KEY,KEY] [--workers 3] [--dry]      (about a minute, 3 workers) */
+     node scripts/fit-clips.mjs [--only KEY,KEY] [--workers 3] [--dry]      (about a minute and a half, 3 workers) */
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
