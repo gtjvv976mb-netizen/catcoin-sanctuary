@@ -1,9 +1,25 @@
 # Every 20 minutes the chain wakes, and every hour (repository variable TRENDWATCH_EVERY_MINUTES) the research team's trend watch (scripts/scan-trending-cats.mjs): searches X for cats
-# trending right now, reads each new one (the cat, its name, real / cartoon / fiction, a coin name, ticker
+# on the rise, reads each new one (the cat, its name, real / cartoon / fiction, a coin name, ticker
 # and lore line, and whether a coin would be in poor taste; by rules from the X post alone, or by Claude
 # when ANTHROPIC_API_KEY is set), checks the ticker on Solana, and
 # commits the shortlist, data/trending-cats.json, when it changed. Launching a candidate stays a person's
 # decision.
+#
+# Each run makes at most ONE X post search, through one lens, the first that applies:
+#   trend     a cat trend on X's trending lists (not a sanctuary cat) not searched in the last 6 hours,
+#             one never searched first;
+#   emerging  a cat's name that two or more accounts gave in the last 48 hours (every post searched is
+#             combed for names), not followed up in the last 12 hours; followed up again only when
+#             another search finds a new account giving it;
+#   otherwise, in turn: big, viral, big, figures. The rotation gets at least every other run (after a
+#   trend or emerging run only a cat trend never searched before goes first), so the big accounts get
+#   about every fourth run or more.
+#   big       the cat posts of the big accounts in data/cat-watch.json (any post of theirs that mentions a
+#             cat counts, picture or not; one that names no cat is listed under "signals");
+#   viral     cat posts with a picture and no coin talk;
+#   figures   famous cat characters and cat memes in data/cat-watch.json that are not in the sanctuary yet.
+# A post counts when it is viral (20k likes or 1M views in 48 hours) or rising (in 12 hours: 1k likes at
+# 500 an hour, or 50k views an hour). Edit data/cat-watch.json to change who and what is watched.
 #
 # X counts every post a search returns against the plan's monthly read cap, which the announcer shares:
 # the script reads at most TRENDWATCH_MONTHLY_READS posts a month (default 10000), paced by day, and

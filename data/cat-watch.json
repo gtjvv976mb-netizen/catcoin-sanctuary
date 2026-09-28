@@ -1,0 +1,44 @@
+{
+ "note": "The trend watch's watch lists (scripts/scan-trending-cats.mjs), edited by hand. topAccounts: X handles without @ of the accounts that move memecoins, searched on every other \"big\" lens turn; bigAccounts: famous people and companies with many followers (no politicians: politics is sensitive), searched a chunk at a time on the other \"big\" turns (the \"big\" lens is every other rotation run); besides both lists, any account with at least 1,000,000 followers counts as big when a search finds its cat post, any post of theirs that mentions a cat counts, with or without a picture, and one with no cat's name in it is listed as a signal. figures: famous cat characters and cat memes that are not in the sanctuary yet, searched on the \"figures\" lens; a post that names one is read as that cat. name is the canonical name; aliases also match (whole words, \"and\" also matches \"&\"; a one-word name in any case, a name of several words only written with its capitals, so \"Grumpy Cat\" but not \"my grumpy cat\"; avoid aliases that are everyday phrases, like \"tom cat\" or \"spinning cat\", or a film with several cats in it); matchOnlyAliases: the name alone is too common a word to match (Tom, Duchess), so only the aliases do; needsCatWord: the post must also say cat, and the name is searched with a cat word (the name is shared with people, like Andrew Garfield); kind: cartoon, fiction, real or meme (read as cartoon); ticker: optional, otherwise made from the name. A figure whose name or alias is already a sanctuary cat is skipped, and so is a name or alias found inside a sanctuary cat's name (\"Tom Cat\" is in \"Talking Tom Cat\") (tests/trendwatch.test.mjs checks this file against data/adoptables.json and data/planned.json). Queries are split so each stays within X's 512 characters.",
+ "topAccounts": [
+  "elonmusk", "cz_binance", "VitalikButerin", "saylor", "aeyakovenko", "rajgokal", "solana", "pumpdotfun", "a1lon9",
+  "blknoiz06", "MustStopMurad", "frankdegods", "cb_doge", "DogeDesigner", "WatcherGuru"
+ ],
+ "bigAccounts": [
+  "taylorswift13", "justinbieber", "rihanna", "katyperry", "ladygaga", "ArianaGrande", "selenagomez", "MileyCyrus", "ddlovato",
+  "britneyspears", "jtimberlake", "Harry_Styles", "Drake", "NICKIMINAJ", "iamcardib", "SnoopDogg", "BTS_twt", "shakira",
+  "JLo", "KimKardashian", "Oprah", "TheEllenShow", "jimmyfallon", "ConanOBrien", "KevinHart4real", "Cristiano", "neymarjr",
+  "KingJames", "BillGates", "MrBeast", "KSI", "NASA", "SpaceX", "Tesla", "netflix", "Disney",
+  "Pixar", "Marvel", "YouTube", "instagram", "Google", "OpenAI", "NintendoAmerica", "Pokemon", "PlayStation",
+  "Xbox", "Spotify", "McDonalds", "Wendys", "tacobell", "Starbucks", "CocaCola", "Nike", "NBA",
+  "NFL", "TheSimpsons", "CartoonNetwork", "adultswim", "Crunchyroll", "hellokitty", "binance", "coinbase", "CoinMarketCap"
+ ],
+ "figures": [
+  { "name": "Garfield", "aliases": [], "kind": "cartoon", "needsCatWord": true },
+  { "name": "Grumpy Cat", "aliases": ["Tardar Sauce"], "kind": "meme" },
+  { "name": "Nyan Cat", "aliases": [], "kind": "meme", "ticker": "NYAN" },
+  { "name": "Keyboard Cat", "aliases": [], "kind": "meme" },
+  { "name": "Doraemon", "aliases": [], "kind": "cartoon" },
+  { "name": "Tom", "aliases": ["Tom and Jerry"], "matchOnlyAliases": true, "kind": "cartoon", "ticker": "TOMCAT" },
+  { "name": "Top Cat", "aliases": [], "kind": "cartoon" },
+  { "name": "Heathcliff", "aliases": ["Heathcliff the Cat"], "matchOnlyAliases": true, "kind": "cartoon" },
+  { "name": "Jiji", "aliases": [], "kind": "cartoon", "needsCatWord": true },
+  { "name": "Duchess", "aliases": ["Duchess the cat"], "matchOnlyAliases": true, "kind": "cartoon" },
+  { "name": "Toulouse", "aliases": ["Toulouse the cat"], "matchOnlyAliases": true, "kind": "cartoon" },
+  { "name": "Berlioz", "aliases": ["Berlioz the cat"], "matchOnlyAliases": true, "kind": "cartoon" },
+  { "name": "Oliver", "aliases": ["Oliver and Company"], "matchOnlyAliases": true, "kind": "cartoon" },
+  { "name": "Dinah", "aliases": ["Dinah the cat"], "matchOnlyAliases": true, "kind": "fiction" },
+  { "name": "Scratchy", "aliases": ["Itchy and Scratchy"], "matchOnlyAliases": true, "kind": "cartoon" },
+  { "name": "Mr. Jinks", "aliases": ["Mr Jinks"], "kind": "cartoon" },
+  { "name": "Smudge", "aliases": ["Smudge the cat", "woman yelling at a cat"], "matchOnlyAliases": true, "kind": "meme" },
+  { "name": "Big Floppa", "aliases": ["Floppa"], "kind": "meme", "ticker": "FLOPPA" },
+  { "name": "Bingus", "aliases": [], "kind": "meme" },
+  { "name": "Maxwell the Cat", "aliases": ["Maxwell cat"], "kind": "meme", "ticker": "MAXWELL" },
+  { "name": "Huh Cat", "aliases": [], "kind": "meme" },
+  { "name": "Banana Cat", "aliases": [], "kind": "meme" },
+  { "name": "Polite Cat", "aliases": [], "kind": "meme" },
+  { "name": "Chipi Chipi Cat", "aliases": ["Chipi Chipi Chapa Chapa"], "kind": "meme", "ticker": "CHIPI" },
+  { "name": "OIIA Cat", "aliases": ["OIIAI Cat"], "kind": "meme", "ticker": "OIIA" },
+  { "name": "Happy Cat", "aliases": ["Happy Happy Happy Cat"], "matchOnlyAliases": true, "kind": "meme", "ticker": "HAPPYCAT" }
+ ]
+}
