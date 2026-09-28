@@ -203,7 +203,9 @@ export function adoptPanel(r, { files = null, onBack, site, pads = null } = {}) 
     img.setAttribute("referrerpolicy", "no-referrer");
     img.addEventListener("error", () => img.remove(), { once: true });
     const side = el("div");
-    side.append(el("p", "adopt-credit", `Photo: @${files.photo.handle}`));
+    const credit = el("p", "adopt-credit", "Photo: ");
+    credit.append(files.photo.post ? outLink(files.photo.post, `@${files.photo.handle} on X`) : `@${files.photo.handle} on X`);
+    side.append(credit);
     side.append(outLink(files.photo.url, "Open original to save ↗", "btn btn-kit"));
     side.append(el("p", "card-note", "This photo belongs to its owner. Ask for their permission before using it as your coin's logo."));
     ph.append(img, side);

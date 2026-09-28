@@ -159,8 +159,8 @@ is only prepared when its coin and its X post would pass on pump.fun in SOL too.
 
 **Who it launches on its own: only watch-list cats.** A post the trend watch named after a
 `data/cat-watch.json` figure (`reading.nameFrom: "figure"`), or a cartoon or fiction cat that an X
-trend named or a big account posted. Anything else (a real pet, a name the rules guessed) waits for
-you: add its post id to `data/launch-approvals.json` (`{ "approve": ["<post id>"] }`, the id in quotes, laid
+trend named or a big account posted. Anything else (a real pet, even one named after a watch-list
+figure, or a name the rules guessed) waits for you: add its post id to `data/launch-approvals.json` (`{ "approve": ["<post id>"] }`, the id in quotes, laid
 out as you like; for someone's pet, ask its owner first). An approved post still meets every other rule. It never launches a
 sensitive cat, one already in the sanctuary (a planned or adoptable cat's name or ticker), one in
 its ledger, a post older than 48 hours or without a picture, or a cat whose coin text or X post
@@ -170,9 +170,9 @@ would break the site's content rules. Newest post first.
 after a crash at any point):
 
 1. *prepare* chooses the venue, writes the coin's metadata to `coins/<postId>.json` (pump.fun's
-   shape, the same on every venue: name, symbol, the lore line "From the Catcoin Sanctuary.", the
-   post's picture hotlinked from pbs.twimg.com, the cat's card as website, @catcosanctuary as
-   twitter) and a "prepared" row in the ledger, `data/sanctuary-launches.json` (its venue, and the
+   shape, the same on every venue: name, symbol, the description, the post's picture hotlinked from
+   pbs.twimg.com (the site's own picture for a hidden photo, below), the cat's card as website,
+   @catcosanctuary as twitter) and a "prepared" row in the ledger, `data/sanctuary-launches.json` (its venue, and the
    cat priced in the venue's pair). The site is deployed so it serves that file.
 2. *send* (the only step with the key) waits until `https://catcoinsanctuary.com/coins/<postId>.json`
    serves exactly the committed file, builds the launch on its venue (falling back to pump.fun in
@@ -191,11 +191,42 @@ after a crash at any point):
    Collection proves the mint, then "Launched by the sanctuary on …" with that launchpad's link),
    its transaction in `data/launches.json` (the announcer holds it by its own rule; the launcher
    never writes `data/announced.json`), a 3D model queued in `scripts/meshy.queue.json`, its real photo in
-   `data/real-photos.json`, and its figure off the watch list. Then the Collection, Pages and
+   `data/real-photos.json` (credited on its card, below), and its figure off the watch list. Then the Collection, Pages and
    Announce are started (Pages at once; the Collection and Announce keep their own hourly chains, so
    the proof and the post come within about an hour). Its one X post ("… launched by the sanctuary on PumpFun" or "on StonkFun",
-   its lore line and its card link; never the mint or the author's @handle) goes out through
+   its lore line, the fan-tribute line when it fits, and its card link; never the mint or the author's @handle) goes out through
    `scripts/post-updates.mjs` once the Collection has proved it.
+
+**Every sanctuary coin is a fan tribute, and says so.** Its description is its lore line, then
+always, whole: "Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by
+the character's owners." (for a real pet, a post the trend watch read as kind `real`: "…by the cat's
+owners."). The description is kept to 500 characters (no venue limits it: it lives only in the
+off-chain metadata); a longer lore line is shortened, never the tribute line. The lore meets every
+content rule; the tribute line itself is the owner's fixed text, let through as a citation (the
+rules' endorsement list cannot tell "not endorsed" from "endorsed"). The launch X post carries the
+same line, under the lore line, when a version of the post fits 280 characters and every rule with
+it: room is made as for any long post (the mint line, a hashtag, then the lore line go first), never
+by dropping the card link. If no version could carry it, the post goes out as it would without it.
+
+**Photos from X are shown with credit to their source.** Every launched cat, drawn or real, gets the
+photo from its X post on its card, hotlinked from pbs.twimg.com (never copied here) and credited under
+it: "📸 Photo: @handle on X", linked to the post (the Adopt panel credits a kit's photo the same way).
+The same photo is the coin's picture, and the coin's description credits it too ("Photo: @handle on
+X.", between the lore and the tribute line) when it fits the 500 characters and the content rules;
+otherwise the description goes without it. The launch X post does not carry the credit: the launch
+post never names the @handle of the post a cat was found in (a rule of the launcher's X post: no
+mention of a stranger), and it links to the card, where the credit is.
+
+**Hiding a photo (the owner):** a stranger's photo can show faces, children or a home. To hide one,
+add its post's X status id (in quotes; any photo on the site, launched cat or not) to **`data/photo-hide.json`** (`{ "hide": ["<post id>"] }`).
+The next Launch run (every 20 minutes) moves the cat's `data/real-photos.json` entry, whole, to `hidden` (the
+card then shows its portrait), deploys the site, and a coin not sent yet takes the site's own picture
+(`assets/og-image.jpg`, no photo credit) instead. **A coin's picture cannot change once it is
+launched**, so hide a photo *before* the launch if the coin must not show it (for a real pet, you
+see the post anyway when you approve its launch). Remove the id to show the photo again: it comes back
+from `hidden` exactly as it was. The file is
+read like `data/launch-approvals.json`: a typo hides nothing (the run warns), and it never stops the
+launcher or the tests.
 
 The coin's mint is derived from the wallet and the post (`deriveMintKeypair`), so one post can only
 ever make one coin: a retry sends the same mint again. The mint is never written or printed before
@@ -234,8 +265,56 @@ its transaction is sent (a known, unused address can be blocked by anyone who fu
 launch already sent is settled and recorded the next time it runs. To retire the wallet, give its
 row in `data/wallets.json` an `until` date; never delete the row. Never delete a file in `coins/`:
 a launched coin's uri points to it for good. A real photo that shows a person can be taken off a
-card by moving its row in `data/real-photos.json` to `none`. The 3D model is made by hand, as for
-every cat (`node scripts/meshy.mjs run <TICKER>`, see `MESHY-HANDOFF.md`).
+card with `data/photo-hide.json` (above), or by hand by moving its row in `data/real-photos.json` to `none`. The 3D model is
+made by the Models workflow (below) once it is switched on; by hand otherwise, as for every cat
+(`node scripts/meshy.mjs run <TICKER>`, see `MESHY-HANDOFF.md`).
+
+### 3D models for launched cats (the Models workflow)
+
+`.github/workflows/models.yml` (`scripts/models.mjs`) gives each launched cat a 3D model of its own,
+with the repository's own tools used as they are designed (`scripts/CAT-MODELS.md`). It runs daily,
+by hand, and right after a launch is recorded (the Launch workflow's publish job starts it). Each run
+makes at most one queued **rebuild** from `scripts/meshy.queue.json` (`MODELS_PER_RUN` 2 for two):
+launched cats with no model first, never one whose photo `data/photo-hide.json` hides.
+
+1. **Meshy** (`scripts/meshy.mjs run`): four-legged reference views from the queue entry's reference
+   picture (the post's photo), multi-image-to-3D and a remesh far copy, about 41 credits a cat.
+2. **Pack** (`scripts/make-cat-models.py` with gltfpack): normalized, textured, `<KEY>.glb` and
+   `<KEY>-lo.glb` in `assets/models/cats/`, `index.json` and `PROVENANCE.md`.
+3. **Checks**: the size budgets (600/150 KB, 800/300 KB for HD), a valid textured GLB the page can load
+   without a decoder, the garden's own rig (`assets/world/catrig.js`) run on the model (four legs with
+   their joints in order, skin weights that add up, 1 unit tall on the ground), and the model tests
+   (`tests/catmodels`, `catrig`, `meshy`). A model that fails is **discarded** (its files, index row and
+   job entry put back), the failure recorded in `scripts/models.state.json` and `scripts/meshy.state.json`,
+   and the cat keeps its portrait and the shared model. After 2 failed tries it is left for a person
+   (delete its row in `scripts/models.state.json` to try again).
+4. **Tripo** (`scripts/tripo.mjs rig`): the quadruped rig of the packed model (about 25 credits),
+   recorded in `scripts/tripo.state.json`. Skipped, with a log line, when `TRIPO_API_KEY` is missing.
+   The site rigs its cats itself, so Tripo's rigged GLB is not used on the page; a "not riggable"
+   verdict is flagged in the log as a model to look at.
+5. A **preview** PNG (`scripts/model-previews/<KEY>.png`, three views, rendered headless) and a line in
+   the run's summary; then the commit, and Pages is deployed.
+
+These run as separate jobs, so no job that installs a package holds a key it does not need or the push
+token: the Meshy job installs nothing and alone holds `MESHY_API_KEY`; the Pack job (packages installed
+with `--ignore-scripts`) holds no secret; the Tripo job alone holds `TRIPO_API_KEY`; the Commit job
+installs nothing third-party, takes only the expected files from the others (each checked, the model
+checks and tests run again there) and pushes with git hooks off. A try is counted before Meshy is
+called, and the Commit job always runs, so a run that fails, times out or is cancelled still records
+what Meshy spent (the cat is tried again, at most twice in all).
+
+**Setting it up (the owner):** add the repository secrets **`MESHY_API_KEY`** and **`TRIPO_API_KEY`**
+and the variable **`MODELS_ENABLED`** = `on` (anything else, or unset, runs nothing). Optional
+variables: `MODELS_MESHY_RESERVE` and `MODELS_TRIPO_RESERVE` (credits each tool keeps, 100 by default
+as in the scripts), `MODELS_PER_RUN` (1 or 2), `MODELS_BACKLOG` = `on` to also rebuild the queued cats
+that have a model already (off by default: those were checked by eye before). Each key is only in the
+step that calls its API; no wallet key is anywhere near this workflow.
+
+**A quick look at each new model is still wise:** the checks cannot tell which way a model faces (a
+big tail can fool the packer's heading guess: `--yaw 180`, see `scripts/CAT-MODELS.md`) or whether it
+looks like its cat. Open its preview, or run `node scripts/render-cat-clips.mjs OUT.png <KEY>` to see it
+walk. Still by hand: a yaw fix, the in-game shot for X posts (`scripts/capture-ingame.mjs`), retextures,
+and cats whose Meshy views wait for a person.
 
 ## Unread transactions
 
@@ -385,6 +464,7 @@ recorded fixtures keep a fixed one.
 | `pump-quote.test.mjs` | A pump.fun launch priced in a listed coin, and the Collection's proof of one (also in `npm run test:builder`). |
 | `venues-routing.test.mjs` | The owner's routing rule, the ties in `data/cat-watch.json` (valid, however they are laid out), one cat per stock pair, and that every row of `data/pump-quotes.json` is accepted. |
 | `launch.test.mjs` | The Launch workflow: pinned actions, permissions per job, the wallet key in one step only, no npm, a commit after each phase, dispatches from jobs that run no repository code. |
+| `models.test.mjs` | The Models workflow (pinned actions, permissions per job, fail closed on `MODELS_ENABLED`, each API key in its one step, no wallet secret, the token only in the push) and `scripts/models.mjs` with fakes: which cats it makes, the credit reserves, the retries, the checks a model must pass, and discarding one that fails. |
 
 `site.test.mjs` checks the site as a whole:
 

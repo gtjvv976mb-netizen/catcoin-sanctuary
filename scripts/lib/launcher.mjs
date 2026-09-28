@@ -7,8 +7,8 @@
  * WHAT IT LAUNCHES. Cats the trend watch found (data/trending-cats.json), newest post first, at most
  * one a run, only "watch-list cats": a reading named after a data/cat-watch.json figure
  * (reading.nameFrom "figure"), or a cartoon or fiction cat that a big account posted
- * (post.bigAccount) or an X trend named (nameFrom "trend"). Anything else (a real pet, a name the rules
- * guessed) waits for the owner: its post id in data/launch-approvals.json { approve: [ids] } lets it
+ * (post.bigAccount) or an X trend named (nameFrom "trend"). Anything else (a real pet, even one named
+ * after a figure, a name the rules guessed) waits for the owner: its post id in data/launch-approvals.json { approve: [ids] } lets it
  * through the watch-list rule, and every other rule still applies. Never a sensitive cat, one the trend
  * watch marked known, one already in the sanctuary (data/planned.json, data/adoptables.json: names and
  * tickers, letter case aside), one in the ledger, a post older than MAX_POST_AGE_HOURS or without a
@@ -38,7 +38,7 @@
  *
  * THE LEDGER, data/sanctuary-launches.json { note, launches: [row] }, newest first, at most
  * LEDGER_MAX rows (old finished rows are dropped first; none in flight ever is). A row:
- *   { postId, url, name, coinName, ticker, venue, policy, lore, image, metadataPath, status,
+ *   { postId, url, name, coinName, ticker, venue, policy, figure?, kind, lore, image, metadataPath, status,
  *     preparedAt, attempts, cat, and, as it goes: tx, sentAt, lastValidBlockHeight, mintPublic,
  *     spentLamports, settledAt, launchedAt, recordedAt, retry, reason, fallback }
  *   status "prepared" (its metadata written; no tx, no mint) → "sending" (tx = the signed
@@ -48,6 +48,7 @@
  *   prepared again with the SAME mint, at most MAX_ATTEMPTS sends). `venue` is the registered venue
  *   (its launchpad is the cat's launch.launchpad); `cat` is the adoptable row the cat gets once
  *   launched (data/adoptables.json, checked by assets/ui/adoptables.js before anything is prepared),
+ *   `kind` the trend watch's reading kind ("real" is a pet; "cartoon" and "fiction" are characters),
  *   priced in the venue's pair (SOL, the stock pair, or the listed coin); `fallback` says why a
  *   StonkFun or coin-priced cat went out on pump.fun in SOL instead.
  *
@@ -57,7 +58,10 @@
  *            expired: failed, retry) and saves that at once, prepares a retryable failed row again, or,
  *            with nothing in flight, the day's count not reached and room left under the Collection's
  *            MAX_CATS (collectionRoom), prepares ONE new cat: its metadata file and its ledger row.
- *            data/launch-approvals.json is only read (unreadable: no approvals, a warning).
+ *            data/launch-approvals.json is only read (unreadable: no approvals, a warning). Then the photos
+ *            of posts the owner hides in data/photo-hide.json (read the same way) move, whole, from
+ *            data/real-photos.json `cats` to `hidden` (and back once no longer hidden), and a prepared row's coin picture
+ *            follows that list (the site's own picture for a hidden post).
  *   send     (the only phase with the key) settles "sending" rows, then for the prepared row: looks for
  *            a launch of its post on chain (its mint's create in the wallet's own history, on every
  *            venue, or a create with its metadata uri in another launcher wallet's: a launch that
@@ -79,7 +83,8 @@
  *            it first), the cat in data/adoptables.json with its `launch` (which the announcer holds by
  *            rule: the X post is scripts/post-updates.mjs's, once the Collection has proved the mint;
  *            data/announced.json is the Announce workflow's alone and never written here), a 3D
- *            model queued in scripts/meshy.queue.json, its hotlinked real photo in data/real-photos.json,
+ *            model queued in scripts/meshy.queue.json, its hotlinked real photo in data/real-photos.json
+ *            credited to its post's author on the card (a post the owner hides in data/photo-hide.json: `hidden`),
  *            and its figure (and any other figure now in the sanctuary) off data/cat-watch.json, as the
  *            trend watch's own checks expect of a cat that moved in.
  *
@@ -96,15 +101,21 @@ import { venueById, venueIds, chooseVenue, takenPairs, PUMP_SOL, PUMP_QUOTE } fr
 import { coatFromLook } from "./coat.mjs";
 import { tickerFor } from "./read-cat-post.mjs";
 import { RpcError } from "./rpc.mjs";
-import { draftLaunch, checkUpdate } from "../post-updates.mjs";
+import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
 
 /* ── constants ─────────────────────────────────────────────────────────────────────────── */
 
 export const SITE_ORIGIN = "https://catcoinsanctuary.com";
 export const X_ACCOUNT = "https://x.com/catcosanctuary";
+/**
+ * The coin image of a post the owner hides (data/photo-hide.json): the site's own picture, never that
+ * photo (a stranger's photo can show faces, children or a home).
+ */
+export const SITE_IMAGE = `${SITE_ORIGIN}/assets/og-image.jpg`;
 export const FILES = Object.freeze({
   ledger: "data/sanctuary-launches.json",
   approvals: "data/launch-approvals.json",
+  photoHide: "data/photo-hide.json",
   trending: "data/trending-cats.json",
   watch: "data/cat-watch.json",
   adoptables: "data/adoptables.json",
@@ -232,14 +243,50 @@ export const walletInstructions = (address, nowMs) => [
 export const metadataPath = (postId) => `coins/${postId}.json`;
 export const metadataUri = (postId) => `${SITE_ORIGIN}/coins/${postId}.json`;
 export const cardUrl = (ticker) => `${SITE_ORIGIN}/#cat=${encodeURIComponent(ticker)}`;
-/** The coin's description: its lore line and where it comes from. */
-export const descriptionOf = (lore) => `${/[.!?…]$/.test(lore) ? lore : `${lore}.`} From the Catcoin Sanctuary.`;
+/**
+ * The most characters a coin's description is given. No venue limits it (the description lives only in
+ * the off-chain metadata JSON: pump.fun's create_v2 and LaunchLab's initialize carry the name, the symbol
+ * and the uri on chain, which launchTextProblem bounds); this is the launcher's own bound, well inside
+ * what launchpad pages show.
+ */
+export const DESCRIPTION_MAX = 500;
+/**
+ * The coin's description: its lore line, the photo's credit when there is one and it fits ("Photo:
+ * @handle on X.", `credit`), then the fan-tribute line (post-updates.mjs fanTribute: "…the character's
+ * owners." or, for a real pet (reading kind "real"), "…the cat's owners."), which always closes it whole.
+ * Over `max`, the credit goes first, then the lore is shortened (at a word, with "…"), never the tribute.
+ */
+export function descriptionOf(lore, kind = null, { credit = null, max = DESCRIPTION_MAX } = {}) {
+  const tribute = fanTribute(kind);
+  const line = String(lore ?? "").trim();
+  const ended = /[.!?…]$/.test(line) ? line : `${line}.`;
+  if (credit && `${ended} ${credit} ${tribute}`.length <= max) return `${ended} ${credit} ${tribute}`;
+  if (`${ended} ${tribute}`.length <= max) return `${ended} ${tribute}`;
+  const room = max - tribute.length - 2;                          // the lore, its "…" and the space
+  if (room < 1) return tribute;
+  const cut = line.slice(0, room + 1);
+  const atWord = cut.lastIndexOf(" ") > room / 2 ? cut.slice(0, cut.lastIndexOf(" ")) : cut.slice(0, room);
+  return `${atWord.replace(/[\s,;:.!?…-]+$/u, "")}… ${tribute}`;
+}
+
+/**
+ * The picture a coin shows (its metadata's image): the post's photo (row.image), for every kind of cat,
+ * unless the owner hides that post's photo (data/photo-hide.json): then SITE_IMAGE. It follows the hide
+ * list while the row is prepared and is fixed once the coin is sent (its uri serves it for good).
+ */
+export const coinImageFor = ({ image, postId }, hidden = new Set()) => (hidden.has(String(postId)) ? SITE_IMAGE : image);
+/** A row's coin image: its `coinImage`, or (a row from before it was kept) the post's photo. */
+export const coinImageOf = (row) => row.coinImage ?? row.image;
+/** The photo credit a coin's description carries ("Photo: @handle on X."), for its post's author. */
+export const photoCredit = (handle) => `Photo: @${handle} on X.`;
+/** A row's credit: only when its coin shows the post's photo and the row says the credit fits (`photoCredit`), else null. */
+const creditOf = (row) => (row.photoCredit === true && coinImageOf(row) === row.image && X_POST_URL.test(row.url ?? "") ? photoCredit(X_POST_URL.exec(row.url)[1]) : null);
 
 /** The metadata JSON a row's coin serves, in its venue's shape. */
 export function coinMetadata(row) {
   const venue = venueById(row.venue);
   if (!venue) throw new LaunchError(`unknown venue ${row.venue}`);
-  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore), image: row.image, website: cardUrl(row.ticker), twitter: X_ACCOUNT, createdOn: SITE_ORIGIN });
+  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row) }), image: coinImageOf(row), website: cardUrl(row.ticker), twitter: X_ACCOUNT, createdOn: SITE_ORIGIN });
 }
 /** The metadata file's exact text. */
 export const metadataText = (meta) => `${JSON.stringify(meta, null, 2)}\n`;
@@ -270,9 +317,11 @@ export async function waitForMetadata({ fetchImpl, uri, text, now, sleep, waitMs
 
 export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
-const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "lore", "image", "metadataPath", "status", "preparedAt", "attempts", "cat",
+const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "kind", "lore", "image", "coinImage", "photoCredit", "metadataPath", "status", "preparedAt", "attempts", "cat",
   "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback"];
 export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved"]);
+/** The trend watch's reading kinds a launched cat may have (a row's `kind`: "real" is a pet, the others characters). */
+export const KINDS = Object.freeze(["real", "cartoon", "fiction"]);
 const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 const isTime = (t) => parseTime(t, { dayAllowed: false }) !== null;
 
@@ -289,8 +338,11 @@ export function rowProblem(r) {
   if (!venueById(r.venue)) return `venue ${String(r.venue).slice(0, 20)} is not registered`;
   if (!POLICIES.includes(r.policy)) return "policy is unknown";
   if (r.figure !== undefined && (typeof r.figure !== "string" || textProblem(r.figure, { maxChars: 60 }))) return "figure must be a watch-list figure's name";
+  if (r.kind !== undefined && !KINDS.includes(r.kind)) return `kind must be one of ${KINDS.join(", ")}`;
   if (typeof r.lore !== "string" || r.lore.length < 1 || r.lore.length > 200) return "lore must be one line";
   if (!PBS_IMAGE.test(r.image ?? "")) return "image must be a pbs.twimg.com picture";
+  if (r.coinImage !== undefined && r.coinImage !== r.image && r.coinImage !== SITE_IMAGE) return "coinImage must be the post's picture, or the site's own";
+  if (r.photoCredit !== undefined && typeof r.photoCredit !== "boolean") return "photoCredit must be true or false";
   if (r.metadataPath !== metadataPath(r.postId)) return "metadataPath must be coins/<postId>.json";
   if (!STATUSES.includes(r.status)) return "status is unknown";
   if (!isTime(r.preparedAt)) return "preparedAt must be YYYY-MM-DDTHH:MM:SSZ";
@@ -394,16 +446,58 @@ export function approvalsOf(data) {
     .map((v) => String(v).trim()).filter((v) => X_POST_ID.test(v)));
 }
 
+/**
+ * data/photo-hide.json { note, hide: [postIds] }, edited by the owner: posts whose photo the site must not
+ * show (on a card) or use (as a coin's picture). Read as data/launch-approvals.json is (readOwned): a file
+ * that is not JSON, or not { hide: [...] }, hides nothing, with a warning; never an error. A missing file
+ * hides nothing.
+ */
+export function photoHideOf(io, log = () => {}) {
+  const data = readOwned(io, FILES.photoHide, { hide: [] }, log);
+  if (!isObj(data) || !Array.isArray(data.hide)) {
+    log(`::warning title=Launcher::${FILES.photoHide} must be { "hide": ["<post id>", ...] }; no photo is hidden until it is fixed.`);
+    return new Set();
+  }
+  return approvalsOf({ approve: data.hide });
+}
+
+/** An X post's status id from any link to it (x.com or twitter.com, www., a query such as ?s=20), or null. */
+export const postIdOf = (url) => /\/status\/(\d{5,25})/.exec(String(url ?? ""))?.[1] ?? null;
+/** The real-photos entry's photo for a ledger row: the post's picture, hotlinked, credited to its author. */
+const photoOfRow = (row) => ({ url: row.image, handle: row.cat.proof.handle, post: row.url, alt: `${row.name}: the photo from @${row.cat.proof.handle}'s post` });
+
+/**
+ * data/real-photos.json kept in line with the owner's hide list, without losing anything: a shown photo
+ * (`cats`) whose post is hidden moves, whole, to `hidden` ({ T: { postId, entry } }: the page reads `cats`
+ * only, so the card shows its portrait), and one whose post is no longer hidden moves back to `cats` from
+ * there, exactly as it was. Returns { photos, hid: [tickers], restored: [tickers] }; `photos` is the same
+ * object when nothing moved.
+ */
+export function applyPhotoHide(photos, hiddenIds) {
+  const cats = isObj(photos?.cats) ? photos.cats : {}, kept = isObj(photos?.hidden) ? photos.hidden : {};
+  const hid = Object.keys(cats).filter((T) => !(T in kept) && hiddenIds.has(postIdOf(cats[T]?.realPhoto?.post)));
+  const restored = Object.keys(kept).filter((T) => !hiddenIds.has(String(kept[T]?.postId)) && !(T in cats) && isObj(kept[T]?.entry) && realPhotoOf(kept[T].entry.realPhoto));
+  if (!hid.length && !restored.length) return { photos, hid, restored };
+  const next = { ...photos, cats: { ...cats }, hidden: { ...kept } };
+  for (const T of hid) { next.hidden[T] = { postId: postIdOf(cats[T].realPhoto.post), entry: cats[T] }; delete next.cats[T]; }
+  for (const T of restored) { next.cats[T] = next.hidden[T].entry; delete next.hidden[T]; }
+  if (!Object.keys(next.hidden).length) delete next.hidden;
+  return { photos: next, hid, restored };
+}
+
 /** The watch-list figures (data/cat-watch.json), by name. */
 const figuresOf = (watch) => new Map((Array.isArray(watch?.figures) ? watch.figures : []).filter((f) => isObj(f) && typeof f.name === "string").map((f) => [f.name, f]));
 
 /**
  * Why the owner's policy lets this post launch on its own, or null (it waits for data/launch-approvals.json):
  * "figure" (named after a watch-list figure still on the list), "trend" or "big-account" (a cartoon or
- * fiction cat an X trend named or a big account posted), "approved" (the owner listed its id).
+ * fiction cat an X trend named or a big account posted), "approved" (the owner listed its id). A real
+ * pet (reading kind "real") is only ever "approved": the owner sees a stranger's post before it launches,
+ * even when it is named after a figure.
  */
 export function policyOf(post, { approvals = new Set(), watch = null } = {}) {
   const r = post?.reading;
+  if (r?.kind === "real") return approvals.has(String(post?.id)) ? "approved" : null;
   if (r?.nameFrom === "figure" && typeof post.figure === "string" && figuresOf(watch).has(post.figure)) return "figure";
   const drawn = r?.kind === "cartoon" || r?.kind === "fiction";
   if (drawn && r?.nameFrom === "trend") return "trend";
@@ -461,7 +555,7 @@ export function adoptableFor(post, { figure = null, pair, taken = { ids: new Set
 
 /**
  * The ledger row a post would get, or { problem }: every rule the launcher keeps (see the header).
- * `ctx` = { nowMs, approvals, watch, ledger, adoptables, planned }.
+ * `ctx` = { nowMs, approvals, photoHide, watch, ledger, adoptables, planned }.
  */
 export function candidateRow(post, ctx) {
   const no = (problem) => ({ problem });
@@ -506,17 +600,24 @@ export function candidateRow(post, ctx) {
   const v = validateAdoptables({ cats: [...cats, built.cat] }, { taken: new Set((ctx.planned?.cats ?? []).map((c) => c.ticker)) });
   if (v.refused.some((x) => x.index === cats.length)) return no(`the adoptable row would be refused: ${v.refused.find((x) => x.index === cats.length).detail}`);
   const row = {
-    postId: String(post.id), url: post.url, name, coinName, ticker, venue: venue.id, policy, ...(figure ? { figure: figure.name } : {}), lore, image,
+    postId: String(post.id), url: post.url, name, coinName, ticker, venue: venue.id, policy, ...(figure ? { figure: figure.name } : {}), kind: r.kind, lore, image,
+    coinImage: coinImageFor({ image, postId: post.id }, ctx.photoHide),
     metadataPath: metadataPath(String(post.id)), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat: built.cat, ...(fallback ? { fallback } : {}),
   };
   // The site's content rules: the metadata's description, and the X post, drafted now (a held post means no launch).
   const cited = [name, coinName, ticker, ...(figure ? [figure.name, ...(Array.isArray(figure.aliases) ? figure.aliases : [])] : [])];
+  // The fan-tribute line is the owner's fixed text (it says the coin is NOT official): a citation; the lore meets every rule.
+  const tributeCited = [...cited, fanTribute(row.kind)];
+  // The photo's credit goes in the description when it fits and meets every rule (a handle is the stranger's own text).
+  row.photoCredit = true;
+  const credit = creditOf(row);
+  if (!credit || !coinMetadata(row).description.includes(credit) || !checkUpdate(coinMetadata(row).description, tributeCited).ok) row.photoCredit = false;
   const meta = coinMetadata(row);
-  const d = checkUpdate(meta.description, cited);
+  const d = checkUpdate(meta.description, tributeCited);
   if (!d.ok) return no(`the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
   // The post names the launchpad: drafted for the venue's, and for pump.fun's (the fallback's).
   for (const launchpad of new Set([venue.launchpad, PUMP_SOL.launchpad])) {
-    const post2 = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad, cited });
+    const post2 = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad, cited, tribute: fanTribute(row.kind) });
     if (!post2.ok) return no(`its X post would be held (${post2.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
   }
   if (rowProblem(row)) return no(`the ledger row would be malformed: ${rowProblem(row)}`);
@@ -847,6 +948,7 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
     nowMs, ledger,
     trending: readJson(io, FILES.trending, { posts: [], candidates: [] }),
     approvals: approvalsOf(readOwned(io, FILES.approvals, { approve: [] }, log)),
+    photoHide: photoHideOf(io, log),
     watch: readOwned(io, FILES.watch, { figures: [] }, log),
     adoptables: readJson(io, FILES.adoptables, null),
     planned: readJson(io, FILES.planned, null),
@@ -857,10 +959,11 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
 }
 
 /**
- * PREPARE (no key). Returns { mode, changed, pending, deploy, prepared, notes }: `pending` when the
+ * PREPARE (no key). Returns { mode, changed, pending, deploy, prepared, photos? }: `pending` when the
  * send or record phase has work (a row in flight or launched but not recorded, or, in dry mode, a cat
- * to simulate); `deploy` when a prepared row's metadata is not served yet (the workflow then deploys
- * the site).
+ * to simulate); `deploy` when a prepared row's metadata is not served yet, or data/real-photos.json
+ * just changed with data/photo-hide.json (`photos`: the tickers hidden or shown again): the workflow
+ * then deploys the site.
  */
 export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, log = () => {}, scrub = (t) => t }) {
   const mode = launchMode(env);
@@ -900,7 +1003,16 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     }
   }
 
-  // 3. The prepared row's metadata file, written if it is missing (a crash between the two writes).
+  // 3. The prepared row's metadata file, written if it is missing (a crash between the two writes). Its coin
+  //    picture follows data/photo-hide.json until it is sent (then it is fixed for good).
+  for (const row of ledger.launches.filter((r) => r.status === "prepared")) {
+    const coinImage = coinImageFor(row, ctx.photoHide);
+    if (mode === "on" && coinImage !== coinImageOf(row)) {
+      replaceRow(ledger, { ...row, coinImage });
+      out.changed = true;
+      log(`Launcher: ${row.ticker}'s coin picture is now ${coinImage === SITE_IMAGE ? "the site's own (its post's photo is hidden in data/photo-hide.json)" : "its post's photo"}.`);
+    }
+  }
   for (const row of ledger.launches.filter((r) => r.status === "prepared")) {
     const text = metadataText(coinMetadata(row));
     if (io.readText(row.metadataPath) !== text) { io.writeText(row.metadataPath, text); out.changed = true; }
@@ -931,10 +1043,25 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
   }
 
   if (out.changed) saveLedger(io, ledger);
+
+  // 5. Photos the owner hid (data/photo-hide.json) leave their cards; one no longer hidden comes back.
+  if (mode === "on") {
+    const photos = readOwned(io, FILES.realPhotos, null, log);    // unreadable: left as it is (a warning), never a stop
+    const { photos: next, hid, restored } = isObj(photos) ? applyPhotoHide(photos, ctx.photoHide) : { hid: [], restored: [] };
+    if (hid.length || restored.length) {
+      io.writeText(FILES.realPhotos, json2(next));
+      out.photos = [...hid, ...restored];
+      out.deploy = true;
+      if (hid.length) log(`Launcher: the photo of ${hid.join(", ")} is hidden (data/photo-hide.json): off ${hid.length === 1 ? "its card" : "their cards"} from the next deploy.`);
+      if (restored.length) log(`Launcher: the photo of ${restored.join(", ")} is no longer hidden: back on ${restored.length === 1 ? "its card" : "their cards"} from the next deploy.`);
+    }
+  }
+
   const prepared = ledger.launches.find((r) => r.status === "prepared");
   if (prepared && mode === "on") {
-    out.deploy = !(await metadataServed({ fetchImpl, uri: metadataUri(prepared.postId), text: metadataText(coinMetadata(prepared)), bust: nowMs }));
-    if (out.deploy) log(`Launcher: ${metadataUri(prepared.postId)} is not served yet; the site is to be deployed.`);
+    const unserved = !(await metadataServed({ fetchImpl, uri: metadataUri(prepared.postId), text: metadataText(coinMetadata(prepared)), bust: nowMs }));
+    out.deploy ||= unserved;
+    if (unserved) log(`Launcher: ${metadataUri(prepared.postId)} is not served yet; the site is to be deployed.`);
   }
   out.pending ||= inFlight(ledger).length > 0 || ledger.launches.some((r) => r.status === "launched" && !r.recordedAt);
   return out;
@@ -1221,9 +1348,10 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     collection: readJson(io, FILES.collection, { cats: [] }),
     photos: readJson(io, FILES.realPhotos, { cats: {} }),
     meshy: readJson(io, FILES.meshy, { cats: {} }),
+    photoHide: photoHideOf(io, log),                            // edited by hand: unreadable, nothing hidden (a warning)
     watch: readOwned(io, FILES.watch, null, log),                 // edited by hand: unreadable, left as it is (a warning)
   };
-  const before = Object.fromEntries(Object.entries(files).map(([k, v]) => [k, JSON.stringify(v)]));
+  const before = Object.fromEntries(Object.entries(files).map(([k, v]) => [k, v instanceof Set ? null : JSON.stringify(v)]));
   const plannedTickers = new Set((files.planned.cats ?? []).map((c) => c.ticker));
   const proved = new Set((files.collection.cats ?? []).map((c) => c.tx));
   for (const row of todo) {
@@ -1261,10 +1389,15 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
       files.meshy.cats[T] = { action: "rebuild", priority: 1, why: "A trending cat the sanctuary launched: it has no model of its own yet (the garden draws the shared model in its coat).",
         styleImage: row.image, referencePrompt: look, order };
     }
-    // Its real photo, hotlinked from the post (never copied), unless the owner ruled it out.
+    // Its real photo, hotlinked from the post (never copied) and credited to its author on the card, unless the owner
+    // ruled it out (`none`) or hides the post (data/photo-hide.json: then it waits in `hidden`, and the card keeps its portrait).
     files.photos.cats ??= {};
-    const photo = { url: row.image, handle: row.cat.proof.handle, post: row.url, alt: `${row.name}: the photo from @${row.cat.proof.handle}'s post` };
-    if (!files.photos.cats[T] && !(T in (files.photos.none ?? {})) && realPhotoOf(photo)) files.photos.cats[T] = { realPhoto: photo, source: "proof" };
+    const photo = photoOfRow(row);
+    if (!(T in files.photos.cats) && !(T in (files.photos.none ?? {})) && !(T in (files.photos.hidden ?? {})) && realPhotoOf(photo)) {
+      const entry = { realPhoto: photo, source: "proof" };
+      if (files.photoHide.has(row.postId)) files.photos = { ...files.photos, hidden: { ...(files.photos.hidden ?? {}), [T]: { postId: row.postId, entry } } };
+      else files.photos.cats[T] = entry;
+    }
     replaceRow(ledger, { ...row, recordedAt: ISO_SECONDS(nowMs) });
     out.recorded.push(T);
     log(`Launcher: ${row.name} (${T}), launched ${whereText(row)}, moves into the sanctuary; its X post ("launched by the sanctuary on ${venue.announceAs}") waits for the Collection to prove ${row.tx.slice(0, 12)}….`);

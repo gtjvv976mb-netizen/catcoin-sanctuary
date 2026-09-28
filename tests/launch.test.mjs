@@ -80,7 +80,7 @@ test("launch workflow: a commit after each phase, the token handed to git for th
   const commits = steps.filter((s) => /git -c user\.name="github-actions\[bot\]"/.test(s));
   assert.equal(commits.length, 3);
   const [c1, c2, c3] = commits;
-  assert.match(c1, /git add -- data\/sanctuary-launches\.json coins\n/);
+  assert.match(c1, /git add -- data\/sanctuary-launches\.json coins data\/real-photos\.json\n/, "the ledger, the coin's metadata, and a photo data/photo-hide.json hid or showed again");
   assert.match(c2, /git add -- data\/sanctuary-launches\.json\n/);
   assert.match(c3, /git add -- data\/sanctuary-launches\.json data\/adoptables\.json data\/launches\.json data\/real-photos\.json data\/cat-watch\.json scripts\/meshy\.queue\.json\n/);
   // data/announced.json is the Announce workflow's alone (it holds the launcher's cats by rule): committed here, it raced
@@ -104,11 +104,16 @@ test("launch workflow: a commit after each phase, the token handed to git for th
   for (const c of commits) assert.match(c, /commit -q -m "Launch: [a-z' ]+"/);
 });
 
-test("launch workflow: the dispatching jobs run no code of the repository's: the metadata job deploys the site, publish starts the Collection, Pages and Announce", () => {
+test("launch workflow: the dispatching jobs run no code of the repository's: the metadata job deploys the site, publish starts the Collection, Pages, Announce and Models", () => {
   for (const name of ["metadata", "publish"]) assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\.|checkout/.test(job(name)), `${name} runs repository code or sees a secret`);
   assert.match(job("metadata"), /run: gh workflow run pages\.yml -R "\$REPO" --ref main\n/);
   const pub = job("publish");
-  for (const w of ["collection.yml", "pages.yml", "announce.yml"]) assert.match(pub, new RegExp(`gh workflow run ${w.replace(".", "\\.")} -R "\\$REPO" --ref main`), w);
+  for (const w of ["collection.yml", "pages.yml", "announce.yml", "models.yml"]) assert.match(pub, new RegExp(`gh workflow run ${w.replace(".", "\\.")} -R "\\$REPO" --ref main`), w);
+  // The new cat's 3D model: the Models workflow (which runs only while MODELS_ENABLED is on) is started after a recorded launch.
+  assert.ok(fs.existsSync(path.join(ROOT, ".github/workflows/models.yml")));
+  // A disabled Models workflow never fails the publish job (the Collection, Pages and Announce dispatches come first).
+  assert.match(pub, /gh workflow run models\.yml -R "\$REPO" --ref main \|\| echo "::notice::Models not started[^"]*"\n/);
+  for (const w of ["collection.yml", "pages.yml", "announce.yml"]) assert.ok(pub.indexOf(w) < pub.indexOf("models.yml"), w);
   // The outputs the jobs read come from the launcher's own steps.
   assert.match(job("prepare"), /outputs:\n\s+pending: \$\{\{ steps\.prepare\.outputs\.pending \}\}\n\s+deploy: \$\{\{ steps\.prepare\.outputs\.deploy \}\}/);
   assert.match(job("launch"), /outputs:\n\s+recorded: \$\{\{ steps\.commit-record\.outputs\.recorded \}\}/, "publish starts only for a cat whose record reached main");
@@ -116,9 +121,9 @@ test("launch workflow: the dispatching jobs run no code of the repository's: the
   assert.match(stepNamed(/node scripts\/launch\.mjs record/), /id: record\n/);
 });
 
-test("pages: coins/ is published (the metadata a coin's uri serves); the launcher's ledger and the approvals are not; the Launch workflow dispatches the deploy", () => {
+test("pages: coins/ is published (the metadata a coin's uri serves); the launcher's ledger, the approvals and the photo hide list are not; the Launch workflow dispatches the deploy", () => {
   assert.ok(!/--exclude '\/?coins/.test(PAGES), "coins/ must reach the site");
-  for (const excluded of ["/data/sanctuary-launches.json", "/data/launch-approvals.json"]) assert.ok(PAGES.includes(`--exclude '${excluded}'`), excluded);
+  for (const excluded of ["/data/sanctuary-launches.json", "/data/launch-approvals.json", "/data/photo-hide.json"]) assert.ok(PAGES.includes(`--exclude '${excluded}'`), excluded);
   assert.match(PAGES, /workflow_dispatch:/);
   // The only Markdown in coins/ is its note, which the site leaves out with every *.md.
   assert.ok(PAGES.includes("--exclude '*.md'"));

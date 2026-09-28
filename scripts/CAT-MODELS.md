@@ -44,6 +44,13 @@ far copy), and the PBR extras go. gltfpack packs it with `-kn -km -tr`, and `-si
 `assets/models/PROVENANCE.md`. Budgets are 600 KB full and 150 KB far; the 24 cats come to about
 230-340 KB and 70-115 KB. `--yaw DEG` turns a single model if the automatic heading is ever wrong.
 
+## Automatic: the Models workflow
+
+`.github/workflows/models.yml` runs the Meshy rebuild, the packer, the checks (budgets, a valid GLB, the
+garden's rig on the model, tests/catmodels, catrig and meshy), Tripo's rig and a preview for the cats the
+sanctuary launches (`scripts/models.mjs`; README "Launcher"). A model that fails the checks is discarded.
+The facing and the look still want a person's eye (section 3).
+
 ## 3. Check by eye
 
     node scripts/render-cat-thumbs.mjs OUT --pictures DIR   # picture | 3/4 view | side (head right) | far copy
