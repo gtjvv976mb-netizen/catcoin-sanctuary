@@ -1,13 +1,15 @@
 # Publishes the site to GitHub Pages (catcoinsanctuary.com, from CNAME). No build: the folder is
 # the site (the page reads data/planned.json, data/collection.json, data/wallets.json and data/famous.json, and the
 # portraits in assets/portraits, all prepared ahead). Everything a visitor loads is copied into _site; what only builds or tests it
-# (scripts/, tests/, .github/, the package files, Markdown notes, the builder's state file) is
-# left out. The tests run first, in a job of their own that can only read the repository (they
+# (scripts/, tests/, .github/, the package files, Markdown notes, the builder's state file, the
+# launcher's ledger and approvals) is left out. coins/ is published: the metadata of the coins the
+# launcher launches (scripts/launch.mjs), at the uri each coin carries on chain. The tests run first, in a job of their own that can only read the repository (they
 # never see the Pages or OIDC tokens), and a failing test stops the deploy, so the live site stays
 # as it was.
 #
-# When it runs: on a push to main, by hand, and when the hourly Collection workflow (or the daily
-# Famous coins refresh) has finished.
+# When it runs: on a push to main, by hand (the Launch workflow starts it to publish a coin's
+# metadata before the launch, and after a launched cat moved in), and when the hourly Collection
+# workflow (or the daily Famous coins refresh) has finished.
 # That last one is needed because a commit pushed with the workflow token does not start other
 # workflows. A "check" job looks at whether that Collection run committed anything (main's newest
 # commit is newer than the run's start); if not, nothing is deployed, so there is no deploy
@@ -103,6 +105,7 @@ jobs:
             --exclude '.git' --exclude '/.github' --exclude '/_site' --exclude '/node_modules' \
             --exclude '/scripts' --exclude '/tests' --exclude '/package.json' --exclude '/package-lock.json' \
             --exclude '*.prototype.html' --exclude '/data/collection-state.json' --exclude '/data/held.json' --exclude '/data/launches.json' --exclude '*.md' \
+            --exclude '/data/sanctuary-launches.json' --exclude '/data/launch-approvals.json' \
             ./ _site/
           test -f _site/index.html && test -f _site/CNAME && test -f _site/data/collection.json && test -f _site/data/planned.json && test -f _site/data/wallets.json && test -f _site/data/famous.json
           test -f _site/favicon.ico && test -f _site/assets/og-image.jpg && test -f _site/assets/models/sanctuary.glb

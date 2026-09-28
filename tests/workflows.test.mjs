@@ -70,9 +70,13 @@ test("collection: hourly and by hand, contents: write for collecting, actions: w
   assert.match(COLLECTION, /persist-credentials: false/);
   assert.deepEqual([...new Set([...COLLECTION.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))], ["SOLANA_RPC_URL"]);
   // Only the builder's own tests gate the hourly run (a content test can hold up a deploy, never the recording of a launch).
+  // tests/pump-quote.test.mjs is one: the Collection proves a pump.fun launch priced in a listed coin (chain.mjs
+  // proveLaunchPump's quotes, the curve's quote read back, collection.js's entry rules, the builder's pump-quotes.json),
+  // which the launcher makes once the owner opts in. launchlab and venues-routing test the launcher only (the Launch
+  // workflow runs launchlab's before it sends; venues-routing's reads the trend watch, which needs npm).
   assert.match(COLLECTION, /npm ci[\s\S]*npm run test:builder[\s\S]*node scripts\/build-collection\.mjs/);
   const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"));
-  assert.deepEqual(pkg.scripts["test:builder"].split(" ").filter((w) => w.startsWith("tests/")).sort(), ["tests/build.test.mjs", "tests/chain.test.mjs", "tests/collection.test.mjs", "tests/workflows.test.mjs"]);
+  assert.deepEqual(pkg.scripts["test:builder"].split(" ").filter((w) => w.startsWith("tests/")).sort(), ["tests/build.test.mjs", "tests/chain.test.mjs", "tests/collection.test.mjs", "tests/pump-quote.test.mjs", "tests/workflows.test.mjs"]);
   assert.match(COLLECTION, /git add -- 'data\/\*\.json'/);
   assert.match(COLLECTION, /git diff --cached --quiet/);
   assert.match(COLLECTION, /concurrency:\n\s+group: collection/);

@@ -59,8 +59,8 @@ export function launchKit(r, { site } = {}) {
   };
 }
 
-/** Can this cat be adopted here? A cat with a ticker that has not launched, is not already adopted and is not an example. */
-export const canAdopt = (r) => !!r && !!r.ticker && !r.example && r.kind !== "famous" && r.token?.status !== "launched" && !r.adoption;
+/** Can this cat be adopted here? A cat with a ticker that has not launched, is not adopted, is not being launched by the sanctuary and is not an example. */
+export const canAdopt = (r) => !!r && !!r.ticker && !r.example && r.kind !== "famous" && r.token?.status !== "launched" && !r.adoption && !r.sanctuaryLaunch;
 
 let kitsPromise = null;
 /** assets/kits/kits.json, read once ({ cats: {} } when it cannot be read). */

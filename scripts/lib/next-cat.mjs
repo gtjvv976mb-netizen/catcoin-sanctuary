@@ -7,7 +7,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { checkFields } from "./content-rules/content-rules.mjs";
-import { pick, rosterLeft, listCats, readJson, DEFAULT_CONFIG, PAUSED_REASON } from "../announce.mjs";
+import { pick, rosterLeft, listCats, readJson, sanctuaryCoins, holdSanctuaryCats, DEFAULT_CONFIG, PAUSED_REASON } from "../announce.mjs";
 
 export const CATEGORIES = ["company", "celebrity", "tv-movie", "crypto", "viral"];
 export const RUN_EVERY_MINUTES = 20; // .github/workflows/announce.yml: */20
@@ -87,9 +87,10 @@ export function nextCatFile({ cats, state, queue, config, hints = {}, adoptables
 export function writeNextCat(root, { now = new Date(), state = null } = {}) {
   const data = (f) => path.join(root, "data", f);
   const adoptables = readJson(data("adoptables.json"), { cats: [] });
-  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), readJson(data("collection.json"), { cats: [] }), adoptables);
+  const cats = listCats(readJson(data("planned.json"), { stocks: [], cats: [] }), readJson(data("collection.json"), { cats: [] }), adoptables,
+    { sanctuaryCoin: sanctuaryCoins(readJson(data("sanctuary-launches.json"), { launches: [] }), readJson(data("launches.json"), { launches: [] })) });
   state ||= readJson(data("announced.json"), { cats: {} });
-  state.cats ||= {};
+  holdSanctuaryCats(cats, state);
   const config = { ...DEFAULT_CONFIG, ...readJson(data("announce-config.json"), {}) };
   const hints = readJson(path.join(root, HINTS_FILE), { cats: {} }).cats || {};
   const next = nextCatFile({ cats, state, queue: readJson(data("release-queue.json"), { cats: [] }), config, hints, adoptables, now, root });

@@ -13,16 +13,17 @@
    Nothing here decides that a launch happened; the builder proves that on chain. This file only
    refuses an entry that is malformed, unsafe to show, or not paid by a listed wallet.
 
-   data/collection.json   { "cats": [ entry, … ] }, newest first
-   entry                  { mint, name, symbol, pair: { symbol, mint }, pool, payer, tx, time }
-                            mint, pool, payer, pair.mint: base58, 32 bytes; tx: base58, 64 bytes
-                            time: the launch's block time, "YYYY-MM-DDTHH:MM:SSZ"
-   data/wallets.json      { "launchers": [ { address, since, label, until? } ] }
-                            since / until: "YYYY-MM-DD" or "YYYY-MM-DDTHH:MM:SSZ" (UTC); until is
-                            exclusive and optional. To retire a wallet, give it an until date:
-                            removing it would make its cats fail this check, and the builder
-                            never drops a cat, so it stops instead.
-   data/planned.json      { "stocks": [ stock, … ], "cats": [ planned cat, … ] } (see validatePlanned)
+   data/collection.json  { "cats": [ entry, … ] }, newest first
+   entry  { mint, name, symbol, pair: { symbol, mint }, pool, payer, tx, time, launchpad? }
+       launchpad "pump.fun": pair SOL_PAIR or a listed quote (opts.quotes); absent (StonkFun): a stock pair
+       mint, pool, payer, pair.mint: base58, 32 bytes; tx: base58, 64 bytes
+       time: the launch's block time, "YYYY-MM-DDTHH:MM:SSZ"
+   data/wallets.json  { "launchers": [ { address, since, label, until? } ] }
+       since / until: "YYYY-MM-DD" or "YYYY-MM-DDTHH:MM:SSZ" (UTC); until is
+       exclusive and optional. To retire a wallet, give it an until date:
+       removing it would make its cats fail this check, and the builder
+       never drops a cat, so it stops instead.
+   data/planned.json  { "stocks": [ stock, … ], "cats": [ planned cat, … ] } (see validatePlanned)
 
    A third kind lives round them:
    - a FAMOUS cat coin (data/famous.json, see validateFamous): a cat coin that already exists on
@@ -148,6 +149,9 @@ export const STOCK_PAIRS = Object.freeze([
 
 /** The 24 xStocks among them. */
 export const XSTOCKS = Object.freeze(STOCK_PAIRS.filter((p) => p.category === "xstock"));
+
+/** A pump.fun launch's pair (wrapped SOL). */
+export const SOL_PAIR = Object.freeze({ symbol: "SOL", mint: "So11111111111111111111111111111111111111112" });
 
 /** The pair row for a mint, or null. */
 export const pairByMint = (mint) => STOCK_PAIRS.find((p) => p.mint === mint) ?? null;
@@ -357,7 +361,7 @@ export function activeLauncher(launchers, payer, timeMs) {
   return launchers.find((l) => l.address === payer && timeMs >= l.sinceMs && (l.untilMs === null || timeMs < l.untilMs)) ?? null;
 }
 
-const ENTRY_FIELDS = ["mint", "name", "symbol", "pair", "pool", "payer", "tx", "time"];
+const ENTRY_FIELDS = ["mint", "name", "symbol", "pair", "pool", "payer", "tx", "time", "launchpad"];
 
 /** Why a pair { symbol, mint } is not one of the stock pairs, or null. */
 export function pairProblem(pair, { stocks = STOCK_PAIRS } = {}) {
@@ -368,8 +372,25 @@ export function pairProblem(pair, { stocks = STOCK_PAIRS } = {}) {
   return null;
 }
 
+/* data/pump-quotes.json { note?, quotes: [{ symbol, mint, tokenProgram }] }: coins besides SOL a pump.fun launch may be
+   priced in (scripts/lib/pump.mjs). One rule for the builder, the bots and the page: closed fields, a plain symbol of
+   at most 16 bytes, no SOL (wrapped, or the zero key), no stock pair (a stock launches on StonkFun), nothing twice. */
+export const quoteProblem = (q) => (!isObject(q) ? "a quote is { mint, tokenProgram }" : !isAddress(q.mint) ? "the quote mint is not a base58 address"
+  : [SOL_PAIR.mint, "11111111111111111111111111111111"].includes(q.mint) ? "SOL is not a quote"
+    : /^Token(kegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA|zQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb)$/.test(q.tokenProgram) ? null : "the token program is not Token or Token-2022");
+export function validatePumpQuotes(d) {
+  const quotes = [], refused = [];
+  if (!isObject(d) || !Array.isArray(d.quotes) || extraKeys(d, ["note", "quotes"]).length || !["undefined", "string"].includes(typeof d.note)) return { quotes, refused: [{ index: null, detail: "pump-quotes must be { note, quotes }" }] };
+  d.quotes.forEach((q, index) => {
+    const o = isObject(q), x = o && extraKeys(q, ["symbol", "mint", "tokenProgram"])[0], s = o && textProblem(q.symbol, { maxBytes: 16 });
+    const bad = !o ? "not an object" : x ? `unknown field ${x}` : s ? `symbol: ${s}` : quoteProblem(q) || (pairByMint(q.mint) ? "a stock pair" : quotes.some((y) => y.mint === q.mint || y.symbol === q.symbol) && "listed twice");
+    if (bad) refused.push({ index, detail: bad }); else quotes.push(Object.freeze({ symbol: q.symbol, mint: q.mint, tokenProgram: q.tokenProgram }));
+  });
+  return { quotes, refused };
+}
+
 /** Why one collection entry may not be a resident, as { clause, detail }, or null. */
-export function entryProblem(e, { launchers, stocks = STOCK_PAIRS, nowMs = Date.now() }) {
+export function entryProblem(e, { launchers, stocks = STOCK_PAIRS, quotes = [], nowMs = Date.now() }) {
   const no = (clause, detail) => ({ clause, detail });
   if (!isObject(e)) return no("shape", "not an object");
   const extra = extraKeys(e, ENTRY_FIELDS);
@@ -380,7 +401,9 @@ export function entryProblem(e, { launchers, stocks = STOCK_PAIRS, nowMs = Date.
   if (name) return no("name", `name: ${name}`);
   const symbol = textProblem(e.symbol, { maxBytes: LIMITS.symbolBytes });
   if (symbol) return no("symbol", `symbol: ${symbol}`);
-  const pair = pairProblem(e.pair, { stocks });
+  const pump = e.launchpad === "pump.fun";
+  if (e.launchpad !== undefined && !pump) return no("launchpad", "an unknown launchpad");
+  const pair = pairProblem(e.pair, { stocks: pump ? [SOL_PAIR, ...quotes] : stocks });
   if (pair) return no("pair", pair);
   if (new Set([e.mint, e.pool, e.pair.mint]).size !== 3) return no("accounts", "mint, pool and pair must be different accounts");
   const timeMs = parseTime(e.time, { dayAllowed: false });
@@ -395,15 +418,16 @@ export const compareEntries = (a, b) => (a.time < b.time ? 1 : a.time > b.time ?
 
 const copyEntry = (e) => ({
   mint: e.mint, name: e.name, symbol: e.symbol, pair: { symbol: e.pair.symbol, mint: e.pair.mint },
-  pool: e.pool, payer: e.payer, tx: e.tx, time: e.time,
+  pool: e.pool, payer: e.payer, tx: e.tx, time: e.time, ...(e.launchpad && { launchpad: e.launchpad }),
 });
 
 /**
  * The resident tokens in a collection file. `wallets` is data/wallets.json as read (or its
- * validateWallets result). Returns { cats, refused: [{ index, mint, clause, detail }] }: `cats`
- * are clean copies, deduplicated by mint (and by transaction), newest first, at most `max`.
+ * validateWallets result); the other options are entryProblem's. Returns { cats, refused:
+ * [{ index, mint, clause, detail }] }: `cats` are clean copies, deduplicated by mint (and by
+ * transaction), newest first, at most `max`.
  */
-export function validateCollection(data, { wallets, stocks = STOCK_PAIRS, max = MAX_CATS, nowMs = Date.now() } = {}) {
+export function validateCollection(data, { wallets, max = MAX_CATS, ...opts } = {}) {
   const launchers = Array.isArray(wallets?.launchers) && wallets.launchers.every((l) => typeof l.sinceMs === "number")
     ? wallets.launchers : validateWallets(wallets).launchers;
   const refused = [];
@@ -412,7 +436,7 @@ export function validateCollection(data, { wallets, stocks = STOCK_PAIRS, max = 
   }
   const good = [];
   data.cats.forEach((e, index) => {
-    const p = entryProblem(e, { launchers, stocks, nowMs });
+    const p = entryProblem(e, { ...opts, launchers });
     if (p) refused.push({ index, mint: typeof e?.mint === "string" ? e.mint.slice(0, 44) : null, ...p });
     else good.push({ index, entry: copyEntry(e) });
   });
@@ -429,30 +453,22 @@ export function validateCollection(data, { wallets, stocks = STOCK_PAIRS, max = 
 
 /* ── links for a launched token ─────────────────────────────────────────────────────── */
 
-/** Public pages about a validated entry, or null. The StonkFun page form is the one the Cat
-    Intelligence Agency project pinned (bots/lib/verified.mjs PAGES.stonkfunToken); on 2026-09-25
-    https://www.stonkfun.xyz/token/EcB7LMNF…3HvL opened the GMEx launch's page ("1GME / GMEX · StonkFun"). */
+/** Public pages about a validated entry, or null: Solscan's token and launch pages, and its
+    launchpad's page (pump.fun's /coin/<mint>; StonkFun's form as the Cat Intelligence Agency project
+    pinned it, which opened the GMEx launch's page on 2026-09-25). */
 export function links(entry) {
   if (!isObject(entry) || !isAddress(entry.mint) || !isSignature(entry.tx)) return null;
   return {
     token: `https://solscan.io/token/${entry.mint}`,
     tx: `https://solscan.io/tx/${entry.tx}`,
-    stonkfun: `https://www.stonkfun.xyz/token/${entry.mint}`,
+    ...(entry.launchpad === "pump.fun" ? { pumpfun: `https://pump.fun/coin/${entry.mint}` } : { stonkfun: `https://www.stonkfun.xyz/token/${entry.mint}` }),
   };
 }
 
-/**
- * Where a launched token can be bought: a mint only, so a planned cat has none. Checked on
- * 2026-09-25 (tests/fixtures/buy-links.json keeps what was seen):
- * - GMGN: https://gmgn.ai/sol/token/<mint>. In a browser, POPCAT's mint (7GCihgDB…W2hr) opened
- *   its page ("POPCAT $56.94M | GMGN.AI"), and so did a real StonkFun LaunchLab token priced in
- *   GMEx (EcB7LMNF…3HvL, "1GME $3.25K | GMGN.AI").
- * - FOMO (the fomo app by FOMO Labs, Inc.; official site https://fomo.family, the site its
- *   Google Play listing names): https://fomo.family/tokens/solana/<mint>. That is the path its
- *   own web app builds (route "tokens/:chain/:tokenAddress", chain "solana"), and the share card
- *   fomo renders for that path named POPCAT, and the GMEx StonkFun token, correctly. The page
- *   needs a fomo login: a visitor who is signed out lands on fomo.family's front page.
- */
+/** Where a launched token can be bought: a mint only, so a planned cat has none. GMGN, and FOMO (the
+    fomo app by FOMO Labs, Inc.: the path its own web app builds; a signed-out visitor lands on its
+    front page). Both were opened in a browser on 2026-09-25 for POPCAT and a StonkFun LaunchLab
+    token; tests/fixtures/buy-links.json keeps what was seen. */
 export const BUY_SITES = Object.freeze([
   Object.freeze({ label: "GMGN", url: (mint) => `https://gmgn.ai/sol/token/${mint}` }),
   Object.freeze({ label: "FOMO", url: (mint) => `https://fomo.family/tokens/solana/${mint}` }),
