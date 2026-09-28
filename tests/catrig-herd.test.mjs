@@ -24,7 +24,10 @@
      over in a frame).
    A failure names the cat, the clip or blend, the measure and where it was worst, so a fix can be
    checked one cat at a time: CATRIG_HERD=KEY1,KEY2 node --test tests/catrig-herd.test.mjs
-   (CATRIG_HERD_MS=1 prints each cat's time spent rigging, posing clips and running blends). */
+   (CATRIG_HERD_MS=1 prints each cat's time spent rigging, posing clips and running blends).
+   Each cat's clips are made with its fit (assets/models/cats/fit.json: how far its own skin lets each
+   mannerism go, measured by scripts/fit-clips.mjs; re-run that after changing catrig.js or a model), and
+   the actions its model can't show at all (traits.js MODEL_LIMITS) are left out, as the sims leave them out. */
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -94,6 +97,8 @@ if (isMainThread) {
   // (the cats with leg labels made offline, assets/models/cats/<KEY>.legs.json, skinned with them as the page does)
   const LEGS = new Set((() => { try { const j = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/models/cats/legs-index.json"), "utf8")); return j.v === 1 ? j.cats : []; } catch { return []; } })());
   const legsOf = (key) => { if (!LEGS.has(key)) return null; const j = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/models/cats", `${key}.legs.json`), "utf8")); return j.v === 1 && j.far ? R.decodeLegs(j.far, j.nlo) : null; };
+  // (and how far each model's skin lets a mannerism go, assets/models/cats/fit.json by scripts/fit-clips.mjs, as the page reads it)
+  const FIT = (() => { try { const j = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/models/cats/fit.json"), "utf8")); return j.v === 1 ? j.cats || {} : {}; } catch { return {}; } })();
   const out = [];
   for (const key of workerData.keys) {
     try { out.push(checkCat(key)); } catch (e) { out.push({ key, error: String(e && e.stack || e).split("\n").slice(0, 3).join(" | ") }); }
@@ -194,7 +199,9 @@ if (isMainThread) {
     const t0 = performance.now(), ms = {};
     const lo = readModel(path.join(ROOT, "assets/models/cats", `${key}-lo.glb`));
     const rig = R.findRig(lo.pos, lo.index), sk = R.buildSkeleton(rig), w = R.skinWeights(lo.pos, rig, sk, lo.index, legsOf(key));
-    const traits = T.traitsOf({ id: key }, TABLE), style = T.styleOf(traits), clips = R.makeClips(rig, style || {});
+    const traits = T.traitsOf({ id: key }, TABLE), style = T.styleOf(traits), clips = R.makeClips(rig, style || {}, FIT[key] || null);
+    // (what this model can't show, traits.js MODEL_LIMITS, the sims never give it and the view never shows: not measured)
+    const avoid = new Set(traits.avoid || []);
     const bones = sk.skeleton.bones, inv = sk.skeleton.boneInverses, SM = new Float64Array(bones.length * 16), m4 = new THREE.Matrix4();
     const gauge = skinGauge(lo.pos, lo.index, w, bones.map((b) => b.name), rig);
     ms.setup = performance.now() - t0;
@@ -205,7 +212,7 @@ if (isMainThread) {
     // Clips on their own.
     const mixer = new THREE.AnimationMixer(sk.root);
     for (const name of CLIPS) {
-      if (!clips[name]) continue;
+      if (!clips[name] || avoid.has(name)) continue;
       const loop = clips[name].userData?.loop !== false;
       for (const u of loop ? [0.1, 0.35, 0.6, 0.85] : [0.15, 0.5, 0.85, 1]) {
         mixer.stopAllAction(); reset();
@@ -226,7 +233,7 @@ if (isMainThread) {
     const INVA = 4276115653; // 1664525^-1 mod 2^32: steers the controller's rnd() so a loop starts at a chosen phase
     const PHASES = [0.3, 0.8], DT = 1 / 60, prevQ = LEGS.map(() => [new THREE.Quaternion(), new THREE.Quaternion(), new THREE.Quaternion()]), curQ = LEGS.map(() => [new THREE.Quaternion(), new THREE.Quaternion(), new THREE.Quaternion()]);
     for (const seq of SEQS) {
-      if (!seq.every((a) => clips[a])) continue;
+      if (!seq.every((a) => clips[a] && !avoid.has(a))) continue;
       for (const phase of PHASES) {
         reset();
         const o = { rig, sk, s, style, mixer: new THREE.AnimationMixer(sk.root), clips, actions: {}, perUnit };

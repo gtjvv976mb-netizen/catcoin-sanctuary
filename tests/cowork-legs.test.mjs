@@ -10,7 +10,7 @@ import { decodeLegs, encodeLegs, BODY } from "../scripts/cowork-legs.mjs";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DIR = path.join(ROOT, "assets/models/cats");
 const INDEX = JSON.parse(fs.readFileSync(path.join(DIR, "index.json"), "utf8")).cats;
-const files = fs.readdirSync(DIR).filter((f) => f.endsWith(".legs.json")).sort();
+const files = fs.readdirSync(DIR).filter((f) => f.endsWith(".legs.json")).sort(); // (fit.json and index.json are not leg files)
 
 /** A GLB's first primitive's vertex count (its POSITION accessor), without decoding the mesh. */
 function vertexCount(file) {

@@ -54,7 +54,7 @@ export async function buildTraits(root = ROOT) {
     const exactLook = (exact[r.ticker] ?? exact[r.id])?.exactLook || "";
     const t = deriveTraits(r, { caption, exactLook });
     const row = {};
-    for (const k of [...TRAIT_KEYS, "age", "build", "legs", "size", "scale", "flags", "signature"]) if (t[k] !== undefined) row[k] = t[k];
+    for (const k of [...TRAIT_KEYS, "age", "build", "legs", "size", "scale", "flags", "signature", "avoid"]) if (t[k] !== undefined) row[k] = t[k];
     row.why = t.why;
     cats[r.id] = row;
   }
