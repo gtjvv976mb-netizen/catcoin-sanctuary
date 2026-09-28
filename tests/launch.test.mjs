@@ -80,7 +80,7 @@ test("launch workflow: a commit after each phase, the token handed to git for th
   const commits = steps.filter((s) => /git -c user\.name="github-actions\[bot\]"/.test(s));
   assert.equal(commits.length, 3);
   const [c1, c2, c3] = commits;
-  assert.match(c1, /git add -- data\/sanctuary-launches\.json coins\n/);
+  assert.match(c1, /git add -- data\/sanctuary-launches\.json coins data\/real-photos\.json\n/, "the ledger, the coin's metadata, and a photo data/photo-hide.json hid or showed again");
   assert.match(c2, /git add -- data\/sanctuary-launches\.json\n/);
   assert.match(c3, /git add -- data\/sanctuary-launches\.json data\/adoptables\.json data\/launches\.json data\/real-photos\.json data\/cat-watch\.json scripts\/meshy\.queue\.json\n/);
   // data/announced.json is the Announce workflow's alone (it holds the launcher's cats by rule): committed here, it raced
@@ -116,9 +116,9 @@ test("launch workflow: the dispatching jobs run no code of the repository's: the
   assert.match(stepNamed(/node scripts\/launch\.mjs record/), /id: record\n/);
 });
 
-test("pages: coins/ is published (the metadata a coin's uri serves); the launcher's ledger and the approvals are not; the Launch workflow dispatches the deploy", () => {
+test("pages: coins/ is published (the metadata a coin's uri serves); the launcher's ledger, the approvals and the photo hide list are not; the Launch workflow dispatches the deploy", () => {
   assert.ok(!/--exclude '\/?coins/.test(PAGES), "coins/ must reach the site");
-  for (const excluded of ["/data/sanctuary-launches.json", "/data/launch-approvals.json"]) assert.ok(PAGES.includes(`--exclude '${excluded}'`), excluded);
+  for (const excluded of ["/data/sanctuary-launches.json", "/data/launch-approvals.json", "/data/photo-hide.json"]) assert.ok(PAGES.includes(`--exclude '${excluded}'`), excluded);
   assert.match(PAGES, /workflow_dispatch:/);
   // The only Markdown in coins/ is its note, which the site leaves out with every *.md.
   assert.ok(PAGES.includes("--exclude '*.md'"));

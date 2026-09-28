@@ -159,8 +159,8 @@ is only prepared when its coin and its X post would pass on pump.fun in SOL too.
 
 **Who it launches on its own: only watch-list cats.** A post the trend watch named after a
 `data/cat-watch.json` figure (`reading.nameFrom: "figure"`), or a cartoon or fiction cat that an X
-trend named or a big account posted. Anything else (a real pet, a name the rules guessed) waits for
-you: add its post id to `data/launch-approvals.json` (`{ "approve": ["<post id>"] }`, the id in quotes, laid
+trend named or a big account posted. Anything else (a real pet, even one named after a watch-list
+figure, or a name the rules guessed) waits for you: add its post id to `data/launch-approvals.json` (`{ "approve": ["<post id>"] }`, the id in quotes, laid
 out as you like; for someone's pet, ask its owner first). An approved post still meets every other rule. It never launches a
 sensitive cat, one already in the sanctuary (a planned or adoptable cat's name or ticker), one in
 its ledger, a post older than 48 hours or without a picture, or a cat whose coin text or X post
@@ -171,7 +171,8 @@ after a crash at any point):
 
 1. *prepare* chooses the venue, writes the coin's metadata to `coins/<postId>.json` (pump.fun's
    shape, the same on every venue: name, symbol, the description, the post's picture hotlinked from
-   pbs.twimg.com, the cat's card as website, @catcosanctuary as twitter) and a "prepared" row in the ledger, `data/sanctuary-launches.json` (its venue, and the
+   pbs.twimg.com (the site's own picture for a hidden photo, below), the cat's card as website,
+   @catcosanctuary as twitter) and a "prepared" row in the ledger, `data/sanctuary-launches.json` (its venue, and the
    cat priced in the venue's pair). The site is deployed so it serves that file.
 2. *send* (the only step with the key) waits until `https://catcoinsanctuary.com/coins/<postId>.json`
    serves exactly the committed file, builds the launch on its venue (falling back to pump.fun in
@@ -190,7 +191,7 @@ after a crash at any point):
    Collection proves the mint, then "Launched by the sanctuary on …" with that launchpad's link),
    its transaction in `data/launches.json` (the announcer holds it by its own rule; the launcher
    never writes `data/announced.json`), a 3D model queued in `scripts/meshy.queue.json`, its real photo in
-   `data/real-photos.json`, and its figure off the watch list. Then the Collection, Pages and
+   `data/real-photos.json` (credited on its card, below), and its figure off the watch list. Then the Collection, Pages and
    Announce are started (Pages at once; the Collection and Announce keep their own hourly chains, so
    the proof and the post come within about an hour). Its one X post ("… launched by the sanctuary on PumpFun" or "on StonkFun",
    its lore line, the fan-tribute line when it fits, and its card link; never the mint or the author's @handle) goes out through
@@ -206,6 +207,25 @@ rules' endorsement list cannot tell "not endorsed" from "endorsed"). The launch 
 same line, under the lore line, when a version of the post fits 280 characters and every rule with
 it: room is made as for any long post (the mint line, a hashtag, then the lore line go first), never
 by dropping the card link. If no version could carry it, the post goes out as it would without it.
+
+**Photos from X are shown with credit to their source.** Every launched cat, drawn or real, gets the
+photo from its X post on its card, hotlinked from pbs.twimg.com (never copied here) and credited under
+it: "📸 Photo: @handle on X", linked to the post (the Adopt panel credits a kit's photo the same way).
+The same photo is the coin's picture, and the coin's description credits it too ("Photo: @handle on
+X.", between the lore and the tribute line) when it fits the 500 characters and the content rules;
+otherwise the description goes without it. The launch X post does not carry the credit: the launch
+post never names the @handle of the post a cat was found in (a rule of the launcher's X post: no
+mention of a stranger), and it links to the card, where the credit is.
+
+**Hiding a photo (the owner):** a stranger's photo can show faces, children or a home. To hide one,
+add its post's X status id (in quotes) to **`data/photo-hide.json`** (`{ "hide": ["<post id>"] }`).
+The next Launch run (every 20 minutes) moves the cat's `data/real-photos.json` entry to `none` (the
+card then shows its portrait), deploys the site, and a coin not sent yet takes the site's own picture
+(`assets/og-image.jpg`, no photo credit) instead. **A coin's picture cannot change once it is
+launched**, so hide a photo *before* the launch if the coin must not show it (for a real pet, you
+see the post anyway when you approve its launch). Remove the id to show the photo again. The file is
+read like `data/launch-approvals.json`: a typo hides nothing (the run warns), and it never stops the
+launcher or the tests.
 
 The coin's mint is derived from the wallet and the post (`deriveMintKeypair`), so one post can only
 ever make one coin: a retry sends the same mint again. The mint is never written or printed before
@@ -244,7 +264,7 @@ its transaction is sent (a known, unused address can be blocked by anyone who fu
 launch already sent is settled and recorded the next time it runs. To retire the wallet, give its
 row in `data/wallets.json` an `until` date; never delete the row. Never delete a file in `coins/`:
 a launched coin's uri points to it for good. A real photo that shows a person can be taken off a
-card by moving its row in `data/real-photos.json` to `none`. The 3D model is made by hand, as for
+card with `data/photo-hide.json` (above), or by hand by moving its row in `data/real-photos.json` to `none`. The 3D model is made by hand, as for
 every cat (`node scripts/meshy.mjs run <TICKER>`, see `MESHY-HANDOFF.md`).
 
 ## Unread transactions

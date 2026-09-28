@@ -1,0 +1,4 @@
+{
+  "note": "Photos the owner hides (read by scripts/launch.mjs). Every launched cat's card shows the photo from its X post, credited \"Photo: @handle on X\" with a link to the post, and the post's photo is its coin's picture. List a post's X status id here (in quotes) to hide its photo: the next Launch run moves the cat's data/real-photos.json entry to \"none\" (the card shows its portrait) and a coin not sent yet takes the site's own picture (assets/og-image.jpg) instead. A launched coin's picture cannot change: hide a photo before its launch if the coin must not show it. Remove the id to show the photo again. A file that is not JSON, or not { \"hide\": [ids] }, hides nothing (the Launch run warns).",
+  "hide": []
+}

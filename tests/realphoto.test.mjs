@@ -1,5 +1,5 @@
 /* The real photos (data/real-photos.json): every cat card with one shows it at the top of its body,
-   hotlinked from pbs.twimg.com and credited "📸 Real photo · @handle" with a link to the X post;
+   hotlinked from pbs.twimg.com and credited to its source, "📸 Photo: @handle on X", linked to the X post;
    our own picture sits under it as "🎮 In-game look" and takes its place if the photo fails.
    No image from X is ever hosted in this repository. */
 import test from "node:test";
@@ -24,9 +24,13 @@ const residents = async () => (await loadResidents({ fetchImpl: localFetch, base
 const fire = (el, type) => { for (const fn of el.listeners[type] ?? []) fn({}); };
 
 test("data/real-photos.json: only the four fields, pbs.twimg.com images, X post links, no cat both listed and left out", () => {
+  // A closed schema: shown photos (cats) and cats left without one (none: a reason, or HIDDEN_NOTE and the post data/photo-hide.json hides).
+  assert.deepEqual(Object.keys(PHOTOS).filter((k) => !["note", "checked", "cats", "none"].includes(k)), []);
+  for (const [k, why] of Object.entries(PHOTOS.none || {})) assert.ok(typeof why === "string" && why.length > 0, k);
   const entries = Object.entries(PHOTOS.cats);
   assert.ok(entries.length >= 50, `${entries.length} real photos`);
   for (const [k, v] of entries) {
+    assert.deepEqual(Object.keys(v).sort(), ["realPhoto", "source"], k);
     assert.deepEqual(Object.keys(v.realPhoto).sort(), ["alt", "handle", "post", "url"], k);
     assert.match(v.realPhoto.url, /^https:\/\/pbs\.twimg\.com\//, k);
     assert.match(v.realPhoto.post, /^https:\/\/(x|twitter)\.com\/[A-Za-z0-9_]{1,15}\/status\/\d+/, k);
@@ -69,7 +73,7 @@ test("the real-photo block: at the top of the card body, credited and linked; ou
     assert.equal(img.src, r.realPhoto.url);
     assert.match(img.src, /^https:\/\/pbs\.twimg\.com\//);
     const cap = first.querySelector("figcaption.card-real-photo-caption");
-    assert.equal(cap.textContent, `📸 Real photo · @${r.realPhoto.handle}`);
+    assert.equal(cap.textContent, `📸 Photo: @${r.realPhoto.handle} on X`, `${r.id}: credited to its source`);
     const a = cap.querySelector("a.card-real-photo-link");
     assert.equal(a.href, r.realPhoto.post);
     assert.equal(a.target, "_blank");

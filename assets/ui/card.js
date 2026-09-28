@@ -87,7 +87,7 @@ export function inGameFigure(src, alt) {
 
 /**
  * The real photo from the cat's X post, at the top of its card: hotlinked from pbs.twimg.com
- * (never hosted here), captioned "📸 Real photo · @handle" with a link to the post. If the image
+ * (never hosted here), credited to its source: "📸 Photo: @handle on X", linked to the post. If the image
  * cannot load, our own picture (`fallback`, the in-game look) takes its place.
  */
 export function realPhotoFigure(ph, fallback = null) {
@@ -96,9 +96,9 @@ export function realPhotoFigure(ph, fallback = null) {
   img.src = ph.url; img.alt = ph.alt; img.decoding = "async";
   img.referrerPolicy = "no-referrer";
   img.addEventListener("error", () => { if (fallback) fig.replaceWith(fallback); else fig.remove(); }, { once: true });
-  const cap = el("figcaption", "card-real-photo-caption", "📸 Real photo · ");
-  const a = link(ph.post, `@${ph.handle}`, "card-real-photo-link");
-  a.setAttribute("aria-label", `Real photo by @${ph.handle}: view the post on X (opens in a new tab)`);
+  const cap = el("figcaption", "card-real-photo-caption", "📸 Photo: ");
+  const a = link(ph.post, `@${ph.handle} on X`, "card-real-photo-link");
+  a.setAttribute("aria-label", `Photo by @${ph.handle}: view the post on X (opens in a new tab)`);
   cap.append(a);
   fig.append(img, cap);
   return fig;

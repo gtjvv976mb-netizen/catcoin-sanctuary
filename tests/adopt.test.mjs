@@ -141,7 +141,8 @@ test("the Adopt panel: copy buttons for every kit field, real downloads, both la
     if (/x$/i.test(r.pair.symbol || "")) assert.match(pads[1].textContent, new RegExp(`Suggested stock pair ${r.pair.symbol}`));
     // The logo: the credited real photo when the proof post has one, else our portrait, said plainly.
     if (files.photo) {
-      assert.ok(text.includes(`Photo: @${files.photo.handle}`));
+      assert.ok(text.includes(`Photo: @${files.photo.handle} on X`), `${r.id}: credited to its source`);
+      if (files.photo.post) assert.ok(anchors.some((a) => a.href === files.photo.post && a.textContent === `@${files.photo.handle} on X`), `${r.id}: the credit links the post`);
       assert.ok(anchors.some((a) => a.href === files.photo.url && a.textContent === "Open original to save ↗"));
       assert.match(text, /This photo belongs to its owner\. Ask for their permission/);
       assert.match(text, /Use our Sanctuary portrait instead/);
