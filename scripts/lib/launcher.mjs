@@ -38,7 +38,7 @@
  *
  * THE LEDGER, data/sanctuary-launches.json { note, launches: [row] }, newest first, at most
  * LEDGER_MAX rows (old finished rows are dropped first; none in flight ever is). A row:
- *   { postId, url, name, coinName, ticker, venue, policy, lore, image, metadataPath, status,
+ *   { postId, url, name, coinName, ticker, venue, policy, figure?, kind, lore, image, metadataPath, status,
  *     preparedAt, attempts, cat, and, as it goes: tx, sentAt, lastValidBlockHeight, mintPublic,
  *     spentLamports, settledAt, launchedAt, recordedAt, retry, reason, fallback }
  *   status "prepared" (its metadata written; no tx, no mint) → "sending" (tx = the signed
@@ -48,6 +48,7 @@
  *   prepared again with the SAME mint, at most MAX_ATTEMPTS sends). `venue` is the registered venue
  *   (its launchpad is the cat's launch.launchpad); `cat` is the adoptable row the cat gets once
  *   launched (data/adoptables.json, checked by assets/ui/adoptables.js before anything is prepared),
+ *   `kind` the trend watch's reading kind ("real" is a pet; "cartoon" and "fiction" are characters),
  *   priced in the venue's pair (SOL, the stock pair, or the listed coin); `fallback` says why a
  *   StonkFun or coin-priced cat went out on pump.fun in SOL instead.
  *
@@ -96,7 +97,7 @@ import { venueById, venueIds, chooseVenue, takenPairs, PUMP_SOL, PUMP_QUOTE } fr
 import { coatFromLook } from "./coat.mjs";
 import { tickerFor } from "./read-cat-post.mjs";
 import { RpcError } from "./rpc.mjs";
-import { draftLaunch, checkUpdate } from "../post-updates.mjs";
+import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
 
 /* ── constants ─────────────────────────────────────────────────────────────────────────── */
 
@@ -232,14 +233,35 @@ export const walletInstructions = (address, nowMs) => [
 export const metadataPath = (postId) => `coins/${postId}.json`;
 export const metadataUri = (postId) => `${SITE_ORIGIN}/coins/${postId}.json`;
 export const cardUrl = (ticker) => `${SITE_ORIGIN}/#cat=${encodeURIComponent(ticker)}`;
-/** The coin's description: its lore line and where it comes from. */
-export const descriptionOf = (lore) => `${/[.!?…]$/.test(lore) ? lore : `${lore}.`} From the Catcoin Sanctuary.`;
+/**
+ * The most characters a coin's description is given. No venue limits it (the description lives only in
+ * the off-chain metadata JSON: pump.fun's create_v2 and LaunchLab's initialize carry the name, the symbol
+ * and the uri on chain, which launchTextProblem bounds); this is the launcher's own bound, well inside
+ * what launchpad pages show.
+ */
+export const DESCRIPTION_MAX = 500;
+/**
+ * The coin's description: its lore line, then the fan-tribute line (post-updates.mjs fanTribute: "…the
+ * character's owners." or, for a real pet (reading kind "real"), "…the cat's owners."), which always
+ * closes it whole. Over `max`, the lore is shortened (at a word, with "…"), never the tribute.
+ */
+export function descriptionOf(lore, kind = null, max = DESCRIPTION_MAX) {
+  const tribute = fanTribute(kind);
+  const line = String(lore ?? "").trim();
+  const full = `${/[.!?…]$/.test(line) ? line : `${line}.`} ${tribute}`;
+  if (full.length <= max) return full;
+  const room = max - tribute.length - 2;                          // the lore, its "…" and the space
+  if (room < 1) return tribute;
+  const cut = line.slice(0, room + 1);
+  const atWord = cut.lastIndexOf(" ") > room / 2 ? cut.slice(0, cut.lastIndexOf(" ")) : cut.slice(0, room);
+  return `${atWord.replace(/[\s,;:.!?…-]+$/u, "")}… ${tribute}`;
+}
 
 /** The metadata JSON a row's coin serves, in its venue's shape. */
 export function coinMetadata(row) {
   const venue = venueById(row.venue);
   if (!venue) throw new LaunchError(`unknown venue ${row.venue}`);
-  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore), image: row.image, website: cardUrl(row.ticker), twitter: X_ACCOUNT, createdOn: SITE_ORIGIN });
+  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind), image: row.image, website: cardUrl(row.ticker), twitter: X_ACCOUNT, createdOn: SITE_ORIGIN });
 }
 /** The metadata file's exact text. */
 export const metadataText = (meta) => `${JSON.stringify(meta, null, 2)}\n`;
@@ -270,9 +292,11 @@ export async function waitForMetadata({ fetchImpl, uri, text, now, sleep, waitMs
 
 export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
-const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "lore", "image", "metadataPath", "status", "preparedAt", "attempts", "cat",
+const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "kind", "lore", "image", "metadataPath", "status", "preparedAt", "attempts", "cat",
   "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback"];
 export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved"]);
+/** The trend watch's reading kinds a launched cat may have (a row's `kind`: "real" is a pet, the others characters). */
+export const KINDS = Object.freeze(["real", "cartoon", "fiction"]);
 const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
 const isTime = (t) => parseTime(t, { dayAllowed: false }) !== null;
 
@@ -289,6 +313,7 @@ export function rowProblem(r) {
   if (!venueById(r.venue)) return `venue ${String(r.venue).slice(0, 20)} is not registered`;
   if (!POLICIES.includes(r.policy)) return "policy is unknown";
   if (r.figure !== undefined && (typeof r.figure !== "string" || textProblem(r.figure, { maxChars: 60 }))) return "figure must be a watch-list figure's name";
+  if (r.kind !== undefined && !KINDS.includes(r.kind)) return `kind must be one of ${KINDS.join(", ")}`;
   if (typeof r.lore !== "string" || r.lore.length < 1 || r.lore.length > 200) return "lore must be one line";
   if (!PBS_IMAGE.test(r.image ?? "")) return "image must be a pbs.twimg.com picture";
   if (r.metadataPath !== metadataPath(r.postId)) return "metadataPath must be coins/<postId>.json";
@@ -506,17 +531,18 @@ export function candidateRow(post, ctx) {
   const v = validateAdoptables({ cats: [...cats, built.cat] }, { taken: new Set((ctx.planned?.cats ?? []).map((c) => c.ticker)) });
   if (v.refused.some((x) => x.index === cats.length)) return no(`the adoptable row would be refused: ${v.refused.find((x) => x.index === cats.length).detail}`);
   const row = {
-    postId: String(post.id), url: post.url, name, coinName, ticker, venue: venue.id, policy, ...(figure ? { figure: figure.name } : {}), lore, image,
+    postId: String(post.id), url: post.url, name, coinName, ticker, venue: venue.id, policy, ...(figure ? { figure: figure.name } : {}), kind: r.kind, lore, image,
     metadataPath: metadataPath(String(post.id)), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat: built.cat, ...(fallback ? { fallback } : {}),
   };
   // The site's content rules: the metadata's description, and the X post, drafted now (a held post means no launch).
   const cited = [name, coinName, ticker, ...(figure ? [figure.name, ...(Array.isArray(figure.aliases) ? figure.aliases : [])] : [])];
   const meta = coinMetadata(row);
-  const d = checkUpdate(meta.description, cited);
+  // The fan-tribute line is the owner's fixed text (it says the coin is NOT official): a citation; the lore meets every rule.
+  const d = checkUpdate(meta.description, [...cited, fanTribute(row.kind)]);
   if (!d.ok) return no(`the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
   // The post names the launchpad: drafted for the venue's, and for pump.fun's (the fallback's).
   for (const launchpad of new Set([venue.launchpad, PUMP_SOL.launchpad])) {
-    const post2 = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad, cited });
+    const post2 = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad, cited, tribute: fanTribute(row.kind) });
     if (!post2.ok) return no(`its X post would be held (${post2.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
   }
   if (rowProblem(row)) return no(`the ledger row would be malformed: ${rowProblem(row)}`);

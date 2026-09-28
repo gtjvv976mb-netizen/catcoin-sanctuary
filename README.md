@@ -170,9 +170,8 @@ would break the site's content rules. Newest post first.
 after a crash at any point):
 
 1. *prepare* chooses the venue, writes the coin's metadata to `coins/<postId>.json` (pump.fun's
-   shape, the same on every venue: name, symbol, the lore line "From the Catcoin Sanctuary.", the
-   post's picture hotlinked from pbs.twimg.com, the cat's card as website, @catcosanctuary as
-   twitter) and a "prepared" row in the ledger, `data/sanctuary-launches.json` (its venue, and the
+   shape, the same on every venue: name, symbol, the description, the post's picture hotlinked from
+   pbs.twimg.com, the cat's card as website, @catcosanctuary as twitter) and a "prepared" row in the ledger, `data/sanctuary-launches.json` (its venue, and the
    cat priced in the venue's pair). The site is deployed so it serves that file.
 2. *send* (the only step with the key) waits until `https://catcoinsanctuary.com/coins/<postId>.json`
    serves exactly the committed file, builds the launch on its venue (falling back to pump.fun in
@@ -194,8 +193,19 @@ after a crash at any point):
    `data/real-photos.json`, and its figure off the watch list. Then the Collection, Pages and
    Announce are started (Pages at once; the Collection and Announce keep their own hourly chains, so
    the proof and the post come within about an hour). Its one X post ("… launched by the sanctuary on PumpFun" or "on StonkFun",
-   its lore line and its card link; never the mint or the author's @handle) goes out through
+   its lore line, the fan-tribute line when it fits, and its card link; never the mint or the author's @handle) goes out through
    `scripts/post-updates.mjs` once the Collection has proved it.
+
+**Every sanctuary coin is a fan tribute, and says so.** Its description is its lore line, then
+always, whole: "Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by
+the character's owners." (for a real pet, a post the trend watch read as kind `real`: "…by the cat's
+owners."). The description is kept to 500 characters (no venue limits it: it lives only in the
+off-chain metadata); a longer lore line is shortened, never the tribute line. The lore meets every
+content rule; the tribute line itself is the owner's fixed text, let through as a citation (the
+rules' endorsement list cannot tell "not endorsed" from "endorsed"). The launch X post carries the
+same line, under the lore line, when a version of the post fits 280 characters and every rule with
+it: room is made as for any long post (the mint line, a hashtag, then the lore line go first), never
+by dropping the card link. If no version could carry it, the post goes out as it would without it.
 
 The coin's mint is derived from the wallet and the post (`deriveMintKeypair`), so one post can only
 ever make one coin: a retry sends the same mint again. The mint is never written or printed before

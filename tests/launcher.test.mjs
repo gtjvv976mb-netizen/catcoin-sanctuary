@@ -26,9 +26,11 @@ import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
+  descriptionOf, DESCRIPTION_MAX,
 } from "../scripts/lib/launcher.mjs";
 import { main, fsStore, scrubber } from "../scripts/launch.mjs";
-import { draftLaunch, checkUpdate, ADDRESS_LIKE, run as postUpdates } from "../scripts/post-updates.mjs";
+import { draftLaunch, checkUpdate, ADDRESS_LIKE, FAN_TRIBUTE, fanTribute, run as postUpdates } from "../scripts/post-updates.mjs";
+import { weightedLength, LIMIT } from "../scripts/announce.mjs";
 import { cardLink, SITE, listCats, holdSanctuaryCats, provedCollection, sanctuaryCoins, run as announce } from "../scripts/announce.mjs";
 import { loadResidents } from "../assets/residents.js";
 import { buildAdoptables } from "../scripts/build-adoptables.mjs";
@@ -386,13 +388,15 @@ test("a candidate's row: its venue (pump.fun in SOL), its coin's metadata in pum
   const meta = coinMetadata(row);
   assert.deepEqual(Object.keys(meta), ["name", "symbol", "description", "image", "showName", "createdOn", "website", "twitter"]);
   assert.deepEqual(meta, {
-    name: "Sir Gloopington", symbol: "GLOOP", description: "Gloopington stares down the camera from the top of the fridge. From the Catcoin Sanctuary.",
+    name: "Sir Gloopington", symbol: "GLOOP", description: `Gloopington stares down the camera from the top of the fridge. ${FAN_TRIBUTE.character}`,
     image: "https://pbs.twimg.com/media/Gx2100000000000000201.jpg", showName: true, createdOn: "https://catcoinsanctuary.com",
     website: "https://catcoinsanctuary.com/#cat=GLOOP", twitter: "https://x.com/catcosanctuary",
   });
   assert.equal(metadataUri(row.postId), "https://catcoinsanctuary.com/coins/2100000000000000201.json");
   assert.ok(Buffer.byteLength(metadataUri(row.postId)) <= 200);
-  assert.ok(checkUpdate(meta.description, ["Sir Gloopington", "Gloopington"]).ok, "the description passes the content rules");
+  assert.equal(row.kind, "cartoon");
+  assert.ok(meta.description.endsWith("Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the character's owners."));
+  assert.ok(checkUpdate(meta.description, ["Sir Gloopington", "Gloopington", FAN_TRIBUTE.character]).ok, "the description passes the content rules (the tribute line a citation)");
   assert.ok(!/https?:|www\.|\$/.test(meta.description));
   // The adoptable: the figure's look, coat and category, a pending portrait, the post as proof, priced in SOL.
   const cat = row.cat;
@@ -431,6 +435,60 @@ test("the X post: the cat's name, one lore line, 'launched by the sanctuary on P
   const long = "AbcdefghijkmnopqrstuvwxyzABCDEFG";
   assert.equal(long.length, 32);
   assert.equal(draftLaunch({ id: "LONG", name: long }, { coinName: "Long", ticker: "LONG" }).ok, false, "an address-like run of letters");
+});
+
+test("the fan-tribute line: every coin's description ends with it, whole; a real pet's names the cat's owners; a long lore is shortened, never the line", () => {
+  assert.equal(FAN_TRIBUTE.character, "Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the character's owners.");
+  assert.equal(FAN_TRIBUTE.real, "Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the cat's owners.");
+  for (const kind of ["cartoon", "fiction", undefined, null]) assert.equal(fanTribute(kind), FAN_TRIBUTE.character, String(kind));
+  assert.equal(fanTribute("real"), FAN_TRIBUTE.real);
+  assert.equal(descriptionOf("A cat on a fridge", "cartoon"), `A cat on a fridge. ${FAN_TRIBUTE.character}`);
+  assert.equal(descriptionOf("A cat on a fridge!", "real"), `A cat on a fridge! ${FAN_TRIBUTE.real}`);
+  // The longest lore the ledger allows (200 characters) fits whole.
+  const lore200 = `${"Whiskers ".repeat(22)}naps`.slice(0, 200);
+  assert.ok(descriptionOf(lore200, "real").startsWith(lore200) && descriptionOf(lore200, "real").length <= DESCRIPTION_MAX);
+  // Over the bound, the lore is cut at a word with "…"; the tribute stays whole and last.
+  for (const max of [160, 200, 131]) {
+    const d = descriptionOf("Gloopington stares down the camera from the top of the fridge every single morning, then naps on the warm router.", "cartoon", max);
+    assert.ok(d.length <= max, `${d.length} <= ${max}`);
+    assert.ok(d.endsWith(` ${FAN_TRIBUTE.character}`), d);
+    assert.match(d, /^Gloopington[^…]*… Unofficial/, d);
+    assert.ok(!/\s…/.test(d), "cut at a word, no space before the ellipsis");
+  }
+  assert.equal(descriptionOf("Anything at all", "real", 20), FAN_TRIBUTE.real, "no room for any lore: the tribute alone, never cut");
+  // Every venue serves the same description (one metadata shape).
+  const ctx = { nowMs: NOW, approvals: new Set(["2100000000000000301"]), watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")) };
+  const { row } = candidateRow(post("2100000000000000301", { name: "Quillbert", ticker: "QUILL", kind: "real", nameFrom: null, figure: null, lore: "Quillbert sleeps in the salad bowl." }), ctx);
+  assert.equal(row.kind, "real");
+  for (const v of venueIds()) assert.ok(coinMetadata({ ...row, venue: v }).description.endsWith(FAN_TRIBUTE.real), v);
+  assert.equal(coinMetadata(row).description, `Quillbert sleeps in the salad bowl. ${FAN_TRIBUTE.real}`);
+  // Only the owner's fixed line is let through: the lore still meets the endorsement rule.
+  assert.equal(candidateRow(post("2100000000000000302", { lore: "The official cat of the fridge." }), ctx).row, undefined);
+  assert.equal(rowProblem({ ...row, kind: "dog" }), "kind must be one of real, cartoon, fiction");
+});
+
+test("the X post carries the fan-tribute line when a version of it fits every rule with the card link (else the post is left as it is)", () => {
+  const cat = { id: "MOCHI", name: "Mochi" };
+  const d = draftLaunch(cat, { coinName: "Mochi", ticker: "MOCHI", lore: "Naps in a shoe.", tribute: FAN_TRIBUTE.real });
+  assert.ok(d.ok, JSON.stringify(d.violations));
+  const lines = d.text.split("\n");
+  assert.ok(lines.includes(FAN_TRIBUTE.real), d.text);
+  assert.equal(lines.at(-2), cardLink("MOCHI"), "the card link kept");
+  assert.equal(lines[lines.indexOf(FAN_TRIBUTE.real) - 1], "📜 Naps in a shoe.", "under the lore line");
+  assert.ok(weightedLength(d.text) <= LIMIT, `${weightedLength(d.text)} characters`);
+  assert.ok(checkUpdate(d.text, ["Mochi", "MOCHI", cardLink("MOCHI"), SITE, "PumpFun", FAN_TRIBUTE.real]).ok);
+  // Without a tribute, the post is what it always was.
+  const plain = draftLaunch(cat, { coinName: "Mochi", ticker: "MOCHI", lore: "Naps in a shoe." });
+  assert.ok(plain.ok && !plain.text.includes("Unofficial") && plain.text.includes("🔍 Its one real mint is on its card"));
+  // Room is made as for any long post (fewer extras, then no lore line), never by dropping the card link: even the
+  // longest names fit with it. (The line is left out only if no version of the post could carry it.)
+  const long = { id: "WHISKERBOT", name: "Princess Whiskerbottom Longname" };
+  const lore = "She sleeps on the warm router every afternoon and guards the fridge all night long, loudly.";
+  const withT = draftLaunch(long, { coinName: "Whiskerbottom The Magnificent!", ticker: "WHISKERBOT", lore, tribute: FAN_TRIBUTE.character });
+  assert.ok(withT.ok && withT.text.includes(FAN_TRIBUTE.character) && withT.text.includes(cardLink("WHISKERBOT")) && weightedLength(withT.text) <= LIMIT, withT.text);
+  assert.ok(!draftLaunch(long, { coinName: "Whiskerbottom The Magnificent!", ticker: "WHISKERBOT", lore }).text.includes("Unofficial"), "without the line, the post as it always was");
+  // Only the owner's own lines are a tribute.
+  assert.equal(draftLaunch(cat, { coinName: "Mochi", ticker: "MOCHI", tribute: "Officially endorsed." }).ok, false);
 });
 
 /* ── the phases ───────────────────────────────────────────────────────────────────────── */
