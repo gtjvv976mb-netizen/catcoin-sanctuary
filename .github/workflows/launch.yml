@@ -1,0 +1,192 @@
+# The sanctuary's automatic launcher (scripts/launch.mjs, scripts/lib/launcher.mjs): every 20 minutes,
+# by hand, and whenever the trend watch commits new candidates (its next job dispatches this one), it
+# launches at most one trending cat on pump.fun, priced in SOL, with no dev buy: it never buys or
+# sells anything. Only watch-list cats launch on their own (a data/cat-watch.json figure, or a cartoon
+# or fiction cat that an X trend named or a big account posted); any other cat waits until the owner
+# lists its post in data/launch-approvals.json. Never a sensitive cat, one already in the sanctuary, a
+# second coin for one post (its mint is derived from the post), or a launch past the caps.
+#
+# Repository variables: LAUNCH_ENABLED "on" launches, "dry" builds and simulates only (nothing is sent
+# and nothing new is written), anything else (or unset) stops every job here. The caps, each clamped:
+# LAUNCH_MAX_PER_DAY (3), LAUNCH_MAX_SOL_PER_LAUNCH (0.03), LAUNCH_MAX_SOL_PER_DAY (0.1),
+# LAUNCH_MIN_BALANCE_SOL (0.02, what must be left after a launch), LAUNCH_PRIORITY_MICROLAMPORTS.
+#
+# The jobs, in order:
+#   prepare   settles what was sent before, then prepares at most one cat: its ledger row
+#             (data/sanctuary-launches.json) and its coin's metadata (coins/<postId>.json, which the
+#             site serves at the coin's uri). Commits them.
+#   metadata  when the prepared cat's metadata is not served yet, deploys the site (runs no code of
+#             the repository's; it may only start workflow runs).
+#   launch    waits (bounded) until the site serves the committed metadata, then builds, signs,
+#             simulates and sends the launch within the caps, and commits the ledger (even when the
+#             send step failed, so a transaction sent is never forgotten); then records a launched cat
+#             in the sanctuary (data/adoptables.json, data/launches.json, the 3D-model queue, its real
+#             photo, held from the announcer: its X post is scripts/post-updates.mjs's, once the
+#             Collection has proved it) and commits that.
+#   publish   after a cat moved in, starts the Collection (to prove it), Pages and Announce (runs no
+#             code of the repository's; it may only start workflow runs).
+#
+# Secrets: LAUNCH_WALLET_KEY, the dedicated launch wallet's secret key, only in the send step;
+# SOLANA_RPC_URL (optional; the public RPC otherwise) in the prepare and send steps. The wallet must be
+# an active launcher in data/wallets.json, or the send step refuses and prints its address and what
+# to add. No dependency is installed: the launcher is plain node.
+#
+# To stop it: set LAUNCH_ENABLED to anything but on or dry (or disable the workflow). A launch already
+# sent is still settled and recorded the next time it runs.
+#
+# The checkout keeps no credentials; the push hands the workflow token to git for that one command.
+name: Launch
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: launch
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: ${{ vars.LAUNCH_ENABLED == 'on' || vars.LAUNCH_ENABLED == 'dry' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    outputs:
+      pending: ${{ steps.prepare.outputs.pending }}
+      deploy: ${{ steps.prepare.outputs.deploy }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: node --test tests/launcher.test.mjs tests/launch.test.mjs
+      - name: Settle what was sent, then prepare at most one cat
+        id: prepare
+        env:
+          LAUNCH_ENABLED: ${{ vars.LAUNCH_ENABLED }}
+          LAUNCH_MAX_PER_DAY: ${{ vars.LAUNCH_MAX_PER_DAY }}
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
+        run: node scripts/launch.mjs prepare
+      - name: Commit the prepared cat
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/sanctuary-launches.json coins
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Launch: prepare the next cat"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+
+  metadata:
+    needs: prepare
+    if: ${{ needs.prepare.outputs.deploy == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Deploy the site so it serves the coin's metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: gh workflow run pages.yml -R "$REPO" --ref main
+
+  launch:
+    needs: [prepare, metadata]
+    if: ${{ !cancelled() && needs.prepare.result == 'success' && needs.prepare.outputs.pending == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    outputs:
+      recorded: ${{ steps.record.outputs.recorded }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: node --test tests/launcher.test.mjs tests/launch.test.mjs
+      - name: Send the launch (the only step with the wallet key)
+        id: send
+        env:
+          LAUNCH_ENABLED: ${{ vars.LAUNCH_ENABLED }}
+          LAUNCH_MAX_PER_DAY: ${{ vars.LAUNCH_MAX_PER_DAY }}
+          LAUNCH_MAX_SOL_PER_LAUNCH: ${{ vars.LAUNCH_MAX_SOL_PER_LAUNCH }}
+          LAUNCH_MAX_SOL_PER_DAY: ${{ vars.LAUNCH_MAX_SOL_PER_DAY }}
+          LAUNCH_MIN_BALANCE_SOL: ${{ vars.LAUNCH_MIN_BALANCE_SOL }}
+          LAUNCH_PRIORITY_MICROLAMPORTS: ${{ vars.LAUNCH_PRIORITY_MICROLAMPORTS }}
+          LAUNCH_WALLET_KEY: ${{ secrets.LAUNCH_WALLET_KEY }}
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
+        run: node scripts/launch.mjs send
+      - name: Commit the launch
+        id: commit-send
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/sanctuary-launches.json
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Launch: record the launch"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+      - name: Move the launched cat into the sanctuary
+        id: record
+        if: ${{ !cancelled() && steps.commit-send.outcome == 'success' }}
+        env:
+          LAUNCH_ENABLED: ${{ vars.LAUNCH_ENABLED }}
+        run: node scripts/launch.mjs record
+      - name: Commit the sanctuary's new cat
+        if: ${{ !cancelled() && steps.commit-send.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/sanctuary-launches.json data/adoptables.json data/announced.json data/launches.json data/real-photos.json data/cat-watch.json scripts/meshy.queue.json
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Launch: a launched cat moves into the sanctuary"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+
+  publish:
+    needs: launch
+    if: ${{ !cancelled() && needs.launch.outputs.recorded == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Start the Collection, Pages and Announce for the new cat
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh workflow run collection.yml -R "$REPO" --ref main
+          gh workflow run pages.yml -R "$REPO" --ref main
+          gh workflow run announce.yml -R "$REPO" --ref main

@@ -183,9 +183,33 @@ test("trend watch workflow: pinned actions, contents: write for the scan, secret
   assert.equal(withSecrets.length, 1);
   assert.match(withSecrets[0], /node scripts\/scan-trending-cats\.mjs/);
   assert.deepEqual([...new Set([...W.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))].sort(), ["ANTHROPIC_API_KEY", "X_ACCESS_SECRET", "X_ACCESS_TOKEN", "X_API_KEY", "X_API_SECRET"]);
-  assert.ok(!/SECRET_KEY|WALLET|PRIVATE/i.test(W), "no wallet key: launching stays a person's decision");
+  assert.ok(!/SECRET_KEY|WALLET|PRIVATE/i.test(W), "no wallet key: the trend watch never signs anything (the launcher is launch.yml)");
   const next = W.slice(W.indexOf("\n  next:"));
   assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(next));
+  // A commit that brings new candidates starts the launcher at once (LAUNCH_ENABLED on or dry), from the next job, before its wait.
+  assert.match(W, /outputs:\n\s+candidates: \$\{\{ steps\.commit\.outputs\.candidates \}\}/);
+  assert.match(W, /id: commit\n/);
+  assert.match(W, /if \[ "\$fresh" -gt 0 \]; then echo "candidates=true" >> "\$GITHUB_OUTPUT"; fi\n\n  next:/, "set only after the push");
+  assert.match(next, /if: \$\{\{ needs\.scan\.outputs\.candidates == 'true' && \(vars\.LAUNCH_ENABLED == 'on' \|\| vars\.LAUNCH_ENABLED == 'dry'\) \}\}\n\s+env:\n\s+GH_TOKEN: \$\{\{ github\.token \}\}\n\s+REPO: \$\{\{ github\.repository \}\}\n\s+run: gh workflow run launch\.yml -R "\$REPO" --ref main\n/);
+  assert.ok(next.indexOf("gh workflow run launch.yml") < next.indexOf("sleep"), "the launcher starts before the 20-minute wait");
+});
+
+test("trend watch workflow: the commit step counts the candidates the commit adds (git and jq, as the runner has them)", { skip: process.platform === "win32" }, async () => {
+  const fs = await import("node:fs"), os = await import("node:os"), path = await import("node:path"), { execFileSync } = await import("node:child_process");
+  const W = fs.readFileSync(new URL("../.github/workflows/trendwatch.yml", import.meta.url), "utf8");
+  const lines = W.match(/\n {10}(fresh=\$\(comm[^\n]*\\\n[^\n]*)\n/)[1].replace(/\\\n\s*/, "");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "tw-"));
+  const git = (...a) => execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", ...a], { cwd: dir, encoding: "utf8" });
+  const put = (v) => { fs.mkdirSync(path.join(dir, "data"), { recursive: true }); fs.writeFileSync(path.join(dir, "data/trending-cats.json"), JSON.stringify(v)); };
+  const count = () => execFileSync("bash", ["-eo", "pipefail", "-c", `${lines}\necho "$fresh"`], { cwd: dir, encoding: "utf8" }).trim();
+  git("init", "-q");
+  put({ candidates: ["1", "2"] }); git("add", "."); git("commit", "-qm", "a");
+  put({ candidates: ["2", "1"] });
+  assert.equal(count(), "0", "the same candidates: nothing new");
+  put({ candidates: ["3", "1"] });
+  assert.equal(count(), "1", "one new candidate");
+  put({ posts: [] });
+  assert.equal(count(), "0", "no candidates at all");
 });
 
 /* ---------- lenses: one X search a run, chosen for being first ---------- */
@@ -706,6 +730,8 @@ test("data/cat-watch.json: every query built from it fits X's 512 characters and
     "My grumpy cat Biscuit refuses to share the bed", "top cat energy today", "such a polite cat", "a spinning cat video", "my happy cat", "Andrew Garfield at the premiere"]) {
     assert.equal(figureIn(text, w.figures)?.name ?? null, null, text);
   }
-  assert.deepEqual(["Grumpy Cat is back", "Tom and Jerry marathon", "Floppa stares", "Garfield the cat hates Mondays", "OIIAI Cat on repeat", "Happy Happy Happy Cat"].map((text) => figureIn(text, w.figures)?.name),
-    ["Grumpy Cat", "Tom", "Big Floppa", "Garfield", "OIIA Cat", "Happy Cat"]);
+  // (A figure the sanctuary's launcher launched has moved into the sanctuary and left the list: only the ones still listed are looked for.)
+  const named = [["Grumpy Cat is back", "Grumpy Cat"], ["Tom and Jerry marathon", "Tom"], ["Floppa stares", "Big Floppa"], ["Garfield the cat hates Mondays", "Garfield"],
+    ["OIIAI Cat on repeat", "OIIA Cat"], ["Happy Happy Happy Cat", "Happy Cat"]].filter(([, name]) => raw.figures.some((f) => f.name === name));
+  assert.deepEqual(named.map(([text]) => figureIn(text, w.figures)?.name), named.map(([, name]) => name));
 });

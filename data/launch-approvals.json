@@ -1,0 +1,4 @@
+{
+  "note": "Posts the owner approves for the automatic launcher (scripts/launch.mjs): the X status ids of data/trending-cats.json posts that are not watch-list cats (a real pet, a name the rules guessed). An approved post still meets every other rule: not sensitive, not already in the sanctuary, at most 48 hours old, a picture, a clean name and X post, the caps. Add an id to approve it; remove it to take the approval back before it is prepared. The launcher only reads this file.",
+  "approve": []
+}

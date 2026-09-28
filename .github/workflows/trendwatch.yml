@@ -2,8 +2,12 @@
 # on the rise, reads each new one (the cat, its name, real / cartoon / fiction, a coin name, ticker
 # and lore line, and whether a coin would be in poor taste; by rules from the X post alone, or by Claude
 # when ANTHROPIC_API_KEY is set), checks the ticker on Solana, and
-# commits the shortlist, data/trending-cats.json, when it changed. Launching a candidate stays a person's
-# decision.
+# commits the shortlist, data/trending-cats.json, when it changed. When that commit brings new
+# candidates, the next job starts the Launch workflow at once (being first matters), if the repository
+# variable LAUNCH_ENABLED is on or dry. The launcher (.github/workflows/launch.yml) launches only
+# watch-list cats on its own (a data/cat-watch.json figure, or a cartoon or fiction cat an X trend
+# named or a big account posted); any other candidate waits until the owner approves its post in
+# data/launch-approvals.json. Nothing here signs or launches anything.
 #
 # Each run makes at most ONE X post search, through one lens, the first that applies:
 #   trend     a cat trend on X's trending lists (not a sanctuary cat) not searched in the last 6 hours,
@@ -51,6 +55,8 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: write
+    outputs:
+      candidates: ${{ steps.commit.outputs.candidates }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -73,11 +79,15 @@ jobs:
           TRENDWATCH_EVERY_MINUTES: ${{ vars.TRENDWATCH_EVERY_MINUTES }}
         run: node scripts/scan-trending-cats.mjs
       - name: Commit the shortlist if it changed
+        id: commit
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           git add -- data/trending-cats.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          # Candidates this commit adds (for the launcher, started by the next job).
+          fresh=$(comm -13 <(git show HEAD:data/trending-cats.json 2>/dev/null | jq -r '.candidates // [] | .[]' | sort) \
+            <(jq -r '.candidates // [] | .[]' data/trending-cats.json | sort) | wc -l)
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Trend watch: cats trending on X"
           auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
@@ -87,6 +97,7 @@ jobs:
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
             git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
           fi
+          if [ "$fresh" -gt 0 ]; then echo "candidates=true" >> "$GITHUB_OUTPUT"; fi
 
   next:
     needs: scan
@@ -96,6 +107,12 @@ jobs:
     permissions:
       actions: write
     steps:
+      - name: Start the launcher now for the new candidates
+        if: ${{ needs.scan.outputs.candidates == 'true' && (vars.LAUNCH_ENABLED == 'on' || vars.LAUNCH_ENABLED == 'dry') }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: gh workflow run launch.yml -R "$REPO" --ref main
       - name: Start the next run 20 minutes after this one began
         env:
           GH_TOKEN: ${{ github.token }}

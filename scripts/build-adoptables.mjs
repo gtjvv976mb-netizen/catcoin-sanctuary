@@ -103,6 +103,10 @@ export function buildAdoptables({ root, source, top = 25, checked = new Date().t
     if (!usable(r)) { log(`${r?.id}: skipped (${r?.confidence === "low" ? "low confidence" : "look not settled"}).`); continue; }
     picked.push(adoptableFrom(r, { root, captions }));
   }
+  // A cat the sanctuary's launcher launched (its `launch`, scripts/launch.mjs) is never dropped: it stays as it is.
+  let current = [];
+  try { current = JSON.parse(fs.readFileSync(path.join(root, "data/adoptables.json"), "utf8")).cats ?? []; } catch { current = []; }
+  for (const c of current) if (c?.launch && !picked.some((p) => p.ticker === c.ticker)) picked.push(c);
   const planned = JSON.parse(fs.readFileSync(path.join(root, "data/planned.json"), "utf8"));
   const taken = new Set(planned.cats.map((c) => c.ticker));
   const data = {

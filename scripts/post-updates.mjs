@@ -1,8 +1,15 @@
 /**
- * POST ADOPTIONS AND SITE UPDATES ON X (@catcosanctuary).
+ * POST THE SANCTUARY'S OWN LAUNCHES, ADOPTIONS AND SITE UPDATES ON X (@catcosanctuary).
  *
  * Runs after scripts/announce.mjs in the Announce workflow (every 20 minutes) and posts at most
  * ONE thing a run:
+ *   0. a coin the sanctuary's automatic launcher launched (data/sanctuary-launches.json, written by
+ *      scripts/launch.mjs): a row "launched" and recorded in the sanctuary, whose cat in
+ *      data/adoptables.json carries that very mint and transaction as its `launch`, and whose mint is
+ *      in data/collection.json as validated (the hourly check proved it on chain; never on the
+ *      launcher's word alone). The post (draftLaunch) names the cat, one lore line, that the
+ *      sanctuary launched it on PumpFun, and the card link; never the mint or any address, never the
+ *      @handle of the post the cat was found in. State: launchesPosted { TICKER: { … } };
  *   1. an adoption not posted yet (data/adoptions.json: a coin a visitor launched from a sanctuary
  *      cat's own Adopt kit, the earliest per cat). The post is drafted here: the cat (and its owner,
  *      when a company or a show), the coin's name and ticker as the cat's kit gives them, the launchpad, "launched by a visitor from its kit", that the
@@ -20,8 +27,8 @@
  * is "held" and never posted. The rules refuse "$" before a letter and the word "pump" (so
  * "pump.fun" too), so a ticker is written without its "$" and pump.fun is named "PumpFun".
  *
- * State lives in data/updates.json: each update's status, and adoptionsPosted { key: { … } } for the
- * adoptions. An item is marked "posting" (and the file saved) before its post goes out, and "posted"
+ * State lives in data/updates.json: each update's status, adoptionsPosted { key: { … } } for the
+ * adoptions and launchesPosted { key: { … } } for the sanctuary's launches. An item is marked "posting" (and the file saved) before its post goes out, and "posted"
  * with the post id after, so a crash can cost a post but never double one. A failed post is
  * "failed" and tried again on a later run, at most 3 tries; a 401 (the keys) or 429 (the rate) is no
  * fault of the post and does not use a try. One try a run: any failure ends the run.
@@ -36,6 +43,7 @@ import { credsFromEnv, uploadImage, createPost, XError } from "./lib/x-api.mjs";
 import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost, weightedLength, listCats, postImages, ingameShot, readJson } from "./announce.mjs";
 import { kitsOf, adoptionProblem } from "./lib/adoptions.mjs";
 import { nameKey } from "../assets/ui/adoptables.js";
+import { validateCollection, validateWallets, isAddress } from "../assets/collection.js";
 
 export const DEFAULT_GAP_MINUTES = 180;
 /** Minutes to leave after the announcer's last post. */
@@ -128,23 +136,88 @@ export function draftAdoption(a, cat, { kit = null, category = null, caption = n
   return { ok: false, text: null, violations };
 }
 
+/** A run of 32 or more base58 letters: what an address or a signature looks like. Never in a launch post. */
+export const ADDRESS_LIKE = /[1-9A-HJ-NP-Za-km-z]{32,}/;
+
+/**
+ * Draft the post for a coin the sanctuary launched itself. `cat` is the announcer's cat (listCats:
+ * its id is the card's key), `coinName` and `ticker` the coin's, `lore` its one lore line, `launchpad`
+ * the adoptable's launch.launchpad; `cited` names more words the post may use as citations (a
+ * watch-list figure's aliases). The cat's name, the coin's name and ticker, the card link, the site and
+ * the launchpad are citations; the rest meets every rule. Never an address (ADDRESS_LIKE), a mention,
+ * a hashtag of ours in the names, or the found post's author. Longest first; the shortest names the
+ * cat, the sanctuary's launch and the card. Returns { ok, text, violations }. The launcher drafts it
+ * BEFORE launching (scripts/lib/launcher.mjs) and does not launch a cat whose post would be held.
+ */
+export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "pump.fun", cited: also = [] } = {}) {
+  const pad = LAUNCHPADS[launchpad];
+  const bad = [];
+  if (!KIT_NAME.test(cat?.name ?? "")) bad.push({ rule: "kit_name", term: String(cat?.name ?? "").slice(0, 40), field: "name" });
+  if (!KIT_NAME.test(coinName ?? "")) bad.push({ rule: "kit_name", term: String(coinName ?? "").slice(0, 40), field: "coinName" });
+  if (!KIT_TICKER.test(ticker ?? "")) bad.push({ rule: "kit_ticker", term: String(ticker ?? "").slice(0, 16), field: "symbol" });
+  if (!pad) bad.push({ rule: "launchpad", term: String(launchpad), field: "launchpad" });
+  if (lore !== null && (typeof lore !== "string" || !lore.trim() || /[@#$]|https?:|www\./i.test(lore))) bad.push({ rule: "lore", term: String(lore).slice(0, 40), field: "lore" });
+  if (typeof cat?.id !== "string" || !cat.id) bad.push({ rule: "card", term: String(cat?.id), field: "id" });
+  if (bad.length) return { ok: false, text: null, violations: bad };
+
+  const link = cardLink(cat.id);
+  const cited = [cat.name, coinName, ticker, link, SITE, pad, ...also];
+  const hook = "🚀 NEW SANCTUARY COIN 🚀";
+  const named = nameKey(cat.name) === nameKey(coinName) ? `${cat.name} (${ticker})` : `${cat.name}: ${coinName} (${ticker})`;
+  const coins = [...new Set([`😻 ${named}, launched by the sanctuary on ${pad}`, `😻 ${cat.name}, launched by the sanctuary on ${pad}`])];
+  const mintLine = "🔍 Its one real mint is on its card 👇";
+  const lores = [...(lore ? [`📜 ${lore.trim()}`] : []), ""];
+  let violations = [];
+  for (const coin of coins) {
+    for (const loreLine of lores) {
+      for (const [tags, where] of [[HASHTAGS, mintLine], [HASHTAGS.slice(0, 1), mintLine], [HASHTAGS, null], [HASHTAGS.slice(0, 1), null]]) {
+        const text = [hook, coin, loreLine, where, link, tags.join(" ")].filter(Boolean).join("\n");
+        const r = checkUpdate(text, cited);
+        if (ADDRESS_LIKE.test(text)) r.violations.push({ rule: "address", term: text.match(ADDRESS_LIKE)[0].slice(0, 12), field: "post" });
+        if (text.includes("@")) r.violations.push({ rule: "mention", term: "@", field: "post" });
+        if (!r.violations.length) return { ok: true, text, violations: [] };
+        violations = r.violations;
+      }
+    }
+  }
+  return { ok: false, text: null, violations };
+}
+
 const retryable = (s) => !s || s.status === "queued" || (s.status === "failed" && (s.attempts ?? 0) < MAX_ATTEMPTS);
 
 /**
- * What may go out, in order: adoptions not posted yet (earliest launch first), then approved, queued
- * updates in file order. An adoption of a cat the sanctuary does not have, or of a mint the owner
- * launched (data/collection.json), is not one.
+ * The sanctuary's own launches that may be announced (data/sanctuary-launches.json rows), earliest
+ * first: "launched" and recorded, the cat in `adoptables` (data/adoptables.json's cats) carrying that
+ * very mint and transaction as its launch, the mint `proved` (in data/collection.json as validated),
+ * not held for review, and not posted (or retryable). [{ kind: "launch", id: TICKER, launch, cat }].
  */
-export function candidates(updates, adoptions, { cats, kits = null, ownMints = new Set(), ownWallets = new Set(), heldKeys = new Set() }) {
+export function launchItems(updates, launches, { cats, adoptables = [], proved = new Set(), heldKeys = new Set() }) {
+  const byKey = new Map(cats.map((c) => [c.key, c]));
+  const done = updates.launchesPosted || {};
+  return (Array.isArray(launches) ? launches : [])
+    .filter((r) => r?.status === "launched" && typeof r.recordedAt === "string" && typeof r.ticker === "string" && isAddress(r.mintPublic) && proved.has(r.mintPublic))
+    .filter((r) => { const a = adoptables.find((c) => c?.ticker === r.ticker); return a?.launch?.mint === r.mintPublic && a.launch.tx === r.tx && byKey.get(r.ticker)?.sanctuary; })
+    .filter((r) => !heldKeys.has(r.ticker) && retryable(done[r.ticker]))
+    .sort((a, b) => Date.parse(a.launchedAt ?? a.recordedAt) - Date.parse(b.launchedAt ?? b.recordedAt))
+    .map((r) => ({ kind: "launch", id: r.ticker, launch: r, cat: byKey.get(r.ticker) }));
+}
+
+/**
+ * What may go out, in order: the sanctuary's own launches (launchItems), then adoptions not posted yet
+ * (earliest launch first), then approved, queued updates in file order. An adoption of a cat the
+ * sanctuary does not have, or of a mint the owner launched (data/collection.json), is not one.
+ */
+export function candidates(updates, adoptions, { cats, kits = null, ownMints = new Set(), ownWallets = new Set(), heldKeys = new Set(), launches = [], adoptables = [], proved = new Set() }) {
   const byKey = new Map(cats.map((c) => [c.key, c]));
   const done = updates.adoptionsPosted || {};
+  const ours = launchItems(updates, launches, { cats, adoptables, proved, heldKeys });
   // Not the owner's own launch or wallet, and not a cat the announcer holds for its content (paused adoptables are fine).
   // With the kits: the coin carries its cat's kit name and ticker, as the site checks it (assets/residents.js).
   const ofKit = (a) => { const k = kits?.get(a.key); return !kits || (!!k && nameKey(a.name) === nameKey(k.name) && a.symbol.trim().toUpperCase() === k.ticker); };
   const real = (adoptions?.adoptions || []).filter((a) => validAdoption(a) && !ownMints.has(a.mint) && !ownWallets.has(a.creator) && byKey.has(a.key) && !heldKeys.has(a.key) && ofKit(a))
     .sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
-  const out = real.filter((a) => retryable(done[a.key]))
-    .map((a) => ({ kind: "adoption", id: a.key, adoption: a, cat: byKey.get(a.key), first: a === real[0] }));
+  const out = [...ours, ...real.filter((a) => retryable(done[a.key]))
+    .map((a) => ({ kind: "adoption", id: a.key, adoption: a, cat: byKey.get(a.key), first: a === real[0] }))];
   for (const p of updates.posts || []) {
     if (p?.approved === true && typeof p.id === "string" && retryable({ ...p, status: p.status ?? "queued" })) out.push({ kind: "update", id: p.id, post: p });
   }
@@ -207,16 +280,26 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
   const category = new Map((adoptables.cats || []).map((c) => [c.ticker, c.category]));
   const announced = readJson(data("announced.json"), { cats: {} });
   const heldKeys = new Set(Object.entries(announced.cats || {}).filter(([, v]) => ["held", "needs_review"].includes(v?.status) && v.reason !== "adoptable cat: announcing paused").map(([k]) => k));
-  const ownWallets = new Set((readJson(data("wallets.json"), { launchers: [] }).launchers || []).map((w) => w.address));
-  const list = candidates(updates, readJson(data("adoptions.json"), { adoptions: [] }), { cats, kits, ownMints: new Set((collection.cats || []).map((c) => c.mint)), ownWallets, heldKeys });
-  log(`Updates: ${mode} mode; ${list.filter((c) => c.kind === "adoption").length} adoption(s) and ${list.filter((c) => c.kind === "update").length} update(s) waiting.`);
+  const walletsFile = readJson(data("wallets.json"), { launchers: [] });
+  const ownWallets = new Set((walletsFile.launchers || []).map((w) => w.address));
+  // A sanctuary launch is announced only once the hourly check has proved its mint (the collection as the page validates it).
+  const proved = new Set(validateCollection(collection, { wallets: validateWallets(walletsFile), nowMs }).cats.map((c) => c.mint));
+  const ledger = readJson(data("sanctuary-launches.json"), { launches: [] });
+  const list = candidates(updates, readJson(data("adoptions.json"), { adoptions: [] }), { cats, kits, ownMints: new Set((collection.cats || []).map((c) => c.mint)), ownWallets, heldKeys,
+    launches: ledger.launches || [], adoptables: adoptables.cats || [], proved });
+  log(`Updates: ${mode} mode; ${list.filter((c) => c.kind === "launch").length} launch(es), ${list.filter((c) => c.kind === "adoption").length} adoption(s) and ${list.filter((c) => c.kind === "update").length} update(s) waiting.`);
 
-  // The record an item's state lives in: the update itself, or its adoptionsPosted row.
-  const recOf = (item) => (item.kind === "update" ? item.post : (updates.adoptionsPosted[item.id] ||= { mint: item.adoption.mint }));
+  // The record an item's state lives in: the update itself, or its adoptionsPosted or launchesPosted row.
+  const recOf = (item) => (item.kind === "update" ? item.post
+    : item.kind === "launch" ? ((updates.launchesPosted ||= {})[item.id] ||= { postId: item.launch.postId })
+      : (updates.adoptionsPosted[item.id] ||= { mint: item.adoption.mint }));
+  const launchpadOf = (key) => (adoptables.cats || []).find((c) => c.ticker === key)?.launch?.launchpad;
   for (const item of list) {
     const d = item.kind === "update"
       ? { ...checkUpdate(item.post.text), text: item.post.text }
-      : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first });
+      : item.kind === "launch"
+        ? draftLaunch(item.cat, { coinName: item.launch.coinName, ticker: item.launch.ticker, lore: item.launch.lore ?? null, launchpad: launchpadOf(item.id) })
+        : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first });
     summary.drafts.push({ kind: item.kind, id: item.id, ok: d.ok, text: d.text, length: d.text ? weightedLength(d.text) : null, violations: d.violations });
     if (!d.ok) {
       summary.held.push(item.id);
@@ -224,7 +307,7 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
       if (mode === "post") { Object.assign(recOf(item), { status: "held", at: stamp(), violations: d.violations }); save(); }
       continue;
     }
-    const images = item.kind === "adoption" ? postImages(item.cat, { image: item.cat.portrait }, root)
+    const images = item.kind !== "update" ? postImages(item.cat, { image: item.cat.portrait }, root)
       : item.post.image && IMAGE_PATH.test(item.post.image) && !item.post.image.includes("..") && fs.existsSync(path.join(root, item.post.image)) ? [path.join(root, item.post.image)] : [];
     if (item.kind === "update" && item.post.image && !images.length) log(`::warning::Updates: ${item.id}'s image ${item.post.image} is missing or not a png, jpg or webp under assets/; posting without it.`);
     if (mode === "dryRun") {

@@ -115,6 +115,79 @@ Every run proves each listed launch that is not in the collection yet, first and
 scan's limits, exactly as it proves a scanned one (it must still be paid by a listed wallet). The
 scan finds launches on its own; this is for when it is slow.
 
+## Launcher
+
+The sanctuary launches trending cats itself: `.github/workflows/launch.yml` runs `scripts/launch.mjs`
+(the rules are in `scripts/lib/launcher.mjs`) every 20 minutes, by hand, and at once whenever the
+trend watch commits new candidates (`data/trending-cats.json`). It launches at most one cat a run
+on **pump.fun, priced in SOL, with no dev buy**: it never buys or sells anything.
+
+**Who it launches on its own: only watch-list cats.** A post the trend watch named after a
+`data/cat-watch.json` figure (`reading.nameFrom: "figure"`), or a cartoon or fiction cat that an X
+trend named or a big account posted. Anything else (a real pet, a name the rules guessed) waits for
+you: add its post id to `data/launch-approvals.json` (`{ "approve": ["<post id>"] }`; for someone's
+pet, ask its owner first). An approved post still meets every other rule. It never launches a
+sensitive cat, one already in the sanctuary (a planned or adoptable cat's name or ticker), one in
+its ledger, a post older than 48 hours or without a picture, or a cat whose coin text or X post
+would break the site's content rules. Newest post first.
+
+**How one launch goes** (each phase is committed before the next, and each is safe to run again
+after a crash at any point):
+
+1. *prepare* writes the coin's metadata to `coins/<postId>.json` (pump.fun's shape: name, symbol,
+   the lore line "From the Catcoin Sanctuary.", the post's picture hotlinked from pbs.twimg.com,
+   the cat's card as website, @catcosanctuary as twitter) and a "prepared" row in the ledger,
+   `data/sanctuary-launches.json`. The site is deployed so it serves that file.
+2. *send* (the only step with the key) waits until `https://catcoinsanctuary.com/coins/<postId>.json`
+   serves exactly the committed file, builds the launch, **simulates** it and sends it only if the
+   simulation passes, the wallet loses at most `LAUNCH_MAX_SOL_PER_LAUNCH`, the last 24 hours stay
+   within `LAUNCH_MAX_SOL_PER_DAY` and `LAUNCH_MAX_PER_DAY`, and at least `LAUNCH_MIN_BALANCE_SOL`
+   stays in the wallet. The row is written "sending" before the transaction goes out, then
+   "launched" (its mint, its transaction, what it cost) or "failed".
+3. *record* moves the cat into the sanctuary: an adoptable in `data/adoptables.json` with its
+   `launch` (the card says "Launching…" until the hourly Collection proves the mint, then
+   "Launched by the sanctuary"), its transaction in `data/launches.json`, held from the announcer
+   in `data/announced.json`, a 3D model queued in `scripts/meshy.queue.json`, its real photo in
+   `data/real-photos.json`, and its figure off the watch list. Then the Collection, Pages and
+   Announce are started. Its one X post ("… launched by the sanctuary on PumpFun", its lore line
+   and its card link; never the mint or the author's @handle) goes out through
+   `scripts/post-updates.mjs` once the Collection has proved it.
+
+The coin's mint is derived from the wallet and the post (`deriveMintKeypair`), so one post can only
+ever make one coin: a retry sends the same mint again. The mint is never written or printed before
+its transaction is sent (a known, unused address can be blocked by anyone who funds it).
+
+**Setting it up (the owner):**
+
+1. Make a **new wallet used for nothing else**, for instance `solana-keygen new -o launcher.json`
+   (or a fresh account in Phantom). Never the owner's wallet.
+2. Fund it with about **0.1 SOL**. A launch costs about 0.006 SOL (rent and fees); the rest is the
+   floor and the day's cap. The wallet can only lose what is in it.
+3. Add the repository secret **`LAUNCH_WALLET_KEY`**: the secret key as the Solana CLI writes it
+   (the JSON array in `launcher.json`) or as Phantom exports it (base58). Keep
+   **`SOLANA_RPC_URL`** set too (the public RPC throttles). Neither is ever printed.
+4. Add the wallet's **address** to `data/wallets.json` and commit it before the first launch (the
+   Collection proves only a listed wallet's launches; the send step refuses to run otherwise and
+   prints this row with the address filled in):
+
+   ```json
+   { "address": "<the launcher's address>", "since": "2026-09-28", "label": "Auto launcher" }
+   ```
+5. Repository variables (Settings → Secrets and variables → Actions → Variables):
+   **`LAUNCH_ENABLED`** `dry` first (each run builds and simulates the next cat and logs it, sending
+   and writing nothing), then `on`. Optional caps, each clamped: `LAUNCH_MAX_PER_DAY` (3, at most
+   10), `LAUNCH_MAX_SOL_PER_LAUNCH` (0.03, at most 0.1), `LAUNCH_MAX_SOL_PER_DAY` (0.1, at most
+   0.5), `LAUNCH_MIN_BALANCE_SOL` (0.02, at least 0.01), `LAUNCH_PRIORITY_MICROLAMPORTS` (100000).
+6. Optional, for a figure: `look`, `coat`, `owner` and `category` in its `data/cat-watch.json` entry
+   make its card and its 3D model right from the start.
+
+**Stopping it:** set `LAUNCH_ENABLED` to `off` (or delete it), or disable the Launch workflow. A
+launch already sent is settled and recorded the next time it runs. To retire the wallet, give its
+row in `data/wallets.json` an `until` date; never delete the row. Never delete a file in `coins/`:
+a launched coin's uri points to it for good. A real photo that shows a person can be taken off a
+card by moving its row in `data/real-photos.json` to `none`. The 3D model is made by hand, as for
+every cat (`node scripts/meshy.mjs run <TICKER>`, see `MESHY-HANDOFF.md`).
+
 ## Unread transactions
 
 The check reads transactions in version 0 (and legacy). A transaction that names a listed wallet
@@ -203,7 +276,8 @@ Pushing to `main` deploys the site. `.github/workflows/pages.yml` runs the tests
 can only read the repository (a failing test stops the deploy), then a separate job copies what a
 visitor loads, from the commit the tests passed, into `_site` and publishes it to GitHub Pages. It
 leaves out `scripts/`, `tests/`, `.github/`, the package files, Markdown notes, the builder's
-state file, `data/held.json` and `data/launches.json`. It also deploys after an hourly Collection
+state file, `data/held.json`, `data/launches.json` and the launcher's ledger and approvals (`coins/`,
+the metadata of the coins the launcher launches, is published). It also deploys after an hourly Collection
 run that committed something. The hourly Collection run is gated only by the builder's own tests
 (`npm run test:builder`), so a content test can hold up a deploy but never the recording of a
 launch.
@@ -257,6 +331,8 @@ recorded fixtures keep a fixed one.
 | `page.test.mjs` | The page's scripts cannot write HTML from data, make no request to another host, and its security policy allows only its own origin. |
 | `site.test.mjs` | See below. |
 | `workflows.test.mjs` | Pinned actions, least-privilege permissions, and what each workflow runs. |
+| `launcher.test.mjs` | The automatic launcher: who it launches (the policy and every exclusion), the caps and the balance floor on a simulated balance, dry mode, the metadata it hosts and waits for, the ledger (never a mint before the send), every crash point (one post, one mint), recording the cat and its one X post, the key never in a log line, no dependency. |
+| `launch.test.mjs` | The Launch workflow: pinned actions, permissions per job, the wallet key in one step only, no npm, a commit after each phase, dispatches from jobs that run no repository code. |
 
 `site.test.mjs` checks the site as a whole:
 
@@ -287,7 +363,8 @@ recorded fixtures keep a fixed one.
 | `data/planned.json` | Planned cats and the research for every stock pair (built). |
 | `data/collection.json`, `data/collection-state.json` | Proven launches, and the builder's cursor (built hourly). |
 | `data/wallets.json` | The wallets whose launches count. |
-| `data/launches.json` | Launch signatures listed by hand, proved first on every run (optional). |
+| `data/launches.json` | Launch signatures listed by hand (and by the launcher), proved first on every run (optional). |
+| `data/sanctuary-launches.json`, `data/launch-approvals.json`, `coins/` | The launcher's ledger, the posts the owner approved, and each launched coin's metadata. |
 | `data/held.json` | Planned cats held back until their picture is redrawn. |
 | `data/cats-info.json` | The sourced research, one entry per stock. |
 | `scripts/` | `build-planned.mjs`, `build-collection.mjs` and their helpers. |
@@ -362,7 +439,7 @@ Every planned or adoptable cat that has not launched has an **Adopt this cat** b
 - an optional 1500 x 500 banner ("Include banner", on by default), Sanctuary-style or plain;
 - a **Launch on StonkFun** button (with the quote token to pick and its mint, after StonkFun's terms: 18+, restricted regions) and a **Launch on pump.fun** button (SOL pair). Both open the launchpad's own create page in a new tab.
 
-The visitor decides the final details on the launchpad and is the coin's creator. This site never signs or sends anything, holds no keys and takes no fee. Neither launchpad reads its form from the address (checked 2026-09-26: pump.fun/create reads only `?mayhem=true`; StonkFun's /launch reads no query and has no description field), so the flow is copy-and-open.
+The visitor decides the final details on the launchpad and is the coin's creator. This site (the page) never signs or sends anything, holds no keys and takes no fee; the sanctuary's own launches are the Launch workflow's (see "Launcher"), with its own wallet. Neither launchpad reads its form from the address (checked 2026-09-26: pump.fun/create reads only `?mayhem=true`; StonkFun's /launch reads no query and has no description field), so the flow is copy-and-open.
 
 The kit pictures are built by `python3 scripts/build-kits.py [--offline] [TICKER ...]` into `assets/kits/<TICKER>/` (`token.png`, `banner.png`, `banner-plain.png`) and listed in `assets/kits/kits.json` with each token logo's `tokenSha256` and the proof photo's URL and credit. Run it again after portraits or lore pictures change (`--offline` keeps the photo URLs already found and calls nothing).
 

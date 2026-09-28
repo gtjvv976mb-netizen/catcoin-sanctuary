@@ -220,8 +220,15 @@ test("the shipped data files are canonical and valid, so the first scheduled run
   const fake = fakeRpc();
   const r = await run(root, fake, { nowMs: Date.now() });
   assert.deepEqual(r.written, { collection: false, state: false });
-  // the one listed wallet is the owner's, read from its since date
-  assert.deepEqual(fake.calls.map((c) => [c.method, c.params[0]]), [["getSignaturesForAddress", OWNER]]);
+  // Each listed launch not proved (or refused) yet is asked for first (the RPC here has none of them: they are left for the next
+  // run), then each listed wallet, from its since date: the owner's first, and the automatic launcher's once the owner lists it.
+  const proved = new Set(site.collection.cats.map((c) => c.tx)), refused = new Set(site.state.refused.map((x) => x.tx));
+  const listed = [...new Set(readDataJson(ROOT, "launches.json").launches.map((l) => l.tx))].filter((tx) => !proved.has(tx) && !refused.has(tx));
+  assert.deepEqual(fake.calls.map((c) => [c.method, c.params[0]]), [
+    ...listed.map((tx) => ["getTransaction", tx]),
+    ...site.wallets.launchers.map((l) => ["getSignaturesForAddress", l.address]),
+  ]);
+  assert.equal(site.wallets.launchers[0].address, OWNER);
 });
 
 test("bad state or wallet files stop the run with a plain reason", async () => {

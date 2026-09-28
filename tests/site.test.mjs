@@ -13,7 +13,7 @@ import { pathToFileURL, fileURLToPath } from "node:url";
 import { ROOT, GME_LAUNCHER, GME_LAUNCH, DATA_NOW } from "./helpers.mjs";
 import { installDom, Element } from "./minidom.mjs";
 import { loadResidents } from "../assets/residents.js";
-import { normalize } from "../assets/ui/data.js";
+import { normalize, isLaunched } from "../assets/ui/data.js";
 import { createCard, badgeFor } from "../assets/ui/card.js";
 import { createFinder } from "../assets/ui/finder.js";
 import { jpegInfo } from "../scripts/build-planned.mjs";
@@ -333,7 +333,8 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
   assert.equal(rows.length, list.length);
   for (const b of rows) {
     const r = list.find((x) => x.id === b.dataset.id);
-    assert.equal(b.querySelector("span.badge").textContent, r.kind === "famous" ? "Hall of Fame" : r.token.status === "launched" ? "Launched" : r.adoption ? "Adopted" : "Not launched yet", b.dataset.id);
+    // (A cat the sanctuary's launcher launched says "Launching…" until the Collection proves its coin.)
+    assert.equal(b.querySelector("span.badge").textContent, r.kind === "famous" ? "Hall of Fame" : r.token.status === "launched" ? "Launched" : r.sanctuaryLaunch ? "Launching…" : r.adoption ? "Adopted" : "Not launched yet", b.dataset.id);
     if (r.adoption) assert.ok(b.querySelector("span.find-meta").textContent.includes(`$${r.adoption.symbol}`), b.dataset.id);
     else assert.equal(b.querySelector("span.find-meta").textContent.includes(`$${r.ticker}`), r.token.status === "launched" || r.kind === "famous", b.dataset.id);
   }
@@ -526,7 +527,10 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
   const rows = root.querySelectorAll("button.find-item");
   assert.equal(rows.length, list.length);
   const chips = root.querySelectorAll("button.chip");
-  assert.deepEqual(chips.map((b) => b.textContent), ["All", "Adoptable cats", "Celebrity", "TV & movies", "Company", "Viral", "Crypto", "Hall of Fame"]);
+  // A "Launched" chip joins once any cat is launched (the owner's own launch, or the sanctuary's launcher's).
+  const launchedN = list.filter((r) => isLaunched(r)).length;
+  assert.deepEqual(chips.map((b) => b.textContent), ["All", "Adoptable cats", "Celebrity", "TV & movies", "Company", "Viral", "Crypto", "Hall of Fame", ...(launchedN ? ["Launched"] : [])]);
+  if (launchedN) { chips.find((b) => b.textContent === "Launched").click(); assert.equal(root.querySelectorAll("li").filter((li) => !li.hidden).length, launchedN); }
   const shown = () => root.querySelectorAll("li").filter((li) => !li.hidden).length;
   const famousN = list.filter((r) => r.kind === "famous").length;
   assert.ok(famousN > 0);
@@ -547,7 +551,7 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
 });
 
 
-test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' (or, once a stranger launched it, 'Adopted') and the fan-tribute line", async () => {
+test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' (or, once a stranger launched it, 'Adopted'; once the sanctuary's launcher launched it, 'Launching…' then 'Launched by the sanctuary') and the fan-tribute line", async () => {
   const list = await residents();
   const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
   assert.ok(ADOPT.length >= 25);
@@ -560,20 +564,29 @@ test("adoptable cats: each card shows its category chip, owner, story, X proof, 
     assert.ok(c.text.includes(a.story.slice(0, 40)), `${a.ticker}: story`);
     assert.ok(c.links.some((l) => l.href === a.proof.url && l.text === "View post on X ↗"), `${a.ticker}: X proof`);
     for (const s of a.sources) assert.ok(c.links.some((l) => l.href === new URL(s.url).href), `${a.ticker}: source ${s.url}`);
-    assert.match(c.text, r.adoption ? /Adopted by the community/ : /Not launched yet — adopt it now/, a.ticker);
+    // A cat the sanctuary launched (its `launch`, written by scripts/launch.mjs) is "Launched by the sanctuary" once the
+    // Collection has proved that very mint and transaction, "Launching on …" until then; never "adopt it now".
+    const proved = !!a.launch && COLLECTION.cats.some((e) => e.mint === a.launch.mint && e.tx === a.launch.tx && (e.launchpad ?? "stonkfun") === a.launch.launchpad);
+    assert.match(c.text, a.launch ? (proved ? /Launched by the sanctuary on / : /Launching on /) : r.adoption ? /Adopted by the community/ : /Not launched yet — adopt it now/, a.ticker);
+    if (a.launch) assert.ok(!/adopt it now/.test(c.text), `${a.ticker}: a launched cat is not up for adoption`);
     assert.match(c.text, /Fan tribute, not affiliated with or endorsed by/);
     assert.equal(/In loving memory/.test(c.text), a.memorial, `${a.ticker}: memorial line`);
     if (a.existingCoin) assert.match(c.text, new RegExp(`A small coin already exists: \\$${a.existingCoin.symbol}`));
-    if (!a.portrait) assert.ok(c.root.querySelector(".card-silhouette"), `${a.ticker}: placeholder silhouette`);
+    // No portrait yet: the silhouette, unless its real photo (data/real-photos.json, hotlinked) heads the card instead.
+    if (!a.portrait && !r.realPhoto) assert.ok(c.root.querySelector(".card-silhouette"), `${a.ticker}: placeholder silhouette`);
+    if (!a.portrait && r.realPhoto) assert.equal(c.root.querySelector("img.card-real-photo-img").src, r.realPhoto.url, `${a.ticker}: its real photo`);
     const fig = c.root.querySelector("figure.card-lore-pic");
     if (a.lore) {
       assert.ok(fig, `${a.ticker}: lore picture`);
       assert.equal(fig.querySelector("img.card-lore-img").getAttribute("src") ?? fig.querySelector("img.card-lore-img").src, a.lore.image);
       assert.equal(fig.querySelector("figcaption").textContent, a.lore.caption);
     } else assert.equal(fig, null, `${a.ticker}: no lore picture`);
-    assert.deepEqual(c.buy, []);
-    // Token pages only for an adopted cat, and only for its own mint.
-    for (const l of c.links.filter((x) => TOKEN_HOSTS.test(x.href))) assert.ok(r.adoption && l.href.endsWith(`/${r.adoption.mint}`), `${a.ticker}: ${l.href}`);
+    // No buy button on an adoptable's card; token pages only for a coin the sanctuary launched and the Collection proved (its
+    // own mint and its launch), or for an adopted cat's own mint.
+    assert.deepEqual(c.buy, [], a.ticker);
+    for (const l of c.links.filter((x) => TOKEN_HOSTS.test(x.href))) {
+      assert.ok(proved ? l.href.endsWith(`/${a.launch.mint}`) || l.href.endsWith(`/${a.launch.tx}`) : r.adoption && l.href.endsWith(`/${r.adoption.mint}`), `${a.ticker}: ${l.href}`);
+    }
   }
 });
 

@@ -243,10 +243,13 @@ test("prose, links and source dates: what research text may carry", () => {
   for (const bad of ["2026-13", "2026-02-30", "Sept 2026", "2027-01-01", "", 2026]) assert.notEqual(sourceDateProblem(bad, NOW), null, String(bad));
 });
 
-test("the shipped wallets.json lists the owner's wallet, from 2026-09-25", () => {
+test("the shipped wallets.json lists the owner's wallet first, from 2026-09-25 (and, once the owner adds it, the automatic launcher's own wallet)", () => {
   const w = validateWallets(JSON.parse(fs.readFileSync(path.join(ROOT, "data/wallets.json"), "utf8")));
   assert.deepEqual(w.refused, []);
-  assert.deepEqual(w.launchers.map((l) => [l.address, l.since, l.label]), [[OWNER, "2026-09-25T00:00:00Z", "Owner"]]);
+  assert.deepEqual(w.launchers.slice(0, 1).map((l) => [l.address, l.since, l.label]), [[OWNER, "2026-09-25T00:00:00Z", "Owner"]]);
+  // Any other row is a dedicated wallet (the launcher's: scripts/launch.mjs, README "Launcher"), never the owner's again.
+  assert.ok(w.launchers.length <= 3, "a few wallets at most");
+  for (const l of w.launchers.slice(1)) assert.notEqual(l.address, OWNER);
 });
 
 /* ── data/famous.json: the famous cat coins ─────────────────────────────────────────── */
