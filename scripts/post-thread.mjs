@@ -3,6 +3,7 @@
    Ids are saved after every post, so a refusal part-way never makes it post the same text twice. */
 import fs from "node:fs";
 import { credsFromEnv, createPost, whoAmI, getLatestOwnPostId } from "./lib/x-api.mjs";
+import { addressIn } from "./announce.mjs";
 
 const creds = credsFromEnv(process.env);
 if (!creds) { console.log("No X secrets; threads not posted."); process.exit(0); }
@@ -11,6 +12,9 @@ const file = new URL(`../data/${name}`, import.meta.url);
 if (!fs.existsSync(file)) continue;
 const t = JSON.parse(fs.readFileSync(file, "utf8"));
 if (t.ids || t.hold) continue;
+// The last line before X, as in the other posters: a thread with an address in it is not posted (X refuses them for a new account).
+const hit = t.posts.map((p) => addressIn(p)).find(Boolean);
+if (hit) { console.log(`${name} held: a post carries an address (${hit.slice(0, 6)}…)`); continue; }
 const save = () => fs.writeFileSync(file, JSON.stringify(t, null, 2) + "\n");
 let prev = null;
 if (t.replyToLatestOwn) prev = await getLatestOwnPostId((await whoAmI(creds)).data.id, creds);

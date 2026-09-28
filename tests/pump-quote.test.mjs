@@ -28,7 +28,8 @@ const MEOW = Object.freeze({ symbol: "MEOW", mint: "MEoWkY1hD4n8vUe8vNQ4yLzVz9Hq
 const PURR = Object.freeze({ symbol: "PURR", mint: "PuRRj4nYt8Pq3fGz9Hkq7W2bVx1yLmN5cD6eR8sT4uA", tokenProgram: TOKEN_PROGRAM });
 const QUOTES = validatePumpQuotes({ quotes: [MEOW, PURR] }).quotes;
 
-/** A coin-priced launch built and signed with throwaway keys, landed, with the two accounts the Collection reads back. */
+/** A coin-priced launch built and signed with throwaway keys, landed, with the two accounts the Collection reads back
+    (the mint's metadata has no update authority, None: SYSTEM_PROGRAM, as create_v2 leaves it; see tests/helpers.mjs pumpLaunch). */
 function quoteLaunch({ seedByte = 11, postId = "1971234567890123999", quote = MEOW, quotes = QUOTES, blockTime = 1790300000, curveQuote = quote.mint } = {}) {
   const wallet = keypairFromSecret(new Uint8Array(32).fill(seedByte));
   const mint = deriveMintKeypair(wallet, postId);
@@ -41,7 +42,7 @@ function quoteLaunch({ seedByte = 11, postId = "1971234567890123999", quote = ME
   Buffer.from(BONDING_CURVE_DISC, "hex").copy(curveData, 0);
   Buffer.from(base58Decode(curveQuote)).copy(curveData, BONDING_CURVE_QUOTE_OFFSET);
   const accounts = new Map([
-    [mint.publicKey, { owner: TOKEN_2022_PROGRAM, lamports: 1, executable: false, rentEpoch: 0, data: [token2022MintData({ mint: mint.publicKey, updateAuthority: PUMP.mintAuthority, ...PUMP_COIN }).toString("base64"), "base64"] }],
+    [mint.publicKey, { owner: TOKEN_2022_PROGRAM, lamports: 1, executable: false, rentEpoch: 0, data: [token2022MintData({ mint: mint.publicKey, updateAuthority: SYSTEM_PROGRAM, ...PUMP_COIN }).toString("base64"), "base64"] }],
     [curve, { owner: PUMP.program, lamports: 1, executable: false, rentEpoch: 0, data: [curveData.toString("base64"), "base64"] }],
   ]);
   return { wallet: wallet.publicKey, mint: mint.publicKey, curve, tx, signature: tx.transaction.signatures[0], accounts, built, b64 };

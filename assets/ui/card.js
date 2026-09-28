@@ -574,7 +574,7 @@ export function createCard({ root, onClose, onInset }) {
     real.append(realHead);
     if (r.who) for (const p of r.who.split(/\n{2,}/)) real.append(el("p", null, p));
     else real.append(el("p", "card-none", "Nothing sourced yet."));
-    who.append(real);
+    if (r.stock) who.append(real);   // a pump.fun coin has no stock
     body.append(who);
 
     /* Proof: the X post (or, when there is none, the page) that links the cat to its company. */
@@ -640,7 +640,8 @@ export function createCard({ root, onClose, onInset }) {
       m.append(r.explorer?.token ? link(r.explorer.token, shortMint(r.token.mint), "mono") : el("span", "mono", shortMint(r.token.mint)), " ", copyButton(r.token.mint, "mint address"));
       row("Mint", m);
       if (r.explorer?.tx) row("Launch", link(r.explorer.tx, "The launch on Solscan"));
-      if (r.explorer?.stonkfun) row("StonkFun", link(r.explorer.stonkfun, "Its StonkFun page"));
+      const pad = r.explorer?.pumpfun ? "pump.fun" : "StonkFun", page = r.explorer?.pumpfun || r.explorer?.stonkfun;
+      if (page) row(pad, link(page, `Its ${pad} page`));
       if (r.plannedName) row("Planned as", r.plannedName);
     } else {
       const st = el("span");

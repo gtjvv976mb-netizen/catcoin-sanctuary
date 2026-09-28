@@ -207,7 +207,7 @@ export function proveLaunch(tx, { wallet, stocks = STOCK_PAIRS } = {}) {
   try { t = readTransaction(tx); } catch (e) { return no("unreadable", e.message); }
   const launches = t.instructions.filter(isLaunchIx);
   launchLike = launches.length > 0 || t.inner.some(isLaunchIx);
-  if (tx.meta.err !== null || (tx.meta.status && !("Ok" in tx.meta.status))) return no("failed", "the transaction failed on chain");
+  if (failedOnChain(tx.meta)) return no("failed", "the transaction failed on chain");
   if (t.feePayer !== wallet) return no("fee_payer", "the fee payer is not the listed wallet");
 
   if (launches.length === 0) {
@@ -335,6 +335,9 @@ const isPumpCreate = (ix) => ix.program === PUMPFUN_PROGRAM && [CREATE_V2_DISC, 
  * the listed quote's { symbol, mint }), pool (the bonding curve), payer, tx, time, launchpad:
  * "pump.fun", uri }. "no_launch": the transaction creates no pump.fun coin.
  */
+/** Did the transaction fail? Any err, or a status that is not { Ok } (a malformed status counts as failed, never throws). */
+const failedOnChain = (meta) => meta.err !== null || (meta.status != null && (typeof meta.status !== "object" || !("Ok" in meta.status)));
+
 export function proveLaunchPump(tx, { wallet, quotes = [] } = {}) {
   let launchLike = null;
   const no = (clause, detail) => ({ ok: false, clause, detail, launchLike });
@@ -344,7 +347,7 @@ export function proveLaunchPump(tx, { wallet, quotes = [] } = {}) {
   try { t = readTransaction(tx); } catch (e) { return no("unreadable", e.message); }
   const creates = t.instructions.filter(isPumpCreate);
   launchLike = creates.length > 0 || t.inner.some(isPumpCreate);
-  if (tx.meta.err !== null || (tx.meta.status && !("Ok" in tx.meta.status))) return no("failed", "the transaction failed on chain");
+  if (failedOnChain(tx.meta)) return no("failed", "the transaction failed on chain");
   if (t.feePayer !== wallet) return no("fee_payer", "the fee payer is not the listed wallet");
   if (creates.length === 0) return no(launchLike ? "pump_cpi_launch" : "no_launch", launchLike ? "pump.fun's create was called by another program; only a direct launch is read" : "not a pump.fun launch");
   if (creates.length > 1) return no("pump_several_launches", "more than one pump.fun create in one transaction");
@@ -396,24 +399,32 @@ export const BONDING_CURVE_QUOTE_OFFSET = 8 + 5 * 8 + 1 + 32 + 1 + 1;
  * Cross-check a proved pump.fun launch against the chain as it is now: `mintAccount` and
  * `curveAccount` are getMultipleAccounts answers (base64) for launch.mint and launch.pool (the
  * bonding curve). The mint must be a Token-2022 mint whose own metadata names it and carries the
- * name and symbol create_v2 wrote, and whose update authority is not the launching wallet (pump.fun
- * holds it, so the coin cannot be renamed; which pump.fun account holds it is not pinned: no
- * pump.fun mint account is recorded). The bonding curve must be PDA["bonding-curve", mint], exist,
- * be owned by pump.fun and carry BondingCurve's account discriminator. For a coin-priced launch
- * (a pair that is not SOL) the bonding curve must also name that quote mint, at the offset the
- * SDK's IDL gives (no real coin-priced curve is recorded: that layout is the SDK's, unverified).
+ * name and symbol create_v2 wrote, and whose metadata has NO update authority (None, which the
+ * extension stores as 32 zero bytes and readTokenMetadata reads as SYSTEM_PROGRAM), so nobody, the
+ * wallet, pump.fun or a stranger, can rename the coin. That is what create_v2 does: in the recorded
+ * real launch (tests/fixtures/pumpfun-create.json) pump.fun's create calls Token-2022's
+ * UpdateAuthority (spl_token_metadata_interface:update_the_authority, d7e4a6e45464567b) with 32 zero
+ * bytes. The bonding curve must be PDA["bonding-curve", mint], exist, be owned by pump.fun and carry
+ * BondingCurve's account discriminator. A malformed account (data not [base64 string, …]) is refused.
+ * For a coin-priced launch (a pair that is not SOL) the bonding curve must also name that quote
+ * mint, at the offset the SDK's IDL gives (no real coin-priced curve is recorded: that layout is the
+ * SDK's, unverified).
  */
 export function checkPumpAccounts(launch, mintAccount, curveAccount) {
   const no = (clause, detail) => ({ ok: false, clause, detail });
+  const bytes = (acc) => { if (typeof acc.data[0] !== "string") throw new DecodeError("the account's data is not base64"); return Buffer.from(acc.data[0], "base64"); };
   if (!mintAccount || mintAccount.owner !== TOKEN_2022_PROGRAM || !Array.isArray(mintAccount.data)) return no("metadata", "the mint is not a Token-2022 account on chain");
   let meta;
-  try { meta = readTokenMetadata(Buffer.from(mintAccount.data[0], "base64")); } catch (e) { return no("metadata", e.message); }
+  try { meta = readTokenMetadata(bytes(mintAccount)); } catch (e) { return no("metadata", e.message); }
   if (meta.mint !== launch.mint) return no("metadata", "the mint's metadata names another mint");
-  if (meta.updateAuthority === launch.payer) return no("metadata", "the launching wallet can rename the coin");
+  if (meta.updateAuthority !== SYSTEM_PROGRAM) {
+    return no("metadata", meta.updateAuthority === launch.payer ? "the launching wallet can rename the coin" : "the coin can still be renamed: its metadata's update authority is not None");
+  }
   if (meta.name !== launch.name || meta.symbol !== launch.symbol) return no("metadata_mismatch", "the mint's metadata does not carry the name and symbol the launch wrote");
   if (launch.pool !== bondingCurve(launch.mint)) return no("bonding_curve", "the pool is not the mint's bonding curve");
   if (!curveAccount || curveAccount.owner !== PUMP.program || !Array.isArray(curveAccount.data)) return no("bonding_curve", "the bonding curve is not a pump.fun account on chain");
-  const curve = Buffer.from(curveAccount.data[0], "base64");
+  let curve;
+  try { curve = bytes(curveAccount); } catch (e) { return no("bonding_curve", e.message); }
   if (curve.subarray(0, 8).toString("hex") !== BONDING_CURVE_DISC) return no("bonding_curve", "not a pump.fun BondingCurve account");
   if (launch.pair && launch.pair.mint !== SOL_PAIR.mint) {
     const at = BONDING_CURVE_QUOTE_OFFSET;

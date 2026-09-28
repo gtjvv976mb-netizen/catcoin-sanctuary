@@ -237,11 +237,12 @@ function normalizeAdoptable(e) {
   if (!r || !ADOPT_CATEGORIES.has(e.category)) return null;
   const sanctuaryLaunch = pad === "pump.fun" || pad === "stonkfun" ? { status: isLaunched(r) ? "launched" : "pending", launchpad: pad } : null;
   const ec = e.existingCoin && typeof e.existingCoin === "object" ? e.existingCoin : null;
+  const t = isLaunched(r) && e.token;   // the proved coin's own name and symbol
   return {
     ...r, kind: "adoptable",
-    category: e.category, owner: str(e.owner, 120), company: str(e.owner, 120), coinName: str(e.coinName, 60),
+    category: e.category, owner: str(e.owner, 120), company: str(e.owner, 120), coinName: str(t ? t.name : e.coinName, 60),
     // The ticker to launch with, when it differs from the cat's key (r.ticker stays the id: card link, files).
-    launchTicker: /^[A-Z0-9]{2,10}$/.test(e.launchTicker ?? "") ? e.launchTicker : null,
+    launchTicker: t ? str(t.symbol, 20) || null : /^[A-Z0-9]{2,10}$/.test(e.launchTicker ?? "") ? e.launchTicker : null,
     sources: (Array.isArray(e.sources) ? e.sources : []).slice(0, 6).map((s) => ({ label: str(s?.label, 140), url: httpsUrl(s?.url) })).filter((s) => s.url),
     existingCoin: ec && str(ec.symbol, 24) ? { symbol: str(ec.symbol, 24), mcapUsd: num(ec.mcapUsd) ?? 0 } : null,
     memorial: e.memorial === true, sensitivity: str(e.sensitivity, 300), portraitStatus: e.portraitStatus === "ready" && r.portrait ? "ready" : "pending",

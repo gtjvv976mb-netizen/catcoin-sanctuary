@@ -5,7 +5,9 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { ROOT } from "./helpers.mjs";
-import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft, releasesFile, PAUSED_REASON } from "../scripts/announce.mjs";
+import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft, releasesFile, PAUSED_REASON, addressIn, guardDraft, provedCollection } from "../scripts/announce.mjs";
+import { proveLaunchPump } from "../scripts/lib/chain.mjs";
+import { pumpLaunch } from "./helpers.mjs";
 import { oauthHeader } from "../scripts/lib/x-api.mjs";
 import { hiddenByQueue } from "../assets/residents.js";
 
@@ -14,12 +16,15 @@ const PLANNED = read("data/planned.json");
 const CATS = listCats(PLANNED);
 const CREDS = { X_API_KEY: "k", X_API_SECRET: "s", X_ACCESS_TOKEN: "t", X_ACCESS_SECRET: "a" };
 
-function sandbox({ announced = { cats: {} }, config = {}, planned = PLANNED, queue = null } = {}) {
+function sandbox({ announced = { cats: {} }, config = {}, planned = PLANNED, queue = null, collection = { cats: [] }, adoptables = null, wallets = null } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "announce-"));
   fs.mkdirSync(path.join(dir, "data"));
   const w = (f, v) => fs.writeFileSync(path.join(dir, "data", f), JSON.stringify(v));
-  w("planned.json", planned); w("collection.json", { cats: [] }); w("announced.json", announced); w("announce-config.json", config);
+  w("planned.json", planned); w("collection.json", collection); w("announced.json", announced); w("announce-config.json", config);
   if (queue) w("release-queue.json", queue);
+  if (adoptables) w("adoptables.json", adoptables);
+  // The bots read the collection as the page does (validated), so the test entries' payers are listed launchers unless a test says otherwise.
+  w("wallets.json", wallets ?? { launchers: [...new Set((collection.cats || []).map((e) => e?.payer).filter(Boolean))].map((address) => ({ address, since: "2020-01-01", label: "Test launcher" })) });
   return { dir, read: (f) => JSON.parse(fs.readFileSync(path.join(dir, "data", f), "utf8")) };
 }
 /** A fake X: records every request, answers each post with a new id. */
@@ -361,4 +366,97 @@ test("in-game shot: a second image after the lore photo, a line in the post if i
 
 test("every planned cat still drafts within 280 with the in-game line", () => {
   for (const c of CATS) { const d = draft(c, { ingame: true }); if (d.ok) assert.ok(weightedLength(d.posts[0].text) <= LIMIT, c.key); }
+});
+
+/* ── The last line before X: no post names a Solana address (review finding D) ─────────────────── */
+
+const PUMP_L = pumpLaunch();
+const PUMP_ENTRY = (() => { const { launch: x } = proveLaunchPump(PUMP_L.tx, { wallet: PUMP_L.wallet }); const { uri, ...e } = x; return e; })();
+const STONK_ENTRY = { ...PUMP_ENTRY, pair: { symbol: "GMEx", mint: "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc" } };
+delete STONK_ENTRY.launchpad;
+
+test("addressIn / guardDraft: a base58 run of 32+ characters anywhere (a mint in a card link, a signature, a word) holds the draft; nothing shorter does", () => {
+  const mint = PUMP_L.mint, sig = PUMP_L.signature;
+  assert.equal(addressIn(`Meet the cat\n${cardLink(mint)}`), mint);
+  assert.equal(addressIn(`CA: ${mint} 🚀`), mint);
+  assert.equal(addressIn(`the launch ${sig}`), sig, "a signature too");
+  assert.equal(addressIn("https://x.com/Rainmaker1973/status/1833451037694308415 #catcoin #CatsOfX"), null);
+  assert.equal(addressIn(`${cardLink("MEREDITCAT")} Supercalifragilisticexpialidocious`), null);
+  assert.equal(addressIn(`${cardLink(mint)}`, [cardLink(mint)]), null, "the one allowed string");
+  assert.equal(addressIn(`${cardLink(mint)} ${mint}`, [cardLink(mint)]), mint, "allowed only where it is allowed");
+  const posts = { ok: true, posts: [{ text: "fine" }, { text: `🔗 ${mint}` }], violations: [] };
+  const held = guardDraft(posts);
+  assert.equal(held.ok, false);
+  assert.deepEqual(held.posts, []);
+  assert.deepEqual(held.violations, [{ rule: "address", term: `${mint.slice(0, 6)}…`, field: "post" }]);
+  const text = guardDraft({ ok: true, text: `New: ${mint}`, violations: [] });
+  assert.deepEqual([text.ok, text.text, text.violations[0].rule], [false, null, "address"]);
+  const fine = { ok: true, posts: [{ text: "fine" }], violations: [] };
+  assert.equal(guardDraft(fine), fine);
+  const bad = { ok: false, posts: [], violations: [{ rule: "length" }] };
+  assert.equal(guardDraft(bad), bad);
+});
+
+test("every shipped cat (planned and adoptable) drafts the same with the guard: none names an address", () => {
+  const all = listCats(PLANNED, { cats: [] }, read("data/adoptables.json"));
+  for (const c of all) for (const thread of [true, false]) {
+    const d = draft(c, { thread });
+    assert.equal(guardDraft(d).ok, d.ok, c.key);
+  }
+});
+
+test("a draft naming an address is held (needs_review) in every mode and never reaches X; an owner-launched StonkFun coin's own card link still posts, as before", async () => {
+  const mint = "7Yk3fQeW9sPzD4nV2mXcR8tLbH6uJgA1oKqE5iNwTy3p";
+  const cat = PLANNED.cats[0];
+  const planned = { ...PLANNED, cats: [{ ...cat, name: `Patch ${mint}` }] };
+  for (const config of [{ dryRun: false, perRun: 1, thread: false }, { dryRun: true, perRun: 1 }]) {
+    const s = sandbox({ planned, config });
+    const x = fakeX();
+    const r = await run({ root: s.dir, env: CREDS, fetchImpl: x, ...quiet });
+    assert.deepEqual(r.held, [cat.ticker], JSON.stringify(config));
+    assert.deepEqual(r.drafts[0].violations.map((v) => v.rule), ["address"]);
+    assert.equal(x.calls.filter((c) => c.url === "https://api.x.com/2/tweets").length, 0);
+    if (!config.dryRun) assert.equal(s.read("announced.json").cats[cat.ticker].status, "needs_review");
+  }
+  // An owner-launched StonkFun coin that no cat has: listed by its mint, its card link carries it, and it posts as before.
+  const s = sandbox({ planned: { stocks: PLANNED.stocks, cats: [] }, collection: { cats: [STONK_ENTRY] }, config: { dryRun: false, perRun: 1, thread: false } });
+  const x = fakeX();
+  const r = await run({ root: s.dir, env: CREDS, fetchImpl: x, ...quiet });
+  assert.deepEqual(r.posted.map((p) => p.key), [STONK_ENTRY.mint]);
+  const tweet = JSON.parse(x.calls.find((c) => c.url === "https://api.x.com/2/tweets").init.body);
+  assert.ok(tweet.text.includes(cardLink(STONK_ENTRY.mint)));
+  assert.ok(tweet.text.includes("Adopted! Its owner has launched it"));
+});
+
+test("a proved pump.fun coin no adoptable claims is never picked, drafted or posted by the announcer", async () => {
+  const s = sandbox({ planned: { stocks: PLANNED.stocks, cats: [] }, collection: { cats: [PUMP_ENTRY] }, config: { dryRun: false, perRun: 3 } });
+  const x = fakeX();
+  const r = await run({ root: s.dir, env: CREDS, fetchImpl: x, ...quiet });
+  assert.deepEqual([r.drafts.length, r.posted.length, x.calls.length], [0, 0, 0]);
+  assert.equal(s.read("announced.json").cats[PUMP_ENTRY.mint], undefined);
+});
+
+test("the bots read the collection as the page does: an entry validateCollection refuses is never listed or announced", async () => {
+  const at = (iso) => Date.parse(iso);
+  const listed = (since) => ({ launchers: [{ address: PUMP_ENTRY.payer, since, label: "Launcher" }] });
+  const s = sandbox({ planned: { stocks: PLANNED.stocks, cats: [] }, collection: { cats: [STONK_ENTRY] }, wallets: listed("2020-01-01") });
+  assert.deepEqual(provedCollection(path.join(s.dir, "data"), Date.now()).cats.map((e) => e.mint), [STONK_ENTRY.mint]);
+  // The same entry when its wallet was listed only after the launch, or with an unknown field: the page does not show it, so the bots never list it.
+  const late = sandbox({ planned: { stocks: PLANNED.stocks, cats: [] }, collection: { cats: [STONK_ENTRY] }, wallets: listed("2099-01-01"), config: { dryRun: false, perRun: 1, thread: false } });
+  assert.equal(provedCollection(path.join(late.dir, "data"), at("2099-06-01T00:00:00Z")).cats.length, 0);
+  const x = fakeX();
+  const r = await run({ root: late.dir, env: CREDS, fetchImpl: x, ...quiet });
+  assert.deepEqual([r.drafts.length, r.posted.length, x.calls.length], [0, 0, 0], "an unproved coin is never announced");
+  const odd = sandbox({ planned: { stocks: PLANNED.stocks, cats: [] }, collection: { cats: [{ ...STONK_ENTRY, extra: 1 }] } });
+  assert.equal(provedCollection(path.join(odd.dir, "data"), Date.now()).cats.length, 0);
+  assert.equal(provedCollection(path.join(odd.dir, "missing"), Date.now()).cats.length, 0, "no files: no cats");
+});
+
+test("no thread file waiting to be posted carries an address (post-thread.mjs holds such a thread)", () => {
+  for (const f of fs.readdirSync(path.join(ROOT, "data")).filter((n) => /^(intro-)?thread.*\.json$/.test(n))) {
+    const t = JSON.parse(fs.readFileSync(path.join(ROOT, "data", f), "utf8"));
+    if (t.ids) continue;
+    for (const p of t.posts || []) assert.equal(addressIn(p), null, `${f}: ${p.slice(0, 40)}`);
+  }
+  assert.match(fs.readFileSync(path.join(ROOT, "scripts", "post-thread.mjs"), "utf8"), /addressIn\(p\)/, "post-thread.mjs checks every post before posting");
 });

@@ -251,8 +251,15 @@ test("page weight: the first view stays within budget", () => {
   // blended along the surface; then to 690 KB for the Trending tab, assets/ui/trending.js, loaded
   // only when it is first opened; then to 695 KB for adopted cats on cards, data/adoptions.json
   // checked in assets/residents.js and assets/ui/data.js and drawn by card.js, after trimming ~1 KB
-  // of repeated code from card.js: one card body, one portrait, one heading and one row helper.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 695 * 1024, "the page's own scripts over 695 KB");
+  // of repeated code from card.js: one card body, one portrait, one heading and one row helper;
+  // then from 695 KB to 696 KB for the launcher stage 2 review fixes, ~0.9 KB: the one shared
+  // provedLaunch rule in assets/ui/adoptables.js (mint, tx, launchpad, and the cat's own name and
+  // ticker), one coin to one cat and no bare card for a coin a launch names (residents.js), the
+  // coin's own pair, name and symbol on a sanctuary-launched card (data.js), a pump.fun coin's own
+  // disclaimer and launchpad row with no stock-cat block (residents.js, card.js), and no Adopt
+  // button on the "New cat" banner for a cat that cannot be adopted (newcat.js). Stage 2 had left
+  // 72 bytes spare.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 696 * 1024, "the page's own scripts over 696 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
