@@ -88,8 +88,8 @@ import { readPostByRules, namesIn, describes, tickerFor, loreFrom, NOT_NAMES, SE
 
 export const QUERY = '(cat OR cats OR kitten OR kitty OR "my cat" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -"$" -pump -memecoin -solana -"contract address" -airdrop -giveaway';
 export const MAX_AGE_HOURS = 48;
-export const MIN_LIKES = 20_000;
-export const MIN_VIEWS = 1_000_000;
+export const MIN_LIKES = 5_000;
+export const MIN_VIEWS = 250_000;
 export const RISING_MAX_AGE_HOURS = 12;      // "rising": young and climbing fast, found before it is viral
 export const RISING_MIN_LIKES = 1_000;
 export const RISING_LIKES_PER_HOUR = 500;
@@ -102,7 +102,7 @@ export const TREND_PLACES = [1, 23424977, 23424856]; // worldwide, the US, Japan
 export const TREND_SEARCHES = 2;     // kept for compatibility: a run searches at most one trend now (see chooseLens)
 export const MAX_TRENDS = 20;        // cat trends kept a run (busiest first), so a small new one is not crowded out by two big ones
 export const READ_BUDGET = 10_000;   // posts a month, leaving room for the announcer on a small plan
-export const PER_SEARCH = 10;        // posts per search (X's minimum is 10, its maximum 100)
+export const PER_SEARCH = 12;        // posts per search (X's minimum is 10, its maximum 100); 12 hourly is ~8.9k reads a month
 export const TREND_PER_SEARCH = 10;  // kept for compatibility: a trend search now asks for PER_SEARCH like every lens
 export const EVERY_MINUTES = 60;     // how often it searches (the workflow wakes every 20 minutes)
 export const ROTATION = ["big", "viral", "big", "figures"];  // the lenses taken in turn when no trend or name needs a search
@@ -712,7 +712,7 @@ export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Dat
   // An unread post is tried again next run (it stays out of `seen` by not being stored).
   const posts = [...read.filter((r) => r.status !== "unread"), ...prev].sort((a, b) => Date.parse(b.postedAt) - Date.parse(a.postedAt)).slice(0, KEEP);
   return {
-    note: "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (20k likes or 1M views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
+    note: "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
     checkedAt: new Date(nowMs).toISOString(), lens: pick.lens, query: pick.query, trends, reads, searchError: null,
     candidates: posts.filter((p) => p.status === "candidate").map((p) => p.id),
     signals: posts.filter((p) => p.status === "signal").map((p) => p.id).slice(0, MAX_SIGNALS),

@@ -1,5 +1,5 @@
 # The sanctuary's automatic launcher (scripts/launch.mjs, scripts/lib/launcher.mjs): every 20 minutes,
-# by hand, and whenever the trend watch commits new candidates (its launcher job dispatches this one), it
+# by hand, when the owner saves data/launch-approvals.json on main, and whenever the trend watch commits new candidates (its launcher job dispatches this one), it
 # launches at most one trending cat, with no dev buy: it never buys or sells anything. Only watch-list
 # cats launch on their own (a data/cat-watch.json figure, or a cartoon or fiction cat that an X trend
 # named or a big account posted); any other cat waits until the owner lists its post in
@@ -58,6 +58,9 @@ on:
   schedule:
     - cron: "*/20 * * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [data/launch-approvals.json]
 
 permissions: {}
 
