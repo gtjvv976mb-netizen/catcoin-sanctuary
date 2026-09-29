@@ -55,7 +55,8 @@ test("rules: a lore picture must be the cat's own file with a short caption", ()
 
 test("shipped: every adoptable cat has an announce record (held until released, then backlog/posted)", () => {
   const ann = read("data/announced.json").cats;
-  for (const c of DATA.cats) assert.ok(["held", "backlog", "posted", "queued", "failed"].includes(ann[c.ticker]?.status), c.ticker);
+  // A cat the launcher launched has none until the announcer's next run holds it by rule (holdSanctuaryCats).
+  for (const c of DATA.cats) assert.ok(["held", "backlog", "posted", "queued", "failed"].includes(ann[c.ticker]?.status) || (c.launch && !ann[c.ticker]), c.ticker);
 });
 
 test("rules: a bad cat is refused", () => {

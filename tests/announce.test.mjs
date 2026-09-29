@@ -76,8 +76,10 @@ test("the rules refuse price talk, promises, links that are not cited, brands, a
 test("backlog: the seeded record marks every existing cat backlog, and a run takes new cats first, then 1-2 from the backlog", () => {
   const seeded = read("data/announced.json");
   const ADOPTABLE = read("data/adoptables.json").cats;
-  assert.equal(Object.keys(seeded.cats).length, PLANNED.cats.length + ADOPTABLE.length);
-  for (const c of ADOPTABLE) assert.ok(["held", "backlog", "posted", "queued", "failed"].includes(seeded.cats[c.ticker]?.status), `${c.ticker} has a record`);
+  // A cat the launcher launched has no record until the announcer's next run holds it by rule (holdSanctuaryCats).
+  const unrecorded = ADOPTABLE.filter((c) => c.launch && !seeded.cats[c.ticker]);
+  assert.equal(Object.keys(seeded.cats).length, PLANNED.cats.length + ADOPTABLE.length - unrecorded.length);
+  for (const c of ADOPTABLE) assert.ok(["held", "backlog", "posted", "queued", "failed"].includes(seeded.cats[c.ticker]?.status) || unrecorded.includes(c), `${c.ticker} has a record`);
   for (const c of PLANNED.cats) assert.ok(["backlog", "posted", "queued", "failed", "held"].includes(seeded.cats[c.ticker]?.status), c.ticker);
   const cfg = read("data/announce-config.json");
   assert.equal(typeof cfg.dryRun, "boolean");
