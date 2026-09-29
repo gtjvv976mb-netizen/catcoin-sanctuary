@@ -17,8 +17,8 @@ const stepNamed = (re) => { const s = steps.filter((x) => re.test(x)); assert.eq
 
 test("launch workflow: name, triggers, no permission by default, one run at a time (never cancelled)", () => {
   assert.match(W, /^name: Launch$/m);
-  assert.match(W, /on:\n  schedule:\n    - cron: "\*\/20 \* \* \* \*"\n  workflow_dispatch:\n/);
-  assert.ok(!/\n  push:/.test(W), "a bot's push starts no workflow: the trend watch dispatches it instead");
+  assert.match(W, /on:\n  schedule:\n    - cron: "\*\/20 \* \* \* \*"\n  workflow_dispatch:\n  push:\n    branches: \[main\]\n    paths: \[data\/launch-approvals\.json\]\n\npermissions/,
+    "a push starts it only when the owner saves the approvals (a bot's push starts no workflow: the trend watch dispatches it instead)");
   assert.match(W, /^permissions: \{\}$/m);
   assert.match(W, /concurrency:\n  group: launch\n  cancel-in-progress: false\n/);
 });

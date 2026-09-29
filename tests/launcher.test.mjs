@@ -24,7 +24,7 @@ import { createRpc } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
-  coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
+  coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf,
 } from "../scripts/lib/launcher.mjs";
@@ -374,6 +374,32 @@ test("selection: newest post first, and every exclusion (sensitive, known, not a
   // A duplicate of a watch-list figure's post: the ticker taken by the older one's row.
   const dup = selectCandidate({ ...ctx, trending: trendingOf([posts[10]]), ledger: { launches: [{ ...row, name: "Sir Gloopington", coinName: "Sir Gloopington", ticker: "GLOOP", status: "launched" }] } });
   assert.equal(dup.row, null);
+});
+
+test("the owner names a signal (a big account's cat post with no cat's name): it launches under that name, approved; nothing else changes", () => {
+  const id = "2100000000000000121";
+  const signal = post(id, { name: null, coin: null, ticker: null, lore: null, kind: "none", nameFrom: null, figure: null, big: "NBA", aboutOneCat: false, author: "NBA",
+    text: "An adorable surprise for a player at media day today, and the whole team loved it" });
+  signal.stage = "big-account"; signal.status = "signal";
+  const ctx = { nowMs: NOW, approvals: new Set(), namings: new Map(), watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")),
+    trending: { note: "test", candidates: [], posts: [signal] } };
+  assert.equal(selectCandidate(ctx).row, null, "a signal is not a candidate");
+  const file = { approve: [{ post: `https://x.com/NBA/status/${id}?s=20`, name: "Plinko Cat", ticker: "$plinko" }] };
+  assert.deepEqual([...approvalsOf(file)], [id]);
+  assert.deepEqual([...namingsOf(file)], [[id, { name: "Plinko Cat", ticker: "PLINKO" }]]);
+  const named = selectCandidate({ ...ctx, approvals: approvalsOf(file), namings: namingsOf(file) });
+  assert.ok(named.row, JSON.stringify(named.skipped));
+  assert.deepEqual([named.row.postId, named.row.name, named.row.coinName, named.row.ticker, named.row.kind, named.row.policy], [id, "Plinko Cat", "Plinko Cat", "PLINKO", "real", "approved"]);
+  assert.equal(named.row.lore, "An adorable surprise for a player at media day today, and the whole team loved it", "the post's first sentence");
+  // Approved without a name: still waits (the post names no cat).
+  assert.match(selectCandidate({ ...ctx, approvals: new Set([id]) }).skipped[0].why, /not about one cat/);
+  // A sensitive post stays sensitive, whatever the owner names it.
+  const sad = { ...signal, reading: { ...signal.reading, sensitive: true } };
+  assert.match(selectCandidate({ ...ctx, trending: { ...ctx.trending, posts: [sad] }, approvals: approvalsOf(file), namings: namingsOf(file) }).skipped[0].why, /sensitive/);
+  // Unusable names or tickers give no naming; the kind and lore are the owner's when given.
+  assert.equal(namingsOf({ approve: [{ post: id, name: "" }, { post: id, name: "<b>x</b>" }, { post: id, name: "Ok Cat", ticker: "no way!" }, { post: "abc", name: "Ok Cat" }] }).size, 0);
+  assert.deepEqual(namingsOf({ approve: [{ post: id, name: "Ok Cat", kind: "cartoon", lore: "  Ok Cat\nwaves.  " }] }).get(id), { name: "Ok Cat", ticker: "OKCAT", kind: "cartoon", lore: "Ok Cat waves." });
+  assert.equal(withNaming(signal, null), signal);
 });
 
 test("a candidate's row: its venue (pump.fun in SOL), its coin's metadata in pump.fun's shape, and the adoptable row it will get, valid", () => {

@@ -9,7 +9,8 @@
  * (reading.nameFrom "figure"), or a cartoon or fiction cat that a big account posted
  * (post.bigAccount) or an X trend named (nameFrom "trend"). Anything else (a real pet, even one named
  * after a figure, a name the rules guessed) waits for the owner: its post id in data/launch-approvals.json { approve: [ids] } lets it
- * through the watch-list rule, and every other rule still applies. Never a sensitive cat, one the trend
+ * through the watch-list rule, and every other rule still applies. A post that names no cat (a big
+ * account's signal) launches when the owner names it there: { "post": "<id or link>", "name": "…" } (namingsOf). Never a sensitive cat, one the trend
  * watch marked known, one already in the sanctuary (data/planned.json, data/adoptables.json: names and
  * tickers, letter case aside), one in the ledger, a post older than MAX_POST_AGE_HOURS or without a
  * pbs.twimg.com picture, and never one whose coin text, metadata or X post would break the site's
@@ -99,7 +100,7 @@ import { TOKEN_PROGRAM, TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./pro
 import { LAUNCH_DEFAULTS } from "./pump.mjs";
 import { venueById, venueIds, chooseVenue, takenPairs, PUMP_SOL, PUMP_QUOTE } from "./venues.mjs";
 import { coatFromLook } from "./coat.mjs";
-import { tickerFor } from "./read-cat-post.mjs";
+import { tickerFor, loreFrom } from "./read-cat-post.mjs";
 import { RpcError } from "./rpc.mjs";
 import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
 
@@ -442,8 +443,53 @@ export function collectionRoom({ collection, planned, ledger }) {
  * an id written as a JSON number past 2^53: its last digits are lost, so it would name another post).
  */
 export function approvalsOf(data) {
-  return new Set((Array.isArray(data?.approve) ? data.approve : []).filter((v) => typeof v === "string" || Number.isSafeInteger(v))
-    .map((v) => String(v).trim()).filter((v) => X_POST_ID.test(v)));
+  return new Set((Array.isArray(data?.approve) ? data.approve : []).map(approvedIdOf).filter((v) => v !== null));
+}
+
+/** An approve entry's post id: the id itself, or a naming's { post } (an id or a link to the post); else null. */
+function approvedIdOf(v) {
+  if (isObj(v)) v = v.post;
+  if (typeof v !== "string" && !Number.isSafeInteger(v)) return null;
+  const s = String(v).trim();
+  const id = X_POST_ID.test(s) ? s : postIdOf(s);
+  return id && X_POST_ID.test(id) ? id : null;
+}
+
+const NAMING_NAME = /^[\p{L}\p{N}][\p{L}\p{N} '’.&-]{0,38}[\p{L}\p{N}.]$/u;
+const NAMING_KINDS = ["real", "cartoon", "fiction"];
+
+/**
+ * The owner's names for approved posts that name no cat themselves (a big account's "Meow 😽" under a cat's
+ * picture, listed under the trend watch's signals): data/launch-approvals.json approve entries written
+ * { "post": "<id or link>", "name": "Poole's Cat", "ticker"?: "POOLE", "kind"?: "real" | "cartoon" | "fiction",
+ * "lore"?: "<one line about the cat>" }. A Map of post id -> { name, ticker, kind?, lore? }. An entry whose
+ * name or ticker is unusable gives no naming (its post is still approved, and read as the trend watch read it).
+ */
+export function namingsOf(data) {
+  const out = new Map();
+  for (const v of Array.isArray(data?.approve) ? data.approve : []) {
+    if (!isObj(v)) continue;
+    const id = approvedIdOf(v), name = typeof v.name === "string" ? oneLine(v.name, 40) : "";
+    if (!id || !NAMING_NAME.test(name)) continue;
+    const ticker = typeof v.ticker === "string" && v.ticker.trim() ? v.ticker.trim().replace(/^\$+/, "").toUpperCase() : tickerFor(name);
+    if (!ticker || !TICKER.test(ticker)) continue;
+    const lore = typeof v.lore === "string" ? oneLine(v.lore, 200) : "";
+    out.set(id, { name, ticker, ...(NAMING_KINDS.includes(v.kind) ? { kind: v.kind } : {}), ...(lore ? { lore } : {}) });
+  }
+  return out;
+}
+
+/**
+ * A post as the owner named it (namingsOf): the cat's name, coin name and ticker are the owner's, its kind the
+ * owner's (else the trend watch's, else a real cat), its lore the owner's (else the post's first sentence, else a
+ * plain line). Whether it is sensitive stays the trend watch's reading. Without a naming, the post as it is.
+ */
+export function withNaming(post, naming) {
+  if (!naming || !isObj(post)) return post;
+  const r = isObj(post.reading) ? post.reading : {};
+  const kind = naming.kind ?? (NAMING_KINDS.includes(r.kind) ? r.kind : "real");
+  const lore = naming.lore ?? loreFrom(post.text, naming.name) ?? `${naming.name}, the cat everyone was talking about on X`;
+  return { ...post, reading: { ...r, aboutOneCat: true, catName: naming.name, coinName: naming.name, ticker: naming.ticker, kind, lore: oneLine(lore, 200), nameFrom: "owner", readBy: "owner" } };
 }
 
 /**
@@ -649,6 +695,7 @@ export function routeOf(post, ctx) {
 export function selectCandidate(ctx) {
   const ids = new Set([...(Array.isArray(ctx.trending?.candidates) ? ctx.trending.candidates.map(String) : []), ...ctx.approvals]);
   const posts = (Array.isArray(ctx.trending?.posts) ? ctx.trending.posts : []).filter((p) => ids.has(String(p?.id)))
+    .map((p) => withNaming(p, ctx.namings?.get(String(p?.id))))
     .sort((a, b) => (Date.parse(b.postedAt) || 0) - (Date.parse(a.postedAt) || 0));
   const skipped = [];
   for (const post of posts) {
@@ -947,7 +994,7 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
   return {
     nowMs, ledger,
     trending: readJson(io, FILES.trending, { posts: [], candidates: [] }),
-    approvals: approvalsOf(readOwned(io, FILES.approvals, { approve: [] }, log)),
+    ...(() => { const a = readOwned(io, FILES.approvals, { approve: [] }, log); return { approvals: approvalsOf(a), namings: namingsOf(a) }; })(),
     photoHide: photoHideOf(io, log),
     watch: readOwned(io, FILES.watch, { figures: [] }, log),
     adoptables: readJson(io, FILES.adoptables, null),
