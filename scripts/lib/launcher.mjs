@@ -170,6 +170,8 @@ export function launchMode(env = {}) {
 
 /** LAUNCH_PUMP_QUOTE: "on" (letter case aside, as LAUNCH_ENABLED) opts in to the unverified coin-priced pump.fun venue; anything else does not. */
 export const pumpQuoteOptIn = (env = {}) => String(env.LAUNCH_PUMP_QUOTE ?? "").trim().toLowerCase() === "on";
+/** The owner's open launch rule (LAUNCH_OPEN, on unless "off"): real pets in viral or rising posts, and any cat a big account names, launch without approval. */
+export const openLaunches = (env = {}) => String(env.LAUNCH_OPEN ?? "").trim().toLowerCase() !== "off";
 
 /**
  * The caps, from the repository variables, each with its default when unset or not a number and
@@ -320,7 +322,7 @@ export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
 const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "kind", "lore", "image", "coinImage", "photoCredit", "metadataPath", "status", "preparedAt", "attempts", "cat",
   "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback"];
-export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved"]);
+export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved", "viral"]);
 /** The trend watch's reading kinds a launched cat may have (a row's `kind`: "real" is a pet, the others characters). */
 export const KINDS = Object.freeze(["real", "cartoon", "fiction"]);
 const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
@@ -539,11 +541,19 @@ const figuresOf = (watch) => new Map((Array.isArray(watch?.figures) ? watch.figu
  * "figure" (named after a watch-list figure still on the list), "trend" or "big-account" (a cartoon or
  * fiction cat an X trend named or a big account posted), "approved" (the owner listed its id). A real
  * pet (reading kind "real") is only ever "approved": the owner sees a stranger's post before it launches,
- * even when it is named after a figure.
+ * even when it is named after a figure; unless the owner's open rule is on (ctx.open, openLaunches:
+ * LAUNCH_OPEN), when a pet a big account names ("big-account") or one in a viral or rising post ("viral")
+ * launches on its own too.
  */
-export function policyOf(post, { approvals = new Set(), watch = null } = {}) {
+export function policyOf(post, { approvals = new Set(), watch = null, open = false } = {}) {
   const r = post?.reading;
-  if (r?.kind === "real") return approvals.has(String(post?.id)) ? "approved" : null;
+  if (r?.kind === "real") {
+    if (approvals.has(String(post?.id))) return "approved";
+    // The open rule (openLaunches): a pet a big account names, or one in a viral or rising post, without approval.
+    if (open && typeof post?.bigAccount === "string" && post.bigAccount) return "big-account";
+    if (open && (post?.stage === "viral" || post?.stage === "rising")) return "viral";
+    return null;
+  }
   if (r?.nameFrom === "figure" && typeof post.figure === "string" && figuresOf(watch).has(post.figure)) return "figure";
   const drawn = r?.kind === "cartoon" || r?.kind === "fiction";
   if (drawn && r?.nameFrom === "trend") return "trend";
@@ -1002,6 +1012,7 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
     collection: readJson(io, FILES.collection, null),
     pumpQuotes: quotes.usable,
     pumpQuoteOptIn: pumpQuoteOptIn(env),
+    open: openLaunches(env),
   };
 }
 

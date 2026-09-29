@@ -24,7 +24,7 @@ import { createRpc } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
-  coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
+  coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf,
 } from "../scripts/lib/launcher.mjs";
@@ -899,6 +899,25 @@ test("photos: every kind shows its post's photo, credited; data/photo-hide.json 
   // A real pet waits for data/launch-approvals.json even when it is named after a watch-list figure.
   assert.equal(policyOf(post("2100000000000000402", { kind: "real" }), { approvals: new Set(), watch: WATCH }), null);
   assert.equal(policyOf(post("2100000000000000402", { kind: "real" }), { approvals: new Set(["2100000000000000402"]), watch: WATCH }), "approved");
+});
+
+test("the owner's open rule (LAUNCH_OPEN, on unless off): a real pet in a viral or rising post, or one a big account names, launches without approval", () => {
+  assert.deepEqual([openLaunches({}), openLaunches({ LAUNCH_OPEN: "" }), openLaunches({ LAUNCH_OPEN: "on" }), openLaunches({ LAUNCH_OPEN: " OFF " })], [true, true, true, false]);
+  const ctx = { approvals: new Set(), watch: WATCH, open: true };
+  const pet = (id, extra = {}, stage = "viral") => ({ ...post(id, { kind: "real", nameFrom: null, figure: null, ...extra }), stage });
+  assert.equal(policyOf(pet("2100000000000000411"), ctx), "viral");
+  assert.equal(policyOf(pet("2100000000000000412", {}, "rising"), ctx), "viral");
+  assert.equal(policyOf(pet("2100000000000000413", { big: "NBA" }, "big-account"), ctx), "big-account");
+  assert.equal(policyOf(pet("2100000000000000414", {}, "big-account"), ctx), null, "no big account, not viral or rising");
+  assert.equal(policyOf(pet("2100000000000000411"), { ...ctx, open: false }), null, "off: it waits for the owner again");
+  assert.equal(policyOf(pet("2100000000000000411"), { ...ctx, approvals: new Set(["2100000000000000411"]) }), "approved", "an approval still reads as one");
+  // Every other rule still applies: a sensitive pet never launches.
+  const adoptables = shipped(FILES.adoptables), planned = JSON.parse(readRoot("data/planned.json"));
+  const posts = [pet("2100000000000000415", { h: 1, name: "Quillbert", ticker: "QUILL", sensitive: true }), pet("2100000000000000416", { h: 2, name: "Bramblewick", ticker: "BRAMBLE", lore: "Bramblewick naps in the sink every afternoon." })];
+  const pick = selectCandidate({ nowMs: NOW, approvals: new Set(), watch: WATCH, open: true, ledger: { launches: [] }, adoptables, planned, trending: trendingOf(posts) });
+  assert.deepEqual([pick.row?.postId, pick.row?.policy, pick.row?.kind], ["2100000000000000416", "viral", "real"]);
+  assert.match(pick.skipped[0].why, /sensitive/);
+  assert.equal(rowProblem(pick.row), null);
 });
 
 test("a real pet, approved to launch: its photo shows on its card and on its coin, credited; the owner hides it later and it leaves the card; unhidden, it comes back", async () => {
