@@ -1087,6 +1087,15 @@ function bendLayer(o, A, b, dt, g, snap) {
     follows the body's turns, so the gaze stays put) until the target moves off; with no target it
     leads a turn a little. A curious cat tilts its head, a friendly one slow-blinks at you, and the
     ears flick (a tiny twitch). The neck takes a little under half of it. */
+/** How much of a glance the neck takes, of the turn and of the nod (the head the rest). (Most of it: the
+    head turns about the back of its skull, and the skin where head meets neck takes only so much of a
+    turn before the face creases; with the head's skin on the neck, as it was on most models before the
+    head joint went to the back of the skull, it hardly mattered.) */
+const LOOK_NECK = [0.62, 0.55];
+/** How far (rad) a glance may pitch the head against the neck, the clip's own pitch of it included: a
+    stalking cat's head is already held up level on a neck bowed low, and a glance up on top of that
+    folds the throat. */
+const LOOK_HEAD_PITCH = 0.85;
 function lookLayer(o, cat, A, b, dt, now, look, g, snap, cam) {
   // The head as the clip (and the bend) posed it, in the model's frame: the chest turned by _qa,
   // the eyes at _vc, facing _vd.
@@ -1145,15 +1154,17 @@ function lookLayer(o, cat, A, b, dt, now, look, g, snap, cam) {
   const flick = A.flickSide * 0.05 * env(now, A.flickAt, A.flickAt + 0.14, 0.04, 0.09) * (1 - A.wSleep);
   const oy = A.oy * g, op = A.op * g;
   if (Math.abs(oy) + Math.abs(op) + Math.abs(tilt) + dip + Math.abs(flick) < 1e-4 || g <= 0) return;
-  // The neck: 45% of the turn about the upright (taken into the chest's frame), 40% of the nod.
-  _qd.setFromAxisAngle(_AY, oy * 0.45);
+  // The neck: most of the turn about the upright (taken into the chest's frame), and of the nod.
+  const relP = 2 * Math.atan2(b.head.quaternion.z, b.head.quaternion.w), hop0 = op * (1 - LOOK_NECK[1]);
+  const hop = hop0 > 0 ? Math.min(hop0, Math.max(0, LOOK_HEAD_PITCH - relP)) : Math.max(hop0, Math.min(0, -LOOK_HEAD_PITCH - relP));
+  _qd.setFromAxisAngle(_AY, oy * LOOK_NECK[0]);
   _qe.copy(_qa).invert().multiply(_qd).multiply(_qa);
-  b.neck.quaternion.premultiply(_qe).multiply(_qd.setFromAxisAngle(_AZ, (op * 0.4 - dip * 0.3 * g)));
+  b.neck.quaternion.premultiply(_qe).multiply(_qd.setFromAxisAngle(_AZ, (op * LOOK_NECK[1] - dip * 0.3 * g)));
   // The head: the rest of the turn, the nod, the blink's dip, the tilt and the flick.
   _qb.copy(_qa).multiply(b.neck.quaternion);
-  _qd.setFromAxisAngle(_AY, oy * 0.55 + flick * 0.5 * g);
+  _qd.setFromAxisAngle(_AY, oy * (1 - LOOK_NECK[0]) + flick * 0.5 * g);
   _qe.copy(_qb).invert().multiply(_qd).multiply(_qb);
-  b.head.quaternion.premultiply(_qe).multiply(_qd.setFromAxisAngle(_AZ, op * 0.6 - dip * 0.7 * g)).multiply(_qe.setFromAxisAngle(_AX, (tilt + flick) * g));
+  b.head.quaternion.premultiply(_qe).multiply(_qd.setFromAxisAngle(_AZ, hop - dip * 0.7 * g)).multiply(_qe.setFromAxisAngle(_AX, (tilt + flick) * g));
 }
 
 /** The tail: each of its four segments a damped spring (swinging sideways, and up and down),

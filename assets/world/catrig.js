@@ -564,7 +564,9 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
   // centre, leaned forward): a muzzle hanging lower than the joint is head, the throat under it neck; and
   // the heart of the head's round is head whatever the line.)
   const hu = headPlane(V().subVectors(rig.headC, rig.neck).add(V(1.2 * Math.hypot(rig.headC.x - rig.neck.x, rig.headC.y - rig.neck.y), 0, 0))), hjB = rig.headJoint;
-  const aheadOfSkull = (q) => (q.x - hjB.x) * hu.x + (q.y - hjB.y) * hu.y > 0 || q.distanceTo(rig.headC) < 0.75 * rig.headR;
+  // (the line a third of the head's radius behind the joint: the band where head and neck skin blend then
+  // lies over the nape and the throat, not the face, which stays whole as the head turns)
+  const aheadOfSkull = (q) => (q.x - hjB.x) * hu.x + (q.y - hjB.y) * hu.y > -0.35 * rig.headR || q.distanceTo(rig.headC) < 0.75 * rig.headR;
   const info = bonesList.map((b, i) => {
     const nm = b.name, lr = nm.match(/\.(L|R)$/);
     return { i, a: seg[nm][0], b: seg[nm][1], r: rad[nm], root: nm === "root", tail: nm.startsWith("tail"), head: nm === "head", headOk: nm === "head" || nm === "neck", side: lr ? lr[1] : null, hind: /^(thigh|shin|foot)/.test(nm) };
@@ -1784,7 +1786,9 @@ export function makeClips(rig, style = {}, fit = null) {
   const LICK_BOW = 1.65;
   const meet = (s, pt, to, lim = 1.1, rise = 0.6) => {
     const k = (1 - 0.7 * headBig) * (1 - 0.45 * shortNeck) * (1 - 0.4 * ruff), kk = k * Math.min(1, lim / 1.1); // (turned and pitched no further than bowed, for a bow held back by the fit)
-    const P = [[0, sitHead[0] - lim * k, sitHead[0] + rise * k], [1, -0.7 * kk, 0.7 * kk], [2, -0.9 * kk, 0.3 * kk]];
+    // (the head tucked against the neck no more than a little: with the head's skin on the head, a chin tucked
+    // hard on a neck bowed deep draws the nape and the back of the head into a hood; the neck does the reaching)
+    const P = [[0, sitHead[0] - lim * k, sitHead[0] + rise * k], [1, -0.7 * kk, 0.7 * kk], [2, -0.35 * kk, 0.3 * kk]];
     const get = (j) => (j === 0 ? s.neck[0] : j === 1 ? s.neck[1] : s.head[0] - s.neck[0]);
     const set = (j, v) => { if (j === 0) { const r = s.head[0] - s.neck[0]; s.neck[0] = v; s.head[0] = v + r; } else if (j === 1) { s.neck[1] = v; s.head[1] = v * 0.5; } else s.head[0] = s.neck[0] + v; };
     for (const [j, lo, hi] of P) set(j, Math.min(hi, Math.max(lo, get(j))));
@@ -1926,7 +1930,7 @@ export function makeClips(rig, style = {}, fit = null) {
     // up to meet it: of a deep bow and shallower ones, the one whose mouth the raised leg's foot or shin
     // comes nearest (a shallower bow only for a leg that comes that much nearer)
     for (const b of [1, 0.85, 0.7, 0.55, 0.4]) {
-      s.neck = [sitHead[0] - LICK_BOW * a * k * b, -(0.1 + 0.3 * b) * k, 0]; s.head = [s.neck[0] + (sitHead[1] - sitHead[0]) - 0.5 * a * k * b, -(0.05 + 0.15 * b) * k, -0.2];
+      s.neck = [sitHead[0] - LICK_BOW * a * k * b, -(0.1 + 0.3 * b) * k, 0]; s.head = [s.neck[0] + (sitHead[1] - sitHead[0]), -(0.05 + 0.15 * b) * k, -0.2];
       const M = headPoint(s, MOUTH);
       // the leg: of the ways it goes up (raised no higher than this cat's leg goes: ph, from the hip), the
       // one whose foot or shin passes nearest the mouth (a little lower preferred: no higher than needed)
@@ -2152,20 +2156,21 @@ export function makeClips(rig, style = {}, fit = null) {
     const L = K.legs[k], t = B.top[k], a = L.hind ? B.aP : B.aC, w = V1.set(r[0], r[1], r[4]).applyQuaternion(t.q);
     return leg(t.x + w.x, t.y + w.y, r[2] + a, r[3], (t.z + w.z - L.toe.z) * L.side);
   };
-  // Curled up asleep: lying half over on its left side, the back rounded towards the belly in one curve (the
-  // loins, chest and neck each taking a share, so no one joint folds the skin), the head come down to
-  // rest on the ground by its forepaws, the legs drawn up loosely against the belly, the tail wrapped
-  // round the hind legs towards the nose; breathing slowly. Seen from above a C, from the belly side
-  // paws and a sleeping face, from the back a round back, the head and the tail (rolled right over onto
-  // its side, the back seen from behind was a long smooth log). A big cartoon head curls less; a
-  // round body (no waist to bend) lies less far over.
-  const SLEEP_ROLL = 0.8 - 0.15 * heavy, curl = (1 - 0.45 * headBig) * (1 - 0.3 * heavy) * (1 - 0.5 * deep) * amp("sleep");
+  // Curled up asleep: lying over on its left side, the back rounded towards the belly in one deep curve
+  // (the loins, chest and neck each taking a share, so no one joint folds the skin), the head come round
+  // to rest on the ground by its hind paws, the legs drawn up loosely against the belly, the tail wrapped
+  // round the hind legs towards the nose; breathing slowly. Seen from above a ring, from the belly side
+  // paws and a sleeping face, from the back a round back with the head tucked in at one end. (Curled
+  // only as far as a wash bows the head, the back seen from behind was a long smooth log, whichever way
+  // it lay: CURL, and the fit's sleep knob for a skin that can't take it.) A big cartoon head curls
+  // less; a round body (no waist to bend) lies less far over.
+  const SLEEP_ROLL = 1.2 - 0.25 * heavy, CURL = 2.4, curl = (1 - 0.45 * headBig) * (1 - 0.3 * heavy) * (1 - 0.5 * deep) * amp("sleep");
   // A round cat (deep-bodied, wide or stubby: no waist to curl, and rolled onto its side it reads as a
   // featureless log) sleeps in its loaf instead, as such cats do: the chin down on the forepaws, the
   // back rounded a little, the tail wrapped along its flank; curling up and waking are then the head
   // going down and coming up.
-  // (so does one whose skin won't take the curl: its fit under a half)
-  const loafSleep = round >= 0.4 || amp("sleep") < 0.5;
+  // (so does one whose skin won't take even a small curl: its fit at the least, 0.3)
+  const loafSleep = round >= 0.4 || amp("sleep") < 0.4;
   const sleepSpec = loafSleep ? (u = 0) => {
     const b = S(TAU * u * 2) * 0.008;
     const s = loafSpec(0, { still: true });
@@ -2181,7 +2186,7 @@ export function makeClips(rig, style = {}, fit = null) {
     const b = S(TAU * u * 2) * 0.012, cr = C(SLEEP_ROLL), sr = S(SLEEP_ROLL);
     // (each joint turned about the upright of the world, which for a body lying over is its belly's way)
     const bend = (th, br = 0) => [-th * sr + br, th * cr, 0];
-    const CK = 1.3;
+    const CK = CURL;
     const s = { root: [loafLift, loafShift, 0, SLEEP_ROLL], pelvis: [0, 0, 0], spine: bend(0.5 * curl * CK, b), chest: bend(0.55 * curl * CK, -b * 0.5), neck: [0, 0, 0], head: [0, 0, 0],
       legs: {}, tail: T([PI + 1.1, PI + 1.8, PI + 2.4, PI + 2.9], [-0.3, -0.15, -0.05, 0]) };
     const B = bodyOf(s), nk = 0.6 * curl * CK, hd = 0.35 * curl * CK;
