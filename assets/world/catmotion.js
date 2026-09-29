@@ -102,8 +102,9 @@ export function transitionPath(from, to) {
 /** Gait bands (world units per second of an ordinary cat) with hysteresis: a cat changes gait
     only when clearly into the next band, so speeds near a boundary do not flicker. */
 export const GAIT_BANDS = { trotUp: 1.55, trotDown: 1.25, runUp: 2.45, runDown: 1.95 };
-/** Shortest time in one gait before another may start (s). */
-export const GAIT_DWELL = 0.5;
+/** Shortest time in one gait before another may start (s): half a second, and a hair more, so a change never falls a
+    rounding error inside it (seen at 0.4999 s on the page). */
+export const GAIT_DWELL = 0.52;
 
 /** The gait for a speed, given the current one (null when not moving) and how long it has lasted. */
 export function gaitFor(prev, speed, since = Infinity, { stalk = false } = {}) {
