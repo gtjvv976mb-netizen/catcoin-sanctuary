@@ -819,12 +819,18 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         act.reason = `Saying hello to ${f.name}`;
         cat.dest = s;
         const head = () => ({ x: f.x, y: 0.35, z: f.z });
+        // (then it settles down beside the friend, touching but not in it: from where it rubbed cheeks, nose to
+        // nose, sitting or loafing it would lie half in the friend's body and stay so, the two of them in each
+        // other when either got up)
+        const settle = rnd.chance(cat.p.loaf) ? "loaf" : "sit", beside = go(s, "stroll", 0.08, `Keeping ${f.name} company`);
         steps.push(
           go(s, "stroll", 0.2, act.reason, { then: () => { f.greetedBy = cat; f.greetUntil = time + 6; } }),
           { type: "face", target: () => f, doing: act.reason },
           hold("greet", dur(cat, 1, 1.6), SAY.greet, { target: head, fidget: false }),
           hold("headBunt", dur(cat, 1.8, 3.2), `Rubbing cheeks with ${f.name}`, { target: head, restore: { social: 0.15 }, fidget: false }),
-          hold(rnd.chance(cat.p.loaf) ? "loaf" : "sit", dur(cat, 18, 40), `Keeping ${f.name} company`, { target: head, restore: { social: 0.03 } }),
+          { type: "call", fn: () => { const p = besideSpot(cat, f, settle === "loaf" ? "loaf" : "sit"); beside.x = p ? p.x : cat.x; beside.z = p ? p.z : cat.z; if (p) cat.dest = p; } },
+          beside,
+          hold(settle, dur(cat, 18, 40), `Keeping ${f.name} company`, { target: head, restore: { social: 0.03 } }),
           { type: "call", fn: () => { cat.needs.social = 0.08; if (f.greetedBy === cat) f.greetedBy = null; } },
         );
         break;
@@ -917,7 +923,10 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     const give = { kind: "chased", steps: [], i: 0, t: 0, reason: `Chasing ${runner.name}`, ignore: new Set(), lead: runner };
     // The runner bows and wiggles until its friend is up and crouched, then is off.
     const ready = () => give.ready || runner.act !== run;
+    // (either of them up on a perch hops down first: a runner that set off from the top of a cat tree ran
+    // about the lawn at the tree's height)
     run.steps.push(
+      ...leavePerch(runner),
       { type: "face", target: () => chaser, doing: SAY.invite },
       hold("wiggle", 3, SAY.invite, { target: () => chaser, fidget: false, until: () => run.t > 0.7 && ready() }),
       ...legs.map((s, k) => go(s, "flee", 0.5, `Running from ${chaser.name}`, { through: k < legs.length - 1, turn: TURN.zoom, then: k === legs.length - 1 ? () => { run.done = true; } : null })),
@@ -928,6 +937,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     );
     runner.dest = from;
     give.steps.push(
+      ...leavePerch(chaser),
       { type: "face", target: () => runner, doing: `Chasing ${runner.name}` },
       hold("crouch", 0.6, SAY.wiggle, { target: () => runner, fidget: false, then: () => { give.ready = true; } }),
       { type: "pursue", lead: runner, stopAt: 1.05, until: 20, doing: `Chasing ${runner.name}`, whileTrue: () => runner.act === run && !run.done },
@@ -1195,14 +1205,13 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   }
 
   /** The cat (passing, or standing there) whose body this one's would be in if it stood up (or woke and lay out:
-      its body at `pose`'s length) where it sits or lies, or be further into than it is (null if none). */
+      its body at `pose`'s length) where it sits or lies, when it is not in it already (null if none). (One it
+      is in already, it gets up and steps out of: waiting there on each other, the two would stay so.) */
   function risesInto(cat, pose = "walk") {
     for (const o of cats) {
       if (o === cat || o.y > 0.3 || o.perch || together(cat, o)) continue;
       if (Math.abs(o.x - cat.x) > 0.8 * (cat.size + o.size) || Math.abs(o.z - cat.z) > 0.8 * (cat.size + o.size)) continue;
-      // (and one it is against already: getting up would put it deeper in)
-      const g0 = bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, o);
-      if (bodyGap(cat, cat.x, cat.z, cat.yaw, pose, o) < Math.min(-0.06, g0 - 0.06)) return o;
+      if (bodyGap(cat, cat.x, cat.z, cat.yaw, pose, o) < -0.06 && bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, o) > -0.06) return o;
     }
     return null;
   }
@@ -1288,6 +1297,38 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       const x = cat.x + Math.cos(a) * d, z = cat.z + Math.sin(a) * d;
       if (!nav.pointFree(x, z, L.CAT.clearR, cat.act && cat.act.ignoreNow)) continue;
       if (!crowding(cat, x, z, Math.atan2(-(z - cat.z), x - cat.x), pose, 0.08) && !crowding(cat, x, z, Math.atan2(-(z - cat.z), x - cat.x), "walk", 0.02) && pathOk(cat, x, z, o)) return { x, z };
+    }
+    return null;
+  }
+
+  /** A spot beside `f` for this cat to settle in (`pose`), its body just clear of f's (and of every other
+      cat's, props too, and reached without passing over one): of the ways round f, the nearest to where it
+      stands; null if none. */
+  function besideSpot(cat, f, pose) {
+    if (f.perch || f.y > 0.3 || cat.perch) return null;
+    let best = null, bd = Infinity;
+    for (let k = 0; k < 16; k++) {
+      const a = (k / 16) * Math.PI * 2;
+      for (let d = 0.35; d <= 1.6; d += 0.05) {
+        // (clear whichever way it ends up facing: it may come round a detour to it, and turn as it settles)
+        const x = f.x + Math.cos(a) * d * Math.max(1, f.size), z = f.z + Math.sin(a) * d * Math.max(1, f.size), yaw = yawTo(f.x - x, f.z - z);
+        let g = Infinity; for (let q = 0; q < 4; q++) g = Math.min(g, bodyGap(cat, x, z, yaw + (q * Math.PI) / 4, pose, f));
+        if (g < 0.01) continue;
+        if (g > 0.2) break;
+        if (nav.pointFree(x, z, L.CAT.bodyR, cat.act && cat.act.ignoreNow) && nav.segmentClear(cat.x, cat.z, x, z, withContaining(cat.act && cat.act.ignoreNow, cat), nav.bodyR) && ![0, 1, 2, 3].some((q) => crowdingBut(cat, x, z, yaw + (q * Math.PI) / 4, pose, f)) && pathOk(cat, x, z, f)) {
+          const dd = Math.hypot(x - cat.x, z - cat.z); if (dd < bd) { bd = dd; best = { x, z }; }
+        }
+        break;
+      }
+    }
+    return best;
+  }
+  /** As crowding, not counting `skip`. */
+  function crowdingBut(cat, x, z, yaw, pose, skip) {
+    for (const o of cats) {
+      if (o === cat || o === skip || o.y > 0.3 || o.perch || together(cat, o)) continue;
+      if (Math.abs(o.x - x) > 2 || Math.abs(o.z - z) > 2) continue;
+      if (bodyGap(cat, x, z, yaw, pose, o) < 0.02 || bodyGap(cat, x, z, yaw, "walk", o) < -0.04) return o;
     }
     return null;
   }
@@ -1436,19 +1477,13 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         // (Getting up (or waking and stretching out) where its body, longer then, would be in another cat's:
         // one that came up close while it sat or lay (sitting, a cat is short; standing, long). It stays as
         // it is a while longer, for the other to move on, rather than rise into it and leave the two of
-        // them in each other; several times, and if the other is still there, it gives up getting up for
-        // now and thinks again (it used to get up all the same, into a cat settled beside it: two sitting
-        // side by side got up into each other and stood so, one waiting on the other).)
-        if (!cat.perch && (HALF_LEN[POSTURE_POSE[want]] || 0.3) > (HALF_LEN[cat.pose] || 0.3) + 0.05) {
+        // them in each other; several times, then it gets up all the same (a cat that only waited on, the
+        // other waiting on it, would leave the two of them stuck so).)
+        if (!cat.perch && (step.rise || 0) < 8 && (HALF_LEN[POSTURE_POSE[want]] || 0.3) > (HALF_LEN[cat.pose] || 0.3) + 0.05) {
           const o = risesInto(cat, POSTURE_POSE[want]);
           // (one standing there, free to go, is asked to move over (makeRoom), as a cat about to get up
           // makes the other step back)
-          if (o) {
-            step.rise = (step.rise || 0) + 1;
-            if (step.rise > 8) return abortAct(cat);
-            if (o.posture === "stand" && time - o.motion.since > 0.6) makeRoom(o, cat);
-            act.steps.splice(act.i, 0, hold(POSTURE_LOOP[cat.posture], 0.8, step.doing || act.reason, { fidget: false })); return true;
-          }
+          if (o) { step.rise = (step.rise || 0) + 1; if (o.posture === "stand" && time - o.motion.since > 0.6) makeRoom(o, cat); act.steps.splice(act.i, 0, hold(POSTURE_LOOP[cat.posture], 0.8, step.doing || act.reason, { fidget: false })); return true; }
         }
         const path = transitionPath(cat.posture, want);
         if (path.length) {

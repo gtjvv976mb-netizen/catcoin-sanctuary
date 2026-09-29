@@ -450,6 +450,8 @@ export const MODEL_LIMITS = {
   // tipped, bowed or rolled over shows, and these models' skin can't take it even at 0.3 of the move, or at what it can take the move falls short)
   LACQUER: { avoid: ["earScratch"], why: "a big kitten head: tipped down to the scratching paw, its face pinches" },
   AMRCAT: { avoid: ["legLick"], why: "a cartoon head as big as its body: bowed to a raised hind leg it buries the leg and folds at the nape" },
+  "hello-kitty-sol": { avoid: ["roll"], why: "rolled onto its back and wriggling, its head rubbed round on the lawn squeezes flat" },
+  SUNSTRETCH: { avoid: ["earScratch"], why: "a tiger cub's big round head: tipped down to the scratching paw, it squeezes at the nape" },
   CHOUPETCAT: { avoid: ["earScratch"], why: "a deep ruff under a head tipped to the paw: its skin lets the hind paw come only part way up, a paw short of the ear" },
   PEWTER: { avoid: ["earScratch", "roll"], why: "its cape and feathered hat: a hind leg lifted to the ear catches the cape, and rolled onto its back the hat's feather goes into the lawn" },
 };

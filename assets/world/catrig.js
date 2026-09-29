@@ -1656,7 +1656,9 @@ export function makeClips(rig, style = {}, fit = null) {
   posed("headBunt", loopDur(2.6), 15, (u) => {
     const s = standSpec(u, { still: true }), side = holds(u, [[0.05, 1], [0.5, -1]], 0.12), push = S(PI * ((u * 2) % 1)) ** 2;
     s.root[1] = 0.03 * push; s.chest = [-0.06 - 0.06 * push, side * 0.08, 0]; s.pelvis = [0, 0, side * 0.03];
-    s.neck = [-0.25 - 0.15 * push, side * (0.25 + 0.25 * push), side * 0.2]; s.head = [-0.25 - 0.2 * push, side * 0.35, side * (0.35 + 0.2 * push)];
+    // (the rub's tilt taken more at the neck than at the head: turned hard against the neck, with the head's own
+    // skin on it, a hood or a big kitten head squeezes at the nape)
+    s.neck = [-0.25 - 0.15 * push, side * (0.25 + 0.25 * push), side * 0.3]; s.head = [-0.25 - 0.2 * push, side * 0.25, side * (0.22 + 0.15 * push)];
     s.tail = T(tailShape(Math.max(0.6, st.tail)), [0, 0.05 * S(TAU * u), 0.1 * S(TAU * u - 0.6), 0.2 * S(TAU * u - 1.2)]);
     return s;
   }, STAND, { enter: 0.45, exit: 0.4 });
