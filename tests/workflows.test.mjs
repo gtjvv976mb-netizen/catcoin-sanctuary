@@ -9,6 +9,7 @@ const read = (name) => fs.readFileSync(path.join(ROOT, ".github/workflows", name
 const PAGES = read("pages.yml");
 const COLLECTION = read("collection.yml");
 const FAMOUS = read("famous.yml");
+const MODELS = read("models.yml");
 
 /* Each action at the commit its release tag points to (git ls-remote github.com/actions/<name>, 2026-09-25). */
 const PINNED = {
@@ -17,10 +18,12 @@ const PINNED = {
   "actions/upload-pages-artifact": ["fc324d3547104276b827a68afc52ff2a11cc49c9", "v5.0.0"],
   "actions/deploy-pages": ["368f82528645a54fb793d4d04e342629a3f51346", "v5.0.1"],
   "actions/setup-node": ["820762786026740c76f36085b0efc47a31fe5020", "v7.0.0"],
+  "actions/upload-artifact": ["043fb46d1a93c77aae656e7c1c64a875d1fc6a0a", "v7.0.1"],
+  "actions/download-artifact": ["3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c", "v8.0.1"],
 };
 
 test("every action is pinned to the full commit SHA of its release", () => {
-  for (const [name, text] of [["pages.yml", PAGES], ["collection.yml", COLLECTION], ["famous.yml", FAMOUS]]) {
+  for (const [name, text] of [["pages.yml", PAGES], ["collection.yml", COLLECTION], ["famous.yml", FAMOUS], ["models.yml", MODELS]]) {
     const uses = [...text.matchAll(/uses:\s*(\S+)(?:\s*#\s*(\S+))?/g)];
     assert.ok(uses.length > 0, name);
     for (const [, u, comment] of uses) {
@@ -96,4 +99,26 @@ test("famous coins: daily and by hand, contents: write only, no secrets, builder
   assert.match(FAMOUS, /Refresh the Hall of Fame coins/, "only the Hall of Fame coins are refreshed");
   assert.match(FAMOUS, /git diff --cached --quiet/);
   assert.match(FAMOUS, /concurrency:\n\s+group: famous/);
+});
+
+test("models: fails closed on MODELS_ENABLED, each API key only in its own step of its own job, no expression inside a script, no wallet secret", () => {
+  assert.match(MODELS, /^name: Models$/m);
+  assert.match(MODELS, /^permissions: \{\}$/m);
+  const jobs = MODELS.slice(MODELS.indexOf("\njobs:")).split(/\n  (?=[a-z][\w-]*:\n)/).slice(1);
+  const jobOf = (name) => jobs.find((j) => j.startsWith(`${name}:`));
+  assert.match(jobOf("meshy"), /\n    if: \$\{\{ vars\.MODELS_ENABLED == 'on' \}\}\n/, "the first job is gated; every other job needs it");
+  for (const j of jobs.filter((j) => !j.startsWith("meshy:"))) assert.match(j, /\n    needs: /, j.split(":")[0]);
+  for (const [secret, job] of [["MESHY_API_KEY", "meshy"], ["TRIPO_API_KEY", "tripo"]]) {
+    const where = jobs.filter((j) => j.includes(`secrets.${secret}`));
+    assert.deepEqual(where.map((j) => j.split(":")[0]), [job], secret);
+    assert.equal([...where[0].matchAll(new RegExp(`secrets\\.${secret}`, "g"))].length, 1, `${secret} in one step`);
+  }
+  assert.deepEqual([...new Set([...MODELS.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))].sort(), ["MESHY_API_KEY", "TRIPO_API_KEY"]);
+  assert.ok(!/LAUNCH_WALLET_KEY|SOLANA_RPC_URL/.test(MODELS));
+  for (const step of MODELS.split(/\n      - /)) {
+    const run = step.includes("run: |") ? step.split("run: |")[1].split("\n").slice(1).filter((l, i, a) => a.slice(0, i + 1).every((x) => x.startsWith("          ") || !x.trim())).join("\n") : step.match(/run: .*/)?.[0] ?? "";
+    assert.ok(!run.includes("${{"), `no expression inside a script: ${step.slice(0, 50)}`);
+  }
+  assert.match(MODELS, /persist-credentials: false/);
+  assert.equal([...MODELS.matchAll(/actions\/checkout@/g)].length, [...MODELS.matchAll(/persist-credentials: false/g)].length);
 });

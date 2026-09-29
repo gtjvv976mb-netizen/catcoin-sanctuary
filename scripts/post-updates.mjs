@@ -10,7 +10,8 @@
  *      launcher's word alone), and whose cat the announcer lists as launched by the page's own rule
  *      (listCats: assets/ui/adoptables.js provedLaunch). The post (draftLaunch) names the cat, one
  *      lore line, that the sanctuary launched it on its launchpad (PumpFun or StonkFun, from its
- *      launch's launchpad), and the card link; never the mint or any address, never the @handle of
+ *      launch's launchpad), the card link and, when the post still fits with it, the coin's fan-tribute
+ *      line (FAN_TRIBUTE: unofficial, not affiliated with the character's or the cat's owners); never the mint or any address, never the @handle of
  *      the post the cat was found in. State: launchesPosted { TICKER: { … } };
  *   1. an adoption not posted yet (data/adoptions.json: a coin a visitor launched from a sanctuary
  *      cat's own Adopt kit, the earliest per cat). The post is drafted here: the cat (and its owner,
@@ -143,16 +144,33 @@ export function draftAdoption(a, cat, { kit = null, category = null, caption = n
 export const ADDRESS_LIKE = /[1-9A-HJ-NP-Za-km-z]{32,}/;
 
 /**
+ * The fan-tribute line every sanctuary coin carries (the end of its metadata description, and its launch
+ * post's when it fits): the owner's words, fixed. A drawn or fictional cat belongs to its character's
+ * owners; a real pet (the trend watch's reading kind "real") to its people. The line says the coin is NOT
+ * official, which the content rules' endorsement list ("affiliated", "endorsed") cannot tell from a claim
+ * that it is: so this exact text is a citation (like the site's own link), and only this text.
+ */
+export const FAN_TRIBUTE = Object.freeze({
+  character: "Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the character's owners.",
+  real: "Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the cat's owners.",
+});
+/** The fan-tribute line for a cat of this reading kind ("real": a pet; anything else: a character). */
+export const fanTribute = (kind) => (kind === "real" ? FAN_TRIBUTE.real : FAN_TRIBUTE.character);
+
+/**
  * Draft the post for a coin the sanctuary launched itself. `cat` is the announcer's cat (listCats:
  * its id is the card's key), `coinName` and `ticker` the coin's, `lore` its one lore line, `launchpad`
  * the adoptable's launch.launchpad; `cited` names more words the post may use as citations (a
  * watch-list figure's aliases). The cat's name, the coin's name and ticker, the card link, the site and
  * the launchpad are citations; the rest meets every rule. Never an address (ADDRESS_LIKE), a mention,
  * a hashtag of ours in the names, or the found post's author. Longest first; the shortest names the
- * cat, the sanctuary's launch and the card. Returns { ok, text, violations }. The launcher drafts it
- * BEFORE launching (scripts/lib/launcher.mjs) and does not launch a cat whose post would be held.
+ * cat, the sanctuary's launch and the card. `tribute` (fanTribute) goes under the lore line when some
+ * version of the post (longest first, the card link always kept) fits the length and every rule with
+ * it; when none does, the post is exactly as it would be without it. Returns
+ * { ok, text, violations }. The launcher drafts it BEFORE launching (scripts/lib/launcher.mjs) and does
+ * not launch a cat whose post would be held.
  */
-export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "pump.fun", cited: also = [] } = {}) {
+export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "pump.fun", cited: also = [], tribute = null } = {}) {
   const pad = LAUNCHPADS[launchpad];
   const bad = [];
   if (!KIT_NAME.test(cat?.name ?? "")) bad.push({ rule: "kit_name", term: String(cat?.name ?? "").slice(0, 40), field: "name" });
@@ -161,6 +179,7 @@ export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "p
   if (!pad) bad.push({ rule: "launchpad", term: String(launchpad), field: "launchpad" });
   if (lore !== null && (typeof lore !== "string" || !lore.trim() || /[@#$]|https?:|www\./i.test(lore))) bad.push({ rule: "lore", term: String(lore).slice(0, 40), field: "lore" });
   if (typeof cat?.id !== "string" || !cat.id) bad.push({ rule: "card", term: String(cat?.id), field: "id" });
+  if (tribute !== null && !Object.values(FAN_TRIBUTE).includes(tribute)) bad.push({ rule: "tribute", term: String(tribute).slice(0, 40), field: "tribute" });
   if (bad.length) return { ok: false, text: null, violations: bad };
 
   const link = cardLink(cat.id);
@@ -170,20 +189,30 @@ export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "p
   const coins = [...new Set([`😻 ${named}, launched by the sanctuary on ${pad}`, `😻 ${cat.name}, launched by the sanctuary on ${pad}`])];
   const mintLine = "🔍 Its one real mint is on its card 👇";
   const lores = [...(lore ? [`📜 ${lore.trim()}`] : []), ""];
-  let violations = [];
-  for (const coin of coins) {
-    for (const loreLine of lores) {
-      for (const [tags, where] of [[HASHTAGS, mintLine], [HASHTAGS.slice(0, 1), mintLine], [HASHTAGS, null], [HASHTAGS.slice(0, 1), null]]) {
-        const text = [hook, coin, loreLine, where, link, tags.join(" ")].filter(Boolean).join("\n");
-        const r = checkUpdate(text, cited);
-        if (ADDRESS_LIKE.test(text)) r.violations.push({ rule: "address", term: text.match(ADDRESS_LIKE)[0].slice(0, 12), field: "post" });
-        if (text.includes("@")) r.violations.push({ rule: "mention", term: "@", field: "post" });
-        if (!r.violations.length) return { ok: true, text, violations: [] };
-        violations = r.violations;
+  const check = (lines, citing) => {
+    const text = lines.filter(Boolean).join("\n");
+    const r = checkUpdate(text, citing);
+    if (ADDRESS_LIKE.test(text)) r.violations.push({ rule: "address", term: text.match(ADDRESS_LIKE)[0].slice(0, 12), field: "post" });
+    if (text.includes("@")) r.violations.push({ rule: "mention", term: "@", field: "post" });
+    return { text, violations: r.violations };
+  };
+  // Longest first: both names, the lore, the mint line and both hashtags, then fewer (the card link always).
+  const first = (line, citing) => {
+    let violations = [];
+    for (const coin of coins) {
+      for (const loreLine of lores) {
+        for (const [tags, where] of [[HASHTAGS, mintLine], [HASHTAGS.slice(0, 1), mintLine], [HASHTAGS, null], [HASHTAGS.slice(0, 1), null]]) {
+          const r = check([hook, coin, loreLine, line, where, link, tags.join(" ")], citing);
+          if (!r.violations.length) return { ok: true, text: r.text, violations: [] };
+          violations = r.violations;
+        }
       }
     }
-  }
-  return { ok: false, text: null, violations };
+    return { ok: false, text: null, violations };
+  };
+  // With the fan-tribute line when some version of the post fits every rule with it; else the post as it would be without.
+  if (tribute) { const t = first(tribute, [...cited, tribute]); if (t.ok) return t; }
+  return first(null, cited);
 }
 
 const retryable = (s) => !s || s.status === "queued" || (s.status === "failed" && (s.attempts ?? 0) < MAX_ATTEMPTS);
@@ -308,7 +337,7 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
     const d = guardDraft(item.kind === "update"
       ? { ...checkUpdate(item.post.text), text: item.post.text }
       : item.kind === "launch"
-        ? draftLaunch(item.cat, { coinName: item.launch.coinName, ticker: item.launch.ticker, lore: item.launch.lore ?? null, launchpad: launchpadOf(item.id) })
+        ? draftLaunch(item.cat, { coinName: item.launch.coinName, ticker: item.launch.ticker, lore: item.launch.lore ?? null, launchpad: launchpadOf(item.id), tribute: fanTribute(item.launch.kind) })
         : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first }));
     summary.drafts.push({ kind: item.kind, id: item.id, ok: d.ok, text: d.text, length: d.text ? weightedLength(d.text) : null, violations: d.violations });
     if (!d.ok) {

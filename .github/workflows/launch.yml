@@ -24,9 +24,10 @@
 # The jobs, in order:
 #   prepare   settles what was sent before, then prepares at most one cat: its ledger row
 #             (data/sanctuary-launches.json) and its coin's metadata (coins/<postId>.json, which the
-#             site serves at the coin's uri). Commits them.
-#   metadata  when the prepared cat's metadata is not served yet, deploys the site (runs no code of
-#             the repository's; it may only start workflow runs).
+#             site serves at the coin's uri). A photo the owner hides in data/photo-hide.json leaves
+#             data/real-photos.json (and one no longer hidden comes back). Commits them.
+#   metadata  when the prepared cat's metadata is not served yet, or a photo was hidden or shown
+#             again, deploys the site (runs no code of the repository's; it may only start workflow runs).
 #   launch    waits (bounded) until the site serves the committed metadata, then builds, signs,
 #             simulates and sends the launch within the caps (falling back to pump.fun in SOL before
 #             the send, as above), and commits the ledger (even when the
@@ -35,8 +36,9 @@
 #             photo; the announcer holds it by rule, since its X post is scripts/post-updates.mjs's
 #             once the Collection has proved it, so data/announced.json is never committed here and
 #             never raced with the Announce workflow) and commits that.
-#   publish   once that commit is pushed, starts the Collection, Pages and Announce (runs no code of
-#             the repository's; it may only start workflow runs). Pages deploys at once; a Collection
+#   publish   once that commit is pushed, starts the Collection, Pages, Announce and Models (the new
+#             cat's 3D model, while MODELS_ENABLED is on) (runs no code of the repository's; it may only
+#             start workflow runs). Pages deploys at once; a Collection
 #             or Announce run that is already chained (each keeps one run going, waiting in its own
 #             concurrency group) takes the new run's place in the queue, so the proof and the X post
 #             come with the Collection's hourly rhythm (within about an hour), not at once.
@@ -94,7 +96,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add -- data/sanctuary-launches.json coins
+          git add -- data/sanctuary-launches.json coins data/real-photos.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Launch: prepare the next cat"
@@ -202,7 +204,7 @@ jobs:
     permissions:
       actions: write
     steps:
-      - name: Start the Collection, Pages and Announce for the new cat
+      - name: Start the Collection, Pages, Announce and Models for the new cat
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
@@ -210,3 +212,4 @@ jobs:
           gh workflow run collection.yml -R "$REPO" --ref main
           gh workflow run pages.yml -R "$REPO" --ref main
           gh workflow run announce.yml -R "$REPO" --ref main
+          gh workflow run models.yml -R "$REPO" --ref main || echo "::notice::Models not started (the Models workflow is disabled or missing)"

@@ -26,9 +26,11 @@ import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
+  descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf,
 } from "../scripts/lib/launcher.mjs";
 import { main, fsStore, scrubber } from "../scripts/launch.mjs";
-import { draftLaunch, checkUpdate, ADDRESS_LIKE, run as postUpdates } from "../scripts/post-updates.mjs";
+import { draftLaunch, checkUpdate, ADDRESS_LIKE, FAN_TRIBUTE, fanTribute, run as postUpdates } from "../scripts/post-updates.mjs";
+import { weightedLength, LIMIT } from "../scripts/announce.mjs";
 import { cardLink, SITE, listCats, holdSanctuaryCats, provedCollection, sanctuaryCoins, run as announce } from "../scripts/announce.mjs";
 import { loadResidents } from "../assets/residents.js";
 import { buildAdoptables } from "../scripts/build-adoptables.mjs";
@@ -386,13 +388,16 @@ test("a candidate's row: its venue (pump.fun in SOL), its coin's metadata in pum
   const meta = coinMetadata(row);
   assert.deepEqual(Object.keys(meta), ["name", "symbol", "description", "image", "showName", "createdOn", "website", "twitter"]);
   assert.deepEqual(meta, {
-    name: "Sir Gloopington", symbol: "GLOOP", description: "Gloopington stares down the camera from the top of the fridge. From the Catcoin Sanctuary.",
+    name: "Sir Gloopington", symbol: "GLOOP", description: `Gloopington stares down the camera from the top of the fridge. Photo: @floppafan on X. ${FAN_TRIBUTE.character}`,
     image: "https://pbs.twimg.com/media/Gx2100000000000000201.jpg", showName: true, createdOn: "https://catcoinsanctuary.com",
     website: "https://catcoinsanctuary.com/#cat=GLOOP", twitter: "https://x.com/catcosanctuary",
   });
   assert.equal(metadataUri(row.postId), "https://catcoinsanctuary.com/coins/2100000000000000201.json");
   assert.ok(Buffer.byteLength(metadataUri(row.postId)) <= 200);
-  assert.ok(checkUpdate(meta.description, ["Sir Gloopington", "Gloopington"]).ok, "the description passes the content rules");
+  assert.equal(row.kind, "cartoon");
+  assert.deepEqual([row.coinImage, row.photoCredit], [row.image, true], "the post's photo is the coin's picture, credited to its author");
+  assert.ok(meta.description.endsWith("Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the character's owners."));
+  assert.ok(checkUpdate(meta.description, ["Sir Gloopington", "Gloopington", FAN_TRIBUTE.character]).ok, "the description passes the content rules (the tribute line a citation)");
   assert.ok(!/https?:|www\.|\$/.test(meta.description));
   // The adoptable: the figure's look, coat and category, a pending portrait, the post as proof, priced in SOL.
   const cat = row.cat;
@@ -431,6 +436,65 @@ test("the X post: the cat's name, one lore line, 'launched by the sanctuary on P
   const long = "AbcdefghijkmnopqrstuvwxyzABCDEFG";
   assert.equal(long.length, 32);
   assert.equal(draftLaunch({ id: "LONG", name: long }, { coinName: "Long", ticker: "LONG" }).ok, false, "an address-like run of letters");
+});
+
+test("the fan-tribute line: every coin's description ends with it, whole; a real pet's names the cat's owners; a long lore is shortened, never the line", () => {
+  assert.equal(FAN_TRIBUTE.character, "Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the character's owners.");
+  assert.equal(FAN_TRIBUTE.real, "Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the cat's owners.");
+  for (const kind of ["cartoon", "fiction", undefined, null]) assert.equal(fanTribute(kind), FAN_TRIBUTE.character, String(kind));
+  assert.equal(fanTribute("real"), FAN_TRIBUTE.real);
+  assert.equal(descriptionOf("A cat on a fridge", "cartoon"), `A cat on a fridge. ${FAN_TRIBUTE.character}`);
+  assert.equal(descriptionOf("A cat on a fridge!", "real"), `A cat on a fridge! ${FAN_TRIBUTE.real}`);
+  // The photo's credit, between the lore and the tribute, only when it fits whole; it goes before the lore is cut.
+  const credit = photoCredit("floppafan");
+  assert.equal(credit, "Photo: @floppafan on X.");
+  assert.equal(descriptionOf("A cat on a fridge", "real", { credit }), `A cat on a fridge. ${credit} ${FAN_TRIBUTE.real}`);
+  assert.equal(descriptionOf("A cat on a fridge", "real", { credit, max: 130 }), `A cat on a fridge. ${FAN_TRIBUTE.real}`, "no room: the credit goes, the lore stays");
+  // The longest lore the ledger allows (200 characters) fits whole.
+  const lore200 = `${"Whiskers ".repeat(22)}naps`.slice(0, 200);
+  assert.ok(descriptionOf(lore200, "real").startsWith(lore200) && descriptionOf(lore200, "real").length <= DESCRIPTION_MAX);
+  // Over the bound, the lore is cut at a word with "…"; the tribute stays whole and last.
+  for (const max of [160, 200, 131]) {
+    const d = descriptionOf("Gloopington stares down the camera from the top of the fridge every single morning, then naps on the warm router.", "cartoon", { credit: photoCredit("floppafan"), max });
+    assert.ok(d.length <= max, `${d.length} <= ${max}`);
+    assert.ok(d.endsWith(` ${FAN_TRIBUTE.character}`), d);
+    assert.match(d, /^Gloopington[^…]*… Unofficial/, d);
+    assert.ok(!/\s…/.test(d), "cut at a word, no space before the ellipsis");
+  }
+  assert.equal(descriptionOf("Anything at all", "real", { max: 20 }), FAN_TRIBUTE.real, "no room for any lore: the tribute alone, never cut");
+  // Every venue serves the same description (one metadata shape).
+  const ctx = { nowMs: NOW, approvals: new Set(["2100000000000000301"]), watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")) };
+  const { row } = candidateRow(post("2100000000000000301", { name: "Quillbert", ticker: "QUILL", kind: "real", nameFrom: null, figure: null, lore: "Quillbert sleeps in the salad bowl." }), ctx);
+  assert.equal(row.kind, "real");
+  for (const v of venueIds()) assert.ok(coinMetadata({ ...row, venue: v }).description.endsWith(FAN_TRIBUTE.real), v);
+  assert.equal(coinMetadata(row).description, `Quillbert sleeps in the salad bowl. Photo: @floppafan on X. ${FAN_TRIBUTE.real}`);
+  // Only the owner's fixed line is let through: the lore still meets the endorsement rule.
+  assert.equal(candidateRow(post("2100000000000000302", { lore: "The official cat of the fridge." }), ctx).row, undefined);
+  assert.equal(rowProblem({ ...row, kind: "dog" }), "kind must be one of real, cartoon, fiction");
+});
+
+test("the X post carries the fan-tribute line when a version of it fits every rule with the card link (else the post is left as it is)", () => {
+  const cat = { id: "MOCHI", name: "Mochi" };
+  const d = draftLaunch(cat, { coinName: "Mochi", ticker: "MOCHI", lore: "Naps in a shoe.", tribute: FAN_TRIBUTE.real });
+  assert.ok(d.ok, JSON.stringify(d.violations));
+  const lines = d.text.split("\n");
+  assert.ok(lines.includes(FAN_TRIBUTE.real), d.text);
+  assert.equal(lines.at(-2), cardLink("MOCHI"), "the card link kept");
+  assert.equal(lines[lines.indexOf(FAN_TRIBUTE.real) - 1], "📜 Naps in a shoe.", "under the lore line");
+  assert.ok(weightedLength(d.text) <= LIMIT, `${weightedLength(d.text)} characters`);
+  assert.ok(checkUpdate(d.text, ["Mochi", "MOCHI", cardLink("MOCHI"), SITE, "PumpFun", FAN_TRIBUTE.real]).ok);
+  // Without a tribute, the post is what it always was.
+  const plain = draftLaunch(cat, { coinName: "Mochi", ticker: "MOCHI", lore: "Naps in a shoe." });
+  assert.ok(plain.ok && !plain.text.includes("Unofficial") && plain.text.includes("🔍 Its one real mint is on its card"));
+  // Room is made as for any long post (fewer extras, then no lore line), never by dropping the card link: even the
+  // longest names fit with it. (The line is left out only if no version of the post could carry it.)
+  const long = { id: "WHISKERBOT", name: "Princess Whiskerbottom Longname" };
+  const lore = "She sleeps on the warm router every afternoon and guards the fridge all night long, loudly.";
+  const withT = draftLaunch(long, { coinName: "Whiskerbottom The Magnificent!", ticker: "WHISKERBOT", lore, tribute: FAN_TRIBUTE.character });
+  assert.ok(withT.ok && withT.text.includes(FAN_TRIBUTE.character) && withT.text.includes(cardLink("WHISKERBOT")) && weightedLength(withT.text) <= LIMIT, withT.text);
+  assert.ok(!draftLaunch(long, { coinName: "Whiskerbottom The Magnificent!", ticker: "WHISKERBOT", lore }).text.includes("Unofficial"), "without the line, the post as it always was");
+  // Only the owner's own lines are a tribute.
+  assert.equal(draftLaunch(cat, { coinName: "Mochi", ticker: "MOCHI", tribute: "Officially endorsed." }).ok, false);
 });
 
 /* ── the phases ───────────────────────────────────────────────────────────────────────── */
@@ -755,6 +819,134 @@ test("crash points: a failed launch, a preflight refusal and an address someone 
   assert.equal((await send({ io: t5.io, env, rpc: sol5.rpc, fetchImpl: web5.fetchImpl, now: c.now, sleep: c.sleep, ...quick })).outcome, "simulation_failed");
   assert.deepEqual([t5.json(FILES.ledger).launches[0].status, t5.json(FILES.ledger).launches[0].attempts], ["failed", 1]);
   assert.ok(!sol5.methods().includes("sendTransaction"));
+});
+
+test("photos: every kind shows its post's photo, credited; data/photo-hide.json (read tolerantly) hides one: off its card, the site's own picture on its coin", () => {
+  // The coin's picture: the post's photo for every kind, the site's own for a hidden post.
+  assert.equal(SITE_IMAGE, "https://catcoinsanctuary.com/assets/og-image.jpg");
+  assert.ok(fs.existsSync(path.join(ROOT, "assets/og-image.jpg")));
+  const img = "https://pbs.twimg.com/media/Gx1.jpg";
+  for (const kind of ["real", "cartoon", "fiction"]) assert.equal(coinImageFor({ kind, image: img, postId: "2100000000000000401" }), img, kind);
+  assert.equal(coinImageFor({ image: img, postId: "2100000000000000401" }, new Set(["2100000000000000401"])), SITE_IMAGE);
+  // The hide list, read as the approvals are: a typo hides nothing, with a warning, and never throws.
+  const io = (text) => ({ readText: () => text });
+  for (const [text, want, warned] of [[null, [], false], ['{ "hide": ["2100000000000000401", 5, "x"] }', ["2100000000000000401", "5"].filter((v) => /^\d{5,25}$/.test(v)), false],
+    ["{ not json", [], true], ['{ "hide": "2100000000000000401" }', [], true], ['["2100000000000000401"]', [], true]]) {
+    const logs = [];
+    assert.deepEqual([...photoHideOf(io(text), (l) => logs.push(l))], want, text);
+    assert.equal(logs.some((l) => /^::warning/.test(l)), warned, text);
+  }
+  // A shown photo whose post is hidden moves, whole, to `hidden`; unhidden, it comes back exactly as it was, for any cat
+  // (not only a launched one: a hand-reviewed photo has no ledger row), and whatever form its post link takes.
+  const photo = { url: img, handle: "floppafan", post: "https://x.com/floppafan/status/2100000000000000401", alt: "Quillbert: the photo from @floppafan's post" };
+  const photos = { note: "n", checked: "2026-09-26", cats: { QUILL: { realPhoto: photo, source: "proof" }, OTHER: { realPhoto: { ...photo, post: "https://x.com/a/status/2100000000000000999" }, source: "search" } }, none: { ZZZ: "no photo" } };
+  const hidden = applyPhotoHide(photos, new Set(["2100000000000000401"]));
+  assert.deepEqual(hidden.hid, ["QUILL"]);
+  assert.deepEqual(hidden.photos.hidden.QUILL, { postId: "2100000000000000401", entry: photos.cats.QUILL });
+  assert.ok(!("QUILL" in hidden.photos.cats) && "OTHER" in hidden.photos.cats && hidden.photos.none.ZZZ === "no photo" && !("QUILL" in hidden.photos.none));
+  assert.equal(applyPhotoHide(hidden.photos, new Set(["2100000000000000401"])).photos, hidden.photos, "nothing moves twice");
+  const back = applyPhotoHide(hidden.photos, new Set());
+  assert.deepEqual(back.restored, ["QUILL"]);
+  assert.deepEqual(back.photos, photos, "unhidden: the file exactly as it was");
+  // Every photo the site ships can be hidden and shown again without losing it (the review's probe).
+  const shippedPhotos = JSON.parse(readRoot(FILES.realPhotos));
+  const ids = new Set(Object.values(shippedPhotos.cats).map((v) => postIdOf(v.realPhoto.post)));
+  const all = applyPhotoHide(shippedPhotos, ids);
+  assert.deepEqual(Object.keys(all.photos.cats).filter((T) => ids.has(postIdOf(shippedPhotos.cats[T].realPhoto.post))), []);
+  assert.deepEqual(applyPhotoHide(all.photos, new Set()).photos, shippedPhotos);
+  // Any link form of the post: twitter.com, www., a query.
+  for (const u of ["https://twitter.com/floppafan/status/2100000000000000401", "https://www.x.com/floppafan/status/2100000000000000401?s=20", "https://x.com/floppafan/status/2100000000000000401/photo/1"]) {
+    assert.equal(postIdOf(u), "2100000000000000401", u);
+    assert.deepEqual(applyPhotoHide({ cats: { QUILL: { realPhoto: { ...photo, post: u }, source: "proof" } } }, new Set(["2100000000000000401"])).hid, ["QUILL"], u);
+  }
+  // The row's own fields: the coin's picture is its post's or the site's; the credit a flag.
+  const ctx = { nowMs: NOW, approvals: new Set(["2100000000000000401"]), watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")) };
+  const p = post("2100000000000000401", { name: "Quillbert", ticker: "QUILL", kind: "real", nameFrom: null, figure: null, lore: "Quillbert sleeps in the salad bowl." });
+  const shown = candidateRow(p, ctx).row;
+  assert.deepEqual([shown.coinImage, shown.photoCredit, coinMetadata(shown).image], [shown.image, true, shown.image]);
+  const hid = candidateRow(p, { ...ctx, photoHide: new Set(["2100000000000000401"]) }).row;
+  assert.deepEqual([hid.coinImage, coinMetadata(hid).image], [SITE_IMAGE, SITE_IMAGE]);
+  assert.ok(!coinMetadata(hid).description.includes("Photo:"), "no credit for a photo the coin does not show");
+  assert.equal(rowProblem(hid), null);
+  assert.equal(rowProblem({ ...shown, coinImage: "https://pbs.twimg.com/media/other.jpg" }), "coinImage must be the post's picture, or the site's own");
+  assert.equal(rowProblem({ ...shown, photoCredit: "yes" }), "photoCredit must be true or false");
+  // A real pet waits for data/launch-approvals.json even when it is named after a watch-list figure.
+  assert.equal(policyOf(post("2100000000000000402", { kind: "real" }), { approvals: new Set(), watch: WATCH }), null);
+  assert.equal(policyOf(post("2100000000000000402", { kind: "real" }), { approvals: new Set(["2100000000000000402"]), watch: WATCH }), "approved");
+});
+
+test("a real pet, approved to launch: its photo shows on its card and on its coin, credited; the owner hides it later and it leaves the card; unhidden, it comes back", async () => {
+  const w = throwaway();
+  const id = "2100000000000000411";
+  const t = site({ wallet: w.address, approve: [id], posts: [post(id, { name: "Quillbert", ticker: "QUILL", kind: "real", nameFrom: null, figure: null, lore: "Quillbert sleeps in the salad bowl." })] });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  const { r } = await launchOnce(t, { env: ON(w), sol, web, c });
+  assert.deepEqual(r.recorded, ["QUILL"]);
+  const row = t.json(FILES.ledger).launches[0];
+  assert.deepEqual([row.kind, row.policy, row.coinImage], ["real", "approved", row.image]);
+  const meta = t.json(row.metadataPath);
+  assert.equal(meta.image, row.image);
+  assert.equal(meta.description, `Quillbert sleeps in the salad bowl. Photo: @floppafan on X. ${FAN_TRIBUTE.real}`);
+  const ph = t.json(FILES.realPhotos).cats.QUILL;
+  assert.deepEqual(ph, { realPhoto: { url: row.image, handle: "floppafan", post: row.url, alt: "Quillbert: the photo from @floppafan's post" }, source: "proof" });
+  assert.equal((await pageOf(t)).find((x) => x.id === "QUILL")?.realPhoto?.url, row.image, "shown on its card");
+  // Hidden by the owner: the next prepare takes it off the card (kept whole in `hidden`) and deploys; the coin keeps its picture (sent).
+  fs.writeFileSync(path.join(t.root, FILES.photoHide), JSON.stringify({ note: "test", hide: [id] }));
+  const logs = [];
+  const p = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, log: (l) => logs.push(l) });
+  assert.deepEqual([p.photos, p.deploy], [["QUILL"], true]);
+  const photos = t.json(FILES.realPhotos);
+  assert.ok(!("QUILL" in photos.cats));
+  assert.deepEqual(photos.hidden.QUILL, { postId: id, entry: ph });
+  assert.equal((await pageOf(t)).find((x) => x.id === "QUILL")?.realPhoto ?? null, null, "off its card");
+  assert.equal(t.json(row.metadataPath).image, row.image, "a launched coin's metadata is never rewritten");
+  assert.ok(logs.some((l) => /QUILL is hidden/.test(l)));
+  // Unhidden: back on its card.
+  fs.writeFileSync(path.join(t.root, FILES.photoHide), JSON.stringify({ note: "test", hide: [] }));
+  const p2 = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+  assert.deepEqual(p2.photos, ["QUILL"]);
+  assert.deepEqual(t.json(FILES.realPhotos).cats.QUILL, ph);
+  assert.ok(!("hidden" in t.json(FILES.realPhotos)));
+  // A typo in the file hides nothing and stops nothing.
+  fs.writeFileSync(path.join(t.root, FILES.photoHide), "{ hide: [");
+  const warn = [];
+  const p3 = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, log: (l) => warn.push(l) });
+  assert.equal(p3.photos, undefined);
+  assert.ok(warn.some((l) => /^::warning.*photo-hide\.json/.test(l)));
+});
+
+test("a post hidden before it launches: its coin shows the site's own picture (no credit), and its photo waits in hidden, never on its card", async () => {
+  const w = throwaway();
+  const id = "2100000000000000421";
+  const t = site({ wallet: w.address });
+  fs.writeFileSync(path.join(t.root, "data/trending-cats.json"), JSON.stringify(trendingOf([post(id)])));
+  fs.writeFileSync(path.join(t.root, FILES.photoHide), JSON.stringify({ note: "test", hide: [id] }));
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  const { r } = await launchOnce(t, { env: ON(w), sol, web, c });
+  assert.deepEqual(r.recorded, ["GLOOP"]);
+  const row = t.json(FILES.ledger).launches[0];
+  assert.equal(row.coinImage, SITE_IMAGE);
+  const meta = t.json(row.metadataPath);
+  assert.equal(meta.image, SITE_IMAGE);
+  assert.equal(meta.description, `Gloopington stares down the camera from the top of the fridge. ${FAN_TRIBUTE.character}`);
+  const photos = t.json(FILES.realPhotos);
+  assert.ok(!("GLOOP" in photos.cats));
+  assert.deepEqual(photos.hidden.GLOOP, { postId: id, entry: { realPhoto: { url: row.image, handle: "floppafan", post: row.url, alt: "Sir Gloopington: the photo from @floppafan's post" }, source: "proof" } });
+});
+
+test("a prepared coin's picture follows data/photo-hide.json until it is sent", async () => {
+  const w = throwaway();
+  const t = site({ wallet: w.address });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+  let row = t.json(FILES.ledger).launches[0];
+  assert.equal(t.json(row.metadataPath).image, row.image);
+  fs.writeFileSync(path.join(t.root, FILES.photoHide), JSON.stringify({ note: "test", hide: [row.postId] }));
+  const p = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+  row = t.json(FILES.ledger).launches[0];
+  assert.deepEqual([row.status, row.coinImage, t.json(row.metadataPath).image, p.deploy], ["prepared", SITE_IMAGE, SITE_IMAGE, true]);
+  assert.equal(t.read(row.metadataPath), metadataText(coinMetadata(row)));
+  assert.ok(!t.json(row.metadataPath).description.includes("Photo:"));
 });
 
 test("the wallet must be an active launcher in data/wallets.json: otherwise nothing is sent, and its address and what to add are printed", async () => {
@@ -1873,6 +2065,9 @@ test("shipped: the ledger and every coin's metadata are valid (the ledger and th
   const logs = [];
   const approvals = readOwned(fsStore(ROOT), FILES.approvals, { approve: [] }, (l) => logs.push(l));
   assert.ok(approvalsOf(approvals) instanceof Set && logs.every((l) => /^::warning.*read as empty/.test(l)));
+  // So is the photo hide list: read, or read as hiding nothing with a warning.
+  const hideLogs = [];
+  assert.ok(photoHideOf(fsStore(ROOT), (l) => hideLogs.push(l)) instanceof Set && hideLogs.every((l) => /^::warning/.test(l)));
   // A row in flight is sent only with its exact metadata; a launched coin's file is never rewritten (its uri points to it for good).
   for (const row of ledger.launches) {
     if (row.status === "prepared" || row.status === "sending") assert.equal(readRoot(row.metadataPath), metadataText(coinMetadata(row)), row.postId);
@@ -1886,7 +2081,7 @@ test("shipped: the ledger and every coin's metadata are valid (the ledger and th
     assert.deepEqual(Object.keys(m), ["name", "symbol", "description", "image", "showName", "createdOn", "website", "twitter"], f);
     assert.equal(m.createdOn, SITE_ORIGIN); assert.equal(m.twitter, X_ACCOUNT); assert.equal(m.showName, true);
     assert.equal(m.website, `${SITE_ORIGIN}/#cat=${m.symbol}`);
-    assert.match(m.image, /^https:\/\/pbs\.twimg\.com\//);
+    assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE, `${f}: the post's photo, or the site's own for a hidden one`);
     assert.ok(Buffer.byteLength(metadataUri(f.slice(0, -5))) <= 200);
   }
   // The mint of a row not sent yet is never public.
