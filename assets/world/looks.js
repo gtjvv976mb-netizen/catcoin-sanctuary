@@ -21,6 +21,8 @@
                headband, bow, collar, bell, tag, tie, scarf, sunglasses, bag, crescent
    } */
 
+import { speciesScale } from "./traits.js";
+
 /** The Hall of Fame cats' looks, from their profiles (data/famous.json `who`), read by hand. */
 export const HALL_LOOKS = {
   "cate-meme": { pattern: "tabby", stripe: 0.6, white: { muzzle: true, chest: true } },
@@ -46,15 +48,21 @@ export const HALL_LOOKS = {
   "leveraged-cat": { white: { chest: true, muzzle: true, paws: true, belly: true } },
 };
 
-/** Big cats: how much bigger they are drawn, and what they have that a house cat doesn't. */
+/** Big cats: how much bigger they are drawn (their species' size, traits.js SPECIES) and what they
+    have that a house cat doesn't. A house cat described by one ("panther-like", "lynx-tipped ears",
+    "lynx points", a "tiger-striped" coat) is not one (NOT_BIG, as traits.js reads them). */
+const NOT_BIG = "(?![- ](?:print|stripes?|striped|like|points?|tips?|tipped|tufts?|tufted|make-up|hybrid))";
+const big = (words) => new RegExp(`\\b(?:${words})\\b${NOT_BIG}`);
 const BIG = [
-  [/\b(mountain lion|cougar|puma)\b/, { scale: 1.35, tail: "dark", belly: true }],
-  [/\blion\b(?!ess)/, { scale: 1.55, mane: true, tail: "dark", belly: true }],
-  [/\blioness\b/, { scale: 1.45, tail: "dark", belly: true }],
-  [/\btiger\b/, { scale: 1.5, stripe: 1, belly: true }],
-  [/\bcheetah\b/, { scale: 1.35, belly: true }],
-  [/\b(panther|jaguar|leopard)\b/, { scale: 1.4 }],
-  [/\bbobcat|lynx\b/, { scale: 1.15, tail: "bob" }],
+  [big("mountain lion|cougar|puma"), { species: "cougar", tail: "dark", belly: true }],
+  [big("lion"), { species: "lion", mane: true, tail: "dark", belly: true }],
+  [big("lioness"), { species: "lioness", tail: "dark", belly: true }],
+  [big("tiger"), { species: "tiger", stripe: 1, belly: true }],
+  [big("cheetah"), { species: "cheetah", belly: true }],
+  [big("jaguar"), { species: "jaguar" }],
+  [big("panther|leopard"), { species: "leopard" }],
+  [big("bobcat"), { species: "bobcat", tail: "bob" }],
+  [big("lynx"), { species: "eurasian lynx", tail: "bob" }],
 ];
 
 const COLOR_WORD = "(?:[a-z]+[- ])?(?:jet-?black|black|white|cream|ginger|orange|red|rust|grey|gray|silver|blue|slate(?:-blue)?|brown|chocolate|seal|lilac|fawn|cinnamon|golden|gold|tan|smoke|caramel|amber|green|yellow|copper|hazel|charcoal|taupe|pink|purple|violet|teal|aqua|navy|magenta|salmon|rust-orange|honey(?:-gold)?|lemon-yellow|lime-green|leaf-green|sky-blue|ice-blue|olive(?:-gold)?|brass-gold|green-gold|dark(?:-grey| brown| rust-brown)?|darker(?:[- ][a-z]+)?|rust-red)";
@@ -106,8 +114,8 @@ export function parseLook(text) {
   if (/white tip|white-tipped/.test(t)) out.tail = "white";
   if (/dark tail tip|black tail tip|dark-tipped tail/.test(t)) out.tail = "dark";
   // Big cats.
-  for (const [re, b] of BIG) if (re.test(t)) {
-    out.scale = b.scale;
+  if (!/\b(house ?cat|domestic)\b/.test(t.slice(0, 200))) for (const [re, b] of BIG) if (re.test(t)) {
+    out.scale = speciesScale(b.species);
     if (b.mane) {
       const mm = t.match(new RegExp(`(${COLOR_WORD}) mane`));
       out.mane = mm ? mm[1] : "#6b4226";

@@ -10,42 +10,62 @@
      energy, sleepy, playful, bold (shy 0 .. bold 1), social (aloof 0 .. affectionate 1), grumpy,
      proud, grace (clumsy 0 .. graceful 1), curious, hunter, vocal, foodie,
      age: "kitten" | "adult" | "senior", build: "slim" | "normal" | "chunky", legs: "normal" | "short",
-     size: "small" | "medium" | "large" | "bigcat", scale (big cats only: how much bigger the looks
-     draw it, as looks.js), flags: ["blind", "tailless", "memorial", "gentle"] (gentle: memorial or
-     disabled cats, or serious real lore: no slapstick, no clumsy moves), signature: a key of
-     SIGNATURES (catmotion.js) or null.
+     size: "small" | "medium" | "large" | "bigcat", species (a big cat's, or a wild hybrid's: a key
+     of SPECIES) and scale (how much bigger it is drawn: its species' size, speciesScale),
+     flags: ["blind", "tailless", "memorial", "gentle"] (gentle: memorial or disabled cats, or
+     serious real lore: no slapstick, no clumsy moves), signature: a key of SIGNATURES
+     (catmotion.js) or null.
 
    styleOf(traits) turns them into how the cat moves and holds itself (see STYLE_DEFAULTS). */
 
 import { ACTIONS, NEUTRAL_TRAITS, SIGNATURES } from "./catmotion.js";
-import { parseLook } from "./looks.js";
 
 export const TRAIT_KEYS = ["energy", "sleepy", "playful", "bold", "social", "grumpy", "proud", "grace", "curious", "hunter", "vocal", "foodie"];
 const ENUMS = { age: ["kitten", "adult", "senior"], build: ["slim", "normal", "chunky"], legs: ["normal", "short"], size: ["small", "medium", "large", "bigcat"] };
 const FLAGS = ["blind", "tailless", "memorial", "gentle"];
 
 /** The most and the least a cat is ever drawn and simulated at, × an ordinary adult's size: the one
-    limit traits, styles, the sims (cats.js sizeOf) and the herd (catviews.js) all share. */
-export const MAX_SCALE = 5, MIN_SCALE = 0.5;
+    limit traits, styles, the sims (cats.js sizeOf, meadow.js) and the herd (catviews.js) all share. */
+export const MAX_SCALE = 3, MIN_SCALE = 0.5;
 
-/* DRAFT (?debug&bigset=A|B|C only): big cats drawn to their real size against a house cat. Each
-   species' shoulder height over a house cat's 0.25 m; set A is that ratio, B its 0.75th power, C its
-   0.6th (a softer step). Cartoon and fantasy ones take their species' size. */
-export const BIG_SPECIES = { lion: 4.8, lioness: 4, tiger: 4, liger: 5, cheetah: 3.2, jaguar: 2.8, cougar: 2.8, leopard: 2.6, "eurasian lynx": 2.6, "snow leopard": 2.4, serval: 2.2, "canada lynx": 2.2, "clouded leopard": 2, bobcat: 1.8, caracal: 1.8, ocelot: 1.8, savannah: 1.55 };
-export const BIG_SETS = { A: 1, B: 0.75, C: 0.6 };
-/** Which species each big resident is (the species audit, 2026-09-29): VELVETPAW's black panther is a
-    melanistic leopard, SANDSTEP a mountain lion, STUBTAIL's "Lynx rufus" a bobcat. SUSHITUNA (an F1
-    Savannah, a serval hybrid ~0.35-0.43 m) is the audit's borderline case, included here to preview. */
-export const BIG_CATS = {
-  LEOTHELION: "lion", COWARDLION: "lion", DROWSEPAW: "lion", SORRELPAW: "lioness",
-  SAFFWHISK: "tiger", SUNSTRETCH: "tiger", RIMESTRIPE: "tiger", GRREAT: "tiger",
-  TALLYSPOT: "cheetah", CHEETLE: "cheetah", ROSETTE: "jaguar", SANDSTEP: "cougar",
-  VELVETPAW: "leopard", STUBTAIL: "bobcat", SUSHITUNA: "savannah",
+/* BIG CATS, DRAWN BY SPECIES. The owner (2026-09): "if its a lion, normally lions are bigger than cats
+   so make them bigger and same logic with other feline beasts", "make the tigers, lions proportionately
+   bigger, not the same size as the normal cats", "AS REALISTICALLY AS POSSIBLE".
+   Each species' adult shoulder height (m), against a house cat's 0.25 m, gives how many times bigger
+   it really is (a lion 4.8×). The garden draws SIZE_POWER of that ratio (its 0.6th power: a lion
+   2.56×, a tiger 2.3×, a cheetah 2.0×, a bobcat 1.42×): the real ratio would put a lion's head over
+   the cottage's ridge and its body across three garden paths, and three judges picked this set (C)
+   from renders of the true ratio (A), its 0.75th power (B) and this. It keeps the species' order and
+   their ratios to one another in proportion. A cartoon or fantasy big cat (a cereal-box tiger, an
+   armoured lion, an ice tiger) is drawn at its species' size. `domestic`: a wild-cat hybrid bred as a
+   house cat (an F1 Savannah), bigger than a house cat but not a big cat (no big-cat ways). */
+export const HOUSE_CAT_SHOULDER = 0.25;
+export const SIZE_POWER = 0.6;
+export const SPECIES = {
+  liger: { shoulder: 1.25 }, lion: { shoulder: 1.2 }, lioness: { shoulder: 1.0 }, tiger: { shoulder: 1.0 },
+  cheetah: { shoulder: 0.8 }, jaguar: { shoulder: 0.7 }, cougar: { shoulder: 0.7 }, leopard: { shoulder: 0.65 },
+  "eurasian lynx": { shoulder: 0.65 }, "snow leopard": { shoulder: 0.6 }, serval: { shoulder: 0.55 }, "canada lynx": { shoulder: 0.55 },
+  "clouded leopard": { shoulder: 0.5 }, bobcat: { shoulder: 0.45 }, caracal: { shoulder: 0.45 }, ocelot: { shoulder: 0.45 },
+  savannah: { shoulder: 0.39, domestic: true },
 };
-/** A resident's scale in a big-cat size set ("A" | "B" | "C"), or null when it is not a big cat or no set. */
-export function bigSetScale(id, set) {
-  const sp = BIG_CATS[id], e = BIG_SETS[set];
-  return sp && e ? Math.round(Math.min(MAX_SCALE, BIG_SPECIES[sp] ** e) * 100) / 100 : null;
+/** How many times a house cat's size a species really is (shoulder height over 0.25 m). */
+export const speciesRatio = (sp) => (SPECIES[sp] ? SPECIES[sp].shoulder / HOUSE_CAT_SHOULDER : 1);
+/** How much bigger than an ordinary adult a cat of this species is drawn (and simulated): its real
+    ratio to the SIZE_POWER, to two places. 1 for a species not in the table. */
+export const speciesScale = (sp) => (SPECIES[sp] ? Math.round(Math.min(MAX_SCALE, speciesRatio(sp) ** SIZE_POWER) * 100) / 100 : 1);
+/** Which species a look's big-cat word names (the words just round it, so "mountain lion" is a cougar
+    and "snow leopard" not a leopard): the first rule that matches, or null. A black panther is a
+    melanistic leopard unless the look says jaguar; "Lynx rufus" beside "bobcat" is a bobcat. */
+const SPECIES_RULES = [
+  [/\b(liger|tigon)\b/, "liger"], [/\b(mountain lion|cougar|puma)\b/, "cougar"], [/\bsnow leopard\b/, "snow leopard"],
+  [/\bclouded leopard\b/, "clouded leopard"], [/\blioness\b/, "lioness"], [/\blion\b/, "lion"], [/\btiger\b/, "tiger"],
+  [/\bcheetah\b/, "cheetah"], [/\bjaguar\b/, "jaguar"], [/\b(leopard|panther)\b/, "leopard"], [/\bbobcat\b/, "bobcat"],
+  [/\bcanada lynx\b/, "canada lynx"], [/\blynx\b/, "eurasian lynx"], [/\bserval\b/, "serval"], [/\bcaracal\b/, "caracal"], [/\bocelot\b/, "ocelot"],
+];
+export function speciesIn(text, at = 0) {
+  const near = String(text || "").toLowerCase().slice(Math.max(0, at - 12), at + 24);
+  for (const [re, sp] of SPECIES_RULES) if (re.test(near)) return sp;
+  return null;
 }
 
 /** Words that name something else and would read as character: other cats and people, titles,
@@ -159,7 +179,7 @@ const CHUNKY = /\b(chubby(?![^.;]{0,14}\b(?:cheek|face))|chonk\w*|fat|tubby|plum
 const SLIM = /\b(slim(?! (?:[a-z]+ )?(?:collar|tail|line))|slender|(?<!medium[- ])lean(?!,? medium)|lithe|wiry(?![^.;]{0,24}\b(?:hairs?|coat|fur)\b)|lanky|skinny|svelte|rangy|leggy|long-legged|long legs|very thin|underfed|dancer-like)\b/;
 const SHORT_LEGS = /\b(munchkin|minuet|short-legged|short legs|stubby (?:black )?(?:legs|limbs|arms and legs|nub feet)|dwarfism)\b/;
 const LONG_LEGS = /\b(long legs|long-legged)\b/;
-const BIG = /\b(lion|lioness|tiger|cheetah|panther|jaguar|leopard|bobcat|lynx|cougar|puma|big cat)\b(?![- ](?:print|stripes?|striped|like|points?|tips?|tufts?|tufted|make-up))/;
+const BIG = /\b(lion|lioness|tiger|liger|tigon|cheetah|panther|jaguar|leopard|bobcat|lynx|cougar|puma|serval|caracal|ocelot)\b(?![- ](?:print|stripes?|striped|like|points?|tips?|tufts?|tufted|make-up|hybrid))/;
 const LARGE = /\b(maine coon|norwegian forest|savannah|serval-hybrid|big boi|26-pound|(?:very large|fairly large|huge|giant|big|large)(?:,| and)? (?:(?!head|eyes?|ears?|nose|paws?|feet|ruff|tail|patch|chest|belly|fist)[a-z-]+,? ){0,3}(?:cat|tom|tomcat|male|female|body|calico|tabby|persian|shorthair|adult)(?![-\w]| (?:saddle|patch|mark|stripe|spot|silhouette)))\b/;
 const SMALL = /(?<!carries a )\b(?:small|little|tiny|petite)(?:,| and)? (?:(?!head|eyes?|ears?|nose|paws?|feet|body|patch|spots?)[a-z-]+,? ){0,3}(?:cat|kitten|calico|tabby|tortoiseshell|shorthair|house cat|female|male|tom|adult)(?![-\w]| (?:saddle|patch|mark|stripe|spot|silhouette))/;
 const TAILLESS = /\b(tailless|manx|bobbed tail|bobtailed|stub tail|no tail(?! rings?))\b/;
@@ -189,14 +209,20 @@ export function parseTraits({ story = "", caption = "", look = "", lore = "", wh
   const sen = find(L, SENIOR) ? [L, find(L, SENIOR)] : find(C, SENIOR) ? [C, find(C, SENIOR)] : null;
   if (sen) { age = "senior"; why.age = `"${quote(...sen)}"`; }
   if (fixed.age) { age = fixed.age; why.age = "hand"; }
-  // Size: a big cat when its look is one (not a house cat with a tiger print), else from its looks.
+  // Size: a big cat when its look is one (not a house cat with a tiger print), of the species its
+  // look names (SPECIES: drawn at its species' size), else from its looks.
   const lead = L.slice(0, 200);
   const big = find(lead, BIG) && !/\b(house ?cat|domestic)\b/.test(lead) ? find(lead, BIG) : null;
-  const bigScale = big ? parseLook(lead).scale : 1;
-  const size = fixed.size || (big && bigScale > 1 ? "bigcat" : age === "kitten" ? "small" : find(L, LARGE) || find(tale, LARGE) ? "large" : find(L, SMALL) || find(tale, SMALL) ? "small" : "medium");
+  const species = fixed.species || (big ? speciesIn(lead, big.at) : null);
+  const wild = !!species && !SPECIES[species].domestic;
+  const size = fixed.size || (wild ? "bigcat" : age === "kitten" ? "small" : find(L, LARGE) || find(tale, LARGE) ? "large" : find(L, SMALL) || find(tale, SMALL) ? "small" : "medium");
   if (fixed.size) why.size = "hand";
   else if (size === "bigcat") why.size = `"${quote(lead, big)}"`;
   else if (size !== "medium") { const src = find(L, size === "large" ? LARGE : SMALL) ? L : tale, m = find(src, size === "large" ? LARGE : SMALL); why.size = m ? `"${quote(src, m)}"` : age; }
+  if (species) {
+    why.species = fixed.species ? "hand" : `"${quote(lead, big)}"`;
+    why.scale = `a ${species}: ${SPECIES[species].shoulder} m at the shoulder, ${r2(speciesRatio(species))}x a house cat's ${HOUSE_CAT_SHOULDER} m; drawn at ${r2(speciesRatio(species))}^${SIZE_POWER} = ${speciesScale(species)}x`;
+  }
   // Build: from the look first (its first mention), then the story. Big cats are never "chunky".
   let build = "normal";
   const bm = (src) => { const c = find(src, CHUNKY), s = find(src, SLIM); return c && (!s || c.at <= s.at) ? ["chunky", c] : s ? ["slim", s] : null; };
@@ -234,7 +260,8 @@ export function parseTraits({ story = "", caption = "", look = "", lore = "", wh
   }
   for (const key of TRAIT_KEYS) t[key] = r2(clamp(t[key], 0.05, 0.95));
   const out = { ...t, age, build, legs, size, flags: FLAGS.filter((f) => flags.includes(f)), signature };
-  if (size === "bigcat") out.scale = big ? bigScale : 1.45;
+  if (species) { out.species = species; out.scale = speciesScale(species); }
+  else if (size === "bigcat") out.scale = 1.45;
   for (const key of Object.keys(why)) if (Array.isArray(why[key])) { if (t[key] === 0.5) delete why[key]; else why[key] = why[key].slice(0, 3).join("; "); }
   out.why = why;
   return out;
@@ -315,7 +342,7 @@ export const TRAIT_OVERRIDES = {
   SPRIGATO: { playful: .85, social: .75, vocal: .6, energy: .7, note: "'capricious, attention-seeking'" },
   STRAYB12: { curious: .9, energy: .7, grace: .8, playful: .6, bold: .6, note: "the Stray: climbs everything, explores everywhere" },
   GENKITTY: { proud: .75, grumpy: .35, note: "Genesis, CryptoKitty #1, smug" },
-  SUSHITUNA: { age: "adult", size: "large", energy: .8, bold: .7, playful: .7, curious: .75, hunter: .7, social: .55, vocal: .6, note: "Savannah siblings: tall, busy, chirpy hunters" },
+  SUSHITUNA: { age: "adult", size: "large", species: "savannah", energy: .8, bold: .7, playful: .7, curious: .75, hunter: .7, social: .55, vocal: .6, note: "Savannah siblings: tall, busy, chirpy hunters (F1 Savannahs, serval hybrids, about 0.39 m at the shoulder)" },
   TREMAINE: { grumpy: .85, proud: .7, social: .2, foodie: .7, energy: .3, hunter: .7, signature: "sphinxWatch", note: "Lucifer, plotting on his velvet cushion" },
   PUSSBOOCAT: { bold: .9, proud: .8, grace: .85, energy: .7, playful: .6, social: .6, signature: "headTilt", note: "Puss in Boots: swashbuckler with the big pleading eyes" },
   DIDGACAT: { energy: .85, playful: .8, grace: .8, bold: .75, social: .6, note: "Didga: record-breaking trick cat" },
@@ -406,7 +433,7 @@ function applyOverride(t, o) {
   if (!o) return t;
   const out = { ...t, why: { ...t.why } };
   for (const [k, v] of Object.entries(o)) {
-    if (k === "note" || has(ENUMS, k)) continue; // age, build, legs, size: read by parseTraits
+    if (k === "note" || k === "species" || has(ENUMS, k)) continue; // age, build, legs, size, species: read by parseTraits
     if (k === "flags") { out.flags = FLAGS.filter((f) => t.flags.includes(f) || v.includes(f)); for (const f of v) out.why[f] = "hand"; continue; }
     out[k] = v;
     out.why[k] = "hand";
@@ -478,7 +505,7 @@ const avoidOf = (r) => { const m = MODEL_LIMITS[r?.id] ?? MODEL_LIMITS[r?.ticker
 export function deriveTraits(r, extra = {}) {
   const o = TRAIT_OVERRIDES[r?.id] ?? TRAIT_OVERRIDES[r?.ticker];
   const fixed = {};
-  for (const k of Object.keys(ENUMS)) if (o?.[k]) fixed[k] = o[k];
+  for (const k of [...Object.keys(ENUMS), "species"]) if (o?.[k]) fixed[k] = o[k];
   const t = parseTraits(textsOf(r, extra), fixed);
   if (r?.memorial === true || /in loving memory/i.test(r?.sensitivity || "")) {
     t.flags = FLAGS.filter((f) => t.flags.includes(f) || f === "memorial" || f === "gentle");
@@ -499,7 +526,9 @@ export function normalizeTraits(x) {
   out.flags = FLAGS.filter((f) => Array.isArray(src.flags) && src.flags.includes(f));
   if (out.flags.includes("memorial") && !out.flags.includes("gentle")) out.flags.push("gentle");
   out.signature = has(SIGNATURES, src.signature) ? src.signature : null;
-  if (out.size === "bigcat") out.scale = Number.isFinite(src.scale) ? clamp(src.scale, 1, MAX_SCALE) : 1.45;
+  // (a species drawn at its species' size, from the table: SPECIES; any other big cat as given)
+  if (has(SPECIES, src.species)) { out.species = src.species; out.scale = speciesScale(src.species); }
+  else if (out.size === "bigcat") out.scale = Number.isFinite(src.scale) ? clamp(src.scale, 1, MAX_SCALE) : 1.45;
   // (what its model can't show, catmotion ACTIONS names, kept only when there is any: see MODEL_LIMITS)
   if (Array.isArray(src.avoid) && src.avoid.length) out.avoid = src.avoid.filter((a, i) => typeof a === "string" && has(ACTIONS, a) && src.avoid.indexOf(a) === i);
   return out;
@@ -527,7 +556,7 @@ export const STYLE_DEFAULTS = Object.freeze({ tempo: 1, stride: 1, lift: 1, bob:
     sway 0..1 (hip roll, the chunky waddle), crouch 0..0.35 (body lowered on the move: shy, hunter),
     tail -0.4..1 (carriage: tucked .. relaxed 0 .. straight up), head -0.3..0.3 (carriage),
     sitTall 0..1 (slumped .. regal), loafTuck 0..1 (sphinx forelegs out .. fully tucked),
-    scale 0.7..MAX_SCALE (drawn size: kittens ~0.75, big cats as their looks). */
+    scale 0.7..MAX_SCALE (drawn size: kittens ~0.75, big cats and wild hybrids by species: SPECIES). */
 export function styleOf(traits) {
   const t = normalizeTraits(traits);
   const c = (k) => t[k] - 0.5;
@@ -555,7 +584,7 @@ export function styleOf(traits) {
   const sitTall = Math.max(sitSig ? 0.6 : 0, 0.5 + 0.8 * c("proud") + 0.2 * c("bold") + 0.1 * c("curious") - 0.3 * c("sleepy") - (fat ? 0.15 : 0) - (old ? 0.1 : 0));
   const loafTuck = 0.5 + 0.8 * c("sleepy") - 0.4 * c("energy") - 0.3 * c("hunter") - 0.2 * c("bold") + (fat ? 0.1 : 0) - (big ? 0.3 : 0)
     + (sig === "loaf" ? 0.2 : 0) - (sig === "sphinxWatch" ? 0.25 : 0);
-  const scale = big ? t.scale : kit ? 0.75 : t.size === "small" ? 0.88 : t.size === "large" ? 1.12 : 1;
+  const scale = Number.isFinite(t.scale) ? t.scale : kit ? 0.75 : t.size === "small" ? 0.88 : t.size === "large" ? 1.12 : 1;
   const s = (v, lo, hi) => r2(clamp(v, lo, hi));
   return {
     tempo: s(tempo, 0.8, 1.3), stride: s(stride, 0.85, 1.15), lift: s(lift, 0.7, 1.3), bob: s(bob, 0.6, 1.6),

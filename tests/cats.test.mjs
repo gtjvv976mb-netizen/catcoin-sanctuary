@@ -20,13 +20,19 @@
      gentle (memorial) cat never rolls about or races.
    The two big garden runs go in worker threads (this file again, below), side by side. Scenes of
    two or three cats check the bodies directly: a walker never goes through a sitting cat, big or
-   small, and a big cat's body is as big as it is drawn. */
+   small, and a big cat's body is as big as it is drawn.
+   Big cats (a lion 2.56x, a tiger 2.3x: traits.js SPECIES): a third run, the real garden with its
+   real residents, watches them: their whole bodies clear of the props, none of the house cats'
+   places used, company kept only with cats of a size, never stuck for long; and scenes check that
+   a lion walks, turns and sits down as a big animal does (catmotion gaitScale) and goes round a
+   house cat sitting in its way. */
 
 import { isMainThread, parentPort, workerData, Worker } from "node:worker_threads";
 import { readFileSync } from "node:fs";
-import { createSanctuary, POSES, UNWIND, bodyGap, sizeOf } from "../assets/world/cats.js";
+import { createSanctuary, POSES, UNWIND, BODY, BIG_SIZE, HALF_LEN, bodyGap, sizeOf, alike } from "../assets/world/cats.js";
 import { createMeadow } from "../assets/world/meadow.js";
-import { ACTIONS, MIN_SHOW } from "../assets/world/catmotion.js";
+import { ACTIONS, GAIT_BANDS, MIN_SHOW, TRANS_DUR, gaitFor, gaitScale } from "../assets/world/catmotion.js";
+import { distToObstacle } from "../assets/world/nav.js";
 import * as L from "../assets/world/layout.js";
 
 const DT = 1 / 60;
@@ -156,8 +162,46 @@ async function gardenRun({ traits, seconds }) {
   return out;
 }
 
+/** The real garden (its residents with their real traits and sizes, data/traits.json) for `seconds` at
+    30 Hz, watching the big cats: how deep each one's body (its capsule, drawn size) gets into a prop,
+    which places it holds, who it keeps company with, how long it stands waiting, what it does. */
+async function bigRun({ seconds }) {
+  const { styleOf } = await import("../assets/world/traits.js");
+  const rows = JSON.parse(readFileSync(new URL("../data/traits.json", import.meta.url), "utf8")).cats;
+  const residents = Object.entries(rows).map(([id, t]) => ({ id, name: id, traits: t, style: styleOf(t) }));
+  const sim = createSanctuary({ residents, reduced: false, critters: null });
+  sim.setViewer(0, 18);
+  const obs = L.obstacles(), dt = 1 / 30, big = sim.cats.filter((c) => c.size >= BIG_SIZE);
+  const S = new Map(big.map((c) => [c, { props: 0, propWhat: "", holds: new Set(), company: new Set(), waiting: 0, kinds: new Set(), walkV: [], gaits: new Set() }]));
+  for (let f = 1; f <= seconds / dt; f++) {
+    const at = new Map(big.map((c) => [c, [c.x, c.z]]));
+    sim.update(dt);
+    for (const c of big) {
+      const s = S.get(c), k = c.act?.kind;
+      s.kinds.add(k);
+      for (const h of c.holds) s.holds.add(h);
+      for (const o of [c.act?.mate, c.act?.lead, c.act?.nuzzle]) if (o) s.company.add(`${k}:${o.id}:${o.size}`);
+      if (c.waitUntil > sim.time) s.waiting += dt;
+      if (c.motion.gait) { s.gaits.add(c.motion.gait); if (c.motion.gait === "walk") s.walkV.push(Math.hypot(c.x - at.get(c)[0], c.z - at.get(c)[1]) / dt); }
+      if (c.y > 0.3) continue;
+      // (on the pond's bank, where it watches and drinks, its head may reach out over the water)
+      const h = (HALF_LEN[c.pose] || 0.3) * c.size, r = BODY * c.size, fx = Math.cos(c.yaw) * h, fz = -Math.sin(c.yaw) * h;
+      const bank = Math.hypot(c.x - L.POND.x, c.z - L.POND.z) < Math.hypot(sim.bigPlaces.pond[0].x - L.POND.x, sim.bigPlaces.pond[0].z - L.POND.z) + 0.5;
+      for (const o of obs) {
+        if (bank && o.id === L.POND.id) continue;
+        let d = Infinity;
+        for (let u = -1; u <= 1.0001; u += 0.25) d = Math.min(d, distToObstacle(o, c.x + fx * u, c.z + fz * u));
+        if (r - d > s.props) { s.props = r - d; s.propWhat = `${o.id} (${c.motion.action}, ${k})`; }
+      }
+    }
+  }
+  // (its cruising speed: the 90th percentile of its walking, past the speeding up, slowing down and short steps)
+  const p90 = (a) => { const b = a.slice().sort((x, y) => x - y); return b.length ? b[Math.floor(b.length * 0.9)] : 0; };
+  return big.map((c) => { const s = S.get(c); return { id: c.id, size: c.size, fr: c.fr, props: s.props, propWhat: s.propWhat, holds: [...s.holds], company: [...s.company], waiting: s.waiting, kinds: [...s.kinds], walkV: p90(s.walkV), walked: s.walkV.length * (1 / 30), gaits: [...s.gaits] }; });
+}
+
 if (!isMainThread) {
-  parentPort.postMessage(await gardenRun(workerData));
+  parentPort.postMessage(workerData.big ? await bigRun(workerData) : await gardenRun(workerData));
 } else {
   const { test } = await import("node:test");
   const assert = (await import("node:assert/strict")).default;
@@ -172,9 +216,10 @@ if (!isMainThread) {
     p.catch(() => {}); // awaited in its test
     return p;
   };
-  // Both big runs start now and run side by side.
+  // The big runs start now and run side by side.
   const plain = inWorker({ traits: false, seconds: SECONDS });
   const characters = inWorker({ traits: true, seconds: SECONDS });
+  const bigCats = inWorker({ big: true, seconds: 180 });
 
   const report = (t, o) => t.diagnostic(`${o.cats} cats, ${o.minutes} min: ${(o.changes / o.cats / o.minutes).toFixed(2)} changes/cat/min (${(o.changesNoTrans / o.cats / o.minutes).toFixed(2)} without posture changes), ${o.msPerTick?.toFixed(2) ?? "-"} ms/tick; longest creep ${o.creepMax.toFixed(2)} s, walked into resting cats ${o.walkInto.toFixed(2)} s, ${o.longOverlaps} pairs in each other for a second`);
   function assertMoveLikeCats(o) {
@@ -243,7 +288,8 @@ if (!isMainThread) {
       assertMoveLikeCats(o);
       assertBodies(o, { longOverlaps: 0 });
       // The legs step by the distance walked (the old plaza cats stepped 5.2 times too slowly).
-      for (const c of m.cats) assert.ok(Math.abs(c.stride - c.motion.odometer * 5.2) < 1e-6, `${label}: ${c.id}'s stride follows its odometer`);
+      // (a big cat's shared-model strides as much longer as it is drawn: its phase steps that much slower)
+      for (const c of m.cats) assert.ok(Math.abs(c.stride - (c.motion.odometer * 5.2) / c.size) < 1e-6, `${label}: ${c.id}'s stride follows its odometer`);
       assert.ok(m.cats.some((c) => c.motion.odometer > 0.5) || label !== "near", `${label}: some cats stroll about`);
     }
   });
@@ -280,10 +326,10 @@ if (!isMainThread) {
     return sim;
   }
   /** A straight stretch of open lawn, clear of props by `room` either side: its two ends. */
-  function openLawn(nav, len, room) {
-    for (let z = -12; z <= 12; z += 0.5) for (let x = -12; x <= 12 - len; x += 0.5) {
+  function openLawn(nav, len, room, pad = 0.45, reach = 12) {
+    for (let z = -reach; z <= reach; z += 0.5) for (let x = -reach; x <= reach - len; x += 0.5) {
       let ok = true;
-      for (let k = -room; k <= room + 1e-9 && ok; k += room / 2) ok = nav.segmentClear(x, z + k, x + len, z + k, null, 0.45) && nav.pointFree(x, z + k, 0.5) && nav.pointFree(x + len, z + k, 0.5);
+      for (let k = -room; k <= room + 1e-9 && ok; k += room / 2) ok = nav.segmentClear(x, z + k, x + len, z + k, null, pad) && nav.pointFree(x, z + k, pad + 0.05) && nav.pointFree(x + len, z + k, pad + 0.05);
       if (ok) return { x0: x, x1: x + len, z };
     }
     throw new Error("no open lawn");
@@ -359,6 +405,114 @@ if (!isMainThread) {
     const m = createMeadow({ residents: residents.slice(0, 16), startIndex: 247 });
     const H = L.HALL_OF_FAME; m.setFocus(H.x, H.z, H.x, H.z + 20);
     for (let f = 0; f < 180 / DT; f++) { m.update(DT); if (f % 3 === 0) check(m.cats, "Hall"); }
+  });
+
+  test("big cats in the real garden: bodies clear of the props, the house cats' places left alone, company kept with cats of a size, never stuck", async (t) => {
+    const list = await bigCats;
+    assert.ok(list.length >= 13, `the garden's big cats are big (${list.map((c) => `${c.id} ${c.size}`).join(", ")})`);
+    const HOUSE_PLACES = /^(bed|tree|step|blanket|cushion|mat|bowl|water)/;
+    for (const c of list) {
+      t.diagnostic(`${c.id} ${c.size}x: ${c.kinds.join(", ")}; walked ${c.walked.toFixed(0)} s, cruising at ${c.walkV.toFixed(2)} u/s (${c.gaits.join("/")}); waited ${c.waiting.toFixed(1)} s; deepest into a prop ${c.props.toFixed(2)} ${c.propWhat}`);
+      assert.ok(c.props < 0.15, `${c.id}'s body went ${c.props.toFixed(2)} into ${c.propWhat}`);
+      assert.deepEqual(c.holds.filter((h) => HOUSE_PLACES.test(h)), [], `${c.id} took a house cat's place`);
+      for (const m of c.company) { const size = +m.split(":")[2]; assert.ok(Math.max(size, c.size) <= 1.5 * Math.min(size, c.size), `${c.id} (${c.size}) kept company with a cat not its size: ${m}`); }
+      assert.ok(!c.kinds.some((k) => ["climb", "porch", "pile", "eat", "play", "chase", "chased", "zoomies"].includes(k)), `${c.id} did a house cat's thing: ${c.kinds}`);
+      assert.ok(c.waiting < 0.2 * 180, `${c.id} stood waiting ${c.waiting.toFixed(1)} s of 180`);
+      assert.ok(!c.gaits.includes("trot") && !c.gaits.includes("run") || c.kinds.includes("butterfly") || c.kinds.includes("bird"), `${c.id} strolls at a walk (${c.gaits})`);
+    }
+    // Strolling at a big animal's pace: about √size times a house cat's (0.7 u/s at an ordinary pace, a walk at most 1.1).
+    // (the ones that went for a wander: short steps aside and up to a spot are stepped more slowly)
+    for (const c of list.filter((x) => x.walked > 5 && x.kinds.includes("wander"))) assert.ok(c.walkV > 0.6 * c.fr && c.walkV <= 1.1 * c.fr + 0.05, `${c.id} (${c.size}x) cruises at ${c.walkV.toFixed(2)} u/s`);
+  });
+
+  test("a big cat moves as a big animal: gait bands, speeds, turns and posture changes by the square root of its size", () => {
+    assert.equal(gaitScale(1), 1); assert.equal(gaitScale(0.75), 1, "a kitten keeps its own pace"); assert.ok(Math.abs(gaitScale(2.56) - 1.6) < 1e-9);
+    // The same speed is a house cat's trot and a lion's walk; the lion trots and runs at √2.56 = 1.6 times the speeds.
+    assert.equal(gaitFor(null, 1.8), "trot"); assert.equal(gaitFor(null, 1.8, Infinity, { scale: 1.6 }), "walk");
+    assert.equal(gaitFor(null, 2.6), "run"); assert.equal(gaitFor(null, 2.6, Infinity, { scale: 1.6 }), "trot");
+    assert.equal(gaitFor(null, GAIT_BANDS.runUp * 1.6 + 0.05, Infinity, { scale: 1.6 }), "run");
+    const probe = createSanctuary({ residents: [{ id: "L", name: "L", style: { scale: 2.56 } }], reduced: false, critters: null });
+    const lane = openLawn(probe.navOf(2.56), 12, 1.5, probe.navOf(2.56).clearR + 0.1, 30);
+    const run = (style) => {
+      const sim = scene([{ id: "CAT", style, x: lane.x0, z: lane.z, yaw: 0, pose: "stand", steps: [{ type: "go", x: lane.x1, z: lane.z, mode: "stroll", arrive: 0.1, doing: "" }, { type: "hold", action: "sit", dur: 1e6, doing: "" }] }]);
+      const c = sim.cats[0], w = watcher(sim.cats), vs = [];
+      let turn = 0, sitFrom = null, sitFor = 0, strideOk = true, x = c.x, z = c.z, yaw = c.yaw, s0 = c.stride, o0 = c.motion.odometer;
+      for (let f = 1; f <= 30 / DT; f++) {
+        sim.update(DT); w.tick(f * DT, DT);
+        if (c.motion.gait) vs.push(Math.hypot(c.x - x, c.z - z) / DT);
+        turn = Math.max(turn, Math.abs(Math.atan2(Math.sin(c.yaw - yaw), Math.cos(c.yaw - yaw))) / DT);
+        if (c.motion.action === "sitDown") { sitFrom ??= f * DT; sitFor = f * DT - sitFrom + DT; }
+        x = c.x; z = c.z; yaw = c.yaw;
+      }
+      strideOk = Math.abs((c.stride - s0) - ((c.motion.odometer - o0) * 5.2) / c.size) < 1e-6;
+      vs.sort((a, b) => a - b);
+      return { c, v: vs[Math.floor(vs.length * 0.75)] || 0, turn, sitFor, strideOk, w: w.out, gaits: new Set(vs.length ? ["walk"] : []) };
+    };
+    const house = run(undefined), lion = run({ scale: 2.56, tempo: 1 });
+    assert.equal(lion.c.size, 2.56); assert.equal(lion.c.big, true);
+    assert.ok(Math.abs(lion.v / house.v - 1.6) < 0.12, `a lion strolls 1.6x as fast (${lion.v.toFixed(2)} against ${house.v.toFixed(2)} u/s)`);
+    assert.ok(lion.v < GAIT_BANDS.trotUp * 1.6 && lion.c.motion.gait === null && lion.w.fastGaits === 0, "at a walk, in its own bands");
+    assert.ok(lion.turn <= (3.4 + 1.5) / 1.6 + 0.05, `and turns at most 1/1.6 as quickly (${lion.turn.toFixed(2)} rad/s)`);
+    assert.ok(Math.abs(lion.sitFor - TRANS_DUR.sitDown * 1.6) < 0.05 && Math.abs(house.sitFor - TRANS_DUR.sitDown) < 0.05, `sits down in 1.6x the time (${lion.sitFor.toFixed(2)} s, a house cat ${house.sitFor.toFixed(2)} s)`);
+    assert.ok(lion.strideOk && house.strideOk, "its shared-model strides follow its odometer, as long as it is big");
+    for (const o of [house, lion]) { assert.equal(o.w.creeps, 0, o.w.examples.join("\n")); assert.equal(o.w.skips, 0, o.w.examples.join("\n")); assert.equal(o.w.short, 0, o.w.examples.join("\n")); }
+    assert.ok(Math.hypot(lion.c.x - lane.x1, lion.c.z - lane.z) < 0.6, "and gets there");
+  });
+
+  test("a lion never walks through a house cat or a kitten in its way: it goes round, as far off as its body needs", () => {
+    const probe = createSanctuary({ residents: [{ id: "L", name: "L", style: { scale: 2.56 } }], reduced: false, critters: null });
+    const lane = openLawn(probe.navOf(2.56), 12, 3, probe.navOf(2.56).clearR + 0.1, 30);
+    for (const [label, pose, yaw, scale] of [["a house cat sitting", "sit", 0, 1], ["a kitten loafing across the way", "loaf", Math.PI / 2, 0.75], ["a house cat loafing across the way", "loaf", Math.PI / 2, 1]]) {
+      const mid = (lane.x0 + lane.x1) / 2;
+      const sim = scene([
+        { id: "RESTING", style: { scale }, x: mid, z: lane.z, yaw, pose, steps: [{ type: "hold", action: pose, dur: 1e6, doing: "" }] },
+        { id: "LION", style: { scale: 2.56 }, x: lane.x0, z: lane.z + 0.05, yaw: 0, pose: "stand", steps: [{ type: "go", x: lane.x1, z: lane.z, mode: "stroll", arrive: 0.25, doing: "" }, { type: "hold", action: "stand", dur: 1e6, doing: "" }] },
+      ]);
+      const [rest, lion] = sim.cats;
+      let worst = Infinity;
+      for (let f = 0; f < 25 / DT; f++) { sim.update(DT); worst = Math.min(worst, bodyGap(lion, lion.x, lion.z, lion.yaw, lion.pose, rest)); }
+      assert.ok(worst > -0.06, `${label}: the lion went ${(-worst).toFixed(2)} into its body`);
+      assert.ok(Math.hypot(lion.x - lane.x1, lion.z - lane.z) < 0.25 * 2.56 + 0.4, `${label}: the lion got round to the far side (${lion.x.toFixed(2)}, ${lion.z.toFixed(2)})`);
+      assert.ok(Math.hypot(rest.x - mid, rest.z - lane.z) < 1e-9, `${label}: the resting cat was not pushed about`);
+    }
+  });
+
+  test("a big cat leaves the house cats' things alone, naps on a whole sunny patch, and watches the pond from further back", () => {
+    const sim = createSanctuary({ residents: [{ id: "LION", name: "Lion", style: { scale: 2.56 } }, { id: "HOUSE", name: "House", style: { scale: 1 } }], reduced: false, critters: null });
+    const lion = sim.byId("LION"), house = sim.byId("HOUSE");
+    assert.ok(lion.big && !house.big && !alike(lion, house));
+    // Its body (the capsule every "no overlapping" check uses) is as big as it is drawn: 2.56 times as long and wide.
+    const was = { x: house.x, z: house.z, yaw: house.yaw, pose: house.pose };
+    Object.assign(house, { x: 5, z: 0, yaw: 0, pose: "walk" });
+    assert.ok(Math.abs(bodyGap(lion, 0, 0, 0, "walk", house) - (5 - HALF_LEN.walk * (2.56 + 1) - BODY * (2.56 + 1))) < 1e-9, "a lion's capsule is 2.56x a house cat's");
+    Object.assign(house, was);
+    assert.equal(lion.nav, sim.navOf(2.56)); assert.notEqual(lion.nav, sim.nav, "its own route-finder");
+    assert.ok(lion.nav.clearR >= BODY * 2.56 + 0.1 && lion.bodyR >= BODY * 2.56 - 1e-9, "routes and push-out as wide as its body");
+    for (const kind of ["climb", "porch", "eat", "play", "pile"]) assert.equal(sim.force("LION", kind), false, `a lion doesn't ${kind}`);
+    assert.equal(sim.force("HOUSE", "climb"), true, "a house cat still climbs");
+    for (let k = 0; k < 6; k++) {
+      assert.equal(sim.force("LION", "nap"), true);
+      const held = [...sim.reservations()].filter(([, id]) => id === "LION").map(([p]) => p);
+      assert.ok(held.every((p) => p.startsWith("sun-")) && (held.length === 0 || held.length === 2 && held[0].split("#")[0] === held[1].split("#")[0]), `a lion naps across a whole sunny patch or on the grass, never in a bed: ${held}`);
+      sim.force("LION", "rest");
+    }
+    const water = L.POND.r + 0.25;
+    for (const p of sim.bigPlaces.pond) assert.ok(Math.hypot(p.x - L.POND.x, p.z - L.POND.z) - water >= lion.nav.clearR, `${p.id}: its body clear of the water's edge`);
+    assert.ok(sim.bigPlaces.pond.length >= 3 && sim.bigPlaces.sun.length >= 10, "and has places enough");
+    assert.equal(sim.force("LION", "pond"), true); assert.equal(sim.force("LION", "drink"), true);
+  });
+
+  test("a big Hall of Fame cat gets a home with room for its body, and nobody sits in it", () => {
+    const H = L.HALL_OF_FAME, residents = Array.from({ length: 21 }, (_, i) => ({ id: `h${i}`, name: `h${i}`, style: i === 2 ? { scale: 2.56 } : undefined }));
+    const m = createMeadow({ residents, startIndex: 247 });
+    const lion = m.cats[2];
+    for (const o of m.cats) if (o !== lion) assert.ok(Math.hypot(o.home.x - lion.home.x, o.home.z - lion.home.z) >= 1.4 * (lion.size + o.size) / 2 - 1e-9, `${o.id}'s home is clear of the lion's`);
+    assert.ok(Math.hypot(lion.home.x - H.x, lion.home.z - H.z) >= H.fountain.r + (HALF_LEN.walk + BODY) * lion.size, "and of the fountain");
+    m.setFocus(H.x, H.z, H.x, H.z + 20);
+    const w = watcher(m.cats, { bodies: true });
+    for (let f = 1; f <= 90 / DT; f++) { m.update(DT); w.tick(f * DT, DT); }
+    assertMoveLikeCats({ ...w.out, minutes: 1.5 });
+    assertBodies(w.out, { longOverlaps: 0 });
   });
 
   test("with reduced motion every cat settles still, and later gets up properly", () => {

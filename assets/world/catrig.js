@@ -943,7 +943,7 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
     lowered while walking), tail (-0.4 tucked .. 0 relaxed .. 1 straight up with a hooked tip), head
     (carried low .. high), sitTall (slumped .. regal sit), loafTuck (sphinx .. paws folded under). */
 export const DEFAULT_STYLE = Object.freeze({ tempo: 1, stride: 1, lift: 1, bob: 1, sway: 0, crouch: 0, tail: 0, head: 0, sitTall: 0.5, loafTuck: 0.3, scale: 1 });
-const STYLE_RANGE = { tempo: [0.6, 1.5], stride: [0.75, 1.25], lift: [0.5, 1.5], bob: [0.3, 2], sway: [0, 1], crouch: [0, 0.4], tail: [-0.5, 1], head: [-0.4, 0.4], sitTall: [0, 1], loafTuck: [0, 1], scale: [0.5, 5] }; // (scale: traits.js MIN_SCALE..MAX_SCALE; the tests load this file with catmotion.js alone)
+const STYLE_RANGE = { tempo: [0.6, 1.5], stride: [0.75, 1.25], lift: [0.5, 1.5], bob: [0.3, 2], sway: [0, 1], crouch: [0, 0.4], tail: [-0.5, 1], head: [-0.4, 0.4], sitTall: [0, 1], loafTuck: [0, 1], scale: [0.5, 3] }; // (scale: traits.js MIN_SCALE..MAX_SCALE; the tests load this file with catmotion.js alone)
 /** A full style: the defaults, with the given values clamped to what the clips can show. */
 export function clipStyle(style) {
   const s = { ...DEFAULT_STYLE };

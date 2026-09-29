@@ -29,7 +29,7 @@ import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
 import { AMBIENT } from "./ambient.js";
 import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit, GAIT_RATE, PIVOT_TURN, STOPS } from "./catrig.js";
-import { ACTIONS, NEUTRAL_TRAITS, allowedAction, transitionPath } from "./catmotion.js";
+import { ACTIONS, NEUTRAL_TRAITS, allowedAction, gaitScale, transitionPath } from "./catmotion.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { lookOf } from "./looks.js";
 import { MAX_SCALE, MIN_SCALE } from "./traits.js";
@@ -633,8 +633,13 @@ function coatShader(material, md) {
 export const OWN = { maxHi: 10, maxHiOut: 12, hiDist: 14, hiOut: 18, index: "assets/models/cats/index.json", drawDist: 55, drawOut: 62 };
 
 /** Level of detail for the shared, tinted cats: beyond `far` units from the camera a cat is drawn
-    from the lightest copy; beyond `cullNear` a cat outside the view is not drawn at all. */
+    from the lightest copy; beyond `cullNear` a cat outside the view is not drawn at all.
+    Every detail distance (these, OWN's and ANIM's) is for an ordinary cat: a big cat, as big on the
+    screen as an ordinary one that many times nearer, is judged by its distance over its size
+    (lodDist), and its cull sphere is as big as its body. */
 export const LOD = { far: 26, cullNear: 14 };
+/** How near a cat looks for its level of detail: its distance, over its size when it is bigger than an ordinary cat. */
+export const lodDist = (dist, size = 1) => (size > 1 ? dist / size : dist);
 /** How tall a cat stands in each pose, as a share of its standing height (for its tag and the camera). */
 const OWN_HEIGHT = { walk: 1, sit: 1.05, stretch: 0.8, loaf: 0.62, sleep: 0.45 };
 const POSTURE_H = { move: 1, stand: 1, sit: 1.05, lie: 0.62, sleep: 0.45, air: 0.9 };
@@ -844,6 +849,10 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
   if (!snap && dist > ANIM.throttle && dt < 0.045) return false;
   dt = snap ? 0 : Math.max(0, Math.min(dt, 0.1));
   A.t = now;
+  // A big cat's own clock (catmotion gaitScale): its idle loops (a paw wash, panting, kneading) and
+  // the layers (the head's glances, the tail's sway and lash, its breath) play that much more slowly,
+  // as its gait's steps and the sim's moves do; the blends between clips keep their own times.
+  const kt = o.fr || 1, tdt = dt / kt, tnow = now / kt;
   // What to show: the sim's action (or, from an older sim, clipFor), its progress, the distance walked.
   const m = cat.motion;
   let action, u = null, odo, look = null;
@@ -956,7 +965,7 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
   A.odo = odo;
   // (Blended so the paws the blend plants move back exactly as fast as the ground goes by.)
   let inv = 0, vmax = 0;
-  for (let i = 0; i < 4; i++) { inv += A.gs[i] / GAIT_RATE[GAITS[i]]; vmax += A.gs[i] * GAIT_VMAX[i]; }
+  for (let i = 0; i < 4; i++) { inv += A.gs[i] / GAIT_RATE[GAITS[i]]; vmax += A.gs[i] * GAIT_VMAX[i] * kt; } // (a big cat's legs step out faster ground: its bands are faster)
   const ground = Math.min(dOdo, vmax * dt);
   A.phi = (A.phi + (inv > 0 ? ground * o.perUnit / inv : 0)) % 1;
   if (dt > 0) damp(A, "spd", "spdV", dOdo / dt, 0.25, dt);
@@ -1003,9 +1012,9 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
     const a = X.a;
     if (!a.isScheduled()) a.play();
     a.weight = d;
-    if (X.kind === "loop") { X.t += dt; if (X.t >= X.dur) X.t = X.enter + ((X.t - X.enter) % (X.dur - X.enter)); }
-    else if (X.own || X.clock) X.t = Math.min(X.dur, X.t + dt);
-    else if (X === E) X.t = u !== null ? Math.min(1, Math.max(0, u)) * X.dur : Math.min(X.dur, X.t + dt);
+    if (X.kind === "loop") { X.t += tdt; if (X.t >= X.dur) X.t = X.enter + ((X.t - X.enter) % (X.dur - X.enter)); }
+    else if (X.own || X.clock) X.t = Math.min(X.dur, X.t + tdt);
+    else if (X === E) X.t = u !== null ? Math.min(1, Math.max(0, u)) * X.dur : Math.min(X.dur, X.t + tdt);
     a.time = X.t;
     const L = X.L, md = X.mood;
     gH += d * L[0]; gT += d * L[1]; gS += d * L[2]; gB += d * L[3];
@@ -1043,11 +1052,11 @@ export function animateOwn(o, cat, now, dist = 0, still = false, cam = null) {
   LG[0] += (gH - LG[0]) * kf; LG[1] += (gT - LG[1]) * kf; LG[2] += (gS - LG[2]) * kf; LG[3] += (gB - LG[3]) * kf;
   // The layers, fading out with distance.
   const b = o.sk.bones, gD = still ? 0 : 1 - smooth01((dist - ANIM.layerNear) / (ANIM.layerFar - ANIM.layerNear));
-  breathe(A, b, dt, LG[3] * gD);
+  breathe(A, b, tdt, LG[3] * gD);
   if (gD <= 0) return true;
   bendLayer(o, A, b, dt, LG[2] * gD, snap);
-  lookLayer(o, cat, A, b, dt, now, look, LG[0] * gD, snap, cam);
-  if (A.tail) tailLayer(A, dt, now, LG[1] * gD, snap);
+  lookLayer(o, cat, A, b, tdt, tnow, look, LG[0] * gD, snap, cam);
+  if (A.tail) tailLayer(A, tdt, tnow, LG[1] * gD, snap);
   return true;
 }
 
@@ -1419,8 +1428,9 @@ export class CatHerd {
         this.scene.add(group);
         const mixer = new THREE.AnimationMixer(sk.root);
         // Its character: how it moves (the clips in its style) and how big it is drawn.
+        // (k: its size, which also sets its own clock and how far off it still counts as near: gaitScale, update)
         const style = this.styleOf(cat), k = Math.min(MAX_SCALE, Math.max(MIN_SCALE, style?.scale || 1));
-        o = { cat, group, hi: null, lo: null, dims, legs, fit, s: ownScale(dims) * k, style, rig, sk, mixer, clips: null, anim: null, actions: {}, u: { hl: { value: 0 } }, near: false, drawOwn: false, dc: 0, size: { len: 0, height: 0, width: 0 } };
+        o = { cat, group, hi: null, lo: null, dims, legs, fit, s: ownScale(dims) * k, k, fr: gaitScale(k), style, rig, sk, mixer, clips: null, anim: null, actions: {}, u: { hl: { value: 0 } }, near: false, drawOwn: false, dc: 0, size: { len: 0, height: 0, width: 0 } };
         o.perUnit = cyclesPerUnit(rig, o.s, style || undefined, fit); // (its fit's shorter stride, if any, as its clips take)
         this.own.set(catId, o);
         this.ownRank.push(o);
@@ -1507,16 +1517,16 @@ export class CatHerd {
     // Which own-model cats get the full model: the nearest few within reach of the camera, kept
     // until they are clearly out of it (so the 10th and 11th nearest don't swap back and forth).
     const R = this.ownRank;
-    for (let i = 0; i < R.length; i++) { const c = R[i].cat; R[i].dc = Math.hypot(c.x - cx, c.z - cz); }
+    for (let i = 0; i < R.length; i++) { const c = R[i].cat; R[i].dc = lodDist(Math.hypot(c.x - cx, c.z - cz), R[i].k); }
     for (let i = 1; i < R.length; i++) { const o = R[i]; let j = i - 1; while (j >= 0 && R[j].dc > o.dc) { R[j + 1] = R[j]; j--; } R[j + 1] = o; } // (nearly sorted already)
     for (let i = 0; i < R.length; i++) { const o = R[i]; o.near = o.near ? i < OWN.maxHiOut && o.dc <= OWN.hiOut : i < OWN.maxHi && o.dc < OWN.hiDist; }
     const T = AMBIENT.uTime.value, camP = cam ? cam.position : null;
     for (const cat of this.sim.cats) {
       const o = this.own.get(cat.id);
-      const hl0 = this.highlight.get(cat.id) || 0;
-      const dist = Math.hypot(cat.x - cx, cat.z - cz);
+      const hl0 = this.highlight.get(cat.id) || 0, sz = cat.size > 1 ? cat.size : 1;
+      const dist = lodDist(Math.hypot(cat.x - cx, cat.z - cz), sz);
       let skip = !!cat.hidden && !hl0;
-      if (!skip && cam && dist > LOD.cullNear && !hl0) { _sp.center.set(cat.x, cat.y + 0.5, cat.z); _sp.radius = 1.3; skip = !_fr.intersectsSphere(_sp); }
+      if (!skip && cam && dist > LOD.cullNear && !hl0) { _sp.center.set(cat.x, cat.y + 0.5 * sz, cat.z); _sp.radius = 1.3 * sz; skip = !_fr.intersectsSphere(_sp); }
       if (skip) {
         if (o) o.group.visible = false;
         if (this.blobs) { _t.makeScale(0, 0, 0); this.blobs.setMatrixAt(cat.index, _t); }
@@ -1560,7 +1570,7 @@ export class CatHerd {
         const w = smooth01((m.u - 0.3) / 0.4), pa = TRANS_POSE[A.from], pb = TRANS_POSE[A.to];
         if (w > 0 && w < 1 && pa !== pb && (cat.pose === pa || cat.pose === pb)) { pose2 = cat.pose === pa ? pb : pa; fade = cat.pose === pa ? 1 - w : -w; }
       }
-      const aStride = cat.stride || 0, aWalk = cat.pose === "walk" && !this.still ? Math.min(1, (cat.speed || 0) / 1.2) : 0, aPhase = (cat.phase || 0) % 50, aAwake = cat.pose === "sleep" ? 0 : 1;
+      const aStride = cat.stride || 0, aWalk = cat.pose === "walk" && !this.still ? Math.min(1, (cat.speed || 0) / (1.2 * gaitScale(sz))) : 0, aPhase = (cat.phase || 0) % 50, aAwake = cat.pose === "sleep" ? 0 : 1;
       const far = dist > LOD.far && !hl0 ? "-far" : "";
       this.putShared(cat, cat.pose, far, pose2 ? fade : 0, aStride, aWalk, aPhase, aAwake);
       if (pose2) this.putShared(cat, pose2, far, fade > 0 ? fade - 1 : 1 + fade, aStride, pose2 === "walk" ? aWalk : 0, aPhase, pose2 === "sleep" ? 0 : 1);
@@ -1686,6 +1696,15 @@ export class CatHerd {
   headPoint(cat, out) {
     const md = this.dimsOf(cat), k = this.own.has(cat.id) ? 1 : this.scaleOf(cat);
     return out.set(cat.x, cat.y + md.height * k + 0.2, cat.z);
+  }
+
+  /** How long or tall a cat is drawn standing, whichever is more (units): for the camera to frame
+      the whole animal and for the ring round it. */
+  extentOf(cat) {
+    const o = this.own.get(cat.id);
+    if (o) return Math.max(o.dims.len || 1.2, o.dims.height || 1) * o.s;
+    const md = this.models[cat.model].walk;
+    return Math.max(md.len || 1.2, md.height || 1) * this.scaleOf(cat);
   }
 
   /** The middle of the cat, for "nearest cat to a tap" picking and for the camera to look at. */

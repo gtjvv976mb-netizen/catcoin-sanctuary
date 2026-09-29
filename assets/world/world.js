@@ -30,7 +30,7 @@ import { createSanctuary } from "./cats.js";
 import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
 import { decodeLegs } from "./catrig.js";
-import { bigSetScale, traitsOf, styleOf } from "./traits.js";
+import { traitsOf, styleOf } from "./traits.js";
 import { HOUSE, GARDEN, MEADOW, HALL_OF_FAME, BRIDGES, EASEL, groundHeight } from "./layout.js";
 import { modelIdFor } from "../ui/models.js";
 
@@ -205,14 +205,9 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   // Each cat's character (traits.js: from data/traits.json, else read from its story) and the way
   // it moves because of it (its style: tempo, stride, tail and head carriage, size); the sim and
   // the herd both use them. A cat whose traits can't be read is an ordinary adult.
-  // (DRAFT, ?debug&bigset=A|B|C: the big cats drawn at a candidate size set's scale, traits.js BIG_SETS.)
-  const bigSet = debug && typeof location !== "undefined" ? new URLSearchParams(location.search).get("bigset") : null;
+  // (A big cat is drawn at its species' size: traits.js SPECIES.)
   const character = new Map(residents.map((r) => {
-    try {
-      const traits = traitsOf(r), style = styleOf(traits), k = bigSet && bigSetScale(r.id, bigSet);
-      if (k) style.scale = k;
-      return [r.id, { traits, style }];
-    } catch { return [r.id, { traits: null, style: null }]; }
+    try { const traits = traitsOf(r); return [r.id, { traits, style: styleOf(traits) }]; } catch { return [r.id, { traits: null, style: null }]; }
   }));
   const simOf = (r) => ({ id: r.id, name: r.name, tier: r.tier, model: coats.get(r.id).ginger ? "ginger" : "cat", traits: character.get(r.id).traits, style: character.get(r.id).style });
   const mainResidents = residents.filter((r) => !livesInHall(r)).map(simOf);
@@ -224,7 +219,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     fencePosts: garden.fencePosts,
     flowerFields: garden.flowerFields,
     lawnFree: (x, z) => !sim || sim.nav.pointFree(x, z, 0.35),
-    catsNear: (x, z, r) => !!sim && sim.cats.some((c) => Math.abs(c.x - x) < r && Math.abs(c.z - z) < r && Math.hypot(c.x - x, c.z - z) < r),
+    // (a big cat's reach is as much bigger as it is: no bird lands under a lion)
+    catsNear: (x, z, r) => !!sim && sim.cats.some((c) => { const R = r * (c.size > 1 ? c.size : 1); return Math.abs(c.x - x) < R && Math.abs(c.z - z) < R && Math.hypot(c.x - x, c.z - z) < R; }),
   });
   const garden0 = createSanctuary({ residents: mainResidents, reduced: still, critters });
   const meadow = createMeadow({ residents: meadowResidents, startIndex: garden0.cats.length, reduced: still });
@@ -407,6 +403,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     if (chosenId && chosenId !== id) herd.highlight.delete(chosenId);
     chosenId = cat ? cat.id : null;
     ring.visible = !!cat;
+    // (no zooming in closer than the chosen cat's body allows: a big cat is not seen from inside)
+    controls.minDistance = cat ? Math.max(4.5, 1.4 * herd.extentOf(cat)) : 4.5;
     if (!cat) {
       focus = null;
       if (saved && ease) {
@@ -424,7 +422,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     // Keep the direction we look from, unless the cottage or a tree stands in the way: then come round.
     const off = new THREE.Vector3().subVectors(camera.position, controls.target);
     const sph = new THREE.Spherical().setFromVector3(off);
-    sph.radius = mobile ? 10.5 : 9.5;
+    // (Far enough back to frame the whole animal: a lion's length takes a little over a third of the frame.)
+    sph.radius = Math.max(mobile ? 10.5 : 9.5, (mobile ? 3.2 : 2.6) * herd.extentOf(cat));
     sph.phi = Math.min(Math.max(sph.phi, 1.0), 1.28);
     const toP = new THREE.Vector3().setFromSpherical(sph).add(mid);
     const theta0 = sph.theta, phi0 = sph.phi;
@@ -645,7 +644,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     const cc = chosenId ? sim.byId(chosenId) : null;
     if (cc) {
       ring.position.set(cc.x, cc.y + 0.04, cc.z);
-      const k = still ? 1 : 1 + Math.sin(tt * 3) * 0.06;
+      // (round a big cat's body, not a spot between its forepaws)
+      const k = (still ? 1 : 1 + Math.sin(tt * 3) * 0.06) * Math.max(1, herd.scaleOf(cc));
       ring.scale.set(k, 1, k);
     }
     // No hover labels while the camera glides to a chosen cat (the pointer is still where the click was).

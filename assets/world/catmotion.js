@@ -105,9 +105,21 @@ export const GAIT_BANDS = { trotUp: 1.55, trotDown: 1.25, runUp: 2.45, runDown: 
 /** Shortest time in one gait before another may start (s). */
 export const GAIT_DWELL = 0.5;
 
-/** The gait for a speed, given the current one (null when not moving) and how long it has lasted. */
-export function gaitFor(prev, speed, since = Infinity, { stalk = false } = {}) {
-  if (speed < 0.03) return null;
+/** Dynamic similarity (the Froude number): an animal `size` times as big as an ordinary cat walks,
+    trots and runs at √size times the speeds (each gait at the same Froude number: a lion strolls
+    where a house cat strolls, only on longer legs), steps and turns √size times more slowly, and
+    takes √size times as long over a move (sitting down, a yawn, a leap); so its stride, tied to
+    the distance it covers, keeps its paws planted, and a big cat has the slow, heavy cadence of a
+    big animal instead of walking in slow motion. Only bigger cats: a kitten keeps its own pace
+    (tune.pace, style.tempo). The sims (speeds, gait bands, turn rates, durations) and the view
+    (the fastest the legs are stepped, the idle loops' clock) all use this one factor. */
+export const gaitScale = (size = 1) => Math.sqrt(size > 1 ? size : 1);
+
+/** The gait for a speed, given the current one (null when not moving) and how long it has lasted.
+    `scale`: the cat's gaitScale (a big cat's bands are that much faster). */
+export function gaitFor(prev, speed, since = Infinity, { stalk = false, scale = 1 } = {}) {
+  if (speed < 0.03) return null; // (still: whatever its size)
+  if (scale !== 1) speed /= scale;
   // (into a stalk too only once the gait it is in has been seen its dwell: no walk flicked into a stalk)
   if (stalk) return prev && prev !== "stalk" && since < GAIT_DWELL ? prev : "stalk";
   const B = GAIT_BANDS;

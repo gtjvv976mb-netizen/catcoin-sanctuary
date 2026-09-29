@@ -9,7 +9,9 @@
    you, now and then), have a wash, loaf, sprawl in the sun, turn round and curl up for a nap. It
    moves by the same rules as the garden cats (cats.js): posture changes through catmotion's
    transitions, gaits with hysteresis, speeds that pick up and fall off, turns made in small steps,
-   little mannerisms while it holds a pose. Each cat carries the same fields the garden cats do
+   little mannerisms while it holds a pose, and a big cat moves and takes up room as a big one does
+   (its speeds, turns and moves by catmotion gaitScale; a home slot with room for its body; every
+   body check by both cats' sizes). Each cat carries the same fields the garden cats do
    (cat.motion, and pose, position, heading, stride, speed, anim, doing for the shared models), so
    catviews.js draws them the same way.
 
@@ -21,8 +23,8 @@
 
 import { makeRandom } from "./rng.js";
 import * as L from "./layout.js";
-import { ACTIONS, FIDGETS, SIGNATURES, allowedAction, canDo, pickFidget, transDur, transitionPath } from "./catmotion.js";
-import { BODY, HALF_LEN, SHUFFLE, UNWIND, V_MIN, animateShared, bodyGap, circleStep, leadFidget, pathGap, publishMotion, sizeOf, snapMotion, traitsFrom, unwindFor } from "./cats.js";
+import { ACTIONS, FIDGETS, SIGNATURES, allowedAction, canDo, gaitScale, pickFidget, transDur, transitionPath } from "./catmotion.js";
+import { BIG_SIZE, BODY, HALF_LEN, SHUFFLE, UNWIND, V_MIN, animateShared, bodyGap, circleStep, leadFidget, pathGap, publishMotion, sizeOf, snapMotion, traitsFrom, unwindFor } from "./cats.js";
 
 /** Distances (from the point the camera looks at, and from the camera itself). */
 export const STREAM = { active: 30, lazy: 62, lazyStep: 0.3, draw: 115, appear: 0.5 };
@@ -73,10 +75,18 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       if (L.hallFree(x, z, 0.5)) slots.push({ x, z });
     }
   });
+  // (A big cat's body needs its neighbours' slots too, and one next to it would sit in its body: a
+  // slot too near a big cat's home, for the two of them, is no one's; the rest go as they always have.)
+  const homes = [];
+  const roomy = (s, size) => homes.every((h) => Math.max(size, h.size) < BIG_SIZE || Math.hypot(h.x - s.x, h.z - s.z) >= 1.4 * (size + h.size) * 0.5) && (size < BIG_SIZE || Math.hypot(s.x - H.x, s.z - H.z) >= H.fountain.r + (HALF_LEN.walk + BODY) * size);
   residents.forEach((r, k) => {
-    const rnd = makeRandom(`hall:${r.id}`);
+    const rnd = makeRandom(`hall:${r.id}`), size = sizeOf({ style: r.style });
     // Spread the cats over the slots evenly, so a small Hall of Fame still rings the fountain.
-    const home = slots.length ? slots[Math.floor((k * slots.length) / Math.max(residents.length, 1)) % slots.length] : { x: H.x + H.fountain.r + 1.2, z: H.z };
+    const i0 = slots.length ? Math.floor((k * slots.length) / Math.max(residents.length, 1)) % slots.length : 0;
+    let home = null;
+    for (let j = 0; j < slots.length && !home; j++) { const s = slots[(i0 + j) % slots.length]; if (roomy(s, size)) home = s; }
+    home ||= slots.length ? slots[i0] : { x: H.x + H.fountain.r + 1.2, z: H.z };
+    homes.push({ x: home.x, z: home.z, size });
     cats.push(makeCat(r, { ...home }, rnd));
   });
   cats.forEach((c, i) => { c.index = startIndex + i; });
@@ -88,7 +98,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
     const j = () => rnd.range(0.93, 1.07), start = allowedAction(t, "sit"); // (sitting, or standing if its own model can't sit)
     const c = {
       id: r.id, name: r.name, model: r.model === "ginger" ? "ginger" : "cat", index: 0, tier: r.tier, meadow: true, hall: true,
-      rnd, home, traits: t, style, gentle: t.flags.includes("gentle"), size: sizeOf({ style }),
+      rnd, home, traits: t, style, gentle: t.flags.includes("gentle"), size: sizeOf({ style }), fr: gaitScale(sizeOf({ style })),
       tune: {
         pace: clamp((0.86 + 0.24 * t.energy + (kit ? 0.04 : 0) - (old ? 0.1 : 0) - (t.build === "chunky" ? 0.05 : 0) - (t.flags.includes("blind") ? 0.14 : 0)) * j(), 0.7, 1.15),
         rhythm: clamp(lerp(1.4, 1.0, t.energy) * (old ? 1.1 : 1) * j(), 0.9, 1.55),
@@ -119,16 +129,20 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
   const dur = (c, a, b) => c.rnd.range(a, b) * c.tune.rhythm;
   const tempo = (c) => clamp(c.style.tempo ?? 1, 0.6, 1.5);
   const hold = (action, d, doing, o) => ({ type: "hold", action, dur: d, doing, ...o });
-  const once = (c, action, doing) => hold(action, action === "shake" ? 0.8 : (action === "yawn" ? 2 : 2.2) * tempo(c), doing, { fidget: false });
+  // (a big cat's one-off moves and posture changes take gaitScale times as long)
+  const once = (c, action, doing) => hold(action, (action === "shake" ? 0.8 : (action === "yawn" ? 2 : 2.2) * tempo(c)) * c.fr, doing, { fidget: false });
+  /** How far apart two cats may be with their bodies still touching: the window a body check looks in. */
+  const reach = (a, b) => Math.max(2.5, 0.8 * (a.size + b.size) + 0.3);
 
   /** A free spot near home: on the plaza, clear of the other cats (by their size) and where they are
       heading, with a clear straight way there (it never walks through a cat lying in the way). */
   function spotNear(c, min, max) {
     const rnd = c.rnd;
+    const g = Math.max(1, c.size);
     for (let t = 0; t < 8; t++) {
       const a = rnd.range(0, 6.28), d = rnd.range(min, max);
       const x = c.home.x + Math.cos(a) * d, z = c.home.z + Math.sin(a) * d;
-      if (!L.hallFree(x, z, 0.4) || !L.hallFree((x + c.x) / 2, (z + c.z) / 2, 0.3)) continue;
+      if (!L.hallFree(x, z, 0.4 * g) || !L.hallFree((x + c.x) / 2, (z + c.z) / 2, 0.3 * g)) continue;
       // (Room to lie down there whichever way it and its neighbours face: both bodies, lying, end to end.)
       if (cats.some((o) => { if (o === c) return false; const r = (HALF_LEN.loaf + BODY) * (c.size + o.size) + 0.05; return Math.hypot(o.x - x, o.z - z) < r || (o.dest && Math.hypot(o.dest.x - x, o.dest.z - z) < r) || pathGap(c, c.x, c.z, x, z, o) < 0.1; })) continue;
       return { x, z };
@@ -138,7 +152,8 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
   /** Room to turn round on the spot (a circle of CIRCLE_R, its body swinging round) clear of every other cat. */
   function roomToTurn(c) {
     for (const o of cats) {
-      if (o === c || Math.abs(o.x - c.x) > 3 || Math.abs(o.z - c.z) > 3) continue;
+      const w = 3 * Math.max(1, (c.size + o.size) * 0.5);
+      if (o === c || Math.abs(o.x - c.x) > w || Math.abs(o.z - c.z) > w) continue;
       if (Math.hypot(o.x - c.x, o.z - c.z) < (HALF_LEN.walk + BODY) * c.size + 0.25 + ((HALF_LEN[o.pose] || 0.3) + BODY) * o.size) return false;
     }
     return true;
@@ -148,7 +163,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       there will stand up there, and needs the room. */
   function crowdedBy(c, x, z, yaw, pose, room = 0) {
     for (const o of cats) {
-      if (o === c || Math.abs(o.x - x) > 2.5 || Math.abs(o.z - z) > 2.5) continue;
+      if (o === c || Math.abs(o.x - x) > reach(c, o) || Math.abs(o.z - z) > reach(c, o)) continue;
       if (bodyGap(c, x, z, yaw, pose, o, HALF_LEN[o.pose] > HALF_LEN.walk ? o.pose : "walk") < room) return o;
     }
     return null;
@@ -159,7 +174,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
     for (let t = 0; t < 14; t++) {
       const a = rnd.range(0, 6.28), d = rnd.range(0.5, 1.5) * c.size;
       const x = c.x + Math.cos(a) * d, z = c.z + Math.sin(a) * d, yaw = Math.atan2(-(z - c.z), x - c.x);
-      if (!L.hallFree(x, z, 0.4) || crowdedBy(c, x, z, yaw, pose, 0.08)) continue;
+      if (!L.hallFree(x, z, 0.4 * Math.max(1, c.size)) || crowdedBy(c, x, z, yaw, pose, 0.08)) continue;
       if (cats.some((o) => o !== c && (pathGap(c, c.x, c.z, x, z, o) < 0.03 || (o.dest && Math.hypot(o.dest.x - x, o.dest.z - z) < 1.3 * (c.size + o.size) * 0.5)))) continue;
       return { x, z };
     }
@@ -169,7 +184,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
   function inTheWay(c, dx, dz) {
     const l = Math.hypot(dx, dz) || 1, x = c.x + (dx / l) * 0.15, z = c.z + (dz / l) * 0.15;
     for (const o of cats) {
-      if (o === c || o.hidden || Math.abs(o.x - c.x) > 2 || Math.abs(o.z - c.z) > 2) continue;
+      if (o === c || o.hidden || Math.abs(o.x - c.x) > reach(c, o) || Math.abs(o.z - c.z) > reach(c, o)) continue;
       const g = bodyGap(c, x, z, c.yaw, "walk", o);
       if (g < 0.03 && g < bodyGap(c, c.x, c.z, c.yaw, "walk", o) - 1e-4) return o;
     }
@@ -182,7 +197,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
     c.dest = null;
     const lying = c.posture === "lie" || c.posture === "sleep", sitting = c.posture === "sit";
     const w = {
-      stroll: 0.3 * (0.5 + t.energy) * (0.6 + 0.8 * t.curious) * (Math.hypot(c.x - c.home.x, c.z - c.home.z) > ROAM ? 3 : 1),
+      stroll: 0.3 * (0.5 + t.energy) * (0.6 + 0.8 * t.curious) * (Math.hypot(c.x - c.home.x, c.z - c.home.z) > ROAM * c.fr ? 3 : 1),
       look: 0.26 * (0.6 + 0.5 * t.curious + 0.3 * t.proud) + (sitting ? 0.15 : 0),
       groom: 0.14 * (0.6 + 0.8 * t.proud),
       loaf: 0.16 * (0.6 + 0.8 * t.sleepy) + (lying ? 0.15 : 0),
@@ -198,8 +213,8 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
     let r = rnd.next() * Object.values(w).reduce((s, v) => s + v, 0), kind = "look";
     for (const [k, v] of Object.entries(w)) { r -= v; if (r <= 0) { kind = k; break; } }
     if (kind === "stroll") {
-      const far = Math.hypot(c.x - c.home.x, c.z - c.home.z) > ROAM;
-      const s = far ? { x: c.home.x, z: c.home.z } : spotNear(c, 0.8, ROAM);
+      const far = Math.hypot(c.x - c.home.x, c.z - c.home.z) > ROAM * c.fr;
+      const s = far ? { x: c.home.x, z: c.home.z } : spotNear(c, 0.8 * Math.max(1, c.size), ROAM * c.fr);
       if (!s) kind = "look";
       else {
         c.dest = s;
@@ -296,7 +311,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
           if (q) { c.dest = q; c.plan.splice(c.si, 0, { type: "go", x: q.x, z: q.z, doing: s.doing || c.doing }); return true; }
         }
         const path = transitionPath(c.posture, want);
-        if (path.length) { c.plan.splice(c.si, 0, ...path.map((name) => ({ type: "trans", name, dur: transDur(name, tempo(c)), doing: s.doing }))); return true; }
+        if (path.length) { c.plan.splice(c.si, 0, ...path.map((name) => ({ type: "trans", name, dur: transDur(name, tempo(c)) * c.fr, doing: s.doing }))); return true; }
       }
       c.started = true; c.st = 0; c.fid = null; c.fidAt = null; c.lookNext = 0;
     }
@@ -311,29 +326,31 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       case "go": {
         // Straight across the plaza at a stroll, slowing into turns (stepping round on the spot for
         // a sharp one) and braking to a stop where it is going.
-        const dx = s.x - c.x, dz = s.z - c.z, d = Math.hypot(dx, dz);
+        // (A big cat at its own pace, turning and stepping more slowly: gaitScale.)
+        const dx = s.x - c.x, dz = s.z - c.z, d = Math.hypot(dx, dz), f = c.fr;
         const going = !!c.motion.gait, shown = going ? time - c.moveSince : 0;
-        if (d < 0.1 + (going ? 0.01 : SHUFFLE) && (!going || shown >= 0.3)) { c.dest = null; return next(); }
+        if (d < 0.1 + (going ? 0.01 : SHUFFLE * Math.max(1, c.size)) && (!going || shown >= 0.3 * f)) { c.dest = null; return next(); }
         if (c.st > 40) { c.dest = null; return next(); }
         // Another cat come into the way (it never walks into one): it stops short, here (once its
         // first steps are seen), and does what it came to do where it is.
-        if (inTheWay(c, dx, dz) && (!going || shown >= MIN_MOVE)) { c.dest = null; c.plan.splice(c.si + 1, 0, { type: "stop", doing: s.doing }); return next(); }
+        if (inTheWay(c, dx, dz) && (!going || shown >= MIN_MOVE * f)) { c.dest = null; c.plan.splice(c.si + 1, 0, { type: "stop", doing: s.doing }); return next(); }
         c.wa = "move"; c.lookOn = false;
-        const left = wrap(yawTo(dx, dz) - c.yaw), turn = clamp(left, -TURN * dt, TURN * dt);
+        const left = wrap(yawTo(dx, dz) - c.yaw), turn = clamp(left, -TURN * dt / f, TURN * dt / f);
         c.yaw = wrap(c.yaw + turn);
         const rest = left - turn;
-        let v = Math.min(WALK_MAX, WALK * c.tune.pace) * Math.max(0, Math.cos(Math.min(Math.abs(rest), Math.PI / 2)));
+        let v = Math.min(WALK_MAX, WALK * c.tune.pace) * f * Math.max(0, Math.cos(Math.min(Math.abs(rest), Math.PI / 2)));
         const vb = Math.sqrt(2 * BRAKE * Math.max(0, d - 0.1));
         if (vb < v) { v = vb; c.brakeT = c.speed / BRAKE; }
         // Never a creep: a short way is stepped at a walk, and it walks at least V_MIN to its last step
         // (slower only stepping round a sharp turn on the spot).
-        if (shown < MIN_MOVE) v = Math.min(v, Math.max(V_MIN, (d - 0.1) / (MIN_MOVE - shown)));
-        if (v < V_MIN && Math.abs(rest) < 0.35 && d > 0.1) v = V_MIN;
+        const vmin = V_MIN * f, minMove = MIN_MOVE * f;
+        if (shown < minMove) v = Math.min(v, Math.max(vmin, (d - 0.1) / (minMove - shown)));
+        if (v < vmin && Math.abs(rest) < 0.35 && d > 0.1) v = vmin;
         ease(c, v, dt);
         c.wantV = v;
         c.speed = Math.min(c.speed, d / Math.max(dt, 1e-3)); // never past the spot
         advance(c, dt);
-        if (c.speed < 0.25 && Math.abs(rest) > PIVOT_MIN) c.pivoting = true;
+        if (c.speed < 0.25 * f && Math.abs(rest) > PIVOT_MIN) c.pivoting = true;
         return false;
       }
       case "stop":
@@ -371,7 +388,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       const toV = wrap(yawTo(eye.x - c.x, eye.z - c.z) - c.yaw);
       if (r < c.p.viewer && Math.abs(toV) <= HEAD_MAX && !(t.grumpy > 0.62 && rnd.chance(0.6))) { L0.x = eye.x; L0.z = eye.z; L0.y = 1.6; c.lookOn = true; c.atYou = true; }
       else if (r < c.p.viewer + 0.25) c.lookOn = false;
-      else { const a = c.yaw + rnd.range(-1.1, 1.1), d = rnd.range(2, 6); L0.x = c.x + Math.cos(a) * d; L0.z = c.z - Math.sin(a) * d; L0.y = rnd.range(0, 0.7); c.lookOn = true; }
+      else { const g = Math.max(1, c.size), a = c.yaw + rnd.range(-1.1, 1.1), d = rnd.range(2, 6) * g; L0.x = c.x + Math.cos(a) * d; L0.z = c.z - Math.sin(a) * d; L0.y = rnd.range(0, 0.7) * g; c.lookOn = true; }
     }
     if (c.atYou) c.doing = SAY.atYou;
   }
@@ -394,7 +411,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
     if (!name || name === s.action || ACTIONS[name]?.posture !== posture || (c.gentle && COMEDY.has(name))) return s.action;
     if (ACTIONS[name].kind === "once" && UNWIND[s.action]) return s.action; // no yawn with a paw still at its face
     const isOnce = ACTIONS[name].kind === "once", range = FIDGETS[name]?.dur || [2, 4];
-    const d = isOnce ? (name === "shake" ? 0.8 : name === "yawn" ? 2 * tempo(c) : 2.2 * tempo(c)) : rnd.range(range[0], range[1]) * c.tune.rhythm;
+    const d = isOnce ? (name === "shake" ? 0.8 : name === "yawn" ? 2 * tempo(c) : 2.2 * tempo(c)) * c.fr : rnd.range(range[0], range[1]) * c.tune.rhythm;
     if (s.dur - c.st < d + 1) return s.action;
     c.fid = { action: name, t0: c.st, end: c.st + d, once: isOnce };
     return fidget(c, s);
@@ -448,7 +465,7 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
     for (const c of cats) {
       if (c.hidden || c.moving || !quiet(c) || c.posture === "stand") { c.crowdT = 0; continue; }
       let o = null;
-      for (const q of cats) if (q !== c && !q.hidden && Math.abs(q.x - c.x) < 2.5 && Math.abs(q.z - c.z) < 2.5 && q.motion.since <= c.motion.since && bodyGap(c, c.x, c.z, c.yaw, c.pose, q) < -0.1) { o = q; break; }
+      for (const q of cats) if (q !== c && !q.hidden && Math.abs(q.x - c.x) < reach(c, q) && Math.abs(q.z - c.z) < reach(c, q) && q.motion.since <= c.motion.since && bodyGap(c, c.x, c.z, c.yaw, c.pose, q) < -0.1) { o = q; break; }
       c.crowdT = o ? (c.crowdT || 0) + span : 0;
       if (c.crowdT > 0.6) {
         const q = clearNear(c, POSTURE_POSE[c.posture]);
