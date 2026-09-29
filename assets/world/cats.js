@@ -172,6 +172,9 @@ const WAIT_ON = 0.5;
 const RISE_WAITS = 8;
 /** How far (units, into both bodies) a visitor comes into its friend's body to rub cheeks: touching, heads together. */
 const NUZZLE = 0.1;
+/** Come to a spot beside its friend, still this far (units) into its body or less: near enough to settle (settling checks
+    the room exactly, and steps over a little if it must). */
+const TOUCH_ARRIVE = 0.1;
 /** A cat hemmed in on the last stretch of its way, this close to where it was going (beyond the
     arrival radius), takes it as arrived rather than treading on the spot. */
 const CLOSE_ENOUGH = 0.45;
@@ -848,11 +851,11 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         // (no room to settle by it, or come up short of the spot, still in its body: it steps off out of its way
         // instead, a standing step clear of it, and doesn't stay)
         const off = () => { stay.skip = true; const q = besideSpot(cat, f, "walk"); if (q) { act.steps.splice(act.i + 1, 0, go(q, "stroll", 0.08, keep)); cat.dest = q; } };
-        const beside = go(s, "stroll", 0.08, keep, { then: () => { if (bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, f, fLen()) > -0.05) apart(); else if (!stay.skip) off(); } });
+        const beside = go(s, "stroll", 0.04, keep, { then: () => { if (bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, f, fLen()) > -TOUCH_ARRIVE) apart(); else if (!stay.skip) off(); } });
         // (the friend getting up and going off meanwhile, the visit is off: it isn't followed into its body)
         const gone = () => f.moving || f.y > 0.3 || !f.act || TRAVEL.has(f.act.steps[f.act.i]?.type), goneNow = () => act.t > 0.3 && gone();
         steps.push(
-          go(s, "stroll", 0.2, act.reason, { abortIf: gone, then: () => { f.greetedBy = cat; f.greetUntil = time + 6; } }),
+          go(s, "stroll", 0.08, act.reason, { abortIf: gone, then: () => { f.greetedBy = cat; f.greetUntil = time + 6; } }),
           { type: "face", target: () => f, doing: act.reason },
           hold("greet", dur(cat, 1, 1.6), SAY.greet, { target: head, fidget: false, abortIf: goneNow }),
           hold("headBunt", dur(cat, 1.8, 3.2), `Rubbing cheeks with ${f.name}`, { target: head, restore: { social: 0.15 }, fidget: false, abortIf: goneNow }),
@@ -1351,7 +1354,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       for (let d = 0.35; d <= 1.6; d += 0.05) {
         // (clear whichever way it ends up facing: it may come round a detour to it, and turn as it settles)
         const x = f.x + Math.cos(a) * d * Math.max(1, f.size), z = f.z + Math.sin(a) * d * Math.max(1, f.size), yaw = yawTo(f.x - x, f.z - z);
-        let g = Infinity; for (let q = 0; q < 4; q++) g = Math.min(g, bodyGap(cat, x, z, yaw + (q * Math.PI) / 4, pose, f, fp), bodyGap(cat, x, z, yaw + (q * Math.PI) / 4, "walk", f, fp) + 0.05);
+        let g = Infinity; for (let q = 0; q < 8; q++) g = Math.min(g, bodyGap(cat, x, z, yaw + (q * Math.PI) / 8, pose, f, fp), bodyGap(cat, x, z, yaw + (q * Math.PI) / 8, "walk", f, fp) + 0.03);
         if (g < 0.01) continue;
         if (g > 0.2) break;
         if (nav.pointFree(x, z, L.CAT.bodyR, bowlsKept(cat.act && cat.act.ignoreNow)) && nav.segmentClear(cat.x, cat.z, x, z, withContaining(cat.act && cat.act.ignoreNow, cat), nav.bodyR) && ![0, 1, 2, 3].some((q) => crowdingBut(cat, x, z, yaw + (q * Math.PI) / 4, pose, f)) && pathOk(cat, x, z, f)) {
@@ -2165,9 +2168,9 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         if (cat.stall === 0) { cat.stallX = cat.x; cat.stallZ = cat.z; }
         // (Held back by another cat's body for most of its step: it doesn't wait out the check.)
         const byProp = (cat.heldProp || 0) > 0.7;
-        // (and a tick it made no step at all, held a moment ago, counts on: pressed head on against a cat that is
+        // (and a tick it made next to no headway, held a moment ago, counts on: pressed head on against a cat that is
         // pressing back, its speed taken back to nothing each tick, it is still held, not free every other tick)
-        const noStep = cat.heldT > 0 && Math.hypot(cat.x - cat.px, cat.z - cat.pz) < 1e-3;
+        const noStep = cat.heldT > 0 && Math.hypot(cat.x - cat.px, cat.z - cat.pz) < 0.15 * dt;
         cat.heldT = byProp || (cat.held || 0) > 0.7 || noStep ? (cat.heldT || 0) + dt : 0;
         if ((cat.stall += dt) > STALL_WAIT || cat.heldT > HELD_WAIT) {
           const made = Math.hypot(cat.x - cat.stallX, cat.z - cat.stallZ) / cat.stall;
@@ -2175,11 +2178,12 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           if (made < Math.max(STALL_SPEED, cat.speed * 0.4) || cat.heldT > HELD_WAIT) {
             // (Walked into something, it has stopped: its speed is what it really made.)
             const R = cat.route, near = R && Math.hypot(R.qx - cat.x, R.qz - cat.z) < (R.arrive ?? 0.15) + CLOSE_ENOUGH;
-            // (Slid only a creep's worth along a prop that stopped it, it stops: it doesn't inch along the edge in a
-            // gait, its legs going nowhere; it stands, and sets off again on the way it finds from there.)
-            if (cat.heldT > HELD_WAIT && dt > 0 && !near) {
+            // (Getting only a creep's worth on against a prop or a cat that stopped it, it stops: it doesn't inch along
+            // an edge or press on into a body in a gait, its legs going nowhere; it stands, and sets off again, goes
+            // round or waits, from there.)
+            if ((cat.heldT > HELD_WAIT || (cat.heldT > 0.03 && made < STALL_SPEED)) && dt > 0 && !near) {
               const real = Math.hypot(cat.x - cat.px, cat.z - cat.pz) / dt;
-              if (byProp && real < 0.15) { cat.speed = 0; cat.x = cat.px; cat.z = cat.pz; cat.moving = false; } // (stopped where it stood)
+              if (real < 0.15) { cat.speed = 0; cat.x = cat.px; cat.z = cat.pz; cat.moving = false; } // (stopped where it stood)
               else cat.speed = Math.min(cat.speed, real);
               cat.wantV = 0;
             }
