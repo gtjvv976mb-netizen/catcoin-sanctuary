@@ -306,7 +306,8 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       case "trans":
         c.speed = 0; c.lookOn = false;
         c.wa = s.name; c.wu = Math.min(1, c.st / s.dur);
-        if (c.st >= s.dur) { c.posture = ACTIONS[s.name].to; return next(); }
+        // (its last frame shown for a tick before what follows: never cut off short of its end)
+        if (c.st >= s.dur) { if (!s.ended) { s.ended = true; return false; } c.posture = ACTIONS[s.name].to; return next(); }
         return false;
       case "go": {
         // Straight across the plaza at a stroll, slowing into turns (stepping round on the spot for
