@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-09-27T17:12:54.367Z",
+  "lastPostedAt": "2026-09-29T18:21:20.697Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -37,6 +37,15 @@
       "postedAt": null,
       "tweet": null,
       "note": "Posted as a thread from data/thread-adoption-catbus.json on 2026-09-27; its ids are recorded there."
+    }
+  },
+  "launchesPosted": {
+    "MEDIACAT": {
+      "postId": "2104643043726926283",
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-09-29T18:21:20.697Z",
+      "tweet": "2104999986790269316"
     }
   }
 }
