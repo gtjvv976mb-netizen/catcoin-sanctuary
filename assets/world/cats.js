@@ -639,12 +639,17 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         if (!list.length) return null;
         const b = nearest(cat, list, (p) => p.stand);
         if (!reserve(b.id, cat)) return null;
-        act.ignore.add(b.id); // it may come right up to its own bowl
+        // (it may come right up to its own bowl: but only for the last step to it, from a spot just back from
+        // its stand, so the way there never crosses the bowl, coming from its far side)
+        const ox = b.stand.x - b.x, oz = b.stand.z - b.z, ol = Math.hypot(ox, oz) || 1, back = { x: b.stand.x + (ox / ol) * 0.35, z: b.stand.z + (oz / ol) * 0.35 };
+        const near = nav.pointFree(back.x, back.z, L.CAT.clearR) && Math.hypot(cat.x - b.stand.x, cat.z - b.stand.z) > 0.5;
+        if (!near) act.ignore.add(b.id);
         cat.dest = { ...b.stand };
         const d = kind === "eat" ? dur(cat, 7, 13) : dur(cat, 4, 8);
         act.reason = kind === "eat" ? SAY.eatGo : SAY.drinkGo;
         // A hungry, lively cat trots to its bowl.
         const mode = kind === "eat" && cat.needs.hunger > 0.8 && t.energy > 0.55 && t.foodie > 0.5 ? "hurry" : "purpose";
+        if (near) steps.push(go(back, mode, 0.15, act.reason, { through: true }), { type: "call", fn: () => { act.ignore.add(b.id); } });
         steps.push(
           go(b.stand, mode, 0.1, act.reason),
           { type: "turn", yaw: b.yaw, doing: act.reason },
@@ -1242,14 +1247,14 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     // sideways-and-back: pinned between a prop and a cat, the ways straight out from the cat are all into the prop)
     for (const a of [...ways, base + 0.5, base - 0.5, base + 1, base - 1, base + 1.5, base - 1.5, base + 2, base - 2]) {
       const x = cat.x + Math.cos(a) * k, z = cat.z + Math.sin(a) * k;
-      if (!nav.pointFree(x, z, L.CAT.bodyR, act && act.ignoreNow) || !nav.segmentClear(cat.x, cat.z, x, z, ign, nav.bodyR)) continue;
+      if (!nav.pointFree(x, z, L.CAT.bodyR, bowlsKept(act && act.ignoreNow)) || !nav.segmentClear(cat.x, cat.z, x, z, ign, nav.bodyR)) continue;
       const yaw = Math.atan2(-(z - cat.z), x - cat.x);
       let clear = true;
       for (const c of cats) { if (c === cat || c === from || c.y > 0.3 || c.perch || together(cat, c) || Math.abs(c.x - x) > 1.6 || Math.abs(c.z - z) > 1.6) continue; if (bodyGap(cat, x, z, yaw, "walk", c) < (force && c.posture === "stand" ? -0.08 : 0.02)) { clear = false; break; } }
       // (and a way it can set off on: the step's first stride and the turn onto it clear of every body but
       // the one it leaves, as the walk itself will find them; a spot clear at the end of a way that brushes
       // a sleeper on the way would only be waited at, over and over)
-      if (!clear || bodyAhead(cat, x - cat.x, z - cat.z, act, from, force) || turnBlocked(cat, yawTo(x - cat.x, z - cat.z), act, from, force)) continue;
+      if (!clear || bodyAhead(cat, x - cat.x, z - cat.z, act, from, force) || turnBlocked(cat, yawTo(x - cat.x, z - cat.z), act, from, force) || propAhead(cat, x - cat.x, z - cat.z, ignore)) continue;
       if (bodyGap(cat, x, z, yaw, "walk", from) > bodyGap(cat, cat.x, cat.z, cat.yaw, cat.pose, from) + 0.05) return { x, z, until: time + 2.5, escape: true, from, ghost: force };
     }
     return null;
@@ -1295,7 +1300,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     for (let t = 0; t < 12; t++) {
       const a = away + rnd.range(-1.2, 1.2), d = rnd.range(0.35, 1.1) * (cat.size + o.size) * 0.5;
       const x = cat.x + Math.cos(a) * d, z = cat.z + Math.sin(a) * d;
-      if (!nav.pointFree(x, z, L.CAT.clearR, cat.act && cat.act.ignoreNow)) continue;
+      if (!nav.pointFree(x, z, L.CAT.clearR, bowlsKept(cat.act && cat.act.ignoreNow))) continue;
       if (!crowding(cat, x, z, Math.atan2(-(z - cat.z), x - cat.x), pose, 0.08) && !crowding(cat, x, z, Math.atan2(-(z - cat.z), x - cat.x), "walk", 0.02) && pathOk(cat, x, z, o)) return { x, z };
     }
     return null;
@@ -1315,7 +1320,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         let g = Infinity; for (let q = 0; q < 4; q++) g = Math.min(g, bodyGap(cat, x, z, yaw + (q * Math.PI) / 4, pose, f));
         if (g < 0.01) continue;
         if (g > 0.2) break;
-        if (nav.pointFree(x, z, L.CAT.bodyR, cat.act && cat.act.ignoreNow) && nav.segmentClear(cat.x, cat.z, x, z, withContaining(cat.act && cat.act.ignoreNow, cat), nav.bodyR) && ![0, 1, 2, 3].some((q) => crowdingBut(cat, x, z, yaw + (q * Math.PI) / 4, pose, f)) && pathOk(cat, x, z, f)) {
+        if (nav.pointFree(x, z, L.CAT.bodyR, bowlsKept(cat.act && cat.act.ignoreNow)) && nav.segmentClear(cat.x, cat.z, x, z, withContaining(cat.act && cat.act.ignoreNow, cat), nav.bodyR) && ![0, 1, 2, 3].some((q) => crowdingBut(cat, x, z, yaw + (q * Math.PI) / 4, pose, f)) && pathOk(cat, x, z, f)) {
           const dd = Math.hypot(x - cat.x, z - cat.z); if (dd < bd) { bd = dd; best = { x, z }; }
         }
         break;
@@ -1332,6 +1337,10 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     }
     return null;
   }
+
+  /** An activity's props to ignore, less its bowl or water dish: a spot to step clear to, or to settle in, is
+      never in a bowl (a cat that had eaten stepped clear of another into its own bowl, and sat down in it). */
+  const bowlsKept = (ignore) => (ignore ? new Set([...ignore].filter((id) => !RIM_OF.has(id))) : ignore);
 
   /** Whether the straight way from where a cat stands to (x, z) keeps its body out of every still cat's (one
       it is against already, no further in) but `skip`'s, the one it goes round or leaves: a way round one, or
@@ -1390,7 +1399,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     let out = null, score = Infinity;
     for (const side of [1, -1]) {
       const x = b.x + px * side * off, z = b.z + pz * side * off;
-      if (!nav.pointFree(x, z, L.CAT.bodyR + 0.05, ignore) || !nav.segmentClear(cat.x, cat.z, x, z, withContaining(ignore, cat), nav.bodyR)) continue;
+      if (!nav.pointFree(x, z, L.CAT.bodyR + 0.05, bowlsKept(ignore)) || !nav.segmentClear(cat.x, cat.z, x, z, withContaining(ignore, cat), nav.bodyR)) continue;
       let clear = true;
       for (const o of cats) { const r = 0.6 * (cat.size + o.size) * 0.5; if (o !== cat && o !== b && Math.abs(o.x - x) < r && Math.abs(o.z - z) < r) { clear = false; break; } }
       if (!clear || !pathOk(cat, x, z, b)) continue;
