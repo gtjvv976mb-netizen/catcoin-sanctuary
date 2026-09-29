@@ -1,9 +1,9 @@
 # The sanctuary's automatic launcher (scripts/launch.mjs, scripts/lib/launcher.mjs): every 20 minutes,
 # by hand, when the owner saves data/launch-approvals.json on main, and whenever the trend watch commits new candidates (its launcher job dispatches this one), it
-# launches at most one trending cat, with no dev buy: it never buys or sells anything. Only watch-list
-# cats launch on their own (a data/cat-watch.json figure, or a cartoon or fiction cat that an X trend
-# named or a big account posted); any other cat waits until the owner lists its post in
-# data/launch-approvals.json. Never a sensitive cat, one already in the sanctuary, a second coin for
+# launches at most one trending cat, with no dev buy: it never buys or sells anything. These launch on
+# their own: a data/cat-watch.json figure, a cartoon or fiction cat that an X trend named or a big account
+# posted, and while LAUNCH_OPEN is on (the default), a real pet in a viral or rising post and any cat a big
+# account names; any other cat waits until the owner lists its post in data/launch-approvals.json. Never a sensitive cat, one already in the sanctuary, a second coin for
 # one post (its mint is derived from the post), or a launch past the caps.
 #
 # Where (scripts/lib/venues.mjs, the owner's rule in scripts/lib/venues-routing.mjs): on pump.fun priced
@@ -18,6 +18,8 @@
 # and nothing new is written), anything else (or unset) stops every job here. The caps, each clamped:
 # LAUNCH_MAX_PER_DAY (3), LAUNCH_MAX_SOL_PER_LAUNCH (0.03), LAUNCH_MAX_SOL_PER_DAY (0.1),
 # LAUNCH_MIN_BALANCE_SOL (0.02, what must be left after a launch), LAUNCH_PRIORITY_MICROLAMPORTS.
+# LAUNCH_OPEN (on unless "off"): real pets in viral or rising posts, and any cat a big account names,
+# launch without approval; "off" sends them to data/launch-approvals.json again.
 # LAUNCH_PUMP_QUOTE "on" opts in to pump.fun launches priced in a listed coin (unverified: no such launch
 # has been recorded); anything else keeps them off. A variable, never a secret.
 #
@@ -93,6 +95,7 @@ jobs:
           LAUNCH_ENABLED: ${{ vars.LAUNCH_ENABLED }}
           LAUNCH_MAX_PER_DAY: ${{ vars.LAUNCH_MAX_PER_DAY }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
+          LAUNCH_OPEN: ${{ vars.LAUNCH_OPEN }}
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
         run: node scripts/launch.mjs prepare
       - name: Commit the prepared cat
