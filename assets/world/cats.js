@@ -167,7 +167,7 @@ const STALL_SPEED = 0.15, STALL_WAIT = 0.45, WAIT_FOR = 1.4;
 const HELD_WAIT = 0.1;
 /** How long (s) a standing cat whose way is still blocked by another cat's body waits on each time. */
 const WAIT_ON = 0.5;
-/** Waits (0.8 s each) before a cat that can't get up clear of another gives up what it meant to do (it rests on). */
+/** Waits (0.8 s each) before a cat that can't get up clear of another gives up what it meant to do. */
 const RISE_WAITS = 8;
 /** How far (units) a visitor comes into its friend's body to rub cheeks: touching. */
 const NUZZLE = 0.08;
@@ -824,7 +824,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         if (!fs.length) return null;
         const f = nearest(cat, fs);
         if (dist(f, cat) > 9) return null;
-        // (up to cheek to cheek: its body just touching the friend's, facing it)
+        // (cheek to cheek: its body just touching the friend's)
         const a = Math.atan2(cat.z - f.z, cat.x - f.x) + rnd.range(-0.5, 0.5);
         let s = null;
         for (let d = 0.5; d <= 2.2; d += 0.05) {
@@ -836,8 +836,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         act.reason = `Saying hello to ${f.name}`;
         cat.dest = s;
         const head = () => ({ x: f.x, y: 0.35, z: f.z });
-        // (then it settles down beside the friend, clear of its body (each keeps out of the other's from then on);
-        // with no room there, it steps off instead)
+        // (then it settles beside the friend, clear of its body; with no room there, it steps off)
         const settle = rnd.chance(cat.p.loaf) ? "loaf" : "sit", keep = `Keeping ${f.name} company`;
         const fLen = () => ((HALF_LEN[f.pose] || 0.3) > HALF_LEN.walk ? f.pose : "walk");
         const apart = () => { act.nuzzle = null; act.mate = null; };
@@ -1180,7 +1179,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     cat.wantV = v;
     if (sprint && v > cat.speed) cat.runIntent = true;
     advance(cat, dt);
-    // (a turn sharp enough to see is stepped, never made standing or at the end of getting up)
+    // (a turn sharp enough to see is stepped, not made standing or getting up)
     if (cat.speed < 0.25 && (Math.abs(left) > 0.2 || Math.abs(wrapAngle(cat.yaw - yaw0)) > 0.45 * dt)) cat.pivoting = true;
     return "moving";
   }
@@ -1236,7 +1235,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     return null;
   }
 
-  /** Whether a cat in the air will land where `cat`, landing at (x, z), would be in its body. */
+  /** Whether a cat in the air lands where `cat`, landing at (x, z), would be in its body. */
   function landsNear(cat, x, z) {
     for (const o of cats) {
       if (o === cat || !airborne(o)) continue;
@@ -1245,7 +1244,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     }
     return false;
   }
-  /** The cat a standing cat would stretch out (to `pose`) further into: null if none. */
+  /** The cat a standing cat would stretch out (to `pose`) further into. */
   function growsInto(cat, pose) {
     for (const o of cats) {
       if (o === cat || o.y > 0.3 || o.perch || Math.abs(o.x - cat.x) > 0.8 * (cat.size + o.size) || Math.abs(o.z - cat.z) > 0.8 * (cat.size + o.size)) continue;
@@ -1326,7 +1325,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     return nav.project(p, ignore) && Math.hypot(p.x - x, p.z - z) > 0.12;
   }
 
-  /** A spot a short step (`far` times further) away from `o` where `cat` can settle in `pose` clear of every cat (null if none). */
+  /** A spot a short step (`far` times) from `o` where `cat` can settle in `pose` clear of every cat, or null. */
   function clearSpot(cat, o, pose, far = 1) {
     const away = Math.atan2(cat.z - o.z, cat.x - o.x), rnd = cat.rnd;
     for (let t = 0; t < 12; t++) {
@@ -1515,7 +1514,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           if (o) {
             const n = (step.roomTries = (step.roomTries || 0) + 1), s = n <= 3 && clearSpot(cat, o, POSTURE_POSE[want], n > 1 ? 2 : 1);
             if (s) { cat.dest = s; act.steps.splice(act.i, 0, go(s, "stroll", 0.1, step.doing || act.reason)); return true; }
-            // (nowhere clear: it stands a moment for the other to move on; still no room, it does something else)
+            // (nowhere clear: it stands a moment; still no room, it does something else)
             if (n <= 6) { act.steps.splice(act.i, 0, hold("stand", 0.6, step.doing || act.reason, { fidget: false })); return true; }
             return abortAct(cat);
           }
@@ -1526,7 +1525,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         for (const name of transitionPath(cat.posture, want)) { const p = POSTURE_POSE[ACTIONS[name].to]; if ((HALF_LEN[p] || 0) > (HALF_LEN[upPose] || 0)) upPose = p; }
         if (!cat.perch && (HALF_LEN[upPose] || 0.3) > (HALF_LEN[cat.pose] || 0.3) + 0.03) {
           const o = risesInto(cat, upPose, want === "stand");
-          // (one standing there is asked to move over; kept waiting, it gives up what it meant to do instead)
+          // (one standing there is asked to move over; kept waiting, it gives up)
           if (o) {
             if ((step.rise = (step.rise || 0) + 1) > RISE_WAITS) return abortAct(cat);
             if (o.posture === "stand" && time - o.motion.since > 0.6) makeRoom(o, cat);
@@ -1540,7 +1539,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           return true;
         }
       }
-      // (Standing, it doesn't stretch out (a stretch, a crouch, a wiggle) into a cat close by: it stands instead.)
+      // (Standing, it doesn't stretch out (a stretch, a crouch, a wiggle) into a cat: it stands instead.)
       if (step.type === "hold" && cat.posture === "stand" && !cat.perch && (HALF_LEN[POSE_OF[step.action]] || 0) > (HALF_LEN[cat.pose] || 0.3) + 0.03 && growsInto(cat, POSE_OF[step.action])) {
         if (ACTIONS[step.action].kind === "once") { step.skip = true; return true; }
         step.action = allowedAction(cat.traits, "stand"); step.fidget = false;
@@ -1985,14 +1984,18 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     for (let i = 0; i < n; i++) {
       const c = cats[i];
       let px = push[i * 2], pz = push[i * 2 + 1];
-      // (one on its feet steps out at once, one resting moves over after a moment; the other one instead, if
-      // that one is hemmed in)
+      // (one on its feet steps out at once, one resting moves over after a moment; if hemmed in, the other)
       if (c.crowdBy) {
         c.crowdT = (c.crowdT || 0) + dt; c.crowdLong = (c.crowdLong || 0) + dt;
         const o = c.crowdBy, st = c.act && c.act.steps[c.act.i];
         if (st && st.escapeFrom) c.crowdT = 0;
         else if (c.posture === "stand" && c.crowdT > 0.1 && shuffleOut(c, o)) c.crowdT = 0;
-        else if (c.crowdT > CROWD_WAIT) { c.crowdT = 0; if (c.crowdLong > 2.5 && (o.posture === "sit" || o.posture === "lie")) makeRoom(o, c); else makeRoom(c, o); }
+        else if (c.crowdT > CROWD_WAIT) {
+          c.crowdT = 0;
+          // (not one that would get up further into it)
+          const rise = o.posture === "sit" || o.posture === "lie" ? bodyGap(o, o.x, o.z, o.yaw, "walk", c) - bodyGap(o, o.x, o.z, o.yaw, o.pose, c) : -1;
+          if (c.crowdLong > 2.5 && rise > -0.06) makeRoom(o, c); else makeRoom(c, o);
+        }
       } else { c.crowdT = 0; c.crowdLong = 0; }
       let hx = hard[i * 2], hz = hard[i * 2 + 1];
       if (px === 0 && pz === 0 && hx === 0 && hz === 0) { c.held = 0; continue; }
@@ -2042,7 +2045,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         const op = bigPose(o), g1 = bodyGap(c, c.x, c.z, c.yaw, c.pose, o, op);
         if (g1 >= -lim) continue;
         const g0 = bodyGap(c, c.px, c.pz, c.pyaw, c.pose, o, op);
-        // (in it a little already, it may wriggle a hair deeper turning to leave, one stepping out a little more)
+        // (in it a little already, it may wriggle a hair deeper turning to leave; stepping out, a little more)
         const leaving = (c.detour && c.detour.escape && c.detour.from === o) || c.act?.steps[c.act.i]?.escapeFrom === o;
         if (g1 >= g0 - 1e-4 || (g0 < -lim && lim === KEEP_OUT && g1 >= g0 - 0.03 && g1 >= -lim - (leaving ? 0.15 : 0.08))) continue;
         if (hop || (c.yaw !== c.pyaw && bodyGap(c, c.x, c.z, c.pyaw, c.pose, o, op) >= Math.min(g0, -lim) - 1e-4)) c.yaw = c.pyaw;
@@ -2059,7 +2062,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     return (HALF_LEN[p1] || 0) > (HALF_LEN[p0] || 0) ? p1 : p0;
   }
 
-  /** A standing cat in another's body steps out of it (stepOut) and carries on from there; false if it can't. */
+  /** A standing cat in another's body steps out (stepOut) and carries on; false if it can't. */
   const TIED = new Set(["eat", "scratch"]);
   function shuffleOut(cat, o) {
     const act = cat.act, st = act && act.steps[act.i];
@@ -2329,7 +2332,7 @@ export function publishMotion(cat, dt, time) {
     const dead = !cat.pivoting && real < 0.03 && (held || !(cat.wantV > 0));
     if (!gait && m.gait && time - cat.gaitSince < MIN_SHOW.move && !(dead && time - m.since >= 0.25)) gait = m.gait;
     if (cat.pivoting) { odo += Math.abs(turned) * PIVOT_ARC; if (m.gait && gait) gait = m.gait; } // turning on the spot in the gait it has
-    // It counts as stopped once still a moment, or at once if nothing asks it on (never frozen mid-stride).
+    // It counts as stopped once still a moment, or at once if nothing asks it on.
     cat.slowFor = gait || cat.lastWa !== "move" ? 0 : cat.slowFor + dt; // (setting off counts as not yet stopped)
     const grace = cat.wantV > 0 || cat.pivoting ? 0.12 : 0.03;
     if (gait) action = gait;
