@@ -416,7 +416,7 @@ test("a candidate's row: its venue (pump.fun in SOL), its coin's metadata in pum
   assert.deepEqual(meta, {
     name: "Sir Gloopington", symbol: "GLOOP", description: `Gloopington stares down the camera from the top of the fridge. Photo: @floppafan on X. ${FAN_TRIBUTE.character}`,
     image: "https://pbs.twimg.com/media/Gx2100000000000000201.jpg", showName: true, createdOn: "https://catcoinsanctuary.com",
-    website: "https://catcoinsanctuary.com/#cat=GLOOP", twitter: "https://x.com/catcosanctuary",
+    website: "https://catcoinsanctuary.com/#cat=GLOOP", twitter: "https://x.com/floppafan/status/2100000000000000201",
   });
   assert.equal(metadataUri(row.postId), "https://catcoinsanctuary.com/coins/2100000000000000201.json");
   assert.ok(Buffer.byteLength(metadataUri(row.postId)) <= 200);
@@ -2124,7 +2124,8 @@ test("shipped: the ledger and every coin's metadata are valid (the ledger and th
     const text = readRoot(`coins/${f}`), m = JSON.parse(text);
     assert.equal(text, metadataText(m), f);
     assert.deepEqual(Object.keys(m), ["name", "symbol", "description", "image", "showName", "createdOn", "website", "twitter"], f);
-    assert.equal(m.createdOn, SITE_ORIGIN); assert.equal(m.twitter, X_ACCOUNT); assert.equal(m.showName, true);
+    assert.equal(m.createdOn, SITE_ORIGIN); assert.equal(m.showName, true);
+    assert.ok(/^https:\/\/x\.com\/[A-Za-z0-9_]{1,15}\/status\/\d{5,25}$/.test(m.twitter) && postIdOf(m.twitter) === f.slice(0, -5), `${f}: its X link is the cat's own post`);
     assert.equal(m.website, `${SITE_ORIGIN}/#cat=${m.symbol}`);
     assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE, `${f}: the post's photo, or the site's own for a hidden one`);
     assert.ok(Buffer.byteLength(metadataUri(f.slice(0, -5))) <= 200);

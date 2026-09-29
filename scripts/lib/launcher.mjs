@@ -289,7 +289,7 @@ const creditOf = (row) => (row.photoCredit === true && coinImageOf(row) === row.
 export function coinMetadata(row) {
   const venue = venueById(row.venue);
   if (!venue) throw new LaunchError(`unknown venue ${row.venue}`);
-  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row) }), image: coinImageOf(row), website: cardUrl(row.ticker), twitter: X_ACCOUNT, createdOn: SITE_ORIGIN });
+  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row) }), image: coinImageOf(row), website: cardUrl(row.ticker), twitter: row.url, createdOn: SITE_ORIGIN });
 }
 /** The metadata file's exact text. */
 export const metadataText = (meta) => `${JSON.stringify(meta, null, 2)}\n`;

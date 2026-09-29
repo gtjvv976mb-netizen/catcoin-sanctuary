@@ -21,6 +21,8 @@ export const silhouettePath = (key) => `assets/teaser/${teaserId(key)}.png`;
 /** Every upcoming cat in posting order: this roster's picks (fresh, retries, backlog), then the approved release queue. */
 export function upcoming(cats, state, queue, config = DEFAULT_CONFIG) {
   queue = { cats: [], ...queue };
+  // A cat the sanctuary launched itself, with no record yet, is held by rule (as the announcer reads it), never next.
+  state = holdSanctuaryCats(cats, structuredClone(state ?? { cats: {} }));
   const queued = new Set(queue.cats.filter((q) => q.status !== "released").map((q) => q.key));
   const roster = pick(cats, state, { ...config, perRun: Infinity, backlogPerRun: 2, announceBacklog: config.announceBacklog }, queued);
   // pick() takes at most 2 from the backlog a run; the order past them is the same list's order.
