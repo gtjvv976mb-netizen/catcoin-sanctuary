@@ -73,7 +73,7 @@ function rigged(key) {
     }
     return worst;
   };
-  return { rig, sk, clips, at, bone, tear, pos };
+  return { rig, sk, clips, at, bone, tear, pos, w };
 }
 
 const SAMPLE = ["JOCKCAT", "WINDSOCK", "RUBYCAT", "MISTO", "GENKITTY", "CHOCOCACAT", "maneki", "NYANKOSEN", "AMRCAT", "SNOWBELCAT", "NERMALCAT", "SANDSTEP", "SGTTIBBS", "LIDNAP", "MEOWTHR", "GRREAT", "LEOTHELION", "tsuki", "PATCHPAW", "SKEINKIT", "MAYORSTUB", "BLAZECAT", "TAMAEKI"];
@@ -100,6 +100,25 @@ test("sitting, lying and sleeping bring the body down, whatever the model's shap
     if (!round) assert.ok(loaf < 0.78, `${key}: lying, the chest comes down (${loaf.toFixed(2)} of standing)`);
     // (an upright, deep torso (MEOWTHR) lies on its side as high as it is wide: 0.71)
     if (!round) assert.ok(sleep < (deep ? 0.75 : 0.6), `${key}: asleep, the chest is down (${sleep.toFixed(2)} of standing)`);
+  }
+});
+
+test("a head turns as a head: its joint at the back of the skull, and the skin of the head's round goes with it", () => {
+  // (the head joint used to be set at a share of the way from the front of the body to the head: for a head
+  // carried over the chest it fell under the chin or the nose, and the skull behind it went with the neck, so
+  // on three models in four a head bowed to a paw, tucked or turned by a glance hardly moved)
+  for (const [key, c] of CATS) {
+    const r = c.rig, hj = r.headJoint, u = { x: r.headC.x - r.neck.x, y: r.headC.y - r.neck.y }, l = Math.hypot(u.x, u.y) || 1;
+    const ahead = ((hj.x - r.headC.x) * u.x + (hj.y - r.headC.y) * u.y) / l;
+    assert.ok(ahead < 0, `${key}: the head joint is ${(ahead / r.headR).toFixed(2)} head radii ahead of the head's centre`);
+    const names = c.sk.skeleton.bones.map((b) => b.name), hb = names.indexOf("head"), I = c.w.index.array, W = c.w.weight.array, P = c.pos;
+    let sum = 0, n = 0;
+    for (let i = 0; i < P.length / 3; i++) {
+      if (Math.hypot(P[i * 3] - r.headC.x, P[i * 3 + 1] - r.headC.y, P[i * 3 + 2] - r.headC.z) > 0.9 * r.headR) continue;
+      for (let k = 0; k < 4; k++) if (I[i * 4 + k] === hb) sum += W[i * 4 + k];
+      n++;
+    }
+    assert.ok(n > 0 && sum / n >= 0.75, `${key}: only ${(sum / Math.max(1, n)).toFixed(2)} of the head's skin goes with the head`);
   }
 });
 
