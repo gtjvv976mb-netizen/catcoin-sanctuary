@@ -3,7 +3,8 @@
    cartoon heads, a round body with no neck, forelegs modelled as one piece, a long body on short
    legs, curled and plume tails, lions' tufts, a model posed crouching mid-stride. On every one:
    sitting and lying bring the body down (the belly line is found on the mesh, not on legs that
-   happen to be in the middle), a sleeping cat curls round, a curled tail keeps its joints inside it,
+   happen to be in the middle), a sleeping cat curls round with its head up on top of the curl (and
+   keeps it up curling up and waking), a curled tail keeps its joints inside it,
    and no pose, washing and scratching included, stretches the skin into a sheet. */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -58,13 +59,18 @@ function rigged(key) {
   const S = new Float32Array(pos.length), I = w.index.array, Wt = w.weight.array;
   /** The worst stretch of the skin in the current pose: how much longer (model units) than at rest the
       longest-stretched edge is, among edges stretched to over 2.5 times their rest length. */
-  const tear = () => {
+  /** The skin's points as posed now (world positions, 3 a point). */
+  const skinned = () => {
     for (let j = 0; j < bones.length; j++) M[j].multiplyMatrices(bones[j].matrixWorld, inv[j]);
     for (let i = 0; i < pos.length / 3; i++) {
       const x = pos[i * 3], y = pos[i * 3 + 1], z = pos[i * 3 + 2]; let ox = 0, oy = 0, oz = 0;
       for (let k = 0; k < 4; k++) { const wt = Wt[i * 4 + k]; if (!wt) continue; const e = M[I[i * 4 + k]].elements; ox += wt * (e[0] * x + e[4] * y + e[8] * z + e[12]); oy += wt * (e[1] * x + e[5] * y + e[9] * z + e[13]); oz += wt * (e[2] * x + e[6] * y + e[10] * z + e[14]); }
       S[i * 3] = ox; S[i * 3 + 1] = oy; S[i * 3 + 2] = oz;
     }
+    return S;
+  };
+  const tear = () => {
+    skinned();
     let worst = 0;
     for (let e = 0; e < edges.length; e += 2) {
       const a = edges[e] * 3, b = edges[e + 1] * 3;
@@ -73,7 +79,7 @@ function rigged(key) {
     }
     return worst;
   };
-  return { rig, sk, clips, at, bone, tear, pos, w };
+  return { rig, sk, clips, at, bone, tear, skinned, pos, w };
 }
 
 const SAMPLE = ["JOCKCAT", "WINDSOCK", "RUBYCAT", "MISTO", "GENKITTY", "CHOCOCACAT", "maneki", "NYANKOSEN", "AMRCAT", "SNOWBELCAT", "NERMALCAT", "SANDSTEP", "SGTTIBBS", "LIDNAP", "MEOWTHR", "GRREAT", "LEOTHELION", "tsuki", "PATCHPAW", "SKEINKIT", "MAYORSTUB", "BLAZECAT", "TAMAEKI"];
@@ -128,6 +134,31 @@ test("a sleeping cat is curled round: seen from above, its head is by its hind e
     const h = c.bone("head"), t = c.bone("tail1"), d = Math.hypot(h.x - t.x, h.z - t.z) / c.rig.L;
     assert.ok(d < 0.86, `${key}: head ${d.toFixed(2)} of its length from the root of its tail`);
   }
+});
+
+test("a sleeping cat reads as a cat from every side: its head upright, its ears up, and on top of the curl, however it lies; curling up and waking, too", () => {
+  // (the verifier's 'logs': with the head laid on its side on the ground inside the curl, seen from the
+  // cat's back or the garden's low three-quarter view a sleeper was a long smooth bolster with at most an ear
+  // tip, and half way through curling up or waking a headless, legless one)
+  const up = new THREE.Vector3(), q = new THREE.Quaternion(), bad = [];
+  for (const [key, c] of CATS) {
+    const names = c.sk.skeleton.bones.map((b) => b.name), hb = names.indexOf("head"), torso = ["pelvis", "spine", "chest"].map((n) => names.indexOf(n));
+    const I = c.w.index.array, Wt = c.w.weight.array, n = c.pos.length / 3, dom = new Int16Array(n);
+    for (let i = 0; i < n; i++) { let bw = -1; for (let k = 0; k < 4; k++) if (Wt[i * 4 + k] > bw) { bw = Wt[i * 4 + k]; dom[i] = I[i * 4 + k]; } }
+    for (const [name, us] of [["sleep", [0, 0.5]], ["curlUp", [0.25, 0.5, 0.75, 1]], ["wake", [0, 0.25, 0.5, 0.75]]]) for (const u of us) {
+      c.at(name, u);
+      // (upright: the head's own up within 60 degrees of the sky's)
+      c.sk.bones.head.getWorldQuaternion(q); up.set(0, 1, 0).applyQuaternion(q);
+      if (up.y < 0.5) bad.push(`${key} ${name} ${u}: the head lies over, its up ${up.y.toFixed(2)}`);
+      // (on top: its highest point above the torso's, so from behind its ears show over the back)
+      if (name === "sleep") {
+        const S = c.skinned(); let hTop = -Infinity, tTop = -Infinity;
+        for (let i = 0; i < n; i++) { const y = S[i * 3 + 1]; if (dom[i] === hb) hTop = Math.max(hTop, y); else if (torso.includes(dom[i])) tTop = Math.max(tTop, y); }
+        if (!(hTop > tTop + 0.15 * c.rig.headR)) bad.push(`${key} sleep ${u}: the head's top ${hTop.toFixed(3)} is not over the back's ${tTop.toFixed(3)}`);
+      }
+    }
+  }
+  assert.deepEqual(bad, []);
 });
 
 test("a tail is followed along its curls: its joints are inside it, in order from the rump", () => {

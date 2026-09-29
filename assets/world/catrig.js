@@ -2249,7 +2249,14 @@ export function makeClips(rig, style = {}, fit = null) {
     const s = curledBody(c, u);
     s.tail = lerpN(LOAF.tail, SLEEP_TAIL, tl);
     const B = bodyOf(s);
-    for (const k of KEYS) s.legs[k] = fromRel(B, k, lerpN(REL0[k], REL1[k], c));
+    for (const k of KEYS) {
+      const r = lerpN(REL0[k], REL1[k], c), L = K.legs[k];
+      // (the forepaws a little over to the side it lies on as they fold in, and while it sleeps: drawn in
+      // along the shoulders' own line, a paw passes the shoulder's height right on the leg's line, where the
+      // leg can't tell which way its elbow goes, and its forearm flicks over in a frame)
+      if (!L.hind) r[4] += 0.2 * L.reach * smooth(c / 0.3);
+      s.legs[k] = fromRel(B, k, r);
+    }
     if (look <= 0 && down <= 0) return s;
     // (the chest's heading and tilt in the world; the head's heading goes round with it)
     const qc = chestW(s, new THREE.Quaternion()), yc = headingOf(qc), tc = yzx(qc)[2];
