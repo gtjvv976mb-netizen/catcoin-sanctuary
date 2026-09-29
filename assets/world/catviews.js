@@ -733,7 +733,7 @@ const clamp01v = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
     legs) and short neck (0..1: a neck shorter than the head is round), as catrig.js reckons them. */
 const ruffOf = (rig) => clamp01v((rig.bodyR / Math.max(0.05, rig.headR) - 1.6) / 1.4);
 const bigHeadOf = (rig) => clamp01v((rig.headR / Math.max(0.1, rig.legTop) - 0.42) / 0.4);
-const shortNeckOf = (rig) => (rig.headJoint && rig.neck ? clamp01v((1 - Math.hypot(rig.headJoint.x - rig.neck.x, rig.headJoint.y - rig.neck.y) / Math.max(0.05, rig.headR)) / 0.25) : 0);
+const shortNeckOf = (rig) => { const j = rig.headJoint0 || rig.headJoint; return j && rig.neck ? clamp01v((1 - Math.hypot(j.x - rig.neck.x, j.y - rig.neck.y) / Math.max(0.05, rig.headR)) / 0.25) : 0; };
 export function animState(o, cat) {
   const t = { ...NEUTRAL_TRAITS, ...(cat.traits || {}) }, rig = o.rig, bones = o.sk.bones;
   const kit = t.age === "kitten", old = t.age === "senior", flags = Array.isArray(t.flags) ? t.flags : [];

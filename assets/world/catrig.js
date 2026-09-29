@@ -412,7 +412,11 @@ export function findRig(pos, index = null) {
     legR,
     under: [V(hindX - 0.3 * d, yb + 0.35 * (yt - yb), zc), V(hindX - 0.18 * d, yb + 0.08 * (yt - yb), zc), V(hindX, yb, zc), V((frontX + hindX) / 2, yb, zc), V(frontX, yb, zc)],
     pelvis: V(hindX + 0.05 * d, yMid, zc), chest: V(frontX - 0.05 * d, yMid, zc), spine: V((frontX + hindX) / 2, yMid, zc),
-    neck: V(frontX + 0.04 * d, yMid + 0.25 * (yt - yb), zc), headJoint: V(frontX + 0.14 * d + (headC.x - frontX) * 0.35, (yt + headC.y) / 2, zc),
+    neck: V(frontX + 0.04 * d, yMid + 0.25 * (yt - yb), zc), headJoint: skullBase(V(frontX + 0.04 * d, yMid + 0.25 * (yt - yb), zc), headC, headR, zc),
+    // (where the neck's line was taken to end before the head joint was set at the back of the skull: the
+    // neck plane the skin's head side begins at, and how short a neck is for its head, are still reckoned
+    // from it, as every clip and fit was measured against them)
+    headJoint0: V(frontX + 0.14 * d + (headC.x - frontX) * 0.35, (yt + headC.y) / 2, zc),
     legTop, legLen: legTop, legJoin, skin,
     // Whether the head sits right over the body (the back was found at the neck's narrowing): then
     // the head's round reaches back over the body; otherwise skin behind the neck is back, not head.
@@ -421,6 +425,18 @@ export function findRig(pos, index = null) {
 }
 
 const LEGS = [["thigh", "shin", "foot", "h"], ["arm", "forearm", "paw", "f"]];
+
+/** The head joint: at the back of the skull, where the neck goes into it (on the line from the neck
+    joint to the head's centre, half the head's radius short of the centre; never less than two fifths
+    of the way along a neck that short). The head turns about it, as a cat's does, and every point of
+    the head ahead of it is the head's skin. (It used to be set at a share of the way from the front of
+    the body to the head, which for a head carried over the chest put it under the chin or the nose: the
+    head then turned about its own nose, and the skull behind that point, most of the head, went with
+    the neck, so a head bowed, turned or tucked by the clips hardly moved on three models in four.) */
+function skullBase(neck, headC, headR, zc) {
+  const dx = headC.x - neck.x, dy = headC.y - neck.y, D = Math.max(1e-6, Math.hypot(dx, dy)), t = Math.max(0.4 * D, D - 0.5 * headR);
+  return V(neck.x + (dx / D) * t, neck.y + (dy / D) * t, zc);
+}
 
 /** How far round the head (in head radii from its centre) skin on the head's side of the neck plane
     still counts as head: hair or a crest swept back off the head. */
@@ -539,9 +555,16 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
   const midX = (rig.pelvis.x + rig.chest.x) / 2, p = V();
   // The head's side of a plane across the neck (a third of the way to the head joint): points
   // there go to the neck and head only, however far back a big cartoon head reaches.
-  const hd = V().subVectors(rig.headJoint, rig.neck), hp = rig.neck.clone().addScaledVector(hd, 0.3);
+  const hj0 = rig.headJoint0 || rig.headJoint, hd = V().subVectors(hj0, rig.neck), hp = rig.neck.clone().addScaledVector(hd, 0.3);
   const nl = Math.max(1e-6, Math.hypot(hd.x, hd.y)); headPlane(hd);
-  const neckI = names.indexOf("neck");
+  const neckI = names.indexOf("neck"), headI = names.indexOf("head");
+  // (On the head's side, the head is everything ahead of the back of the skull; the rest is the neck's,
+  // with a ruff beside it. The line between them runs through the head joint from behind the skull
+  // down and forward under the jaw, as a cat's does (across the way from the neck joint to the head's
+  // centre, leaned forward): a muzzle hanging lower than the joint is head, the throat under it neck; and
+  // the heart of the head's round is head whatever the line.)
+  const hu = headPlane(V().subVectors(rig.headC, rig.neck).add(V(1.2 * Math.hypot(rig.headC.x - rig.neck.x, rig.headC.y - rig.neck.y), 0, 0))), hjB = rig.headJoint;
+  const aheadOfSkull = (q) => (q.x - hjB.x) * hu.x + (q.y - hjB.y) * hu.y > 0 || q.distanceTo(rig.headC) < 0.75 * rig.headR;
   const info = bonesList.map((b, i) => {
     const nm = b.name, lr = nm.match(/\.(L|R)$/);
     return { i, a: seg[nm][0], b: seg[nm][1], r: rad[nm], root: nm === "root", tail: nm.startsWith("tail"), head: nm === "head", headOk: nm === "head" || nm === "neck", side: lr ? lr[1] : null, hind: /^(thigh|shin|foot)/.test(nm) };
@@ -709,7 +732,9 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
     // (and, on the head's side of the plane, a ruff beside the neck: alongside the neck's length yet
     // outside the head's round, whatever its thickness, it is neck, not head: a head bowed to a paw would
     // otherwise carry the ruff's skin away from the shoulders')
-    if (!inLeg && neckI > 0 && !info[best].tail && (onNeck(p, rig, hd, nl) || (headSide && onNeckWide(p, rig, hd, nl))) && (headSide || ((p.x - rig.neck.x) * hd.x + (p.y - rig.neck.y) * hd.y > 0 && p.y > rig.neck.y - 0.3 * rig.bodyR))) best = neckI;
+    const inHead = headSide && !inLeg && !info[best].tail && headI > 0 && aheadOfSkull(p);
+    if (!inHead && !inLeg && neckI > 0 && !info[best].tail && (onNeck(p, rig, hd, nl) || (headSide && onNeckWide(p, rig, hd, nl))) && (headSide || ((p.x - rig.neck.x) * hd.x + (p.y - rig.neck.y) * hd.y > 0 && p.y > rig.neck.y - 0.3 * rig.bodyR))) best = neckI;
+    if (inHead) best = headI;
     // (Well out along the tail, it is tail whatever lies nearer.)
     // (A piece of the tail the model left unjoined, a tuft or a tip, goes to the bone it is nearest.)
     if (tg && !inLeg && tg[u] < tRoot * 0.8) best = tailBand(u);
@@ -1521,10 +1546,15 @@ export function makeClips(rig, style = {}, fit = null) {
   // (As ground, for a spec whose body is also yawed or rolled: the lift that rests its torso's skin at
   // `clear`; a rump rolled onto one haunch would otherwise dip its side into the lawn.)
   const groundAt = (s, clear = 0.012) => (hasSkin ? clear - 0.008 - lowTorso(body(K, { lift: 0, shift: s.root[1], side: s.root[2], pelvis: s.pelvis, spine: s.spine, chest: s.chest })) : ground(s.pelvis[0], clear, s.spine[0], s.chest[0]));
-  // The neck pitch (in the world) that puts the head joint at height y.
-  const Ln = Math.hypot(K.H0.x - K.N0.x, K.H0.y - K.N0.y), phi0 = Math.atan2(K.H0.y - K.N0.y, K.H0.x - K.N0.x);
+  // The neck pitch (in the world) that puts the head at height y: reckoned along the neck's line to where
+  // it was taken to end before the head joint went to the back of the skull (headJoint0), so a head is
+  // carried as high, and the neck bowed as far, as every clip was made for; the head then turns about the
+  // back of its skull. (Reckoned to the skull, a neck that short (the skull right over the chest) would
+  // have to swing through half a turn to lower the head as far, and fold the throat.)
+  const HJ0 = rig.headJoint0 || K.H0;
+  const Ln = Math.hypot(HJ0.x - K.N0.x, HJ0.y - K.N0.y), phi0 = Math.atan2(HJ0.y - K.N0.y, HJ0.x - K.N0.x);
   const neckFor = (B, y) => Math.asin(Math.max(-1, Math.min(1, (y - B.nec.y) / Ln))) - phi0;
-  const restHed = K.H0.y;
+  const restHed = HJ0.y;
 
   /** The tail's carriage: -0.4 tucked low, 0 a relaxed low curve (the tip turning up), 1 straight up
       with the tip hooked over (a friendly greeting). Four segment directions. */
@@ -1744,7 +1774,8 @@ export function makeClips(rig, style = {}, fit = null) {
   // chest (rad).
   // (A head as big as its neck is long, on a ruff: bowed as far as an ordinary cat's, its nape's skin
   // parts from the shoulders' into a hood. Such a head bows less; the paw meets it higher.)
-  const shortNeck = clamp01((1 - Math.hypot(K.H0.x - K.N0.x, K.H0.y - K.N0.y) / Math.max(0.05, rig.headR)) / 0.25);
+  // (reckoned to where the neck's line was taken to end before the head joint went to the back of the skull: headJoint0)
+  const shortNeck = clamp01((1 - Math.hypot(HJ0.x - K.N0.x, HJ0.y - K.N0.y) / Math.max(0.05, rig.headR)) / 0.25);
   // (and a mane or a ruff, a body thick about the shoulders for its head: bowed deep, the head drags
   // the mane's fur after it)
   const ruff = clamp01((rig.bodyR / Math.max(0.05, rig.headR) - 1.6) / 1.4);
