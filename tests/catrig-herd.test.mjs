@@ -21,7 +21,10 @@
      between the two clips' own poses would put it: the paw flung out sideways as a cat starts or stops
      washing;
    - pop: in a blend, any leg bone turning faster than TH.pop rad/s against its girdle (a limb flipping
-     over in a frame).
+     over in a frame);
+   - a half gesture: a wash whose forepaw stops short of the mouth (and whose head doesn't bow to the
+     chest instead), a leg lick whose head doesn't bow down to the raised leg (the leg held up while the
+     head stares out over it), an ear scratch whose hind paw stays down by the shoulder (REACH, TH).
    A failure names the cat, the clip or blend, the measure and where it was worst, so a fix can be
    checked one cat at a time: CATRIG_HERD=KEY1,KEY2 node --test tests/catrig-herd.test.mjs
    (CATRIG_HERD_MS=1 prints each cat's time spent rigging, posing clips and running blends).
@@ -40,7 +43,13 @@ import { pathToFileURL, fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 /** Thresholds (see the header; set in the survey against rendered frames). */
-export const TH = { sheet: 700, spike: 0.2, crush: 0.3, under: 0.05, swing: 0.3, pop: 40 };
+export const TH = { sheet: 700, spike: 0.2, crush: 0.3, under: 0.05, swing: 0.3, pop: 40, bow: -25, wash: 0, ear: 0.72 };
+/** What a wash must reach: the paw within washGap leg heights of the mouth, or (a cat that licks its
+    chest: forelegs modelled as one, or too short to reach) the head bowed chestBow degrees. The leg lick
+    must bow the head 25 degrees (TH.bow, negated), the ear scratch bring the hind paw within TH.ear leg
+    heights of the ear (renders of the whole herd: below these, a gesture reads; a cat whose shape can't
+    do it has the action in traits.js MODEL_LIMITS and doesn't do it). */
+export const REACH = { washGap: 0.4, chestBow: 15 };
 /** Clips posed on their own (u at four points): the everyday ones (sit, groom, loaf, curlUp, sleep) and
     those the survey found broken on at least a tenth of the herd's far copies. */
 export const CLIPS = ["sit", "groom", "loaf", "curlUp", "sleep", "wake", "legLick", "earScratch", "roll", "hindStand", "stalk", "pounce", "sitToLie", "lieToSit",
@@ -91,6 +100,7 @@ if (isMainThread) {
   test("no pose crushes the head", report("crushed heads", (f) => f.metric === "crush"));
   test("no pose sinks the body into the ground", report("poses under the ground", (f) => f.metric === "under"));
   test("no blend flings a paw out or flips a limb over", report("flung or popped limbs", (f) => f.metric === "swing" || f.metric === "pop"));
+  test("no wash, leg lick or ear scratch is a half gesture: what is meant to meet does", report("half gestures", (f) => f.metric === "bow" || f.metric === "wash" || f.metric === "ear"));
 } else {
   const THREE_URL = pathToFileURL(path.join(ROOT, "assets/vendor/three/three.module.min.js")).href, ADDONS = pathToFileURL(path.join(ROOT, "assets/vendor/three/addons/")).href;
   register("data:text/javascript," + encodeURIComponent(`export async function resolve(s, c, next) {
@@ -234,6 +244,35 @@ if (isMainThread) {
         for (const k of ["sheet", "spike", "crush", "under"]) note(name, k, g[k], `u ${u}`);
       }
     }
+    // Washing, licking a leg, scratching an ear: what is meant to meet does (no half gesture: a paw
+    // waving short of the face, a leg held up while the head stares out over it, a hind paw at the
+    // shoulder). Over the loop (after its way in): the head's bow against the plain sit (deg), the
+    // mouth's nearest to the washed forepaw or the licked hind leg, the ear's to the scratching foot
+    // (/ the rig's leg height).
+    const head = sk.bones.head, wp = (b) => new THREE.Vector3().setFromMatrixPosition(b.matrixWorld);
+    const MOUTH = new THREE.Vector3(rig.noseX - 0.25 * rig.headR, rig.headC.y - 0.35 * rig.headR, rig.zc).sub(head.userData.at);
+    const EAR = new THREE.Vector3(rig.headC.x - 0.3 * rig.headR, rig.headC.y + 0.45 * rig.headR, rig.zc + 0.55 * rig.headR).sub(head.userData.at);
+    const segD = (p, a, b) => { const ab = b.clone().sub(a), t = Math.max(0, Math.min(1, p.clone().sub(a).dot(ab) / Math.max(1e-9, ab.lengthSq()))); return a.clone().addScaledVector(ab, t).distanceTo(p); };
+    const chain = (k, [n1, n2, n3]) => [wp(sk.bones[n1]), wp(sk.bones[n2]), wp(sk.bones[n3]), rig.legs[k].toe.clone().sub(sk.bones[n3].userData.at).applyMatrix4(sk.bones[n3].matrixWorld)];
+    const posed = (name, u) => {
+      mixer.stopAllAction(); reset();
+      const a = mixer.clipAction(clips[name]); a.play(); a.time = Math.min(u, 0.9999) * clips[name].duration; mixer.update(0); sk.root.updateMatrixWorld(true);
+      const q = new THREE.Quaternion(); head.getWorldQuaternion(q); const fwd = new THREE.Vector3(1, 0, 0).applyQuaternion(q);
+      return { pitch: Math.asin(Math.max(-1, Math.min(1, fwd.y))) * 180 / Math.PI, mouth: MOUTH.clone().applyMatrix4(head.matrixWorld), ear: EAR.clone().applyMatrix4(head.matrixWorld) };
+    };
+    const meets = (name, fn) => {
+      if (!clips[name] || avoid.has(name)) return;
+      const c = clips[name], e = (c.userData?.enter || 0) / c.duration, sit0 = posed("sit", 0.5).pitch;
+      let bow = -90, d = Infinity;
+      for (let i = 0; i < 8; i++) { const P = posed(name, e + (1 - e) * (i + 0.5) / 8); bow = Math.max(bow, sit0 - P.pitch); d = Math.min(d, fn(P) / rig.legTop); }
+      return { bow, d };
+    };
+    const lick = meets("legLick", (P) => { const L = chain("hL", ["thigh.L", "shin.L", "foot.L"]); return Math.min(segD(P.mouth, L[1], L[2]), segD(P.mouth, L[2], L[3])); });
+    if (lick) note("legLick", "bow", -lick.bow, "the deepest bow of the loop (deg, negated)");
+    const wash = meets("groom", (P) => { const L = chain("fR", ["arm.R", "forearm.R", "paw.R"]); return Math.min(segD(P.mouth, L[1], L[2]), segD(P.mouth, L[2], L[3])); });
+    if (wash) note("groom", "wash", wash.d <= REACH.washGap ? 0 : REACH.chestBow - wash.bow, `paw ${wash.d.toFixed(2)} from the mouth, bow ${wash.bow.toFixed(0)} deg`);
+    const scr = meets("earScratch", (P) => { const L = chain("hL", ["thigh.L", "shin.L", "foot.L"]); return segD(P.ear, L[2], L[3]); });
+    if (scr) note("earScratch", "ear", scr.d, "the hind paw's nearest to the ear (/ leg height)");
     mixer.stopAllAction(); mixer.uncacheRoot(sk.root);
     ms.clips = performance.now() - t0 - ms.setup;
     // Blends, through the page's own controller (the loop entered at two phases).

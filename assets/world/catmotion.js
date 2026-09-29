@@ -108,7 +108,8 @@ export const GAIT_DWELL = 0.5;
 /** The gait for a speed, given the current one (null when not moving) and how long it has lasted. */
 export function gaitFor(prev, speed, since = Infinity, { stalk = false } = {}) {
   if (speed < 0.03) return null;
-  if (stalk) return "stalk";
+  // (into a stalk too only once the gait it is in has been seen its dwell: no walk flicked into a stalk)
+  if (stalk) return prev && prev !== "stalk" && since < GAIT_DWELL ? prev : "stalk";
   const B = GAIT_BANDS;
   let want;
   if (prev === "run") want = speed < B.runDown ? (speed < B.trotDown ? "walk" : "trot") : "run";
