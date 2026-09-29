@@ -14,9 +14,9 @@
       "image": "https://pbs.twimg.com/amplify_video_thumb/2104638982260666368/img/a2S9SYP6ON9zxUS5.jpg",
       "coinImage": "https://pbs.twimg.com/amplify_video_thumb/2104638982260666368/img/a2S9SYP6ON9zxUS5.jpg",
       "metadataPath": "coins/2104643043726926283.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-09-29T17:03:48Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "media-day-cat",
         "ticker": "MEDIACAT",
@@ -57,7 +57,14 @@
         "confidence": "medium",
         "lore": null
       },
-      "photoCredit": true
+      "photoCredit": true,
+      "tx": "3yffugUngPkXoyTorbs24MnPZYyi96YPt6dBbRSaNkcLKR1oHNCoQbiXvacMVQVUku85wwTbzN9P8Tywyqa8UFyH",
+      "sentAt": "2026-09-29T17:07:25Z",
+      "lastValidBlockHeight": 429743904,
+      "mintPublic": "24NGWC9iFkLtUrPEN6EAnYLNW3zHqSv9oDuNqcpuNmN9",
+      "spentLamports": 5501160,
+      "settledAt": "2026-09-29T17:07:34Z",
+      "launchedAt": "2026-09-29T17:07:25Z"
     }
   ]
 }
