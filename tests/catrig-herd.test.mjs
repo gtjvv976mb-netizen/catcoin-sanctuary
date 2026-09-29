@@ -276,7 +276,7 @@ if (isMainThread) {
     mixer.stopAllAction(); mixer.uncacheRoot(sk.root);
     ms.clips = performance.now() - t0 - ms.setup;
     // Blends, through the page's own controller (the loop entered at two phases).
-    const s = V.ownScale(INDEX[key]) * Math.min(2, Math.max(0.5, style?.scale || 1)), perUnit = R.cyclesPerUnit(rig, s, style || undefined, FIT[key] || null);
+    const s = V.ownScale(INDEX[key]) * Math.min(T.MAX_SCALE, Math.max(T.MIN_SCALE, style?.scale || 1)), perUnit = R.cyclesPerUnit(rig, s, style || undefined, FIT[key] || null);
     const LEGS = [["thigh.L", "shin.L", "foot.L", "pelvis", "hL"], ["thigh.R", "shin.R", "foot.R", "pelvis", "hR"], ["arm.L", "forearm.L", "paw.L", "chest", "fL"], ["arm.R", "forearm.R", "paw.R", "chest", "fR"]];
     const interp = new Map(), q3 = [new THREE.Quaternion(), new THREE.Quaternion(), new THREE.Quaternion()], tv = new THREE.Vector3(), ideal = new THREE.Vector3();
     const tipOf = (L, qa, qb, qc, outV) => { const [a, b, c] = L.map((nm) => sk.bones[nm]); return outV.copy(rig.legs[L[4]].toe).sub(c.userData.at).applyQuaternion(qc).add(c.position).applyQuaternion(qb).add(b.position).applyQuaternion(qa).add(a.position); };

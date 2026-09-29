@@ -48,6 +48,7 @@
 
 import * as THREE from "three";
 import { ACTIONS, transDur } from "./catmotion.js";
+import { MAX_SCALE, MIN_SCALE } from "./traits.js";
 
 const TAU = Math.PI * 2;
 const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
@@ -943,7 +944,7 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
     lowered while walking), tail (-0.4 tucked .. 0 relaxed .. 1 straight up with a hooked tip), head
     (carried low .. high), sitTall (slumped .. regal sit), loafTuck (sphinx .. paws folded under). */
 export const DEFAULT_STYLE = Object.freeze({ tempo: 1, stride: 1, lift: 1, bob: 1, sway: 0, crouch: 0, tail: 0, head: 0, sitTall: 0.5, loafTuck: 0.3, scale: 1 });
-const STYLE_RANGE = { tempo: [0.6, 1.5], stride: [0.75, 1.25], lift: [0.5, 1.5], bob: [0.3, 2], sway: [0, 1], crouch: [0, 0.4], tail: [-0.5, 1], head: [-0.4, 0.4], sitTall: [0, 1], loafTuck: [0, 1], scale: [0.5, 2] };
+const STYLE_RANGE = { tempo: [0.6, 1.5], stride: [0.75, 1.25], lift: [0.5, 1.5], bob: [0.3, 2], sway: [0, 1], crouch: [0, 0.4], tail: [-0.5, 1], head: [-0.4, 0.4], sitTall: [0, 1], loafTuck: [0, 1], scale: [MIN_SCALE, MAX_SCALE] };
 /** A full style: the defaults, with the given values clamped to what the clips can show. */
 export function clipStyle(style) {
   const s = { ...DEFAULT_STYLE };

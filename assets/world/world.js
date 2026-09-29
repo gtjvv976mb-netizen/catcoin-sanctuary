@@ -30,7 +30,7 @@ import { createSanctuary } from "./cats.js";
 import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
 import { decodeLegs } from "./catrig.js";
-import { traitsOf, styleOf } from "./traits.js";
+import { bigSetScale, traitsOf, styleOf } from "./traits.js";
 import { HOUSE, GARDEN, MEADOW, HALL_OF_FAME, BRIDGES, EASEL, groundHeight } from "./layout.js";
 import { modelIdFor } from "../ui/models.js";
 
@@ -205,8 +205,14 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   // Each cat's character (traits.js: from data/traits.json, else read from its story) and the way
   // it moves because of it (its style: tempo, stride, tail and head carriage, size); the sim and
   // the herd both use them. A cat whose traits can't be read is an ordinary adult.
+  // (DRAFT, ?debug&bigset=A|B|C: the big cats drawn at a candidate size set's scale, traits.js BIG_SETS.)
+  const bigSet = debug && typeof location !== "undefined" ? new URLSearchParams(location.search).get("bigset") : null;
   const character = new Map(residents.map((r) => {
-    try { const traits = traitsOf(r); return [r.id, { traits, style: styleOf(traits) }]; } catch { return [r.id, { traits: null, style: null }]; }
+    try {
+      const traits = traitsOf(r), style = styleOf(traits), k = bigSet && bigSetScale(r.id, bigSet);
+      if (k) style.scale = k;
+      return [r.id, { traits, style }];
+    } catch { return [r.id, { traits: null, style: null }]; }
   }));
   const simOf = (r) => ({ id: r.id, name: r.name, tier: r.tier, model: coats.get(r.id).ginger ? "ginger" : "cat", traits: character.get(r.id).traits, style: character.get(r.id).style });
   const mainResidents = residents.filter((r) => !livesInHall(r)).map(simOf);

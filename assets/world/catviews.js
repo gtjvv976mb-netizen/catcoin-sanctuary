@@ -32,6 +32,7 @@ import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit, GAIT_RAT
 import { ACTIONS, NEUTRAL_TRAITS, allowedAction, transitionPath } from "./catmotion.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { lookOf } from "./looks.js";
+import { MAX_SCALE, MIN_SCALE } from "./traits.js";
 
 /** Pose ids for the shader's procedural animation. */
 const POSE_ID = { walk: 0, sit: 1, loaf: 2, stretch: 3, sleep: 4 };
@@ -1418,7 +1419,7 @@ export class CatHerd {
         this.scene.add(group);
         const mixer = new THREE.AnimationMixer(sk.root);
         // Its character: how it moves (the clips in its style) and how big it is drawn.
-        const style = this.styleOf(cat), k = Math.min(2, Math.max(0.5, style?.scale || 1));
+        const style = this.styleOf(cat), k = Math.min(MAX_SCALE, Math.max(MIN_SCALE, style?.scale || 1));
         o = { cat, group, hi: null, lo: null, dims, legs, fit, s: ownScale(dims) * k, style, rig, sk, mixer, clips: null, anim: null, actions: {}, u: { hl: { value: 0 } }, near: false, drawOwn: false, dc: 0, size: { len: 0, height: 0, width: 0 } };
         o.perUnit = cyclesPerUnit(rig, o.s, style || undefined, fit); // (its fit's shorter stride, if any, as its clips take)
         this.own.set(catId, o);
@@ -1479,7 +1480,7 @@ export class CatHerd {
       (a kitten small, a big cat big), else its look's. */
   scaleOf(cat) {
     const s = this.styleOf(cat)?.scale;
-    return s > 0 ? Math.min(2, Math.max(0.5, s)) : this.coats.get(cat.id)?.scale || 1;
+    return s > 0 ? Math.min(MAX_SCALE, Math.max(MIN_SCALE, s)) : this.coats.get(cat.id)?.scale || 1;
   }
 
   /** The size a cat is drawn at, for its tag and the camera: its own model's when it has one (its

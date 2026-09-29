@@ -12,7 +12,7 @@ import path from "node:path";
 import { ROOT, DATA_NOW } from "./helpers.mjs";
 import { loadResidents } from "../assets/residents.js";
 import { NEUTRAL_TRAITS, SIGNATURES } from "../assets/world/catmotion.js";
-import { parseTraits, traitsOf, deriveTraits, normalizeTraits, styleOf, STYLE_DEFAULTS, TRAIT_OVERRIDES, TRAIT_KEYS } from "../assets/world/traits.js";
+import { parseTraits, traitsOf, deriveTraits, normalizeTraits, styleOf, STYLE_DEFAULTS, TRAIT_OVERRIDES, TRAIT_KEYS, MAX_SCALE } from "../assets/world/traits.js";
 import { buildTraits, formatTraits, table, TABLE_CATS } from "../scripts/build-traits.mjs";
 
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), "utf8");
@@ -167,7 +167,7 @@ test("traitsOf: its table row, else what residents.js attached, else read from i
   const junk = normalizeTraits({ energy: 7, sleepy: -3, playful: "a lot", age: "ancient", build: 3, flags: ["blind", "wings"], signature: "moonwalk", size: "bigcat", scale: 9 });
   assert.equal(junk.energy, 1); assert.equal(junk.sleepy, 0); assert.equal(junk.playful, 0.5);
   assert.equal(junk.age, "adult"); assert.equal(junk.build, "normal"); assert.deepEqual(junk.flags, ["blind"]);
-  assert.equal(junk.signature, null); assert.equal(junk.scale, 1.6);
+  assert.equal(junk.signature, null); assert.equal(junk.scale, MAX_SCALE);
   const plain = traitsOf({ id: "EMPTY" });
   for (const k of TRAIT_KEYS) assert.equal(plain[k], 0.5, `a cat with no words is ordinary: ${k}`);
   assert.deepEqual(deriveTraits({ id: "MARUBOX", ticker: "MARUBOX" }).signature, "boxSit", "overrides apply at run time too");

@@ -74,6 +74,7 @@
 import { makeRandom } from "./rng.js";
 import { NavWorld, yawTo, wrapAngle } from "./nav.js";
 import * as L from "./layout.js";
+import { MAX_SCALE, MIN_SCALE } from "./traits.js";
 import { ACTIONS, FIDGETS, GAIT_BANDS, GAIT_DWELL, MIN_SHOW, NEUTRAL_TRAITS, allowedAction, canDo, gaitFor, pickFidget, transDur, transitionPath } from "./catmotion.js";
 
 export const POSES = ["sit", "walk", "loaf", "stretch", "sleep"];
@@ -194,7 +195,7 @@ export const SHUFFLE = 0.08;
 const COMEDY = new Set(["roll", "flop"]);
 /** How big a cat is drawn (traits.js styleOf scale: a kitten small, a lion big), 1 for an ordinary cat;
     its body, its personal space and the room it leaves others grow with it. */
-export const sizeOf = (cat) => { const s = cat.style && cat.style.scale; return s > 0 ? clamp(s, 0.5, 2) : 1; };
+export const sizeOf = (cat) => { const s = cat.style && cat.style.scale; return s > 0 ? clamp(s, MIN_SCALE, MAX_SCALE) : 1; };
 /* Cats are long, not round: for the "no overlapping" checks each one is a capsule along its heading,
    as long as its (shared) pose, and as big as it is drawn (sizeOf: a lion's is half as big again):
    half its length HALF_LEN[pose] x size, its radius BODY x size. */

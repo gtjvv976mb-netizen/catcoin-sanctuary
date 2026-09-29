@@ -24,6 +24,30 @@ export const TRAIT_KEYS = ["energy", "sleepy", "playful", "bold", "social", "gru
 const ENUMS = { age: ["kitten", "adult", "senior"], build: ["slim", "normal", "chunky"], legs: ["normal", "short"], size: ["small", "medium", "large", "bigcat"] };
 const FLAGS = ["blind", "tailless", "memorial", "gentle"];
 
+/** The most and the least a cat is ever drawn and simulated at, × an ordinary adult's size: the one
+    limit traits, styles, the sims (cats.js sizeOf) and the herd (catviews.js) all share. */
+export const MAX_SCALE = 5, MIN_SCALE = 0.5;
+
+/* DRAFT (?debug&bigset=A|B|C only): big cats drawn to their real size against a house cat. Each
+   species' shoulder height over a house cat's 0.25 m; set A is that ratio, B its 0.75th power, C its
+   0.6th (a softer step). Cartoon and fantasy ones take their species' size. */
+export const BIG_SPECIES = { lion: 4.8, lioness: 4, tiger: 4, liger: 5, cheetah: 3.2, jaguar: 2.8, cougar: 2.8, leopard: 2.6, "eurasian lynx": 2.6, "snow leopard": 2.4, serval: 2.2, "canada lynx": 2.2, "clouded leopard": 2, bobcat: 1.8, caracal: 1.8, ocelot: 1.8, savannah: 1.55 };
+export const BIG_SETS = { A: 1, B: 0.75, C: 0.6 };
+/** Which species each big resident is (the species audit, 2026-09-29): VELVETPAW's black panther is a
+    melanistic leopard, SANDSTEP a mountain lion, STUBTAIL's "Lynx rufus" a bobcat. SUSHITUNA (an F1
+    Savannah, a serval hybrid ~0.35-0.43 m) is the audit's borderline case, included here to preview. */
+export const BIG_CATS = {
+  LEOTHELION: "lion", COWARDLION: "lion", DROWSEPAW: "lion", SORRELPAW: "lioness",
+  SAFFWHISK: "tiger", SUNSTRETCH: "tiger", RIMESTRIPE: "tiger", GRREAT: "tiger",
+  TALLYSPOT: "cheetah", CHEETLE: "cheetah", ROSETTE: "jaguar", SANDSTEP: "cougar",
+  VELVETPAW: "leopard", STUBTAIL: "bobcat", SUSHITUNA: "savannah",
+};
+/** A resident's scale in a big-cat size set ("A" | "B" | "C"), or null when it is not a big cat or no set. */
+export function bigSetScale(id, set) {
+  const sp = BIG_CATS[id], e = BIG_SETS[set];
+  return sp && e ? Math.round(Math.min(MAX_SCALE, BIG_SPECIES[sp] ** e) * 100) / 100 : null;
+}
+
 /** Words that name something else and would read as character: other cats and people, titles,
     merchandise. Taken out of the text before the rules run. */
 const NOISE = /fat cat bat rat|hello kitty|laser cat|(?:minnie|mickey) mouse|(?:ai )?cat chaser(?: cat)?|cat toy|capsule toys|pet mode|roaring kitty|in loving memory|sweet home|stephen king|queen song|first cat to \$1b|as (?:a |an |\d{4} )?(?:shy |little |tiny )*kittens?|timid, fight-shy chaa|alfred[^.]*gentle|the angelic dog hopes for snacks|big cat rescue|smells of milk|milk[- ]c(?:arton|hug)|swift bought back|the independent|\(independent\)|monster hunter|solo leveling hunter|guardian mech|meow(?:, co-founder| \(@weremeow\)| signs off)|plush toys|\(spin\)|zoom court hearing|happy meal|deadpan posts|colonel meow|the guardian(?! cat)/g;
@@ -475,7 +499,7 @@ export function normalizeTraits(x) {
   out.flags = FLAGS.filter((f) => Array.isArray(src.flags) && src.flags.includes(f));
   if (out.flags.includes("memorial") && !out.flags.includes("gentle")) out.flags.push("gentle");
   out.signature = has(SIGNATURES, src.signature) ? src.signature : null;
-  if (out.size === "bigcat") out.scale = Number.isFinite(src.scale) ? clamp(src.scale, 1, 1.6) : 1.45;
+  if (out.size === "bigcat") out.scale = Number.isFinite(src.scale) ? clamp(src.scale, 1, MAX_SCALE) : 1.45;
   // (what its model can't show, catmotion ACTIONS names, kept only when there is any: see MODEL_LIMITS)
   if (Array.isArray(src.avoid) && src.avoid.length) out.avoid = src.avoid.filter((a, i) => typeof a === "string" && has(ACTIONS, a) && src.avoid.indexOf(a) === i);
   return out;
@@ -503,7 +527,7 @@ export const STYLE_DEFAULTS = Object.freeze({ tempo: 1, stride: 1, lift: 1, bob:
     sway 0..1 (hip roll, the chunky waddle), crouch 0..0.35 (body lowered on the move: shy, hunter),
     tail -0.4..1 (carriage: tucked .. relaxed 0 .. straight up), head -0.3..0.3 (carriage),
     sitTall 0..1 (slumped .. regal), loafTuck 0..1 (sphinx forelegs out .. fully tucked),
-    scale 0.7..1.6 (drawn size: kittens ~0.75, big cats as their looks). */
+    scale 0.7..MAX_SCALE (drawn size: kittens ~0.75, big cats as their looks). */
 export function styleOf(traits) {
   const t = normalizeTraits(traits);
   const c = (k) => t[k] - 0.5;
@@ -536,6 +560,6 @@ export function styleOf(traits) {
   return {
     tempo: s(tempo, 0.8, 1.3), stride: s(stride, 0.85, 1.15), lift: s(lift, 0.7, 1.3), bob: s(bob, 0.6, 1.6),
     sway: s(sway, 0, 1), crouch: s(crouch, 0, 0.35), tail: s(tail, -0.4, 1), head: s(head, -0.3, 0.3),
-    sitTall: s(sitTall, 0, 1), loafTuck: s(loafTuck, 0, 1), scale: s(scale, 0.7, 1.6),
+    sitTall: s(sitTall, 0, 1), loafTuck: s(loafTuck, 0, 1), scale: s(scale, 0.7, MAX_SCALE),
   };
 }
