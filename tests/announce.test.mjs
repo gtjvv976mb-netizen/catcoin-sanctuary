@@ -5,7 +5,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { ROOT } from "./helpers.mjs";
-import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft, releasesFile, PAUSED_REASON, addressIn, guardDraft, provedCollection } from "../scripts/announce.mjs";
+import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft, releasesFile, PAUSED_REASON, addressIn, guardDraft, provedCollection, postImages } from "../scripts/announce.mjs";
 import { proveLaunchPump } from "../scripts/lib/chain.mjs";
 import { pumpLaunch } from "./helpers.mjs";
 import { oauthHeader } from "../scripts/lib/x-api.mjs";
@@ -309,6 +309,20 @@ test("adoptable cats: the lore picture object gives the portrait path", () => {
   const [c] = listCats({ stocks: [], cats: [] }, { cats: [] }, { cats: [{ ticker: "LOREOBJ", name: "L", lore: { image: "assets/lore/LOREOBJ.webp", caption: "c" } }] });
   assert.equal(c.portrait, "assets/lore/LOREOBJ.webp");
   assert.deepEqual(readiness(c, { root: ROOT, kits: {} }).includes("portrait"), true);
+});
+
+test("adoptable cats with no lore picture yet: their own portrait is the post image, and they are ready with it", () => {
+  const s = fs.mkdtempSync(path.join(os.tmpdir(), "announce-"));
+  fs.mkdirSync(path.join(s, "assets/portraits"), { recursive: true });
+  fs.writeFileSync(path.join(s, "assets/portraits/NOLORE.jpg"), Buffer.from([0xff, 0xd8, 0xff]));
+  const [c, p] = listCats({ stocks: [], cats: [] }, { cats: [] }, { cats: [
+    { ticker: "NOLORE", name: "N", portrait: "assets/portraits/NOLORE.jpg", lore: null },
+    { ticker: "PENDING", name: "P", portrait: "pending", lore: null }] });
+  assert.equal(c.portrait, "assets/portraits/NOLORE.jpg");
+  assert.equal(p.portrait, "assets/lore/PENDING.webp");
+  assert.equal(readiness(c, { root: s, kits: {} }).includes("portrait"), false);
+  assert.equal(readiness(p, { root: s, kits: {} }).includes("portrait"), true);
+  assert.deepEqual(postImages(c, { image: c.portrait }, s), [path.join(s, "assets/portraits/NOLORE.jpg")]);
 });
 
 test("shipped release queue: approved adoptable cats held as paused, all shown (the site keeps showing them)", () => {
