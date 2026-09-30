@@ -10,10 +10,12 @@ Higgsfield tools and records each finished job in scripts/cat-models.jobs.json:
 
 This script then, for every ticker with a "url" (or only the tickers named on the command line):
 
-  1. downloads the raw GLB (cached in scripts/.cat-models-cache/, which is git-ignored),
+  1. downloads the raw GLB (cached in scripts/.cat-models-cache/, which is git-ignored; a cached
+     <TICKER>.raw.glb whose stamp <TICKER>.raw.job holds the job's model_job is used as it is, which
+     is how scripts/tripo.mjs make hands over the model it downloaded),
   2. normalizes it: y up, facing +X like the shared base models, 1 unit tall, feet on y = 0,
      centred on x/z (a wrapper node carrying the fit; gltfpack bakes it in),
-  3. re-encodes the colour texture to 1024 px JPEG (512 px for the far copy), drops PBR extras,
+  3. re-encodes the colour texture (JPEG, PNG or WebP) to 1024 px JPEG (512 px for the far copy), drops PBR extras,
   4. packs it with gltfpack -kn -km -tr (quantized, no decoder needed), and writes
        assets/models/cats/<TICKER>.glb      the full model (budget 600 KB)
        assets/models/cats/<TICKER>-lo.glb   gltfpack -si 0.25 copy for far away (budget 150 KB)
@@ -98,12 +100,18 @@ def world_points(js, binc):
     return np.concatenate(pts)
 
 
+def tex_source(t):
+    """A texture's image: its own "source", else EXT_texture_webp's (a generator may ship a WebP texture only;
+    Pillow reads it, and retexture writes it back as JPEG)."""
+    return t["source"] if "source" in t else t.get("extensions", {}).get("EXT_texture_webp", {}).get("source")
+
+
 def retexture(js, binc, size, quality=86):
     """Colour textures -> <= size px JPEG; everything but baseColor dropped. Rebuilds the binary chunk."""
     keep = set()
     for m in js.get("materials", []):
         pbr = m.setdefault("pbrMetallicRoughness", {})
-        if "baseColorTexture" in pbr: keep.add(js["textures"][pbr["baseColorTexture"]["index"]]["source"])
+        if "baseColorTexture" in pbr: keep.add(tex_source(js["textures"][pbr["baseColorTexture"]["index"]]))
         pbr.pop("metallicRoughnessTexture", None)
         for k in ("normalTexture", "occlusionTexture", "emissiveTexture"): m.pop(k, None)
         pbr["metallicFactor"], pbr["roughnessFactor"] = 0.0, 0.85
@@ -135,7 +143,7 @@ def retexture(js, binc, size, quality=86):
         if "bufferView" in a: a["bufferView"] = remap[a["bufferView"]]
     textures, tmap = [], {}
     for ti, t in enumerate(js.get("textures", [])):
-        if t.get("source") in imap: tmap[ti] = len(textures); textures.append({k: v for k, v in dict(t, source=imap[t["source"]]).items() if k != "extensions"})
+        if tex_source(t) in imap: tmap[ti] = len(textures); textures.append({k: v for k, v in dict(t, source=imap[tex_source(t)]).items() if k != "extensions"})
     for m in js.get("materials", []):
         bt = m["pbrMetallicRoughness"].get("baseColorTexture")
         if bt: bt["index"] = tmap[bt["index"]]; bt.pop("extensions", None)
@@ -194,6 +202,10 @@ def build(ticker, job, exe, yaw):
         raw = CACHE / f"{ticker}{name}.raw.glb"
         stamp = raw.with_suffix(".job")
         if not raw.exists() or not stamp.exists() or stamp.read_text() != job_id:
+            # Only a web link is downloaded: a job whose model exists only in the cache (scripts/tripo.mjs make records
+            # "tripo:task/<id>" when Tripo gave no link) stops here, before any request.
+            if not str(url).startswith("https://"):
+                sys.exit(f"{ticker}: no cached {raw.name} stamped {job_id!r}, and its link {str(url)[:60]!r} is not one to download")
             req = urllib.request.Request(url, headers={"User-Agent": "cat-sanctuary-models"})
             raw.write_bytes(urllib.request.urlopen(req, timeout=120).read())
             stamp.write_text(job_id)

@@ -3,9 +3,14 @@
 
    The social links come from one file, data/socials.json, which the owner edits by hand. A link
    shows only when its address is a valid https address on a host this page knows (the site
-   itself, X, Telegram, pump.fun, DexScreener); an empty one is simply left out. */
+   itself, X, Telegram, pump.fun, DexScreener); an empty one is simply left out. About shows
+   $CATSANC's ticker and contract from the same file once it has loaded and passes its checks,
+   and under them the "Holder rewards" section (assets/ui/rewards.js), whose files and stylesheet
+   the page fetches when About is first opened. */
 
-const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+import { createRewards } from "./rewards.js";
+
+const el =(tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
 /** The hosts a social link may point to (and their subdomains). */
 export const SOCIAL_HOSTS = ["catcoinsanctuary.com", "x.com", "twitter.com", "t.me", "telegram.me", "pump.fun", "dexscreener.com"];
@@ -105,10 +110,11 @@ export function shell(root, titleText, id) {
  * @param {() => void} [o.onDisclaimers]
  */
 export function createPanels({ about, socials, config = null, onDisclaimers }) {
-  const ticker = config?.ticker || "$CATSANC";
+  let rewards = null, rewardsData = null, aboutStale = false;
 
   /* ── About ── */
-  {
+  function drawAbout(cfg) {
+    const ticker = cfg?.ticker || "$CATSANC";
     const body = shell(about, "About", "about-title");
     const logo = el("img", "panel-logo");
     logo.setAttribute("src", "assets/brand/wordmark-480.webp");
@@ -124,16 +130,23 @@ export function createPanels({ about, socials, config = null, onDisclaimers }) {
     const t = el("p", "panel-ticker");
     t.append(el("span", "panel-ticker-label", "The sanctuary's own coin"), el("span", "panel-ticker-name", ticker));
     body.append(t);
-    if (isMint(config?.contract)) {
+    const contract = isMint(cfg?.contract) ? cfg.contract : null;
+    if (contract) {
       const c = el("p", "panel-contract");
-      c.append(el("span", null, "Contract "), el("code", null, config.contract));
+      c.append(el("span", null, "Contract "), el("code", null, contract));
       body.append(c);
     } else body.append(el("p", "panel-note", `${ticker} has not launched yet. Only an address posted here and on our own socials is ours.`));
+    const section = el("section", "rw");
+    body.append(section);
+    rewards = createRewards(section, { contract });
+    if (rewardsData) rewards.setData(rewardsData);
     const d = el("button", "panel-link", "Read the disclaimers");
     d.type = "button";
     d.addEventListener("click", () => { about.close(); onDisclaimers?.(); });
     body.append(el("p", "panel-small", "Memecoins have no intrinsic value, and nothing here is financial advice."), d);
+    aboutStale = false;
   }
+  drawAbout(config);
 
   /* ── Socials ── */
   function drawSocials(cfg) {
@@ -158,10 +171,16 @@ export function createPanels({ about, socials, config = null, onDisclaimers }) {
   drawSocials(config);
 
   const opener = (dlg) => () => { if (!dlg.open) dlg.showModal(); };
+  let aboutCfg = config;
   return {
-    openAbout: opener(about),
+    openAbout() { if (!about.open) { if (aboutStale) drawAbout(aboutCfg); rewards?.show(); about.showModal(); } },
     openSocials: opener(socials),
-    /** Redraws Socials once data/socials.json has loaded. */
-    setConfig(cfg) { if (checkSocials(cfg).length === 0 || socialLinks(cfg).length) drawSocials(cfg); },
+    /** Redraws Socials once data/socials.json has loaded, and About (the ticker, the contract) when the whole file passes its checks: at once, or when About next opens if it is open now. */
+    setConfig(cfg) {
+      if (checkSocials(cfg).length === 0) { aboutCfg = cfg; if (about.open) aboutStale = true; else drawAbout(cfg); }
+      if (checkSocials(cfg).length === 0 || socialLinks(cfg).length) drawSocials(cfg);
+    },
+    /** The rewards files (assets/ui/rewards.js fetchRewards), once loaded: the Holder rewards section fills in, in place. */
+    setRewards(data) { rewardsData = data; rewards?.setData(data); },
   };
 }

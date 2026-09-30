@@ -23,13 +23,18 @@ const byId = new Map(CATS.map((c) => [teaserId(c.key), c]));
 test("no name leak: the shipped next-cat.json and every silhouette's name say nothing of the cat", () => {
   const next = read("data/next-cat.json");
   assert.deepEqual(Object.keys(next).sort(), ["category", "expectedAt", "hint", "id", "silhouette"]);
-  assert.match(next.id, /^[0-9a-f]{16}$/);
-  const cat = byId.get(next.id);
-  assert.ok(cat, "the id is one of the sanctuary's cats");
-  assert.equal(next.silhouette, silhouettePath(cat.key));
-  assert.ok(CATEGORIES.includes(next.category));
-  const text = JSON.stringify(next).toLowerCase();
-  for (const w of giveaways({ ...cat, owner: OWNER.get(cat.key) })) assert.ok(!new RegExp(`(^|[^a-z0-9])${w}`).test(text), `next-cat.json says "${w}"`);
+  if (next.id === null) {
+    // Nobody waiting (every queued cat released): every field is null and the page hides the tab.
+    assert.deepEqual(Object.values(next), [null, null, null, null, null]);
+  } else {
+    assert.match(next.id, /^[0-9a-f]{16}$/);
+    const cat = byId.get(next.id);
+    assert.ok(cat, "the id is one of the sanctuary's cats");
+    assert.equal(next.silhouette, silhouettePath(cat.key));
+    assert.ok(CATEGORIES.includes(next.category));
+    const text = JSON.stringify(next).toLowerCase();
+    for (const w of giveaways({ ...cat, owner: OWNER.get(cat.key) })) assert.ok(!new RegExp(`(^|[^a-z0-9])${w}`).test(text), `next-cat.json says "${w}"`);
+  }
   for (const f of fs.readdirSync(path.join(ROOT, "assets/teaser"))) {
     assert.match(f, /^[0-9a-f]{16}\.png$/);
     assert.ok(byId.has(f.slice(0, 16)), `${f} is a cat's hash`);

@@ -1,0 +1,9 @@
+{
+  "name": "models-tripo-cli",
+  "private": true,
+  "description": "The Tripo CLI (scripts/tripo.mjs) for the Models workflow's two Tripo jobs, the make and the rig (.github/workflows/models.yml): npm ci --ignore-scripts from package-lock.json, so every package that runs in a step holding TRIPO_API_KEY is the one its hash names.",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "tripo-cli": "0.5.1"
+  }
+}

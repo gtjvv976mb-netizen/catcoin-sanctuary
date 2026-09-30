@@ -1,0 +1,4 @@
+{
+  "note": "Wallets that never earn $CATSANC holder rewards (scripts/lib/rewards.mjs), besides data/wallets.json's and every off-curve owner (pools, bonding curves, lockers, vaults): { address, reason }. Edited by the owner. A wallet added here stops earning at the next sample; what it was already owed is still paid.",
+  "exclude": []
+}
