@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-09-30T15:52:47.980Z",
- "lens": "big",
- "query": "(from:taylorswift13 OR from:justinbieber OR from:rihanna OR from:katyperry OR from:ladygaga OR from:ArianaGrande OR from:selenagomez OR from:MileyCyrus OR from:ddlovato OR from:britneyspears OR from:jtimberlake OR from:Harry_Styles OR from:Drake OR from:NICKIMINAJ OR from:iamcardib OR from:SnoopDogg OR from:BTS_twt OR from:shakira OR from:JLo OR from:KimKardashian OR from:Oprah) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
+ "checkedAt": "2026-09-30T16:33:15.835Z",
+ "lens": "figures",
+ "query": "(\"Oliver and Company\" OR \"Dinah the cat\" OR \"Itchy and Scratchy\" OR \"Mr. Jinks\" OR \"Mr Jinks\" OR \"Big Floppa\" OR \"Floppa\" OR \"Bingus\" OR \"Huh Cat\" OR \"Banana Cat\" OR \"Polite Cat\" OR \"Chipi Chipi Cat\" OR \"Chipi Chipi Chapa Chapa\" OR \"OIIA Cat\" OR \"OIIAI Cat\" OR \"Happy Happy Happy Cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-09-30",
-  "dayUsed": 105,
+  "dayUsed": 117,
   "month": "2026-09",
-  "monthUsed": 483,
+  "monthUsed": 495,
   "monthCap": 10000,
   "dayCap": 333
  },
@@ -419,10 +419,10 @@
   }
  ],
  "state": {
-  "nextLens": 3,
+  "nextLens": 0,
   "bigChunk": 2,
-  "figureChunk": 1,
-  "lastLens": "big",
+  "figureChunk": 0,
+  "lastLens": "figures",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {}
