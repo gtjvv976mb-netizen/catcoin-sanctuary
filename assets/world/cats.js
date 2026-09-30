@@ -88,7 +88,7 @@ import { makeRandom } from "./rng.js";
 import { NavWorld, distToObstacle, yawTo, wrapAngle } from "./nav.js";
 import * as L from "./layout.js";
 import { MAX_SCALE, MIN_SCALE } from "./traits.js";
-import { ACTIONS, FIDGETS, GAIT_BANDS, GAIT_DWELL, MIN_SHOW, NEUTRAL_TRAITS, allowedAction, canDo, gaitFor, gaitScale, LEG_VMAX, legCap, legStep, newLegs, pickFidget, transDur, transitionPath } from "./catmotion.js";
+import { ACTIONS, FIDGETS, GAIT_BANDS, GAIT_DWELL, MIN_SHOW, NEUTRAL_TRAITS, allowedAction, canDo, gaitFor, gaitScale, LEG_VMAX, legCapAhead, legStep, newLegs, pickFidget, transDur, transitionPath } from "./catmotion.js";
 
 export const POSES = ["sit", "walk", "loaf", "stretch", "sleep"];
 
@@ -183,6 +183,8 @@ const HELD_WAIT = 0.1;
 const WAIT_ON = 0.5;
 /** Waits (0.8 s each) before a cat that can't get up clear of another gives up what it meant to do. */
 const RISE_WAITS = 8;
+/** How long (s) a big cat whose way was stuck does only what it does in place (a rest, a wash) before it tries again. */
+const HEMMED = 10;
 /** How far (units) a visitor comes into its friend's body to rub cheeks: touching. */
 const NUZZLE = 0.08;
 /** Near enough (units into the friend) to settle beside it: settling checks the room exactly. */
@@ -491,7 +493,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       // (the speed its step asks for, how much of its step another cat's body or a prop took back and for how long)
       wantV: 0, lastWa: start, held: 0, heldProp: 0, heldT: 0, crowdBy: null, crowdT: 0, ySettle: false, hardSum: 0, squeezeT: 0,
       // (every field a cat ever gets, from the start: the hot loops over all the cats stay fast when every cat has the same shape)
-      heldFree: 0, jamT: 0, crowdLong: 0, growth: null, legs: newLegs(), turnFlip: 0,
+      heldFree: 0, jamT: 0, crowdLong: 0, growth: null, legs: newLegs(), turnFlip: 0, hemmedUntil: 0,
     };
   }
 
@@ -587,7 +589,9 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     if (!big && !cat.gentle && !cat.lazy && time - cat.lastZoom > (cat.kitten ? 60 : 120) && n.sleep < 0.5
       && rnd.chance(0.01 + 0.06 * t.playful * t.energy + (cat.kitten ? 0.06 : 0))) opts.push(["zoomies", 3]);
     opts.sort((a, b) => b[1] - a[1]);
-    for (const [kind] of opts) { const act = build(cat, kind); if (act) return act; }
+    // (A big cat hemmed in, its way stuck, settles where it is a while (a rest, a wash) rather than set off on one errand
+    // after another it can't go on, waiting its turn at each.)
+    for (const [kind] of opts) { if (cat.hemmedUntil > time && kind !== "rest" && kind !== "groom") continue; const act = build(cat, kind); if (act) return act; }
     return build(cat, "rest");
   }
 
@@ -1144,17 +1148,10 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       if (nav.containing(sx, sz).some((id) => !(ignore && ignore.has(id)))) {
         const q = { x: sx, z: sz };
         nav.project(q, ignore, nav.clearR + 0.03);
-        // (A long cat alongside the prop walks on out along its heading, where that clears the berth without its
-        // body going any further in: turned to step straight out, end on to the prop, its hindquarters would be in it.)
-        if (cat.size >= LONG) {
-          const ign = withContaining(ignore, cat), bank = onBank(cat, sx, sz), g0 = Math.max(PROP_BRUSH, propDepth(cat, sx, sz, cat.yaw, cat.pose, ign, bank)) + 1e-3;
-          const fx = Math.cos(cat.yaw), fz = -Math.sin(cat.yaw);
-          for (let d = 0.3 * g; d <= 2.2 * g; d += 0.15 * g) {
-            const x = sx + fx * d, z = sz + fz * d;
-            if (propDepth(cat, x - fx * d * 0.5, z - fz * d * 0.5, cat.yaw, "walk", ign, bank) > g0) break;
-            if (nav.pointFree(x, z, nav.clearR + 0.02, ignore) && propDepth(cat, x, z, cat.yaw, "walk", ign, bank) <= g0) { q.x = x; q.z = z; break; }
-          }
-        }
+        // (A long cat alongside the prop walks out along a heading it can turn to (outAlong): turned to step straight
+        // out, end on to the prop, its hindquarters would be in it.)
+        const A = cat.size >= LONG && outAlong(cat, ignore);
+        if (A) { q.x = A.x; q.z = A.z; }
         if (Math.hypot(q.x - sx, q.z - sz) > 1e-3) { out = q; sx = q.x; sz = q.z; }
       }
       let pts = nav.route(sx, sz, tx, tz, ignore);
@@ -1165,6 +1162,9 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         pts = nav.route(sx, sz, q.x, q.z, ignore);
       }
       if (!pts) return "stuck";
+      // (A long cat that can't turn onto its way's first leg either way round, a prop at its flank: it walks out
+      // first along a heading it can turn to.)
+      if (!out && cat.size >= LONG && pts.length && !turnFree(cat, yawTo(pts[0].x - sx, pts[0].z - sz), ignore)) { const A = outAlong(cat, ignore); if (A) { out = A; pts = nav.route(A.x, A.z, tx, tz, ignore) || pts; } }
       if (out) pts.unshift(out);
       cat.route = { pts, i: 0, out: !!out, goal: { x: tx, z: tz }, check: 0, best: Infinity, bestAt: time, replans: (cat.route?.replans || 0), rx: NaN, rz: NaN, qx: tx, qz: tz };
     }
@@ -1255,7 +1255,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       // (stepping out from against another cat, that one's body doesn't hold it back: it is leaving it;
       // squeezing out of a knot of cats, no standing one does (a sitting or lying cat is never walked through))
       const skip = D && D.escape ? D.from : step.escapeFrom || null, ghost = !!(D && D.ghost);
-      let o = bodyAhead(cat, dx, dz, act, skip, ghost) || turnBlocked(cat, yawTo(dx, dz), act, skip, ghost) || propAhead(cat, dx, dz, ignore);
+      const ahead = bodyAhead(cat, dx, dz, act, skip, ghost);
+      let o = ahead || turnBlocked(cat, yawTo(dx, dz), act, skip, ghost) || propAhead(cat, dx, dz, ignore);
       if (o) {
         if (!D && o !== true && !o.moving) {
           // (The way round only if its first steps are clear too; standing in the other's body
@@ -1269,12 +1270,17 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         if (o) {
           const jam = (cat.jamT || 0) > 1.4;
           if (!(D && D.escape) || (jam && !D.ghost)) {
-            const E = stepOut(cat, o, act, ignore, (R.waited || 0) >= 0.9, jam);
+            // (hemmed in beside one a while, it steps off from it; but not back from one standing or resting in its way
+            // ahead, not in its body: it goes round, waits, has a small one move over, or gives up (no pacing to and fro))
+            const E = stepOut(cat, o, act, ignore, (R.waited || 0) >= 0.9 && o !== ahead, jam);
             if (E) { cat.detour = E; dx = E.x - cat.x; dz = E.z - cat.z; o = null; if (E.ghost) cat.jamT = 0; }
           }
           if (o) cat.jamT = inBody(cat) ? (cat.jamT || 0) + WAIT_ON : 0;
         }
         if (o) {
+          // (Stalking its prey, a prop in the way (a flower bed, a cat bed): it has come as near as it can, and stops
+          // short of it there, rather than wait for a way round.)
+          if (o === true && step.type === "chase" && step.stalk) return "arrived";
           // (Up against a prop, it finds its way again from where it stands.)
           if (o === true) { R.stale = true; R.replans = (R.replans || 0) + 1; }
           // (A cat resting in a big cat's way, a third of its size or less, gets up and moves over once it has kept
@@ -1451,6 +1457,41 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       if (Math.hypot(o.x - cat.x, o.z - cat.z) < (HALF_LEN.walk + BODY) * cat.size + 0.25 + ((HALF_LEN[o.pose] || 0.3) + BODY) * o.size) return false;
     }
     return true;
+  }
+
+  /** Whether a long cat can turn on the spot from its heading round to `want`, one way or the other, without its body
+      going further into a prop than a brush and than it is. */
+  function turnFree(cat, want, ignore) {
+    const ign = withContaining(ignore, cat), bank = onBank(cat, cat.x, cat.z), g0 = Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, cat.yaw, cat.pose, ign, bank)) + 1e-3;
+    const left = wrapAngle(want - cat.yaw);
+    for (const way of [Math.sign(left) || 1, -(Math.sign(left) || 1)]) {
+      const arc = way === Math.sign(left) ? Math.abs(left) : Math.PI * 2 - Math.abs(left);
+      let ok = true;
+      for (let a = 0.15; a < arc + 0.15; a += 0.15) if (propDepth(cat, cat.x, cat.z, cat.yaw + way * Math.min(a, arc), "walk", ign, bank) > g0) { ok = false; break; }
+      if (ok) return true;
+    }
+    return false;
+  }
+  /** Where a long cat hemmed in by a prop at its flank walks out to: along a heading it can turn to (either way round from
+      its own, no further into the prop), the nearest spot clear of the route-finder's berth, reached without its body
+      going further in on the way; null if none. */
+  function outAlong(cat, ignore) {
+    const N = cat.nav, g = Math.max(1, cat.size), ign = withContaining(ignore, cat), bank = onBank(cat, cat.x, cat.z);
+    const g0 = Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, cat.yaw, cat.pose, ign, bank)) + 1e-3;
+    let best = null, score = Infinity;
+    for (const way of [1, -1]) {
+      for (let a = 0; a <= Math.PI + 1e-6; a += 0.3) {
+        const yaw = cat.yaw + way * a;
+        if (propDepth(cat, cat.x, cat.z, yaw, "walk", ign, bank) > g0) break; // (it can turn no further this way)
+        const fx = Math.cos(yaw), fz = -Math.sin(yaw);
+        for (let d = 0.3 * g; d <= 2.2 * g; d += 0.15 * g) {
+          if (propDepth(cat, cat.x + fx * (d - 0.15 * g), cat.z + fz * (d - 0.15 * g), yaw, "walk", ign, bank) > g0) break;
+          const x = cat.x + fx * d, z = cat.z + fz * d;
+          if (N.pointFree(x, z, N.clearR + 0.02, ignore) && propDepth(cat, x, z, yaw, "walk", ign, bank) <= g0) { const sc = d + a * g; if (sc < score) { score = sc; best = { x, z }; } break; }
+        }
+      }
+    }
+    return best;
   }
 
   /** True when a standing cat's first steps in direction (dx, dz) run into a prop (the hard check would stop it). */
@@ -1731,7 +1772,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         cat.wa = "move"; cat.lookOn = false;
         const r = walk(cat, step, step.x, step.z, dt, speedOf(cat, step.mode), step.arrive, act.ignoreNow, !!step.through);
         if (r === "arrived") { cat.route = null; return nextStep(act, step); }
-        if (r === "stuck") return abortAct(cat);
+        if (r === "stuck") { if (cat.big) cat.hemmedUntil = time + HEMMED; return abortAct(cat); }
         break;
       }
       case "chase": {
@@ -1748,7 +1789,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         cat.wa = "move"; cat.stalk = !!step.stalk; cat.lookOn = false;
         const r = walk(cat, step, cat.x + (tg.x - cat.x) * k, cat.z + (tg.z - cat.z) * k, dt, speedOf(cat, step.mode), 0.15, act.ignoreNow);
         if (r === "arrived") { cat.route = null; return nextStep(act, step); }
-        if (r === "stuck") return abortAct(cat);
+        if (r === "stuck") { if (cat.big) cat.hemmedUntil = time + HEMMED; return abortAct(cat); }
         break;
       }
       case "pursue":
@@ -1764,6 +1805,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           // near as it can (the head does the rest) rather than start a turn its neighbour stops.
           if (cat.posture !== "stand" || diff < 0.2 || turnBlocked(cat, want, act)) {
             if (step.target) act.faceTarget = step.target;
+            // (a hunter that can't turn to face its prey doesn't wiggle and leap at it: it watches it get away)
+            if (diff > 0.6 && act.prey) { skipTo(act, cat); return true; }
             return nextStep(act, step);
           }
           // (a big cat turns round on the spot more slowly: gaitScale)
@@ -1776,7 +1819,11 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         // Round (the last of it turned last tick: what follows starts in a tick with no turn in it,
         // so a cat never sits down or lies down while its body is still turning); or its body up
         // against another's, it can turn no further: it faces as near as it got.
-        if (Math.abs(wrapAngle(want - cat.yaw)) < 0.03 || act.t > 3 || (cat.held > 0.7 && act.t > 0.05)) { if (step.target) act.faceTarget = step.target; return nextStep(act, step); }
+        if (Math.abs(wrapAngle(want - cat.yaw)) < 0.03 || act.t > 3 || ((cat.held > 0.7 || cat.heldProp > 0.7) && act.t > 0.05)) {
+          if (step.target) act.faceTarget = step.target;
+          if (Math.abs(wrapAngle(want - cat.yaw)) > 0.6 && act.prey) { skipTo(act, cat); return true; }
+          return nextStep(act, step);
+        }
         turnToward(cat, want, step.rate, dt);
         cat.pivoting = true;
         break;
@@ -1809,9 +1856,17 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         // Gather, leap, land. The cat leaves the ground only for the middle of it (AIR0..AIR1).
         if (!step.from) {
           step.from = { x: cat.x, y: cat.y, z: cat.z };
+          // (A long cat with no room to stretch out for the leap where it stands, a prop at its chest or its
+          // hindquarters, thinks better of it.)
+          if (step.pounce && cat.size >= LONG) {
+            const bank = onBank(cat, cat.x, cat.z), g0 = Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, cat.yaw, cat.pose, act.ignoreNow, bank)) + 1e-3;
+            if (propDepth(cat, cat.x, cat.z, cat.yaw, "stretch", act.ignoreNow, bank) > g0) { step.from = null; cat.hopPitch = 0; return nextStep(act, step); }
+          }
           if (step.to) {
             // A leap at something: land a little short of it (the cat never gets it).
             const tg = step.to(), dx = tg.x - cat.x, dz = tg.z - cat.z, d = Math.hypot(dx, dz) || 1;
+            // (never off sideways or backwards: not facing it, it thinks better of it)
+            if (step.pounce && Math.abs(wrapAngle(yawTo(dx, dz) - cat.yaw)) > 0.6) { step.from = null; cat.hopPitch = 0; return nextStep(act, step); }
             let len = Math.max(0.25, Math.min(1.8 * Math.max(1, cat.size), d - step.short));
             // (not onto a cat, nor where one in the air will land: it pulls the leap up short)
             // (and a long cat's whole body, stretched out as it lands, not into a prop, nor over one on the way:
@@ -1819,7 +1874,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
             // front and its flower bed) is no place to land)
             const long = cat.size >= LONG, ign = act.ignoreNow, yw = Math.atan2(-dz, dx);
             const busy = (x, z) => !!crowding(cat, x, z, yw, "walk", 0.06) || landsNear(cat, x, z)
-              || (long && (propDepth(cat, x, z, yw, "stretch", ign, onBank(cat, x, z)) > PROP_BRUSH || !cat.nav.segmentClear(cat.x, cat.z, x, z, ign, cat.bodyR)));
+              // (at the leap's heading, and at its own, should the turn as it gathers fall short)
+              || (long && (propDepth(cat, x, z, yw, "stretch", ign, onBank(cat, x, z)) > PROP_BRUSH || propDepth(cat, x, z, cat.yaw, "stretch", ign, onBank(cat, x, z)) > PROP_BRUSH || !cat.nav.segmentClear(cat.x, cat.z, x, z, ign, cat.bodyR)));
             while (len > 0.25 && busy(cat.x + (dx / d) * len, cat.z + (dz / d) * len)) len -= 0.1;
             len = Math.max(0.2, len);
             // (Nowhere to land but on a cat: it thinks better of it.)
@@ -2292,8 +2348,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     }
     return worst;
   }
-  /** On the pond's bank for what it is doing there (watching, drinking): its head may reach out over the water. */
-  const onBank = (cat, x, z) => !!cat.act && (cat.act.kind === "pond" || cat.act.kind === "drink") && Math.hypot(x - L.POND.x, z - L.POND.z) < L.POND.r + 1.2 * cat.size;
+  /** On the pond's bank (where it watches and drinks): its head may reach out over the water (propDepth). */
+  const onBank = (cat, x, z) => Math.hypot(x - L.POND.x, z - L.POND.z) < L.POND.r + 1.2 * cat.size;
   /** A brush of a prop (units into it) that is let be. */
   const PROP_BRUSH = 0.03;
   /** How fast (units/s, × gaitScale) a cat found further into a prop than its own step took it (landed or
@@ -2321,10 +2377,10 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     }
     resolveCats(dt);
     for (const cat of cats) {
-      // (Its step and any nudge from the cats round it carry it no further in a tick than the legs it shows step
-      // (legCap): so the props' hard check, and keepOut, work from where its legs really take it.)
+      // (Its step and any nudge from the cats round it carry it no further in a tick than the legs it shows will step
+      // (legCapAhead): so the props' hard check, and keepOut, work from where its legs really take it.)
       // (setting off afresh, the gait it starts in: a stalk's legs, or a walk's)
-      const vl = (cat.legs.cur < 0 ? LEG_VMAX[cat.stalk ? 3 : 0] : legCap(cat.legs)) * cat.fr * dt, ml = Math.hypot(cat.x - cat.px, cat.z - cat.pz);
+      const vl = (cat.legs.cur < 0 ? LEG_VMAX[cat.stalk ? 3 : 0] : legCapAhead(cat.legs, dt)) * cat.fr * dt, ml = Math.hypot(cat.x - cat.px, cat.z - cat.pz);
       if (vl > 0 && ml > vl && cat.y < 0.05) { const k = vl / ml; cat.x = cat.px + (cat.x - cat.px) * k; cat.z = cat.pz + (cat.z - cat.pz) * k; }
       // (a big cat turning on the spot too: its nose and hindquarters swing round)
       const long = cat.size >= LONG;
@@ -2341,7 +2397,9 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         // further in than that (landed there, got up there), it is eased out at an amble over a few ticks.)
         // (Its own motion: its step, and the sweep of its body turning on the spot, whose hind end it steps round
         // clear of the prop; a long cat's turn as it walks is undone rather than pushed: below.)
-        const own = Math.hypot(cat.x - cat.px, cat.z - cat.pz) + (!long || cat.pivoting ? Math.abs(wrapAngle(cat.yaw - cat.pyaw)) * (HALF_LEN[cat.pose] || 0.3) * cat.size : 0);
+        // (a long cat's hind end stepped round a step's worth at most: a turn that needs more is undone)
+        const sweep = Math.abs(wrapAngle(cat.yaw - cat.pyaw)) * (HALF_LEN[cat.pose] || 0.3) * cat.size;
+        const own = Math.hypot(cat.x - cat.px, cat.z - cat.pz) + (!long ? sweep : cat.pivoting ? Math.min(sweep, 0.015 * cat.size) : 0);
         const lim = own + PROP_EASE * cat.fr * dt, pl = Math.hypot(p.x - cat.x, p.z - cat.z);
         if (pl > lim) { p.x = cat.x + ((p.x - cat.x) * lim) / pl; p.z = cat.z + ((p.z - cat.z) * lim) / pl; }
         // (A long cat's tick never leaves its body deeper in a prop than a brush and than it was (a keepOut for
@@ -2358,14 +2416,19 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           else if (turned && propDepth(cat, cat.x, cat.z, cat.pyaw, cat.pose, ign, bank) <= lim0) {
             // (turning on the spot that way into it: it turns the other way round from now on; that way too, it
             // is held there (the stall check finds it another way, or it gives up))
-            if (cat.pivoting) cat.turnFlip = cat.turnFlip ? 0 : Math.sign(wrapAngle(cat.yaw - cat.pyaw));
+            if (cat.pivoting) {
+              // (wedged, a prop taking back its turn both ways round: it stands a moment, and finds its way again, out along a
+              // heading it can turn to (walk: turnFree, outAlong); no turning to and fro on the spot)
+              if (cat.turnFlip) { cat.turnFlip = 0; if (cat.route) cat.route.stale = true; cat.waitUntil = time + WAIT_ON; }
+              else cat.turnFlip = Math.sign(wrapAngle(cat.yaw - cat.pyaw));
+            }
             p.x = cat.x; p.z = cat.z; cat.yaw = cat.pyaw; undone = true;
           }
           else if (propDepth(cat, p.x, p.z, cat.yaw, cat.pose, ign, bank) <= lim0) { /* along the prop: p */ }
           else if (turned && propDepth(cat, p.x, p.z, cat.pyaw, cat.pose, ign, bank) <= lim0) { cat.yaw = cat.pyaw; undone = true; }
           else { p.x = cat.px; p.z = cat.pz; cat.yaw = cat.pyaw; undone = true; }
-          // (and pushed along it no further in the tick than its legs step (legCap): no skating along a bush)
-          const vl = (cat.legs.cur < 0 ? LEG_VMAX[cat.stalk ? 3 : 0] : legCap(cat.legs)) * cat.fr * dt, ml = Math.hypot(p.x - cat.px, p.z - cat.pz);
+          // (and pushed along it no further in the tick than its legs step (legCapAhead): no skating along a bush)
+          const vl = (cat.legs.cur < 0 ? LEG_VMAX[cat.stalk ? 3 : 0] : legCapAhead(cat.legs, dt)) * cat.fr * dt, ml = Math.hypot(p.x - cat.px, p.z - cat.pz);
           if (vl > 0 && ml > vl) {
             const qx = cat.px + ((p.x - cat.px) * vl) / ml, qz = cat.pz + ((p.z - cat.pz) * vl) / ml;
             if (propDepth(cat, qx, qz, cat.yaw, cat.pose, ign, bank) <= lim0) { p.x = qx; p.z = qz; } else { p.x = cat.px; p.z = cat.pz; cat.yaw = cat.pyaw; undone = true; }

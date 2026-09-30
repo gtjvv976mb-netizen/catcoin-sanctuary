@@ -30,11 +30,14 @@
    house cat sitting in its way. */
 
 import { isMainThread, parentPort, workerData, Worker } from "node:worker_threads";
-import { readFileSync } from "node:fs";
-import { createSanctuary, POSES, UNWIND, BODY, BIG_SIZE, HALF_LEN, bodyGap, sizeOf, alike } from "../assets/world/cats.js";
+import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
+import { createSanctuary, POSES, UNWIND, BODY, BIG_SIZE, LONG, HALF_LEN, bodyGap, sizeOf, alike } from "../assets/world/cats.js";
 import { createMeadow } from "../assets/world/meadow.js";
-import { ACTIONS, GAIT_BANDS, MIN_SHOW, TRANS_DUR, gaitFor, gaitScale } from "../assets/world/catmotion.js";
-import { distToObstacle } from "../assets/world/nav.js";
+import { ACTIONS, GAIT_BANDS, MIN_SHOW, TRANS_DUR, gaitFor, gaitScale, legStep, newLegs } from "../assets/world/catmotion.js";
+import { distToObstacle, yawTo } from "../assets/world/nav.js";
 import * as L from "../assets/world/layout.js";
 
 const DT = 1 / 60;
@@ -219,8 +222,101 @@ async function bigRun({ seconds }) {
   return big.map((c) => { const s = S.get(c); return { id: c.id, size: c.size, fr: c.fr, props: s.props, propWhat: s.propWhat, holds: [...s.holds], company: [...s.company], waiting: s.waiting, kinds: [...s.kinds], walkV: p90(s.walkV), walked: s.walkV.length * (1 / 30), gaits: [...s.gaits] }; });
 }
 
+/** critters.js (the birds and butterflies) as the page loads it, its "three" imports pointed at the vendored copy,
+    and its random stream seeded by `seed` (where and when the birds land and the butterflies go). */
+async function loadCritters(seed) {
+  const v = (p) => new URL(`../${p}`, import.meta.url).href, dir = mkdtempSync(join(tmpdir(), "critters-"));
+  const THREE_URL = v("assets/vendor/three/three.module.min.js"), utils = join(dir, "utils.mjs"), file = join(dir, "critters.mjs");
+  writeFileSync(utils, readFileSync(new URL("../assets/vendor/three/addons/utils/BufferGeometryUtils.js", import.meta.url), "utf8").replace(/from 'three'/, `from "${THREE_URL}"`));
+  writeFileSync(file, readFileSync(new URL("../assets/world/critters.js", import.meta.url), "utf8")
+    .replace('from "three";', `from "${THREE_URL}";`).replace('from "three/addons/utils/BufferGeometryUtils.js"', `from "${pathToFileURL(utils).href}"`)
+    .replace('from "./layout.js"', `from "${v("assets/world/layout.js")}"`).replace('from "./rng.js"', `from "${v("assets/world/rng.js")}"`)
+    .replace('makeRandom("critters")', `makeRandom("critters${seed}")`));
+  return { THREE: await import(THREE_URL), ...(await import(pathToFileURL(file).href)) };
+}
+
+/** The real garden with its birds and butterflies (critters.js, built as the page builds them; `seed` varies them)
+    for `seconds` at 30 Hz, watching every cat tick by tick:
+    - pops: moved further in a tick than its own step asked by more than 0.1 (out of a prop, off another cat), on the ground;
+    - slides: ground covered in a tick beyond what the legs the view shows step (catmotion legStep, blended as catviews
+      blends them) by more than 0.01: paws skating;
+    and every long cat (drawn LONG × or more: the big cats, the bobcat, the Savannah):
+    - its whole body (its capsule, drawn size) in a prop: deepest, and spells over 0.05 lasting a second (the bed it went
+      to nap in, the bowls and dishes a house-sized one eats at, a hop up its cat tree aside; on the pond's bank its head may reach
+      0.2 × its size out over the water);
+    - pacing on its errands: 3 s windows in which it walked more than 1.2 √size yet ended less than a quarter of that
+      from where it was (the verifier's measure; turning round before lying down aside). */
+async function huntRun({ seconds, seed }) {
+  const [{ styleOf }, C] = await Promise.all([import("../assets/world/traits.js"), loadCritters(seed)]);
+  const rows = JSON.parse(readFileSync(new URL("../data/traits.json", import.meta.url), "utf8")).cats;
+  const residents = Object.entries(rows).map(([id, t]) => ({ id, name: id, traits: t, style: styleOf(t) }));
+  const fencePosts = [];
+  for (let a = 0, step = 1.35 / L.GARDEN.fenceR; a < Math.PI * 2 - 1e-6; a += step) if (!L.inGate((a * 180) / Math.PI)) fencePosts.push({ x: Math.cos(a) * L.GARDEN.fenceR, y: 1.02, z: Math.sin(a) * L.GARDEN.fenceR });
+  let sim = null;
+  const critters = C.buildCritters(new C.THREE.Scene(), {
+    mobile: false, fencePosts, flowerFields: L.FLOWER_FIELDS.map((f) => ({ x: f.x, z: f.z, r: Math.min(f.rx, f.rz), y: 0 })),
+    lawnFree: (x, z) => !sim || sim.nav.pointFree(x, z, 0.35),
+    catsNear: (x, z, r) => !!sim && sim.cats.some((c) => { const R = r * (c.size > 1 ? c.size : 1); return Math.abs(c.x - x) < R && Math.abs(c.z - z) < R && Math.hypot(c.x - x, c.z - z) < R; }),
+  });
+  sim = createSanctuary({ residents, reduced: false, critters });
+  sim.setViewer(0, 18);
+  const dt = 1 / 30, obs = L.obstacles(), cats = sim.cats, long = cats.filter((c) => c.size >= LONG);
+  const S = new Map(cats.map((c) => [c, { x: c.x, z: c.z, v: c.speed, legs: newLegs() }]));
+  const P = new Map(long.map((c) => [c, { deep: 0, deepWhat: "", spell: new Map(), hist: [] }]));
+  const out = { cats: cats.length, long: long.length, hunts: 0, pops: 0, popMax: 0, slides: 0, slideMax: 0, deepest: 0, spells: 0, paces: 0, examples: [] };
+  const note = (what) => { if (out.examples.length < 12) out.examples.push(what); };
+  const hunting = new Set();
+  for (let f = 1; f <= seconds / dt; f++) {
+    critters.update(dt, false);
+    sim.update(dt);
+    const t = f * dt;
+    for (const c of cats) {
+      // (its own step: at its speed going into the tick or coming out of it, whichever is more)
+      const s = S.get(c), m = c.motion, A = ACTIONS[m.action], mv = Math.hypot(c.x - s.x, c.z - s.z), v = Math.max(s.v, c.speed);
+      s.x = c.x; s.z = c.z; s.v = c.speed;
+      if (c.act && (c.act.kind === "butterfly" || c.act.kind === "bird")) hunting.add(c.id);
+      const cap = legStep(s.legs, A.kind === "gait" ? m.action : null, dt) * gaitScale(c.size);
+      if (c.y > 0.05 || c.perch) continue;
+      if (A.kind !== "gait" && A.posture === "air") continue;
+      const pop = mv - Math.max(0, v) * dt;
+      if (pop > 0.1) { out.pops++; out.popMax = Math.max(out.popMax, pop); note(`pop ${c.id} (${c.size}x) ${mv.toFixed(2)} in a tick at ${t.toFixed(2)} s, ${m.action}, "${c.doing}"`); }
+      if (cap > 0 && mv - cap * dt > 0.01) { out.slides++; out.slideMax = Math.max(out.slideMax, mv - cap * dt); note(`slide ${c.id} (${c.size}x) ${(mv / dt).toFixed(2)} u/s in a ${m.action} stepping ${cap.toFixed(2)} at ${t.toFixed(2)} s, "${c.doing}"`); }
+    }
+    for (const c of long) {
+      const p = P.get(c), kind = c.act?.kind;
+      // (pacing: the last 3 s of its walking)
+      p.hist.push([c.x, c.z]); if (p.hist.length > 90) p.hist.shift();
+      if (p.hist.length === 90 && f % 15 === 0 && !/Turning round/.test(c.doing) && m0(c)) {
+        let path = 0; for (let i = 1; i < 90; i++) path += Math.hypot(p.hist[i][0] - p.hist[i - 1][0], p.hist[i][1] - p.hist[i - 1][1]);
+        const net = Math.hypot(c.x - p.hist[0][0], c.z - p.hist[0][1]);
+        if (path > 1.2 * c.fr && net < 0.25 * path) { out.paces++; note(`pacing ${c.id} (${c.size}x): ${path.toFixed(2)} walked in 3 s, ${net.toFixed(2)} from where it was, at ${t.toFixed(1)} s, "${c.doing}"`); }
+      }
+      if (c.y > 0.3 || c.perch || (m0(c) === false && c.motion.action === "hop" && kind === "climb")) continue;
+      const h = (HALF_LEN[c.pose] || 0.3) * c.size, r = BODY * c.size, fx = Math.cos(c.yaw) * h, fz = -Math.sin(c.yaw) * h, own = c.act?.ignoreNow;
+      const bank = Math.hypot(c.x - L.POND.x, c.z - L.POND.z) < L.POND.r + 1.2 * c.size;
+      for (const o0 of obs) {
+        // (a bowl or a water dish is low: a cat that eats and drinks at them (not a big cat) stands over one as it gets up)
+        if ((own && own.has(o0.id)) || (!c.big && /^(bowl|water)-/.test(o0.id))) continue;
+        const o = bank && o0.id === L.POND.id ? { type: "circle", x: o0.x, z: o0.z, r: L.POND.r - 0.2 * c.size } : o0;
+        let d = Infinity;
+        for (let u = -1; u <= 1.0001; u += 0.25) d = Math.min(d, distToObstacle(o, c.x + fx * u, c.z + fz * u));
+        const pen = r - d;
+        if (pen > p.deep) { p.deep = pen; p.deepWhat = `${o0.id} (${c.motion.action}, ${kind}, "${c.doing}")`; }
+        const sp = p.spell.get(o0.id);
+        if (pen > 0.05) { if (sp) sp.t1 = t; else p.spell.set(o0.id, { t0: t, t1: t, what: `${c.id} (${c.size}x) in ${o0.id} from ${t.toFixed(1)} s, "${c.doing}"` }); }
+        else if (sp && t - sp.t1 > dt * 1.5) { p.spell.delete(o0.id); if (sp.t1 - sp.t0 >= 1) { out.spells++; note(`in a prop a second: ${sp.what} for ${(sp.t1 - sp.t0).toFixed(1)} s`); } }
+      }
+    }
+  }
+  for (const c of long) { const p = P.get(c); if (p.deep > out.deepest) { out.deepest = p.deep; out.deepWhat = `${c.id} (${c.size}x) ${p.deep.toFixed(2)} into ${p.deepWhat}`; } }
+  out.hunts = hunting.size;
+  return out;
+}
+/** On the move (in a gait): walking on an errand, not sitting still. */
+const m0 = (c) => ACTIONS[c.motion.action].kind === "gait";
+
 if (!isMainThread) {
-  parentPort.postMessage(workerData.big ? await bigRun(workerData) : await gardenRun(workerData));
+  parentPort.postMessage(workerData.hunt ? await huntRun(workerData) : workerData.big ? await bigRun(workerData) : await gardenRun(workerData));
 } else {
   const { test } = await import("node:test");
   const assert = (await import("node:assert/strict")).default;
@@ -239,6 +335,7 @@ if (!isMainThread) {
   const plain = inWorker({ traits: false, seconds: SECONDS });
   const characters = inWorker({ traits: true, seconds: SECONDS });
   const bigCats = inWorker({ big: true, seconds: 180 });
+  const hunts = [inWorker({ hunt: true, seconds: 180, seed: "" }), inWorker({ hunt: true, seconds: 180, seed: "2" })];
 
   const report = (t, o) => t.diagnostic(`${o.cats} cats, ${o.minutes} min: ${(o.changes / o.cats / o.minutes).toFixed(2)} changes/cat/min (${(o.changesNoTrans / o.cats / o.minutes).toFixed(2)} without posture changes), ${o.msPerTick?.toFixed(2) ?? "-"} ms/tick; longest creep ${o.creepMax.toFixed(2)} s, walked into resting cats ${o.walkInto.toFixed(2)} s, ${o.longOverlaps} pairs in each other for a second, ${o.spells} for half a second`);
   function assertMoveLikeCats(o) {
@@ -472,6 +569,62 @@ if (!isMainThread) {
     // Strolling at a big animal's pace: about √size times a house cat's (0.7 u/s at an ordinary pace, a walk at most 1.1).
     // (the ones that went for a wander: short steps aside and up to a spot are stepped more slowly)
     for (const c of list.filter((x) => x.walked > 5 && x.kinds.includes("wander"))) assert.ok(c.walkV > 0.6 * c.fr && c.walkV <= 1.1 * c.fr + 0.05, `${c.id} (${c.size}x) cruises at ${c.walkV.toFixed(2)} u/s`);
+  });
+
+  test("the real garden with its birds and butterflies: nobody pops out of a prop or skates, and no long cat's body goes into a prop on a hunt or paces on its errands", async (t) => {
+    for (const o of await Promise.all(hunts)) {
+      t.diagnostic(`${o.cats} cats (${o.long} long), ${o.hunts} went hunting: ${o.pops} pops (the biggest ${o.popMax.toFixed(2)}), ${o.slides} skating ticks (${o.slideMax.toFixed(3)}), deepest into a prop ${o.deepest.toFixed(2)} ${o.deepWhat || ""}, ${o.spells} spells in a prop, ${o.paces} pacing windows`);
+      const why = o.examples.join("\n  ");
+      assert.ok(o.hunts >= 10, `the birds and butterflies were hunted (${o.hunts} cats)`);
+      assert.equal(o.pops, 0, `cats popped across the ground:\n  ${why}`);
+      assert.equal(o.slides, 0, `paws skating (ground covered faster than the legs shown step):\n  ${why}`);
+      assert.ok(o.deepest < 0.15, `a long cat's body went ${o.deepWhat}`);
+      assert.equal(o.spells, 0, `long cats in a prop for a second or more:\n  ${why}`);
+      assert.ok(o.paces <= 3, `${o.paces} windows of a long cat pacing on its errands:\n  ${why}`);
+    }
+  });
+
+  test("a long cat hunting beside a prop keeps its whole body out of it, and never pops out: the Savannah after a butterfly at the easel", () => {
+    const E = L.obstacles().find((o) => o.id === "easel");
+    for (const [scale, ox, oz] of [[1.31, -0.7, -0.5], [1.31, 0.75, 0.45], [2.56, -0.7, -0.5]]) {
+      // (a butterfly hovering just by the easel, low enough to hunt: stalked, pounced at and missed, again and again)
+      const bf = { x: E.x + ox, y: 0.6, z: E.z + oz, state: "fly" }, critters = { butterflies: [bf], birds: [], startle() {} };
+      const sim = createSanctuary({ residents: [{ id: "SAV", name: "Sav", style: { scale }, traits: { playful: 0.95, hunter: 0.95, energy: 0.8, sleepy: 0.05, curious: 0.3 } }], reduced: false, critters });
+      const c = sim.cats[0], dt = 1 / 30;
+      // (a lion hunts only a butterfly its route-finder reaches: the nearest such spot to the easel)
+      const Nb = sim.navOf(scale), pad = scale >= BIG_SIZE ? Nb.clearR * 0.7 : 0.3;
+      for (let k = 0; k < 400 && !Nb.pointFree(bf.x, bf.z, pad); k++) { bf.x = E.x + ox + Math.cos(k * 2.4) * (0.1 + k * 0.02); bf.z = E.z + oz + Math.sin(k * 2.4) * (0.1 + k * 0.02); }
+      // (where the verifier saw the Savannah stand 14 s and then sit in the easel, or the nearest spot there a bigger cat's
+      // whole body fits whichever way it turns; the easel's corner: the cottage, a cat tree, a flower bed and a cat bed)
+      const N = sim.navOf(scale), reach = (HALF_LEN.walk + BODY) * scale + 0.05;
+      let st = { x: 4.15, z: 3.12 };
+      for (let k = 0; k < 400 && !N.pointFree(st.x, st.z, reach); k++) st = { x: 4.15 + Math.cos(k * 2.4) * (0.1 + k * 0.02), z: 3.12 + Math.sin(k * 2.4) * (0.1 + k * 0.02) };
+      c.x = st.x; c.z = st.z; c.yaw = yawTo(E.x - c.x, E.z - c.z);
+      let deep = 0, what = "", pops = 0, hunts = 0, px = c.x, pz = c.z, pv = 0, was = null;
+      for (let f = 1; f <= 150 / dt; f++) {
+        c.needs.play = 1; c.needs.sleep = 0;
+        sim.update(dt);
+        if (c.act?.kind === "butterfly" && was !== c.act) hunts++;
+        was = c.act;
+        const mv = Math.hypot(c.x - px, c.z - pz), v = Math.max(pv, c.speed); px = c.x; pz = c.z; pv = c.speed;
+        if (c.y > 0.05) continue;
+        if (ACTIONS[c.motion.action].posture !== "air" && mv - v * dt > 0.1) pops++;
+        if (c.motion.action === "hop" && c.act?.kind === "climb") continue; // (up its cat tree)
+        const h = (HALF_LEN[c.pose] || 0.3) * c.size, r = BODY * c.size, fx = Math.cos(c.yaw) * h, fz = -Math.sin(c.yaw) * h;
+        const own = c.act?.ignoreNow, bank = Math.hypot(c.x - L.POND.x, c.z - L.POND.z) < L.POND.r + 1.2 * c.size;
+        for (const o0 of L.obstacles()) {
+          // (as the garden run counts it: its own bowl or bed, the bowls a house-sized cat eats at, its head over the pond)
+          if ((own && own.has(o0.id)) || (!c.big && /^(bowl|water)-/.test(o0.id))) continue;
+          const o = bank && o0.id === L.POND.id ? { type: "circle", x: o0.x, z: o0.z, r: L.POND.r - 0.2 * c.size } : o0;
+          let d = Infinity;
+          for (let u = -1; u <= 1.0001; u += 0.25) d = Math.min(d, distToObstacle(o, c.x + fx * u, c.z + fz * u));
+          if (r - d > deep) { deep = r - d; what = `${o.id} (${c.motion.action}, "${c.doing}") at ${(f * dt).toFixed(1)} s`; }
+        }
+      }
+      assert.ok(hunts >= (scale >= BIG_SIZE ? 1 : 3), `a ${scale}x cat went after the butterfly by the easel (${hunts} hunts)`);
+      assert.equal(pops, 0, `a ${scale}x cat popped across the ground by the easel`);
+      assert.ok(deep < 0.1, `a ${scale}x cat's body went ${deep.toFixed(2)} into ${what}`);
+    }
   });
 
   test("a big cat moves as a big animal: gait bands, speeds, turns and posture changes by the square root of its size", () => {

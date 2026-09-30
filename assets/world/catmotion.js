@@ -122,6 +122,19 @@ export function legCap(L) {
   for (let i = 0; i < 4; i++) v += L.gs[i] * LEG_VMAX[i];
   return v;
 }
+/** The ground (units/s, before gaitScale) the legs shown will step next tick at the least: whether the cat stays in
+    its gait or changes it for the slowest (a stalk), the view's blend moves on a tick (0 when no gait is shown). */
+const _ahead = newLegs();
+export function legCapAhead(L, dt) {
+  if (L.cur < 0) return 0;
+  let v = Infinity;
+  for (const g of [LEG_GAITS[L.cur], "stalk"]) {
+    for (let i = 0; i < 4; i++) { _ahead.gs[i] = L.gs[i]; _ahead.gp[i] = L.gp[i]; _ahead.gd0[i] = L.gd0[i]; }
+    _ahead.cur = L.cur; _ahead.idle = 0;
+    v = Math.min(v, legStep(_ahead, g, dt));
+  }
+  return v;
+}
 /** One tick of the view's gait weights for the gait shown (null: none; after 0.2 s of none, the next gait
     starts afresh, as the view's gait layer has faded out), exactly as catviews blends them; returns the
     ground (units/s, before gaitScale) the legs shown step, 0 when no gait is shown. */
