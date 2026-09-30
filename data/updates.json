@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-09-30T13:03:01.559Z",
+  "lastPostedAt": "2026-09-30T16:03:34.915Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -52,7 +52,10 @@
       "id": "trivia-sources",
       "text": "🐾 Sanctuary trivia 2/5\nNo made-up lore here 📜\nEvery cat's card lists the posts and articles behind its story, each with a date. If we couldn't find it, the card says so 🔍\nhttps://catcoinsanctuary.com/\n#catcoin",
       "approved": true,
-      "status": "queued"
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-09-30T16:03:34.915Z",
+      "tweet": "2105327705415680054"
     },
     {
       "id": "trivia-memorials",
