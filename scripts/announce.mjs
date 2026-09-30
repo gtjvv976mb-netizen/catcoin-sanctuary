@@ -154,12 +154,14 @@ export function listCats(planned, collection = { cats: [] }, adoptables = { cats
   const ofPlanned = (e) => tickers.has(`${e.pair?.mint} ${String(e.symbol).toUpperCase()}`);
   // A coin is one cat's: a planned cat's, or the first adoptable's it is proved for (as on the page).
   const used = new Set(entries.filter(ofPlanned).map((e) => e.mint));
-  // Adoptable cats (verified lore from companies, people, shows); the lore picture is the post image.
+  // Adoptable cats (verified lore from companies, people, shows); the lore picture is the post image,
+  // else the cat's own portrait (a cat with none yet: the file its lore picture would be).
   for (const c of adoptables.cats || []) {
     const e = provedLaunch(c, entries.filter((x) => !used.has(x.mint)));
     if (e) used.add(e.mint);
+    const own = typeof c.portrait === "string" && c.portrait.startsWith("assets/") ? c.portrait : null;
     out.push({ key: c.ticker, id: c.ticker, name: c.name, ticker: c.ticker, symbol: c.pair?.symbol ?? "STONK", company: c.owner ?? null,
-      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore?.image ?? (typeof c.lore === "string" ? c.lore : `assets/lore/${c.ticker}.webp`),
+      story: c.story, why: null, proof: c.proof ?? null, portrait: c.lore?.image ?? (typeof c.lore === "string" ? c.lore : own ?? `assets/lore/${c.ticker}.webp`),
       launched: !!e, adoptable: true, ...(c.launch ? { sanctuary: true } : {}) });
   }
   for (const e of entries) {
