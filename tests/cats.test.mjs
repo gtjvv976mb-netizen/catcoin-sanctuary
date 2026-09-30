@@ -18,6 +18,10 @@
      each other (more than 0.12 into both bodies side by side) for half a second or more, however
      it came about: one waking, getting up or stretching out into another, one landing, settling or
      turning into another, a visitor staying in its friend (the verifier's "cats inside cats");
+   - a pounce never carries a cat into another's body nor lands it on one (one trotting up, one crossing), nobody walks
+     into a cat mid-pounce, and a cat running from its chaser runs away and turns wide, never rings round it;
+   - no cat's body goes into a thin tall post (a rose arch's, a lantern's), nose and all, and a big cat by the pond but
+     not there to drink or watch it keeps its whole body out of the water;
    - character shows: a sleepy cat sleeps far more than a lively one, a lazy cat never runs, a
      gentle (memorial) cat never rolls about or races.
    The two big garden runs go in worker threads (this file again, below), side by side. Scenes of
@@ -835,6 +839,63 @@ if (!isMainThread) {
     }
   });
 
+  test("a pounce never carries a cat into another's body or lands it on one, and nobody walks into a cat mid-pounce: one trotting up head-on, one crossing its way", () => {
+    const probe = createSanctuary({ residents: [], reduced: false, critters: null });
+    const lane = openLawn(probe.nav, 8, 2.5);
+    const px = lane.x0 + 1, z = lane.z;
+    // (the verifier's two: one pounced at its yarn as another trotted up to its own, and landed 0.32 into it; every moment
+    // the pounce might go, from long before the other comes by to after it has passed)
+    for (const [label, wx, wz, gx, gz] of [["trotting up head-on", px + 6, z + 0.1, px - 3, z], ["crossing its way", px + 1.4, z + 4, px + 1.4, z - 4]]) {
+      let leaps = 0;
+      for (let wait = 0.3; wait <= 3.01; wait += 0.1) {
+        const sim = scene([
+          { id: "POUNCER", x: px, z, yaw: 0, pose: "stand", steps: [{ type: "hold", action: "crouch", dur: wait, doing: "" }, { type: "hop", pounce: true, to: () => ({ x: px + 1.8, z }), short: 0.42, y: 0, air: 0.32, apex: 0.2, doing: "" }, { type: "hold", action: "stand", dur: 1e6, doing: "" }] },
+          { id: "WALKER", x: wx, z: wz, yaw: yawTo(gx - wx, gz - wz), pose: "stand", steps: [{ type: "go", x: gx, z: gz, mode: "hurry", arrive: 0.25, doing: "" }, { type: "hold", action: "stand", dur: 1e6, doing: "" }] },
+        ]);
+        const [p, w] = sim.cats;
+        let deepest = 0, leapt = false;
+        for (let f = 0; f < 8 / DT; f++) {
+          sim.update(DT);
+          if (p.motion.action === "pounce") leapt = true;
+          deepest = Math.max(deepest, -bodyGap(p, p.x, p.z, p.yaw, p.pose, w));
+        }
+        if (leapt) leaps++;
+        assert.ok(deepest <= 0.12, `${label}, the pounce after ${wait.toFixed(1)} s: the two were ${deepest.toFixed(2)} into each other`);
+      }
+      assert.ok(leaps >= 14, `${label}: it pounced when the way was clear (${leaps} of 28)`);
+    }
+  });
+
+  test("a cat running from its chaser runs away along open lawn and turns wide: it never runs tight circles or doubles back at the one chasing it", () => {
+    const PLAY = { playful: 0.9, energy: 0.9, sleepy: 0.1, grumpy: 0.1, social: 0.8 }, dt = 1 / 30;
+    let runs = 0;
+    const loops = [];
+    // (where the verifier's Savannah ran rings round its chaser, and about the garden; house cats and Savannahs, the chaser on every side)
+    for (const [x, z] of [[-6.1, 34.2], [0, 6], [8, -4], [-12, -10], [14, 12], [3, -20]]) for (let k = 0; k < 8; k++) {
+      const a = k * 0.9, style = k % 2 ? { scale: 1.31 } : undefined;
+      const sim = scene([
+        { id: `RUN${k}`, traits: PLAY, style, x, z, yaw: a, pose: "sit", steps: [{ type: "hold", action: "sit", dur: 1e6, doing: "" }] },
+        { id: `CHASER${k}`, traits: PLAY, style, x: x + Math.cos(a) * 2.2, z: z - Math.sin(a) * 2.2, yaw: a + Math.PI, pose: "sit", steps: [{ type: "hold", action: "sit", dur: 1e6, doing: "" }] },
+      ]);
+      const r = sim.cats[0];
+      for (let f = 0; f < 3 / dt; f++) sim.update(dt);
+      if (!sim.force(r.id, "chase") || r.act?.kind !== "chase") continue;
+      runs++;
+      // (the garden run's measure of pacing: 3 s of it on the move, more than 1.2 √size walked, less than a quarter of that from where it was)
+      const hist = [];
+      for (let f = 1; f <= 20 / dt && r.act?.kind === "chase"; f++) {
+        sim.update(dt);
+        hist.push([r.x, r.z]); if (hist.length > 90) hist.shift();
+        if (hist.length < 90 || f % 15 || ACTIONS[r.motion.action].kind !== "gait") continue;
+        let path = 0; for (let i = 1; i < 90; i++) path += Math.hypot(hist[i][0] - hist[i - 1][0], hist[i][1] - hist[i - 1][1]);
+        const net = Math.hypot(r.x - hist[0][0], r.z - hist[0][1]);
+        if (path > 1.2 * r.fr && net < 0.25 * path) { loops.push(`${r.id} (${r.size}x) at (${x}, ${z}): ${path.toFixed(2)} run in 3 s, ${net.toFixed(2)} from where it was, "${r.doing}"`); break; }
+      }
+    }
+    assert.ok(runs >= 36, `the chases got going (${runs} of 48)`);
+    assert.deepEqual(loops, [], `runners that ran rings:\n  ${loops.join("\n  ")}`);
+  });
+
   test("a big cat leaves the house cats' things alone, naps on a whole sunny patch, and watches the pond from further back", () => {
     const sim = createSanctuary({ residents: [{ id: "LION", name: "Lion", style: { scale: 2.56 } }, { id: "HOUSE", name: "House", style: { scale: 1 } }], reduced: false, critters: null });
     const lion = sim.byId("LION"), house = sim.byId("HOUSE");
@@ -858,6 +919,55 @@ if (!isMainThread) {
     for (const p of sim.bigPlaces.pond) assert.ok(Math.hypot(p.x - L.POND.x, p.z - L.POND.z) - water >= lion.nav.clearR, `${p.id}: its body clear of the water's edge`);
     assert.ok(sim.bigPlaces.pond.length >= 3 && sim.bigPlaces.sun.length >= 10, "and has places enough");
     assert.equal(sim.force("LION", "pond"), true); assert.equal(sim.force("LION", "drink"), true);
+  });
+
+  test("a big cat by the pond but not there to drink or watch it keeps its whole body out of the water: turning round to walk off, its hindquarters don't swing out over it", () => {
+    // (the verifier's tiger, moved over from the bank on its way to drink, turned round to go with its hindquarters 0.2 over the water)
+    const P = L.POND, water = L.obstacles().find((o) => o.id === P.id), bad = [];
+    let tries = 0;
+    for (const d of [4.2, 4.6, 5.0]) for (let k = 0; k < 16; k += 2) for (const side of [1, -1]) {
+      const a = (k * Math.PI) / 8, x = P.x + Math.cos(a) * d, z = P.z + Math.sin(a) * d;
+      const sim = scene([{ id: "TIGER", style: { scale: 2.3 }, x, z, yaw: yawTo(P.x - x, P.z - z) + side * 1.2, pose: "stand",
+        steps: [{ type: "go", x: P.x + Math.cos(a) * (d + 4), z: P.z + Math.sin(a) * (d + 4), mode: "stroll", arrive: 0.3, doing: "" }, { type: "hold", action: "stand", dur: 1e6, doing: "" }] }]);
+      const c = sim.cats[0];
+      if (!c.nav.pointFree(x, z, c.bodyR)) continue;
+      tries++;
+      const wet = () => { const h = (HALF_LEN[c.pose] || 0.3) * c.size, fx = Math.cos(c.yaw) * h, fz = -Math.sin(c.yaw) * h; let dd = Infinity; for (let u = -1; u <= 1.0001; u += 0.25) dd = Math.min(dd, distToObstacle(water, c.x + fx * u, c.z + fz * u)); return BODY * c.size - dd; };
+      const start = wet();
+      let worst = start;
+      for (let f = 0; f < 10 / (1 / 30); f++) { sim.update(1 / 30); worst = Math.max(worst, wet()); }
+      if (worst > Math.max(0.03, start) + 0.05) bad.push(`${d} from the middle, ${a.toFixed(2)} round, turning ${side > 0 ? "left" : "right"}: ${worst.toFixed(2)} into the water (from ${start.toFixed(2)})`);
+    }
+    assert.ok(tries >= 20, `spots on the bank (${tries})`);
+    assert.deepEqual(bad, [], `a tiger walking off from the bank went into the water:\n  ${bad.join("\n  ")}`);
+  });
+
+  test("a cat by a thin tall post (a rose arch's, a lantern's) keeps its whole body out of it, nose and all: walking up to it, turning beside it, stretching or loafing there", () => {
+    // (the verifier's cat stood ten minutes with a rose arch's post through its head: its middle its walk's berth off the
+    // post, its nose 0.12 inside it; a low planter or a bush's edge a nose may lean in over, a post not)
+    const posts = L.obstacles().filter((o) => /^(arch-2--1|arch-3-1|lantern-3|lantern-6)$/.test(o.id)), bad = [];
+    let runs = 0;
+    for (const o of posts) for (const [scale, end] of [[1, "stand"], [1, "stretch"], [1, "loaf"], [0.75, "stand"], [1.12, "sit"]]) for (let k = 0; k < 8; k++) {
+      const a = (k * Math.PI) / 4, probe = createSanctuary({ residents: [], reduced: false, critters: null });
+      // (from 2.5 off, up to a spot just its walk's berth off the post, facing it)
+      const sx = o.x + Math.cos(a) * 2.5, sz = o.z - Math.sin(a) * 2.5, gx = o.x + Math.cos(a) * (o.r + 0.33), gz = o.z - Math.sin(a) * (o.r + 0.33);
+      if (!probe.nav.pointFree(sx, sz, 0.45) || !probe.nav.segmentClear(sx, sz, gx, gz, null, 0.3)) continue;
+      const sim = scene([{ id: "CAT", style: { scale }, x: sx, z: sz, yaw: yawTo(gx - sx, gz - sz), pose: "stand",
+        steps: [{ type: "go", x: gx, z: gz, mode: "stroll", arrive: 0.05, doing: "" }, { type: "turn", yaw: a + Math.PI + 1.2, doing: "" }, { type: "turn", yaw: a + Math.PI, doing: "" }, { type: "hold", action: end, dur: 1e6, doing: "" }] }]);
+      const c = sim.cats[0];
+      runs++;
+      let deep = 0, when = "";
+      for (let f = 0; f < 10 / DT; f++) {
+        sim.update(DT);
+        const h = (HALF_LEN[c.pose] || 0.3) * c.size, fx = Math.cos(c.yaw) * h, fz = -Math.sin(c.yaw) * h;
+        let d = Infinity;
+        for (let u = -1; u <= 1.0001; u += 0.125) d = Math.min(d, distToObstacle(o, c.x + fx * u, c.z + fz * u));
+        if (BODY * c.size - d > deep) { deep = BODY * c.size - d; when = `${c.motion.action} at ${(f * DT).toFixed(1)} s`; }
+      }
+      if (deep > 0.05) bad.push(`${o.id}, a ${scale}x cat from ${a.toFixed(2)}, ending in ${end}: ${deep.toFixed(2)} into it (${when})`);
+    }
+    assert.ok(runs >= 60, `ways up to the posts (${runs})`);
+    assert.deepEqual(bad, [], `bodies in a post:\n  ${bad.slice(0, 12).join("\n  ")}`);
   });
 
   test("a big Hall of Fame cat gets a home with room for its body, and nobody sits in it", () => {
