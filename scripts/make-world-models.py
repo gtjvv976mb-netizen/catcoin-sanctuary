@@ -17,7 +17,7 @@ names given):
 Usage:  python3 scripts/make-world-models.py [NAME ...] --raw DIR [--gltfpack PATH]
         DIR holds the raw <name>.glb files (not in the repo: 60-75 MB each).
 """
-import argparse, importlib.util, json, os, subprocess, sys, tempfile
+import argparse, importlib.util, io, json, os, subprocess, sys, tempfile
 from pathlib import Path
 
 import numpy as np
@@ -43,7 +43,7 @@ MODELS = {
     "bench":    dict(height=0.95, tris=5000, tex=512),
     "lamp":     dict(height=2.3, tris=2000, tex=512),
     "cattower": dict(height=2.0, tris=6000, tex=512),
-    "bed":      dict(height=0.3, tris=2500, tex=512),
+    "bed":      dict(height=0.3, tris=2500, tex=512, seams=True, patch=True),
 }
 YAW = -90
 BUDGET = 600_000
@@ -80,10 +80,30 @@ def triangles(js):
     return sum(js["accessors"][p["indices"]]["count"] // 3 for m in js["meshes"] for p in m["primitives"])
 
 
+def patch(js, binc):
+    """Paints over dark blotches in a one-colour texture (the cat bed's has one on its side, a stray
+    patch of another picture): pixels far darker than the median take the median colour."""
+    from PIL import Image
+    bv = js["bufferViews"][js["images"][-1]["bufferView"]]
+    assert bv["byteOffset"] + bv["byteLength"] == len(binc), "the image is not the last view"
+    img = np.asarray(Image.open(io.BytesIO(binc[bv["byteOffset"]:])).convert("RGB")).astype(np.float32)
+    lum = img @ [0.3, 0.59, 0.11]
+    med = np.median(img.reshape(-1, 3), 0)
+    tint = img[..., 0] - (img[..., 1] + img[..., 2]) / 2
+    bad = (lum < 0.6 * np.median(lum)) | (tint < 0.4 * np.median(tint))
+    for _ in range(3): bad = bad | np.roll(bad, 1, 0) | np.roll(bad, -1, 0) | np.roll(bad, 1, 1) | np.roll(bad, -1, 1)
+    img[bad] = med
+    b = io.BytesIO(); Image.fromarray(img.astype(np.uint8)).save(b, "JPEG", quality=84, optimize=True)
+    bv["byteLength"] = len(b.getvalue())
+    js["buffers"] = [{"byteLength": bv["byteOffset"] + bv["byteLength"]}]
+    return binc[:bv["byteOffset"]] + b.getvalue()
+
+
 def pack(name, cfg, raw, exe, tag="", tris=None, tex=None):
     js, binc = cm.read_glb((raw / f"{name}.glb").read_bytes())
     n0 = triangles(js)
     js, binc = cm.retexture(js, binc, tex or cfg["tex"], 84)
+    if cfg.get("patch"): binc = patch(js, binc)
     dims = fit(js, binc, cfg["height"], cfg.get("tree", False))
     dst = OUT / f"{name}{tag}.glb"
     with tempfile.TemporaryDirectory() as tmp:

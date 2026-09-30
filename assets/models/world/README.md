@@ -13,8 +13,8 @@ the repository; scripts/make-world-models.py packs them:
   for every tree's far copy); the metal/roughness and normal maps are dropped, metallic 0, roughness 0.85;
 - normalized: y up, front towards +Z (Tripo puts it at +X), standing on y = 0, centred on x/z (a
   tree on the foot of its trunk), at a sensible size in metres;
-- simplified and quantized with gltfpack 1.3 (`-km -si <ratio> -sp -sa`; the cottage without `-sa`,
-  which smears textures across UV seams and shows on its timbers). KHR_mesh_quantization and
+- simplified and quantized with gltfpack 1.3 (`-km -si <ratio> -sp -sa`; the cottage and the cat bed without `-sa`,
+  which smears textures across UV seams and shows on the timbers and the plush). KHR_mesh_quantization and
   KHR_texture_transform only: no Draco, no meshopt, no KTX2, since the page's GLTFLoader has no
   decoders and its policy allows none;
 - index.json: each model's size (`w`, `h`, `d`), its bounding box and top point (the cottage's
@@ -32,7 +32,7 @@ the repository; scripts/make-world-models.py packs them:
 | bench.glb | 4.8k | 135 KB | 2a218113-f883-4360-981e-318f1204ae4b | 1b0bd8f5-55c5-4fc8-9ae1-aeacbdb9aa71 |
 | lamp.glb (garden lamp post) | 1.8k | 87 KB | 78506c7f-385a-47a9-87e5-a823d0861602 | 6b8fb9b9-d487-4fd6-919a-e958ef0983ec |
 | cattower.glb | 6.0k | 166 KB | c4f2299d-39e9-4c26-8ab5-4d392e692667 | d6bf9095-bb70-4182-9ce8-23acbaa41ed4 |
-| bed.glb (cat bed) | 2.4k | 81 KB | a1ba16ab-20e6-4c72-8636-06113994274a | 72d3c571-9952-4c49-aacd-ed0d51362f30 |
+| bed.glb (cat bed; a stray dark patch in its texture painted over) | 5.7k | 143 KB | a1ba16ab-20e6-4c72-8636-06113994274a | 72d3c571-9952-4c49-aacd-ed0d51362f30 |
 
 The cottage's seams keep gltfpack from going below about 26k triangles without `-sa`, so it is over
 the 600 KB each model aims for.
