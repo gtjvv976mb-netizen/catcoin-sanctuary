@@ -102,10 +102,19 @@ wrong.
   `buildSkeleton` builds the same bone names for every cat: root, pelvis, spine, chest, neck,
   head, tail1-4, and thigh/shin/foot plus arm/forearm/paw on each side. `skinWeights` weights
   each vertex by region (leg, tail, head, body) with inverse distance to the bones.
-- `makeClips` generates the clips procedurally: walk, trot, run, stalk, stand, sniff, greet,
-  sit, look, pant, groom, knead, loaf, sleep, eat, stretch, crouch, wiggle, pounce and scratch.
-  An AnimationMixer per cat crossfades between them (0.3 s). Gait clips are timed by the
-  distance walked (`cyclesPerUnit`), so paws don't slide.
+- `makeClips` generates the clips procedurally: a clip for every action in catmotion.js (walk, trot,
+  run, stalk, stand, sit, loaf, sleep, groom, pounce, the posture changes, ...), pivot and the
+  pull-ups. Gaits keep real cats' footfalls: walk and stalk are a lateral sequence (left hind, left
+  fore, right hind, right fore, a quarter cycle apart; the shoulders' roll and swing follow the
+  forelegs), trot moves diagonal pairs, and run is a rotary gallop with the back rounding and
+  stretching. The head is held level and steady over the gait; the pounce gathers from the
+  wiggle's crouch, stretches out in the air and lands. tests/catrig.test.mjs checks the footfalls.
+- catviews.js (animateOwn) sets each clip's weight and time from cat.motion: per-clip fades, one
+  gait phase stepped by the distance walked (`cyclesPerUnit`, so paws don't slide) and blended
+  between gaits, idle loops at each cat's own phase; then procedural layers: the head turns to
+  what the cat looks at, the back bends into turns, the tail is a damped spring, ear-flick twitches.
+- Behaviour (cats.js): walking, the head looks along the way ahead, so it leads a turn; chasing or
+  stalking, it stays on the prey.
 - LOD: the nearest 10 cats within 16 units get the full model; the rest use the far copy on the
   same skeleton, and their animation updates at up to 20 Hz.
 - `?still`: no motion. Each cat holds a sit, loaf or sleep pose.

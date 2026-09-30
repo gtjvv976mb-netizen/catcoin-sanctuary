@@ -353,3 +353,25 @@ test("the wiggle before a pounce is in the hindquarters: the rump sways, the hea
   assert.ok(head < 0.02, `head sways ${head.toFixed(3)} side to side`);
   assert.ok(rump > 3 * head && rump > 0.03, `rump sways ${rump.toFixed(3)}`);
 });
+
+// When each paw lands in a gait: the first sample of each planted stretch, as a share of the cycle.
+function landings(name) {
+  const N = 64, down = { hL: [], hR: [], fL: [], fR: [] }, at = {};
+  for (let f = 0; f < N; f++) { pose(clips, name, f / N); for (const k in down) down[k].push(toeAt(k).y < 0.004); }
+  for (const k in down) { const d = down[k]; at[k] = d.findIndex((v, f) => v && !d[(f + N - 1) % N]) / N; }
+  return at;
+}
+const after = (a, b) => (((b - a) % 1) + 1) % 1; // how long after a comes b, in cycles
+
+test("the gaits' footfalls: walk and stalk a lateral sequence, trot diagonal pairs, run a rotary gallop", () => {
+  for (const name of ["walk", "stalk"]) {
+    const w = landings(name);
+    // Left hind, then left fore, right hind, right fore, about a quarter cycle apart.
+    for (const [a, b] of [["hL", "fL"], ["fL", "hR"], ["hR", "fR"], ["fR", "hL"]]) assert.ok(Math.abs(after(w[a], w[b]) - 0.25) < 0.06, `${name}: ${a} to ${b} ${after(w[a], w[b]).toFixed(2)}`);
+  }
+  const t = landings("trot");
+  assert.ok(after(t.hL, t.fR) < 0.06 || after(t.fR, t.hL) < 0.06, "trot: each hind lands with the opposite fore");
+  const g = landings("run"), order = Object.keys(g).sort((a, b) => after(g.hR, g[a]) - after(g.hR, g[b]));
+  // Rotary: the hinds one after the other, then the fores starting on the side the hinds ended on.
+  assert.deepEqual(order, ["hR", "hL", "fL", "fR"], `run: footfalls ${order.join(" ")}`);
+});
