@@ -132,7 +132,8 @@ scan finds launches on its own; this is for when it is slow.
 The sanctuary launches trending cats itself: `.github/workflows/launch.yml` runs `scripts/launch.mjs`
 (the rules are in `scripts/lib/launcher.mjs`) every 20 minutes, by hand, and at once whenever the
 trend watch commits new candidates (`data/trending-cats.json`). It launches at most one cat a run,
-**with no dev buy**: it never buys or sells anything, on any launchpad.
+**with no dev buy**: it never buys or sells anything, on any launchpad. The creator fees its pump.fun
+coins earn go to the holders of $CATSANC (see "Holder rewards" below).
 
 **Where (the owner's rule, `scripts/lib/venues.mjs` and `scripts/lib/venues-routing.mjs`):**
 
@@ -180,7 +181,8 @@ after a crash at any point):
    signed ever reaches the RPC but the send itself) and sends it only if the
    simulation passes, the wallet loses at most `LAUNCH_MAX_SOL_PER_LAUNCH`, the last 24 hours stay
    within `LAUNCH_MAX_SOL_PER_DAY` and `LAUNCH_MAX_PER_DAY`, at least `LAUNCH_MIN_BALANCE_SOL`
-   stays in the wallet, and the wallet is still an active launcher. The row is written "sending"
+   stays in the wallet (counted after the $CATSANC holders' SOL, which a launch never spends: see
+   "Holder rewards"), and the wallet is still an active launcher. The row is written "sending"
    before the transaction goes out, then "launched" (its mint, its transaction, what it cost) or
    "failed". A send whose answer is unclear stays "sending" until its signature settles it, and a
    launch that landed but is not proved yet stays "sending" too (the run fails so a person looks):
@@ -237,7 +239,9 @@ its transaction is sent (a known, unused address can be blocked by anyone who fu
 1. Make a **new wallet used for nothing else**, for instance `solana-keygen new -o launcher.json`
    (or a fresh account in Phantom). Never the owner's wallet.
 2. Fund it with about **0.1 SOL**. A launch costs about 0.006 SOL (rent and fees); the rest is the
-   floor and the day's cap. The wallet can only lose what is in it.
+   floor and the day's cap. The wallet can only lose what is in it. Once it holds creator fees
+   claimed for the $CATSANC holders, those do not count towards the floor (a deposit of yours is
+   never mistaken for them).
 3. Add the repository secret **`LAUNCH_WALLET_KEY`**: the secret key as the Solana CLI writes it
    (the JSON array in `launcher.json`) or as Phantom exports it (base58). Keep
    **`SOLANA_RPC_URL`** set too (the public RPC throttles). Neither is ever printed.
@@ -332,6 +336,178 @@ big tail can fool the packer's heading guess: `--yaw 180`, see `scripts/CAT-MODE
 looks like its cat. Open its preview, or run `node scripts/render-cat-clips.mjs OUT.png <KEY>` to see it
 walk. Still by hand: a yaw fix, the in-game shot for X posts (`scripts/capture-ingame.mjs`), retextures,
 and cats whose Meshy views wait for a person.
+
+## Holder rewards
+
+The creator fees the launcher's coins earn go to the holders of **$CATSANC**, the sanctuary's own
+coin (its mint is `"contract"` in `data/socials.json`), in SOL. Older holders get more, and a new
+holder always earns at least half the top rate. `.github/workflows/rewards.yml` runs
+`scripts/rewards.mjs` every hour. The rules are in `scripts/lib/rewards.mjs` (which decides every
+amount), the claim is in `scripts/lib/pump-fees.mjs` and the runs are in `scripts/lib/rewards-run.mjs`.
+
+The site shows it under **About → Holder rewards** (`assets/ui/rewards.js`): the formula in three
+lines, what was claimed and paid, when the next payout is due, the last payout's transactions on
+Solscan, and a box to check any wallet (its tokens, age bonus, share of this period's points, and
+what it is owed and was paid). It reads the files below, as of the site's last deploy (usually
+within the hour: Pages redeploys after the hourly Collection run whenever main has moved). It says
+plainly that none of this is financial advice: rewards can be small or nothing.
+
+**What is paid.** Only SOL, and only what the launcher wallet (`HxhisqFB…HzQh`) actually claimed:
+its pump.fun and PumpSwap creator fees, measured from each claim transaction (what the wallet
+received, less that transaction's fee), times `REWARDS_HOLDER_SHARE_PCT` (100 by default; the share
+is fixed when the claim is sent). StonkFun (Raydium LaunchLab) coins pay their creator no fee on
+chain, and a pump.fun coin priced in another coin pays in that coin. Neither is claimed, because
+turning it into SOL would need a swap, and the launcher never trades. The launcher's own SOL is
+never in the pot.
+
+**To whom.** Every wallet that holds at least 0.01% of the supply (100,000 $CATSANC,
+`REWARDS_MIN_BALANCE_PPM`) in its own name. Never counted: the wallets in `data/wallets.json` (the
+owner and the launcher), every owner off the ed25519 curve (a program address: pump.fun bonding
+curves, AMM pools, lockers, vaults), the runtime's reserved addresses (the System Program's
+"dead address" `1111…1111`, the sysvars, the builtin programs: SOL sent to one in a transaction is
+always refused), the token and launch programs, the $CATSANC mint itself, frozen token accounts, and
+the wallets the owner lists in `data/rewards-exclude.json`. At each close the accounts of the
+wallets with points are read, and one that can never receive SOL (a program, an account a program
+owns, an account holding data) gets no share; the period's file lists it under `refused`.
+
+**The formula.** Every hour, at a random moment kept secret until the hour's window has closed (so
+nobody can time a buy to the check), the Rewards workflow reads every $CATSANC token account.
+
+```
+points      = Σ over each hour: tokens held at this check and the one before × seconds (at most 2 h) × bonus
+bonus       = 1 + age / (age + 14 days)     1× new, 1.33× at a week, 1.5× at two, 1.68× at a month, never 2×
+every 7 days  50% of the holders' unallocated SOL is split by points, at most 10% of it to one wallet
+              (what the cap holds back stays in the pot for later periods; nobody else gets it)
+```
+
+- A wallet's tokens are kept in lots, each with its own age. Tokens bought or received start a new
+  lot at 1×. A sale takes the newest lot first, so the oldest tokens keep their age. (A wallet keeps
+  at most 16 lots: past that, the two neighbours whose merge loses the least bonus are merged, at
+  the younger age.)
+- Age runs on a verified clock that moves only between two good checks, at most 2 hours at a time,
+  so no age builds up while the workflow is off or the RPC is down. It starts at the first check
+  (genesis, within the hour after `REWARDS_ENABLED` is first set): every holder then starts at 1×,
+  so holding $CATSANC before that earns no age. The site says so; announce the start date in advance.
+- Fair to newcomers: the bonus is bounded, so a new holder's tokens always earn more than half of
+  what the oldest can. The cap keeps one big wallet from taking the pot: no wallet gets more than
+  10% of a period's pot, however few wallets have points. What the cap holds back is never handed
+  to the other wallets (that would pay a two-hour holding, or a wallet split in fifty, more than its
+  points); it stays in the unallocated SOL and is released at later closes. Each close releases
+  half of the unallocated SOL and keeps the rest for later periods, so someone who buys next week
+  still shares in fees claimed this week.
+- After each close every wallet is sent what it is owed, in plain SOL transfers, in transactions of
+  at most 20 and of near-equal size (so the smallest payees never carry a transaction's fee almost
+  alone). Each pays its share of that transaction's fee (a few hundred lamports; about 5,000 for a
+  wallet paid alone). Amounts under
+  `REWARDS_MIN_PAYOUT_SOL` (0.001) wait until they add up, and a wallet with no SOL account yet is
+  paid once its reward covers the rent the account needs. A wallet whose own transfer fails in
+  simulation is held for a day while the others are paid (the run fails so a person looks), and one
+  whose payout expired waits until the wallet's history shows it never landed. Nothing is forfeited:
+  a wallet that sold out, or that is excluded later, is still paid what it was owed. (A wallet with
+  no SOL account whose reward never grows to cover that account's rent, about 0.0009 SOL with the
+  fee, stays owed and is sent nothing until its account holds some SOL; an address that can never
+  receive SOL is carried with its reason in each run's log.)
+
+Everything is public: `data/rewards/ledger.json` (every claim and payout, with its transaction),
+`data/rewards/state.json` (the rules in force, each wallet's lots, points and what it is owed) and
+`data/rewards/periods/<k>.json` (each closed period's points and amounts).
+
+**The safety rules:**
+
+- **The pot is only claimed fees.** The holders' total is summed again from the landed claims on
+  every run, and a hand-edited total is refused. A payout is signed only if what was paid, the
+  payout fees, what is still in flight and this transaction together stay within that total. This
+  is checked when the payout is planned, again right before it is signed, and again when it is
+  recorded. The wallet must also still hold `LAUNCH_MIN_BALANCE_SOL` plus everything the holders
+  are owed, so a payout never reaches into the launch reserve. The launcher, for its part, spends
+  only its balance less the holders' SOL (`rewardsEarmark` in `scripts/lib/launcher.mjs`). Both
+  rules are tested.
+- **The key is only in the send step.** `LAUNCH_WALLET_KEY` is in the pay job's one send step and
+  nowhere else; the hourly sample runs with no key. No job installs a dependency, the actions are
+  pinned to commit SHAs, the workflow starts with `permissions: {}`, and the checkout keeps no
+  credentials. The key and the RPC address are scrubbed from every line a run prints.
+- **Simulate, then sign.** Every claim and payout is built, decoded again from its bytes and
+  checked instruction by instruction. A claim may hold only pump.fun's and PumpSwap's creator-fee
+  instructions, and opening and closing the wallet's own WSOL account. A payout may hold only
+  SystemProgram transfers to the wallets owed, and the compute budget. It is simulated unsigned (a
+  payout's simulation must succeed and take no more than the planned lamports from the wallet) and
+  signed only after every check and cap has passed. Nothing here ever buys, sells or swaps.
+- **The ledger.** A transaction's row is written "sending" to the ledger before it is sent, and
+  committed by the step after (which runs even when the send fails or the run is cancelled), then
+  settled by the next run (landed, paid, failed or expired). A record lost anyway is found on chain
+  by the next run and recorded, never paid twice. "Expired" takes more than one answer: the
+  finalized block height well past the blockhash's, and neither the status nor the transaction
+  found when asked again; one that landed after all is recorded as what it did when the wallet's
+  history shows it. The pay job shares the Launch workflow's concurrency group, so the two never
+  spend from the wallet at the same time.
+- **The wallet's history.** Each run counts the wallet's transactions since the ledger's cursor
+  (a claim a stranger made, a record lost), oldest first, saving as it goes, for at most six
+  minutes; anyone can flood the wallet's history with cheap transactions, so what is left is
+  counted by the next runs, where the last stopped. Payouts wait until the count has caught up;
+  claims do not. Never move the ledger's `cursor` by hand past transactions the count has not
+  classified: a lost payout among them would be paid twice. The launcher holds back what every
+  claim since the cursor brought in until it is counted (and waits if reading them takes too long).
+- **Fail closed.** A missing `data/rewards/ledger.json` while `data/rewards/state.json` is there
+  (or the other way round) stops the Rewards workflow, and the launcher waits while the ledger is
+  missing and rewards are on or dry: restore the file from the repository's history.
+- **Until $CATSANC has a valid mint** in `"contract"`, fees are still claimed and kept, and nothing
+  is sampled or paid.
+
+**Setting it up (the owner):**
+
+1. Keep **`SOLANA_RPC_URL`** set: the hourly read of every token account (`getProgramAccounts`)
+   needs a provider that serves it, and the public RPC may refuse it.
+2. Set the repository variable **`REWARDS_ENABLED`** to `dry` first: real samples and periods are
+   committed, and claims and payouts are built and simulated, but nothing is signed or sent. Then
+   set it to `on`.
+3. Optional repository variables, each clamped to its range:
+
+   | Variable | Default | Range | What it sets |
+   |---|---|---|---|
+   | `REWARDS_ENABLED` | `off` | `off`, `dry`, `on` | Whether the workflow runs, and whether it sends. |
+   | `REWARDS_HOLDER_SHARE_PCT` | 100 | 0–100 | The holders' share of each claim, fixed when the claim is sent. |
+   | `REWARDS_EVERY_DAYS` | 7 | 1–30 | Days between payouts (one period). |
+   | `REWARDS_RELEASE_PCT` | 50 | 10–100 | The share of the unallocated SOL each close releases. |
+   | `REWARDS_WALLET_CAP_PCT` | 10 | 1–100 | The most one wallet gets of a period's pot; what it holds back stays in the pot (100: no cap). |
+   | `REWARDS_MIN_BALANCE_PPM` | 100 | 10–10000 | The smallest holding that counts, in millionths of the supply (100 is 100,000 $CATSANC). |
+   | `REWARDS_MIN_PAYOUT_SOL` | 0.001 | 0.0001–0.1 | The smallest payout; less waits for the next. |
+   | `REWARDS_MIN_CLAIM_SOL` | 0.01 | 0.001–1 | Fees are claimed once at least this much waits. |
+   | `REWARDS_MAX_TX_PER_RUN` | 10 | 1–50 | Payout transactions per run. |
+   | `REWARDS_MAX_SOL_PER_RUN` | 2 | 0–20 | The most one run pays out, transfers and fees. |
+   | `LAUNCH_PRIORITY_MICROLAMPORTS` | 100000 | 0–1000000 | The launcher's priority fee, used for claims and payouts too. |
+   | `LAUNCH_MIN_BALANCE_SOL` | 0.02 | at least 0.01 | The launcher's floor: a payout leaves it, plus what the holders are owed. |
+
+   The site's three lines quote the rules in force: each hourly sample records them in
+   `data/rewards/state.json` ("rules"), and the site words its lines from them (7 days, half, 10%,
+   100,000 $CATSANC, 0.001 SOL until a sample has recorded others). Changing a variable needs no
+   code change; the site shows the new numbers after the next sample and deploy.
+4. Changed the coin? Put the new mint in `"contract"`, then run the Rewards workflow by hand with
+   `new_epoch` set to it. The period closes, everyone starts again at age 0, and what each wallet
+   is owed is kept and paid. The run by hand waits behind the hour-long run in progress, and the
+   next scheduled run can displace it (GitHub keeps one waiting run per group): check that it
+   completed, and run it again if it shows as cancelled (until then every run warns about the
+   changed contract and samples nothing).
+
+**Excluding a wallet (the owner):** add it to `data/rewards-exclude.json` with a short reason (1 to
+200 characters; the site's wallet box shows it) and commit:
+
+```json
+{ "note": "…", "exclude": [ { "address": "<the wallet>", "reason": "Team vesting wallet" } ] }
+```
+
+It stops earning at the next hourly check; what it was already owed is still paid. The wallets in
+`data/wallets.json` and every program address are excluded already. A file that does not parse (a
+bad address, an address listed twice, a missing reason) stops the samples until it is fixed:
+nothing is counted against a list the workflow cannot read. Nothing else stops: the tests never
+read this file, so a typo in it never holds up a deploy, a launch or the payouts.
+
+**Stopping it:** set `REWARDS_ENABLED` to `off` (or delete it). Nothing more is claimed, sampled or
+paid. What the holders are already owed stays theirs: the launcher keeps holding it back from
+launches, together with whatever claims (a stranger's) landed since the ledger's cursor, reading the
+wallet's history since that cursor on each launch; it is paid once the rewards are on again. For a
+long pause, `dry` is better: it keeps counting (and so keeps that history short) and sends nothing.
+Disabling the Rewards workflow alone does not stop it: the variable decides. A claim or payout
+already sent is settled the next time the workflow runs.
 
 ## Unread transactions
 
@@ -481,6 +657,10 @@ recorded fixtures keep a fixed one.
 | `pump-quote.test.mjs` | A pump.fun launch priced in a listed coin, and the Collection's proof of one (also in `npm run test:builder`). |
 | `venues-routing.test.mjs` | The owner's routing rule, the ties in `data/cat-watch.json` (valid, however they are laid out), one cat per stock pair, and that every row of `data/pump-quotes.json` is accepted. |
 | `launch.test.mjs` | The Launch workflow: pinned actions, permissions per job, the wallet key in one step only, no npm, a commit after each phase, dispatches from jobs that run no repository code. |
+| `rewards.test.mjs` | The $CATSANC holder-reward rules: the age bonus, the mint gate and the bracketed supply check, reading a sample, the reserved and program addresses that never earn, lots and points (lazy equal to eager), the period close and its cap (which hands nobody another wallet's share: a sniper or a split wallet gets only its points' share), owners that can never be paid, the payout plan (near-equal batches, held wallets), the ledger and its identity, expired rows found on chain, I1 and I2, the launcher's earmark, the site's lines for any rules in force, and every scenario of the spec re-run. |
+| `pump-fees.test.mjs` | Claiming the launcher's creator fees: every instruction byte for byte, the checker refusing anything else, what waits to be claimed, and measuring a real mainnet claim. |
+| `panels.test.mjs` | The About and Socials panels and `data/socials.json`, and About's Holder rewards section: its three lines (for the rules state.json records) and age bonus equal to the rules' own, a 15-day scenario run through the real rules and shown (the totals, the next payout, the last payout's Solscan links, the wallet box's tokens, age bonus, points share, owed and paid), files that do not read reported, never shown, and its stylesheet linked only when About opens. |
+| `rewards-cli.test.mjs` | The Rewards workflow and `scripts/rewards.mjs` end to end against a fake Solana: the hidden sample (a burn between the reads, unpayable owners at a close, the rules recorded), claims measured into the pot, payouts written "sending" first and never past the pot or into the launcher's reserve, one failing recipient held while the others are paid, a flood of transactions counted over several runs, a lagging node never making a payout "expired" on one answer, dry mode counting and sending nothing, a missing file refused, every crash point (a lost record is found on chain, never paid twice), the key never in a log line. |
 | `models.test.mjs` | The Models workflow (pinned actions, permissions per job, fail closed on `MODELS_ENABLED`, each API key in its one step, no wallet secret, the token only in the push) and `scripts/models.mjs` with fakes: which cats it makes, the credit reserves, the retries, the checks a model must pass, and discarding one that fails. |
 
 `site.test.mjs` checks the site as a whole:
@@ -496,13 +676,15 @@ recorded fixtures keep a fixed one.
   and has nothing to buy; a launched one shows exactly the GMGN and FOMO links for its own mint.
 - With a real recorded launch as a sample, only that cat's card shows GMGN and FOMO buy links for
   its own mint, and a buy link on any other host or path is dropped.
+- About's Holder rewards section reads the shipped rewards files from this site (and Pages publishes
+  them), links only to Solscan transaction pages and the ledger, and says it is not financial advice.
 
 ## Where things are
 
 | Path | What |
 |---|---|
 | `index.html`, `assets/site.css` | The page: the world fills the window, with a light overlay on top. |
-| `assets/ui/` | The overlay: the card (`card.js`), Find a cat (`finder.js`), the checks on every field (`data.js`) and the start-up (`main.js`). |
+| `assets/ui/` | The overlay: the card (`card.js`), Find a cat (`finder.js`), About and Socials (`panels.js`) with About's Holder rewards section (`rewards.js`, `rewards.css`), the checks on every field (`data.js`) and the start-up (`main.js`). |
 | `assets/world/` | The 3D world: sky, sun and clouds (`sky.js`), the garden (`garden.js`), birds and butterflies (`critters.js`), the cats' behaviour (`cats.js`, `nav.js`, `layout.js`), drawing the cats (`catviews.js`) and the scene, camera and picking (`world.js`). |
 | `assets/residents.js`, `assets/collection.js` | Loading and checking the three data files, merging cats with tokens, buy and explorer links, and the stock pairs. |
 | `assets/models/` | The cottage and the cats (glTF). See `PROVENANCE.md`. |
@@ -514,6 +696,7 @@ recorded fixtures keep a fixed one.
 | `data/wallets.json` | The wallets whose launches count. |
 | `data/launches.json` | Launch signatures listed by hand (and by the launcher), proved first on every run (optional). |
 | `data/sanctuary-launches.json`, `data/launch-approvals.json`, `coins/` | The launcher's ledger, the posts the owner approved, and each launched coin's metadata. |
+| `data/rewards/`, `data/rewards-exclude.json` | The $CATSANC holder rewards (see "Holder rewards"): the sampling state, the ledger of claims and payouts, each period's split (written by the Rewards workflow, shown in About), and the wallets the owner excludes. |
 | `data/held.json` | Planned cats held back until their picture is redrawn. |
 | `data/cats-info.json` | The sourced research, one entry per stock. |
 | `scripts/` | `build-planned.mjs`, `build-collection.mjs` and their helpers. |
@@ -547,6 +730,9 @@ and the in-game shot.
 - Buy links appear only for a launched cat, and only the exact GMGN and FOMO pages for its own
   mint. Research links are never trading pages.
 - Only https links are shown. Portraits must be files on this site.
+- About's Holder rewards section shows only what the committed rewards files say, each checked
+  first (a file that does not read is reported, never guessed at). Its only outbound links are
+  payout transactions on Solscan, and it says it is not financial advice.
 - Catcoin Sanctuary is not affiliated with StonkFun, with the issuers of the tokenised stocks, or with
   any company whose stock a cat is paired with. Memecoins have no intrinsic value. Nothing here
   is financial advice.

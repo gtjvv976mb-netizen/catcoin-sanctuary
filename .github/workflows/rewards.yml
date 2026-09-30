@@ -1,0 +1,173 @@
+# $CATSANC holder rewards (scripts/rewards.mjs; the rules in scripts/lib/rewards.mjs, the claim in
+# scripts/lib/pump-fees.mjs, the runs in scripts/lib/rewards-run.mjs): the creator fees the automatic
+# launcher's wallet claims on pump.fun go to the holders of $CATSANC (data/socials.json "contract"), by
+# points: tokens held × hours × an age bonus that grows from 1× toward 2× (older tokens earn more; a new
+# holder always earns at least half the top rate). Every hour, and by hand.
+#
+# The jobs, in order:
+#   sample  (no key) at a random moment of the hour, hidden until the window closes (about 56
+#           minutes), reads every $CATSANC token account and updates each wallet's lots and points;
+#           every REWARDS_EVERY_DAYS days it closes a period and allocates part of the unpaid pot
+#           (data/rewards/periods/<k>.json, public). It records the rules in force (the variables the
+#           site quotes) in data/rewards/state.json. Without a valid mint in data/socials.json it does
+#           nothing. Commits data/rewards.
+#   pay     (the wallet key, in its one send step) settles what was sent before, counts the wallet's
+#           transactions since the ledger's cursor (a few thousand a run at most, saved as it goes: a
+#           flood of transactions naming the wallet only delays the payouts), claims the launcher's
+#           creator fees (even without a mint yet: the pot keeps growing), and pays each wallet what it
+#           is owed in SystemProgram transfers, each transaction checked from its bytes, simulated
+#           unsigned, written "sending" before it is sent and confirmed before the next (a wallet whose
+#           own transfer fails in simulation is held for a day, and the others are paid). A payout
+#           never spends more than the holders' claimed share less what was paid and the fees (I1),
+#           and never the launcher's own reserve (I2). Commits data/rewards even when the send step
+#           failed or the run was cancelled, so a sent transaction is never forgotten (and one whose
+#           record is lost anyway is found on chain by the next run, never paid twice).
+#
+# Why the pay job shares the Launch workflow's concurrency group ("launch"), and the sample job does
+# not: both the launcher and the pay job spend from the same wallet, so they never run at the same
+# time; each starts from the other's committed ledger and a balance nobody else is moving (the launcher
+# spends only its balance less the holders' earmark, scripts/lib/launcher.mjs rewardsEarmark, and the
+# pay job checks the holders' SOL is there, I2, as a second line). Only the pay job (minutes) holds the
+# group: the hour-long sample job touches no wallet, so it never keeps a launch waiting. A group keeps
+# one run pending: a pending launch or payout that another queued run displaces simply runs at its next
+# schedule (20 minutes, an hour). The whole workflow is also its own group ("rewards"), so the sample
+# and the pay job of two hours never overlap on data/rewards. That group keeps one run pending too: a
+# run by hand (new_epoch) that waits behind the hour-long run can be displaced by the next scheduled
+# run, and a scheduled run never redoes it. After dispatching one, check that it completed, and run it
+# again if it shows as cancelled.
+#
+# Repository variables: REWARDS_ENABLED "on" claims and pays; "dry" samples (real samples, points and
+# closes are committed) and builds and simulates claims and payouts, signing and sending nothing;
+# anything else (or unset) stops every job here. The rules and caps, each clamped:
+# REWARDS_HOLDER_SHARE_PCT (100: the share of each claim for the holders, fixed when the claim is sent),
+# REWARDS_EVERY_DAYS (7), REWARDS_RELEASE_PCT (50: the share of the unallocated pot each close releases),
+# REWARDS_WALLET_CAP_PCT (10: what the cap holds back stays in the pot), REWARDS_MIN_BALANCE_PPM (100:
+# 0.01% of the supply), REWARDS_MIN_PAYOUT_SOL (0.001), REWARDS_MIN_CLAIM_SOL (0.01),
+# REWARDS_MAX_TX_PER_RUN (10), REWARDS_MAX_SOL_PER_RUN (2), and the launcher's
+# LAUNCH_PRIORITY_MICROLAMPORTS and LAUNCH_MIN_BALANCE_SOL.
+#
+# By hand: "Run workflow"; new_epoch=<address> (it must equal data/socials.json "contract") starts over
+# after the owner changed the coin: the period is closed at the last sample, lots and points are
+# cleared, what each wallet is owed is kept.
+#
+# Secrets: LAUNCH_WALLET_KEY, the launcher wallet's key, only in the pay job's send step; SOLANA_RPC_URL
+# in the sample and send steps (effectively required: the public RPC may refuse the sample's
+# getProgramAccounts). No dependency is installed: the rewards are plain node.
+#
+# To stop it: set REWARDS_ENABLED to anything but on or dry. A claim or payout already sent is settled
+# the next time it runs. What the holders are owed stays theirs: the launcher keeps holding it back, and
+# every claim since the ledger's cursor too, reading the wallet's history since that cursor on each
+# launch (a long pause is better done with dry, which keeps counting and sends nothing). Disabling the
+# workflow alone is not a way to stop it.
+#
+# The checkout keeps no credentials; the push hands the workflow token to git for that one command.
+name: Rewards
+
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+    inputs:
+      new_epoch:
+        description: "Start a new epoch for this mint (it must equal data/socials.json contract); leave empty for a normal run"
+        required: false
+        default: ""
+
+permissions: {}
+
+concurrency:
+  group: rewards
+  cancel-in-progress: false
+
+jobs:
+  sample:
+    if: ${{ vars.REWARDS_ENABLED == 'on' || vars.REWARDS_ENABLED == 'dry' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: node --test tests/rewards.test.mjs tests/rewards-cli.test.mjs tests/pump-fees.test.mjs
+      - name: Take the hour's sample of the holders at a random moment
+        env:
+          REWARDS_ENABLED: ${{ vars.REWARDS_ENABLED }}
+          REWARDS_EVERY_DAYS: ${{ vars.REWARDS_EVERY_DAYS }}
+          REWARDS_RELEASE_PCT: ${{ vars.REWARDS_RELEASE_PCT }}
+          REWARDS_WALLET_CAP_PCT: ${{ vars.REWARDS_WALLET_CAP_PCT }}
+          REWARDS_MIN_BALANCE_PPM: ${{ vars.REWARDS_MIN_BALANCE_PPM }}
+          REWARDS_MIN_PAYOUT_SOL: ${{ vars.REWARDS_MIN_PAYOUT_SOL }}
+          REWARDS_NEW_EPOCH: ${{ inputs.new_epoch }}
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
+        run: node scripts/rewards.mjs snapshot
+      - name: Commit the sample
+        if: ${{ !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/rewards
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Rewards: the hour's sample of the holders"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+
+  pay:
+    needs: sample
+    if: ${{ !cancelled() && (vars.REWARDS_ENABLED == 'on' || vars.REWARDS_ENABLED == 'dry') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    concurrency:
+      group: launch
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: node --test tests/rewards.test.mjs tests/rewards-cli.test.mjs tests/pump-fees.test.mjs
+      - name: Settle, claim the creator fees and pay the holders (the only step with the wallet key)
+        env:
+          REWARDS_ENABLED: ${{ vars.REWARDS_ENABLED }}
+          REWARDS_HOLDER_SHARE_PCT: ${{ vars.REWARDS_HOLDER_SHARE_PCT }}
+          REWARDS_MIN_PAYOUT_SOL: ${{ vars.REWARDS_MIN_PAYOUT_SOL }}
+          REWARDS_MIN_CLAIM_SOL: ${{ vars.REWARDS_MIN_CLAIM_SOL }}
+          REWARDS_MAX_TX_PER_RUN: ${{ vars.REWARDS_MAX_TX_PER_RUN }}
+          REWARDS_MAX_SOL_PER_RUN: ${{ vars.REWARDS_MAX_SOL_PER_RUN }}
+          LAUNCH_PRIORITY_MICROLAMPORTS: ${{ vars.LAUNCH_PRIORITY_MICROLAMPORTS }}
+          LAUNCH_MIN_BALANCE_SOL: ${{ vars.LAUNCH_MIN_BALANCE_SOL }}
+          LAUNCH_WALLET_KEY: ${{ secrets.LAUNCH_WALLET_KEY }}
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
+        run: node scripts/rewards.mjs send
+      - name: Commit the claims and payouts
+        if: ${{ always() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/rewards
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Rewards: record the claims and payouts"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi

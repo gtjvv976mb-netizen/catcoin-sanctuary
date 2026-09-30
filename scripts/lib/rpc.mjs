@@ -82,11 +82,12 @@ export function createRpc({ url = PUBLIC_RPC, fetchImpl = globalThis.fetch, dela
     /**
      * Simulate a signed transaction (base64) exactly as it would be sent: its own blockhash
      * (replaceRecentBlockhash false), signatures not checked (sigVerify false), and `addresses`'
-     * accounts as they would be after it (base64). Returns the answer's value: { err, logs, accounts, unitsConsumed }.
+     * accounts as they would be after it (base64), on a bank at `minContextSlot` or later when given.
+     * Returns the answer's value: { err, logs, accounts, unitsConsumed }.
      */
-    simulateTransaction: async (base64, { addresses = [], commitment: c = "confirmed" } = {}) =>
+    simulateTransaction: async (base64, { addresses = [], commitment: c = "confirmed", minContextSlot } = {}) =>
       (await call("simulateTransaction", [base64, { encoding: "base64", sigVerify: false, replaceRecentBlockhash: false, commitment: c,
-        accounts: { encoding: "base64", addresses } }]))?.value ?? null,
+        ...(Number.isSafeInteger(minContextSlot) ? { minContextSlot } : {}), accounts: { encoding: "base64", addresses } }]))?.value ?? null,
     /** Send a signed transaction (base64) with the node's own preflight; returns its signature. */
     sendTransaction: (base64, { maxRetries = 5, preflightCommitment = "confirmed" } = {}) =>
       call("sendTransaction", [base64, { encoding: "base64", skipPreflight: false, preflightCommitment, maxRetries }]),

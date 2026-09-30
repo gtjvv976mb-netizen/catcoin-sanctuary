@@ -10,6 +10,7 @@ const PAGES = read("pages.yml");
 const COLLECTION = read("collection.yml");
 const FAMOUS = read("famous.yml");
 const MODELS = read("models.yml");
+const REWARDS = read("rewards.yml");
 
 /* Each action at the commit its release tag points to (git ls-remote github.com/actions/<name>, 2026-09-25). */
 const PINNED = {
@@ -23,7 +24,7 @@ const PINNED = {
 };
 
 test("every action is pinned to the full commit SHA of its release", () => {
-  for (const [name, text] of [["pages.yml", PAGES], ["collection.yml", COLLECTION], ["famous.yml", FAMOUS], ["models.yml", MODELS]]) {
+  for (const [name, text] of [["pages.yml", PAGES], ["collection.yml", COLLECTION], ["famous.yml", FAMOUS], ["models.yml", MODELS], ["rewards.yml", REWARDS]]) {
     const uses = [...text.matchAll(/uses:\s*(\S+)(?:\s*#\s*(\S+))?/g)];
     assert.ok(uses.length > 0, name);
     for (const [, u, comment] of uses) {

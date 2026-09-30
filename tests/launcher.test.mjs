@@ -26,8 +26,10 @@ import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
-  descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf,
+  descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
 } from "../scripts/lib/launcher.mjs";
+import * as R from "../scripts/lib/rewards.mjs";
+import { creatorVault, EVENT_IX_TAG, EVENT_DISC } from "../scripts/lib/pump-fees.mjs";
 import { main, fsStore, scrubber } from "../scripts/launch.mjs";
 import { draftLaunch, checkUpdate, ADDRESS_LIKE, FAN_TRIBUTE, fanTribute, run as postUpdates } from "../scripts/post-updates.mjs";
 import { weightedLength, LIMIT } from "../scripts/announce.mjs";
@@ -105,6 +107,8 @@ const shipped = (rel) => fixtureFree(rel, JSON.parse(readRoot(rel)));
 function site({ posts = [post("2100000000000000001")], wallet = null, approve = [], listWallet = true, ledger = null, watch = WATCH, quotes = null } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "launcher-"));
   fs.cpSync(path.join(ROOT, "data"), path.join(root, "data"), { recursive: true });
+  // No $CATSANC holder rewards (data/rewards: the live ledger's holders' SOL would change what the wallet may spend); a test writes its own.
+  fs.rmSync(path.join(root, "data/rewards"), { recursive: true, force: true });
   fs.mkdirSync(path.join(root, "scripts"));
   fs.copyFileSync(path.join(ROOT, "scripts/meshy.queue.json"), path.join(root, "scripts/meshy.queue.json"));
   // No shipped cat named like a fixture (a file is rewritten, in its own layout, only when one is there).
@@ -665,6 +669,116 @@ test("caps and the balance floor, on the simulated balance: per launch, per day,
   const row = (status, h, spent, extra = {}) => ({ status, sentAt: iso(NOW - h * HOUR), spentLamports: spent, ...extra });
   assert.deepEqual(dayStats({ launches: [row("launched", 1, 5_000_000), row("launched", 23, 6_000_000), row("launched", 25, 7_000_000), row("failed", 2, 25_000), row("sending", 0.1, undefined), row("prepared", 3, 10_000)] }, NOW, caps),
     { count: 3, lamports: 5_000_000 + 6_000_000 + 25_000 + caps.maxLamportsPerLaunch + 10_000 }, "a row still sending counts the per-launch cap");
+});
+
+test("the $CATSANC holders' SOL (the rewards ledger's earmark) is never spent on a launch; a ledger that is missing or does not read, or a history it cannot read, makes the launch wait", async () => {
+  const sigOf = () => base58Encode(randomBytes(64));
+  /** A rewards ledger whose holders are owed `forHolders` lamports (one landed claim), with its cursor and any rows still sending. */
+  const ledgerWith = (forHolders, { cursor = null, sending = [] } = {}) => {
+    const L = R.emptyLedger();
+    const g = sigOf();
+    R.recordClaimSending(L, { sig: g, lastValidBlockHeight: 1, sharePct: 100, sentAt: iso(NOW - HOUR) });
+    R.settleClaim(L, g, { claimed: BigInt(forHolders), walletFee: 0n, net: BigInt(forHolders) }, { settledAt: iso(NOW - HOUR) });
+    for (const s of sending) R.recordClaimSending(L, { sig: s, lastValidBlockHeight: 1, sharePct: 100, sentAt: iso(NOW - HOUR) });
+    if (cursor) R.advanceCursor(L, cursor);
+    return R.ledgerText(L);
+  };
+  const attempt = async ({ rewardsLedger, rewardsState, env = {}, chain = {}, setup = () => {} }) => {
+    const w = throwaway();
+    const t = site({ wallet: w.address });
+    if (rewardsLedger !== undefined || rewardsState !== undefined) fs.mkdirSync(path.join(t.root, "data/rewards"), { recursive: true });
+    if (rewardsLedger !== undefined) fs.writeFileSync(path.join(t.root, R.REWARDS_FILES.ledger), rewardsLedger);
+    if (rewardsState !== undefined) fs.writeFileSync(path.join(t.root, R.REWARDS_FILES.state), rewardsState);
+    const sol = fakeSolana({ wallet: w.address, ...chain }), web = fakeSite(t.root), c = clock();
+    setup(sol, w);
+    await prepare({ io: t.io, env: ON(w, env), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+    web.deployed = true;
+    const logs = [];
+    const r = await send({ io: t.io, env: ON(w, env), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
+    return { r, logs, sol, all: logs.join("\n") };
+  };
+  // No rewards ledger, or one as shipped (nothing claimed, no cursor): nothing held back.
+  const none = await attempt({});
+  assert.equal(none.r.outcome, "launched", none.all);
+  assert.ok(!none.all.includes("holders"), none.all);
+  const empty = await attempt({ rewardsLedger: R.ledgerText(R.emptyLedger()), env: { REWARDS_ENABLED: "on" } });
+  assert.equal(empty.r.outcome, "launched", empty.all);
+  // 0.2 SOL in the wallet, 0.15 of it the holders': 0.05 free, the launch costs 0.0056, 0.0444 stays over the 0.02 floor.
+  const ok = await attempt({ rewardsLedger: ledgerWith(150_000_000) });
+  assert.equal(ok.r.outcome, "launched", ok.all);
+  assert.ok(ok.logs.some((l) => /0\.15 SOL of the wallet's 0\.2 SOL belongs to the \$CATSANC holders/.test(l)), ok.all);
+  // 0.185 SOL of it the holders': 0.015 free, at or under the floor: it waits, nothing is sent.
+  const held = await attempt({ rewardsLedger: ledgerWith(185_000_000) });
+  assert.equal(held.r.outcome, "cap", held.all);
+  assert.ok(held.logs.some((l) => /0\.185 SOL of it the holders'.*at or under LAUNCH_MIN_BALANCE_SOL/.test(l)), held.all);
+  assert.ok(!held.sol.methods().includes("sendTransaction"));
+  // 0.176 of it the holders': 0.024 free, but 0.024 less the launch's 0.0056 falls under the floor after it.
+  const after = await attempt({ rewardsLedger: ledgerWith(176_000_000) });
+  assert.equal(after.r.outcome, "cap", after.all);
+  assert.ok(after.logs.some((l) => /would fall under LAUNCH_MIN_BALANCE_SOL/.test(l)), after.all);
+  // What a claim brought in since the ledger's cursor that the ledger does not list yet (a stranger's claim, or one whose record has not
+  // reached main) is the holders' too, whatever REWARDS_ENABLED says; a claim the ledger lists as still sending as well. Each is measured
+  // as the Rewards workflow will count it (measureClaim: pump.fun's claim event, what the wallet received, what left the vault).
+  const cursor = sigOf(), unlisted = sigOf();
+  const claimTx = (w, sig, lamports) => {
+    const stranger = throwaway().address, vault = creatorVault(w.address);
+    const event = Buffer.alloc(16 + 80);
+    Buffer.from(EVENT_IX_TAG + EVENT_DISC.collectCreatorFee, "hex").copy(event, 0);
+    event.writeBigInt64LE(1_790_000_000n, 16); Buffer.from(base58Decode(w.address)).copy(event, 24); event.writeBigUInt64LE(BigInt(lamports), 56); Buffer.from(base58Decode(SYSTEM_PROGRAM)).copy(event, 64);
+    return { slot: 450_000_000, blockTime: Math.floor(NOW / 1000), transaction: { signatures: [sig], message: { accountKeys: [stranger, w.address, vault, PUMP.program, PUMP.eventAuthority] } },
+      meta: { err: null, fee: 7000, preBalances: [10_000_000, 20_000_000, 650_240 + lamports, 1, 1], postBalances: [9_993_000, 20_000_000 + lamports, 650_240, 1, 1],
+        innerInstructions: [{ index: 0, instructions: [{ programIdIndex: 3, accounts: [4], data: base58Encode(event) }] }], loadedAddresses: { writable: [], readonly: [] } } };
+  };
+  const arrived = (sol, w) => {
+    sol.history.set(w.address, [{ signature: unlisted, err: null, blockTime: Math.floor(NOW / 1000), slot: 450_000_000 }]);
+    sol.txs.set(unlisted, claimTx(w, unlisted, 160_000_000));
+  };
+  for (const REWARDS_ENABLED of ["on", "dry", "off"]) {
+    const on = await attempt({ rewardsLedger: ledgerWith(20_000_000, { cursor }), env: { REWARDS_ENABLED }, setup: arrived });
+    assert.equal(on.r.outcome, "cap", `${REWARDS_ENABLED}\n${on.all}`);
+    assert.ok(on.logs.some((l) => /0\.18 SOL of the wallet's 0\.2 SOL belongs to the \$CATSANC holders/.test(l)), on.all);
+    const until = on.sol.calls.find((x) => x.method === "getSignaturesForAddress" && x.params[1]?.until);
+    assert.deepEqual(until.params[1], { limit: 1000, commitment: "confirmed", until: cursor });
+  }
+  const sending = await attempt({ rewardsLedger: ledgerWith(20_000_000, { sending: [unlisted] }), setup: arrived });
+  assert.equal(sending.r.outcome, "cap", sending.all);
+  // A deposit (the owner funding the wallet: a plain transfer in) claims nothing: it is never held back.
+  const deposit = (sol, w) => {
+    sol.history.set(w.address, [{ signature: unlisted, err: null, blockTime: Math.floor(NOW / 1000), slot: 450_000_000 }]);
+    sol.txs.set(unlisted, { slot: 450_000_000, blockTime: Math.floor(NOW / 1000), transaction: { signatures: [unlisted], message: { accountKeys: [throwaway().address, w.address, SYSTEM_PROGRAM] } },
+      meta: { err: null, fee: 5000, preBalances: [300_000_000, 40_000_000, 1], postBalances: [139_995_000, 200_000_000, 1], innerInstructions: [], loadedAddresses: { writable: [], readonly: [] } } });
+  };
+  const funded = await attempt({ rewardsLedger: ledgerWith(20_000_000, { cursor }), env: { REWARDS_ENABLED: "on" }, setup: deposit });
+  assert.equal(funded.r.outcome, "launched", funded.all);
+  assert.ok(funded.logs.some((l) => /0\.02 SOL of the wallet's 0\.2 SOL belongs to the \$CATSANC holders/.test(l)), funded.all);
+  // Past the first page of 1,000 signatures: every page is read (a flood no longer stops launches by its count alone).
+  const many = await attempt({ rewardsLedger: ledgerWith(20_000_000, { cursor }), env: { REWARDS_ENABLED: "on" }, setup: (sol, w) => {
+    const junk = Array.from({ length: 1_500 }, () => ({ signature: sigOf(), err: { InstructionError: [0, "Custom"] }, blockTime: Math.floor(NOW / 1000), slot: 450_000_000 }));
+    arrived(sol, w);
+    sol.history.set(w.address, [...junk, ...sol.history.get(w.address)]);
+  } });
+  assert.equal(many.r.outcome, "cap", many.all);
+  assert.equal(many.sol.calls.filter((x) => x.method === "getSignaturesForAddress" && x.params[1]?.until).length, 2, "two pages");
+  assert.equal(many.sol.calls.filter((x) => x.method === "getTransaction").length, 1, "failed ones are never read");
+  // A missing ledger: nothing is held only when neither rewards file exists and REWARDS_ENABLED is off.
+  const noLedger = await attempt({ rewardsState: R.stateText(R.emptyState()) });
+  assert.equal(noLedger.r.outcome, "earmark", noLedger.all);
+  assert.ok(noLedger.logs.some((l) => /data\/rewards\/ledger\.json is missing while data\/rewards\/state\.json is there: the holders' SOL cannot be told apart/.test(l)), noLedger.all);
+  for (const REWARDS_ENABLED of ["on", "dry"]) {
+    const none = await attempt({ env: { REWARDS_ENABLED } });
+    assert.equal(none.r.outcome, "earmark", none.all);
+    assert.ok(none.logs.some((l) => new RegExp(`ledger\\.json is missing while REWARDS_ENABLED is ${REWARDS_ENABLED}`).test(l)), none.all);
+  }
+  // A ledger that does not read, or a history that cannot be read: the holders' SOL cannot be told apart, so nothing is sent.
+  const broken = await attempt({ rewardsLedger: ledgerWith(10_000_000).replace('"E": "10000000"', '"E": "99000000"') });
+  assert.equal(broken.r.outcome, "earmark", broken.all);
+  assert.ok(broken.logs.some((l) => /data\/rewards\/ledger\.json does not read .*E is 99000000.*: the holders' SOL cannot be told apart/.test(l)), broken.all);
+  assert.ok(!broken.sol.methods().includes("sendTransaction"));
+  const unreadable = await attempt({ rewardsLedger: ledgerWith(10_000_000, { cursor }), env: { REWARDS_ENABLED: "on" }, setup: (sol, w) => { arrived(sol, w); sol.txs.delete(unlisted); } });
+  assert.equal(unreadable.r.outcome, "earmark", unreadable.all);
+  // The pure rule, from the rewards module: none without either rewards file while rewards are off.
+  assert.deepEqual(await rewardsEarmark({ io: { readText: () => null }, rpc: null, wallet: throwaway().address }), { lamports: 0n, problem: null });
+  assert.match((await rewardsEarmark({ io: { readText: () => null }, rpc: null, wallet: throwaway().address, env: { REWARDS_ENABLED: "dry" } })).problem, /missing/);
 });
 
 test("the day's count: after LAUNCH_MAX_PER_DAY launches in 24 hours, no new cat is prepared", async () => {

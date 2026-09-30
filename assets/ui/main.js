@@ -7,6 +7,7 @@ import { getResidents, isLaunched, isFamous } from "./data.js";
 import { createCard, badgeFor, tickerLabel } from "./card.js";
 import { createFinder } from "./finder.js";
 import { createPanels } from "./panels.js";
+import { fetchRewards } from "./rewards.js";
 
 const $ = (id) => document.getElementById(id);
 const canvas = $("world");
@@ -143,7 +144,12 @@ const panels = createPanels({
   about: $("about"), socials: $("socials"),
   onDisclaimers: () => { if (footToggle.getAttribute("aria-expanded") !== "true") footToggle.click(); footToggle.focus(); },
 });
-$("about-open").addEventListener("click", () => panels.openAbout());
+// About's "Holder rewards" section reads data/rewards/ and the excluded wallets when About is first opened.
+let rewardsAsked = false;
+$("about-open").addEventListener("click", () => {
+  panels.openAbout();
+  if (!rewardsAsked) { rewardsAsked = true; fetchRewards().then((d) => panels.setRewards(d)); }
+});
 $("socials-open").addEventListener("click", () => panels.openSocials());
 fetch("data/socials.json").then((r) => (r.ok ? r.json() : null)).then((j) => j && panels.setConfig(j)).catch(() => {});
 

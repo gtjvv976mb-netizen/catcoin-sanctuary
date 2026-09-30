@@ -1,0 +1,17 @@
+{
+  "note": "The $CATSANC holder rewards' sampling state (scripts/lib/rewards.mjs): the rules in force (the repository variables the site quotes), the verified clock V, the current period, and each wallet's lots [[amount, since V]] (oldest first), points this period, what it is owed in lamports, and a hold on its payouts, if any. Written by the Rewards workflow; do not edit by hand.",
+  "version": 1,
+  "rules": null,
+  "mint": null,
+  "tokenProgram": null,
+  "decimals": null,
+  "epoch": null,
+  "tPrev": null,
+  "slotPrev": null,
+  "V": 0,
+  "period": 0,
+  "periodStart": null,
+  "periodEnd": null,
+  "intervals": [],
+  "wallets": {}
+}

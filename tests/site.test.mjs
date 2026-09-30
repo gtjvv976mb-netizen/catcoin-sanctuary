@@ -16,6 +16,7 @@ import { loadResidents } from "../assets/residents.js";
 import { normalize, isLaunched } from "../assets/ui/data.js";
 import { createCard, badgeFor } from "../assets/ui/card.js";
 import { createFinder } from "../assets/ui/finder.js";
+import { fetchRewards, checkLedger, checkState, createRewards } from "../assets/ui/rewards.js";
 import { jpegInfo } from "../scripts/build-planned.mjs";
 
 const SITE = "https://catcoinsanctuary.com/";
@@ -186,6 +187,8 @@ test("every file the page names exists", () => {
   }
   for (const u of CSS_URLS) assert.ok(exists(path.posix.join("assets", u)), `site.css names ${u}, which is missing`);
   for (const f of [...MODELS, ...DATA, "CNAME", "favicon.ico", "assets/icons/favicon.svg", "assets/icons/apple-touch-icon.png", "assets/og-image.jpg"]) assert.ok(exists(f), `${f} is missing`);
+  // About's Holder rewards section: its stylesheet and the files it fetches when About opens.
+  for (const f of ["assets/ui/rewards.css", "data/rewards/ledger.json", "data/rewards/state.json", "data/rewards-exclude.json", "data/socials.json"]) assert.ok(exists(f), `${f} is missing`);
   assert.equal(read("CNAME").trim(), "catcoinsanctuary.com");
   assert.ok(!exists("index.prototype.html"), "the prototype page is gone");
   for (const c of PLANNED.cats) {
@@ -262,8 +265,18 @@ test("page weight: the first view stays within budget", () => {
   // reads data/pump-quotes.json (residents.js), so a pump.fun coin the launcher priced in a listed
   // coin and the Collection proved shows as launched, checked by the one rule the builder and the
   // bots use (quoteProblem and validatePumpQuotes, moved from scripts/lib/pump.mjs to
-  // assets/collection.js). 29 bytes were spare before it, 219 after.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 698 * 1024, "the page's own scripts over 698 KB");
+  // assets/collection.js). 29 bytes were spare before it, 219 after; then from 698 KB to 720 KB for the
+  // $CATSANC "Holder rewards" section in About, ~21.8 KB: assets/ui/rewards.js (the three-line formula
+  // and what goes in the pot, copied from scripts/lib/rewards.mjs and kept equal by tests/panels.test.mjs;
+  // the checks on data/rewards/ledger.json and state.json; the age bonus and the period's points exactly
+  // as the rules compute them; the last payout's Solscan links; the "check a wallet" box), About drawn
+  // again once data/socials.json has loaded (panels.js), and the rewards files fetched when About is first
+  // opened (main.js). 85 bytes were spare before it, about 0.7 KB after; then from 720 KB to 724 KB for
+  // the holder rewards' review fixes, ~2.7 KB: the three lines built from the rules in force that
+  // state.json records (rewardsText and the check of those rules, rewards.js), and the section's
+  // stylesheet, assets/ui/rewards.css, linked only when About is first opened (panels.js calls its
+  // show()), never on the first view: tests/panels.test.mjs checks it. About 2 KB are spare after it.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 724 * 1024, "the page's own scripts over 724 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
@@ -493,6 +506,32 @@ test("every planned cat's card shows its proof: the post's author, handle, words
   assert.equal(bare.proof, null);
   assert.match(renderCard(bare).section("card-proof"), /No proof post recorded yet/);
   assert.equal(normalize({ ...planned[0], id: "t", proof: { kind: "web", url: "http://example.com/", author: "G", text: "hi" } }).proof, null);
+});
+
+/* ── About's Holder rewards section, from the files as shipped ───────────────────────── */
+
+test("the Holder rewards section reads the shipped rewards files from this site (published by Pages), and says it is not financial advice", async () => {
+  const data = await fetchRewards((rel) => localFetch(new URL(rel, BASE)));
+  for (const k of ["ledger", "state", "wallets"]) assert.ok(data[k], `data for ${k} could not be read`);
+  // data/rewards-exclude.json is the owner's, edited by hand, and npm test gates every Pages deploy: whatever it holds, the page shows
+  // the section (an exclusion list it cannot read only leaves the excluded wallets' reasons out), and this test does not read it.
+  data.exclude = null;
+  assert.ok(checkLedger(data.ledger), "data/rewards/ledger.json reads on the page");
+  assert.ok(checkState(data.state), "data/rewards/state.json reads on the page");
+  const root = new Element("section");
+  const contract = JSON.parse(read("data/socials.json")).contract || null;
+  createRewards(root, { contract, now: () => NOW }).setData(data);
+  assert.match(root.textContent, /^Holder rewardsNot financial advice\./);
+  assert.match(root.textContent, /Hold \$CATSANC, earn SOL\..*Older tokens earn more\..*Every 7 days,/);
+  assert.match(root.textContent, /Creator fees claimed[\d.,]+ SOLPaid to holders[\d.,]+ SOLWaiting for holders[\d.,]+ SOLNext payout/);
+  assert.ok(!/could not be read/.test(root.textContent));
+  for (const a of root.querySelectorAll("a")) {
+    assert.ok(a.href === "data/rewards/ledger.json" || /^https:\/\/solscan\.io\/tx\/[1-9A-HJ-NP-Za-km-z]{64,90}$/.test(a.href), a.href);
+    assert.equal(a.rel, "noopener noreferrer");
+  }
+  // Pages publishes the rewards files (nothing under data/rewards is left out of the site).
+  const pages = read(".github/workflows/pages.yml");
+  assert.ok(!/--exclude '\/data\/rewards/.test(pages), "the Pages workflow leaves the rewards files out");
 });
 
 /* ── Famous cat coins: their cards and the finder's filters ───────────────────────── */

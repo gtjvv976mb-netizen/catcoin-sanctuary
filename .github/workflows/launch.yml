@@ -22,6 +22,12 @@
 # launch without approval; "off" sends them to data/launch-approvals.json again.
 # LAUNCH_PUMP_QUOTE "on" opts in to pump.fun launches priced in a listed coin (unverified: no such launch
 # has been recorded); anything else keeps them off. A variable, never a secret.
+# The send step never spends the $CATSANC holders' SOL (the creator fees the Rewards workflow claimed for
+# them and has not paid out: data/rewards/ledger.json); it also holds back every creator-fee claim that
+# landed since that ledger's cursor (whatever REWARDS_ENABLED says; a deposit is never held) until the
+# Rewards workflow has counted it, and it waits when that ledger is missing while rewards are on or dry.
+# The launch and the Rewards pay job share this concurrency group, so they never spend from the wallet
+# at the same time.
 #
 # The jobs, in order:
 #   prepare   settles what was sent before, then prepares at most one cat: its ledger row
@@ -156,6 +162,7 @@ jobs:
           LAUNCH_MIN_BALANCE_SOL: ${{ vars.LAUNCH_MIN_BALANCE_SOL }}
           LAUNCH_PRIORITY_MICROLAMPORTS: ${{ vars.LAUNCH_PRIORITY_MICROLAMPORTS }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
+          REWARDS_ENABLED: ${{ vars.REWARDS_ENABLED }}
           LAUNCH_WALLET_KEY: ${{ secrets.LAUNCH_WALLET_KEY }}
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
         run: node scripts/launch.mjs send

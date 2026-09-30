@@ -73,7 +73,11 @@
  *            run uses no attempt), and refuses unless
  *            the simulation succeeds, the wallet's loss is within LAUNCH_MAX_SOL_PER_LAUNCH, the last
  *            24 hours' spend plus this one is within LAUNCH_MAX_SOL_PER_DAY and the balance stays at or
- *            above LAUNCH_MIN_BALANCE_SOL. In dry mode it stops there, having signed nothing. Otherwise,
+ *            above LAUNCH_MIN_BALANCE_SOL, the balance counted WITHOUT the $CATSANC holders' SOL (the
+ *            creator fees claimed for them and not paid out yet, and what every claim since the rewards
+ *            ledger's cursor brought in: rewardsEarmark, from data/rewards/ledger.json; a ledger that is
+ *            missing or does not read, or a history it cannot read in time, makes the launch wait).
+ *            In dry mode it stops there, having signed nothing. Otherwise,
  *            the wallet still listed, it signs, writes the row "sending", sends, and confirms with
  *            bounded polling. Only a definite preflight or validation failure (REFUSAL_CODES: -32002,
  *            -32602) answered to the first and only post is a refusal (failed, nothing went out);
@@ -103,6 +107,8 @@ import { coatFromLook } from "./coat.mjs";
 import { tickerFor, loreFrom } from "./read-cat-post.mjs";
 import { RpcError } from "./rpc.mjs";
 import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
+import { validateRewardsLedger, earmarkSignatures, earmarkLamports, rewardsMode, REWARDS_FILES } from "./rewards.mjs";
+import { measureClaim } from "./pump-fees.mjs";
 
 /* ── constants ─────────────────────────────────────────────────────────────────────────── */
 
@@ -1125,6 +1131,78 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
   return out;
 }
 
+/** Pages of 1,000 wallet signatures past the rewards ledger's cursor the earmark lists at most: more, and the launch waits (the Rewards workflow counts them, a few thousand a run). */
+export const EARMARK_MAX_PAGES = 50;
+/** How long the earmark may spend reading the transactions past the cursor: longer, and the launch waits until the Rewards workflow has counted them. */
+export const EARMARK_MS = 5 * 60_000;
+
+/**
+ * THE $CATSANC HOLDERS' SOL, which a launch must leave alone (scripts/lib/rewards.mjs, the holder
+ * rewards): the wallet keeps the creator fees it claims for the holders until the Rewards workflow pays
+ * them out. max(0, E − P − F) (the holders' share of every settled claim, less what was paid and the
+ * payout fees), plus what each transaction the ledger has not settled for them yet claimed (measured
+ * as the Rewards workflow will: pump-fees.mjs measureClaim, so a deposit or a refund is never held):
+ * each claim it lists as still sending and, whenever the ledger has a cursor (whatever REWARDS_ENABLED
+ * says: a stranger's claim while rewards are dry or off is the holders' too), each successful wallet
+ * transaction newer than the cursor that it does not list. Only when neither rewards file exists and
+ * REWARDS_ENABLED is off is there nothing to hold. Returns { lamports (BigInt), problem }: a ledger that
+ * is missing (while data/rewards/state.json exists, or rewards are on or dry) or does not validate, a
+ * read that fails, more than EARMARK_MAX_PAGES pages past the cursor, or more than EARMARK_MS spent
+ * reading them is a problem, and then the launch waits (fail closed: the holders' SOL cannot be told
+ * apart).
+ */
+export async function rewardsEarmark({ io, rpc, wallet, env = {}, now = Date.now }) {
+  const text = io.readText(REWARDS_FILES.ledger);
+  if (text === null || text === undefined) {
+    const state = io.readText(REWARDS_FILES.state);
+    const hasState = state !== null && state !== undefined, mode = rewardsMode(env);
+    if (!hasState && mode === "off") return { lamports: 0n, problem: null };
+    return { lamports: 0n, problem: `${REWARDS_FILES.ledger} is missing while ${hasState ? `${REWARDS_FILES.state} is there` : `REWARDS_ENABLED is ${mode}`}` };
+  }
+  let L;
+  try { L = validateRewardsLedger(JSON.parse(text.replace(/^\uFEFF/, ""))); } catch (e) { return { lamports: 0n, problem: `${REWARDS_FILES.ledger} does not read (${String(e?.message ?? e).slice(0, 200)})` }; }
+  const sending = L.claims.filter((r) => r.status === "sending").map((r) => r.sig);
+  let sigs = sending;
+  try {
+    if (L.cursor) {
+      const list = [];
+      let before;
+      for (let page = 0; ; page++) {
+        if (page >= EARMARK_MAX_PAGES) return { lamports: 0n, problem: `more than ${EARMARK_MAX_PAGES * 1000} wallet transactions since the rewards ledger's cursor (the Rewards workflow is counting them)` };
+        const got = await rpc.getSignaturesForAddress(wallet, { until: L.cursor, limit: 1000, commitment: "confirmed", ...(before ? { before } : {}) });
+        if (!Array.isArray(got)) return { lamports: 0n, problem: "the wallet's history could not be read for the holders' earmark" };
+        list.push(...got);
+        if (got.length < 1000) break;
+        before = got[got.length - 1].signature;
+      }
+      sigs = [...new Set([...earmarkSignatures(L, list.filter((s) => s && !s.err).map((s) => s.signature)), ...sending])];
+    }
+    const started = now();
+    const deltas = [];
+    for (const sig of sigs) {
+      if (now() - started > EARMARK_MS) return { lamports: 0n, problem: `${sigs.length} wallet transactions since the rewards ledger's cursor take too long to read (the Rewards workflow is counting them)` };
+      const tx = await rpc.getTransaction(sig, { commitment: "confirmed" });
+      if (!tx) {
+        if (sending.includes(sig)) continue;                  // a claim not landed yet: nothing of it is in the balance
+        return { lamports: 0n, problem: `the wallet's transaction ${sig.slice(0, 12)}… could not be read for the holders' earmark` };
+      }
+      // What it claimed, as the Rewards workflow will count it (a deposit or a refund claims nothing).
+      try { deltas.push(measureClaim(tx, { wallet }).claimed); continue; } catch { /* not readable as a claim: whatever it brought in is held (fail closed) */ }
+      const keys = [...(tx.transaction?.message?.accountKeys ?? []), ...(tx.meta?.loadedAddresses?.writable ?? []), ...(tx.meta?.loadedAddresses?.readonly ?? [])];
+      const i = keys.indexOf(wallet);
+      if (i < 0) continue;
+      const pre = tx.meta?.preBalances?.[i], post = tx.meta?.postBalances?.[i];
+      if (!Number.isSafeInteger(pre) || !Number.isSafeInteger(post)) return { lamports: 0n, problem: `the wallet's transaction ${sig.slice(0, 12)}… gave no balances` };
+      deltas.push(BigInt(post) - BigInt(pre));
+    }
+    const lamports = earmarkLamports(L, deltas);
+    if (lamports > BigInt(Number.MAX_SAFE_INTEGER)) return { lamports, problem: "the holders' earmark is past what a balance can hold" };
+    return { lamports, problem: null };
+  } catch (e) {
+    return { lamports: 0n, problem: `the holders' earmark could not be read (${String(e?.message ?? e).slice(0, 160)})` };
+  }
+}
+
 /** Simulation errors that say nothing about the launch (the RPC node's view of the chain lagged): the row stays prepared and uses no attempt; the next run simulates again (within the post's 48 hours). */
 export const TRANSIENT_SIMULATION = Object.freeze(["BlockhashNotFound", "AccountInUse"]);
 /** A send refused as a copy of a transaction the chain already has: it went out. */
@@ -1259,8 +1337,18 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   if (stats.count >= caps.maxPerDay) { log(`Launcher: ${stats.count} launch(es) in the last 24 hours (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}); ${row.ticker} waits.`); return { ...out, outcome: "cap" }; }
   const balance = await rpc.getBalance(wallet.publicKey);
   if (!Number.isSafeInteger(balance)) throw new LaunchError("the RPC gave no balance for the wallet");
-  if (balance <= caps.minBalanceLamports) {
-    log(`::warning title=Launcher::the wallet holds ${sol(balance)}, at or under LAUNCH_MIN_BALANCE_SOL (${sol(caps.minBalanceLamports)}); ${row.ticker} waits until it is funded.`);
+  // The $CATSANC holders' SOL (the creator fees claimed for them, not paid out yet) is never the launcher's to spend:
+  // every check below sees only what is left of the balance without it.
+  const held = await rewardsEarmark({ io, rpc, wallet: wallet.publicKey, env, now });
+  if (held.problem) {
+    log(`::warning title=Launcher::${scrub(held.problem)}: the holders' SOL cannot be told apart from the launcher's, so ${row.ticker} waits.`);
+    return { ...out, outcome: "earmark" };
+  }
+  const earmark = Number(held.lamports);
+  const free = balance - earmark;
+  if (earmark > 0) log(`Launcher: ${sol(earmark)} of the wallet's ${sol(balance)} belongs to the $CATSANC holders (${REWARDS_FILES.ledger}); a launch may use only the other ${sol(Math.max(0, free))}.`);
+  if (free <= caps.minBalanceLamports) {
+    log(`::warning title=Launcher::the wallet holds ${sol(balance)}${earmark > 0 ? `, ${sol(earmark)} of it the holders'` : ""}: ${sol(free)} is at or under LAUNCH_MIN_BALANCE_SOL (${sol(caps.minBalanceLamports)}); ${row.ticker} waits until it is funded.`);
     return { ...out, outcome: "cap" };
   }
   const bh = await rpc.getLatestBlockhash();
@@ -1320,8 +1408,8 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     return { ...out, outcome: "simulation_failed" };
   }
   const loss = tried.loss;
-  const capped = capProblem({ stats, caps, lossLamports: loss, balanceLamports: balance });
-  const figures = `about ${sol(loss)} (cap ${sol(caps.maxLamportsPerLaunch)}), the last 24 hours ${sol(stats.lamports)} of ${sol(caps.maxLamportsPerDay)}, balance ${sol(balance)} (floor ${sol(caps.minBalanceLamports)})`;
+  const capped = capProblem({ stats, caps, lossLamports: loss, balanceLamports: free });
+  const figures = `about ${sol(loss)} (cap ${sol(caps.maxLamportsPerLaunch)}), the last 24 hours ${sol(stats.lamports)} of ${sol(caps.maxLamportsPerDay)}, balance ${sol(balance)}${earmark > 0 ? ` (${sol(earmark)} of it the holders')` : ""} (floor ${sol(caps.minBalanceLamports)})`;
   if (capped) { log(`Launcher: ${dry}${row.ticker} is not sent: ${capped}.`); return { ...out, outcome: "cap" }; }
   if (mode === "dry") {
     log(`Launcher (dry run): ${row.coinName} (${row.ticker}) from ${row.url} simulates cleanly ${whereText(row)}: ${figures}. Nothing was signed or sent.`);
