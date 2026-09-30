@@ -29,7 +29,7 @@ import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
 import { AMBIENT } from "./ambient.js";
 import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit, GAIT_RATE, PIVOT_TURN, STOPS } from "./catrig.js";
-import { ACTIONS, NEUTRAL_TRAITS, allowedAction, gaitScale, transitionPath } from "./catmotion.js";
+import { ACTIONS, GAIT_BLEND, LEG_VMAX, NEUTRAL_TRAITS, allowedAction, gaitScale, transitionPath } from "./catmotion.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { lookOf } from "./looks.js";
 import { MAX_SCALE, MIN_SCALE } from "./traits.js";
@@ -677,7 +677,7 @@ export function clipFor(cat) {
 /** The controller's timings (s) and reach: blends, when a returning cat snaps, where far cats are
     posed less often and where the procedural layers fade out (units from the camera), and how far
     the head turns (rad). */
-export const ANIM = { fade: 0.15, loopFade: 0.25, moveFade: 0.2, changeFade: 0.3, gaitBlend: 0.3, snapAfter: 0.5, throttle: 30, layerNear: 24, layerFar: 32, lookYaw: 1.22, lookPitch: 0.61 };
+export const ANIM = { fade: 0.15, loopFade: 0.25, moveFade: 0.2, changeFade: 0.3, gaitBlend: GAIT_BLEND, snapAfter: 0.5, throttle: 30, layerNear: 24, layerFar: 32, lookYaw: 1.22, lookPitch: 0.61 };
 
 /** How much each action leaves to the procedural layers: [head turns to look, tail spring, back
     bends into a turn, breathing]. Posture changes and once-through moves: nothing (the clip does it). */
@@ -704,7 +704,7 @@ const GAIT_I = { walk: 0, trot: 1, run: 2, stalk: 3 };
 const GAIT_AT = [0, -0.21, -0.18, 0];
 /** The fastest each gait's legs are stepped (units per second of ground): ground counted faster than
     that (a quick turn on the spot counted as steps, a shove) is not stepped out in a flurry of legs. */
-const GAIT_VMAX = [1.6, 2.6, 4.5, 0.7];
+const GAIT_VMAX = LEG_VMAX; // (catmotion: the sims never carry a cat over more)
 /** The clip standing in for a posture (reduced motion, or an action a clip set lacks). */
 const BASE = { move: "stand", stand: "stand", sit: "sit", lie: "loaf", sleep: "sleep", air: "stand" };
 const STILL_CLIP = { walk: "stand", sit: "sit", loaf: "loaf", stretch: "stand", sleep: "sleep" };

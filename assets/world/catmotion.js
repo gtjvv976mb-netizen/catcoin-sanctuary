@@ -106,6 +106,40 @@ export const GAIT_BANDS = { trotUp: 1.55, trotDown: 1.25, runUp: 2.45, runDown: 
     rounding error inside it (seen at 0.4999 s on the page). */
 export const GAIT_DWELL = 0.52;
 
+/** The legs the view shows: the gaits in its order, the most ground (units/s, an ordinary cat's; × gaitScale for a
+    bigger one) each gait's legs are stepped over, and how long (s) it blends one gait's legs into the next's.
+    catviews steps no more ground than that, and the sims never carry a cat over more (legStep): its paws never skate. */
+export const LEG_GAITS = ["walk", "trot", "run", "stalk"];
+export const LEG_VMAX = [1.6, 2.6, 4.5, 0.7];
+export const GAIT_BLEND = 0.3;
+const smooth01 = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+/** A cat's legs as the view blends them (legStep's state). */
+export const newLegs = () => ({ gs: [0, 0, 0, 0], gp: [0, 0, 0, 0], gd0: [0, 0, 0, 0], cur: -1, idle: 0 });
+/** The ground (units/s, before gaitScale) the legs shown step as they stand (0 when no gait is shown). */
+export function legCap(L) {
+  if (L.cur < 0) return 0;
+  let v = 0;
+  for (let i = 0; i < 4; i++) v += L.gs[i] * LEG_VMAX[i];
+  return v;
+}
+/** One tick of the view's gait weights for the gait shown (null: none; after 0.2 s of none, the next gait
+    starts afresh, as the view's gait layer has faded out), exactly as catviews blends them; returns the
+    ground (units/s, before gaitScale) the legs shown step, 0 when no gait is shown. */
+export function legStep(L, gait, dt) {
+  const gi = gait ? LEG_GAITS.indexOf(gait) : -1;
+  if (gi < 0) { if ((L.idle += dt) > 0.2) L.cur = -1; return 0; }
+  L.idle = 0;
+  if (L.cur < 0) { L.gs.fill(0); L.gp.fill(0); L.gs[gi] = 1; }
+  else {
+    if (gi !== L.cur) { L.gd0[L.cur] = L.gs[L.cur]; L.gp[L.cur] = 1; L.gp[gi] = 0; }
+    let rest = 1;
+    for (let i = 0; i < 4; i++) if (i !== gi) { L.gp[i] = Math.max(0, L.gp[i] - dt / GAIT_BLEND); L.gs[i] = L.gd0[i] * smooth01(L.gp[i]); rest -= L.gs[i]; }
+    L.gs[gi] = Math.max(0, rest);
+  }
+  L.cur = gi;
+  return legCap(L);
+}
+
 /** Dynamic similarity (the Froude number): an animal `size` times as big as an ordinary cat walks,
     trots and runs at √size times the speeds (each gait at the same Froude number: a lion strolls
     where a house cat strolls, only on longer legs), steps and turns √size times more slowly, and
