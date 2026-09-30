@@ -104,8 +104,34 @@ wrong.
   each vertex by region (leg, tail, head, body) with inverse distance to the bones.
 - `makeClips` generates the clips procedurally: walk, trot, run, stalk, stand, sniff, greet,
   sit, look, pant, groom, knead, loaf, sleep, eat, stretch, crouch, wiggle, pounce and scratch.
-  An AnimationMixer per cat crossfades between them (0.3 s). Gait clips are timed by the
-  distance walked (`cyclesPerUnit`), so paws don't slide.
+  - Gaits, with real cats' footfalls: walk is a lateral sequence (left hind, left fore, right hind,
+    right fore, a quarter cycle apart); trot moves diagonal pairs (the hind a touch ahead); run is a
+    rotary gallop (the hinds, then the fores the other way round, a flight after each pair) with the
+    spine arching to bring the hinds forward under the chest, then stretching out, and the body
+    pitching and surging with it. Walking, the body vaults over the planted legs; trotting it sinks
+    onto them. Hips and shoulders roll and swing with the legs (each leg rolled back so the paw
+    stays put), the shoulder blades ride up over each planted foreleg (the arm bones move, most in
+    the stalk), and the head is held level and at an even height over all of it.
+  - Pounce: out of the wiggle's crouch, the hinds drive, the body stretches out with the forepaws
+    reaching and the hinds trailing, then the forepaws meet the ground and the cat lands in a crouch.
+    Stretch: a play bow (chest down, bottom and tail up), then the weight goes forward and a hind leg
+    stretches out behind. Groom: licks at the raised paw, then wipes over the face. Knead: the paws
+    tread in turn, the weight rocking onto the one that stays.
+- catviews.js plays them on an AnimationMixer per cat. Crossfades depend on the clip (0.1 s into a
+  pounce, 0.6 s into a sit, 1.4 s into sleep). Gait clips are timed by the distance walked
+  (`cyclesPerUnit`), so paws don't slide, all on one phase, so a change of gait (walk -> trot -> run
+  by speed, with a little hysteresis) blends leg for leg. A cat turning on the spot steps round. The
+  pounce is timed by the leap's progress (`hopU`). Looping clips start at a random point and run at
+  each cat's own tempo (0.88-1.12), so cats don't move in step.
+- `layer` runs over the clips after each mixer step: the spine bends into turns; the head turns
+  (about the upright) to `gaze`, what the cat looks at (set by cats.js: where it is going, its prey,
+  a friend, a cat going by, the player), or leads the turn; the tail follows through on damped
+  springs joint by joint (the start of a turn swings it out, then it comes round into the turn and
+  settles); tail-tip flicks and quick head twitches come at random. There are no ear or eyelid
+  bones, so no ear movement or blinks.
+- Behaviour (cats.js): a cat about to set off stands and looks where it is going first; at a stroll
+  its path wanders a little from side to side, its pace varies, and now and then it stops for a sniff
+  or a look round; resting cats glance at cats going by and at the player.
 - LOD: the nearest 10 cats within 16 units get the full model; the rest use the far copy on the
   same skeleton, and their animation updates at up to 20 Hz.
 - `?still`: no motion. Each cat holds a sit, loaf or sleep pose.

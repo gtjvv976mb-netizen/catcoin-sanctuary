@@ -29,7 +29,9 @@
 
    Two cats never share a bed, a bowl, a slot or a perch (a place is reserved when a cat heads
    for it). Cats keep a little personal space, steer round the cottage and props on routes from
-   nav.js, and are pushed back out of anything they would otherwise walk into.
+   nav.js, and are pushed back out of anything they would otherwise walk into. Each cat leaves `gaze`
+   (the heading it looks along) for the renderer to turn its head to, and `hopU`, how far through a
+   leap it is.
    Each cat's rhythm (its pace, how sleepy, playful or sociable it is) is seeded from its id,
    so a cat behaves the same way on every visit.
    With reduced motion, every cat settles in one spot and stays there, still.
@@ -187,6 +189,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       anim: { bob: 0, pitch: 0, pivot: 0, roll: 0, rollY: 0, sx: 1, sy: 1, sz: 1 },
       act: null, last: null, lastZoom: -999, holds: new Set(), dest: null, perch: null, cool: {},
       phase: rnd.range(0, 100), stride: 0, doing: SAY.look, moving: false, route: null, stall: 0, waitUntil: 0, px: 0, pz: 0,
+      gaze: null, hopU: null, clip: null,
     };
   }
 
@@ -662,10 +665,13 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       const w = (room - d) / room * (o.moving ? 1.1 : 1.8);
       dx += (ox / d) * w; dz += (oz / d) * w;
     }
-    const want = yawTo(dx, dz);
+    // The head looks along the way ahead; at a stroll the way wanders a little and the pace varies.
+    const amble = speed < 1.5 ? Math.min(1, Math.max(0, (d0 - 1.5) / 2)) : 0, ph = time * 0.7 + cat.phase;
+    cat.gaze = yawTo(wp.x - cat.x, wp.z - cat.z);
+    const want = wrapAngle(yawTo(dx, dz) + Math.sin(ph) * 0.3 * amble);
     const left = turnToward(cat, want, step.turn || TURN.walk, dt);
     // Slow down for sharp turns and on the last stretch, so cats arrive rather than orbit.
-    let v = speed * cat.traits.pace * Math.max(0.12, Math.cos(Math.min(Math.abs(left), Math.PI / 2)));
+    let v = speed * cat.traits.pace * (1 + Math.sin(ph * 0.7 + 1) * 0.12 * amble) * Math.max(0.12, Math.cos(Math.min(Math.abs(left), Math.PI / 2)));
     if (R.i === last) v *= Math.max(0.28, Math.min(1, d0 / 0.9));
     if (Math.abs(left) > 1.9 && d0 < 0.6) v = 0.05;
     cat.speed += (v - cat.speed) * Math.min(1, dt * (speed > 2 ? 6 : 4));
@@ -695,11 +701,26 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     if (!act.started) { act.started = true; act.t = 0; act.ignoreNow = withContaining(act.ignore, cat); cat.route = null; cat.stall = 0; cat.waitUntil = 0; }
     act.t += dt;
     cat.doing = step.doing || act.reason;
+    cat.gaze = cat.hopU = cat.clip = null;
     const next = () => { if (step.then) step.then(); act.i++; act.started = false; };
     const abort = () => { finish(cat, false); };
 
     switch (step.type) {
       case "go": {
+        const rnd = cat.rnd, d = Math.hypot(step.x - cat.x, step.z - cat.z);
+        // Setting off, a cat stands and looks where it is going first. On a stroll, now and then it
+        // stops for a sniff or a look round.
+        if (act.t <= dt) step.wait = step.speed < 2 && cat.speed < 0.1 ? rnd.range(0.3, 0.9) : 0;
+        if (!step.halt && act.t > 1.5 && d > 2.5 && step.speed <= SPEED.stroll && rnd.chance(dt * 0.07)) step.halt = { until: time + rnd.range(0.8, 2.2), sniff: rnd.chance(0.5), dir: wrapAngle(cat.yaw + rnd.range(-1.1, 1.1)) };
+        const h = step.halt && time < step.halt.until ? step.halt : null;
+        if (act.t < step.wait || h) {
+          setPose(cat, "walk");
+          cat.speed *= Math.max(0, 1 - dt * 6);
+          cat.gaze = h ? (h.sniff ? null : h.dir) : yawTo(step.x - cat.x, step.z - cat.z);
+          if (h?.sniff && cat.speed < 0.05) cat.clip = "sniff";
+          if (!h) turnToward(cat, cat.gaze, 0.9, dt);
+          break;
+        }
         setPose(cat, walkPose(cat));
         const r = walk(cat, step, step.x, step.z, dt, step.speed, step.arrive, act.ignoreNow);
         if (r === "arrived") { next(); cat.route = null; }
@@ -719,6 +740,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         if (act.t > step.until) { if (step.endOk) { cat.speed = 0; skipTo(act, cat); } else abort(); break; }
         setPose(cat, walkPose(cat));
         const r = walk(cat, step, tx, tz, dt, step.speed, 0.15, act.ignoreNow);
+        cat.gaze = yawTo(tg.x - cat.x, tg.z - cat.z); // eyes on the prey
         // Close enough to the point short of its target (a ball of yarn does not move): on to the next step.
         if (r === "arrived") { cat.speed *= 0.5; next(); cat.route = null; }
         else if (r === "stuck") abort();
@@ -731,12 +753,14 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         if (d < step.stopAt) { setPose(cat, "sit"); cat.speed = 0; turnToward(cat, yawTo(tg.x - cat.x, tg.z - cat.z), TURN.zoom, dt); break; }
         setPose(cat, walkPose(cat));
         const r = walk(cat, step, tg.x, tg.z, dt, step.speed, step.stopAt * 0.8, act.ignoreNow);
+        cat.gaze = yawTo(tg.x - cat.x, tg.z - cat.z);
         if (r === "stuck") { next(); cat.route = null; }
         break;
       }
       case "follow": {
         const lead = step.lead;
         if (act.t > step.until || !cats.includes(lead)) { next(); break; }
+        cat.gaze = yawTo(lead.x - cat.x, lead.z - cat.z);
         const d = Math.hypot(lead.x - cat.x, lead.z - cat.z);
         if (lead.moving && lead.y < 0.05) {
           // Walk a little behind the leader, matching its pace.
@@ -760,6 +784,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         const pose = step.pose || (cat.pose === "walk" ? "walk" : cat.pose);
         setPose(cat, pose);
         cat.speed = 0; cat.moving = false;
+        cat.gaze = step.yaw;
         const left = turnToward(cat, step.yaw, TURN.still, dt);
         if (Math.abs(left) < 0.04 || act.t > 3) next();
         break;
@@ -767,7 +792,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       case "face": {
         const tg = step.target();
         cat.speed = 0;
-        const left = turnToward(cat, yawTo(tg.x - cat.x, tg.z - cat.z), TURN.still * 1.5, dt);
+        cat.gaze = yawTo(tg.x - cat.x, tg.z - cat.z);
+        const left = turnToward(cat, cat.gaze, TURN.still * 1.5, dt);
         if (Math.abs(left) < 0.08 || act.t > 1.2) next();
         break;
       }
@@ -789,7 +815,9 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         if (step.abortIf && step.abortIf()) { skipTo(act, cat); break; }
         if (step.restore) for (const [k, v] of Object.entries(step.restore)) cat.needs[k] = Math.max(0, cat.needs[k] - v * dt);
         if (step.anim === "look") lookAbout(cat, dt, act);
-        else if (step.anim === "watchUp" && step.target) { const tg = step.target(); turnToward(cat, yawTo(tg.x - cat.x, tg.z - cat.z), 1.6, dt); }
+        else if (step.anim === "watchUp" && step.target) { const tg = step.target(); turnToward(cat, cat.gaze = yawTo(tg.x - cat.x, tg.z - cat.z), 1.6, dt); }
+        else if (step.anim === "greet" && act.lead) cat.gaze = yawTo(act.lead.x - cat.x, act.lead.z - cat.z);
+        else if (step.anim === "breathe" || step.anim === "pant") glance(cat, act);
         if (act.t >= step.dur) next();
         break;
       }
@@ -806,7 +834,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           }
           if (step.start) step.start();
         }
-        const f = step.from, u = Math.min(1, act.t / step.dur);
+        const f = step.from, u = cat.hopU = Math.min(1, act.t / step.dur);
         setPose(cat, "stretch");
         cat.moving = false;
         const top = Math.max(f.y, step.y) + step.apex;
@@ -839,8 +867,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         const y = step.yarn;
         if (act.t <= dt) { step.from = { x: cat.x, z: cat.z }; step.len = Math.max(0.4, Math.hypot(y.x - cat.x, y.z - cat.z) - 0.45); }
         setPose(cat, "walk");
-        const u = Math.min(1, act.t / 0.42);
-        const want = yawTo(y.x - cat.x, y.z - cat.z);
+        const u = cat.hopU = Math.min(1, act.t / 0.42);
+        const want = cat.gaze = yawTo(y.x - cat.x, y.z - cat.z);
         turnToward(cat, want, 6, dt);
         const v = step.len / 0.42;
         const nx = cat.x + Math.cos(cat.yaw) * v * dt, nz = cat.z - Math.sin(cat.yaw) * v * dt;
@@ -891,8 +919,23 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       act.lookingAtYou = atYou && Math.abs(d) <= 1.2;
       act.lookNext = time + cat.rnd.range(2.2, 5.5);
     }
+    // The head gets there first; the body follows, slowly.
+    cat.gaze = act.lookingAtYou ? yawTo(viewer.x - cat.x, viewer.z - cat.z) : act.lookAt;
     turnToward(cat, act.lookAt, 0.7, dt);
     if (act.lookingAtYou) cat.doing = SAY.atYou;
+  }
+
+  /** A resting cat glances about now and then: at a cat going by, at you, or at nothing much. */
+  function glance(cat, act) {
+    if (!(time < act.gNext)) {
+      const r = cat.rnd;
+      let near = null, nd = 5;
+      for (const c of cats) if (c !== cat && c.moving) { const d = Math.abs(c.x - cat.x) + Math.abs(c.z - cat.z); if (d < nd) { nd = d; near = c; } }
+      act.gNext = time + r.range(1.5, 5);
+      act.gAt = near && r.chance(0.7) ? near : viewer && r.chance(0.35) ? "you" : r.chance(0.5) ? { dir: wrapAngle(cat.yaw + r.range(-1, 1)) } : null;
+    }
+    const g = act.gAt === "you" ? viewer : act.gAt;
+    cat.gaze = !g ? null : g.dir ?? yawTo(g.x - cat.x, g.z - cat.z);
   }
 
   /* ── Animation values for the pose ─────────────────────────────────── */

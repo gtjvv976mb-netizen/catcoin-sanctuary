@@ -28,7 +28,8 @@ import * as THREE from "three";
 import { POSES } from "./cats.js";
 import { CAT } from "./layout.js";
 import { AMBIENT } from "./ambient.js";
-import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit, GAIT_RATE } from "./catrig.js";
+import { findRig, buildSkeleton, skinWeights, makeClips, cyclesPerUnit, GAIT_RATE, layer } from "./catrig.js";
+import { wrapAngle } from "./nav.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { lookOf } from "./looks.js";
 
@@ -588,14 +589,18 @@ function coatShader(material, md) {
    (a quadruped skeleton found from its shape, skin weights blended along the surface) and gives
    it a set of clips posed by inverse kinematics (walk, trot, run, stalk, sit, loaf, sleep, groom,
    stretch, wiggle, pounce, eat, knead, scratch, ...) that an AnimationMixer crossfades between as
-   the cat's activity changes (clipFor, below). Walking clips are stepped by the distance walked,
-   and plant each paw on the ground for the part of the stride it carries weight, so paws don't
-   slide. Near the camera a cat is
+   the cat's activity changes (clipFor, below); looping clips start at a random point and run at
+   each cat's own tempo, so no two cats move in step. Walking clips are stepped by the distance
+   walked and plant each paw on the ground for the part of the stride it carries weight, so paws
+   don't slide. catrig.js's layer plays over them (turns, gaze, tail). Near the camera a cat is
    drawn from the full model, far away from a lighter copy (<TICKER>-lo.glb) on the same
    skeleton; only the nearest OWN.maxHi at a time get the full one, and far cats' animation is
    updated less often. */
 
 export const OWN = { maxHi: 10, hiDist: 16, index: "assets/models/cats/index.json", fade: 0.3, drawDist: 58 };
+/** Crossfade into a clip, in seconds (OWN.fade for the rest). */
+const FADE = { walk: 0.4, trot: 0.4, stalk: 0.45, stand: 0.4, sit: 0.6, look: 0.6, groom: 0.6, loaf: 0.8, sleep: 1.4, stretch: 0.5, wiggle: 0.25, pounce: 0.1 };
+const GAITS = ["walk", "trot", "run", "stalk"];
 
 /** Level of detail for the shared, tinted cats: beyond `far` units from the camera a cat is drawn
     from the lightest copy; beyond `cullNear` a cat outside the view is not drawn at all. */
@@ -608,14 +613,16 @@ export function ownScale(dims) {
   return (CAT.size * 0.95) / (dims.height || 1);
 }
 
-/** Which clip a cat plays now, from its pose and what it is doing (cats.js leaves both on it). */
-export function clipFor(cat) {
+/** Which clip a cat plays now, from its pose and what it is doing (cats.js leaves both on it); `cur`,
+    the clip it plays, holds a gait a little past the speed it changes at, so it doesn't flicker. */
+export function clipFor(cat, cur = null) {
   const act = cat.act, step = act && act.steps ? act.steps[act.i] : null;
   const anim = cat.clip || (step && step.type === "hold" ? step.anim : null);
+  if (step && step.type === "pounce") return "pounce";
   if (cat.pose === "walk") {
-    const v = cat.speed || 0;
-    if (v > 2.2) return "run";
-    if (v > 1.4) return "trot";
+    const v = cat.speed || 0, h = cur === "run" ? 0.2 : cur === "trot" ? 0.15 : 0;
+    if (v > 2.2 - (cur === "run" ? h : 0)) return "run";
+    if (v > 1.4 - h) return "trot";
     if (v > 0.02 && v < 0.55 && step && step.type === "chase") return "stalk";
     return v > 0.02 ? "walk" : anim === "sniff" ? "sniff" : anim === "greet" ? "greet" : "stand";
   }
@@ -835,7 +842,7 @@ export class CatHerd {
         group.add(sk.root);
         this.scene.add(group);
         const mixer = new THREE.AnimationMixer(sk.root);
-        o = { group, hi: null, lo: null, dims, s: ownScale(dims), rig, sk, mixer, clips: makeClips(rig), actions: {}, clip: null, u: { hl: { value: 0 } }, lastT: 0 };
+        o = { group, hi: null, lo: null, dims, s: ownScale(dims), rig, sk, mixer, clips: makeClips(rig), actions: {}, clip: null, u: { hl: { value: 0 } }, lastT: 0, ly: {}, tempo: 0.88 + Math.random() * 0.24 };
         o.perUnit = cyclesPerUnit(rig, o.s);
         this.own.set(catId, o);
       }
@@ -885,9 +892,9 @@ export class CatHerd {
       if (clip.userData?.loop === false) { a.setLoop(THREE.LoopOnce, 1); a.clampWhenFinished = true; }
     }
     a.reset().setEffectiveWeight(1).play();
+    if (clip.userData?.loop && !GAITS.includes(name)) a.time = Math.random() * clip.duration;
     const prev = o.clip && o.actions[o.clip];
     if (prev && fade > 0) prev.crossFadeTo(a, fade, false); else if (prev) prev.stop();
-    if (prev) a.time = ["walk", "trot", "run", "stalk"].includes(name) && ["walk", "trot", "run", "stalk"].includes(o.clip) ? prev.time : a.time;
     o.clip = name;
     return a;
   }
@@ -947,19 +954,30 @@ export class CatHerd {
         const useHi = o.hi && (!o.lo || near.has(cat.id));
         if (o.hi) o.hi.visible = !!useHi;
         if (o.lo) o.lo.visible = !useHi;
-        // Animate: the clip for what it is doing; walking clips follow the ground covered.
-        const name = this.still ? (cat.pose === "sleep" ? "sleep" : cat.pose === "loaf" ? "loaf" : cat.pose === "walk" ? "stand" : "sit") : clipFor(cat);
-        const act = this.playClip(o, name, this.still ? 0 : OWN.fade);
-        const gaitClip = name === "walk" || name === "trot" || name === "run" || name === "stalk";
-        const dist = (cat.stride || 0) / 5.2;
-        if (gaitClip) { act.timeScale = 0; act.time = ((dist * o.perUnit * GAIT_RATE[name]) % 1) * act.getClip().duration; }
-        else act.timeScale = 1;
+        // Animate: the clip for what it is doing. Gaits follow the ground covered, all on one phase (so
+        // a change of gait blends leg for leg); a cat turning on the spot steps round; a pounce follows its leap.
+        const turn = wrapAngle(cat.yaw - (o.yaw ?? cat.yaw)), moved = Math.max(0, (cat.stride || 0) - (o.st ?? cat.stride ?? 0)) / 5.2;
+        o.yaw = cat.yaw; o.st = cat.stride || 0; o.turn = (o.turn || 0) + turn;
+        let name = this.still ? (cat.pose === "sleep" ? "sleep" : cat.pose === "loaf" ? "loaf" : cat.pose === "walk" ? "stand" : "sit") : clipFor(cat, o.clip);
+        if (Math.abs(turn) > 0.006) o.spin = T + 0.3;
+        const spin = name === "stand" && !this.still && T < o.spin;
+        if (spin) name = "walk";
+        const act = this.playClip(o, name, this.still ? 0 : o.clip === "pounce" ? 0.25 : FADE[name] || OWN.fade);
+        if (GAITS.includes(name)) {
+          o.ph = ((o.ph || 0) + (moved + (spin ? Math.abs(turn) * 0.35 : 0)) * o.perUnit * GAIT_RATE[name]) % 1;
+          for (const g of GAITS) { const ga = o.actions[g]; if (ga?.isRunning()) { ga.timeScale = 0; ga.time = o.ph; } }
+        } else if (name === "pounce" && cat.hopU != null) { act.timeScale = 0; act.time = Math.min(0.99, cat.hopU) * act.getClip().duration; }
+        else act.timeScale = o.tempo;
         // Far cats step their animation less often (every third frame).
         const now = T;
         const every = useHi ? 0 : 0.05;
         const dt = Math.min(0.1, Math.max(0, now - o.lastT));
         if (this.still) { o.mixer.update(0); o.lastT = now; }
-        else if (dt >= every) { o.mixer.update(dt); o.lastT = now; }
+        else if (dt >= every) {
+          o.mixer.update(dt); o.lastT = now;
+          layer(o.sk, o.rig, o.ly, dt, dt ? o.turn / dt : 0, cat.gaze == null || cat.pose === "sleep" ? null : wrapAngle(cat.gaze - cat.yaw), cat.pose === "sleep");
+          o.turn = 0;
+        }
         o.u.hl.value = this.highlight.get(cat.id) || 0;
         if (this.blobs) {
           const k = [md.len * 0.8, md.width * 1.1];
