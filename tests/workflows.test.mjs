@@ -101,17 +101,20 @@ test("famous coins: daily and by hand, contents: write only, no secrets, builder
   assert.match(FAMOUS, /concurrency:\n\s+group: famous/);
 });
 
-test("models: fails closed on MODELS_ENABLED, each API key only in its own step of its own job, no expression inside a script, no wallet secret", () => {
+test("models: fails closed on MODELS_ENABLED, each API key only in its own step of the jobs that call its API, no expression inside a script, no wallet secret", () => {
   assert.match(MODELS, /^name: Models$/m);
   assert.match(MODELS, /^permissions: \{\}$/m);
   const jobs = MODELS.slice(MODELS.indexOf("\njobs:")).split(/\n  (?=[a-z][\w-]*:\n)/).slice(1);
   const jobOf = (name) => jobs.find((j) => j.startsWith(`${name}:`));
-  assert.match(jobOf("meshy"), /\n    if: \$\{\{ vars\.MODELS_ENABLED == 'on' \}\}\n/, "the first job is gated; every other job needs it");
-  for (const j of jobs.filter((j) => !j.startsWith("meshy:"))) assert.match(j, /\n    needs: /, j.split(":")[0]);
-  for (const [secret, job] of [["MESHY_API_KEY", "meshy"], ["TRIPO_API_KEY", "tripo"]]) {
-    const where = jobs.filter((j) => j.includes(`secrets.${secret}`));
-    assert.deepEqual(where.map((j) => j.split(":")[0]), [job], secret);
-    assert.equal([...where[0].matchAll(new RegExp(`secrets\\.${secret}`, "g"))].length, 1, `${secret} in one step`);
+  assert.equal(jobs[0].split(":")[0], "pick");
+  assert.match(jobOf("pick"), /\n    if: \$\{\{ vars\.MODELS_ENABLED == 'on' \}\}\n/, "the first job is gated; every other job needs it");
+  assert.ok(!/secrets\./.test(jobOf("pick")), "the pick holds no key");
+  for (const j of jobs.filter((j) => !j.startsWith("pick:"))) assert.match(j, /\n    needs: /, j.split(":")[0]);
+  // Meshy's key where Meshy makes the models; Tripo's where Tripo makes them and where it rigs them: one step in each.
+  for (const [secret, where] of [["MESHY_API_KEY", ["meshy"]], ["TRIPO_API_KEY", ["tripo-make", "tripo"]]]) {
+    const holders = jobs.filter((j) => j.includes(`secrets.${secret}`));
+    assert.deepEqual(holders.map((j) => j.split(":")[0]), where, secret);
+    for (const j of holders) assert.equal([...j.matchAll(new RegExp(`secrets\\.${secret}`, "g"))].length, 1, `${secret} in one step of ${j.split(":")[0]}`);
   }
   assert.deepEqual([...new Set([...MODELS.matchAll(/secrets\.(\w+)/g)].map((m) => m[1]))].sort(), ["MESHY_API_KEY", "TRIPO_API_KEY"]);
   assert.ok(!/LAUNCH_WALLET_KEY|SOLANA_RPC_URL/.test(MODELS));

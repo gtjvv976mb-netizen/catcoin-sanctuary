@@ -115,6 +115,8 @@ function site({ posts = [post("2100000000000000001")], wallet = null, approve = 
   const w = (rel, v) => fs.writeFileSync(path.join(root, rel), typeof v === "string" ? v : `${JSON.stringify(v, null, 2)}\n`);
   w("data/trending-cats.json", trendingOf(posts));
   w("data/launch-approvals.json", { note: "test", approve });
+  // The owner's own hide list is left out: a test hides what it means to (and the shipped list may hide a live cat's photo).
+  w(FILES.photoHide, { note: "test", hide: [] });
   w("data/sanctuary-launches.json", ledger ?? { note: LEDGER_NOTE, launches: [] });
   w("data/cat-watch.json", watchText(watch));
   if (quotes) w("data/pump-quotes.json", { note: "test", quotes });

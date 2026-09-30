@@ -4,41 +4,63 @@
  * around the repository's own tools, each used as it is designed. The workflow runs them in separate
  * jobs, so that no job that installs a package holds a key it does not need or the push token:
  *
- *   MESHY JOB (contents: read, installs nothing: this file and meshy.mjs are node built-ins)
+ *   PICK JOB (contents: read, installs nothing, no secret)
  *   node scripts/models.mjs pick        choose at most MODELS_PER_RUN (1, at most 2) queued REBUILD entries of
  *                                       scripts/meshy.queue.json: the cats the sanctuary launched that have no
  *                                       model yet first; the rest of the queue only when MODELS_BACKLOG is "on".
  *                                       Never one whose post's photo the owner hides (data/photo-hide.json), one
  *                                       already made, one with views waiting for a person, one past MAX_TRIES.
- *   node scripts/models.mjs meshy       (MESHY_API_KEY) for each: a try is counted and saved FIRST (status
- *                                       "started"), then scripts/meshy.mjs run KEY --reserve R (reference views
- *                                       from the entry's picture, multi-image-to-3D, a remesh far copy, in
- *                                       scripts/cat-models.jobs.json; meshy.mjs stops before its balance would drop
- *                                       under MODELS_MESHY_RESERVE, default 100, and then no try is used).
+ *                                       And the tool that makes them: MODELS_GENERATOR "tripo" (the default, unset)
+ *                                       or "meshy"; any other value makes nothing (outputs `keys`, `generator`).
+ *   ONE MAKE JOB, the chosen tool's (contents: read); for each cat a try is counted and saved FIRST (status
+ *   "started", `by` the tool), then the tool's script; when that stops at its credit reserve nothing is spent
+ *   and no try is used (and the run stops there):
+ *   node scripts/models.mjs tripo-make  TRIPO-MAKE JOB (the Tripo CLI from tools/tripo-cli, npm ci --ignore-scripts; TRIPO_API_KEY)
+ *                                       scripts/tripo.mjs make KEY --reserve R: a standing reference picture from
+ *                                       the entry's picture (image-to-image), then image-to-model (tripo-v3.1, 12000
+ *                                       faces, textured), about 40 credits; the GLB goes straight to the packer's
+ *                                       cache and the job entry to scripts/cat-models.jobs.json. Its record:
+ *                                       scripts/tripo.state.json MODELKEY.make. Reserve: MODELS_TRIPO_MAKE_RESERVE,
+ *                                       default 0 (spend what is there; Tripo itself refuses an empty balance).
+ *                                       A cat is started only when its make (at most MAKE_CAT_MS) can finish inside
+ *                                       the step's limit (TRIPO_MAKE_MINUTES), so the step never times out with a
+ *                                       model made and paid for that the Pack job would then never get.
+ *   node scripts/models.mjs meshy       MESHY JOB (installs nothing: this file and meshy.mjs are node built-ins; MESHY_API_KEY)
+ *                                       scripts/meshy.mjs run KEY --reserve R (reference views from the entry's
+ *                                       picture, multi-image-to-3D, a remesh far copy, in scripts/cat-models.jobs.json;
+ *                                       about 41 credits). Its record: scripts/meshy.state.json. Reserve:
+ *                                       MODELS_MESHY_RESERVE, default 100.
  *   PACK JOB (contents: read, no secret; packages installed with --ignore-scripts)
- *   node scripts/models.mjs pack        scripts/make-cat-models.py packs each model Meshy made into
- *                                       assets/models/cats/, then the checks: the size budgets, a valid textured
+ *   node scripts/models.mjs pack        scripts/make-cat-models.py packs each model made (by either tool; one Tripo
+ *                                       made from the raw GLB its make job handed over, never from Tripo's expiring
+ *                                       link) into assets/models/cats/, then the checks: the size budgets, a valid textured
  *                                       GLB, the garden's own rig (assets/world/catrig.js) on the model, and the
  *                                       model tests. A model that fails is discarded (its files, index row and job
- *                                       entry put back) and the try recorded failed; the cat keeps its portrait.
+ *                                       entry put back), its tool's record failed and the try recorded failed; the
+ *                                       cat keeps its portrait.
  *   node scripts/models.mjs preview     scripts/render-cat-thumbs.mjs: a PNG of each new model in scripts/model-previews/.
  *   TRIPO JOB (contents: read)
  *   node scripts/models.mjs tripo       (TRIPO_API_KEY) scripts/tripo.mjs rig KEY --reserve R for each live model
  *                                       (MODELS_TRIPO_RESERVE, default 100); skipped, with a log line, without the
  *                                       key. The site rigs its cats itself: Tripo's verdict is recorded, its GLB unused.
  *   COMMIT JOB (contents: write, installs nothing third-party; it always runs)
- *   node scripts/models.mjs merge       takes from the other jobs' artifacts (MESHY_DIR, PACK_DIR, TRIPO_DIR) only
- *                                       the picked cats' state rows (cleaned) and, for a live model, its two GLBs,
+ *   node scripts/models.mjs merge       takes from the other jobs' artifacts (MAKE_DIR, PACK_DIR, TRIPO_DIR) only
+ *                                       the picked cats' state rows (cleaned; per cat, the artifact whose row is
+ *                                       furthest on, with its tool records: a job that bundled its checkout's
+ *                                       older state never hides a try) and, for a live model, its two GLBs,
  *                                       index and PROVENANCE rows, job entry and preview, each checked, then runs
  *                                       the checks and model tests again; a try that did not finish (a job failed,
- *                                       timed out or was cancelled) is recorded failed, and Meshy's state with it,
- *                                       so no spend goes unrecorded and no cat is left "done" without its model.
- *                                       Writes the job summary ($GITHUB_STEP_SUMMARY).
- *   node scripts/models.mjs bundle DIR / unbundle DIR   the files that go between the jobs (bundlePaths), nothing else.
+ *                                       timed out or was cancelled) is recorded failed, and its tool's record with
+ *                                       it (Meshy's state, or Tripo's make record), so no spend goes unrecorded and
+ *                                       no cat is left "done" without its model. Writes the job summary ($GITHUB_STEP_SUMMARY).
+ *   node scripts/models.mjs bundle DIR / unbundle DIR   the files that go between the jobs (bundlePaths), nothing else;
+ *                                       in the artifact, the packer's hidden cache is under raw/ (artifactPath:
+ *                                       upload-artifact leaves out hidden files and folders).
  *
  * The keys go from job to job in KEYS (outputs `keys`, `made`, `live`); every key is checked against the queue
- * again. State: scripts/models.state.json { note, cats: { KEY: { attempts, status, error?, at, tasks?, tripo? } } }
- * (status "started", "made", "live", "failed" or "gave-up"). No step here holds a wallet key.
+ * again. State: scripts/models.state.json { note, cats: { KEY: { attempts, status, by?, error?, at, tasks?, tripo? } } }
+ * (status "started", "made", "live", "failed" or "gave-up"; by "tripo" or "meshy", a row without it is Meshy's).
+ * No step here holds a wallet key.
  */
 import fs from "node:fs";
 import os from "node:os";
@@ -46,6 +68,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { ordered } from "./meshy.mjs";
+import { MAKE_CAT_MS } from "./tripo.mjs";
 import { photoHideOf } from "./lib/launcher.mjs";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -60,12 +83,24 @@ export const FILES = Object.freeze({
   index: "assets/models/cats/index.json",
   provenance: "assets/models/PROVENANCE.md",
   previews: "scripts/model-previews",
+  cache: "scripts/.cat-models-cache",
 });
 export const STATE_NOTE = "The Models workflow's record (scripts/models.mjs, .github/workflows/models.yml): per queued cat, how many automatic tries it has had (at most MAX_TRIES), and whether its model went live, failed (tried again) or gave up (a person looks). Delete a cat's row to let it be tried again.";
-/** Automatic tries a cat gets in all (a Meshy failure or a model that fails the checks is one). */
+/** Automatic tries a cat gets in all (a failure of its tool, Tripo or Meshy, or a model that fails the checks is one). */
 export const MAX_TRIES = 2;
-/** The credit reserves' defaults: the ones scripts/meshy.mjs run and scripts/tripo.mjs rig use when none is given. */
-export const DEFAULT_RESERVE = Object.freeze({ meshy: 100, tripo: 100 });
+/**
+ * The credit reserves' defaults: the ones scripts/meshy.mjs run, scripts/tripo.mjs rig and scripts/tripo.mjs make
+ * use when none is given (the rig is optional, so it keeps 100 back; the make spends what is there).
+ */
+export const DEFAULT_RESERVE = Object.freeze({ meshy: 100, tripo: 100, tripoMake: 0 });
+/** The tools that can make a model (MODELS_GENERATOR), the default first. */
+export const GENERATORS = Object.freeze(["tripo", "meshy"]);
+/**
+ * The Tripo make step's time limit (.github/workflows/models.yml, its timeout-minutes). A cat is started only when its
+ * make, at most MAKE_CAT_MS (scripts/tripo.mjs), still fits before it with MAKE_MARGIN_MS to spare.
+ */
+export const TRIPO_MAKE_MINUTES = 110;
+export const MAKE_MARGIN_MS = 5 * 60_000;
 export const RESERVE_RANGE = Object.freeze([0, 1_000_000]);
 /** The size budgets tests/catmodels.test.mjs and scripts/make-cat-models.py keep (bytes): full and far copy, and for HD models. */
 export const BUDGET = Object.freeze({ full: 600_000, far: 150_000, hdFull: 800_000, hdFar: 300_000 });
@@ -93,6 +128,13 @@ export function perRun(env) {
 }
 /** Whether the rest of the queue (cats that have a model already) may be rebuilt too: MODELS_BACKLOG "on". */
 export const backlogOn = (env) => String(env?.MODELS_BACKLOG ?? "").trim().toLowerCase() === "on";
+/** The tool that makes the models: MODELS_GENERATOR "tripo" (the default when unset) or "meshy"; anything else, none (fail closed). { value, note }. */
+export function generatorOf(env) {
+  const raw = String(env?.MODELS_GENERATOR ?? "").trim().toLowerCase();
+  if (!raw) return { value: GENERATORS[0], note: null };
+  if (GENERATORS.includes(raw)) return { value: raw, note: null };
+  return { value: null, note: `MODELS_GENERATOR "${raw.slice(0, 40)}" is neither ${GENERATORS.map((g) => `"${g}"`).join(" nor ")}: no model is made` };
+}
 
 /* ── choosing ──────────────────────────────────────────────────────────────────────────── */
 
@@ -136,24 +178,44 @@ export function selectEntries({ queue, meshyState = {}, state = { cats: {} }, ad
 export function stateOf(data) {
   return { note: STATE_NOTE, cats: isObj(data?.cats) ? structuredClone(data.cats) : {} };
 }
-/** The statuses a row may have: "started" (a try counted before Meshy is called), "made" (Meshy done, not packed yet), then live, failed or gave-up. */
+/** The statuses a row may have: "started" (a try counted before its tool is called), "made" (the tool done, not packed yet), then live, failed or gave-up. */
 export const STATUSES = Object.freeze(["started", "made", "live", "failed", "gave-up"]);
+/** Which tool made (or is making) a cat's model this try: its row's `by`; a row from before the Tripo generator is Meshy's. */
+export const byOf = (row) => (row?.by === "tripo" ? "tripo" : "meshy");
+/** How far on a try is: started, then made, then finished (live, failed or gave-up). */
+const STAGE = Object.freeze({ started: 0, made: 1, live: 2, failed: 2, "gave-up": 2 });
 /**
- * A try, counted BEFORE Meshy is called (so a run that hangs, times out or is cancelled still counts it, and
- * its state is committed): attempts + 1, status "started". Returns { row, prev } (prev: the row before, to put
- * back when nothing was spent: the reserve).
+ * Which of the artifacts' rows for one cat the commit takes (the index in `rows`, in job order: make, Pack, rig; -1:
+ * none is a row): the one with more tries, then the one further on, and on a tie the later job's (it carries the
+ * earlier one's work). A job that never received the state before it (its download failed) bundles its checkout's own
+ * row, which is older or missing: it never replaces a newer one.
  */
-export function startTry(state, key, { at }) {
+export function furthestRow(rows) {
+  let best = -1, b = null;
+  rows.forEach((v, i) => {
+    const r = cleanRow(v);
+    if (r && (!b || r.attempts > b.attempts || (r.attempts === b.attempts && STAGE[r.status] >= STAGE[b.status]))) { best = i; b = r; }
+  });
+  return best;
+}
+/** Whether a picked cat may have a try now (checked again in the make job: never a live cat or one past its tries). */
+export const canTry = (state, key) => { const s = state.cats[key]; return !(s?.status === "live" || s?.status === "gave-up" || (s?.attempts ?? 0) >= MAX_TRIES); };
+/**
+ * A try, counted BEFORE its tool is called (so a run that hangs, times out or is cancelled still counts it, and
+ * its state is committed): attempts + 1, status "started", `by` the tool. Returns { row, prev } (prev: the row
+ * before, to put back when nothing was spent: the reserve).
+ */
+export function startTry(state, key, { at, by = null }) {
   const prev = state.cats[key] ?? null;
-  const row = { attempts: (prev?.attempts ?? 0) + 1, status: "started", at, ...(prev?.tripo ? { tripo: prev.tripo } : {}) };
+  const row = { attempts: (prev?.attempts ?? 0) + 1, status: "started", at, ...(by ? { by } : {}), ...(prev?.tripo ? { tripo: prev.tripo } : {}) };
   state.cats[key] = row;
   return { row, prev };
 }
-/** The try's outcome, on the row startTry counted: "made" (Meshy done), live (ok), or failed ("gave-up" once MAX_TRIES are used). */
+/** The try's outcome, on the row startTry counted: "made" (its tool done), live (ok), or failed ("gave-up" once MAX_TRIES are used). */
 export function finishTry(state, key, { ok, made = false, error = null, at, tasks = null }) {
   const prev = state.cats[key] ?? { attempts: 1 };
   const attempts = Math.max(1, prev.attempts ?? 1);
-  const row = { attempts, status: made ? "made" : ok ? "live" : attempts >= MAX_TRIES ? "gave-up" : "failed", at, ...(error ? { error: String(error).slice(0, 400) } : {}), ...(tasks ?? prev.tasks ? { tasks: tasks ?? prev.tasks } : {}) };
+  const row = { attempts, status: made ? "made" : ok ? "live" : attempts >= MAX_TRIES ? "gave-up" : "failed", at, ...(prev.by ? { by: prev.by } : {}), ...(error ? { error: String(error).slice(0, 400) } : {}), ...(tasks ?? prev.tasks ? { tasks: tasks ?? prev.tasks } : {}) };
   if (prev.tripo) row.tripo = prev.tripo;
   state.cats[key] = row;
   return row;
@@ -163,6 +225,7 @@ export function cleanRow(v) {
   if (!isObj(v) || !Number.isInteger(v.attempts) || v.attempts < 1 || v.attempts > MAX_TRIES + 1 || !STATUSES.includes(v.status)) return null;
   const text = (x, n) => (typeof x === "string" ? x.slice(0, n) : undefined);
   const out = { attempts: v.attempts, status: v.status, at: text(v.at, 30) ?? "" };
+  if (GENERATORS.includes(v.by)) out.by = v.by;
   if (text(v.error, 400)) out.error = text(v.error, 400);
   if (Array.isArray(v.tasks)) out.tasks = v.tasks.filter((t) => typeof t === "string").slice(0, 8).map((t) => t.slice(0, 80));
   if (isObj(v.tripo)) out.tripo = { status: text(v.tripo.status, 40) ?? "unknown", ...(typeof v.tripo.riggable === "boolean" ? { riggable: v.tripo.riggable } : {}), ...(text(v.tripo.task, 80) ? { task: text(v.tripo.task, 80) } : {}), ...(text(v.tripo.error, 200) ? { error: text(v.tripo.error, 200) } : {}) };
@@ -177,6 +240,22 @@ export function meshyOutcome(before, after) {
   if (after.status === "done") return { outcome: "made", tasks: after.tasks ?? [], credits: after.credits ?? null };
   if (after.status === "failed") return { outcome: "failed", error: after.error ?? "Meshy failed" };
   return { outcome: "stopped" };
+}
+/**
+ * What a tripo.mjs make run did, from its record (scripts/tripo.state.json MODELKEY.make) before and after:
+ * "made", "stopped" (nothing new: the reserve, or it never got to spend), or "failed": a failure, and also a
+ * record left halfway (its tasks may have cost credits, so it is a try).
+ */
+export function tripoOutcome(before, after) {
+  if (!isObj(after) || JSON.stringify(after) === JSON.stringify(before ?? null)) return { outcome: "stopped" };
+  if (after.status === "done") return { outcome: "made", tasks: Array.isArray(after.tasks) ? after.tasks : [], credits: after.credits ?? null };
+  return { outcome: "failed", error: after.status === "failed" ? after.error ?? "Tripo failed" : `it stopped before the model was made (${String(after.status ?? "no status").slice(0, 40)})` };
+}
+/** Tripo's make record for a model that did not go live, marked failed (the rig's record beside it kept). */
+export function failTripoMake(tripoState, modelKey, why, at) {
+  const t = tripoState[modelKey];
+  if (isObj(t?.make)) tripoState[modelKey] = { ...t, make: { ...t.make, status: "failed", error: String(why).slice(0, 400), at } };
+  return tripoState;
 }
 /** A job entry put back as it was before meshy.mjs recorded a model (recordModel keeps the old one under `previous`). */
 export function restoreJob(jobs, key) {
@@ -318,11 +397,20 @@ function restore(root, snap) {
     if (bytes === null) fs.rmSync(f, { force: true }); else fs.writeFileSync(f, bytes);
   }
 }
-/** The files that go between the jobs (scripts/models.mjs bundle/unbundle), for these model keys: the state, and each model's pieces. */
+/**
+ * The files that go between the jobs (scripts/models.mjs bundle/unbundle), for these model keys: the state, and
+ * each model's pieces, with the raw GLB Tripo made and its stamp in the packer's cache (git-ignored, never committed).
+ */
 export function bundlePaths(modelKeys) {
   return [FILES.meshyState, FILES.state, FILES.tripoState, FILES.jobs, FILES.index, FILES.provenance,
-    ...modelKeys.filter((m) => KEY.test(m)).flatMap((m) => [`assets/models/cats/${m}.glb`, `assets/models/cats/${m}-lo.glb`, `${FILES.previews}/${m}.png`])];
+    ...modelKeys.filter((m) => KEY.test(m)).flatMap((m) => [`assets/models/cats/${m}.glb`, `assets/models/cats/${m}-lo.glb`, `${FILES.previews}/${m}.png`,
+      `${FILES.cache}/${m}.raw.glb`, `${FILES.cache}/${m}.raw.job`])];
 }
+/**
+ * Where a bundled file goes in the artifact: at its own path, but the packer's cache (a hidden folder, which
+ * upload-artifact leaves out) under raw/, so the raw GLB Tripo made reaches the Pack job. unbundle maps it back.
+ */
+export const artifactPath = (rel) => (rel.startsWith(`${FILES.cache}/`) ? `raw/${rel.slice(FILES.cache.length + 1)}` : rel);
 /** The KEYS a step was given: those that are queue keys, in order, without repeats. */
 export function keysOf(env, queue) {
   return [...new Set(String(env?.KEYS ?? "").split(/[\s,]+/).filter(Boolean))].filter((k) => KEY.test(k) && queue?.cats?.[k]?.action === "rebuild");
@@ -345,38 +433,59 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
   const saveState = () => writeJson(file(FILES.state), state);
   const outputs = {};
   const cmd = argv[0];
+  const mk = (key) => queue.cats[key]?.modelKey ?? key;
+  /** The tools that make a model: the secret each needs, its credit reserve, its script, and its own record of what it did. */
+  const TOOLS = {
+    tripo: { name: "Tripo", secret: "TRIPO_API_KEY", reserveVar: "MODELS_TRIPO_MAKE_RESERVE", reserveDefault: DEFAULT_RESERVE.tripoMake,
+      stepMs: TRIPO_MAKE_MINUTES * 60_000, catMs: MAKE_CAT_MS,
+      args: (key, r) => ["scripts/tripo.mjs", "make", key, "--reserve", String(r)],
+      record: (key) => readJsonFile(file(FILES.tripoState), {})[mk(key)]?.make ?? null, outcome: tripoOutcome },
+    meshy: { name: "Meshy", secret: "MESHY_API_KEY", reserveVar: "MODELS_MESHY_RESERVE", reserveDefault: DEFAULT_RESERVE.meshy,
+      args: (key, r) => ["scripts/meshy.mjs", "run", key, "--limit", "1", "--only", "rebuild", "--reserve", String(r)],
+      record: (key) => readJsonFile(file(FILES.meshyState), {})[key] ?? null, outcome: meshyOutcome },
+  };
 
   if (cmd === "pick") {
+    const gen = generatorOf(env);
+    if (gen.note) log(`::warning title=Models::${gen.note}.`);
     const hidden = photoHideOf({ readText: (rel) => (fs.existsSync(file(rel)) ? fs.readFileSync(file(rel), "utf8") : null) }, log);
     const { picked, skipped } = selectEntries({ queue, meshyState: readJsonFile(file(FILES.meshyState), {}), state, adoptables: readJsonFile(file(FILES.adoptables), null),
       photos: readJsonFile(file(FILES.photos), null), hidden, index: readJsonFile(file(FILES.index), { cats: {} }), backlog: backlogOn(env), limit: perRun(env) });
     for (const s of skipped.filter((s) => !/made already|has a model already/.test(s.why))) log(`Models: ${s.key} skipped: ${s.why}.`);
-    log(picked.length ? `Models: this run makes ${picked.map((p) => `${p.key}${p.launched ? " (launched)" : ""}`).join(", ")}.` : `Models: nothing to make${backlogOn(env) ? "" : " (launched cats only; MODELS_BACKLOG is not on)"}.`);
-    outputs.keys = picked.map((p) => p.key).join(" ");
+    log(picked.length ? `Models: this run makes ${picked.map((p) => `${p.key}${p.launched ? " (launched)" : ""}`).join(", ")}${gen.value ? ` with ${TOOLS[gen.value].name}` : ", but no tool is chosen"}.` : `Models: nothing to make${backlogOn(env) ? "" : " (launched cats only; MODELS_BACKLOG is not on)"}.`);
+    outputs.keys = gen.value ? picked.map((p) => p.key).join(" ") : "";
+    outputs.generator = gen.value ?? "";
     return { code: 0, outputs };
   }
 
   const keys = keysOf(env, queue);
-  const mk = (key) => queue.cats[key].modelKey ?? key;
 
-  if (cmd === "meshy") {
-    if (!String(env.MESHY_API_KEY ?? "").trim()) { log("::warning title=Models::MESHY_API_KEY is not set: no model is made."); outputs.made = ""; return { code: 0, outputs }; }
-    const reserve = reserveOf(env, "MODELS_MESHY_RESERVE", DEFAULT_RESERVE.meshy);
+  // THE MAKE JOB: each cat's try counted first, then its tool's script; the tool's own record says what it did.
+  if (cmd === "meshy" || cmd === "tripo-make") {
+    const by = cmd === "meshy" ? "meshy" : "tripo", tool = TOOLS[by];
+    if (!String(env[tool.secret] ?? "").trim()) { log(`::warning title=Models::${tool.secret} is not set: no model is made.`); outputs.made = ""; return { code: 0, outputs }; }
+    const reserve = reserveOf(env, tool.reserveVar, tool.reserveDefault);
     if (reserve.note) log(`::warning title=Models::${reserve.note}`);
-    const made = [];
+    const made = [], t0 = now();
     for (const key of keys) {
-      const before = readJsonFile(file(FILES.meshyState), {})[key] ?? null;
+      if (!canTry(state, key)) { log(`Models: ${key} skipped: made already, or no try left.`); continue; }
+      // Only a cat that can finish before the step's limit: a step that timed out would lose a model made and paid for.
+      if (tool.catMs && now() - t0 + tool.catMs > tool.stepMs - MAKE_MARGIN_MS) {
+        log(`Models: ${key} waits for the next run: its make can take ${Math.round(tool.catMs / 60_000)} minutes, more than this step has left (its limit is ${Math.round(tool.stepMs / 60_000)}); no try is used.`);
+        break;
+      }
+      const before = tool.record(key);
       // The try is counted, and saved, before any credit can be spent: a run that hangs or is cancelled still counts it.
-      const { prev } = startTry(state, key, { at });
+      const { prev } = startTry(state, key, { at, by });
       saveState();
-      const r = x("node", ["scripts/meshy.mjs", "run", key, "--limit", "1", "--only", "rebuild", "--reserve", String(reserve.value)]);
-      const o = meshyOutcome(before, readJsonFile(file(FILES.meshyState), {})[key] ?? null);
-      if (o.outcome === "made") { finishTry(state, key, { made: true, at, tasks: o.tasks }); made.push(key); log(`Models: ${key}: Meshy made its model (${o.credits ?? "?"} credits).`); }
-      else if (o.outcome === "failed") { const row = finishTry(state, key, { ok: false, error: `Meshy: ${o.error}`, at }); log(`::warning title=Models::${key}: Meshy failed (${String(o.error).slice(0, 200)}); try ${row.attempts} of ${MAX_TRIES}.`); }
+      const r = x("node", tool.args(key, reserve.value));
+      const o = tool.outcome(before, tool.record(key));
+      if (o.outcome === "made") { finishTry(state, key, { made: true, at, tasks: o.tasks }); made.push(key); log(`Models: ${key}: ${tool.name} made its model (${o.credits ?? "?"} credits).`); }
+      else if (o.outcome === "failed") { const row = finishTry(state, key, { ok: false, error: `${tool.name}: ${o.error}`, at }); log(`::warning title=Models::${key}: ${tool.name} failed (${String(o.error).slice(0, 200)}); try ${row.attempts} of ${MAX_TRIES}.`); }
       else {
         if (prev) state.cats[key] = prev; else delete state.cats[key];   // nothing was spent: no try
         saveState();
-        log(`Models: ${key}: nothing made (the Meshy balance is at its reserve of ${reserve.value} credits, or the run stopped${r?.status ? `: exit ${r.status}` : ""}); no try is used.`);
+        log(`Models: ${key}: nothing made (the ${tool.name} balance is at its reserve of ${reserve.value} credits, or the run stopped${r?.status ? `: exit ${r.status}` : ""}); no try is used.`);
         break;
       }
       saveState();
@@ -392,9 +501,13 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
       const snap = snapshot(root, [`assets/models/cats/${m}.glb`, `assets/models/cats/${m}-lo.glb`, FILES.index, FILES.provenance]);
       let problems = [];
       try {
-        const p = x("python3", ["scripts/make-cat-models.py", "--gltfpack", env.GLTFPACK || "node_modules/.bin/gltfpack", m]);
-        if (p?.status !== 0) problems.push(`the packer failed (exit ${p?.status})`);
-        else problems = await checkModel(m);
+        // A model Tripo made is packed from the raw GLB its make job handed over, never from Tripo's link (it expires in minutes).
+        if (byOf(state.cats[key]) === "tripo" && !rawHandedOver(m)) problems.push(`the model Tripo made did not reach the Pack job (no ${FILES.cache}/${m}.raw.glb stamped with its task); Tripo's own link has expired`);
+        else {
+          const p = x("python3", ["scripts/make-cat-models.py", "--gltfpack", env.GLTFPACK || "node_modules/.bin/gltfpack", m]);
+          if (p?.status !== 0) problems.push(`the packer failed (exit ${p?.status})`);
+          else problems = await checkModel(m);
+        }
       } catch (e) { problems.push(`packing stopped: ${e.message}`); }
       if (!problems.length) {
         finishTry(state, key, { ok: true, at });
@@ -439,7 +552,7 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
     if (!argv[1]) { log("Usage: node scripts/models.mjs bundle|unbundle DIR"); return { code: 2, outputs }; }
     let n = 0;
     for (const rel of bundlePaths(keys.map(mk))) {
-      const [from, to] = cmd === "bundle" ? [file(rel), path.join(dir, rel)] : [path.join(dir, rel), file(rel)];
+      const [from, to] = cmd === "bundle" ? [file(rel), path.join(dir, artifactPath(rel))] : [path.join(dir, artifactPath(rel)), file(rel)];
       if (!fs.existsSync(from) || !fs.statSync(from).isFile()) continue;
       fs.mkdirSync(path.dirname(to), { recursive: true });
       fs.copyFileSync(from, to);
@@ -457,8 +570,14 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
 
   if (cmd === "summary") { writeSummary([]); return { code: 0, outputs }; }
 
-  log("Usage: node scripts/models.mjs pick | meshy | pack | tripo | preview | bundle DIR | unbundle DIR | merge");
+  log("Usage: node scripts/models.mjs pick | tripo-make | meshy | pack | tripo | preview | bundle DIR | unbundle DIR | merge");
   return { code: 2, outputs };
+
+  /** Whether the raw GLB of `m`'s job is in the packer's cache, stamped with the job's model task (make-cat-models.py then uses it as it is). */
+  function rawHandedOver(m) {
+    const job = readJsonFile(file(FILES.jobs), {})[m], raw = file(`${FILES.cache}/${m}.raw.glb`), stamp = file(`${FILES.cache}/${m}.raw.job`);
+    return isObj(job) && typeof job.model_job === "string" && fs.existsSync(raw) && fs.existsSync(stamp) && fs.readFileSync(stamp, "utf8") === job.model_job;
+  }
 
   /** The checks a packed model must pass: modelProblems, then the model tests. */
   async function checkModel(m) {
@@ -468,36 +587,52 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
     return t?.status !== 0 ? [`the model tests failed (${MODEL_TESTS.join(", ")})`] : [];
   }
 
-  /** A discarded model (its files already put back): its job entry as before Meshy, Meshy's state "failed" (tried again, bounded), the try's failure. */
+  /**
+   * The record of the tool that made `key`'s model this try, marked failed, in the state files given (the model did
+   * not go live): Meshy's state (so meshy.mjs takes the cat again, bounded by the tries), or Tripo's make record.
+   */
+  function failTool(key, why, { meshyState, tripoState }) {
+    if (byOf(state.cats[key]) === "tripo") failTripoMake(tripoState, mk(key), why, at);
+    else meshyState[key] = { ...(meshyState[key] ?? {}), status: "failed", error: String(why).slice(0, 400), at };
+  }
+
+  /** A discarded model (its files already put back): its job entry as before its tool, its tool's record "failed" (tried again, bounded), the try's failure. */
   function discard(key, problems) {
     const jobs = readJsonFile(file(FILES.jobs), {});
     writeJson(file(FILES.jobs), restoreJob(jobs, mk(key)));
-    const ms = readJsonFile(file(FILES.meshyState), {});
-    ms[key] = { ...(ms[key] ?? {}), status: "failed", error: `the model did not pass the checks: ${problems.join("; ")}`.slice(0, 400), at };
-    writeJson(file(FILES.meshyState), ms);
+    const tools = { meshyState: readJsonFile(file(FILES.meshyState), {}), tripoState: readJsonFile(file(FILES.tripoState), {}) };
+    failTool(key, `the model did not pass the checks: ${problems.join("; ")}`, tools);
+    if (byOf(state.cats[key]) === "tripo") writeJson(file(FILES.tripoState), tools.tripoState); else writeJson(file(FILES.meshyState), tools.meshyState);
     const row = finishTry(state, key, { ok: false, error: problems.join("; "), at });
     log(`::warning title=Models::${key}: its model is discarded (${problems.join("; ").slice(0, 300)}); try ${row.attempts} of ${MAX_TRIES}. The cat keeps its portrait.`);
   }
 
   /**
-   * THE COMMIT JOB'S STEP (no third-party code, node built-ins only). From the artifacts of the Meshy, Pack and
-   * Tripo jobs (MESHY_DIR, PACK_DIR, TRIPO_DIR; any may be missing: a job that failed or was cancelled), for the
-   * cats picked (KEYS): their state rows (cleaned), and for a cat the Pack job made live, its two GLBs, its
-   * index and PROVENANCE rows, its job entry and its preview, each checked; then the checks and model tests run
-   * again here. A cat whose try did not finish (Meshy or Pack stopped) is recorded failed, and Meshy's state for it
-   * too (so it is tried again, bounded), never left "done" without its model. Returns the keys that go live.
+   * THE COMMIT JOB'S STEP (no third-party code, node built-ins only). From the artifacts of the make job (Tripo's
+   * or Meshy's), the Pack and the Tripo jobs (MAKE_DIR, PACK_DIR, TRIPO_DIR; any may be missing: a job that failed,
+   * was cancelled or was skipped), for the cats picked (KEYS): their state rows (cleaned), and for a cat the Pack job
+   * made live, its two GLBs, its index and PROVENANCE rows, its job entry and its preview, each checked; then the
+   * checks and model tests run again here. A cat whose try did not finish (its make or the Pack stopped) is recorded
+   * failed, and its tool's record for it too (Meshy's state, so it is tried again, bounded; Tripo's make record),
+   * never left "done" without its model. Returns the keys that go live.
    */
   async function merge() {
-    const dirs = [env.MESHY_DIR, env.PACK_DIR, env.TRIPO_DIR].filter((d) => d && fs.existsSync(d));
-    const latest = (rel) => { for (const d of [...dirs].reverse()) { const v = readJsonFile(path.join(d, rel), null); if (isObj(v)) return v; } return {}; };
+    const dirs = [env.MAKE_DIR, env.PACK_DIR, env.TRIPO_DIR].filter((d) => d && fs.existsSync(d));
+    const obj = (d, rel) => { const v = readJsonFile(path.join(d, rel), null); return isObj(v) ? v : {}; };
+    const arts = dirs.map((d) => ({ cats: obj(d, FILES.state).cats ?? {}, meshy: obj(d, FILES.meshyState), tripo: obj(d, FILES.tripoState) }));
     const meshyState = readJsonFile(file(FILES.meshyState), {}), tripoState = readJsonFile(file(FILES.tripoState), {});
-    const artMeshy = latest(FILES.meshyState), artState = latest(FILES.state), artTripo = latest(FILES.tripoState);
     const notes = [];
     for (const key of keys) {
-      if (isObj(artMeshy[key])) meshyState[key] = artMeshy[key];
-      const row = cleanRow(artState.cats?.[key]);
-      if (row) state.cats[key] = row;
-      if (isObj(artTripo[mk(key)])) tripoState[mk(key)] = artTripo[mk(key)];
+      // Per cat, not per file: the row furthest on, and its tools' records from the same artifact (else the nearest
+      // earlier one that has them), so an artifact with an older state (a job that never took the one before it)
+      // never replaces a try, its task ids or what it spent.
+      const src = furthestRow(arts.map((a) => (isObj(a.cats) ? a.cats[key] : null)));
+      if (src < 0) continue;
+      state.cats[key] = cleanRow(arts[src].cats[key]);
+      const from = (pick) => { for (let i = src; i >= 0; i--) { const v = pick(arts[i]); if (isObj(v)) return v; } return null; };
+      const ms = from((a) => a.meshy[key]), ts = from((a) => a.tripo[mk(key)]);
+      if (ms) meshyState[key] = ms;
+      if (ts) tripoState[mk(key)] = ts;
     }
     const live = [];
     const pack = env.PACK_DIR && fs.existsSync(env.PACK_DIR) ? env.PACK_DIR : null;
@@ -505,9 +640,12 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
       const row = state.cats[key];
       if (!row) continue;
       if (row.status === "started" || row.status === "made") {
-        const why = row.status === "made" ? "Meshy made the model, but packing did not finish (the Pack job failed, timed out or was cancelled)" : "the Meshy step did not finish (it failed, timed out or was cancelled)";
+        const tool = TOOLS[byOf(row)].name;
+        const why = row.status === "made" ? `${tool} made the model, but packing did not finish (the Pack job failed, timed out or was cancelled)` : `the ${tool} step did not finish (it failed, timed out or was cancelled)`;
+        // Its tool's record: Tripo's make record unless it already says failed (it keeps its task ids); Meshy's state when it says done.
+        const open = byOf(row) === "tripo" ? tripoState[mk(key)]?.make?.status !== "failed" : meshyState[key]?.status === "done" || row.status === "made";
+        if (open) failTool(key, why, { meshyState, tripoState });
         const r = finishTry(state, key, { ok: false, error: why, at });
-        if (meshyState[key]?.status === "done" || row.status === "made") meshyState[key] = { ...(meshyState[key] ?? {}), status: "failed", error: why, at };
         notes.push(`${key}: ${why}; try ${r.attempts} of ${MAX_TRIES}.`);
         log(`::warning title=Models::${key}: ${why}; try ${r.attempts} of ${MAX_TRIES}.`);
         continue;
@@ -519,8 +657,8 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
       if (!problems.length) problems.push(...await checkModel(m));
       if (problems.length) {
         restore(root, snap);
+        failTool(key, `the model did not pass the checks at the commit: ${problems.join("; ")}`, { meshyState, tripoState });
         const r = finishTry(state, key, { ok: false, error: `at the commit: ${problems.join("; ")}`, at });
-        meshyState[key] = { ...(meshyState[key] ?? {}), status: "failed", error: `the model did not pass the checks at the commit: ${problems.join("; ")}`.slice(0, 400), at };
         notes.push(`${key}: discarded at the commit (${problems.join("; ")}); try ${r.attempts} of ${MAX_TRIES}.`);
         log(`::warning title=Models::${key}: its model is discarded at the commit (${problems.join("; ").slice(0, 300)}).`);
         continue;
@@ -576,7 +714,7 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
       const s = state.cats[key], m = mk(key), j = jobs[m] ?? {};
       if (s?.status === "live" && index.cats?.[m]) {
         const preview = fs.existsSync(file(`${FILES.previews}/${m}.png`)) ? (repo ? ` · [preview](https://github.com/${repo}/blob/main/${FILES.previews}/${m}.png)` : ` · preview ${FILES.previews}/${m}.png`) : "";
-        lines.push(`- **${key}**: live. ${j.model ?? "model"}, ${Math.round((j.sizes?.hi ?? 0) / 1024)} KB full, ${Math.round((j.sizes?.lo ?? 0) / 1024)} KB far; Meshy tasks ${(s.tasks ?? []).join(", ") || "-"}; Tripo ${s.tripo ? `${s.tripo.status}${s.tripo.riggable === undefined ? "" : `, riggable ${s.tripo.riggable}`}` : "skipped"}${preview}.`);
+        lines.push(`- **${key}**: live. ${j.model ?? "model"}, ${Math.round((j.sizes?.hi ?? 0) / 1024)} KB full, ${Math.round((j.sizes?.lo ?? 0) / 1024)} KB far; ${TOOLS[byOf(s)].name} tasks ${(s.tasks ?? []).join(", ") || "-"}; Tripo rig ${s.tripo ? `${s.tripo.status}${s.tripo.riggable === undefined ? "" : `, riggable ${s.tripo.riggable}`}` : "skipped"}${preview}.`);
       } else if (s && s.status !== "live") lines.push(`- **${key}**: ${s.status} (try ${s.attempts} of ${MAX_TRIES}): ${s.error ?? ""}`);
       else lines.push(`- **${key}**: nothing made this run (the credit reserve, or a missing key).`);
     }

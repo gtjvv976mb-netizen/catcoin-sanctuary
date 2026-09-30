@@ -29,6 +29,8 @@
  *
  * packs the new model into assets/models/cats/ and shoots its in-game picture to check by eye.
  * Meshy's result URLs expire, so pack a batch soon after it finishes. Needs MESHY_API_KEY.
+ * The Models workflow uses this for a rebuild when MODELS_GENERATOR is "meshy"; by default it makes
+ * the model with Tripo instead (scripts/tripo.mjs make, from the same queue and the same prompt).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -91,15 +93,20 @@ export function retextureBody(q, job, { useImage = false, root = ROOT, originalU
   return { model_url, ...style, ai_model: "meshy-6", enable_original_uv: originalUv, texture_resolution: "2k", target_formats: ["glb"] };
 }
 
+// A reference picture's own pose wins over the prompt (a sitting or upright cat stays so), so
+// the image prompt says first that the pose must change.
+export const REPOSE = "Redraw this same character in a NEW POSE: walking on all four legs like a real cat, body horizontal. Keep its exact colours, markings, face and outfit.";
+/** The words a standing reference picture is made from (scripts/tripo.mjs make uses them too): the queue's look and the standing pose, after REPOSE when it is drawn from a picture. */
+export function referencePrompt(q, { fromPicture = false } = {}) {
+  const prompt = `${String(q.referencePrompt || q.retexturePrompt || "").trim()} ${STANDING}`.trim();
+  return fromPicture ? `${REPOSE} ${prompt}` : prompt;
+}
+
 export function referenceBody(q, { root = ROOT } = {}) {
   const img = imageRef(q.styleImage, root);
-  const prompt = `${String(q.referencePrompt || q.retexturePrompt || "").trim()} ${STANDING}`.trim();
-  // A reference picture's own pose wins over the prompt (a sitting or upright cat stays so), so
-  // the image prompt says first that the pose must change.
-  const repose = "Redraw this same character in a NEW POSE: walking on all four legs like a real cat, body horizontal. Keep its exact colours, markings, face and outfit.";
   return img
-    ? { kind: "image-to-image", body: { ai_model: "nano-banana-2", prompt: `${repose} ${prompt}`, reference_image_urls: [img], generate_multi_view: true } }
-    : { kind: "text-to-image", body: { ai_model: "nano-banana-2", prompt, generate_multi_view: true } };
+    ? { kind: "image-to-image", body: { ai_model: "nano-banana-2", prompt: referencePrompt(q, { fromPicture: true }), reference_image_urls: [img], generate_multi_view: true } }
+    : { kind: "text-to-image", body: { ai_model: "nano-banana-2", prompt: referencePrompt(q), generate_multi_view: true } };
 }
 
 export function modelBody(imageUrls) {

@@ -267,7 +267,8 @@ row in `data/wallets.json` an `until` date; never delete the row. Never delete a
 a launched coin's uri points to it for good. A real photo that shows a person can be taken off a
 card with `data/photo-hide.json` (above), or by hand by moving its row in `data/real-photos.json` to `none`. The 3D model is
 made by the Models workflow (below) once it is switched on; by hand otherwise, as for every cat
-(`node scripts/meshy.mjs run <TICKER>`, see `MESHY-HANDOFF.md`).
+(`node scripts/tripo.mjs make <TICKER>` or `node scripts/meshy.mjs run <TICKER>`, see `scripts/CAT-MODELS.md`
+and `MESHY-HANDOFF.md`).
 
 ### 3D models for launched cats (the Models workflow)
 
@@ -277,17 +278,22 @@ by hand, and right after a launch is recorded (the Launch workflow's publish job
 makes at most one queued **rebuild** from `scripts/meshy.queue.json` (`MODELS_PER_RUN` 2 for two):
 launched cats with no model first, never one whose photo `data/photo-hide.json` hides.
 
-1. **Meshy** (`scripts/meshy.mjs run`): four-legged reference views from the queue entry's reference
-   picture (the post's photo), multi-image-to-3D and a remesh far copy, about 41 credits a cat.
+1. **The model**, by the tool `MODELS_GENERATOR` names:
+   - **Tripo** (the default; `scripts/tripo.mjs make`, the official Tripo CLI): the queue entry's reference
+     picture (the post's photo) redrawn standing on four legs (image-to-image), then image-to-model
+     (`tripo-v3.1`, 12000 faces, textured), about 40 credits a cat, downloaded at once for the packer.
+   - **Meshy** (`MODELS_GENERATOR` = `meshy`; `scripts/meshy.mjs run`): four-legged reference views from
+     the same picture, multi-image-to-3D and a remesh far copy, about 41 credits a cat.
 2. **Pack** (`scripts/make-cat-models.py` with gltfpack): normalized, textured, `<KEY>.glb` and
    `<KEY>-lo.glb` in `assets/models/cats/`, `index.json` and `PROVENANCE.md`.
 3. **Checks**: the size budgets (600/150 KB, 800/300 KB for HD), a valid textured GLB the page can load
    without a decoder, the garden's own rig (`assets/world/catrig.js`) run on the model (four legs with
    their joints in order, skin weights that add up, 1 unit tall on the ground), and the model tests
    (`tests/catmodels`, `catrig`, `meshy`). A model that fails is **discarded** (its files, index row and
-   job entry put back), the failure recorded in `scripts/models.state.json` and `scripts/meshy.state.json`,
-   and the cat keeps its portrait and the shared model. After 2 failed tries it is left for a person
-   (delete its row in `scripts/models.state.json` to try again).
+   job entry put back), the failure recorded in `scripts/models.state.json` and in its tool's record
+   (`scripts/tripo.state.json` or `scripts/meshy.state.json`), and the cat keeps its portrait and the
+   shared model. After 2 failed tries it is left for a person (delete its row in
+   `scripts/models.state.json` to try again).
 4. **Tripo** (`scripts/tripo.mjs rig`): the quadruped rig of the packed model (about 25 credits),
    recorded in `scripts/tripo.state.json`. Skipped, with a log line, when `TRIPO_API_KEY` is missing.
    The site rigs its cats itself, so Tripo's rigged GLB is not used on the page; a "not riggable"
@@ -296,19 +302,26 @@ launched cats with no model first, never one whose photo `data/photo-hide.json` 
    the run's summary; then the commit, and Pages is deployed.
 
 These run as separate jobs, so no job that installs a package holds a key it does not need or the push
-token: the Meshy job installs nothing and alone holds `MESHY_API_KEY`; the Pack job (packages installed
-with `--ignore-scripts`) holds no secret; the Tripo job alone holds `TRIPO_API_KEY`; the Commit job
+token: the Pick job installs nothing and holds no secret; one make job runs, the chosen tool's: the
+Tripo make job (its CLI from `tools/tripo-cli`: `npm ci --ignore-scripts`, every package locked by its
+hash) holds only `TRIPO_API_KEY`, the Meshy job installs nothing and alone holds `MESHY_API_KEY`; the
+Pack job (packages installed with `--ignore-scripts`) holds no secret; the Tripo rig job
+(`tools/tripo-cli` and `tools/tripo-rig`, locked the same way) holds only `TRIPO_API_KEY`; the Commit job
 installs nothing third-party, takes only the expected files from the others (each checked, the model
-checks and tests run again there) and pushes with git hooks off. A try is counted before Meshy is
-called, and the Commit job always runs, so a run that fails, times out or is cancelled still records
-what Meshy spent (the cat is tried again, at most twice in all).
+checks and tests run again there) and pushes with git hooks off. The make, Pack and rig jobs run the
+commit the Pick job ran the model tests on. A try is counted before the tool is called, and the Commit
+job always runs, so a run that fails, times out or is cancelled still records what the tool spent (the
+cat is tried again, at most twice in all); a job that never got the state of the one before it uploads
+none, so an older copy never hides a try.
 
-**Setting it up (the owner):** add the repository secrets **`MESHY_API_KEY`** and **`TRIPO_API_KEY`**
-and the variable **`MODELS_ENABLED`** = `on` (anything else, or unset, runs nothing). Optional
-variables: `MODELS_MESHY_RESERVE` and `MODELS_TRIPO_RESERVE` (credits each tool keeps, 100 by default
-as in the scripts), `MODELS_PER_RUN` (1 or 2), `MODELS_BACKLOG` = `on` to also rebuild the queued cats
-that have a model already (off by default: those were checked by eye before). Each key is only in the
-step that calls its API; no wallet key is anywhere near this workflow.
+**Setting it up (the owner):** add the repository secret **`TRIPO_API_KEY`** (and **`MESHY_API_KEY`** to
+use Meshy) and the variable **`MODELS_ENABLED`** = `on` (anything else, or unset, runs nothing). Optional
+variables: `MODELS_GENERATOR` = `tripo` (the default) or `meshy` (any other value makes nothing);
+`MODELS_TRIPO_MAKE_RESERVE` (credits Tripo keeps when it makes a model, 0 by default: it spends what is
+there); `MODELS_MESHY_RESERVE` and `MODELS_TRIPO_RESERVE` (credits Meshy and Tripo's rig keep, 100 by
+default as in the scripts); `MODELS_PER_RUN` (1 or 2), `MODELS_BACKLOG` = `on` to also rebuild the queued
+cats that have a model already (off by default: those were checked by eye before). Each key is only in
+the steps that call its API (Tripo's: the make and the rig); no wallet key is anywhere near this workflow.
 
 **A quick look at each new model is still wise:** the checks cannot tell which way a model faces (a
 big tail can fool the packer's heading guess: `--yaw 180`, see `scripts/CAT-MODELS.md`) or whether it
