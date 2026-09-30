@@ -22,12 +22,12 @@ the repository; scripts/make-world-models.py packs them:
 
 | File | Triangles | Size | 3D job | Reference picture job |
 |---|---|---|---|---|
-| oak.glb, oak-lo.glb | 13.8k, 2.3k | 415 KB, 100 KB | cebeaabe-6251-4a88-88ee-91099e6875de | c6181dbd-7e88-40c5-aa26-53ad70323a9e |
-| birch.glb, birch-lo.glb | 11.9k, 2.4k | 361 KB, 94 KB | ff2e64cc-f7b6-43d7-907d-a5f2c918a3c4 | bbfee002-4ef6-4af9-8270-2f03a2b2c27e |
-| cherry.glb, cherry-lo.glb | 11.8k, 2.2k | 441 KB, 119 KB | a9835964-dd70-4798-8915-55f8318727c0 | 32f5e6e2-753e-40aa-97e4-11969d171e6f |
-| pine.glb, pine-lo.glb | 9.9k, 2.4k | 396 KB, 110 KB | 0f1ee288-dcb3-4ecc-9cb3-ee4b6185bbcc | 7745531f-94cb-4ac5-86e7-4ce5b1c47bcb |
-| apple.glb, apple-lo.glb | 11.4k, 2.3k | 387 KB, 102 KB | 70b23533-47dd-47eb-a868-a8316a198469 | 7d4c5c6e-6eda-4e56-8739-8f3361770802 |
-| cottage.glb (timber-framed, cat's-eye window) | 26.4k | 779 KB | 1c552a2a-31d6-4af3-a145-468b7ad322e5 | 171adf18-3664-4ea8-a093-3928d6088e65 |
+| oak.glb, oak-lo.glb | 14.0k, 2.2k | 412 KB, 90 KB | c7a82e65-aa03-4040-83d6-4e85e4ce679f | 2c4f081d-e492-423c-87ea-ec522589ad29 |
+| birch.glb, birch-lo.glb | 11.9k, 2.3k | 379 KB, 87 KB | fbc0c5c6-b0ef-4d52-b9ae-064221a24f5c | 0b8ab82c-798e-4365-a2ae-9d8772278d58 |
+| cherry.glb, cherry-lo.glb | 11.8k, 2.0k | 493 KB, 114 KB | 89f272c0-520d-4a58-9c27-5bb989fe1b2d | 6c814651-431b-484b-b0dc-6ec6871ee65d |
+| pine.glb, pine-lo.glb | 9.9k, 2.3k | 349 KB, 84 KB | 26819f6f-d117-4862-aaca-6015c4cd8f1c | 2aa186d0-d830-421e-8d84-342d7e9e733e |
+| apple.glb, apple-lo.glb | 11.8k, 2.2k | 378 KB, 96 KB | 4c50d6be-7560-4dba-bd3e-4a63506315bf | c1fb2d4a-5370-4feb-ae80-a8d3a7f92d47 |
+| cottage.glb (the sanctuary's own cottage in HD: orange tiles, cat-ear gable, cat's-eye window, porch) | 27.2k | 829 KB | daaae9b8-5056-40fe-83ad-deb4cc22eb5f (multi-view) | 130af30f, 7a38fc0a, a4cd81fb, 1abd49f9 |
 | fountain.glb (two basins, a gold cat on top) | 8.0k | 409 KB | 7bba50ea-b296-4a65-a424-e5e68b13db38 | d7e4bff3-a4de-4bd7-aadb-bad26e8228ae |
 | bench.glb | 4.8k | 135 KB | 2a218113-f883-4360-981e-318f1204ae4b | 1b0bd8f5-55c5-4fc8-9ae1-aeacbdb9aa71 |
 | lamp.glb (garden lamp post) | 1.8k | 87 KB | 78506c7f-385a-47a9-87e5-a823d0861602 | 6b8fb9b9-d487-4fd6-919a-e958ef0983ec |
@@ -36,6 +36,13 @@ the repository; scripts/make-world-models.py packs them:
 
 The cottage's seams keep gltfpack from going below about 26k triangles without `-sa`, so it is over
 the 600 KB each model aims for.
+
+2026-09-30, second round (a second Higgsfield account): the trees were made again from reference
+pictures of full, dense canopies (the first ones came out as bare branches with a few leaf patches),
+and the cottage is now the sanctuary's own cottage (assets/models/sanctuary.glb, the one the low tier
+shows) in HD: its four sides were rendered, each redrawn in high detail with gpt_image_2_5 keeping
+its design, and the four views made into one model with Tripo H3.1 multi-view (texture and geometry
+"detailed"). The first round's timber-framed cottage was dropped for it.
 
 The ground's photo textures (assets/world/tex/: grass, earth, gravel, stone and bark, each 1024 px
 and a 512 px copy) are tiling images generated in the same account: grass
