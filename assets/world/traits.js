@@ -174,7 +174,7 @@ function quote(text, m) {
 
 const KITTEN = /(?<!\b(?:her|his|small black|carries a|carrying (?:her|a)) )\bkittens?\b(?![- ](?:sized|fuzz|panda|irises|eyes))/;
 const ADULT = /\b(adult|full-grown|grown-up|older)\b/;
-const SENIOR = /\b(senior(?! pest)|elderly|geriatric|16 or so|greying muzzle|old tom|older domestic)\b/;
+const SENIOR = /\b(senior(?! pest| mouse)|elderly|geriatric|16 or so|greying muzzle|old tom|older domestic)\b/;
 const CHUNKY = /\b(chubby(?![^.;]{0,14}\b(?:cheek|face))|chonk\w*|fat|tubby|plump(?!,? (?:round[- ])?fac)|portly|obese|rotund|stout|stocky|heavy-set|heavyset|heavy-bodied|heavy body|heavy build|heavy,? (?:stocky|long-haired|round)|heavy cat|cobby|round-bellied|ball-round|blob-shaped|bean-shaped|gumdrop-shaped|egg-shaped|loaf-(?:shaped|like) (?:body|build)|broad-chested|burly|jowly|barrel-bodied|big boi|26-pound|round(?:,| and)? (?:(?!head|face|eyes?)[a-z-]+,? ){0,3}(?:cat|kitten|body|belly|tom|tabby|tortoiseshell|calico|bodyguard)(?![-\w]))\b/;
 const SLIM = /\b(slim(?! (?:[a-z]+ )?(?:collar|tail|line))|slender|(?<!medium[- ])lean(?!,? medium)|lithe|wiry(?![^.;]{0,24}\b(?:hairs?|coat|fur)\b)|lanky|skinny|svelte|rangy|leggy|long-legged|long legs|very thin|underfed|dancer-like)\b/;
 const SHORT_LEGS = /\b(munchkin|minuet|short-legged|short legs|stubby (?:black )?(?:legs|limbs|arms and legs|nub feet)|dwarfism)\b/;

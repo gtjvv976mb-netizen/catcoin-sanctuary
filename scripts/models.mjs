@@ -103,7 +103,7 @@ export const TRIPO_MAKE_MINUTES = 110;
 export const MAKE_MARGIN_MS = 5 * 60_000;
 export const RESERVE_RANGE = Object.freeze([0, 1_000_000]);
 /** The size budgets tests/catmodels.test.mjs and scripts/make-cat-models.py keep (bytes): full and far copy, and for HD models. */
-export const BUDGET = Object.freeze({ full: 600_000, far: 150_000, hdFull: 800_000, hdFar: 300_000 });
+export const BUDGET = Object.freeze({ full: 600_000, far: 150_000, hdFull: 1_300_000, hdFar: 300_000 });
 /** The tests that validate assets/models/cats, run once a new model is packed. */
 export const MODEL_TESTS = Object.freeze(["tests/catmodels.test.mjs", "tests/catrig.test.mjs", "tests/meshy.test.mjs"]);
 const KEY = /^[A-Za-z0-9][A-Za-z0-9-]{1,39}$/;

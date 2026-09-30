@@ -32,7 +32,7 @@ const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
 
 test("every resident has a character in data/traits.json, in range, with the words behind each value", async () => {
   const list = await residents();
-  assert.equal(list.length, 248);
+  assert.equal(list.length, 284);
   assert.equal(Object.keys(TABLE).length, list.length, "one row per resident, no strays");
   for (const r of list) {
     const t = TABLE[r.id];
@@ -56,7 +56,8 @@ test("every resident has a character in data/traits.json, in range, with the wor
     if (t.signature) assert.ok(t.why.signature, `${r.id}.signature says why`);
     assert.deepEqual(traitsOf(r), normalizeTraits(t), `${r.id}: traitsOf reads its row`);
   }
-  assert.ok(read("data/traits.json").length < 150 * 1024, "data/traits.json stays small");
+  // 2026-09-30: 150 -> 170 KB for the 284 residents (about 545 bytes a row).
+  assert.ok(read("data/traits.json").length < 170 * 1024, "data/traits.json stays small");
   assert.ok(!/https?:/.test(read("data/traits.json")), "no links in the file");
 });
 
@@ -144,7 +145,7 @@ test("big cats are drawn by species: the real shoulder-height ratio to the 0.6th
     LEOTHELION: ["lion", 2.56], COWARDLION: ["lion", 2.56], DROWSEPAW: ["lion", 2.56], SORRELPAW: ["lioness", 2.3],
     SAFFWHISK: ["tiger", 2.3], SUNSTRETCH: ["tiger", 2.3], RIMESTRIPE: ["tiger", 2.3], GRREAT: ["tiger", 2.3],
     TALLYSPOT: ["cheetah", 2.01], CHEETLE: ["cheetah", 2.01], ROSETTE: ["jaguar", 1.85], SANDSTEP: ["cougar", 1.85],
-    VELVETPAW: ["leopard", 1.77], STUBTAIL: ["bobcat", 1.42],
+    VELVETPAW: ["leopard", 1.77], STUBTAIL: ["bobcat", 1.42], BUBSYCAT: ["bobcat", 1.42],
   };
   for (const [id, [sp, k]] of Object.entries(want)) {
     const t = TABLE[id];
@@ -231,7 +232,7 @@ test("traitsOf: its table row, else what residents.js attached, else read from i
   assert.deepEqual(deriveTraits({ id: "MARUBOX", ticker: "MARUBOX" }).signature, "boxSit", "overrides apply at run time too");
   // Without data/traits.json the page still loads every cat, with no rows attached.
   const bare = await residents(["data/traits.json"]);
-  assert.equal(bare.length, 248);
+  assert.equal(bare.length, 284);
   assert.ok(bare.every((x) => x.traits === undefined));
   assert.equal(traitsOf(bare.find((x) => x.id === "INGOTLOAF")).signature, "loaf", "and each is read from its words instead");
 });
