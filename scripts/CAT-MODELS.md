@@ -160,9 +160,11 @@ texture_alignment: "original_image"` (about 21 credits). Fur strands, whiskers, 
 through in the texture. The steps before it are the same: a realistic portrait from the proof photo
 (gpt_image_2_5, high), a standing 3/4 reference (high), and four orthographic views (high from this run on).
 
-Job entries carry `hd: true, si: 0.04, si_lo: 0.003, tex: 2048, tex_lo: 256, q: 78`; most pack at 560-640 KB full
-and 130-260 KB far. A far copy still over 300 KB gets `sa_lo: true` with `si_lo` 0.004-0.01 (this scrambles the far
-copy's texture a little, which does not show at far-copy distances). The Hunyuan models were redone this way; the
+Job entries carry `hd: true, si: 0.02, si_lo: 0.003, tex: 1024, tex_lo: 256, q: 88`: about 50k triangles and a 1K
+texture at high JPEG quality, 800-1000 KB full and 120-260 KB far (the HD budget is 1.3 MB full, 300 KB far). A 2K
+texture doesn't fit with that much geometry, and the packer's fallback for an over-budget model drops straight to a
+256 px texture, so check `tex` in the entry after packing. A far copy still over 300 KB gets `sa_lo: true` with
+`si_lo` 0.004-0.01 (this scrambles the far copy's texture a little, which does not show at far-copy distances). The Hunyuan models were redone this way; the
 old model job is kept as `prev_model_job`. SNOWBALCAT, PUSSBOOCAT, TRIMCAT, TUBBSCAT and SGTTIBBS, listed above as
 failed, have had models since the third run.
 ### 2026-09-30: 24 models made by hand through Higgsfield
