@@ -239,35 +239,46 @@ export function buildTerrain(scene, { renderer, q, shade }) {
 
   const T = groundTextures(renderer, q.texSize);
   const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.94, metalness: 0, envMapIntensity: 0.55 });
+  // The textures, their scales (repeats a unit) and the far-off flat colours; photoreal.js swaps in
+  // photographs (uPhoto 1: the lawn photo is green already, so the tint only varies it round uTint).
+  const U = {
+    tLawn: { value: T.lawn }, tEarth: { value: T.earth }, tGravel: { value: T.gravel }, tStone: { value: T.stone },
+    uScale: { value: new THREE.Vector4(0.42, 0.38, 0.62, 0.16) }, uPhoto: { value: 0 }, uTint: { value: new THREE.Color(1, 1, 1) },
+    uFlatL: { value: new THREE.Color(1, 1, 1) }, uFlatE: { value: new THREE.Color(0.62, 0.48, 0.34) }, uFlatG: { value: new THREE.Color(0.76, 0.71, 0.63) }, uFlatS: { value: new THREE.Color(0.72, 0.7, 0.66) },
+  };
   mat.onBeforeCompile = (shader) => {
-    Object.assign(shader.uniforms, { tLawn: { value: T.lawn }, tEarth: { value: T.earth }, tGravel: { value: T.gravel }, tStone: { value: T.stone } });
+    Object.assign(shader.uniforms, U);
     shader.vertexShader = shader.vertexShader
       .replace("#include <common>", "#include <common>\nattribute vec4 aSplat;\nvarying vec4 vSplat;\nvarying vec3 vWorldP;")
       .replace("#include <fog_vertex>", "#include <fog_vertex>\nvSplat = aSplat;\nvWorldP = (modelMatrix * vec4(transformed, 1.0)).xyz;");
     shader.fragmentShader = shader.fragmentShader
       .replace("#include <common>", /* glsl */`#include <common>
         uniform sampler2D tLawn, tEarth, tGravel, tStone;
+        uniform vec4 uScale;
+        uniform float uPhoto;
+        uniform vec3 uTint, uFlatL, uFlatE, uFlatG, uFlatS;
         varying vec4 vSplat;
         varying vec3 vWorldP;
         vec3 tri(sampler2D t, vec2 p, float s) { return mix(texture2D(t, p * s).rgb, texture2D(t, p * s * 0.27 + 0.37).rgb, 0.35); }`)
       .replace("#include <color_fragment>", /* glsl */`
         vec2 wp = vWorldP.xz;
         float dist = length(vWorldP - cameraPosition);
-        float detail = 1.0 - smoothstep(60.0, 260.0, dist);
-        vec3 lawn = tri(tLawn, wp, 0.42);
-        vec3 earth = tri(tEarth, wp, 0.38);
-        vec3 grav = tri(tGravel, wp, 0.62);
-        vec3 stone = tri(tStone, wp, 0.16);
+        float detail = 1.0 - smoothstep(60.0 + uPhoto * 40.0, 260.0, dist);
+        vec3 lawn = tri(tLawn, wp, uScale.x);
+        vec3 earth = tri(tEarth, wp, uScale.y);
+        vec3 grav = tri(tGravel, wp, uScale.z);
+        vec3 stone = tri(tStone, wp, uScale.w);
         // Each texture's own brightness sharpens the blend, so pebbles poke out of the grass rather than fading into it.
+        vec4 b = mix(vec4(lawn.g, earth.r, grav.r, stone.r), vec4(lawn.g / uFlatL.g, earth.r / uFlatE.r, grav.r / uFlatG.r, stone.r / uFlatS.r) * 0.6, uPhoto);
         float ge = vSplat.x, gg = vSplat.y, gs = vSplat.z;
         float gw = max(0.0, 1.0 - ge - gg - gs);
-        vec4 w = vec4(gw * (0.6 + lawn.g * 0.6), ge * (0.6 + earth.r * 0.6), gg * (0.4 + grav.r * 1.0), gs * (0.6 + stone.r * 0.6));
+        vec4 w = vec4(gw * (0.6 + b.x * 0.6), ge * (0.6 + b.y * 0.6), gg * (0.4 + b.z * 1.0), gs * (0.6 + b.w * 0.6));
         w = pow(w, vec4(1.6));
         w /= max(1e-4, w.x + w.y + w.z + w.w);
-        vec3 lawnC = lawn * vColor.rgb * 1.32;
+        vec3 tint = mix(vColor.rgb * 1.32, mix(vec3(1.0), vColor.rgb / uTint, 0.6), uPhoto);
         float ao = vSplat.w;
-        vec3 ground = lawnC * w.x + earth * w.y * ao + grav * w.z * ao + stone * w.w * ao;
-        vec3 flatC = vColor.rgb * 1.08 * w.x + vec3(0.62, 0.48, 0.34) * w.y * ao + vec3(0.76, 0.71, 0.63) * w.z * ao + vec3(0.72, 0.7, 0.66) * w.w * ao;
+        vec3 ground = lawn * tint * w.x + earth * w.y * ao + grav * w.z * ao + stone * w.w * ao;
+        vec3 flatC = mix(vColor.rgb * 1.08, uFlatL * tint, uPhoto) * w.x + uFlatE * w.y * ao + uFlatG * w.z * ao + uFlatS * w.w * ao;
         diffuseColor.rgb *= mix(flatC, ground, detail);`);
   };
   mat.customProgramCacheKey = () => "terrain-v1";
@@ -275,5 +286,5 @@ export function buildTerrain(scene, { renderer, q, shade }) {
   mesh.receiveShadow = true;
   mesh.name = "ground";
   scene.add(mesh);
-  return { mesh, triangles: idx.length / 3 };
+  return { mesh, triangles: idx.length / 3, uniforms: U };
 }

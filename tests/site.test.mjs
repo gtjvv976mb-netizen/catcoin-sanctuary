@@ -275,8 +275,14 @@ test("page weight: the first view stays within budget", () => {
   // the holder rewards' review fixes, ~2.7 KB: the three lines built from the rules in force that
   // state.json records (rewardsText and the check of those rules, rewards.js), and the section's
   // stylesheet, assets/ui/rewards.css, linked only when About is first opened (panels.js calls its
-  // show()), never on the first view: tests/panels.test.mjs checks it. About 2 KB are spare after it.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 724 * 1024, "the page's own scripts over 724 KB");
+  // show()), never on the first view: tests/panels.test.mjs checks it. About 2 KB are spare after it;
+  // then from 724 KB to 740 KB for the photoreal garden on the medium and high tiers, ~17.5 KB:
+  // assets/world/photoreal.js (~10 KB, imported only once the first view is up, but counted here as
+  // every module is) and the hooks it uses: the terrain's swappable textures, bark and the tree models
+  // in flora.js, the swappable props kept apart in garden.js and scenery.js, research.js following a
+  // new cottage. Its textures and models are fetched by path afterwards, so they are not in this
+  // budget at all. About 0.7 KB are spare after it.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 740 * 1024, "the page's own scripts over 740 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");

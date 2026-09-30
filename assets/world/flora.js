@@ -4,7 +4,9 @@
    branches, a canopy of many soft leaf clusters shaded darker inside and underneath) and a far one
    (a few clusters). Every tree is one instance of its variant's mesh, so the whole wood is a couple
    of dozen draw calls; which trees use the near model is re-sorted as the camera moves (LOD), and
-   only the near ones cast shadows. Canopies sway in the wind (ambient.js windify). */
+   only the near ones cast shadows. Canopies sway in the wind (ambient.js windify). On the medium and
+   high tiers photoreal.js later gives the trunks a photographed bark (useBark), and the garden's and
+   the meadows' trees near the view its models (useModel). */
 
 import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
@@ -13,13 +15,17 @@ import { makeRandom } from "./rng.js";
 import { windify } from "./ambient.js";
 
 const _c = new THREE.Color(), _c2 = new THREE.Color();
-const _m = new THREE.Matrix4(), _q = new THREE.Quaternion(), _v = new THREE.Vector3(), _s = new THREE.Vector3(), _y = new THREE.Vector3(0, 1, 0);
+const _m = new THREE.Matrix4(), _m2 = new THREE.Matrix4(), _q = new THREE.Quaternion(), _v = new THREE.Vector3(), _s = new THREE.Vector3(), _y = new THREE.Vector3(0, 1, 0);
 
-/** Colours a geometry per vertex with f(x, y, z, nx, ny, nz) → Color, and marks how much it sways. */
-function finish(g, colorAt, wind = [0, 0]) {
+/** Colours a geometry per vertex with f(x, y, z, nx, ny, nz) → Color, and marks how much it sways.
+    aBark is where the bark texture goes (-1 on leaves and fruit): `bark` is [repeats round, along]. */
+function finish(g, colorAt, wind = [0, 0], bark = null) {
   if (g.index) g = g.toNonIndexed();
-  if (g.attributes.uv) g.deleteAttribute("uv");
-  const p = g.attributes.position, n = g.attributes.normal, cnt = p.count;
+  const p = g.attributes.position, n = g.attributes.normal, cnt = p.count, uv = g.attributes.uv;
+  const bk = new Float32Array(cnt * 2).fill(-1);
+  if (bark) for (let i = 0; i < cnt; i++) { bk[i * 2] = uv.getX(i) * bark[0]; bk[i * 2 + 1] = uv.getY(i) * bark[1]; }
+  if (uv) g.deleteAttribute("uv");
+  g.setAttribute("aBark", new THREE.BufferAttribute(bk, 2));
   const col = new Float32Array(cnt * 3), w = new Float32Array(cnt);
   for (let i = 0; i < cnt; i++) {
     const c = colorAt(p.getX(i), p.getY(i), p.getZ(i), n.getX(i), n.getY(i), n.getZ(i), i);
@@ -58,7 +64,7 @@ function limb(a, b, r0, r1, radial, hex, rnd, birch = false) {
       _c.multiplyScalar(0.82 + 0.28 * (0.5 + 0.5 * Math.sin(ang * 7 + y * 0.6)));
     }
     return _c;
-  });
+  }, [0, 0], [Math.max(1, Math.round(r0 * 5)), len * 1.2]);
 }
 
 /**
@@ -235,8 +241,8 @@ const GARDEN_KINDS = { "gtree-1": "cherry", "gtree-2": "apple", "gtree-3": "cher
 export function allTrees(q, sunDir = null) {
   const trees = [];
   const rnd = makeRandom("tree-variants");
-  for (const t of L.GARDEN_TREES) trees.push({ x: t.x, z: t.z, s: t.s * 0.85, kind: GARDEN_KINDS[t.id] || "oak", variant: rnd.int(0, 2), ry: rnd.range(0, 6.28), garden: true });
-  for (const t of L.MEADOW_TREES) trees.push({ x: t.x, z: t.z, s: t.s, kind: t.kind, variant: rnd.int(0, 2), ry: rnd.range(0, 6.28) });
+  for (const t of L.GARDEN_TREES) trees.push({ x: t.x, z: t.z, s: t.s * 0.85, kind: GARDEN_KINDS[t.id] || "oak", variant: rnd.int(0, 2), ry: rnd.range(0, 6.28), garden: true, local: true });
+  for (const t of L.MEADOW_TREES) trees.push({ x: t.x, z: t.z, s: t.s, kind: t.kind, variant: rnd.int(0, 2), ry: rnd.range(0, 6.28), local: true });
   trees.push(...forestSpots(q.forest, sunDir));
   for (const t of trees) t.y = L.groundHeight(t.x, t.z) - 0.05;
   return trees;
@@ -254,6 +260,18 @@ export function buildFlora(scene, { q, trees }) {
   scene.add(group);
   const mat = windify(new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.82, metalness: 0, envMapIntensity: 0.7 }), "attr");
   mat.shadowSide = THREE.BackSide; // closed shapes: casting from the back faces keeps the lit side free of acne
+  // The bark: off until useBark; its brightness (over its mean) shades the trunk's own colour, so birches stay white.
+  const bark = { tBark: { value: null }, uBark: { value: 0 }, uBarkMean: { value: 1 } };
+  const wind = mat.onBeforeCompile;
+  mat.onBeforeCompile = (sh) => {
+    wind(sh);
+    Object.assign(sh.uniforms, bark);
+    sh.vertexShader = sh.vertexShader.replace("#include <common>", "#include <common>\nattribute vec2 aBark;\nvarying vec2 vBark;").replace("#include <color_vertex>", "#include <color_vertex>\nvBark = aBark;");
+    sh.fragmentShader = sh.fragmentShader.replace("#include <common>", "#include <common>\nuniform sampler2D tBark;\nuniform float uBark, uBarkMean;\nvarying vec2 vBark;")
+      .replace("#include <color_fragment>", `#include <color_fragment>
+        if (uBark > 0.0 && vBark.x >= 0.0) { vec3 b = texture2D(tBark, vBark).rgb; diffuseColor.rgb *= mix(vec3(dot(b, vec3(0.3, 0.59, 0.11)) / uBarkMean), b / uBarkMean, 0.35); }`);
+  };
+  mat.customProgramCacheKey = () => "trees-bark";
   const kinds = Object.keys(SPECIES);
   const VARIANTS = 3;
   // One mesh per species, variant and level of detail.
@@ -270,7 +288,7 @@ export function buildFlora(scene, { q, trees }) {
       group.add(m);
       return m;
     };
-    sets.set(`${kind}-${v}`, { list, near: make(true), far: make(false) });
+    sets.set(`${kind}-${v}`, { kind, list, near: make(true), far: make(false) });
   }
   // A little colour per tree.
   const rnd = makeRandom("tree-tints");
@@ -286,19 +304,29 @@ export function buildFlora(scene, { q, trees }) {
     if (t.kind === "cherry" && Math.hypot(t.x, t.z) < 80) blossoms.push({ x: t.x, y: t.y + 3.8 * s, z: t.z, r: 1.8 * s, ground: t.y });
   }
 
+  /* The models (useModel): one instanced mesh per part of a kind's model, near and far copies, for
+     the garden's and the meadows' trees (the garden's always near); the forest stays as it is. */
+  const models = new Map();
   let last = new THREE.Vector3(1e9, 0, 0);
   function relod(eye, force = false) {
     if (!force && eye.distanceToSquared(last) < 9) return;
     last.copy(eye);
+    for (const md of models.values()) for (const l of md) l.n = 0;
     for (const set of sets.values()) {
       let nn = 0, nf = 0;
+      const md = models.get(set.kind);
       for (const t of set.list) {
         const d = Math.hypot(t.x - eye.x, t.z - eye.z);
         _m.compose(_v.set(t.x, t.y, t.z), _q.setFromAxisAngle(_y, t.ry), _s.setScalar(t.s));
-        if (d < q.treeNear) { set.near.setMatrixAt(nn, _m); set.near.setColorAt(nn, t.tint); nn++; }
+        if (md && t.local) {
+          const l = md[t.garden || d < q.treeNear ? 0 : 1];
+          for (const m of l.meshes) { m.setMatrixAt(l.n, _m2.multiplyMatrices(_m, m.userData.local)); m.setColorAt(l.n, t.tint); }
+          l.n++;
+        }
+        else if (d < q.treeNear) { set.near.setMatrixAt(nn, _m); set.near.setColorAt(nn, t.tint); nn++; }
         else { set.far.setMatrixAt(nf, _m); set.far.setColorAt(nf, t.tint); nf++; }
       }
-      for (const [m, n] of [[set.near, nn], [set.far, nf]]) {
+      for (const [m, n] of [[set.near, nn], [set.far, nf], ...(md || []).flatMap((l) => l.meshes.map((m) => [m, l.n]))]) {
         m.count = n;
         m.visible = n > 0;
         m.instanceMatrix.needsUpdate = true;
@@ -314,6 +342,22 @@ export function buildFlora(scene, { q, trees }) {
     update(camera) { relod(camera.position); },
     relod: (p) => relod(p, true),
     count: trees.length,
+    /** Photographed bark on every trunk; `mean` is its mean brightness. */
+    useBark(tex, mean) { bark.tBark.value = tex; bark.uBarkMean.value = mean; bark.uBark.value = 1; },
+    /** A model for one kind of tree, the size of the procedural one, near and far: each a list of its
+        meshes (geometry, material, and the matrix that places each in the model). */
+    useModel(kind, near, far) {
+      const n = trees.filter((t) => t.kind === kind && t.local).length;
+      if (!n) return;
+      models.set(kind, [near, far].map((parts, k) => ({ n: 0, meshes: parts.map(({ geometry, material, matrix }) => {
+        const m = new THREE.InstancedMesh(geometry, material, n);
+        Object.assign(m, { count: 0, castShadow: !k, receiveShadow: true, name: `trees ${kind} model ${k ? "far" : "near"}` });
+        m.userData.local = matrix;
+        group.add(m);
+        return m;
+      }) })));
+      relod(last, true);
+    },
   };
 }
 
