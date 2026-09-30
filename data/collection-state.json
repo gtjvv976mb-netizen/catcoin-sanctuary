@@ -1,12 +1,20 @@
 {
   "wallets": {
     "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3": {
-      "newest": "5NY9bfBEod6LVMikPw5ZHud8iJYpTKqbGkHmWPiXLtFAU8cny2vdMamwtkHUSwXGKcwRGx4FgK84aNYCwz4X5e21"
+      "newest": "5o7rRQsV8P3GfoyAFto6ZFLUtB6QTKkx6rZcyxSDTokYXhEvTqrjeQEf2uS5zTG672rhAGqTNEyDFG1xcacppTd"
     },
     "HxhisqFBeZRJcBWkjnumk6HwWxFLGVVD6jfX23tXHzQh": {
       "newest": "3yffugUngPkXoyTorbs24MnPZYyi96YPt6dBbRSaNkcLKR1oHNCoQbiXvacMVQVUku85wwTbzN9P8Tywyqa8UFyH"
     }
   },
-  "refused": [],
+  "refused": [
+    {
+      "tx": "4rvcfqRbgPzvDbxdmDfpYHDXR36QjrXNRepNf6oYYUADjqg8SRa5oNTT3SV34UTx1fM2nZYd3Fr97r7iRUAu8hfJ",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "pump_not_creator",
+      "detail": "the coin's creator is not the listed wallet",
+      "time": "2026-09-30T12:48:44Z"
+    }
+  ],
   "unread": []
 }
