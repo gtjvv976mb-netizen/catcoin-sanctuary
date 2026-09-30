@@ -501,11 +501,15 @@ export const MODEL_LIMITS = {
   // (fixer round 4: with the head's skin on the head at last (the head joint at the back of the skull), a head
   // tipped, bowed or rolled over shows, and these models' skin can't take it even at 0.3 of the move, or at what it can take the move falls short)
   LACQUER: { avoid: ["earScratch"], why: "a big kitten head: tipped down to the scratching paw, its face pinches" },
-  AMRCAT: { avoid: ["legLick"], why: "a cartoon head as big as its body: bowed to a raised hind leg it buries the leg and folds at the nape" },
-  "hello-kitty-sol": { avoid: ["roll"], why: "rolled onto its back and wriggling, its head rubbed round on the lawn squeezes flat" },
-  SUNSTRETCH: { avoid: ["earScratch"], why: "a tiger cub's big round head: tipped down to the scratching paw, it squeezes at the nape" },
   CHOUPETCAT: { avoid: ["earScratch"], why: "a deep ruff under a head tipped to the paw: its skin lets the hind paw come only part way up, a paw short of the ear" },
   PEWTER: { avoid: ["earScratch", "roll"], why: "its cape and feathered hat: a hind leg lifted to the ear catches the cape, and rolled onto its back the hat's feather goes into the lawn" },
+  // (the hand-made Higgsfield models of 2026-09-30 (tripo_h3_1_image_to_3d): what fit-clips.mjs and the herd test
+  // found each new model's skin can't take even at 0.3 of the move, or where the move falls short)
+  AMRCAT: { avoid: ["legLick", "earScratch", "sleep", "curlUp", "wake"], why: "a huge round mound of a body on short legs: a hind leg raised to lick or to the ear stays down by its belly, and curled up the mound hides its head (it dozes in its loaf)" },
+  CAMTHECAT: { avoid: ["legLick", "earScratch", "pounce"], why: "a round Squishmallow plush with no separate legs: no hind leg lifts to lick or reach the ear, and a pounce sinks it into the lawn" },
+  MILKWEED: { avoid: ["legLick", "earScratch", "scratch", "hop", "pounce"], why: "the Hello Kitty Godzilla-suit toy: stub legs in a stiff spiky suit; a raised hind leg or a rear up the trunk tears the suit, and a leap sinks it in the lawn" },
+  "hosico-cat": { avoid: ["earScratch"], why: "a stocky, round-headed Scottish Straight: its hind paw can't get near its ear" },
+  "ket-3": { avoid: ["earScratch"], why: "a plush cartoon head as big as its body, in a shirt and tie: its hind paw can't get near its ear" },
 };
 const avoidOf = (r) => { const m = MODEL_LIMITS[r?.id] ?? MODEL_LIMITS[r?.ticker]; return m ? m.avoid.slice() : null; };
 
