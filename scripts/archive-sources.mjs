@@ -10,6 +10,10 @@
  * does not renew them, so run this soon after a batch. Files already in DIR with the right size
  * are skipped; DIR/index.json maps each file to its cat, field, job id and original link. The
  * site itself only needs the packed copies in assets/models/cats/.
+ *
+ * scripts/source-models.sha256.json records every archived file's size, SHA-256 and link (2026-09-28);
+ * scripts/archive-sources.py does the same job with only Python, on any computer, and checks each file
+ * against that list (python3 scripts/archive-sources.py DIR [--verify]).
  */
 import fs from "node:fs";
 import path from "node:path";

@@ -1,0 +1,90 @@
+{
+  "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
+  "minGapMinutes": 180,
+  "lastPostedAt": "2026-09-30T10:02:59.390Z",
+  "posts": [
+    {
+      "id": "adoptions-found",
+      "text": "🧺 Adopted cats now show up by themselves 🐾\nWhen a visitor launches a cat straight from its Adopt kit, the sanctuary spots it and its card turns Adopted, with its mint 🔍\nAnd we'll cheer every adoption right here 🎉\nhttps://catcoinsanctuary.com/\n#catcoin #CatsOfX",
+      "approved": true,
+      "status": "posted",
+      "postedAt": "2026-09-27T10:18:19.262Z",
+      "tweet": "2104153653716156569",
+      "attempts": 1
+    },
+    {
+      "id": "hall-of-fame",
+      "text": "🏆 Have you visited the Hall of Fame? It's out by the fountain ⛲\nLegendary cat coins that already exist, made by others, in the garden as inspiration ✨\nThey aren't ours and they aren't up for adoption, just there to inspire 😼\nhttps://catcoinsanctuary.com/\n#catcoin",
+      "approved": true,
+      "status": "posted",
+      "postedAt": "2026-09-27T13:32:53.985Z",
+      "tweet": "2104202621468746066",
+      "attempts": 1
+    },
+    {
+      "id": "copycat-check",
+      "text": "🚩 Copycat check 🚩\nStrangers sometimes launch coins with our cats' names and tickers.\n✅ Only the mint shown on a cat's card is real\n❌ No mint on the card = no coin yet\nAnything else is a copycat. Stay safe 🐾\nhttps://catcoinsanctuary.com/\n#catcoin",
+      "approved": true,
+      "status": "posted",
+      "postedAt": "2026-09-27T17:12:54.367Z",
+      "tweet": "2104257987900785037",
+      "attempts": 1
+    },
+    {
+      "id": "how-it-works",
+      "text": "🏡 How Catcoin Sanctuary works 🐾\n🐱 A 3D garden of famous cats, each with its real story\n🧺 Adopt one: its kit lets you launch its coin yourself\n🔥 Trending on X? Our bot launches it\n✅ Only the mint on a cat's card is real\nhttps://catcoinsanctuary.com/\n#catcoin",
+      "approved": true,
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-09-30T10:02:59.390Z",
+      "tweet": "2105236959450829001"
+    },
+    {
+      "id": "trivia-cottage",
+      "text": "🐾 Sanctuary trivia 1/5\nThe cottage in the garden has cat-ear gables 🏡😺\nIt's Research HQ, where every cat's story gets checked before it moves in 🔍\nhttps://catcoinsanctuary.com/\n#catcoin #CatsOfX",
+      "approved": true,
+      "status": "queued"
+    },
+    {
+      "id": "trivia-sources",
+      "text": "🐾 Sanctuary trivia 2/5\nNo made-up lore here 📜\nEvery cat's card lists the posts and articles behind its story, each with a date. If we couldn't find it, the card says so 🔍\nhttps://catcoinsanctuary.com/\n#catcoin",
+      "approved": true,
+      "status": "queued"
+    },
+    {
+      "id": "trivia-memorials",
+      "text": "🐾 Sanctuary trivia 3/5\nSome residents live on in loving memory 🕯️\nTama the station master cat and Tombili of Istanbul both have a home in the garden 🌿\nhttps://catcoinsanctuary.com/\n#CatsOfX",
+      "approved": true,
+      "status": "queued"
+    },
+    {
+      "id": "trivia-routines",
+      "text": "🐾 Sanctuary trivia 4/5\nThe cats keep their own schedule 😸\nThey wander, play, eat, groom and nap in the sun, among the birds, butterflies and the pond 🦋\nCatch one mid-nap 😴\nhttps://catcoinsanctuary.com/\n#CatsOfX",
+      "approved": true,
+      "status": "queued"
+    },
+    {
+      "id": "trivia-browser",
+      "text": "🐾 Sanctuary trivia 5/5\nThe whole 3D garden runs in your browser 🌐\nNo app, no sign-up: everything it shows loads from the sanctuary's own site 🐾\nhttps://catcoinsanctuary.com/\n#catcoin",
+      "approved": true,
+      "status": "queued"
+    }
+  ],
+  "adoptionsPosted": {
+    "NEKOBUS": {
+      "status": "posted",
+      "postedAt": null,
+      "tweet": null,
+      "note": "Posted as a thread from data/thread-adoption-catbus.json on 2026-09-27; its ids are recorded there."
+    }
+  },
+  "launchesPosted": {
+    "MEDIACAT": {
+      "postId": "2104643043726926283",
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-09-29T18:21:20.697Z",
+      "tweet": "2104999986790269316"
+    }
+  }
+}

@@ -29,6 +29,8 @@
  *
  * packs the new model into assets/models/cats/ and shoots its in-game picture to check by eye.
  * Meshy's result URLs expire, so pack a batch soon after it finishes. Needs MESHY_API_KEY.
+ * The Models workflow uses this for a rebuild when MODELS_GENERATOR is "meshy"; by default it makes
+ * the model with Tripo instead (scripts/tripo.mjs make, from the same queue and the same prompt).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -91,25 +93,34 @@ export function retextureBody(q, job, { useImage = false, root = ROOT, originalU
   return { model_url, ...style, ai_model: "meshy-6", enable_original_uv: originalUv, texture_resolution: "2k", target_formats: ["glb"] };
 }
 
+// A reference picture's own pose wins over the prompt (a sitting or upright cat stays so), so
+// the image prompt says first that the pose must change.
+export const REPOSE = "Redraw this same character in a NEW POSE: walking on all four legs like a real cat, body horizontal. Keep its exact colours, markings, face and outfit.";
+/** The words a standing reference picture is made from (scripts/tripo.mjs make uses them too): the queue's look and the standing pose, after REPOSE when it is drawn from a picture. */
+export function referencePrompt(q, { fromPicture = false } = {}) {
+  const prompt = `${String(q.referencePrompt || q.retexturePrompt || "").trim()} ${STANDING}`.trim();
+  return fromPicture ? `${REPOSE} ${prompt}` : prompt;
+}
+
 export function referenceBody(q, { root = ROOT } = {}) {
   const img = imageRef(q.styleImage, root);
-  const prompt = `${String(q.referencePrompt || q.retexturePrompt || "").trim()} ${STANDING}`.trim();
-  // A reference picture's own pose wins over the prompt (a sitting or upright cat stays so), so
-  // the image prompt says first that the pose must change.
-  const repose = "Redraw this same character in a NEW POSE: walking on all four legs like a real cat, body horizontal. Keep its exact colours, markings, face and outfit.";
   return img
-    ? { kind: "image-to-image", body: { ai_model: "nano-banana-2", prompt: `${repose} ${prompt}`, reference_image_urls: [img], generate_multi_view: true } }
-    : { kind: "text-to-image", body: { ai_model: "nano-banana-2", prompt, generate_multi_view: true } };
+    ? { kind: "image-to-image", body: { ai_model: "nano-banana-2", prompt: referencePrompt(q, { fromPicture: true }), reference_image_urls: [img], generate_multi_view: true } }
+    : { kind: "text-to-image", body: { ai_model: "nano-banana-2", prompt: referencePrompt(q), generate_multi_view: true } };
 }
 
 export function modelBody(imageUrls) {
   return { image_urls: imageUrls.slice(0, 4), ai_model: "meshy-7.1", should_texture: true, should_remesh: true, target_polycount: 10000, target_formats: ["glb"] };
 }
 
+/** The longest one Meshy API call and one download may take: a hung request is aborted, never left to hold a run. */
+export const API_TIMEOUT_MS = 60_000;
+export const DOWNLOAD_TIMEOUT_MS = 5 * 60_000;
+
 async function api(method, route, body) {
   const key = process.env.MESHY_API_KEY;
   if (!key) throw new Error("MESHY_API_KEY is not set");
-  const r = await fetch(`${API}/${route}`, { method, headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+  const r = await fetch(`${API}/${route}`, { method, headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(API_TIMEOUT_MS) });
   const text = await r.text();
   if (!r.ok) throw new Error(`${method} ${route}: ${r.status} ${text.slice(0, 300)}`);
   return text ? JSON.parse(text) : {};
@@ -119,9 +130,11 @@ async function task(kind, body, log) {
   const { result: id } = await api("POST", kind, body);
   log(`  ${kind} task ${id}`);
   const t0 = Date.now();
-  for (;;) {
+  for (let misses = 0; ;) {
     await sleep(10_000);
-    const t = await api("GET", `${kind}/${id}`);
+    let t;
+    // A poll that times out or fails is asked again (three in a row give up): the task itself keeps running at Meshy.
+    try { t = await api("GET", `${kind}/${id}`); misses = 0; } catch (e) { if (++misses >= 3) throw e; continue; }
     if (t.status === "SUCCEEDED") return t;
     if (t.status === "FAILED" || t.status === "CANCELED") throw new Error(`${kind} ${id} ${t.status}: ${JSON.stringify(t.task_error ?? t).slice(0, 300)}`);
     if (Date.now() - t0 > 30 * 60_000) throw new Error(`${kind} ${id} still ${t.status} after 30 minutes`);
@@ -129,7 +142,7 @@ async function task(kind, body, log) {
 }
 
 async function download(url, file) {
-  const r = await fetch(url);
+  const r = await fetch(url, { signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT_MS) });
   if (!r.ok) throw new Error(`download ${url.slice(0, 80)}: ${r.status}`);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, Buffer.from(await r.arrayBuffer()));

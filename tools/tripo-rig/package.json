@@ -1,0 +1,12 @@
+{
+  "name": "models-tripo-rig",
+  "private": true,
+  "description": "What scripts/tripo.mjs plain needs to decode a packed model before the Tripo rig job uploads it (.github/workflows/models.yml): npm ci --ignore-scripts from package-lock.json, so every package that runs in the step holding TRIPO_API_KEY is the one its hash names.",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "meshoptimizer": "1.3.0"
+  }
+}

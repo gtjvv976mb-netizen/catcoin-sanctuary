@@ -5,7 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {
   STOCK_PAIRS, XSTOCKS, MAX_CATS, COAT_COLOURS, COAT_PATTERNS, validateCollection, validateWallets, links, buyLinks, BUY_SITES, coatFromMint, coatProblem,
-  textProblem, proseProblem, httpsProblem, sourceDateProblem, isAddress, isSignature, base58Decode, parseTime, pairByMint,
+  textProblem, proseProblem, httpsProblem, sourceDateProblem, isAddress, isSignature, base58Decode, parseTime, pairByMint, SOL_PAIR,
 } from "../assets/collection.js";
 import { readTokenMetadata } from "../scripts/lib/chain.mjs";
 import { OFFICIAL, STONKFUN_PAIRS, PAIR_MINTS, BUY_EVIDENCE, GME_LAUNCHER, GOOGL_LAUNCHER, GME_LAUNCH, GOOGL_LAUNCH, ROOT, OWNER } from "./helpers.mjs";
@@ -243,10 +243,13 @@ test("prose, links and source dates: what research text may carry", () => {
   for (const bad of ["2026-13", "2026-02-30", "Sept 2026", "2027-01-01", "", 2026]) assert.notEqual(sourceDateProblem(bad, NOW), null, String(bad));
 });
 
-test("the shipped wallets.json lists the owner's wallet, from 2026-09-25", () => {
+test("the shipped wallets.json lists the owner's wallet first, from 2026-09-25 (and, once the owner adds it, the automatic launcher's own wallet)", () => {
   const w = validateWallets(JSON.parse(fs.readFileSync(path.join(ROOT, "data/wallets.json"), "utf8")));
   assert.deepEqual(w.refused, []);
-  assert.deepEqual(w.launchers.map((l) => [l.address, l.since, l.label]), [[OWNER, "2026-09-25T00:00:00Z", "Owner"]]);
+  assert.deepEqual(w.launchers.slice(0, 1).map((l) => [l.address, l.since, l.label]), [[OWNER, "2026-09-25T00:00:00Z", "Owner"]]);
+  // Any other row is a dedicated wallet (the launcher's: scripts/launch.mjs, README "Launcher"), never the owner's again.
+  assert.ok(w.launchers.length <= 3, "a few wallets at most");
+  for (const l of w.launchers.slice(1)) assert.notEqual(l.address, OWNER);
 });
 
 /* ── data/famous.json: the famous cat coins ─────────────────────────────────────────── */
@@ -381,13 +384,14 @@ test("famous coins: the daily refresh takes DexScreener's pair figures and CoinG
     if (u.hostname === "api.coingecko.com") return new Response(JSON.stringify([{ id: popcat.coingeckoId, market_cap: 58_000_000, total_volume: 1e6 }]), { status: 200 });
     return new Response("[]", { status: 200 });
   };
-  const now = Date.parse("2026-09-27T05:41:00Z");
+  // After every figure in the file: the daily refresh keeps moving the kept coins' measuredAt forward.
+  const now = Math.max(Date.parse("2026-09-27T05:41:00Z"), ...data.coins.map((c) => Date.parse(c.market?.measuredAt) || 0)) + 60_000;
   const r = await refreshFamous({ data, fetchImpl, nowMs: now, pause: 0 });
   const p = r.data.coins.find((c) => c.id === popcat.id);
   assert.equal(p.market.marketCapUsd, 58_000_000, "CoinGecko's circulating market cap");
   assert.equal(p.market.volume24hUsd, 900_100, "volume summed over its pairs");
   assert.equal(p.market.source, "coingecko");
-  assert.equal(p.market.measuredAt, "2026-09-27T05:41:00Z");
+  assert.equal(p.market.measuredAt, new Date(now).toISOString().replace(/\.\d{3}Z$/, "Z"));
   assert.equal(p.tier, popcat.tier, "the refresh never moves a coin");
   assert.ok(r.kept.includes(cash.id), "a coin no source answered for keeps its figures");
   assert.deepEqual(r.data.coins.find((c) => c.id === cash.id).market, cash.market);
@@ -413,4 +417,49 @@ test("famous coins: a model in assets/models/cats/index.json finds its coin by i
   assert.equal(modelIdFor("MEW", [...residents, twin]), null, "a symbol several coins share names none");
   assert.equal(modelIdFor("PATCHPAW", [...residents, { ...twin, id: "patchpaw-coin", ticker: "PATCHPAW" }]), "PATCHPAW", "a stock cat's ticker is the stock cat");
   assert.equal(modelIdFor("NOT-A-CAT", residents), null);
+});
+
+/* ── pump.fun launches (the sanctuary's automatic launcher): launchpad "pump.fun", priced in SOL ── */
+
+const PUMP_WALLETS = { launchers: [...WALLETS.launchers, { address: "BevqMZhvHq1T3io2eRL6ZmvzyHmH6wk6qh1e3oTgrdrM", since: "2026-09-01", label: "Auto launcher" }] };
+/** The recorded real pump.fun launch (tests/fixtures/pumpfun-create.json) as the builder writes a pump.fun entry. */
+const PUMPED = Object.freeze({
+  mint: "EbBE6V3wta2HtsdAPsxoJwaYtGUuxdsLRLTZ8btTpump", name: "Gull Gadot", symbol: "GULLGADOT",
+  pair: { symbol: "SOL", mint: "So11111111111111111111111111111111111111112" }, pool: "AD17Gka6q5CCYhRFcRmD95NcDzY4ufpWqLNVArUn4erD",
+  payer: "BevqMZhvHq1T3io2eRL6ZmvzyHmH6wk6qh1e3oTgrdrM", tx: "33Z62j12gKrHwS624vnuPruq97cSS6AY4K6HhXpotxaiAwzoZgxVmNfy13skf8izta2Bcua3QQLgxdUYMNdkwsmi",
+  time: "2026-09-24T20:41:59Z", launchpad: "pump.fun",
+});
+const pumpCheck = (cats) => validateCollection({ cats }, { wallets: PUMP_WALLETS, nowMs: NOW });
+const pumpRefusal = (entry) => { const r = pumpCheck([entry]); assert.equal(r.cats.length, 0, JSON.stringify(entry)); return r.refused[0].clause; };
+
+test("pump.fun entries validate next to StonkFun ones: launchpad kept, SOL pair, and several on SOL (no one-cat-per-pair rule)", () => {
+  const second = { ...PUMPED, mint: "43QbEiq2Um2MuKwtPFNrWW6TZEGCBps5Ygifq6xzezBX", pool: "BFcJskGTLmAnthJmLAkHHRMaB7gqxfv7kxc2ii6StBtg",
+    tx: "59Dzq294zoTedo3aVPnC9hDEuUMBFqzDe6W41PFg7JKCr5Dfvy6MF2uUMeBAg3yc5ww7GHbDkWa2dyXmbXvQXR9Y", time: "2026-09-25T01:33:20Z" };
+  const r = pumpCheck([GME, PUMPED, second, GOOGL].map((e) => JSON.parse(JSON.stringify(e))));
+  assert.deepEqual(r.refused, []);
+  assert.deepEqual(r.cats.map((c) => c.symbol), ["GULLGADOT", "MEDPAD", "1GME", "GULLGADOT"]);
+  assert.deepEqual(r.cats.find((c) => c.mint === PUMPED.mint), PUMPED);
+  assert.deepEqual(Object.keys(r.cats.find((c) => c.mint === GME.mint)), ["mint", "name", "symbol", "pair", "pool", "payer", "tx", "time"], "a StonkFun entry gains no field");
+  assert.deepEqual(SOL_PAIR, PUMPED.pair);
+});
+
+test("pump.fun entries: priced in SOL only, a known launchpad only, closed fields, a listed payer; StonkFun entries keep every refusal", () => {
+  assert.equal(pumpRefusal({ ...PUMPED, pair: { ...GME.pair } }), "pair");                         // a pump.fun launch in a stock pair
+  assert.equal(pumpRefusal({ ...PUMPED, pair: { symbol: "WSOL", mint: SOL_PAIR.mint } }), "pair");
+  assert.equal(pumpRefusal({ ...PUMPED, pair: { ...SOL_PAIR, name: "Solana" } }), "pair");
+  assert.equal(pumpRefusal({ ...PUMPED, pair: { symbol: "STONK", mint: "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx" } }), "pair");
+  const { launchpad, ...bare } = PUMPED;
+  assert.equal(pumpRefusal(bare), "pair");                                                           // SOL without the launchpad: a LaunchLab entry, refused
+  for (const lp of ["stonkfun", "raydium", "Pump.fun", "", null, 1]) assert.equal(pumpRefusal({ ...PUMPED, launchpad: lp }), "launchpad", String(lp));
+  assert.equal(pumpRefusal({ ...GME, launchpad: "stonkfun" }), "launchpad");
+  assert.equal(pumpRefusal({ ...PUMPED, bondingCurve: PUMPED.pool }), "unknown_field");
+  assert.equal(pumpRefusal({ ...PUMPED, pool: PUMPED.mint }), "accounts");
+  assert.equal(refusal(PUMPED), "payer");                                                            // its wallet not listed
+  assert.equal(pumpRefusal({ ...PUMPED, name: "cat.fun" }), "name");
+});
+
+test("links for a pump.fun entry: Solscan and its pump.fun page, never a StonkFun page", () => {
+  assert.deepEqual(links(PUMPED), {
+    token: `https://solscan.io/token/${PUMPED.mint}`, tx: `https://solscan.io/tx/${PUMPED.tx}`, pumpfun: `https://pump.fun/coin/${PUMPED.mint}`,
+  });
 });

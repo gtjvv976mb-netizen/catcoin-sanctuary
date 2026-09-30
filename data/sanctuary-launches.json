@@ -1,0 +1,71 @@
+{
+  "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
+  "launches": [
+    {
+      "postId": "2104643043726926283",
+      "url": "https://x.com/NBA/status/2104643043726926283",
+      "name": "Media Day Cat",
+      "coinName": "Media Day Cat",
+      "ticker": "MEDIACAT",
+      "venue": "pump-sol",
+      "policy": "approved",
+      "kind": "real",
+      "lore": "A surprise kitten stole the show at a basketball media day",
+      "image": "https://pbs.twimg.com/amplify_video_thumb/2104638982260666368/img/a2S9SYP6ON9zxUS5.jpg",
+      "coinImage": "https://pbs.twimg.com/amplify_video_thumb/2104638982260666368/img/a2S9SYP6ON9zxUS5.jpg",
+      "metadataPath": "coins/2104643043726926283.json",
+      "status": "launched",
+      "preparedAt": "2026-09-29T17:03:48Z",
+      "attempts": 1,
+      "cat": {
+        "id": "media-day-cat",
+        "ticker": "MEDIACAT",
+        "name": "Media Day Cat",
+        "coinName": "Media Day Cat",
+        "owner": "NBA",
+        "category": "viral",
+        "story": "A surprise kitten stole the show at a basketball media day. Media Day Cat was trending on X on September 28, 2026, and the sanctuary gave it a coin.",
+        "look": "Media Day Cat, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/NBA/status/2104643043726926283",
+          "author": "NBA",
+          "handle": "NBA",
+          "date": "2026-09-28",
+          "dateType": "posted",
+          "text": "\"This is the best media day that I've had!\" An adorable surprise for Jordan Poole at Pelicans Media Day 🐈 (via @PelicansNBA) https://t.co/bO3ZfXSquk",
+          "note": "Found by the sanctuary's trend watch on 2026-09-29.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by NBA.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "medium",
+        "lore": null
+      },
+      "photoCredit": true,
+      "tx": "3yffugUngPkXoyTorbs24MnPZYyi96YPt6dBbRSaNkcLKR1oHNCoQbiXvacMVQVUku85wwTbzN9P8Tywyqa8UFyH",
+      "sentAt": "2026-09-29T17:07:25Z",
+      "lastValidBlockHeight": 429743904,
+      "mintPublic": "24NGWC9iFkLtUrPEN6EAnYLNW3zHqSv9oDuNqcpuNmN9",
+      "spentLamports": 5501160,
+      "settledAt": "2026-09-29T17:07:34Z",
+      "launchedAt": "2026-09-29T17:07:25Z",
+      "recordedAt": "2026-09-29T17:07:38Z"
+    }
+  ]
+}

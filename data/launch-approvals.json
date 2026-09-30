@@ -1,0 +1,11 @@
+{
+ "note": "Posts the owner approves for the automatic launcher (scripts/launch.mjs): the X status ids of data/trending-cats.json posts that are not watch-list cats (a real pet, a name the rules guessed). An approved post still meets every other rule: not sensitive, not already in the sanctuary, at most 48 hours old, a picture, a clean name and X post, the caps. Add an id to approve it; remove it to take the approval back before it is prepared. A post that names no cat (a big account's cat post, listed under signals) launches when you name it: { \"post\": \"<id or link>\", \"name\": \"<the cat's name>\" }, with an optional \"ticker\" (else from the name), \"kind\" (real, cartoon or fiction; else real) and \"lore\" (one line about the cat; else the post's first sentence). Saving this file starts the launcher. The launcher only reads this file.",
+ "approve": [
+  {
+   "post": "https://x.com/NBA/status/2104643043726926283",
+   "name": "Media Day Cat",
+   "ticker": "MEDIACAT",
+   "lore": "A surprise kitten stole the show at a basketball media day"
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+/* "Holder rewards" in the About panel (assets/ui/rewards.js), linked when it is first drawn.
+   Colours come from the site's tokens. */
+.rw { margin: 18px 0 6px; padding: 14px 14px 4px; border-radius: 18px; background: #fff; box-shadow: inset 0 0 0 2px var(--line), 0 3px 0 var(--line); }
+.rw-title { margin: 0; font: 800 22px/1.15 var(--display); color: var(--plum); }
+.rw-sub { margin: 14px 0 4px; font: 800 16px/1.2 var(--display); color: var(--plum); }
+.panel-body .rw-nfa { margin: 8px 0; padding: 8px 12px; border-radius: 12px; background: var(--paper-2); border-left: 4px solid var(--accent); color: var(--ink); font-size: 13px; }
+.rw-rules { margin: 10px 0; padding-left: 22px; display: grid; gap: 8px; font-size: 14px; line-height: 1.45; }
+.rw-rules b { color: var(--plum); }
+.rw-stats, .rw-dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 1px; margin: 10px 0; border-radius: 12px; overflow: hidden; background: var(--line); box-shadow: inset 0 0 0 1px var(--line); }
+.rw-stats dt, .rw-stats dd, .rw-dl dt, .rw-dl dd { margin: 0; padding: 7px 10px; background: var(--paper); font-size: 13.5px; }
+.rw-stats dt, .rw-dl dt { color: var(--ink-soft); font-weight: 700; background: var(--paper-2); }
+.rw-stats dd, .rw-dl dd { font-weight: 700; overflow-wrap: anywhere; }
+.rw-txs { list-style: none; margin: 6px 0 10px; padding: 0; display: grid; gap: 6px; }
+.rw-tx { display: grid; gap: 1px; padding: 7px 10px; border-radius: 12px; background: var(--paper); box-shadow: inset 0 0 0 1.5px var(--line); }
+.rw-sig { width: fit-content; color: var(--ink); font-weight: 500; }
+.rw-sig:focus-visible, .rw-input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.rw-tx-meta { color: var(--ink-soft); font-size: 12.5px; }
+.rw-check { margin: 14px 0 4px; }
+.rw-label { display: block; margin-bottom: 6px; font: 800 16px/1.2 var(--display); color: var(--plum); }
+.rw-line { display: flex; gap: 8px; }
+.rw-input { flex: 1; min-width: 0; min-height: 44px; padding: 8px 12px; border: 2px solid var(--line); border-radius: 14px; background: #fff; color: var(--ink); font: 500 14px var(--mono); }
+.rw-go { flex: none; }
+.rw-result:empty { display: none; }
+@media (max-width: 460px) { .rw-stats, .rw-dl { grid-template-columns: minmax(0, 1fr); } .rw-stats dd, .rw-dl dd { padding-top: 0; } .rw-stats dt, .rw-dl dt { padding-bottom: 2px; } }

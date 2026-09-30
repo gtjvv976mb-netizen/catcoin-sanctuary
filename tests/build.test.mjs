@@ -10,7 +10,9 @@ import { validateCollection, base58Encode } from "../assets/collection.js";
 import {
   fakeRpc, tempSite, readData, readDataJson, history, recordedTransactions, recordedAccounts, launchTx, launchHistory, V1,
   GME_LAUNCHER, GOOGL_LAUNCHER, GME_LAUNCH, GOOGL_LAUNCH, ANTHROPIC_LAUNCHER, IREN_LAUNCHER, OWNER, ROOT,
+  PUMPFUN, pumpLaunch, token2022MintData, PUMP_COIN,
 } from "./helpers.mjs";
+import { SYSTEM_PROGRAM } from "../scripts/lib/chain.mjs";
 
 const NOW = Date.parse("2026-09-25T18:00:00Z");
 const GOOGL_WALLET = { address: GOOGL_LAUNCHER, since: "2026-09-01", label: "GOOGLx launcher" };
@@ -218,8 +220,15 @@ test("the shipped data files are canonical and valid, so the first scheduled run
   const fake = fakeRpc();
   const r = await run(root, fake, { nowMs: Date.now() });
   assert.deepEqual(r.written, { collection: false, state: false });
-  // the one listed wallet is the owner's, read from its since date
-  assert.deepEqual(fake.calls.map((c) => [c.method, c.params[0]]), [["getSignaturesForAddress", OWNER]]);
+  // Each listed launch not proved (or refused) yet is asked for first (the RPC here has none of them: they are left for the next
+  // run), then each listed wallet, from its since date: the owner's first, and the automatic launcher's once the owner lists it.
+  const proved = new Set(site.collection.cats.map((c) => c.tx)), refused = new Set(site.state.refused.map((x) => x.tx));
+  const listed = [...new Set(readDataJson(ROOT, "launches.json").launches.map((l) => l.tx))].filter((tx) => !proved.has(tx) && !refused.has(tx));
+  assert.deepEqual(fake.calls.map((c) => [c.method, c.params[0]]), [
+    ...listed.map((tx) => ["getTransaction", tx]),
+    ...site.wallets.launchers.map((l) => ["getSignaturesForAddress", l.address]),
+  ]);
+  assert.equal(site.wallets.launchers[0].address, OWNER);
 });
 
 test("bad state or wallet files stop the run with a plain reason", async () => {
@@ -361,4 +370,105 @@ test("a version-1 transaction is kept, warned about on every run and read again;
   const r3 = await run(root, fakeRpc({ histories }));
   assert.deepEqual(r3.added.map((c) => c.tx), [GOOGL_LAUNCH]);
   assert.deepEqual(readDataJson(root, "collection-state.json").unread, []);
+});
+
+/* ── pump.fun launches by a listed wallet (the sanctuary's automatic launcher) ─────────────────── */
+
+/** A listed launcher wallet whose history holds one pump.fun launch built and signed by scripts/lib/pump.mjs. */
+function pumpSite(L = pumpLaunch(), { accounts } = {}) {
+  const root = tempSite({ wallets: { launchers: [{ address: L.wallet, since: "2026-09-01", label: "Auto launcher" }] } });
+  const transactions = recordedTransactions();
+  transactions.set(L.signature, { result: structuredClone(L.tx) });
+  const all = recordedAccounts();
+  for (const [k, v] of accounts ?? L.accounts) all.set(k, v);
+  const hist = [{ signature: L.signature, slot: L.tx.slot, err: null, memo: null, blockTime: L.tx.blockTime, confirmationStatus: "finalized" }];
+  return { root, L, fake: () => fakeRpc({ histories: { [L.wallet]: hist }, transactions, accounts: all }), transactions, all };
+}
+
+test("pump.fun: a listed wallet's launch is proved, read back (mint and bonding curve) and listed like a StonkFun launch, once", async () => {
+  const { root, L, fake } = pumpSite();
+  const f = fake();
+  const r = await run(root, f);
+  assert.deepEqual(r.refused, []);
+  const cats = readDataJson(root, "collection.json").cats;
+  assert.deepEqual(cats, [{
+    mint: L.mint, name: "Gull Gadot", symbol: "GULLGADOT", pair: { symbol: "SOL", mint: "So11111111111111111111111111111111111111112" },
+    pool: L.curve, payer: L.wallet, tx: L.signature, time: "2026-09-25T01:33:20Z", launchpad: "pump.fun",
+  }]);
+  assert.deepEqual(f.calls.filter((c) => c.method === "getMultipleAccounts").map((c) => c.params[0]), [[L.mint, L.curve]]);
+  assert.equal(validateCollection({ cats }, { wallets: readDataJson(root, "wallets.json"), nowMs: NOW }).refused.length, 0);
+  const again = fake();
+  const r2 = await run(root, again);
+  assert.deepEqual(r2.written, { collection: false, state: false });
+  assert.deepEqual(txCalls(again), []);
+});
+
+test("pump.fun: a launch listed in data/launches.json is proved at once, and sits with StonkFun launches newest first", async () => {
+  const { root, L, transactions, all } = pumpSite();
+  const wallets = readDataJson(root, "wallets.json");
+  wallets.launchers.push(GOOGL_WALLET);
+  fs.writeFileSync(path.join(root, "data/wallets.json"), serialize(wallets));
+  putLaunches(root, [{ tx: L.signature, note: "Gull Gadot" }]);
+  const r = await run(root, fakeRpc({ histories: { [GOOGL_LAUNCHER]: history(GOOGL_LAUNCHER) }, transactions, accounts: all }));
+  assert.deepEqual(r.refused, []);
+  assert.deepEqual(readDataJson(root, "collection.json").cats.map((c) => [c.symbol, c.pair.symbol, c.launchpad ?? "stonkfun"]),
+    [["GULLGADOT", "SOL", "pump.fun"], ["MEDPAD", "GOOGLx", "stonkfun"]]);
+});
+
+test("pump.fun: the recorded real launch with its dev buy is refused (pump_dev_buy), whether scanned or listed, and never read again once listed", async () => {
+  const payer = PUMPFUN.answer.result.transaction.message.accountKeys[0], sig = PUMPFUN.answer.params[0];
+  const root = tempSite({ wallets: { launchers: [{ address: payer, since: "2026-09-01", label: "Someone" }] } });
+  const hist = [{ signature: sig, slot: PUMPFUN.answer.result.slot, err: null, memo: null, blockTime: PUMPFUN.answer.result.blockTime, confirmationStatus: "finalized" }];
+  const r = await run(root, fakeRpc({ histories: { [payer]: hist } }));
+  assert.equal(r.added.length, 0);
+  assert.deepEqual(readDataJson(root, "collection-state.json").refused.map((x) => [x.tx, x.clause]), [[sig, "pump_dev_buy"]]);
+  const listed = tempSite({ wallets: { launchers: [{ address: payer, since: "2026-09-01", label: "Someone" }] } });
+  putLaunches(listed, [{ tx: sig }]);
+  const r2 = await run(listed, fakeRpc());
+  assert.deepEqual(r2.refused.map((x) => x.clause), ["pump_dev_buy"]);
+  const again = fakeRpc();
+  await run(listed, again);
+  assert.ok(!txCalls(again).includes(sig));
+});
+
+test("pump.fun: a mint whose metadata does not match is refused; a bonding curve the RPC does not return stops the run and writes nothing", async () => {
+  const L = pumpLaunch();
+  const accounts = new Map(L.accounts);
+  accounts.set(L.mint, { ...accounts.get(L.mint), data: [token2022MintData({ mint: L.mint, updateAuthority: SYSTEM_PROGRAM, ...PUMP_COIN, symbol: "GULL" }).toString("base64"), "base64"] });
+  const bad = pumpSite(L, { accounts });
+  const r = await run(bad.root, bad.fake());
+  assert.equal(r.added.length, 0);
+  assert.deepEqual(r.refused.map((x) => x.clause), ["metadata_mismatch"]);
+  const gone = new Map(L.accounts);
+  gone.delete(L.curve);
+  const missing = pumpSite(L, { accounts: gone });
+  const before = snapshot(missing.root);
+  await assert.rejects(run(missing.root, missing.fake()), /bonding curve/);
+  assert.deepEqual(snapshot(missing.root), before);
+});
+
+test("pump.fun: a malformed bonding-curve answer from the RPC is a refusal, not a crash; a mint whose metadata a stranger could rename is refused (review findings I, H)", async () => {
+  const L = pumpLaunch();
+  for (const data of [[], [null], [123, "base64"]]) {
+    const accounts = new Map(L.accounts);
+    accounts.set(L.curve, { ...accounts.get(L.curve), data });
+    const s = pumpSite(L, { accounts });
+    const r = await run(s.root, s.fake());
+    assert.deepEqual([r.added.length, r.refused.map((x) => x.clause)], [0, ["bonding_curve"]], JSON.stringify(data));
+  }
+  const accounts = new Map(L.accounts);
+  accounts.set(L.mint, { ...accounts.get(L.mint), data: [token2022MintData({ mint: L.mint, updateAuthority: GME_LAUNCHER, ...PUMP_COIN }).toString("base64"), "base64"] });
+  const s = pumpSite(L, { accounts });
+  const r = await run(s.root, s.fake());
+  assert.deepEqual([r.added.length, r.refused.map((x) => x.clause)], [0, ["metadata"]]);
+  assert.match(r.refused[0].detail, /renamed/);
+});
+
+test("pump.fun: a launch whose signatures do not verify stops the run (the RPC cannot pass off another launch)", async () => {
+  const L = pumpLaunch();
+  const forged = structuredClone(L.tx);
+  forged.transaction.message.recentBlockhash = base58Encode(Buffer.alloc(32, 3));
+  const s = pumpSite(L);
+  s.transactions.set(L.signature, { result: forged });
+  await assert.rejects(run(s.root, fakeRpc({ histories: { [L.wallet]: [{ signature: L.signature, slot: 1, err: null, blockTime: L.tx.blockTime }] }, transactions: s.transactions, accounts: s.all })), /valid signatures/);
 });

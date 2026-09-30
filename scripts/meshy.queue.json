@@ -1674,6 +1674,14 @@
    "retexturePrompt": "A cat with a smooth, crisp, light-brown kraft-paper grocery bag over its whole head: plain matte tan paper with fold creases, two neat round eye holes and a small round nose hole. Through the holes: pale yellow-green eyes with big dark pupils, and a pink nose on a white muzzle. The body is grey tabby and white: white neck, chest, belly and legs with soft, long white fur; grey tabby with darker streaks on the back, flanks and tail. A dark brown/black collar with a maroon-and-cream patterned band and a round silver metal tag at the throat.",
    "order": 201,
    "modelKey": "anonymous-cat"
+  },
+  "MEDIACAT": {
+   "action": "rebuild",
+   "priority": 1,
+   "why": "A trending cat the sanctuary launched: it has no model of its own yet (the garden draws the shared model in its coat).",
+   "styleImage": "https://pbs.twimg.com/amplify_video_thumb/2104638982260666368/img/a2S9SYP6ON9zxUS5.jpg",
+   "referencePrompt": "The cat in the reference picture, with exactly its fur colours, markings, eye colour and build.",
+   "order": 202
   }
  }
 }

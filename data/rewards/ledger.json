@@ -1,0 +1,11 @@
+{
+  "note": "The $CATSANC holder rewards' ledger (scripts/lib/rewards.mjs): E = the holders' share of every creator-fee claim the launcher wallet made (measured from each claim transaction), A = allocated to wallets, P = paid, F = payout fees, and every claim and payout row. A = P + F + Σowed + Σ(net + share of payouts still sending). Written by the Rewards workflow; do not edit by hand.",
+  "version": 1,
+  "E": "0",
+  "A": "0",
+  "P": "0",
+  "F": "0",
+  "cursor": null,
+  "claims": [],
+  "payouts": []
+}

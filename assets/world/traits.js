@@ -478,6 +478,7 @@ export const MODEL_LIMITS = {
   NYANKOSEN: { avoid: ["groom", "legLick", "earScratch"], why: "a round ball of a cat on stub legs: no paw or leg comes near its mouth or ear" },
   BIGFROGGY: { avoid: ["groom", "legLick", "earScratch"], why: "a round cartoon body: no paw or leg comes near its mouth or ear" },
   TUBBSCAT: { avoid: ["legLick", "earScratch"], why: "a very round cat: a hind leg lifted as far as its skin lets it stays down by its belly" },
+  MEDIACAT: { avoid: ["earScratch"], why: "its hand-made model's hind leg lifted as far as it goes stays down by its shoulder, well short of the ear" },
   WAYBILL: { avoid: ["legLick"], why: "its skin lets a hind leg come up only a third of the way: the lick would be a nod at its knee" },
   OCTOMONA: { avoid: ["legLick"], why: "tentacles for hind legs, which sink into the lawn when one is lifted" },
   TOMBILICAT: { avoid: ["earScratch"], why: "round and short-legged: its hind paw can't get near its ear" },

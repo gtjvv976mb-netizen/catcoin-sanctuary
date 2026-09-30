@@ -51,7 +51,7 @@ export function launchKit(r, { site } = {}) {
   const description = [loreText(r), proof, `Not affiliated with ${ownerOf(r)}. A memecoin with no intrinsic value; not financial advice.`].filter(Boolean).join("\n\n");
   return {
     name: cut(r.coinName || r.name || "", NAME_MAX),
-    ticker: cut(String(r.ticker || "").toUpperCase(), TICKER_MAX),
+    ticker: cut(String(r.launchTicker || r.ticker || "").toUpperCase(), TICKER_MAX),
     description,
     website: cardUrl(r, site),
     x: xLink(r),
@@ -59,8 +59,8 @@ export function launchKit(r, { site } = {}) {
   };
 }
 
-/** Can this cat be adopted here? A cat with a ticker that has not launched and is not an example. */
-export const canAdopt = (r) => !!r && !!r.ticker && !r.example && r.kind !== "famous" && r.token?.status !== "launched";
+/** Can this cat be adopted here? A cat with a ticker that has not launched, is not adopted, is not being launched by the sanctuary and is not an example. */
+export const canAdopt = (r) => !!r && !!r.ticker && !r.example && r.kind !== "famous" && r.token?.status !== "launched" && !r.adoption && !r.sanctuaryLaunch;
 
 let kitsPromise = null;
 /** assets/kits/kits.json, read once ({ cats: {} } when it cannot be read). */
@@ -203,7 +203,9 @@ export function adoptPanel(r, { files = null, onBack, site, pads = null } = {}) 
     img.setAttribute("referrerpolicy", "no-referrer");
     img.addEventListener("error", () => img.remove(), { once: true });
     const side = el("div");
-    side.append(el("p", "adopt-credit", `Photo: @${files.photo.handle}`));
+    const credit = el("p", "adopt-credit", "Photo: ");
+    credit.append(files.photo.post ? outLink(files.photo.post, `@${files.photo.handle} on X`) : `@${files.photo.handle} on X`);
+    side.append(credit);
     side.append(outLink(files.photo.url, "Open original to save ↗", "btn btn-kit"));
     side.append(el("p", "card-note", "This photo belongs to its owner. Ask for their permission before using it as your coin's logo."));
     ph.append(img, side);

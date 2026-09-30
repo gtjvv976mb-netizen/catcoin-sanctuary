@@ -7,6 +7,7 @@ import { getResidents, isLaunched, isFamous } from "./data.js";
 import { createCard, badgeFor, tickerLabel } from "./card.js";
 import { createFinder } from "./finder.js";
 import { createPanels } from "./panels.js";
+import { fetchRewards } from "./rewards.js";
 
 const $ = (id) => document.getElementById(id);
 const canvas = $("world");
@@ -121,7 +122,7 @@ function show(id, { from = null } = {}) {
   card.open(r);
   world?.choose(id);
   tag.hidden = true;
-  say(isFamous(r) ? `${r.name}, $${r.ticker}. Hall of Fame: already a coin, here as inspiration, not made by the sanctuary.` : `${r.name}${r.ticker ? (isLaunched(r) ? `, $${r.ticker}` : `, planned ticker ${r.ticker}`) : ""}. ${r.example ? "An example cat, not a token." : isLaunched(r) ? "Launched." : "Not launched yet."}`);
+  say(isFamous(r) ? `${r.name}, $${r.ticker}. Hall of Fame: already a coin, here as inspiration, not made by the sanctuary.` : `${r.name}${r.ticker ? (isLaunched(r) ? `, $${r.ticker}` : r.adoption ? `, $${r.adoption.symbol}` : `, planned ticker ${r.ticker}`) : ""}. ${r.example ? "An example cat, not a token." : isLaunched(r) ? "Launched." : r.adoption ? "Adopted: launched from its kit by the community, not by the sanctuary." : "Not launched yet."}`);
   history.replaceState(null, "", `#cat=${encodeURIComponent(id)}`);
 }
 function hideCard() {
@@ -143,9 +144,26 @@ const panels = createPanels({
   about: $("about"), socials: $("socials"),
   onDisclaimers: () => { if (footToggle.getAttribute("aria-expanded") !== "true") footToggle.click(); footToggle.focus(); },
 });
-$("about-open").addEventListener("click", () => panels.openAbout());
+// About's "Holder rewards" section reads data/rewards/ and the excluded wallets when About is first opened.
+let rewardsAsked = false;
+$("about-open").addEventListener("click", () => {
+  panels.openAbout();
+  if (!rewardsAsked) { rewardsAsked = true; fetchRewards().then((d) => panels.setRewards(d)); }
+});
 $("socials-open").addEventListener("click", () => panels.openSocials());
 fetch("data/socials.json").then((r) => (r.ok ? r.json() : null)).then((j) => j && panels.setConfig(j)).catch(() => {});
+
+/* ── Trending (data/trending.json, refreshed every 20 minutes): loaded when first opened ── */
+let trending = null;
+$("trending-open").addEventListener("click", async () => {
+  if (!trending) {
+    const [{ createTrending }, { shell }] = await Promise.all([import("./trending.js"), import("./panels.js")]);
+    if (!document.getElementById("trend-css")) { const l = document.createElement("link"); l.id = "trend-css"; l.rel = "stylesheet"; l.href = "assets/ui/trending.css"; document.head.append(l); }
+    trending = createTrending({ dialog: $("trending"), shell, catOf: (id) => byId.get(id) || null, onOpenCat: (id) => show(id, { from: $("trending-open") }) });
+    fetch("data/trending.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)).then((j) => j && trending.setData(j)).catch(() => {});
+  }
+  trending.open();
+});
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && card.isOpen && !document.querySelector("dialog[open]")) { e.preventDefault(); hideCard(); }

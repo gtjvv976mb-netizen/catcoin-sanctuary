@@ -1,0 +1,137 @@
+# Every 20 minutes the chain wakes, and every hour (repository variable TRENDWATCH_EVERY_MINUTES) the research team's trend watch (scripts/scan-trending-cats.mjs): searches X for cats
+# on the rise, reads each new one (the cat, its name, real / cartoon / fiction, a coin name, ticker
+# and lore line, and whether a coin would be in poor taste; by rules from the X post alone, or by Claude
+# when ANTHROPIC_API_KEY is set), checks the ticker on Solana, and
+# commits the shortlist, data/trending-cats.json, when it changed. When that commit brings new
+# candidates, the launcher job starts the Launch workflow at once (being first matters), if the
+# repository variable LAUNCH_ENABLED is on or dry: a job of its own, beside the next job, so neither
+# TRENDWATCH_CHAIN nor a failed dispatch touches the other. The launcher (.github/workflows/launch.yml)
+# launches only watch-list cats on its own (a data/cat-watch.json figure, or a cartoon or fiction cat
+# an X trend named or a big account posted); any other candidate waits until the owner approves its
+# post in data/launch-approvals.json. Nothing here signs or launches anything.
+#
+# Each run makes at most ONE X post search, through one lens, the first that applies:
+#   trend     a cat trend on X's trending lists (not a sanctuary cat) not searched in the last 6 hours,
+#             one never searched first;
+#   emerging  a cat's name that two or more accounts gave in the last 48 hours (every post searched is
+#             combed for names), not followed up in the last 12 hours; followed up again only when
+#             another search finds a new account giving it;
+#   otherwise, in turn: big, viral, big, figures. The rotation gets at least every other run (after a
+#   trend or emerging run only a cat trend never searched before goes first), so the big accounts get
+#   about every fourth run or more.
+#   big       the cat posts of the big accounts in data/cat-watch.json (any post of theirs that mentions a
+#             cat counts, picture or not; one that names no cat is listed under "signals");
+#   viral     cat posts with a picture and no coin talk;
+#   figures   famous cat characters and cat memes in data/cat-watch.json that are not in the sanctuary yet.
+# A post counts when it is viral (5k likes or 250k views in 48 hours) or rising (in 12 hours: 1k likes at
+# 500 an hour, or 50k views an hour). Edit data/cat-watch.json to change who and what is watched.
+#
+# X counts every post a search returns against the plan's monthly read cap, which the announcer shares:
+# the script reads at most TRENDWATCH_MONTHLY_READS posts a month (default 10000), paced by day, and
+# TRENDWATCH_PER_SEARCH per search (default 12). Set both as repository variables to fit the plan.
+#
+# GitHub often skips scheduled runs, so each run starts the next one itself (as Announce does). To stop
+# the chain, set the repository variable TRENDWATCH_CHAIN to "off" (or disable the workflow).
+#
+# Secrets, only in the scan step: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET (an X plan
+# whose keys may search: Basic or above) and, optionally, ANTHROPIC_API_KEY. Without the X keys nothing is
+# searched; without the Anthropic key it runs X-only.
+# The checkout keeps no credentials; the push hands the workflow token to git for that one command.
+name: Trend watch
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: trendwatch
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    outputs:
+      candidates: ${{ steps.commit.outputs.candidates }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: node --test tests/trendwatch.test.mjs
+      - name: Search X and read the trending cats
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TRENDWATCH_MONTHLY_READS: ${{ vars.TRENDWATCH_MONTHLY_READS }}
+          TRENDWATCH_PER_SEARCH: ${{ vars.TRENDWATCH_PER_SEARCH }}
+          TRENDWATCH_EVERY_MINUTES: ${{ vars.TRENDWATCH_EVERY_MINUTES }}
+        run: node scripts/scan-trending-cats.mjs
+      - name: Commit the shortlist if it changed
+        id: commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- data/trending-cats.json
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          # Candidates this commit adds (for the launcher, started by the launcher job).
+          fresh=$(comm -13 <(git show HEAD:data/trending-cats.json 2>/dev/null | jq -r '.candidates // [] | .[]' | sort) \
+            <(jq -r '.candidates // [] | .[]' data/trending-cats.json | sort) | wc -l)
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Trend watch: cats trending on X"
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          if ! git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
+            git -c http.extraheader="AUTHORIZATION: basic $auth" fetch origin main
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
+            git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
+          fi
+          if [ "$fresh" -gt 0 ]; then echo "candidates=true" >> "$GITHUB_OUTPUT"; fi
+
+  launcher:
+    needs: scan
+    if: ${{ !cancelled() && needs.scan.outputs.candidates == 'true' && (vars.LAUNCH_ENABLED == 'on' || vars.LAUNCH_ENABLED == 'dry') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Start the launcher now for the new candidates
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: gh workflow run launch.yml -R "$REPO" --ref main
+
+  next:
+    needs: scan
+    if: ${{ !cancelled() && vars.TRENDWATCH_CHAIN != 'off' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: write
+    steps:
+      - name: Start the next run 20 minutes after this one began
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          started=$(date -d "$(gh api "repos/$REPO/actions/runs/$RUN_ID" --jq .run_started_at)" +%s)
+          wait=$(( started + 20 * 60 - $(date +%s) ))
+          if [ "$wait" -gt 0 ]; then echo "Waiting ${wait}s."; sleep "$wait"; fi
+          others=$(gh run list -R "$REPO" -w trendwatch.yml -L 20 --json databaseId,status \
+            --jq "[.[] | select(.status != \"completed\" and .databaseId != $RUN_ID)] | length")
+          if [ "$others" -gt 0 ]; then echo "Another Trend watch run is already queued or running."; exit 0; fi
+          gh workflow run trendwatch.yml -R "$REPO" --ref main

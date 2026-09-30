@@ -1,0 +1,430 @@
+{
+ "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
+ "checkedAt": "2026-09-30T09:42:08.453Z",
+ "lens": "big",
+ "query": "(from:elonmusk OR from:cz_binance OR from:VitalikButerin OR from:saylor OR from:aeyakovenko OR from:rajgokal OR from:solana OR from:pumpdotfun OR from:a1lon9 OR from:blknoiz06 OR from:MustStopMurad OR from:frankdegods OR from:cb_doge OR from:DogeDesigner OR from:WatcherGuru) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
+ "trends": [],
+ "reads": {
+  "day": "2026-09-30",
+  "dayUsed": 55,
+  "month": "2026-09",
+  "monthUsed": 433,
+  "monthCap": 10000,
+  "dayCap": 333
+ },
+ "searchError": null,
+ "candidates": [],
+ "signals": [
+  "2104961576428269856",
+  "2104926549480796539",
+  "2104794814596440544",
+  "2104717786056384899",
+  "2104643043726926283",
+  "2104594736090657017",
+  "2104580089367368141",
+  "2104561530151030982",
+  "2104546621178745342",
+  "2103952753030561864",
+  "2103903040969245011"
+ ],
+ "posts": [
+  {
+   "id": "2104961576428269856",
+   "url": "https://x.com/solana/status/2104961576428269856",
+   "text": "@BusinessMngr 🐱",
+   "author": {
+    "handle": "solana",
+    "name": "Solana",
+    "followers": 4208825
+   },
+   "postedAt": "2026-09-29T15:48:42Z",
+   "likes": 56,
+   "views": 4133,
+   "reposts": 10,
+   "heat": 117,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "solana",
+   "lens": "big",
+   "readAt": "2026-09-29T16:39:08.849Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2104926549480796539",
+   "url": "https://x.com/CoinMarketCap/status/2104926549480796539",
+   "text": "@NikkiSixx_7 meow",
+   "author": {
+    "handle": "CoinMarketCap",
+    "name": "CoinMarketCap",
+    "followers": 7116379
+   },
+   "postedAt": "2026-09-29T13:29:31Z",
+   "likes": 12,
+   "views": 1573,
+   "reposts": 0,
+   "heat": 3,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "CoinMarketCap",
+   "lens": "big",
+   "readAt": "2026-09-29T22:49:52.077Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2104794814596440544",
+   "url": "https://x.com/CoinMarketCap/status/2104794814596440544",
+   "text": "@davidsalamon Meow 😸",
+   "author": {
+    "handle": "CoinMarketCap",
+    "name": "CoinMarketCap",
+    "followers": 7116074
+   },
+   "postedAt": "2026-09-29T04:46:03Z",
+   "likes": 37,
+   "views": 1837,
+   "reposts": 2,
+   "heat": 10,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "CoinMarketCap",
+   "lens": "big",
+   "readAt": "2026-09-29T10:29:35.520Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2104717786056384899",
+   "url": "https://x.com/CoinMarketCap/status/2104717786056384899",
+   "text": "@coinglass_com Meow Fam 😻",
+   "author": {
+    "handle": "CoinMarketCap",
+    "name": "CoinMarketCap",
+    "followers": 7116074
+   },
+   "postedAt": "2026-09-28T23:39:58Z",
+   "likes": 11,
+   "views": 1426,
+   "reposts": 2,
+   "heat": 3,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "CoinMarketCap",
+   "lens": "big",
+   "readAt": "2026-09-29T10:29:35.520Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2104643043726926283",
+   "url": "https://x.com/NBA/status/2104643043726926283",
+   "text": "\"This is the best media day that I've had!\"\n\nAn adorable surprise for Jordan Poole at Pelicans Media Day 🐈\n\n(via @PelicansNBA)\n https://t.co/bO3ZfXSquk",
+   "author": {
+    "handle": "NBA",
+    "name": "NBA",
+    "followers": 47076691
+   },
+   "postedAt": "2026-09-28T18:42:58Z",
+   "likes": 303,
+   "views": 80670,
+   "reposts": 31,
+   "heat": 365,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2104638982260666368/img/a2S9SYP6ON9zxUS5.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "NBA",
+   "lens": "big",
+   "readAt": "2026-09-28T21:55:38.413Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2104594736090657017",
+   "url": "https://x.com/CoinMarketCap/status/2104594736090657017",
+   "text": "@microbombastic @MacroBombastic Meow 😽",
+   "author": {
+    "handle": "CoinMarketCap",
+    "name": "CoinMarketCap",
+    "followers": 7115831
+   },
+   "postedAt": "2026-09-28T15:31:01Z",
+   "likes": 26,
+   "views": 2019,
+   "reposts": 3,
+   "heat": 8,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "CoinMarketCap",
+   "lens": "big",
+   "readAt": "2026-09-28T21:55:38.413Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2104580089367368141",
+   "url": "https://x.com/CoinMarketCap/status/2104580089367368141",
+   "text": "Meow 😽",
+   "author": {
+    "handle": "CoinMarketCap",
+    "name": "CoinMarketCap",
+    "followers": 7115831
+   },
+   "postedAt": "2026-09-28T14:32:49Z",
+   "likes": 108,
+   "views": 12032,
+   "reposts": 14,
+   "heat": 35,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "CoinMarketCap",
+   "lens": "big",
+   "readAt": "2026-09-28T21:55:38.413Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2104561530151030982",
+   "url": "https://x.com/CoinMarketCap/status/2104561530151030982",
+   "text": "@XelaAtom yes ofc 🥹🐈 https://t.co/8w6ca8UxlS",
+   "author": {
+    "handle": "CoinMarketCap",
+    "name": "CoinMarketCap",
+    "followers": 7115831
+   },
+   "postedAt": "2026-09-28T13:19:04Z",
+   "likes": 27,
+   "views": 2109,
+   "reposts": 4,
+   "heat": 7,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTTnhjHbAAMO_hD.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "CoinMarketCap",
+   "lens": "big",
+   "readAt": "2026-09-28T21:55:38.413Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2104546621178745342",
+   "url": "https://x.com/CoinMarketCap/status/2104546621178745342",
+   "text": "@HTXFutures @HTX_Global Meow 😽",
+   "author": {
+    "handle": "CoinMarketCap",
+    "name": "CoinMarketCap",
+    "followers": 7115831
+   },
+   "postedAt": "2026-09-28T12:19:49Z",
+   "likes": 8,
+   "views": 1302,
+   "reposts": 2,
+   "heat": 3,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "CoinMarketCap",
+   "lens": "big",
+   "readAt": "2026-09-28T21:55:38.413Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2103952753030561864",
+   "url": "https://x.com/YouTube/status/2103952753030561864",
+   "text": "cat looking right at us 😻 → https://t.co/R1RUJDdoct https://t.co/cGC20kd4Fa",
+   "author": {
+    "handle": "YouTube",
+    "name": "YouTube",
+    "followers": 68826742
+   },
+   "postedAt": "2026-09-26T21:00:00Z",
+   "likes": 231,
+   "views": 386087,
+   "reposts": 29,
+   "heat": 128,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2103677485653078016/img/BWf2TXWLqRFIwchf.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "YouTube",
+   "lens": "big",
+   "readAt": "2026-09-28T05:30:21.837Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2103903040969245011",
+   "url": "https://x.com/frankdegods/status/2103903040969245011",
+   "text": "@BitCloutCat 我只是在努力达到大哥哥猫的水平。",
+   "author": {
+    "handle": "frankdegods",
+    "name": "Frank",
+    "followers": 530076
+   },
+   "postedAt": "2026-09-26T17:42:28Z",
+   "likes": 22,
+   "views": 9860,
+   "reposts": 0,
+   "heat": 4,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "frankdegods",
+   "lens": "big",
+   "readAt": "2026-09-27T23:16:21.523Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "no cat's name found in the post",
+    "readBy": "rules"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  }
+ ],
+ "state": {
+  "nextLens": 1,
+  "bigChunk": 5,
+  "figureChunk": 0,
+  "lastLens": "big",
+  "trendSearchedAt": {},
+  "followedUp": {},
+  "names": {}
+ }
+}

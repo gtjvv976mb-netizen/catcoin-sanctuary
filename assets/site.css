@@ -138,6 +138,8 @@ body:has(.foot-more:not([hidden])) .dock { visibility: hidden; }
 .badge-planned::before { border: 1.5px solid currentColor; }
 .badge-example { background: #fbe9d6; color: #7a4a1c; }
 .badge-example::before { background: #e9a35a; }
+.badge-adopted { background: #dcecf8; color: #1f4f78; }
+.badge-adopted::before { background: #4a9ad6; }
 
 /* ── Tags over the cats ─────────────────────────────────────────────────── */
 .tag { position: fixed; z-index: 2; left: 0; top: 0; padding: 7px 12px 8px; border-radius: 14px; background: var(--paper); box-shadow: 0 0 0 2px var(--plum), 0 4px 0 2px rgba(61, 24, 52, .35);

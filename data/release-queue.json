@@ -1,5 +1,591 @@
 {
-  "note": "New cats to release after the initial roster: one an hour, in this order. Add { \"key\": \"<TICKER>\", \"approved\": true, \"added\": \"<date>\" } once the cat is in data/planned.json or data/adoptables.json with a proof, a portrait and a kit (assets/kits/kits.json). A cat listed here is hidden on the site until scripts/announce.mjs has posted it on X and set status \"released\", releasedAt and tweet. approved: false keeps it waiting (and hidden). A cat held in data/announced.json stays held.",
-  "lastReleaseAt": null,
-  "cats": []
+  "note": "New cats to release after the initial roster: one an hour, in this order. Add { \"key\": \"<TICKER>\", \"approved\": true, \"added\": \"<date>\" } once the cat is in data/planned.json or data/adoptables.json with a proof, a portrait and a kit (assets/kits/kits.json). A cat listed here is hidden on the site until scripts/announce.mjs has posted it on X and set status \"released\", releasedAt and tweet. approved: false keeps it waiting (and hidden). A cat held in data/announced.json stays held, except an adoptable cat held only because announcing is paused: queueing it releases it. shown: true marks a cat the site already shows; it is queued only to order its X post and is never hidden.",
+  "lastReleaseAt": "2026-09-30T03:11:45.862Z",
+  "cats": [
+    {
+      "key": "BIGGLESCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Mr. Bigglesworth",
+      "releasedAt": "2026-09-27T08:19:27.501Z",
+      "tweet": "2104123739873169498"
+    },
+    {
+      "key": "NALACATCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Nala",
+      "releasedAt": "2026-09-27T09:18:17.219Z",
+      "tweet": "2104138544629563436"
+    },
+    {
+      "key": "LUNAMOOCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Luna",
+      "releasedAt": "2026-09-27T10:52:40.147Z",
+      "tweet": "2104162296058532262"
+    },
+    {
+      "key": "PICKLECCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Pickle",
+      "releasedAt": "2026-09-27T11:52:51.872Z",
+      "tweet": "2104177444970275065"
+    },
+    {
+      "key": "FELICETCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Félicette",
+      "releasedAt": "2026-09-27T12:52:49.889Z",
+      "tweet": "2104192536076071408"
+    },
+    {
+      "key": "SABERHACAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Salem Saberhagen",
+      "releasedAt": "2026-09-27T13:52:57.626Z",
+      "tweet": "2104207667870789952"
+    },
+    {
+      "key": "MAYORSTUB",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Stubbs",
+      "releasedAt": "2026-09-27T14:53:04.223Z",
+      "tweet": "2104222795131482562"
+    },
+    {
+      "key": "FDCW",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "F. D. C. Willard",
+      "releasedAt": "2026-09-27T15:52:50.716Z",
+      "tweet": "2104237838200185149"
+    },
+    {
+      "key": "SOCKSCACAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Socks",
+      "releasedAt": "2026-09-27T16:52:50.293Z",
+      "tweet": "2104252935811019135"
+    },
+    {
+      "key": "DIPLOMOG",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Palmerston",
+      "releasedAt": "2026-09-27T17:52:58.949Z",
+      "tweet": "2104268071943000365"
+    },
+    {
+      "key": "SNOWBALCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Snowball II",
+      "releasedAt": "2026-09-27T18:53:16.768Z",
+      "tweet": "2104283246041461176"
+    },
+    {
+      "key": "COLMEOW2",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Colonel Meow",
+      "releasedAt": "2026-09-27T20:03:40.210Z",
+      "tweet": "2104300960189174226"
+    },
+    {
+      "key": "VENUS2F",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Venus",
+      "releasedAt": "2026-09-27T21:04:21.834Z",
+      "tweet": "2104316234388975654"
+    },
+    {
+      "key": "CHEETLE",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Chester Cheetah",
+      "releasedAt": "2026-09-27T22:03:53.243Z",
+      "tweet": "2104331214039719946"
+    },
+    {
+      "key": "TALKTOM",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Talking Tom",
+      "releasedAt": "2026-09-27T23:01:04.848Z",
+      "tweet": "2104345607418810568"
+    },
+    {
+      "key": "MRSNORRCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Mrs Norris",
+      "releasedAt": "2026-09-28T00:01:10.714Z",
+      "tweet": "2104360731642859575"
+    },
+    {
+      "key": "CHURCHCCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Church",
+      "releasedAt": "2026-09-28T01:01:12.776Z",
+      "tweet": "2104375839030751485"
+    },
+    {
+      "key": "THACKERY",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Thackery Binx",
+      "releasedAt": "2026-09-28T02:10:55.077Z",
+      "tweet": "2104393381270950392"
+    },
+    {
+      "key": "FIGAROCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Figaro",
+      "releasedAt": "2026-09-28T03:11:05.973Z",
+      "tweet": "2104408526609379740"
+    },
+    {
+      "key": "GUMBALLW",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Gumball Watterson",
+      "releasedAt": "2026-09-28T04:11:10.329Z",
+      "tweet": "2104423644206162079"
+    },
+    {
+      "key": "FELIX1919",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Felix the Cat",
+      "releasedAt": "2026-09-28T05:11:23.773Z",
+      "tweet": "2104438799136657441"
+    },
+    {
+      "key": "ARTEMISCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Artemis",
+      "releasedAt": "2026-09-28T06:11:24.761Z",
+      "tweet": "2104453903786078472"
+    },
+    {
+      "key": "SPRIGATO",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Sprigatito",
+      "releasedAt": "2026-09-28T07:11:28.378Z",
+      "tweet": "2104469018325254535"
+    },
+    {
+      "key": "STRAYB12",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "The Cat",
+      "releasedAt": "2026-09-28T08:24:09.392Z",
+      "tweet": "2104487309722955945"
+    },
+    {
+      "key": "GENKITTY",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Genesis",
+      "releasedAt": "2026-09-28T09:25:20.516Z",
+      "tweet": "2104502707730170008"
+    },
+    {
+      "key": "OCTOMONA",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Mona the Octocat",
+      "releasedAt": "2026-09-28T10:24:40.526Z",
+      "tweet": "2104517639708283105"
+    },
+    {
+      "key": "SUSHITUNA",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Sushi & Tuna",
+      "releasedAt": "2026-09-28T11:24:24.103Z",
+      "tweet": "2104532668847149358"
+    },
+    {
+      "key": "TREMAINE",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Lucifer",
+      "releasedAt": "2026-09-28T12:24:34.407Z",
+      "tweet": "2104547812709216619"
+    },
+    {
+      "key": "PUSSBOOCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Puss in Boots",
+      "releasedAt": "2026-09-28T13:24:43.489Z",
+      "tweet": "2104562950170153215"
+    },
+    {
+      "key": "DIDGACAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Didga",
+      "releasedAt": "2026-09-28T14:24:49.055Z",
+      "tweet": "2104578072901018057"
+    },
+    {
+      "key": "GRREAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Tony the Tiger",
+      "releasedAt": "2026-09-28T15:24:54.009Z",
+      "tweet": "2104593192687460719"
+    },
+    {
+      "key": "COPYCC",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "CC",
+      "releasedAt": "2026-09-28T16:38:15.585Z",
+      "tweet": "2104611654491091154"
+    },
+    {
+      "key": "MUSTACHCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Hamilton the Hipster Cat",
+      "releasedAt": "2026-09-28T17:38:11.944Z",
+      "tweet": "2104626738982478218"
+    },
+    {
+      "key": "JOCKCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Jock",
+      "releasedAt": "2026-09-28T18:38:24.196Z",
+      "tweet": "2104641890088104121"
+    },
+    {
+      "key": "FELIXHUD",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Felix",
+      "releasedAt": "2026-09-28T19:38:26.517Z",
+      "tweet": "2104656999010939235"
+    },
+    {
+      "key": "NITAMACAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Nitama",
+      "releasedAt": "2026-09-28T20:38:39.358Z",
+      "tweet": "2104672152653795420"
+    },
+    {
+      "key": "BLAZECAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Blaze the Cat",
+      "releasedAt": "2026-09-28T21:38:44.668Z",
+      "tweet": "2104687274630000968"
+    },
+    {
+      "key": "CHOCOCACAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Chococat",
+      "releasedAt": "2026-09-28T22:43:40.345Z",
+      "tweet": "2104703614157488546"
+    },
+    {
+      "key": "UNSINKSAM",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Unsinkable Sam",
+      "releasedAt": "2026-09-28T23:43:49.062Z",
+      "tweet": "2104718750201282633"
+    },
+    {
+      "key": "OSCARRI",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Oscar",
+      "releasedAt": "2026-09-29T00:43:54.831Z",
+      "tweet": "2104733873573601439"
+    },
+    {
+      "key": "COLEMARM",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Cole & Marmalade",
+      "releasedAt": "2026-09-29T01:56:11.585Z",
+      "tweet": "2104752063767015741"
+    },
+    {
+      "key": "TREASMOG",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Gladstone",
+      "releasedAt": "2026-09-29T02:55:57.418Z",
+      "tweet": "2104767103244902492"
+    },
+    {
+      "key": "MISTO",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Mr. Mistoffelees",
+      "releasedAt": "2026-09-29T03:56:08.136Z",
+      "tweet": "2104782247173730809"
+    },
+    {
+      "key": "SASSYHB",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Sassy",
+      "releasedAt": "2026-09-29T04:56:11.001Z",
+      "tweet": "2104797359460811144"
+    },
+    {
+      "key": "BIGFROGGY",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Big the Cat",
+      "releasedAt": "2026-09-29T05:56:17.798Z",
+      "tweet": "2104812487636082819"
+    },
+    {
+      "key": "CAITSITH",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Cait Sith",
+      "releasedAt": "2026-09-29T06:56:23.595Z",
+      "tweet": "2104827611234914524"
+    },
+    {
+      "key": "SEACAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Simon",
+      "releasedAt": "2026-09-29T08:01:32.666Z",
+      "tweet": "2104844007046095022"
+    },
+    {
+      "key": "KURONEKCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Kuroneko",
+      "releasedAt": "2026-09-29T09:01:39.677Z",
+      "tweet": "2104859135950860365"
+    },
+    {
+      "key": "SERPOUNCE",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Ser Pounce",
+      "releasedAt": "2026-09-29T10:01:46.471Z",
+      "tweet": "2104874263974985936"
+    },
+    {
+      "key": "AZRAELCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Azrael",
+      "releasedAt": "2026-09-29T11:02:00.235Z",
+      "tweet": "2104889421523038269"
+    },
+    {
+      "key": "NERMALCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Nermal",
+      "releasedAt": "2026-09-29T12:02:03.269Z",
+      "tweet": "2104904533189021814"
+    },
+    {
+      "key": "GROOVYPETE",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Pete the Cat",
+      "releasedAt": "2026-09-29T13:02:10.442Z",
+      "tweet": "2104919662207041997"
+    },
+    {
+      "key": "CHISWEET",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Chi",
+      "releasedAt": "2026-09-29T14:02:30.704Z",
+      "tweet": "2104934846891974889"
+    },
+    {
+      "key": "PALICO",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Palico",
+      "releasedAt": "2026-09-29T15:09:50.284Z",
+      "tweet": "2104951790899016147"
+    },
+    {
+      "key": "ATCHOUMCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Atchoum",
+      "releasedAt": "2026-09-29T16:09:36.554Z",
+      "tweet": "2104966832574640133"
+    },
+    {
+      "key": "SNOWBELCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Snowbell",
+      "releasedAt": "2026-09-29T17:48:40.834Z",
+      "tweet": "2104991764352205286"
+    },
+    {
+      "key": "FINICKY",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Morris the Cat",
+      "releasedAt": "2026-09-29T19:01:23.150Z",
+      "tweet": "2105010061655330899"
+    },
+    {
+      "key": "NYANKOSEN",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Nyanko-sensei",
+      "releasedAt": "2026-09-29T20:09:20.546Z",
+      "tweet": "2105027163376214402"
+    },
+    {
+      "key": "SCRATCHC",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Scratch Cat",
+      "releasedAt": "2026-09-29T21:09:21.406Z",
+      "tweet": "2105042266414821509"
+    },
+    {
+      "key": "EMPTANG",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Empress Tang",
+      "releasedAt": "2026-09-29T22:09:32.867Z",
+      "tweet": "2105057414370541785"
+    },
+    {
+      "key": "KITTENPLZ",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Keanu",
+      "releasedAt": "2026-09-29T23:09:34.032Z",
+      "tweet": "2105072517790462351"
+    },
+    {
+      "key": "FAITHCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Faith",
+      "releasedAt": "2026-09-30T00:11:54.650Z",
+      "tweet": "2105088207943799291"
+    },
+    {
+      "key": "TRIMCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Trim",
+      "releasedAt": "2026-09-30T01:12:05.534Z",
+      "tweet": "2105103353265189375"
+    },
+    {
+      "key": "TUBBSCAT",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Tubbs",
+      "releasedAt": "2026-09-30T02:12:05.363Z",
+      "tweet": "2105118451698184315"
+    },
+    {
+      "key": "SGTTIBBS",
+      "approved": true,
+      "shown": true,
+      "status": "released",
+      "name": "Sergeant Tibbs",
+      "releasedAt": "2026-09-30T03:11:45.862Z",
+      "tweet": "2105133469525274735"
+    }
+  ]
 }

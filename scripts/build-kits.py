@@ -63,10 +63,11 @@ def cats():
 
 def real_photos():
     """data/real-photos.json: the reviewed real photo per cat (cats), and the cats checked and left
-    without one (none: a face, not this cat, or no photo). Missing file: nothing reviewed."""
+    without one (none: a face, not this cat, or no photo; hidden: a photo the owner hides in
+    data/photo-hide.json). Missing file: nothing reviewed."""
     try:
         d = json.loads((ROOT / "data" / "real-photos.json").read_text())
-        return d.get("cats") or {}, d.get("none") or {}
+        return d.get("cats") or {}, {**(d.get("none") or {}), **(d.get("hidden") or {})}
     except (OSError, ValueError):
         return {}, {}
 

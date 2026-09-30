@@ -4,6 +4,10 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { base58Decode, base58Encode } from "../assets/collection.js";
+import { keypairFromSecret, deriveMintKeypair, transactionToJson } from "../scripts/lib/solana-tx.mjs";
+import { PUMP, buildLaunchTransaction, signLaunchTransaction, bondingCurve } from "../scripts/lib/pump.mjs";
+import { BONDING_CURVE_DISC, TOKEN_2022_PROGRAM, SYSTEM_PROGRAM } from "../scripts/lib/chain.mjs";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -122,3 +126,41 @@ export function tempSite({ wallets = { launchers: [] }, collection = { cats: [] 
 
 export const readData = (root, name) => fs.readFileSync(path.join(root, "data", name), "utf8");
 export const readDataJson = (root, name) => JSON.parse(readData(root, name));
+
+/* ── A pump.fun launch as the sanctuary's launcher makes it (scripts/lib/pump.mjs), signed with
+   throwaway keys (a constant filler seed: no real wallet), in getTransaction's json shape, with
+   the two accounts the Collection reads back (the mint and its bonding curve), made up to match:
+   the mint's metadata has no update authority (None, 32 zero bytes: SYSTEM_PROGRAM), as create_v2
+   leaves it on chain (tests/fixtures/pumpfun-create.json, Token-2022 UpdateAuthority to None). */
+
+/** A Token-2022 mint account's bytes with a TokenMetadata extension (the layout chain.mjs readTokenMetadata reads). */
+export function token2022MintData({ mint, updateAuthority, name, symbol, uri }) {
+  const str = (s) => { const b = Buffer.from(s, "utf8"); const n = Buffer.alloc(4); n.writeUInt32LE(b.length); return Buffer.concat([n, b]); };
+  const meta = Buffer.concat([Buffer.from(base58DecodeStrict(updateAuthority)), Buffer.from(base58DecodeStrict(mint)), str(name), str(symbol), str(uri), Buffer.alloc(4)]);
+  const tlv = Buffer.alloc(4); tlv.writeUInt16LE(19, 0); tlv.writeUInt16LE(meta.length, 2);
+  const head = Buffer.alloc(166); head[165] = 1;
+  return Buffer.concat([head, tlv, meta]);
+}
+const base58DecodeStrict = (a) => { const b = base58Decode(a); if (!b || b.length !== 32) throw new Error(`${a} is not an address`); return b; };
+
+export const PUMP_COIN = Object.freeze({ name: "Gull Gadot", symbol: "GULLGADOT", uri: "https://ipfs.io/ipfs/QmbUFoY7PHPMCmkqKjerAnfseEKLszkdmqcd4SX4dGqJJd" });
+
+/**
+ * { wallet, mint, curve, tx, signature, accounts: Map } for a pump.fun launch built and signed by
+ * scripts/lib/pump.mjs. `seedByte` fills the wallet's throwaway seed; `blockTime` is the launch's.
+ */
+export function pumpLaunch({ seedByte = 7, postId = "1971234567890123456", blockTime = 1790300000, coin = PUMP_COIN } = {}) {
+  const wallet = keypairFromSecret(new Uint8Array(32).fill(seedByte));
+  const mint = deriveMintKeypair(wallet, postId);
+  const built = buildLaunchTransaction({ wallet, mint, ...coin, recentBlockhash: base58Encode(Buffer.alloc(32, 9)) });
+  const tx = transactionToJson(Buffer.from(signLaunchTransaction(built, wallet, mint), "base64"));
+  Object.assign(tx, { slot: 450200000, blockTime, meta: { err: null, status: { Ok: null }, fee: 10000, innerInstructions: [], logMessages: [], preBalances: [], postBalances: [] } });
+  const curve = bondingCurve(mint.publicKey);
+  const accounts = new Map([
+    [mint.publicKey, { owner: TOKEN_2022_PROGRAM, lamports: 1, executable: false, rentEpoch: 0,
+      data: [token2022MintData({ mint: mint.publicKey, updateAuthority: SYSTEM_PROGRAM, ...coin }).toString("base64"), "base64"] }],
+    [curve, { owner: PUMP.program, lamports: 1, executable: false, rentEpoch: 0,
+      data: [Buffer.concat([Buffer.from(BONDING_CURVE_DISC, "hex"), Buffer.alloc(143)]).toString("base64"), "base64"] }],
+  ]);
+  return { wallet: wallet.publicKey, mint: mint.publicKey, curve, tx, signature: tx.transaction.signatures[0], accounts };
+}

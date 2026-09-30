@@ -13,9 +13,10 @@ import { pathToFileURL, fileURLToPath } from "node:url";
 import { ROOT, GME_LAUNCHER, GME_LAUNCH, DATA_NOW } from "./helpers.mjs";
 import { installDom, Element } from "./minidom.mjs";
 import { loadResidents } from "../assets/residents.js";
-import { normalize } from "../assets/ui/data.js";
+import { normalize, isLaunched } from "../assets/ui/data.js";
 import { createCard, badgeFor } from "../assets/ui/card.js";
 import { createFinder } from "../assets/ui/finder.js";
+import { fetchRewards, checkLedger, checkState, createRewards } from "../assets/ui/rewards.js";
 import { jpegInfo } from "../scripts/build-planned.mjs";
 
 const SITE = "https://catcoinsanctuary.com/";
@@ -84,7 +85,7 @@ function indexRefs() {
 
 const CSS_URLS = [...read("assets/site.css").matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map((m) => m[1]);
 const MODELS = ["assets/models/sanctuary.glb", ...["cat", "ginger"].flatMap((c) => ["sit", "walk", "loaf", "stretch", "sleep"].map((p) => `assets/models/${c}-${p}.glb`))];
-const DATA = ["data/planned.json", "data/collection.json", "data/wallets.json"];
+const DATA = ["data/planned.json", "data/collection.json", "data/wallets.json", "data/pump-quotes.json"];
 
 /** The first view: the page, its stylesheet and fonts, every module, the models and the data. Portraits load later, one card or list row at a time. */
 function firstView() {
@@ -186,6 +187,8 @@ test("every file the page names exists", () => {
   }
   for (const u of CSS_URLS) assert.ok(exists(path.posix.join("assets", u)), `site.css names ${u}, which is missing`);
   for (const f of [...MODELS, ...DATA, "CNAME", "favicon.ico", "assets/icons/favicon.svg", "assets/icons/apple-touch-icon.png", "assets/og-image.jpg"]) assert.ok(exists(f), `${f} is missing`);
+  // About's Holder rewards section: its stylesheet and the files it fetches when About opens.
+  for (const f of ["assets/ui/rewards.css", "data/rewards/ledger.json", "data/rewards/state.json", "data/rewards-exclude.json", "data/socials.json"]) assert.ok(exists(f), `${f} is missing`);
   assert.equal(read("CNAME").trim(), "catcoinsanctuary.com");
   assert.ok(!exists("index.prototype.html"), "the prototype page is gone");
   for (const c of PLANNED.cats) {
@@ -248,6 +251,31 @@ test("page weight: the first view stays within budget", () => {
   // now uses three's mergeGeometries instead of its own copy; then to 661 KB for the real photo at the
   // top of each card, data/real-photos.json checked in assets/ui/adoptables.js and drawn by card.js;
   // then to 680 KB for the reworked cat rig, assets/world/catrig.js: legs posed by IK, skin weights
+  // blended along the surface; then to 690 KB for the Trending tab, assets/ui/trending.js, loaded
+  // only when it is first opened; then to 695 KB for adopted cats on cards, data/adoptions.json
+  // checked in assets/residents.js and assets/ui/data.js and drawn by card.js, after trimming ~1 KB
+  // of repeated code from card.js: one card body, one portrait, one heading and one row helper;
+  // then from 695 KB to 696 KB for the launcher stage 2 review fixes, ~0.9 KB: the one shared
+  // provedLaunch rule in assets/ui/adoptables.js (mint, tx, launchpad, and the cat's own name and
+  // ticker), one coin to one cat and no bare card for a coin a launch names (residents.js), the
+  // coin's own pair, name and symbol on a sanctuary-launched card (data.js), a pump.fun coin's own
+  // disclaimer and launchpad row with no stock-cat block (residents.js, card.js), and no Adopt
+  // button on the "New cat" banner for a cat that cannot be adopted (newcat.js). Stage 2 had left
+  // 72 bytes spare; then from 696 KB to 698 KB for the launcher's routing, ~1.8 KB: the page now
+  // reads data/pump-quotes.json (residents.js), so a pump.fun coin the launcher priced in a listed
+  // coin and the Collection proved shows as launched, checked by the one rule the builder and the
+  // bots use (quoteProblem and validatePumpQuotes, moved from scripts/lib/pump.mjs to
+  // assets/collection.js). 29 bytes were spare before it, 219 after; then from 698 KB to 720 KB for the
+  // $CATSANC "Holder rewards" section in About, ~21.8 KB: assets/ui/rewards.js (the three-line formula
+  // and what goes in the pot, copied from scripts/lib/rewards.mjs and kept equal by tests/panels.test.mjs;
+  // the checks on data/rewards/ledger.json and state.json; the age bonus and the period's points exactly
+  // as the rules compute them; the last payout's Solscan links; the "check a wallet" box), About drawn
+  // again once data/socials.json has loaded (panels.js), and the rewards files fetched when About is first
+  // opened (main.js). 85 bytes were spare before it, about 0.7 KB after; then from 720 KB to 724 KB for
+  // the holder rewards' review fixes, ~2.7 KB: the three lines built from the rules in force that
+  // state.json records (rewardsText and the check of those rules, rewards.js), and the section's
+  // stylesheet, assets/ui/rewards.css, linked only when About is first opened (panels.js calls its
+  // show()), never on the first view: tests/panels.test.mjs checks it. About 2 KB are spare after it.)
   // blended along the surface; then, 2026-09-27, to 940 KB for cats that move like real cats: the
   // shared motion vocabulary (world/catmotion.js), each cat's character (world/traits.js), transition
   // and mannerism clips (catrig.js), a sim that never jumps between postures (cats.js, meadow.js) and
@@ -267,7 +295,9 @@ test("page weight: the first view stays within budget", () => {
   // their size (traits.js species, catmotion gaitScale, a route-finder and places of their own in cats.js, the camera
   // and labels in catviews.js and world.js), their whole bodies kept out of the props with nothing popped out, and the
   // legs the view shows shared with the sims so no paw skates (catmotion legStep); 1066 KB at the merge with cat-motion.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1090 * 1024, "the page's own scripts over 1090 KB");
+  // (Then, 2026-09-30, to 1140 KB (1133 KB measured) with main's own growth to 724 KB merged in: the Trending tab,
+  // adopted cats on cards, the launcher's routing and the holder rewards, on top of the cat-motion and big-cat work.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1140 * 1024, "the page's own scripts over 1140 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
@@ -276,7 +306,8 @@ test("page weight: the first view stays within budget", () => {
 
 /* Per card, from the data as shipped (whatever the hourly check has added by now): a cat with no
    proven launch says "Not launched yet" and has nothing to buy; a cat with one says "Launched" and
-   links exactly GMGN and FOMO for its own mint. */
+   links exactly GMGN and FOMO for its own mint; a cat a stranger launched from its kit says
+   "Adopted" (tests/adopted.test.mjs has the rest). */
 const COLLECTION = JSON.parse(read("data/collection.json"));
 const TOKEN_HOSTS = /gmgn\.ai|fomo\.family|solscan\.io|stonkfun\.xyz|pump\.fun|dexscreener\.com|birdeye\.so|jup\.ag|raydium\.io|photon-sol|bullx\.io|axiom\.trade|geckoterminal\.com/;
 
@@ -297,6 +328,11 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
       assert.ok(!/Not launched yet/.test(c.text), r.id);
       for (const l of c.links.filter((a) => TOKEN_HOSTS.test(a.href))) assert.ok(l.href.endsWith(r.token.mint) || l.href.endsWith(r.token.tx), `${r.id}: ${l.href}`);
       assert.equal(badgeFor(r).textContent, "Launched");
+    } else if (r.adoption) {
+      assert.equal(badgeFor(r).textContent, "Adopted", r.id);
+      assert.deepEqual(c.buy, [], `${r.id}: the sanctuary sells no adopted coin`);
+      assert.match(c.section("card-token"), /Adopted by the community/, r.id);
+      assert.ok(!/Not launched yet/.test(c.text), r.id);
     } else {
       assert.equal(r.token.status, "planned", r.id);
       assert.deepEqual(r.buy, [], r.id);
@@ -342,8 +378,10 @@ test("every cat's card and list row, from the shipped data: planned cats say \"N
   assert.equal(rows.length, list.length);
   for (const b of rows) {
     const r = list.find((x) => x.id === b.dataset.id);
-    assert.equal(b.querySelector("span.badge").textContent, r.kind === "famous" ? "Hall of Fame" : r.token.status === "launched" ? "Launched" : "Not launched yet", b.dataset.id);
-    assert.equal(b.querySelector("span.find-meta").textContent.includes(`$${r.ticker}`), r.token.status === "launched" || r.kind === "famous", b.dataset.id);
+    // (A cat the sanctuary's launcher launched says "Launching…" until the Collection proves its coin.)
+    assert.equal(b.querySelector("span.badge").textContent, r.kind === "famous" ? "Hall of Fame" : r.token.status === "launched" ? "Launched" : r.sanctuaryLaunch ? "Launching…" : r.adoption ? "Adopted" : "Not launched yet", b.dataset.id);
+    if (r.adoption) assert.ok(b.querySelector("span.find-meta").textContent.includes(`$${r.adoption.symbol}`), b.dataset.id);
+    else assert.equal(b.querySelector("span.find-meta").textContent.includes(`$${r.ticker}`), r.token.status === "launched" || r.kind === "famous", b.dataset.id);
   }
   assert.match(root.querySelector("p.finder-intro").textContent, /adoptable cats so far, each with real, verified lore and no coin yet/);
   // The top bar's Hall of Fame button opens the list on its chip: only the famous coins show.
@@ -491,6 +529,32 @@ test("every planned cat's card shows its proof: the post's author, handle, words
   assert.equal(normalize({ ...planned[0], id: "t", proof: { kind: "web", url: "http://example.com/", author: "G", text: "hi" } }).proof, null);
 });
 
+/* ── About's Holder rewards section, from the files as shipped ───────────────────────── */
+
+test("the Holder rewards section reads the shipped rewards files from this site (published by Pages), and says it is not financial advice", async () => {
+  const data = await fetchRewards((rel) => localFetch(new URL(rel, BASE)));
+  for (const k of ["ledger", "state", "wallets"]) assert.ok(data[k], `data for ${k} could not be read`);
+  // data/rewards-exclude.json is the owner's, edited by hand, and npm test gates every Pages deploy: whatever it holds, the page shows
+  // the section (an exclusion list it cannot read only leaves the excluded wallets' reasons out), and this test does not read it.
+  data.exclude = null;
+  assert.ok(checkLedger(data.ledger), "data/rewards/ledger.json reads on the page");
+  assert.ok(checkState(data.state), "data/rewards/state.json reads on the page");
+  const root = new Element("section");
+  const contract = JSON.parse(read("data/socials.json")).contract || null;
+  createRewards(root, { contract, now: () => NOW }).setData(data);
+  assert.match(root.textContent, /^Holder rewardsNot financial advice\./);
+  assert.match(root.textContent, /Hold \$CATSANC, earn SOL\..*Older tokens earn more\..*Every 7 days,/);
+  assert.match(root.textContent, /Creator fees claimed[\d.,]+ SOLPaid to holders[\d.,]+ SOLWaiting for holders[\d.,]+ SOLNext payout/);
+  assert.ok(!/could not be read/.test(root.textContent));
+  for (const a of root.querySelectorAll("a")) {
+    assert.ok(a.href === "data/rewards/ledger.json" || /^https:\/\/solscan\.io\/tx\/[1-9A-HJ-NP-Za-km-z]{64,90}$/.test(a.href), a.href);
+    assert.equal(a.rel, "noopener noreferrer");
+  }
+  // Pages publishes the rewards files (nothing under data/rewards is left out of the site).
+  const pages = read(".github/workflows/pages.yml");
+  assert.ok(!/--exclude '\/data\/rewards/.test(pages), "the Pages workflow leaves the rewards files out");
+});
+
 /* ── Famous cat coins: their cards and the finder's filters ───────────────────────── */
 
 test("a famous coin's card: logo, who the cat is, lore, warnings, market cap with its time, chain, contract with a copy button, X and website, its one buy link, and the not-affiliated line", async () => {
@@ -534,7 +598,10 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
   const rows = root.querySelectorAll("button.find-item");
   assert.equal(rows.length, list.length);
   const chips = root.querySelectorAll("button.chip");
-  assert.deepEqual(chips.map((b) => b.textContent), ["All", "Adoptable cats", "Celebrity", "TV & movies", "Company", "Viral", "Crypto", "Hall of Fame"]);
+  // A "Launched" chip joins once any cat is launched (the owner's own launch, or the sanctuary's launcher's).
+  const launchedN = list.filter((r) => isLaunched(r)).length;
+  assert.deepEqual(chips.map((b) => b.textContent), ["All", "Adoptable cats", "Celebrity", "TV & movies", "Company", "Viral", "Crypto", "Hall of Fame", ...(launchedN ? ["Launched"] : [])]);
+  if (launchedN) { chips.find((b) => b.textContent === "Launched").click(); assert.equal(root.querySelectorAll("li").filter((li) => !li.hidden).length, launchedN); }
   const shown = () => root.querySelectorAll("li").filter((li) => !li.hidden).length;
   const famousN = list.filter((r) => r.kind === "famous").length;
   assert.ok(famousN > 0);
@@ -555,7 +622,7 @@ test("the finder lists every cat, with filters for adoptable cats and the Hall o
 });
 
 
-test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' and the fan-tribute line", async () => {
+test("adoptable cats: each card shows its category chip, owner, story, X proof, sources, 'Not launched yet — adopt it now' (or, once a stranger launched it, 'Adopted'; once the sanctuary's launcher launched it, 'Launching…' then 'Launched by the sanctuary') and the fan-tribute line", async () => {
   const list = await residents();
   const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
   assert.ok(ADOPT.length >= 25);
@@ -568,19 +635,29 @@ test("adoptable cats: each card shows its category chip, owner, story, X proof, 
     assert.ok(c.text.includes(a.story.slice(0, 40)), `${a.ticker}: story`);
     assert.ok(c.links.some((l) => l.href === a.proof.url && l.text === "View post on X ↗"), `${a.ticker}: X proof`);
     for (const s of a.sources) assert.ok(c.links.some((l) => l.href === new URL(s.url).href), `${a.ticker}: source ${s.url}`);
-    assert.match(c.text, /Not launched yet — adopt it now/);
+    // A cat the sanctuary launched (its `launch`, written by scripts/launch.mjs) is "Launched by the sanctuary" once the
+    // Collection has proved that very mint and transaction, "Launching on …" until then; never "adopt it now".
+    const proved = !!a.launch && COLLECTION.cats.some((e) => e.mint === a.launch.mint && e.tx === a.launch.tx && (e.launchpad ?? "stonkfun") === a.launch.launchpad);
+    assert.match(c.text, a.launch ? (proved ? /Launched by the sanctuary on / : /Launching on /) : r.adoption ? /Adopted by the community/ : /Not launched yet — adopt it now/, a.ticker);
+    if (a.launch) assert.ok(!/adopt it now/.test(c.text), `${a.ticker}: a launched cat is not up for adoption`);
     assert.match(c.text, /Fan tribute, not affiliated with or endorsed by/);
     assert.equal(/In loving memory/.test(c.text), a.memorial, `${a.ticker}: memorial line`);
     if (a.existingCoin) assert.match(c.text, new RegExp(`A small coin already exists: \\$${a.existingCoin.symbol}`));
-    if (!a.portrait) assert.ok(c.root.querySelector(".card-silhouette"), `${a.ticker}: placeholder silhouette`);
+    // No portrait yet: the silhouette, unless its real photo (data/real-photos.json, hotlinked) heads the card instead.
+    if (!a.portrait && !r.realPhoto) assert.ok(c.root.querySelector(".card-silhouette"), `${a.ticker}: placeholder silhouette`);
+    if (!a.portrait && r.realPhoto) assert.equal(c.root.querySelector("img.card-real-photo-img").src, r.realPhoto.url, `${a.ticker}: its real photo`);
     const fig = c.root.querySelector("figure.card-lore-pic");
     if (a.lore) {
       assert.ok(fig, `${a.ticker}: lore picture`);
       assert.equal(fig.querySelector("img.card-lore-img").getAttribute("src") ?? fig.querySelector("img.card-lore-img").src, a.lore.image);
       assert.equal(fig.querySelector("figcaption").textContent, a.lore.caption);
     } else assert.equal(fig, null, `${a.ticker}: no lore picture`);
-    assert.deepEqual(c.buy, []);
-    assert.ok(!c.links.some((l) => TOKEN_HOSTS.test(l.href)), `${a.ticker}: no token links`);
+    // No buy button on an adoptable's card; token pages only for a coin the sanctuary launched and the Collection proved (its
+    // own mint and its launch), or for an adopted cat's own mint.
+    assert.deepEqual(c.buy, [], a.ticker);
+    for (const l of c.links.filter((x) => TOKEN_HOSTS.test(x.href))) {
+      assert.ok(proved ? l.href.endsWith(`/${a.launch.mint}`) || l.href.endsWith(`/${a.launch.tx}`) : r.adoption && l.href.endsWith(`/${r.adoption.mint}`), `${a.ticker}: ${l.href}`);
+    }
   }
 });
 

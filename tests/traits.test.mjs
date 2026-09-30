@@ -32,7 +32,7 @@ const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
 
 test("every resident has a character in data/traits.json, in range, with the words behind each value", async () => {
   const list = await residents();
-  assert.equal(list.length, 247);
+  assert.equal(list.length, 248);
   assert.equal(Object.keys(TABLE).length, list.length, "one row per resident, no strays");
   for (const r of list) {
     const t = TABLE[r.id];
@@ -231,7 +231,7 @@ test("traitsOf: its table row, else what residents.js attached, else read from i
   assert.deepEqual(deriveTraits({ id: "MARUBOX", ticker: "MARUBOX" }).signature, "boxSit", "overrides apply at run time too");
   // Without data/traits.json the page still loads every cat, with no rows attached.
   const bare = await residents(["data/traits.json"]);
-  assert.equal(bare.length, 247);
+  assert.equal(bare.length, 248);
   assert.ok(bare.every((x) => x.traits === undefined));
   assert.equal(traitsOf(bare.find((x) => x.id === "INGOTLOAF")).signature, "loaf", "and each is read from its words instead");
 });

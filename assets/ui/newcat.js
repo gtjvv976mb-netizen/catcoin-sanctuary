@@ -2,6 +2,7 @@
    written by scripts/announce.mjs once the cat's X post is out). Shown on a visit and when a new
    cat is released while the page is open (the file is polled every few minutes); dismissible, and
    shown once per cat per visitor (localStorage, where the browser allows it). */
+import { canAdopt } from "./adopt.js";
 
 export const SEEN_KEY = "catsanc:newcat-seen";
 export const POLL_MS = 3 * 60_000;
@@ -69,7 +70,7 @@ export function createNewCat({ root, lookup, onMeet, onAdopt, fetchImpl = (...a)
     const text = el("div", "newcat-text");
     text.append(kicker, name, line);
     const actions = el("div", "newcat-actions");
-    actions.append(meet, adopt);
+    actions.append(meet, ...(canAdopt(r) ? [adopt] : []));   // not a launched, adopted or launching cat
     root.replaceChildren(close, pic, text, actions);
     root.setAttribute("aria-label", `New cat: ${r.name || r.id}`);
     root.hidden = false;

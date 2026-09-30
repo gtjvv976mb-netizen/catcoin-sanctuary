@@ -1,0 +1,22 @@
+/* The Trending panel (assets/ui/trending.js), linked when it is first opened. Colours come from the site's tokens. */
+.trend { width: min(560px, calc(100vw - 32px)); }
+.trend-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 6px; }
+.trend-tab { min-height: 40px; padding: 6px 14px; border: 0; border-radius: 999px; background: #fff; color: var(--ink); box-shadow: inset 0 0 0 2px var(--plum); font: 700 14px var(--body); cursor: pointer; }
+.trend-tab[aria-selected="true"] { background: var(--plum); color: var(--cream, #fff4e6); }
+.trend-tab:focus-visible, .trend-cat:focus-visible, .trend-name:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.trend-list { list-style: none; margin: 8px 0; padding: 0; display: grid; gap: 8px; }
+.trend-row { display: grid; grid-template-columns: 26px 1fr auto; align-items: center; gap: 10px; min-height: 52px; padding: 8px 12px; border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 2px rgba(61, 24, 52, .14); }
+.trend-rank { color: var(--ink-soft); font: 700 14px var(--mono); text-align: right; }
+.trend-main { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; min-width: 0; }
+.trend-name { color: var(--ink); font-weight: 800; text-decoration: none; overflow-wrap: anywhere; }
+.trend-name:hover { text-decoration: underline; }
+.trend-sym { color: var(--ink-soft); font-size: 13px; }
+.trend-count { color: var(--ink-soft); font-size: 12.5px; font-weight: 700; }
+.trend-fig { display: grid; justify-items: end; gap: 2px; font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+.trend-pct.up { color: #1f7a3a; }
+.trend-pct.down { color: #b3261e; }
+.trend-when { color: var(--ink-soft); font-size: 12px; font-weight: 600; }
+.trend-copy { background: #b3261e; color: #fff; }
+.trend-adopted { background: #1f7a3a; color: #fff; }
+.trend-cat { min-height: 32px; padding: 2px 10px; border: 0; border-radius: 999px; background: var(--accent); color: var(--plum); font: 700 12.5px var(--body); cursor: pointer; }
+@media (max-width: 640px) { .finder.panel.trend { width: 100vw; } .trend-row { grid-template-columns: 22px 1fr; } .trend-fig { grid-column: 2; justify-items: start; grid-auto-flow: column; gap: 10px; } }

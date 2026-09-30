@@ -28,9 +28,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { register } from "node:module";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { NodeIO } from "@gltf-transform/core";
-import { ALL_EXTENSIONS } from "@gltf-transform/extensions";
-import { dequantize, flatten } from "@gltf-transform/functions";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 // catrig.js imports "three": point it at the vendored copy (as tests/catrig.test.mjs and the survey do).
@@ -41,11 +38,21 @@ register("data:text/javascript," + encodeURIComponent(`export async function res
 
 export const LK = ["hL", "hR", "fL", "fR"];
 export const BODY = 255;
-const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
+// @gltf-transform (npm i --no-save @gltf-transform/core @gltf-transform/extensions @gltf-transform/functions)
+// is loaded only when a model is read, so the label codec (decodeLegs, encodeLegs) needs no extra packages.
+let gt = null;
+async function gltf() {
+  if (!gt) {
+    const [{ NodeIO }, { ALL_EXTENSIONS }, { dequantize, flatten }] = await Promise.all([import("@gltf-transform/core"), import("@gltf-transform/extensions"), import("@gltf-transform/functions")]);
+    gt = { io: new NodeIO().registerExtensions(ALL_EXTENSIONS), dequantize, flatten };
+  }
+  return gt;
+}
 
 /** A GLB's first mesh in model space: positions (Float32Array), indices, and (if skinned) its joints,
     weights (4 per vertex, denormalised) and joint names. Quantized files are decoded. */
 export async function readMesh(file) {
+  const { io, dequantize, flatten } = await gltf();
   const doc = await io.read(file);
   await doc.transform(dequantize(), flatten());
   const node = doc.getRoot().listNodes().find((nd) => nd.getMesh());

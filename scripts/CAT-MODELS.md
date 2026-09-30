@@ -44,6 +44,50 @@ far copy), and the PBR extras go. gltfpack packs it with `-kn -km -tr`, and `-si
 `assets/models/PROVENANCE.md`. Budgets are 600 KB full and 150 KB far; the 24 cats come to about
 230-340 KB and 70-115 KB. `--yaw DEG` turns a single model if the automatic heading is ever wrong.
 
+## Automatic: the Models workflow
+
+`.github/workflows/models.yml` makes the model, packs it, runs the checks (budgets, a valid GLB, the
+garden's rig on the model, tests/catmodels, catrig and meshy), Tripo's rig and a preview for the cats the
+sanctuary launches (`scripts/models.mjs`; README "Launcher"). A model that fails the checks is discarded.
+The facing and the look still want a person's eye (section 3).
+
+The repository variable `MODELS_GENERATOR` picks the tool that makes the model:
+
+- **unset** (the default), `off` or `higgsfield`: no API makes a model and no API credit is spent; the
+  owner makes it by hand through Higgsfield (section 1).
+- **`tripo`**: `scripts/tripo.mjs make KEY` with the official Tripo CLI
+  (`tripo-cli` 0.5.1, key `TRIPO_API_KEY`; the workflow installs it from `tools/tripo-cli` with
+  `npm ci --ignore-scripts`, every package, the CLI's own dependencies too, at the version and hash its
+  `package-lock.json` names), in two tasks, about 40 credits:
+  1. `tripo generate image-to-image <picture> --model banana2 --prompt "<TRIPO_REPOSE> <referencePrompt> <TRIPO_STANDING>" -p aspect_ratio=4:3`
+     (about 10 credits): the queue entry's picture (`styleImage`: the post's photo URL as it is, or a
+     PNG/JPEG/WebP in the repository, uploaded by the CLI) redrawn standing on all four legs, with the Meshy
+     reference's pose words said shorter (`tripoPrompt` in `scripts/tripo.mjs`). Tripo takes at most 1024
+     characters for a picture's prompt, so the pose words stay whole and a long `referencePrompt` is cut at
+     a sentence, clause or word to fit. An entry with no picture (`"generate"`) gets
+     `tripo generate text-to-image "<referencePrompt> <TRIPO_STANDING>" --model seedream_v4`
+     (about 5 credits). A photo's own pose would stay otherwise, and a sitting cat fails the rig check.
+  2. `tripo generate image-to-model <reference task> --model tripo-v3.1 -p face_limit=12000 -p texture=true -p pbr=false`
+     (30 credits). The model is always named: with a face budget of 20000 or less and no `--model`, the CLI
+     picks P1 (50 credits). Never `compress=geometry` (the packer cannot read meshopt) or `quad` (FBX only).
+
+  The balance is read first; the run stops, with no try used, when the cost would take it under
+  `MODELS_TRIPO_MAKE_RESERVE` (0 by default: Tripo itself refuses an empty balance). Each task id is saved
+  in `scripts/tripo.state.json` (`<MODELKEY>.make`) as soon as it is known. Each CLI call is killed at its
+  own bound, so one cat takes at most 75 minutes, and the workflow starts a cat only while that still fits
+  in its make step. The GLB is downloaded at once
+  (Tripo's result URLs expire) to `scripts/.cat-models-cache/<MODELKEY>.raw.glb`, with the stamp
+  `<MODELKEY>.raw.job` (the model task), where `make-cat-models.py` reads it (the workflow carries it to the
+  Pack job under `raw/` in the artifact, since the upload leaves out hidden folders; Pack never downloads
+  Tripo's link, and the packer downloads only an `https://` link); the job entry carries
+  `model: "tripo v3.1-20260211 image-to-model"`, `faces: 12000`, and no `lo_url`: Tripo's UV atlas
+  simplifies cleanly into the far copy (`-si 0.25`), as the Tripo models of section 1 did.
+- **`meshy`**: `scripts/meshy.mjs run KEY` (reference views, multi-image-to-3D, a remesh far copy; about
+  41 credits; `MODELS_MESHY_RESERVE`, 100 by default).
+
+Any other value makes nothing. By hand: `node scripts/tripo.mjs balance`, then
+`node scripts/tripo.mjs make <TICKER> [--reserve N]` and the packer as in section 2.
+
 ## 3. Check by eye
 
     node scripts/render-cat-thumbs.mjs OUT --pictures DIR   # picture | 3/4 view | side (head right) | far copy
