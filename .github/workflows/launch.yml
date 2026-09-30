@@ -4,7 +4,10 @@
 # their own: a data/cat-watch.json figure, a cartoon or fiction cat that an X trend named or a big account
 # posted, and while LAUNCH_OPEN is on (the default), a real pet in a viral or rising post and any cat a big
 # account names; any other cat waits until the owner lists its post in data/launch-approvals.json. Never a sensitive cat, one already in the sanctuary, a second coin for
-# one post (its mint is derived from the post), or a launch past the caps.
+# one post (its mint is derived from the post), or a launch past the caps. When no trending cat may
+# launch, the sanctuary's own cat the Announce workflow posted last that has no coin yet launches from
+# that X post, on pump.fun in SOL (the launch wallet is its creator: the creator fees are the wallet's,
+# claimed by the Rewards workflow); Announce starts this workflow right after each post.
 #
 # Where (scripts/lib/venues.mjs, the owner's rule in scripts/lib/venues-routing.mjs): on pump.fun priced
 # in SOL by default; a cat tied to a company whose stock is a stock pair with no sanctuary cat yet (one

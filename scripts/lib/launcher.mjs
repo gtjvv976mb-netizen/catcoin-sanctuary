@@ -16,6 +16,15 @@
  * pbs.twimg.com picture, and never one whose coin text, metadata or X post would break the site's
  * content rules (the post is drafted before the launch: scripts/post-updates.mjs draftLaunch).
  *
+ * AND THE SANCTUARY'S OWN CATS, after their X post (the owner's choice, 2026-09-30): when no trending
+ * cat may launch, the adoptable cat the announcer released last (data/release-queue.json "released",
+ * with the id of the sanctuary's own post) that has no coin yet (sanctuaryRow, policy "sanctuary"). It
+ * launches from that post (its mint derived from the post id, like any other), on pump.fun in SOL,
+ * named as its card names it, its coin's picture its portrait on the site; its row in
+ * data/adoptables.json takes the launch (and the SOL pair) once launched. Never a cat with a coin
+ * already (its own launch, a visitor's adoption, a Collection entry under its name or ticker), one in memoriam or with a sensitivity note, or one of low confidence; and
+ * the caps, the content rules and every check before and after the send are the same as a trending cat's.
+ *
  * WHERE (scripts/lib/venues.mjs chooseVenue, the owner's rule in scripts/lib/venues-routing.mjs): by
  * default on pump.fun priced in SOL ("pump-sol"); a cat tied to a company with a stock pair (data/
  * cat-watch.json: a figure's "stock", or accountLinks for the big account that posted it) on StonkFun
@@ -98,7 +107,7 @@
  * "on" (a repository variable, never a secret) opts in to the unverified coin-priced pump.fun venue.
  */
 import { validateWallets, activeLauncher, isAddress, isSignature, textProblem, httpsProblem, coatProblem, parseTime, base58Encode, TICKER, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes, MAX_CATS } from "../../assets/collection.js";
-import { adoptableProblem, validateAdoptables, tributeLine, ADOPTABLE_CATEGORIES, realPhotoOf } from "../../assets/ui/adoptables.js";
+import { adoptableProblem, validateAdoptables, tributeLine, ADOPTABLE_CATEGORIES, realPhotoOf, nameKey } from "../../assets/ui/adoptables.js";
 import { keypairFromSecret, deriveMintKeypair, decodeCompactU16, decodeLegacyMessage, decompileInstructions, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT } from "./solana-tx.mjs";
 import { TOKEN_PROGRAM, TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
 import { LAUNCH_DEFAULTS } from "./pump.mjs";
@@ -119,6 +128,10 @@ export const X_ACCOUNT = "https://x.com/catcosanctuary";
  * photo (a stranger's photo can show faces, children or a home).
  */
 export const SITE_IMAGE = `${SITE_ORIGIN}/assets/og-image.jpg`;
+/** The sanctuary's X handle (its own posts are the posts its own cats launch from). */
+export const OWN_HANDLE = "catcosanctuary";
+/** A picture the site itself serves: a sanctuary cat's portrait or lore picture (its coin's image). */
+const SITE_PICTURE = /^https:\/\/catcoinsanctuary\.com\/assets\/(?:portraits|lore)\/[A-Za-z0-9_-]{1,40}\.(?:jpg|webp|png)$/;
 export const FILES = Object.freeze({
   ledger: "data/sanctuary-launches.json",
   approvals: "data/launch-approvals.json",
@@ -134,6 +147,9 @@ export const FILES = Object.freeze({
   collection: "data/collection.json",
   pumpQuotes: "data/pump-quotes.json",
   meshy: "scripts/meshy.queue.json",
+  queue: "data/release-queue.json",
+  adoptions: "data/adoptions.json",
+  lore: "data/lore.json",
 });
 export const LAMPORTS_PER_SOL = 1_000_000_000;
 export const HOUR_MS = 3_600_000;
@@ -324,11 +340,12 @@ export async function waitForMetadata({ fetchImpl, uri, text, now, sleep, waitMs
 
 /* ── the ledger ────────────────────────────────────────────────────────────────────────── */
 
-export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
+export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per post it prepared (a trending post, or the sanctuary's own X post of one of its cats), newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
 const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "kind", "lore", "image", "coinImage", "photoCredit", "metadataPath", "status", "preparedAt", "attempts", "cat",
   "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback"];
-export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved", "viral"]);
+/** Why a cat launched: a trending post by the owner's rules (policyOf), or "sanctuary": one of the sanctuary's own cats, after its X post (sanctuaryRow). */
+export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved", "viral", "sanctuary"]);
 /** The trend watch's reading kinds a launched cat may have (a row's `kind`: "real" is a pet, the others characters). */
 export const KINDS = Object.freeze(["real", "cartoon", "fiction"]);
 const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
@@ -349,7 +366,8 @@ export function rowProblem(r) {
   if (r.figure !== undefined && (typeof r.figure !== "string" || textProblem(r.figure, { maxChars: 60 }))) return "figure must be a watch-list figure's name";
   if (r.kind !== undefined && !KINDS.includes(r.kind)) return `kind must be one of ${KINDS.join(", ")}`;
   if (typeof r.lore !== "string" || r.lore.length < 1 || r.lore.length > 200) return "lore must be one line";
-  if (!PBS_IMAGE.test(r.image ?? "")) return "image must be a pbs.twimg.com picture";
+  if (r.policy === "sanctuary" ? !SITE_PICTURE.test(r.image ?? "") : !PBS_IMAGE.test(r.image ?? "")) return r.policy === "sanctuary" ? "image must be the cat's picture on the site" : "image must be a pbs.twimg.com picture";
+  if (r.policy === "sanctuary" && (X_POST_URL.exec(r.url ?? "")?.[1] !== OWN_HANDLE || r.photoCredit === true || r.cat?.launch !== undefined)) return "a sanctuary cat launches from the sanctuary's own post, with no photo credit and no launch yet";
   if (r.coinImage !== undefined && r.coinImage !== r.image && r.coinImage !== SITE_IMAGE) return "coinImage must be the post's picture, or the site's own";
   if (r.photoCredit !== undefined && typeof r.photoCredit !== "boolean") return "photoCredit must be true or false";
   if (r.metadataPath !== metadataPath(r.postId)) return "metadataPath must be coins/<postId>.json";
@@ -722,6 +740,123 @@ export function selectCandidate(ctx) {
   return { row: null, skipped };
 }
 
+/* ── the sanctuary's own cats, after their X post ──────────────────────────────────────── */
+
+const PICTURE_PATH = /^assets\/(?:portraits|lore)\/[A-Za-z0-9_-]{1,40}\.(?:jpg|webp|png)$/;
+/** A drawn cat's look (a cartoon, an anime or a game character, a mascot): its tribute names the character's owners. */
+const DRAWN_LOOK = /\b(?:cartoon|anime|manga|animated|illustrat\w*|drawn|character|mascot|plush\w*|sticker|pixel|emoji|chibi|kawaii)\b/i;
+/** A sanctuary cat's kind, as the fan-tribute line reads it: a show's cat or a drawn one is a character, the rest real cats. */
+export const kindOfAdoptable = (c) => (c?.category === "tv-movie" ? "fiction" : DRAWN_LOOK.test(String(c?.look ?? "")) ? "cartoon" : "real");
+
+/**
+ * A sanctuary cat's lore lines (each at most 200 characters), best first: its lore caption, its story's
+ * first sentence (cut at a word), and last a plain line naming it; the launcher takes the first one its
+ * coin's description and launch post pass the content rules with.
+ */
+export function loreLinesOf(c, captions = {}) {
+  const clean = (s) => oneLine(s, 400).replace(/https?:\/\/\S+|www\.\S+/gi, "").replace(/[@#$]/g, "").replace(/\s+/g, " ").trim();
+  const out = [];
+  for (const text of [captions[c?.ticker], c?.lore?.caption, c?.story]) {
+    const t = clean(text);
+    if (t.length < 10) continue;
+    const first = (t.match(/^.{10,}?[.!?…](?=\s|$)/u)?.[0] ?? t).trim();
+    const cut = first.slice(0, 199);
+    out.push(first.length <= 200 ? first : `${(cut.lastIndexOf(" ") > 100 ? cut.slice(0, cut.lastIndexOf(" ")) : cut).replace(/[\s,;:.!?…-]+$/u, "")}…`);
+  }
+  const name = clean(c?.name);
+  if (name) out.push(`${name}, one of the Catcoin Sanctuary's cats.`);
+  return [...new Set(out)];
+}
+
+/**
+ * The ledger row a sanctuary cat the announcer has posted on X would get, or { problem }. `entry` is its
+ * data/release-queue.json row (released, with the tweet id of the sanctuary's post): the coin launches
+ * from that post (its mint is derived from its id), on pump.fun in SOL, named as the cat's card names it
+ * (coinName, ticker), its picture the cat's portrait on the site. Never a cat with a coin already (its
+ * `launch`, an adoption by a visitor, an entry of the Collection's under its name or ticker; an older,
+ * unrelated coin the research found only under the same ticker), a cat in memoriam or with a sensitivity note, one of low confidence, or one
+ * whose kit launches under another ticker; and every rule a trending cat's coin keeps (its text on
+ * pump.fun, its metadata's description and its launch post by the site's content rules, the whole
+ * adoptables file still valid with the cat priced in SOL).
+ */
+export function sanctuaryRow(entry, ctx) {
+  const no = (problem) => ({ problem });
+  const key = String(entry?.key ?? "");
+  if (entry?.status !== "released" || !X_POST_ID.test(String(entry?.tweet ?? ""))) return no("not posted on X yet");
+  const postId = String(entry.tweet);
+  const cats = ctx.adoptables?.cats ?? [];
+  const i = cats.findIndex((c) => c?.ticker === key);
+  if (i < 0) return no("not an adoptable cat");
+  const c = cats[i];
+  if (c.launch) return no("it has a coin already");
+  if (c.memorial === true || String(c.sensitivity ?? "").trim()) return no("in memoriam, or a sensitivity note: never launched by the launcher");
+  if (c.confidence === "low") return no("low confidence");
+  // An older, unrelated small coin the research found (the card says so, and still offers the cat) does not stop it; its ticker would.
+  if (String(c.existingCoin?.symbol ?? "").toUpperCase() === c.ticker) return no("an older coin has its ticker");
+  if (c.launchTicker !== undefined && c.launchTicker !== c.ticker) return no(`its kit launches as ${c.launchTicker}`);
+  if ((ctx.adoptions?.adoptions ?? []).some((a) => a?.key === key)) return no("a visitor adopted it (data/adoptions.json)");
+  const coinName = oneLine(c.coinName || c.name, 60), name = oneLine(c.name, 60), ticker = c.ticker;
+  if ((ctx.collection?.cats ?? []).some((e) => String(e?.symbol ?? "").toUpperCase() === ticker || nameKey(e?.name) === nameKey(coinName))) return no("the Collection lists a coin under its name or ticker");
+  for (const r of ctx.ledger?.launches ?? []) {
+    if (r.postId === postId) return no("already in the ledger");
+    if (r.ticker === ticker && !(r.status === "failed" && (!r.retry || r.attempts >= MAX_ATTEMPTS))) return no("already in the ledger");
+  }
+  const picture = [c.portrait, c.lore?.image].find((p) => typeof p === "string" && PICTURE_PATH.test(p) && ctx.exists?.(p));
+  if (!picture) return no("no portrait on the site");
+  const uri = metadataUri(postId);
+  const bad = PUMP_SOL.textProblem({ name: coinName, symbol: ticker, uri });
+  if (bad) return no(`the coin cannot be launched as named: ${bad}`);
+  const cat = { ...structuredClone(c), pair: { ...SOL_PAIR } };
+  const v = validateAdoptables({ cats: cats.map((x, j) => (j === i ? cat : x)) }, { taken: new Set((ctx.planned?.cats ?? []).map((p) => p.ticker)) });
+  if (v.refused.some((x) => x.index === i)) return no(`the adoptable row would be refused: ${v.refused.find((x) => x.index === i).detail}`);
+  const image = `${SITE_ORIGIN}/${picture}`;
+  const kind = kindOfAdoptable(c);
+  const cited = [name, coinName, ticker];
+  const tributeCited = [...cited, fanTribute(kind)];
+  // The first lore line its coin's description and its launch post (drafted now: a held post means no launch) pass the content rules with.
+  let problem = "no lore line";
+  for (const lore of loreLinesOf(c, ctx.captions)) {
+    const row = {
+      postId, url: `https://x.com/${OWN_HANDLE}/status/${postId}`, name, coinName, ticker, venue: PUMP_SOL.id, policy: "sanctuary", kind, lore, image,
+      coinImage: image, photoCredit: false, metadataPath: metadataPath(postId), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat,
+    };
+    const d = checkUpdate(coinMetadata(row).description, tributeCited);
+    if (!d.ok) { problem = `the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`; continue; }
+    const post = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad: PUMP_SOL.launchpad, cited, tribute: fanTribute(kind) });
+    if (!post.ok) { problem = `its launch post would be held (${post.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`; continue; }
+    if (rowProblem(row)) return no(`the ledger row would be malformed: ${rowProblem(row)}`);
+    return { row, route: { venue: PUMP_SOL.id, pair: { ...SOL_PAIR }, reason: "a sanctuary cat, after its X post" } };
+  }
+  return no(problem);
+}
+
+/**
+ * Why a prepared sanctuary cat may no longer launch, or null: its row in data/adoptables.json is gone or
+ * has a coin, a visitor adopted it, or the Collection lists a coin under its name or ticker since it was
+ * prepared. Checked again right before the send.
+ */
+export function ownProblemNow(row, ctx) {
+  const c = (ctx.adoptables?.cats ?? []).find((x) => x?.ticker === row.ticker && x?.id === row.cat?.id);
+  if (!c) return "its row in data/adoptables.json is gone";
+  if (c.launch) return "it has a coin now";
+  if ((ctx.adoptions?.adoptions ?? []).some((a) => a?.key === row.ticker)) return "a visitor adopted it";
+  if ((ctx.collection?.cats ?? []).some((e) => String(e?.symbol ?? "").toUpperCase() === row.ticker || nameKey(e?.name) === nameKey(row.coinName))) return "the Collection lists a coin under its name or ticker";
+  return null;
+}
+
+/** The sanctuary cat to launch next: the one the announcer posted last that may launch. { row, route, skipped } or { row: null, skipped }. */
+export function selectSanctuary(ctx) {
+  const released = (Array.isArray(ctx.queue?.cats) ? ctx.queue.cats : []).filter((q) => q?.status === "released" && q.tweet)
+    .sort((a, b) => (Date.parse(b.releasedAt) || 0) - (Date.parse(a.releasedAt) || 0));
+  const skipped = [];
+  for (const entry of released) {
+    const s = sanctuaryRow(entry, ctx);
+    if (s.row) return { row: s.row, route: s.route, skipped };
+    skipped.push({ id: String(entry.key), why: s.problem });
+  }
+  return { row: null, skipped };
+}
+
 /* ── the watch list, once a cat moves in ───────────────────────────────────────────────── */
 
 /** A text as a figure term is compared: CamelCase split, "&" as "and", lower case, words by single spaces. */
@@ -960,6 +1095,8 @@ const json1 = (v) => `${JSON.stringify(v, null, 1)}\n`;
 const inFlight = (ledger) => ledger.launches.filter((r) => r.status === "prepared" || r.status === "sending");
 const replaceRow = (ledger, row) => { ledger.launches = ledger.launches.map((r) => (r.postId === row.postId ? row : r)); };
 const saveLedger = (io, ledger) => io.writeText(FILES.ledger, ledgerText(ledger));
+/** Whether a row's post is too old to launch: a trending post past MAX_POST_AGE_HOURS; a sanctuary cat's own post never is. */
+const tooOld = (row, trending, nowMs) => row.policy !== "sanctuary" && postAgeMs(row, trending, nowMs) > MAX_POST_AGE_HOURS * HOUR_MS;
 const postAgeMs = (row, trending, nowMs) => {
   const p = (trending?.posts ?? []).find((x) => String(x?.id) === row.postId);
   const t = Date.parse(p?.postedAt ?? row.cat?.proof?.date ?? "");
@@ -1019,6 +1156,11 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
     pumpQuotes: quotes.usable,
     pumpQuoteOptIn: pumpQuoteOptIn(env),
     open: openLaunches(env),
+    // The sanctuary's own cats (sanctuaryRow): the ones the announcer released, adoptions, lore captions, files on disk.
+    queue: readOwned(io, FILES.queue, { cats: [] }, log),
+    adoptions: readOwned(io, FILES.adoptions, { adoptions: [] }, log),
+    captions: (() => { const l = readOwned(io, FILES.lore, { cats: {} }, log); return isObj(l?.cats) ? l.cats : {}; })(),
+    exists: (rel) => io.readText(rel) !== null,
   };
 }
 
@@ -1056,7 +1198,8 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     if (again) {
       const next = { ...again };
       for (const k of ["tx", "mintPublic", "lastValidBlockHeight", "settledAt", "retry"]) delete next[k];
-      if (postAgeMs(again, ctx.trending, nowMs) > MAX_POST_AGE_HOURS * HOUR_MS) {
+      // A trending post is tried again only while it is fresh; a sanctuary cat's own post has no age limit.
+      if (tooOld(again, ctx.trending, nowMs)) {
         replaceRow(ledger, { ...again, retry: false, reason: `${again.reason} (not tried again: the post is older than ${MAX_POST_AGE_HOURS} hours)`.slice(0, 300) });
       } else {
         next.status = "prepared";
@@ -1090,9 +1233,17 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     else if (room === null || room < 1) {
       log(`::warning title=Launcher::${room === null ? `${FILES.collection} or ${FILES.planned} cannot be read` : `${FILES.collection} is near its ${MAX_CATS} cats (the Collection's hard cap, past which it proves nothing new), with room kept for the planned cats and ${COLLECTION_MARGIN} more`}; no new cat is prepared.`);
     } else {
-      const pick = selectCandidate(ctx);
+      let pick = selectCandidate(ctx);
       for (const s of pick.skipped) log(`Launcher: post ${s.id} skipped: ${s.why}.`);
-      if (!pick.row) log("Launcher: no trending cat to launch now.");
+      if (!pick.row) {
+        // No trending cat: the sanctuary's own cat the announcer posted last that has no coin yet.
+        log("Launcher: no trending cat to launch now; looking at the sanctuary's cats posted on X.");
+        pick = selectSanctuary(ctx);
+        const why = new Map();
+        for (const s of pick.skipped) why.set(s.why, [...(why.get(s.why) ?? []), s.id]);
+        for (const [w, ids] of why) log(`Launcher: ${ids.length} posted cat(s) skipped (${w}): ${ids.slice(0, 12).join(", ")}${ids.length > 12 ? ", …" : ""}.`);
+      }
+      if (!pick.row) log("Launcher: no cat to launch now.");
       else if (mode === "dry") {
         log(`Launcher (dry run): would prepare ${pick.row.coinName} (${pick.row.ticker}) from ${pick.row.url} (${pick.row.policy}), ${whereText(pick.row, pick.route)}; nothing written.`);
         out.pending = true;
@@ -1273,7 +1424,7 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   let row = ledger.launches.find((r) => r.status === "prepared") ?? null;
   const virtual = !row && mode === "dry";
   if (virtual) {
-    if (dayStats(ledger, nowMs, caps).count < caps.maxPerDay) row = selectCandidate(ctx).row;
+    if (dayStats(ledger, nowMs, caps).count < caps.maxPerDay) row = selectCandidate(ctx).row ?? selectSanctuary(ctx).row;
   }
   if (!row) { log("Launcher: nothing prepared to send."); return out; }
   let venue = venueById(row.venue);
@@ -1310,11 +1461,17 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   if (found.state === "foreign") { log(`::warning title=Launcher::${row.ticker}: ${found.detail}; it is never sent.`); fail(found.detail, false); return { ...out, outcome: "foreign" }; }
   if (found.state === "unknown") { log(`::error title=Launcher::${row.ticker}: ${found.detail}. Nothing was sent; a person must look.`); return { ...out, outcome: "unknown", code: 1 }; }
 
-  // 4. Too old now?
-  if (postAgeMs(row, ctx.trending, nowMs) > MAX_POST_AGE_HOURS * HOUR_MS) {
+  // 4. Too old now? (A sanctuary cat's own post has no age limit; the cat must still be free: no coin since it was prepared.)
+  if (tooOld(row, ctx.trending, nowMs)) {
     log(`Launcher: ${row.ticker}'s post is older than ${MAX_POST_AGE_HOURS} hours now; it is not launched.`);
     fail(`the post is older than ${MAX_POST_AGE_HOURS} hours`, false);
     return { ...out, outcome: "stale" };
+  }
+  const taken = row.policy === "sanctuary" ? ownProblemNow(row, ctx) : null;
+  if (taken) {
+    log(`::warning title=Launcher::${row.ticker} is not launched: ${taken}.`);
+    fail(taken, false);
+    return { ...out, outcome: "taken" };
   }
 
   // 5. The metadata: the committed file, served by the site at the coin's uri.
@@ -1507,11 +1664,25 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     // The cat, with its launch (the whole file must still validate).
     const cats = files.adoptables.cats ?? [];
     const existing = cats.find((c) => c.ticker === T || c.id === row.cat.id);
-    if (existing && !(existing.launch?.mint === launch.mint && existing.launch?.tx === launch.tx)) {
+    const own = row.policy === "sanctuary";
+    // A sanctuary cat is in the file already: its own row takes the launch, priced in the pair it launched in.
+    if (own && existing && existing.id === row.cat.id && existing.ticker === T && !existing.launch) {
+      const next = { ...files.adoptables, cats: cats.map((c) => (c === existing ? { ...existing, pair: { ...row.cat.pair }, launch } : c)) };
+      const v = validateAdoptables(next, { taken: plannedTickers });
+      if (v.refused.length) {
+        const p = `${T}: data/adoptables.json would not validate (${v.refused.map((x) => x.detail).join("; ").slice(0, 200)}); nothing was recorded for it`;
+        out.problems.push(p); log(`::error title=Launcher::${p}`); continue;
+      }
+      files.adoptables = next;
+    } else if (own && !(existing?.launch?.mint === launch.mint && existing?.launch?.tx === launch.tx)) {
+      const p = `${T}: the sanctuary cat ${row.cat.id} is not in data/adoptables.json as it was, or has another coin; ${row.coinName} was launched (${row.tx.slice(0, 12)}…) but is not recorded: a person must add it`;
+      out.problems.push(p); log(`::error title=Launcher::${p}`); continue;
+    }
+    if (!own && existing && !(existing.launch?.mint === launch.mint && existing.launch?.tx === launch.tx)) {
       const p = `${T}: the adoptable ticker or id is taken by another cat; ${row.coinName} was launched (${row.tx.slice(0, 12)}…) but is not in the sanctuary: a person must add it`;
       out.problems.push(p); log(`::error title=Launcher::${p}`); continue;
     }
-    if (!existing) {
+    if (!own && !existing) {
       const next = { ...files.adoptables, cats: [...cats, { ...row.cat, launch }] };
       const v = validateAdoptables(next, { taken: plannedTickers });
       if (v.refused.length) {
@@ -1527,9 +1698,9 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     if (!rows.some((l) => l.tx === row.tx) && !proved.has(row.tx)) rows.push({ tx: row.tx, note: `Sanctuary launcher: ${T}` });
     if (rows.length <= 200) files.launches = { ...files.launches, launches: rows };
     else log(`::warning title=Launcher::data/launches.json holds 200 rows; ${T}'s launch is left to the Collection's wallet scan.`);
-    // A 3D model of its own, from the post's picture.
+    // A 3D model of its own, from the post's picture (a sanctuary cat has its model, its portrait and its card already).
     files.meshy.cats ??= {};
-    if (!files.meshy.cats[T]) {
+    if (!own && !files.meshy.cats[T]) {
       const order = Math.max(0, ...Object.values(files.meshy.cats).map((q) => (Number.isFinite(q?.order) ? q.order : 0))) + 1;
       const look = row.cat.look.startsWith(`${row.cat.name}, drawn from the picture`) ? DEFAULT_REFERENCE : row.cat.look;
       files.meshy.cats[T] = { action: "rebuild", priority: 1, why: "A trending cat the sanctuary launched: it has no model of its own yet (the garden draws the shared model in its coat).",
@@ -1539,14 +1710,14 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     // ruled it out (`none`) or hides the post (data/photo-hide.json: then it waits in `hidden`, and the card keeps its portrait).
     files.photos.cats ??= {};
     const photo = photoOfRow(row);
-    if (!(T in files.photos.cats) && !(T in (files.photos.none ?? {})) && !(T in (files.photos.hidden ?? {})) && realPhotoOf(photo)) {
+    if (!own && !(T in files.photos.cats) && !(T in (files.photos.none ?? {})) && !(T in (files.photos.hidden ?? {})) && realPhotoOf(photo)) {
       const entry = { realPhoto: photo, source: "proof" };
       if (files.photoHide.has(row.postId)) files.photos = { ...files.photos, hidden: { ...(files.photos.hidden ?? {}), [T]: { postId: row.postId, entry } } };
       else files.photos.cats[T] = entry;
     }
     replaceRow(ledger, { ...row, recordedAt: ISO_SECONDS(nowMs) });
     out.recorded.push(T);
-    log(`Launcher: ${row.name} (${T}), launched ${whereText(row)}, moves into the sanctuary; its X post ("launched by the sanctuary on ${venue.announceAs}") waits for the Collection to prove ${row.tx.slice(0, 12)}….`);
+    log(`Launcher: ${row.name} (${T}), launched ${whereText(row)}, ${own ? "has its coin on its card" : "moves into the sanctuary"}; its X post ("launched by the sanctuary on ${venue.announceAs}") waits for the Collection to prove ${row.tx.slice(0, 12)}….`);
   }
   // The watch list lets go of the figures that live in the sanctuary now (the trend watch no longer looks for them).
   if (out.recorded.length && isObj(files.watch) && Array.isArray(files.watch.figures)) {

@@ -23,9 +23,13 @@
 # schedule stays as the backup that restarts a broken chain. To stop the chain, set the repository
 # variable ANNOUNCE_CHAIN to "off" (or disable the workflow).
 #
+# A run that released a cat (posted it on X and marked it released) starts the Launch workflow at
+# once (the "launcher" job, while LAUNCH_ENABLED is on or dry): the launcher launches a posted cat's
+# coin on pump.fun right after its post (scripts/lib/launcher.mjs sanctuaryRow), within its caps.
+#
 # The checkout keeps no credentials; the push hands the workflow token to git for that one
-# command. The announce job may write repository contents and nothing else; the next job may
-# only start workflow runs and runs none of the repository's code.
+# command. The announce job may write repository contents and nothing else; the launcher and next
+# jobs may only start workflow runs and run none of the repository's code.
 name: Announce
 
 on:
@@ -50,6 +54,8 @@ jobs:
     timeout-minutes: 60
     permissions:
       contents: write
+    outputs:
+      released: ${{ steps.record.outputs.released }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -73,12 +79,15 @@ jobs:
           node scripts/post-updates.mjs || status=$?
           exit "$status"
       - name: Commit the record if it changed
+        id: record
         if: ${{ !cancelled() }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           git add -- data/announced.json data/announce-queue.json data/release-queue.json data/releases.json data/next-cat.json data/intro-thread.json data/thread-*.json data/updates.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          # A cat released this run (posted on X): the launcher is started once this is pushed.
+          if git diff --cached -- data/release-queue.json | grep -q '^+ *"status": "released"'; then released=true; else released=false; fi
           git diff --cached --stat
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Announce: record announced cats and posted updates"
@@ -89,6 +98,21 @@ jobs:
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" rebase origin/main
             git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
           fi
+          echo "released=$released" >> "$GITHUB_OUTPUT"
+
+  launcher:
+    needs: announce
+    if: ${{ !cancelled() && needs.announce.outputs.released == 'true' && (vars.LAUNCH_ENABLED == 'on' || vars.LAUNCH_ENABLED == 'dry') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Start the launcher now for the cat just posted
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: gh workflow run launch.yml -R "$REPO" --ref main
 
   next:
     needs: announce
