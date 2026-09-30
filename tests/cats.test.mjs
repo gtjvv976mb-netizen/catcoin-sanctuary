@@ -27,7 +27,12 @@
    real residents, watches them: their whole bodies clear of the props, none of the house cats'
    places used, company kept only with cats of a size, never stuck for long; and scenes check that
    a lion walks, turns and sits down as a big animal does (catmotion gaitScale) and goes round a
-   house cat sitting in its way. */
+   house cat sitting in its way.
+   Every cat, with the birds and butterflies about: its leaps land on dry, clear ground (never in the
+   pond or a prop, the verifier's house cats sitting 40 s in the water), none stays in the water or a
+   solid prop, and a hop up a cat tree goes neither through its foot nor its platform; scenes check a
+   hunt across a corner of the pond, cats found in the pond, the cottage or a vegetable bed walking
+   out, and cats of every size hopping up a cat tree. */
 
 import { isMainThread, parentPort, workerData, Worker } from "node:worker_threads";
 import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
@@ -222,6 +227,38 @@ async function bigRun({ seconds }) {
   return big.map((c) => { const s = S.get(c); return { id: c.id, size: c.size, fr: c.fr, props: s.props, propWhat: s.propWhat, holds: [...s.holds], company: [...s.company], waiting: s.waiting, kinds: [...s.kinds], walkV: p90(s.walkV), walked: s.walkV.length * (1 / 30), gaits: [...s.gaits] }; });
 }
 
+/** How deep a cat's body (its capsule, drawn size) is in the water or a solid prop, and which: [depth, id]. The water is
+    the pond itself (not its rim), as the verifier measures it; watching or drinking at the pond (`pondOk`) it may be at
+    it, and a long cat on its bank may reach its head 0.2 × its size out over it. Solid: every prop but a cat bed, a bowl
+    or dish and a cat tree's foot (with `trees`, only the cat trees' feet). */
+function solidDepth(c, obs, { pondOk = false, trees = false } = {}) {
+  const h = (HALF_LEN[c.pose] || 0.3) * c.size, r = BODY * c.size, fx = Math.cos(c.yaw) * h, fz = -Math.sin(c.yaw) * h;
+  const bank = c.size >= LONG && Math.hypot(c.x - L.POND.x, c.z - L.POND.z) < L.POND.r + 1.2 * c.size;
+  let w = [0, "-"];
+  for (const o0 of obs) {
+    if (trees ? !/^tree-/.test(o0.id) : /^(bed|bowl|water|tree)-/.test(o0.id)) continue;
+    let o = o0;
+    if (o0.id === L.POND.id) { if (pondOk) continue; o = { id: "the water", type: "circle", x: L.POND.x, z: L.POND.z, r: L.POND.r - (bank ? 0.2 * c.size : 0) }; }
+    if (o.type === "circle" ? Math.abs(o.x - c.x) > o.r + h + r || Math.abs(o.z - c.z) > o.r + h + r : c.x < o.minX - h - r || c.x > o.maxX + h + r || c.z < o.minZ - h - r || c.z > o.maxZ + h + r) continue;
+    let d = Infinity;
+    for (let u = -1; u <= 1.0001; u += 0.25) d = Math.min(d, distToObstacle(o, c.x + fx * u, c.z + fz * u));
+    if (r - d > w[0]) w = [r - d, o.id];
+  }
+  return w;
+}
+
+/** How much further a cat's middle is in the water (the pond with its rim) or a solid prop than its walk keeps it (its
+    bodyR off them): [depth, id]. */
+function middleIn(c, obs, pondOk = false) {
+  let w = [0, "-"];
+  for (const o of obs) {
+    if (/^(bed|bowl|water|tree)-/.test(o.id) || (pondOk && o.id === L.POND.id)) continue;
+    const d = c.bodyR - distToObstacle(o, c.x, c.z);
+    if (d > w[0]) w = [d, o.id === L.POND.id ? "the water" : o.id];
+  }
+  return w;
+}
+
 /** critters.js (the birds and butterflies) as the page loads it, its "three" imports pointed at the vendored copy,
     and its random stream seeded by `seed` (where and when the birds land and the butterflies go). */
 async function loadCritters(seed) {
@@ -263,13 +300,32 @@ async function huntRun({ seconds, seed }) {
   const dt = 1 / 30, obs = L.obstacles(), cats = sim.cats, long = cats.filter((c) => c.size >= LONG);
   const S = new Map(cats.map((c) => [c, { x: c.x, z: c.z, v: c.speed, legs: newLegs() }]));
   const P = new Map(long.map((c) => [c, { deep: 0, deepWhat: "", spell: new Map(), hist: [] }]));
-  const out = { cats: cats.length, long: long.length, hunts: 0, pops: 0, popMax: 0, slides: 0, slideMax: 0, deepest: 0, spells: 0, paces: 0, examples: [] };
+  const out = { cats: cats.length, long: long.length, hunts: 0, pops: 0, popMax: 0, slides: 0, slideMax: 0, deepest: 0, spells: 0, paces: 0, examples: [],
+    leaps: 0, landWorst: 0, landWhat: "", wetOrIn: 0, wetOrInWhat: [], treeHop: 0, treeHopWhat: "" };
   const note = (what) => { if (out.examples.length < 12) out.examples.push(what); };
-  const hunting = new Set();
+  const hunting = new Set(), wasAir = new Map(), stay = new Map();
   for (let f = 1; f <= seconds / dt; f++) {
     critters.update(dt, false);
     sim.update(dt);
     const t = f * dt;
+    // Every cat, a kitten to a lion: where each leap lands (its whole body in the water or a solid prop), a cat sitting,
+    // lying or standing still in one, and a hop up a cat tree through its foot.
+    for (const c of cats) {
+      const a = c.motion.action, air = a === "pounce" || a === "hop", landed = wasAir.get(c) && !air;
+      wasAir.set(c, air);
+      if (c.perch || c.hidden) { stay.delete(c); continue; }
+      if (air && c.act?.kind === "climb" && c.y < 0.3) { const d = solidDepth(c, obs, { trees: true }); if (d[0] > out.treeHop) { out.treeHop = d[0]; out.treeHopWhat = `${c.id} (${c.size}x) ${d[0].toFixed(2)} into ${d[1]} at ${t.toFixed(1)} s`; } }
+      if (c.y > 0.05 || air) continue;
+      const d = solidDepth(c, obs, { pondOk: c.act && (c.act.kind === "drink" || c.act.kind === "pond") });
+      if (landed) { out.leaps++; if (d[0] > out.landWorst) { out.landWorst = d[0]; out.landWhat = `${c.id} (${c.size}x) landed ${d[0].toFixed(2)} into ${d[1]} at ${t.toFixed(1)} s, "${c.doing}"`; } }
+      // (in it a second or more: its middle further in than its walk keeps it (a nose against a bush aside), or sitting,
+      // lying or loafing with its body in it)
+      const m = middleIn(c, obs, c.act && (c.act.kind === "drink" || c.act.kind === "pond"));
+      const deep = m[0] > 0.15 ? m : ["sit", "lie", "sleep"].includes(c.motion.posture) && d[0] > 0.25 ? d : null;
+      const s = stay.get(c);
+      if (deep) { if (!s) stay.set(c, { t0: t, max: deep[0], what: deep[1], doing: c.doing }); else s.max = Math.max(s.max, deep[0]); }
+      else if (s) { stay.delete(c); if (t - s.t0 >= 1) { out.wetOrIn++; if (out.wetOrInWhat.length < 6) out.wetOrInWhat.push(`${c.id} (${c.size}x) ${s.max.toFixed(2)} into ${s.what} for ${(t - s.t0).toFixed(1)} s from ${s.t0.toFixed(1)} s, "${s.doing}"`); } }
+    }
     for (const c of cats) {
       // (its own step: at its speed going into the tick or coming out of it, whichever is more)
       const s = S.get(c), m = c.motion, A = ACTIONS[m.action], mv = Math.hypot(c.x - s.x, c.z - s.z), v = Math.max(s.v, c.speed);
@@ -308,6 +364,7 @@ async function huntRun({ seconds, seed }) {
       }
     }
   }
+  for (const [c, s] of stay) if (seconds - s.t0 >= 1) { out.wetOrIn++; if (out.wetOrInWhat.length < 6) out.wetOrInWhat.push(`${c.id} (${c.size}x) ${s.max.toFixed(2)} into ${s.what} for ${(seconds - s.t0).toFixed(1)} s from ${s.t0.toFixed(1)} s (to the end), "${s.doing}"`); }
   for (const c of long) { const p = P.get(c); if (p.deep > out.deepest) { out.deepest = p.deep; out.deepWhat = `${c.id} (${c.size}x) ${p.deep.toFixed(2)} into ${p.deepWhat}`; } }
   out.hunts = hunting.size;
   return out;
@@ -584,6 +641,18 @@ if (!isMainThread) {
     }
   });
 
+  test("the real garden with its birds and butterflies: every cat's leap lands on dry, clear ground, no cat stays in the water or a solid prop (nor sits, lies or loafs with its body in one), and no hop up a cat tree goes through its foot", async (t) => {
+    for (const o of await Promise.all(hunts)) {
+      t.diagnostic(`${o.leaps} leaps landed, the worst ${o.landWorst.toFixed(2)} into the water or a prop${o.landWhat ? ": " + o.landWhat : ""}; ${o.wetOrIn} cats in one a second or more; up a cat tree, ${o.treeHop.toFixed(2)} into its foot ${o.treeHopWhat}`);
+      assert.ok(o.leaps >= 40, `the cats leapt at their prey (${o.leaps} leaps)`);
+      // (a house cat leapt at a butterfly over the pond and sat 43 s in the water; one at the cottage wall sat washing inside it)
+      assert.ok(o.landWorst <= 0.1, `a leap landed in the water or a prop: ${o.landWhat}`);
+      assert.equal(o.wetOrIn, 0, `cats stayed in the water or a solid prop, sitting, lying or standing there:\n  ${o.wetOrInWhat.join("\n  ")}`);
+      // (the bobcat's chest went through the tree's foot as it gathered and took off)
+      assert.ok(o.treeHop <= 0.05, `a hop up a cat tree went through its foot: ${o.treeHopWhat}`);
+    }
+  });
+
   test("a long cat hunting beside a prop keeps its whole body out of it, and never pops out: the Savannah after a butterfly at the easel", () => {
     const E = L.obstacles().find((o) => o.id === "easel");
     for (const [scale, ox, oz] of [[1.31, -0.7, -0.5], [1.31, 0.75, 0.45], [2.56, -0.7, -0.5]]) {
@@ -624,6 +693,93 @@ if (!isMainThread) {
       assert.ok(hunts >= (scale >= BIG_SIZE ? 1 : 3), `a ${scale}x cat went after the butterfly by the easel (${hunts} hunts)`);
       assert.equal(pops, 0, `a ${scale}x cat popped across the ground by the easel`);
       assert.ok(deep < 0.1, `a ${scale}x cat's body went ${deep.toFixed(2)} into ${what}`);
+    }
+  });
+
+  test("a cat hunting a butterfly across a corner of the pond goes round the water, and its leaps land on dry ground: a kitten, a house cat, a bobcat", () => {
+    // (it starts on the pond's rim, well within its berth (where the verifier's cats were when they went in); the
+    // butterfly hovers over the grass across a corner of the water, 80 degrees round the bank)
+    const obs = L.obstacles(), probe = createSanctuary({ residents: [], reduced: false, critters: null });
+    const at = (a, d) => ({ x: L.POND.x + Math.cos(a) * d, z: L.POND.z + Math.sin(a) * d }), notPond = new Set([L.POND.id]);
+    let A = null, B = null;
+    for (let a = 0; a < Math.PI * 2 && !A; a += 0.05) {
+      const p = at(a, L.POND.r + 0.6), q = at(a + 1.4, L.POND.r + 0.85);
+      if (probe.nav.pointFree(p.x, p.z, 0.9, notPond) && probe.nav.pointFree(q.x, q.z, 0.9, notPond)) { A = p; B = q; }
+    }
+    for (const scale of [0.75, 1, 1.42]) {
+      const bf = { x: B.x, y: 0.6, z: B.z, state: "fly" }, critters = { butterflies: [bf], birds: [], startle() {} };
+      const sim = createSanctuary({ residents: [{ id: "HUNTER", name: "Hunter", style: { scale }, traits: { playful: 0.95, hunter: 0.95, energy: 0.8, sleepy: 0.05, curious: 0.3 } }], reduced: false, critters });
+      const c = sim.cats[0], dt = 1 / 30;
+      Object.assign(c, { x: A.x, z: A.z, yaw: yawTo(B.x - A.x, B.z - A.z) });
+      let hunts = 0, was = null, air = false, land = [0, "-"], rest = [0, "-"], wet = 0;
+      for (let f = 1; f <= 40 / dt; f++) {
+        c.needs.play = 1; c.needs.sleep = 0;
+        if (c.act?.kind !== "butterfly") sim.force("HUNTER", "butterfly");
+        sim.update(dt);
+        if (c.act?.kind === "butterfly" && was !== c.act) hunts++;
+        was = c.act;
+        const a = c.motion.action, nowAir = a === "pounce" || a === "hop", landed = air && !nowAir;
+        air = nowAir;
+        if (c.y > 0.05 || nowAir) continue;
+        // (its middle never over the water: it doesn't wade across)
+        wet = Math.max(wet, L.POND.r - Math.hypot(c.x - L.POND.x, c.z - L.POND.z));
+        const d = solidDepth(c, obs);
+        if (landed && d[0] > land[0]) land = [d[0], d[1]];
+        if (["sit", "lie", "sleep"].includes(c.motion.posture) && d[0] > rest[0]) rest = [d[0], d[1]];
+      }
+      assert.ok(hunts >= 2, `a ${scale}x cat went after the butterfly (${hunts} hunts)`);
+      assert.ok(wet <= 0, `a ${scale}x cat walked ${wet.toFixed(2)} into the water after it`);
+      assert.ok(land[0] <= 0.1, `a ${scale}x cat's leap landed ${land[0].toFixed(2)} into ${land[1]}`);
+      assert.ok(rest[0] <= 0.1, `a ${scale}x cat sat ${rest[0].toFixed(2)} into ${rest[1]}`);
+    }
+  });
+
+  test("a cat found in the pond, the cottage or a vegetable bed walks straight out, at a walk, and never sits there: a kitten, a house cat, a bobcat, a lion", () => {
+    const obs = L.obstacles(), house = obs.find((o) => o.id === "house"), veg = obs.find((o) => o.id.startsWith("veg-"));
+    const spots = [["the pond", { x: L.POND.x + Math.cos(1) * (L.POND.r - 0.8), z: L.POND.z + Math.sin(1) * (L.POND.r - 0.8) }], ["the cottage", { x: house.maxX - 0.25, z: (house.minZ + house.maxZ) / 2 + 0.5 }], ["a vegetable bed", { x: (veg.minX + veg.maxX) / 2, z: (veg.minZ + veg.maxZ) / 2 }]];
+    for (const scale of [0.75, 1, 1.42, 2.56]) for (const [label, p] of spots) {
+      // (sitting there, as the verifier's cats sat after a leap, with nothing else to do)
+      const sim = scene([{ id: "IN", style: { scale }, x: p.x, z: p.z, yaw: 0.3, pose: "sit", steps: [{ type: "hold", action: "sit", dur: 1e6, doing: "" }] }]);
+      const c = sim.cats[0], w = watcher(sim.cats);
+      let outAt = null, satIn = 0, fast = 0, px = c.x, pz = c.z;
+      for (let f = 1; f <= 20 / DT; f++) {
+        sim.update(DT); w.tick(f * DT, DT);
+        fast = Math.max(fast, Math.hypot(c.x - px, c.z - pz) / DT); px = c.x; pz = c.z;
+        const d = solidDepth(c, obs)[0];
+        if (outAt == null && d <= 0.05) outAt = f * DT;
+        // (once it has had a moment to get up: never sitting, lying or loafing in it)
+        if (f * DT > 1.5 && d > 0.1 && ["sit", "lie", "sleep"].includes(c.motion.posture) && ACTIONS[c.motion.action].kind !== "trans") satIn += DT;
+      }
+      const what = `a ${scale}x cat in ${label}`;
+      assert.ok(outAt != null && outAt < 3 + 2 * scale, `${what} got out (${outAt?.toFixed(2)} s; ${solidDepth(c, obs)[0].toFixed(2)} in it at the end, ${c.motion.action})`);
+      assert.equal(satIn, 0, `${what} sat or lay in it ${satIn.toFixed(2)} s`);
+      assert.ok(fast <= 1.6 * gaitScale(c.size) + 0.05, `${what} left it at a walk, not a slide (${fast.toFixed(2)} u/s)`);
+      for (const k of ["jumps", "skips", "short", "invalid"]) assert.equal(w.out[k], 0, `${what}: ${w.out.examples.join("; ")}`);
+    }
+  });
+
+  test("a cat hops up onto its cat tree without going through the tree's foot or its platform, whatever its size", () => {
+    for (const scale of [0.75, 1, 1.42]) {
+      const sim = createSanctuary({ residents: [{ id: "CLIMBER", name: "Climber", style: { scale }, traits: { climber: 1 } }], reduced: false, critters: null });
+      const c = sim.cats[0], T = L.TREES[4], base = { type: "rect", ...T.base };
+      for (const x of sim.cats) { x.act = null; x.perch = null; }
+      Object.assign(c, { x: T.ground.x + 2.5, z: T.ground.z, y: 0, yaw: Math.PI });
+      assert.equal(sim.force("CLIMBER", "climb"), true);
+      let foot = 0, under = 0, perched = false;
+      for (let f = 1; f <= 40 / DT && !perched; f++) {
+        sim.update(DT);
+        perched = !!c.perch;
+        if (c.act?.kind !== "climb" || c.perch) continue;
+        const h = (HALF_LEN[c.pose] || 0.3) * c.size, r = BODY * c.size, fx = Math.cos(c.yaw) * h, fz = -Math.sin(c.yaw) * h;
+        let dF = Infinity, dP = Infinity;
+        for (let u = -1; u <= 1.0001; u += 0.25) { dF = Math.min(dF, distToObstacle(base, c.x + fx * u, c.z + fz * u)); dP = Math.min(dP, Math.hypot(c.x + fx * u - T.low.x, c.z + fz * u - T.low.z) - T.low.r); }
+        // (low down, its body clear of the tree's foot; below the platform, clear of it)
+        if (c.y < 0.3) foot = Math.max(foot, r - dF);
+        if (c.y < T.low.y - 0.3) under = Math.max(under, r - dP);
+      }
+      assert.ok(perched, `a ${scale}x cat got up onto the platform`);
+      assert.ok(foot <= 0.05, `a ${scale}x cat went ${foot.toFixed(2)} into the tree's foot`);
+      assert.ok(under <= 0.1, `a ${scale}x cat went ${under.toFixed(2)} up through the platform`);
     }
   });
 
