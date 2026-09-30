@@ -206,12 +206,16 @@ test("models workflow: the state always reaches the commit (every bundle, upload
 
 /* ── configuration and choosing ───────────────────────────────────────────────────────── */
 
-test("the generator: MODELS_GENERATOR tripo by default, meshy when asked, nothing for any other value", () => {
+test("the generator: no API by default (the owner makes models by hand through Higgsfield), tripo or meshy when asked, nothing for any other value", () => {
   assert.deepEqual(GENERATORS, ["tripo", "meshy"]);
-  assert.deepEqual(generatorOf({}), { value: "tripo", note: null });
-  assert.deepEqual(generatorOf({ MODELS_GENERATOR: "  " }), { value: "tripo", note: null });
-  assert.deepEqual(generatorOf({ MODELS_GENERATOR: " Meshy " }), { value: "meshy", note: null });
-  assert.deepEqual(generatorOf({ MODELS_GENERATOR: "TRIPO" }), { value: "tripo", note: null });
+  for (const v of [undefined, "", "  ", "off", "Cowork", " higgsfield ", "none", "hand"]) {
+    const g = generatorOf(v === undefined ? {} : { MODELS_GENERATOR: v });
+    assert.equal(g.value, null, `no API credit is spent for ${JSON.stringify(v)}`);
+    assert.equal(g.warn, false);
+    assert.match(g.note, /made by hand through Higgsfield/);
+  }
+  assert.deepEqual(generatorOf({ MODELS_GENERATOR: " Meshy " }), { value: "meshy", note: null, warn: false });
+  assert.deepEqual(generatorOf({ MODELS_GENERATOR: "TRIPO" }), { value: "tripo", note: null, warn: false });
   const bad = generatorOf({ MODELS_GENERATOR: "hunyuan" });
   assert.equal(bad.value, null);
   assert.match(bad.note, /MODELS_GENERATOR "hunyuan" is neither "tripo" nor "meshy": no model is made/);
@@ -396,18 +400,23 @@ const NOW = () => Date.parse("2026-09-28T06:00:00Z");
 test("pick: the step's outputs are the keys to make and the tool; nothing when no launched cat waits (the backlog is off) or the tool is not one", async () => {
   const t = repo();
   const logs = [];
-  const r = await main(["pick"], { env: { MODELS_PER_RUN: "2" }, root: t.root, now: NOW, log: (l) => logs.push(l) });
+  const r = await main(["pick"], { env: { MODELS_PER_RUN: "2", MODELS_GENERATOR: "tripo" }, root: t.root, now: NOW, log: (l) => logs.push(l) });
   assert.deepEqual(r, { code: 0, outputs: { keys: "NEWCAT LATECAT", generator: "tripo" } });
   assert.match(logs.join("\n"), /this run makes NEWCAT \(launched\), LATECAT \(launched\) with Tripo\./);
   assert.deepEqual((await main(["pick"], { env: { MODELS_GENERATOR: "meshy" }, root: t.root, now: NOW, log: () => {} })).outputs, { keys: "NEWCAT", generator: "meshy" });
   const badLogs = [];
   assert.deepEqual((await main(["pick"], { env: { MODELS_GENERATOR: "both" }, root: t.root, now: NOW, log: (l) => badLogs.push(l) })).outputs, { keys: "", generator: "" }, "fail closed");
   assert.match(badLogs.join("\n"), /::warning title=Models::MODELS_GENERATOR "both" is neither "tripo" nor "meshy": no model is made\./);
-  const none = await main(["pick"], { env: {}, root: repo({ adoptables: { cats: [] } }).root, now: NOW, log: () => {} });
+  // Unset: no API credit is spent (the owner makes the models by hand through Higgsfield), with a plain note, no warning.
+  const handLogs = [];
+  assert.deepEqual((await main(["pick"], { env: {}, root: t.root, now: NOW, log: (l) => handLogs.push(l) })).outputs, { keys: "", generator: "" });
+  assert.match(handLogs.join("\n"), /^Models: no API makes the models/m);
+  assert.ok(!/::warning/.test(handLogs.join("\n")));
+  const none = await main(["pick"], { env: { MODELS_GENERATOR: "tripo" }, root: repo({ adoptables: { cats: [] } }).root, now: NOW, log: () => {} });
   assert.equal(none.outputs.keys, "");
   // A hidden photo (data/photo-hide.json) is never sent to Meshy.
   t.w("data/photo-hide.json", { note: "t", hide: ["2100000000000000001"] });
-  assert.equal((await main(["pick"], { env: {}, root: t.root, now: NOW, log: () => {} })).outputs.keys, "LATECAT");
+  assert.equal((await main(["pick"], { env: { MODELS_GENERATOR: "tripo" }, root: t.root, now: NOW, log: () => {} })).outputs.keys, "LATECAT");
 });
 
 test("meshy: no key, nothing called; each cat through scripts/meshy.mjs with the reserve; a failure is a try; the reserve stops the run and uses none", async () => {
@@ -554,12 +563,12 @@ test("pack: a model over its budget, or failing the model tests, is discarded: f
   assert.deepEqual([row.attempts, row.status], [1, "failed"]);
   assert.match(logs.join("\n"), /discarded \(NEWCAT\.glb: \d+ bytes, over the 600000-byte budget[^)]*\)[\s\S]*keeps its portrait/);
   // Chosen again (one try left), then discarded again: it gives up, and is not chosen any more.
-  assert.equal((await main(["pick"], { env: {}, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT");
+  assert.equal((await main(["pick"], { env: { MODELS_GENERATOR: "tripo" }, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT");
   const j2 = t.json(FILES.jobs); j2.NEWCAT = jobs.NEWCAT; t.w(FILES.jobs, j2);
   t.w(FILES.state, { note: "n", cats: { NEWCAT: { attempts: 2, status: "made", at: "t" } } });
   await main(["pack"], { env: { KEYS: "NEWCAT" }, root: t.root, now: NOW, exec: fakePacker(t, { testsPass: false }), R, log: () => {} });
   assert.deepEqual([t.json(FILES.state).cats.NEWCAT.attempts, t.json(FILES.state).cats.NEWCAT.status], [2, "gave-up"]);
-  assert.equal((await main(["pick"], { env: {}, root: t.root, now: NOW, log: () => {} })).outputs.keys, "LATECAT");
+  assert.equal((await main(["pick"], { env: { MODELS_GENERATOR: "tripo" }, root: t.root, now: NOW, log: () => {} })).outputs.keys, "LATECAT");
   // A packer that fails is a discarded model too.
   const t3 = repo({ meshyState: { NEWCAT: { status: "done" } }, state: { NEWCAT: { attempts: 1, status: "made", at: "t" } } });
   const r3 = await main(["pack"], { env: { KEYS: "NEWCAT" }, root: t3.root, now: NOW, exec: () => ({ status: 1 }), R, log: () => {} });
@@ -590,7 +599,7 @@ test("pack: a model Tripo made is packed as Meshy's is, from the raw GLB its mak
   assert.deepEqual(t2.json(FILES.meshyState), { OTHER: { status: "done" } });
   assert.ok(!("NEWCAT" in t2.json(FILES.jobs)), "the job entry as before Tripo");
   // Chosen again (one try left).
-  assert.equal((await main(["pick"], { env: {}, root: t2.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT");
+  assert.equal((await main(["pick"], { env: { MODELS_GENERATOR: "tripo" }, root: t2.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT");
   // The raw GLB missing (or stamped with another task): the packer is never run (it would fetch Tripo's link, which
   // expires in minutes, or fail on "tripo:task/…"); discarded at once, the try recorded, Tripo's make record failed.
   for (const prepare of [() => {}, (t) => handOver(t, "another-task")]) {
@@ -748,7 +757,7 @@ test("merge: a try whose Pack (or Meshy) job failed, timed out or was cancelled 
   const text = fs.readFileSync(summary, "utf8");
   assert.match(text, /\*\*Did not finish:\*\*[\s\S]*NEWCAT: Meshy made the model, but packing did not finish/);
   // So the next run chooses NEWCAT again (a try left) and pays Meshy only within the bound.
-  assert.equal((await main(["pick"], { env: {}, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT");
+  assert.equal((await main(["pick"], { env: { MODELS_GENERATOR: "tripo" }, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT");
 });
 
 test("merge: the Tripo job's record wins for the rig; bundle and unbundle carry only the expected paths", async () => {
@@ -789,7 +798,7 @@ test("merge: a Tripo try whose make or Pack job did not finish is recorded faile
   assert.ok(!t.exists(`${FILES.cache}/NEWCAT.raw.glb`), "the raw GLB goes nowhere near the commit");
   assert.match(fs.readFileSync(summary, "utf8"), /\*\*Did not finish:\*\*[\s\S]*NEWCAT: Tripo made the model, but packing did not finish[\s\S]*LATECAT: the Tripo step did not finish/);
   // Both are chosen again (a try left each).
-  assert.equal((await main(["pick"], { env: { MODELS_PER_RUN: "2" }, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT LATECAT");
+  assert.equal((await main(["pick"], { env: { MODELS_PER_RUN: "2", MODELS_GENERATOR: "tripo" }, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT LATECAT");
 });
 
 test("merge: an artifact bundled from a checkout that never took the state before it (its download failed) never hides a try: per cat, the row furthest on, with its tools' records from the same artifact", async () => {
@@ -824,7 +833,7 @@ test("merge: an artifact bundled from a checkout that never took the state befor
       const ts = t.json(FILES.tripoState).NEWCAT;
       assert.deepEqual([ts.make.status, ts.make.tasks, ts.make.credits], ["failed", ["r1", "m1"], 40], `${what}: this try's make record, what it spent, marked failed`);
       if (mainTripo) assert.equal(ts.rig_task, "old", `${what}: the rig's record beside it kept`);
-      assert.deepEqual((await main(["pick"], { env: {}, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT", `${what}: one try left`);
+      assert.deepEqual((await main(["pick"], { env: { MODELS_GENERATOR: "tripo" }, root: t.root, now: NOW, log: () => {} })).outputs.keys, "NEWCAT", `${what}: one try left`);
     }
   }
   // main had a row (an earlier failed try): this run's second try wins over the stale copy, and it gives up.

@@ -8,7 +8,7 @@
 # The jobs, each with only what it needs; files go between them as artifacts (scripts/models.mjs bundle,
 # unbundle), and no job that installs a package holds a key it does not need or the push token:
 #   pick        (contents: read; installs nothing; no secret) the model tests, then the cats and the tool that
-#               makes them: MODELS_GENERATOR "tripo" (the default) or "meshy"; any other value makes nothing.
+#               makes them: MODELS_GENERATOR "tripo" or "meshy"; unset (the default) no API: made by hand via Higgsfield.
 #   tripo-make  (contents: read; the Tripo CLI from tools/tripo-cli: npm ci --ignore-scripts, every package locked by
 #               its hash) when the tool is Tripo: counts a try for each cat BEFORE calling Tripo, then a standing
 #               reference picture from the queue entry's picture (image-to-image) and image-to-model (tripo-v3.1,
@@ -35,7 +35,7 @@
 # stops before its balance would drop under its reserve, and then no try is used.
 #
 # Repository variables: MODELS_ENABLED "on" runs it (anything else, or unset, runs nothing);
-# MODELS_GENERATOR "tripo" (default) or "meshy"; MODELS_TRIPO_MAKE_RESERVE, the credits Tripo keeps when it
+# MODELS_GENERATOR "tripo" or "meshy" (unset: no API, no credit spent); MODELS_TRIPO_MAKE_RESERVE, the credits Tripo keeps when it
 # makes a model (0 by default: spend what is there); MODELS_MESHY_RESERVE and MODELS_TRIPO_RESERVE (the rig),
 # the credits each keeps (100 by default, as the scripts); MODELS_PER_RUN (1 or 2); MODELS_BACKLOG "on" to
 # rebuild queued cats that have a model already. No wallet key is anywhere near this workflow. The checkouts

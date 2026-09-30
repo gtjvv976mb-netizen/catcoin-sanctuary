@@ -10,8 +10,8 @@
  *                                       model yet first; the rest of the queue only when MODELS_BACKLOG is "on".
  *                                       Never one whose post's photo the owner hides (data/photo-hide.json), one
  *                                       already made, one with views waiting for a person, one past MAX_TRIES.
- *                                       And the tool that makes them: MODELS_GENERATOR "tripo" (the default, unset)
- *                                       or "meshy"; any other value makes nothing (outputs `keys`, `generator`).
+ *                                       And the tool that makes them: MODELS_GENERATOR "tripo" or "meshy" (unset: no API,
+ *                                       made by hand through Higgsfield); any other value makes nothing (outputs `keys`, `generator`).
  *   ONE MAKE JOB, the chosen tool's (contents: read); for each cat a try is counted and saved FIRST (status
  *   "started", `by` the tool), then the tool's script; when that stops at its credit reserve nothing is spent
  *   and no try is used (and the run stops there):
@@ -93,7 +93,7 @@ export const MAX_TRIES = 2;
  * use when none is given (the rig is optional, so it keeps 100 back; the make spends what is there).
  */
 export const DEFAULT_RESERVE = Object.freeze({ meshy: 100, tripo: 100, tripoMake: 0 });
-/** The tools that can make a model (MODELS_GENERATOR), the default first. */
+/** The APIs that can make a model (MODELS_GENERATOR); unset, none (generatorOf). */
 export const GENERATORS = Object.freeze(["tripo", "meshy"]);
 /**
  * The Tripo make step's time limit (.github/workflows/models.yml, its timeout-minutes). A cat is started only when its
@@ -128,12 +128,18 @@ export function perRun(env) {
 }
 /** Whether the rest of the queue (cats that have a model already) may be rebuilt too: MODELS_BACKLOG "on". */
 export const backlogOn = (env) => String(env?.MODELS_BACKLOG ?? "").trim().toLowerCase() === "on";
-/** The tool that makes the models: MODELS_GENERATOR "tripo" (the default when unset) or "meshy"; anything else, none (fail closed). { value, note }. */
+/** The words for "no API": the models are made by hand through the owner's Higgsfield plan (scripts/CAT-MODELS.md section 1). */
+export const BY_HAND = Object.freeze(["", "off", "none", "hand", "higgsfield", "cowork"]);
+/**
+ * The tool that makes the models: MODELS_GENERATOR "tripo" or "meshy" (each spends that API's credits); unset, or one of
+ * BY_HAND, none: no API credit is spent and the models are made by hand through Higgsfield (the owner's choice); anything
+ * else, none too (fail closed), with a warning. { value, note, warn }.
+ */
 export function generatorOf(env) {
   const raw = String(env?.MODELS_GENERATOR ?? "").trim().toLowerCase();
-  if (!raw) return { value: GENERATORS[0], note: null };
-  if (GENERATORS.includes(raw)) return { value: raw, note: null };
-  return { value: null, note: `MODELS_GENERATOR "${raw.slice(0, 40)}" is neither ${GENERATORS.map((g) => `"${g}"`).join(" nor ")}: no model is made` };
+  if (BY_HAND.includes(raw)) return { value: null, note: "no API makes the models (MODELS_GENERATOR is not tripo or meshy): they are made by hand through Higgsfield, scripts/CAT-MODELS.md", warn: false };
+  if (GENERATORS.includes(raw)) return { value: raw, note: null, warn: false };
+  return { value: null, note: `MODELS_GENERATOR "${raw.slice(0, 40)}" is neither ${GENERATORS.map((g) => `"${g}"`).join(" nor ")}: no model is made`, warn: true };
 }
 
 /* ── choosing ──────────────────────────────────────────────────────────────────────────── */
@@ -447,7 +453,7 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
 
   if (cmd === "pick") {
     const gen = generatorOf(env);
-    if (gen.note) log(`::warning title=Models::${gen.note}.`);
+    if (gen.note) log(gen.warn ? `::warning title=Models::${gen.note}.` : `Models: ${gen.note}.`);
     const hidden = photoHideOf({ readText: (rel) => (fs.existsSync(file(rel)) ? fs.readFileSync(file(rel), "utf8") : null) }, log);
     const { picked, skipped } = selectEntries({ queue, meshyState: readJsonFile(file(FILES.meshyState), {}), state, adoptables: readJsonFile(file(FILES.adoptables), null),
       photos: readJsonFile(file(FILES.photos), null), hidden, index: readJsonFile(file(FILES.index), { cats: {} }), backlog: backlogOn(env), limit: perRun(env) });

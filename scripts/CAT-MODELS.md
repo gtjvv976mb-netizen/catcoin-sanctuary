@@ -53,7 +53,9 @@ The facing and the look still want a person's eye (section 3).
 
 The repository variable `MODELS_GENERATOR` picks the tool that makes the model:
 
-- **`tripo`** (the default, when unset): `scripts/tripo.mjs make KEY` with the official Tripo CLI
+- **unset** (the default), `off` or `higgsfield`: no API makes a model and no API credit is spent; the
+  owner makes it by hand through Higgsfield (section 1).
+- **`tripo`**: `scripts/tripo.mjs make KEY` with the official Tripo CLI
   (`tripo-cli` 0.5.1, key `TRIPO_API_KEY`; the workflow installs it from `tools/tripo-cli` with
   `npm ci --ignore-scripts`, every package, the CLI's own dependencies too, at the version and hash its
   `package-lock.json` names), in two tasks, about 40 credits:

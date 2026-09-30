@@ -278,8 +278,11 @@ by hand, and right after a launch is recorded (the Launch workflow's publish job
 makes at most one queued **rebuild** from `scripts/meshy.queue.json` (`MODELS_PER_RUN` 2 for two):
 launched cats with no model first, never one whose photo `data/photo-hide.json` hides.
 
-1. **The model**, by the tool `MODELS_GENERATOR` names:
-   - **Tripo** (the default; `scripts/tripo.mjs make`, the official Tripo CLI): the queue entry's reference
+1. **The model**, by the tool `MODELS_GENERATOR` names. **Unset (the default), no API makes it and no API
+   credit is spent:** the owner makes the model by hand through the Higgsfield connector (Tripo H3.1 on the
+   owner's Higgsfield plan; `scripts/CAT-MODELS.md` section 1), and the workflow still packs, checks and
+   commits nothing for that cat until the model is in `assets/models/cats/`. Or:
+   - **Tripo** (`MODELS_GENERATOR` = `tripo`; `scripts/tripo.mjs make`, the official Tripo CLI): the queue entry's reference
      picture (the post's photo) redrawn standing on four legs (image-to-image), then image-to-model
      (`tripo-v3.1`, 12000 faces, textured), about 40 credits a cat, downloaded at once for the packer.
    - **Meshy** (`MODELS_GENERATOR` = `meshy`; `scripts/meshy.mjs run`): four-legged reference views from
@@ -316,7 +319,8 @@ none, so an older copy never hides a try.
 
 **Setting it up (the owner):** add the repository secret **`TRIPO_API_KEY`** (and **`MESHY_API_KEY`** to
 use Meshy) and the variable **`MODELS_ENABLED`** = `on` (anything else, or unset, runs nothing). Optional
-variables: `MODELS_GENERATOR` = `tripo` (the default) or `meshy` (any other value makes nothing);
+variables: `MODELS_GENERATOR` = `tripo` or `meshy` to spend that API's credits (unset, the default, spends
+none: the models are made by hand through Higgsfield; any other value makes nothing);
 `MODELS_TRIPO_MAKE_RESERVE` (credits Tripo keeps when it makes a model, 0 by default: it spends what is
 there); `MODELS_MESHY_RESERVE` and `MODELS_TRIPO_RESERVE` (credits Meshy and Tripo's rig keep, 100 by
 default as in the scripts); `MODELS_PER_RUN` (1 or 2), `MODELS_BACKLOG` = `on` to also rebuild the queued
