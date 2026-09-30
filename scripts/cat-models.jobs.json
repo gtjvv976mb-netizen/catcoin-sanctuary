@@ -6538,5 +6538,38 @@
    "height": 1.0,
    "width": 0.7015
   }
+ },
+ "MARUOCAT": {
+  "image_job": "58690b84-7d1e-4d37-a045-288ccea6c9a1",
+  "clean_job": "bdccdd19-1abe-4f72-9acb-a87fb31180a4",
+  "view_jobs": {
+   "front": "fe96651f-8ec7-4201-baa2-7739768a67ad",
+   "left": "e9454885-a7ec-47a2-97e8-d23791cd5be1",
+   "back": "3d6a373a-5369-43f1-a1ab-8d7e6c7c2057",
+   "right": "3aa42b87-547b-4579-9cb2-ddb5095ec0d4"
+  },
+  "model_job": "319ab2f3-3f97-4064-ad17-ed826c63d34d",
+  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
+  "faces": "~500k raw, packed ~20k",
+  "pose": "standing on all fours",
+  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "status": "done",
+  "hd": true,
+  "si": 0.04,
+  "si_lo": 0.01,
+  "tex": 2048,
+  "tex_lo": 256,
+  "q": 78,
+  "credits": 18.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_113527_319ab2f3-3f97-4064-ad17-ed826c63d34d.glb",
+  "sizes": {
+   "hi": 793252,
+   "lo": 144320
+  },
+  "dims": {
+   "len": 1.3784,
+   "height": 1.0,
+   "width": 0.4957
+  }
  }
 }

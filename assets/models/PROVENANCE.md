@@ -211,3 +211,4 @@ Normalized: y up, facing +X, 1 unit tall, feet on y = 0; texture 1024 px JPEG; g
 | NYANKOSEN | 01a0e138-c088-71ff-beab-9be248a4e569 | 01a0e138-c088-71ff-beab-9be248a4e569 | 01a0e156-96ee-77c8-a5ec-9c1586f04b65 (far: 01a0e158-0664-74a0-a69e-4875b1c40ec0) | meshy-7.1 multi-image-to-3d, 10000 faces | 324 KB | 114 KB |
 | GENKITTY | 01a0e15f-23d1-7629-84a9-d5efd883535a | 01a0e15f-23d1-7629-84a9-d5efd883535a | 01a0e15f-8fbb-7479-bf74-9348a8988317 (far: 01a0e160-fd9a-74b4-9b53-6323c7428b53) | meshy-7.1 multi-image-to-3d, 10000 faces | 367 KB | 132 KB |
 | MEDIACAT | 406ae68e-fbd1-420e-8717-e213f3e106c4 | 8c2a7fd2-5e62-4e3f-a9b9-4ef76f884cf6 | 47727821-2b5c-412a-855c-24bf59478902 | tripo_h3_1_image_to_3d, 12000 faces | 298 KB | 94 KB |
+| MARUOCAT | 58690b84-7d1e-4d37-a045-288ccea6c9a1 | bdccdd19-1abe-4f72-9acb-a87fb31180a4 | 319ab2f3-3f97-4064-ad17-ed826c63d34d | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 775 KB | 141 KB |
