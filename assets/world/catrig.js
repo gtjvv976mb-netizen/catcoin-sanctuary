@@ -412,7 +412,11 @@ export function findRig(pos, index = null) {
     legR,
     under: [V(hindX - 0.3 * d, yb + 0.35 * (yt - yb), zc), V(hindX - 0.18 * d, yb + 0.08 * (yt - yb), zc), V(hindX, yb, zc), V((frontX + hindX) / 2, yb, zc), V(frontX, yb, zc)],
     pelvis: V(hindX + 0.05 * d, yMid, zc), chest: V(frontX - 0.05 * d, yMid, zc), spine: V((frontX + hindX) / 2, yMid, zc),
-    neck: V(frontX + 0.04 * d, yMid + 0.25 * (yt - yb), zc), headJoint: V(frontX + 0.14 * d + (headC.x - frontX) * 0.35, (yt + headC.y) / 2, zc),
+    neck: V(frontX + 0.04 * d, yMid + 0.25 * (yt - yb), zc), headJoint: skullBase(V(frontX + 0.04 * d, yMid + 0.25 * (yt - yb), zc), headC, headR, zc),
+    // (where the neck's line was taken to end before the head joint was set at the back of the skull: the
+    // neck plane the skin's head side begins at, and how short a neck is for its head, are still reckoned
+    // from it, as every clip and fit was measured against them)
+    headJoint0: V(frontX + 0.14 * d + (headC.x - frontX) * 0.35, (yt + headC.y) / 2, zc),
     legTop, legLen: legTop, legJoin, skin,
     // Whether the head sits right over the body (the back was found at the neck's narrowing): then
     // the head's round reaches back over the body; otherwise skin behind the neck is back, not head.
@@ -421,6 +425,18 @@ export function findRig(pos, index = null) {
 }
 
 const LEGS = [["thigh", "shin", "foot", "h"], ["arm", "forearm", "paw", "f"]];
+
+/** The head joint: at the back of the skull, where the neck goes into it (on the line from the neck
+    joint to the head's centre, half the head's radius short of the centre; never less than two fifths
+    of the way along a neck that short). The head turns about it, as a cat's does, and every point of
+    the head ahead of it is the head's skin. (It used to be set at a share of the way from the front of
+    the body to the head, which for a head carried over the chest put it under the chin or the nose: the
+    head then turned about its own nose, and the skull behind that point, most of the head, went with
+    the neck, so a head bowed, turned or tucked by the clips hardly moved on three models in four.) */
+function skullBase(neck, headC, headR, zc) {
+  const dx = headC.x - neck.x, dy = headC.y - neck.y, D = Math.max(1e-6, Math.hypot(dx, dy)), t = Math.max(0.4 * D, D - 0.5 * headR);
+  return V(neck.x + (dx / D) * t, neck.y + (dy / D) * t, zc);
+}
 
 /** How far round the head (in head radii from its centre) skin on the head's side of the neck plane
     still counts as head: hair or a crest swept back off the head. */
@@ -539,9 +555,18 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
   const midX = (rig.pelvis.x + rig.chest.x) / 2, p = V();
   // The head's side of a plane across the neck (a third of the way to the head joint): points
   // there go to the neck and head only, however far back a big cartoon head reaches.
-  const hd = V().subVectors(rig.headJoint, rig.neck), hp = rig.neck.clone().addScaledVector(hd, 0.3);
+  const hj0 = rig.headJoint0 || rig.headJoint, hd = V().subVectors(hj0, rig.neck), hp = rig.neck.clone().addScaledVector(hd, 0.3);
   const nl = Math.max(1e-6, Math.hypot(hd.x, hd.y)); headPlane(hd);
-  const neckI = names.indexOf("neck");
+  const neckI = names.indexOf("neck"), headI = names.indexOf("head");
+  // (On the head's side, the head is everything ahead of the back of the skull; the rest is the neck's,
+  // with a ruff beside it. The line between them runs through the head joint from behind the skull
+  // down and forward under the jaw, as a cat's does (across the way from the neck joint to the head's
+  // centre, leaned forward): a muzzle hanging lower than the joint is head, the throat under it neck; and
+  // the heart of the head's round is head whatever the line.)
+  const hu = headPlane(V().subVectors(rig.headC, rig.neck).add(V(1.2 * Math.hypot(rig.headC.x - rig.neck.x, rig.headC.y - rig.neck.y), 0, 0))), hjB = rig.headJoint;
+  // (the line a third of the head's radius behind the joint: the band where head and neck skin blend then
+  // lies over the nape and the throat, not the face, which stays whole as the head turns)
+  const aheadOfSkull = (q) => (q.x - hjB.x) * hu.x + (q.y - hjB.y) * hu.y > -0.35 * rig.headR || q.distanceTo(rig.headC) < 0.75 * rig.headR;
   const info = bonesList.map((b, i) => {
     const nm = b.name, lr = nm.match(/\.(L|R)$/);
     return { i, a: seg[nm][0], b: seg[nm][1], r: rad[nm], root: nm === "root", tail: nm.startsWith("tail"), head: nm === "head", headOk: nm === "head" || nm === "neck", side: lr ? lr[1] : null, hind: /^(thigh|shin|foot)/.test(nm) };
@@ -709,7 +734,9 @@ export function skinWeights(pos, rig, sk, index = null, legs = null) {
     // (and, on the head's side of the plane, a ruff beside the neck: alongside the neck's length yet
     // outside the head's round, whatever its thickness, it is neck, not head: a head bowed to a paw would
     // otherwise carry the ruff's skin away from the shoulders')
-    if (!inLeg && neckI > 0 && !info[best].tail && (onNeck(p, rig, hd, nl) || (headSide && onNeckWide(p, rig, hd, nl))) && (headSide || ((p.x - rig.neck.x) * hd.x + (p.y - rig.neck.y) * hd.y > 0 && p.y > rig.neck.y - 0.3 * rig.bodyR))) best = neckI;
+    const inHead = headSide && !inLeg && !info[best].tail && headI > 0 && aheadOfSkull(p);
+    if (!inHead && !inLeg && neckI > 0 && !info[best].tail && (onNeck(p, rig, hd, nl) || (headSide && onNeckWide(p, rig, hd, nl))) && (headSide || ((p.x - rig.neck.x) * hd.x + (p.y - rig.neck.y) * hd.y > 0 && p.y > rig.neck.y - 0.3 * rig.bodyR))) best = neckI;
+    if (inHead) best = headI;
     // (Well out along the tail, it is tail whatever lies nearer.)
     // (A piece of the tail the model left unjoined, a tuft or a tip, goes to the bone it is nearest.)
     if (tg && !inLeg && tg[u] < tRoot * 0.8) best = tailBand(u);
@@ -1278,6 +1305,9 @@ export function makeClips(rig, style = {}, fit = null) {
   // The lowest point of bone b's skin, the bone turned by q with its joint at height y0.
   const lowB = (b, q, y0) => { const S0 = SKIN[b]; if (!S0) return Infinity; let lo = Infinity; for (let i = 0; i < S0.length; i += 3) { const y = V1.set(S0[i], S0[i + 1], S0[i + 2]).applyQuaternion(q).y; if (y < lo) lo = y; } return lo + y0; };
   const lowTorso = (B) => Math.min(lowB("pelvis", B.qP, B.pel.y), lowB("spine", B.qS, B.spi.y), lowB("chest", B.qC, B.che.y));
+  // (and the highest point of the torso's skin)
+  const highB = (b, q, y0) => { const S0 = SKIN[b]; if (!S0) return -Infinity; let hi = -Infinity; for (let i = 0; i < S0.length; i += 3) { const y = V1.set(S0[i], S0[i + 1], S0[i + 2]).applyQuaternion(q).y; if (y > hi) hi = y; } return hi + y0; };
+  const highTorso = (B) => Math.max(highB("pelvis", B.qP, B.pel.y), highB("spine", B.qS, B.spi.y), highB("chest", B.qC, B.che.y));
   // The lowest point of a leg's skin as posed (p) on the body B.
   const lq1 = new THREE.Quaternion(), lq2 = new THREE.Quaternion(), lq3 = new THREE.Quaternion(), lv = V();
   const legLow = (p, B, k) => {
@@ -1521,10 +1551,15 @@ export function makeClips(rig, style = {}, fit = null) {
   // (As ground, for a spec whose body is also yawed or rolled: the lift that rests its torso's skin at
   // `clear`; a rump rolled onto one haunch would otherwise dip its side into the lawn.)
   const groundAt = (s, clear = 0.012) => (hasSkin ? clear - 0.008 - lowTorso(body(K, { lift: 0, shift: s.root[1], side: s.root[2], pelvis: s.pelvis, spine: s.spine, chest: s.chest })) : ground(s.pelvis[0], clear, s.spine[0], s.chest[0]));
-  // The neck pitch (in the world) that puts the head joint at height y.
-  const Ln = Math.hypot(K.H0.x - K.N0.x, K.H0.y - K.N0.y), phi0 = Math.atan2(K.H0.y - K.N0.y, K.H0.x - K.N0.x);
+  // The neck pitch (in the world) that puts the head at height y: reckoned along the neck's line to where
+  // it was taken to end before the head joint went to the back of the skull (headJoint0), so a head is
+  // carried as high, and the neck bowed as far, as every clip was made for; the head then turns about the
+  // back of its skull. (Reckoned to the skull, a neck that short (the skull right over the chest) would
+  // have to swing through half a turn to lower the head as far, and fold the throat.)
+  const HJ0 = rig.headJoint0 || K.H0;
+  const Ln = Math.hypot(HJ0.x - K.N0.x, HJ0.y - K.N0.y), phi0 = Math.atan2(HJ0.y - K.N0.y, HJ0.x - K.N0.x);
   const neckFor = (B, y) => Math.asin(Math.max(-1, Math.min(1, (y - B.nec.y) / Ln))) - phi0;
-  const restHed = K.H0.y;
+  const restHed = HJ0.y;
 
   /** The tail's carriage: -0.4 tucked low, 0 a relaxed low curve (the tip turning up), 1 straight up
       with the tip hooked over (a friendly greeting). Four segment directions. */
@@ -1624,7 +1659,9 @@ export function makeClips(rig, style = {}, fit = null) {
   posed("headBunt", loopDur(2.6), 15, (u) => {
     const s = standSpec(u, { still: true }), side = holds(u, [[0.05, 1], [0.5, -1]], 0.12), push = S(PI * ((u * 2) % 1)) ** 2;
     s.root[1] = 0.03 * push; s.chest = [-0.06 - 0.06 * push, side * 0.08, 0]; s.pelvis = [0, 0, side * 0.03];
-    s.neck = [-0.25 - 0.15 * push, side * (0.25 + 0.25 * push), side * 0.2]; s.head = [-0.25 - 0.2 * push, side * 0.35, side * (0.35 + 0.2 * push)];
+    // (the rub's tilt taken more at the neck than at the head: turned hard against the neck, with the head's own
+    // skin on it, a hood or a big kitten head squeezes at the nape)
+    s.neck = [-0.25 - 0.15 * push, side * (0.25 + 0.25 * push), side * 0.3]; s.head = [-0.25 - 0.2 * push, side * 0.25, side * (0.22 + 0.15 * push)];
     s.tail = T(tailShape(Math.max(0.6, st.tail)), [0, 0.05 * S(TAU * u), 0.1 * S(TAU * u - 0.6), 0.2 * S(TAU * u - 1.2)]);
     return s;
   }, STAND, { enter: 0.45, exit: 0.4 });
@@ -1744,7 +1781,8 @@ export function makeClips(rig, style = {}, fit = null) {
   // chest (rad).
   // (A head as big as its neck is long, on a ruff: bowed as far as an ordinary cat's, its nape's skin
   // parts from the shoulders' into a hood. Such a head bows less; the paw meets it higher.)
-  const shortNeck = clamp01((1 - Math.hypot(K.H0.x - K.N0.x, K.H0.y - K.N0.y) / Math.max(0.05, rig.headR)) / 0.25);
+  // (reckoned to where the neck's line was taken to end before the head joint went to the back of the skull: headJoint0)
+  const shortNeck = clamp01((1 - Math.hypot(HJ0.x - K.N0.x, HJ0.y - K.N0.y) / Math.max(0.05, rig.headR)) / 0.25);
   // (and a mane or a ruff, a body thick about the shoulders for its head: bowed deep, the head drags
   // the mane's fur after it)
   const ruff = clamp01((rig.bodyR / Math.max(0.05, rig.headR) - 1.6) / 1.4);
@@ -1753,7 +1791,9 @@ export function makeClips(rig, style = {}, fit = null) {
   const LICK_BOW = 1.65;
   const meet = (s, pt, to, lim = 1.1, rise = 0.6) => {
     const k = (1 - 0.7 * headBig) * (1 - 0.45 * shortNeck) * (1 - 0.4 * ruff), kk = k * Math.min(1, lim / 1.1); // (turned and pitched no further than bowed, for a bow held back by the fit)
-    const P = [[0, sitHead[0] - lim * k, sitHead[0] + rise * k], [1, -0.7 * kk, 0.7 * kk], [2, -0.9 * kk, 0.3 * kk]];
+    // (the head tucked against the neck no more than a little: with the head's skin on the head, a chin tucked
+    // hard on a neck bowed deep draws the nape and the back of the head into a hood; the neck does the reaching)
+    const P = [[0, sitHead[0] - lim * k, sitHead[0] + rise * k], [1, -0.7 * kk, 0.7 * kk], [2, -0.35 * kk, 0.3 * kk]];
     const get = (j) => (j === 0 ? s.neck[0] : j === 1 ? s.neck[1] : s.head[0] - s.neck[0]);
     const set = (j, v) => { if (j === 0) { const r = s.head[0] - s.neck[0]; s.neck[0] = v; s.head[0] = v + r; } else if (j === 1) { s.neck[1] = v; s.head[1] = v * 0.5; } else s.head[0] = s.neck[0] + v; };
     for (const [j, lo, hi] of P) set(j, Math.min(hi, Math.max(lo, get(j))));
@@ -1895,7 +1935,7 @@ export function makeClips(rig, style = {}, fit = null) {
     // up to meet it: of a deep bow and shallower ones, the one whose mouth the raised leg's foot or shin
     // comes nearest (a shallower bow only for a leg that comes that much nearer)
     for (const b of [1, 0.85, 0.7, 0.55, 0.4]) {
-      s.neck = [sitHead[0] - LICK_BOW * a * k * b, -(0.1 + 0.3 * b) * k, 0]; s.head = [s.neck[0] + (sitHead[1] - sitHead[0]) - 0.5 * a * k * b, -(0.05 + 0.15 * b) * k, -0.2];
+      s.neck = [sitHead[0] - LICK_BOW * a * k * b, -(0.1 + 0.3 * b) * k, 0]; s.head = [s.neck[0] + (sitHead[1] - sitHead[0]), -(0.05 + 0.15 * b) * k, -0.2];
       const M = headPoint(s, MOUTH);
       // the leg: of the ways it goes up (raised no higher than this cat's leg goes: ph, from the hip), the
       // one whose foot or shin passes nearest the mouth (a little lower preferred: no higher than needed)
@@ -2121,20 +2161,19 @@ export function makeClips(rig, style = {}, fit = null) {
     const L = K.legs[k], t = B.top[k], a = L.hind ? B.aP : B.aC, w = V1.set(r[0], r[1], r[4]).applyQuaternion(t.q);
     return leg(t.x + w.x, t.y + w.y, r[2] + a, r[3], (t.z + w.z - L.toe.z) * L.side);
   };
-  // Curled up asleep: lying half over on its left side, the back rounded towards the belly in one curve (the
-  // loins, chest and neck each taking a share, so no one joint folds the skin), the head come down to
-  // rest on the ground by its forepaws, the legs drawn up loosely against the belly, the tail wrapped
-  // round the hind legs towards the nose; breathing slowly. Seen from above a C, from the belly side
-  // paws and a sleeping face, from the back a round back, the head and the tail (rolled right over onto
-  // its side, the back seen from behind was a long smooth log). A big cartoon head curls less; a
-  // round body (no waist to bend) lies less far over.
-  const SLEEP_ROLL = 0.8 - 0.15 * heavy, curl = (1 - 0.45 * headBig) * (1 - 0.3 * heavy) * (1 - 0.5 * deep) * amp("sleep");
+  // Curled up asleep: lying over on its left side, hips right over, shoulders half up, the back rounded
+  // towards the belly (loins and chest sharing the curve), legs drawn up, the tail wrapped round towards
+  // the nose, the head come round the curl to rest on the paws and flank, upright, ears up, chin tucked;
+  // breathing slowly. From every side a cat: from its back the curve of the back and haunch with the head
+  // and ears on top (laid on its side on the ground inside the curl, it was a smooth bolster from there).
+  // A big cartoon head curls less; a skin that can't take it (the fit's sleep knob) curls and turns less.
+  const SLEEP_ROLL = 1.45 - 0.25 * heavy, CURL = 2.4, curl = (1 - 0.3 * headBig) * amp("sleep");
   // A round cat (deep-bodied, wide or stubby: no waist to curl, and rolled onto its side it reads as a
   // featureless log) sleeps in its loaf instead, as such cats do: the chin down on the forepaws, the
   // back rounded a little, the tail wrapped along its flank; curling up and waking are then the head
   // going down and coming up.
-  // (so does one whose skin won't take the curl: its fit under a half)
-  const loafSleep = round >= 0.4 || amp("sleep") < 0.5;
+  // (so does one whose skin won't take even a small curl: its fit at the least, 0.3)
+  const loafSleep = round >= 0.4 || amp("sleep") < 0.4;
   const sleepSpec = loafSleep ? (u = 0) => {
     const b = S(TAU * u * 2) * 0.008;
     const s = loafSpec(0, { still: true });
@@ -2146,26 +2185,83 @@ export function makeClips(rig, style = {}, fit = null) {
     const d0 = s.head[0] - s.neck[0];
     headOnGround(s, (v) => { s.neck[0] = v; s.head[0] = v + d0; }, -1.3 * bow, -0.1, pawTop);
     return s;
-  } : (u = 0) => {
-    const b = S(TAU * u * 2) * 0.012, cr = C(SLEEP_ROLL), sr = S(SLEEP_ROLL);
-    // (each joint turned about the upright of the world, which for a body lying over is its belly's way)
-    const bend = (th, br = 0) => [-th * sr + br, th * cr, 0];
-    const CK = 1.3;
-    const s = { root: [loafLift, loafShift, 0, SLEEP_ROLL], pelvis: [0, 0, 0], spine: bend(0.5 * curl * CK, b), chest: bend(0.55 * curl * CK, -b * 0.5), neck: [0, 0, 0], head: [0, 0, 0],
-      legs: {}, tail: T([PI + 1.1, PI + 1.8, PI + 2.4, PI + 2.9], [-0.3, -0.15, -0.05, 0]) };
-    const B = bodyOf(s), nk = 0.6 * curl * CK, hd = 0.35 * curl * CK;
-    s.neck = [B.aC - nk * sr, nk * cr, 0]; s.head = [s.neck[0] - hd * sr, hd * cr * 0.8, -0.25];
-    for (const k of KEYS) {
-      // (in the body's own frame: hind knees drawn up, forelegs bent at the wrist in front of the chest;
-      // the upper pair a little further forward, as they lie on the lower)
-      const L = K.legs[k], up = k[1] === "R", R0 = L.reach;
-      s.legs[k] = L.hind ? fromRel(B, k, [R0 * (0.38 + (up ? 0.06 : 0)), -R0 * 0.42, -0.25, 0.25, up ? 0.03 : -0.03]) : fromRel(B, k, [R0 * (0.3 + (up ? 0.06 : 0)), -R0 * 0.5, -1.25, 0, up ? 0.02 : -0.03]);
-    }
-    // (the head down until it rests on the ground)
-    const d0 = s.head[0] - s.neck[0];
-    headOnGround(s, (v) => { s.neck[0] = v; s.head[0] = v + d0; }, B.aC - 1.2, B.aC + 0.3);
+  } : (u = 0) => curled(1, 1, 1, 1, u, sleepPn);
+  // (how far the shoulders roll back up, of the hips' roll)
+  const UNROLL = 0.5;
+  // A curled cat's neck and head are set by their turn in the world (so the head stays up however far the
+  // body has rolled): a heading (+ round to the belly's side), a pitch (+ nose up), a tilt about its line.
+  const aq = new THREE.Quaternion(), bq = new THREE.Quaternion(), cq = new THREE.Quaternion(), dq = new THREE.Quaternion(), ae = new THREE.Euler();
+  const qW = (y, z, x, out) => out.setFromEuler(ae.set(x, y, z, "YZX"));
+  const yzx = (q) => { ae.setFromQuaternion(q, "YZX"); return [ae.y, ae.z, ae.x]; };
+  // (the world turn a spec's root roll gives the whole body, about the hips)
+  const rollQ = (s, out) => { qEuler([s.pelvis[0], s.pelvis[1], s.pelvis[2] + (s.root[3] || 0)], out); return out.multiply(qEuler(s.pelvis, dq).invert()); };
+  // (a spec's neck and head set so their bones are turned qn and qh in the world)
+  const aimHead = (s, qn, qh) => {
+    const B = bodyOf(s), R = rollQ(s, aq).invert(), nPre = bq.copy(R).multiply(qn);
+    ae.setFromQuaternion(cq.copy(B.qC).invert().multiply(nPre), "ZYX");
+    s.neck = [ae.z + B.aC, ae.y, ae.x];
+    const hPre = cq.copy(R).multiply(qh);
+    ae.setFromQuaternion(nPre.invert().multiply(hPre), "ZYX");
+    s.head = [ae.z + s.neck[0], ae.y, ae.x];
     return s;
   };
+  const chestW = (s, out) => rollQ(s, out).multiply(bodyOf(s).qC);
+  // (the chest's heading in the world)
+  const headingOf = (q) => { const f = V1.set(1, 0, 0).applyQuaternion(q); const y = Math.atan2(-f.z, f.x); return y < -PI / 2 ? y + TAU : y; };
+  // (the loaf's own neck, head and legs: a curl begins, and a waking ends, exactly on it)
+  const N0 = yzx(qEuler(LOAF.neck, new THREE.Quaternion())), H0 = yzx(qEuler(LOAF.neck, new THREE.Quaternion()).multiply(qEuler([LOAF.head[0] - LOAF.neck[0], LOAF.head[1], LOAF.head[2]], new THREE.Quaternion())));
+  const REL0 = Object.fromEntries(KEYS.map((k) => [k, toRel(LOAF, k)]));
+  // (in the girdles' frames: hind knees drawn up, forelegs bent at the wrist, the upper pair further forward)
+  const REL1 = Object.fromEntries(KEYS.map((k) => { const L = K.legs[k], up = k[1] === "R", R0 = L.reach; return [k, L.hind ? [R0 * (0.38 + (up ? 0.06 : 0)), -R0 * 0.42, -0.25, 0.25, up ? 0.03 : -0.03] : [R0 * (0.3 + (up ? 0.06 : 0)), -R0 * 0.5, -1.25, 0, up ? 0.02 : -0.03]]; }));
+  const SLEEP_TAIL = T([PI + 1.1, PI + 1.8, PI + 2.4, PI + 2.9], [-0.3, -0.15, -0.05, 0]);
+  // The body c of the way to curled up (lying over and curling round), breathing at u.
+  const curledBody = (c, u = 0) => {
+    const r = SLEEP_ROLL * c, cr = C(r), sr = S(r), b = S(TAU * u * 2) * 0.012 * c;
+    // (each joint turned about the world's upright, for a body lying over its belly's way; then rolled back up)
+    const bend = (th, br = 0) => [-th * sr + br, th * cr, 0];
+    const spine = bend(0.5 * curl * CURL * c, b), chest = bend(0.55 * curl * CURL * c, -b * 0.5);
+    spine[2] = -0.4 * UNROLL * r; chest[2] = -0.6 * UNROLL * r;
+    return { root: [loafLift, loafShift, 0, r], pelvis: [0, 0, 0], spine, chest, neck: LOAF.neck.slice(), head: LOAF.head.slice(), legs: {}, tail: LOAF.tail.slice() };
+  };
+  // (how far on round from the chest the head lies: to face back along the curl, as far as a head turns)
+  const REL_H = Math.min(1.7, Math.max(0.4, 3.1 - headingOf(chestW(curledBody(1), new THREE.Quaternion())))) * (0.35 + 0.65 * amp("sleep"));
+  // (where the head rests: on the forepaws, and no lower than a head and a half under the top of the body
+  // beside it, so on a long or deep body it lies on the flank, its ears above the curl's back)
+  const REST0 = 0.02 + rig.legs.fL.r + rig.legs.fR.r + 0.35 * rig.headR;
+  // A curled cat part of the way: c the body lying over and curling, look the head turned round (held up),
+  // down the head lowered to rest, tl the tail wrapped round; pn: the resting neck's pitch, if known.
+  let sleepPn = null, restPn = 0;
+  function curled(c, look, down, tl = c, u = 0, pn = null) {
+    const s = curledBody(c, u);
+    s.tail = lerpN(LOAF.tail, SLEEP_TAIL, tl);
+    const B = bodyOf(s);
+    for (const k of KEYS) {
+      const r = lerpN(REL0[k], REL1[k], c), L = K.legs[k];
+      // (forepaws a little over to the side it lies on: drawn in along the shoulders' line, a paw passes the
+      // shoulder's height on the leg's own line, and the forearm flicks over in a frame)
+      if (!L.hind) r[4] += 0.2 * L.reach * smooth(c / 0.3);
+      s.legs[k] = fromRel(B, k, r);
+    }
+    if (look <= 0 && down <= 0) return s;
+    const qc = chestW(s, new THREE.Quaternion()), yc = headingOf(qc), tc = yzx(qc)[2];
+    const yn = lerp(N0[0], yc + REL_H * 0.5, look), yh = lerp(H0[0], yc + REL_H, look), th = lerp(H0[2], 0, down), tn = lerp(N0[2], 0.5 * (tc + th), c), ph = lerp(H0[1], -0.3, down);
+    const qn = new THREE.Quaternion(), qh = new THREE.Quaternion();
+    // (the head tipped up against a bowed neck no further than the nape takes; past that, chin tucked)
+    const set = (pn) => aimHead(s, qW(yn, pn, tn, qn), qW(yh, pn + Math.min(0.8, ph - pn), th, qh));
+    // (lowered until it rests; held up, lower than in the loaf once curled, or the neck is drawn out)
+    let lo = -1.6, hi = N0[1] + 0.3;
+    if (pn !== null) hi = pn;
+    else {
+      const rest = Math.max(REST0, highTorso(bodyOf(s, true)) - 1.5 * rig.headR);
+      set(hi);
+      const top = headLow(s);
+      if (top < rest) { if (top < 0.012) s.root[0] += (0.012 - top) * down; } else { set(lo); if (headLow(s) >= rest) hi = lo; else for (let i = 0; i < 9; i++) { const m = (lo + hi) / 2; set(m); if (headLow(s) >= rest) hi = m; else lo = m; } }
+    }
+    restPn = hi;
+    set(lerp(lerp(N0[1], hi, 0.35 * c), hi, down));
+    return s;
+  }
+  if (!loafSleep) { curled(1, 1, 1, 1, 0); sleepPn = restPn; }
   const SLEEP = sleepSpec(0);
   clip("sleep", loopDur(6), 8, (u) => pose(sleepSpec(u)), { fade: 0.4 });
 
@@ -2426,11 +2522,27 @@ export function makeClips(rig, style = {}, fit = null) {
     fL: [...(tuckLate ? [[0.29, sphB, 0.012]] : [[0.02, "A"]]), [tuckLate ? 0.35 : 0.2, sphB], [tuckLate ? 0.66 : 0.55, "B", 0.04]], fR: [...(tuckLate ? [[0.08, "A"], [0.38, sphB, 0.012]] : [[0.08, "A"]]), [tuckLate ? 0.44 : 0.35, sphB], [tuckLate ? 0.84 : 0.75, "B", 0.04]],
     tail: [[0.4, with_(LOAF, { tail: T(SIT_TAIL, [0, 0.2, 0.3, 0.3]) })]],
   });
-  // Curling up to sleep: the head goes down a little, then the cat rolls over onto its side as its
-  // back rounds, its legs coming along folded against it, the tail sweeping round; last the head
-  // settles onto the ground. (The legs are keyed in their hips' and shoulders' own frames, so they
-  // go round with the body instead of being left behind on the ground.)
-  const SLEEP_UP = loafSleep ? with_(SLEEP, { neck: LOAF.neck.slice(), head: LOAF.head.slice() }) : with_(SLEEP, { neck: [SLEEP.neck[0] + 0.55 * curl, SLEEP.neck[1] * 0.6, 0], head: [SLEEP.head[0] + 0.75 * curl, SLEEP.head[1] * 0.6, 0.05] });
+  // Curling up: the head turns round to look along its flank and stays up while the cat lies over and
+  // curls, the legs folding with it (in their girdles' frames), the tail sweeping round; the head goes down
+  // only once the body has curled. Waking: the head lifts first, then the cat uncurls and rolls back up as
+  // the head comes round to the front. [c, look, down, tail] at u.
+  const curledClip = (name, sched) => {
+    const dur = transDur(name, tempo);
+    clip(name, dur, 30, (u) => {
+      if (u === 0) TM.has.fill(false);
+      TM.on = true; TM.lim = 0.35 + Math.max(0, u - 0.85) * 20;
+      const q = sched(u), P = pose(curled(q[0], q[1], q[2], q[3]));
+      TM.on = false;
+      return P;
+    }, { loop: false, dur, fade: 0.12 });
+  };
+  if (!loafSleep) {
+    curledClip("curlUp", (u) => [smoother((u - 0.12) / 0.73), smoother((u - 0.04) / 0.5), smoother((u - 0.62) / 0.33), smoother((u - 0.3) / 0.62)]);
+    curledClip("wake", (u) => [1 - smoother((u - 0.2) / 0.65), 1 - smoother((u - 0.3) / 0.55), 1 - smoother((u - 0.02) / 0.28), 1 - smoother((u - 0.12) / 0.5)]);
+    return clips;
+  }
+  // (dozing in its loaf: the head goes down, and comes up)
+  const SLEEP_UP = with_(SLEEP, { neck: LOAF.neck.slice(), head: LOAF.head.slice() });
   change("curlUp", LOAF, SLEEP, {
     rel: true,
     fL: [[0.1, "A"], [0.78, "B"]], fR: [[0.16, "A"], [0.82, "B"]],

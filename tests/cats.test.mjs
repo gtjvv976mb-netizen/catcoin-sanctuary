@@ -14,8 +14,10 @@
      changes posture (a turn on the spot ends before the sitting down that follows starts);
    - no creeping: a gait is never shown while the cat moves slower than a real step (0.15 units/s
      over the ground, not turning on the spot) for longer than a gait's shortest showing;
-   - no cat walks into another's body (bodies as big as the cats are drawn), and cats don't stay
-     in each other long;
+   - no cat walks into another's body (bodies as big as the cats are drawn), and no two cats are in
+     each other (more than 0.12 into both bodies side by side) for half a second or more, however
+     it came about: one waking, getting up or stretching out into another, one landing, settling or
+     turning into another, a visitor staying in its friend (the verifier's "cats inside cats");
    - character shows: a sleepy cat sleeps far more than a lively one, a lazy cat never runs, a
      gentle (memorial) cat never rolls about or races.
    The two big garden runs go in worker threads (this file again, below), side by side. Scenes of
@@ -51,9 +53,9 @@ const CREEP_MAX = 0.32;
     With `bodies`, it also watches the cats' bodies (drawn size) against each other. */
 function watcher(cats, { bodies = false } = {}) {
   const S = cats.map((c) => ({ action: c.motion.action, since: -Infinity, gait: c.motion.gait, gaitAt: -Infinity, odo: c.motion.odometer, x: c.x, z: c.z, yaw: c.yaw, sleep: 0, fast: 0, creep: 0 }));
-  const out = { cats: cats.length, changes: 0, changesNoTrans: 0, short: 0, skips: 0, unsettled: 0, fastGaits: 0, restMoving: 0, invalid: 0, jumps: 0, rollSkips: 0, creeps: 0, creepMax: 0, spins: 0, walkInto: 0, longOverlaps: 0, examples: [] };
+  const out = { cats: cats.length, changes: 0, changesNoTrans: 0, short: 0, skips: 0, unsettled: 0, fastGaits: 0, restMoving: 0, invalid: 0, jumps: 0, rollSkips: 0, creeps: 0, creepMax: 0, spins: 0, walkInto: 0, longOverlaps: 0, spells: 0, spellMax: 0, spellExamples: [], examples: [] };
   const note = (kind, c, what) => { if (out.examples.length < 12) out.examples.push(`${kind} ${c.id}: ${what}`); };
-  const overlap = new Map();
+  const overlap = new Map(), spell = new Map();
   function tick(now, dt) {
     for (let i = 0; i < cats.length; i++) {
       const c = cats[i], m = c.motion, s = S[i], A = ACTIONS[m.action];
@@ -105,7 +107,10 @@ function watcher(cats, { bodies = false } = {}) {
         const b = cats[j];
         if (Math.abs(a.x - b.x) > 2.2 || Math.abs(a.z - b.z) > 2.2 || b.y > 0.3 || b.perch || b.hidden || together(a, b)) continue;
         const pen = -bodyGap(a, a.x, a.z, a.yaw, a.pose, b), key = i * 4096 + j;
-        if (pen <= 0.12) { overlap.delete(key); continue; }
+        if (pen <= 0.12) { overlap.delete(key); endSpell(key, now, dt); continue; }
+        // (a spell: the two in each other without a break, as the verifier times them)
+        const sp = spell.get(key) || { t0: now, max: 0, what: `${a.id} and ${b.id} (${a.motion.action}/${b.motion.action})` };
+        sp.t1 = now; sp.max = Math.max(sp.max, pen); spell.set(key, sp);
         const am = ACTIONS[a.motion.action].kind === "gait", bm = ACTIONS[b.motion.action].kind === "gait";
         const rest = (c) => ["sit", "lie", "sleep"].includes(c.motion.posture);
         if (pen > 0.2 && ((am && rest(b)) || (bm && rest(a)))) { out.walkInto += dt; if (out.walkInto <= dt * 1.01) note("walked into", am ? a : b, `${(am ? b : a).id} (${(am ? b : a).motion.action}) by ${pen.toFixed(2)}`); }
@@ -114,8 +119,21 @@ function watcher(cats, { bodies = false } = {}) {
         if (now - t0 >= 1 && now - t0 < 1 + dt * 0.99) { out.longOverlaps++; note("in each other", a, `and ${b.id} for a second (${a.motion.action}/${b.motion.action}, ${pen.toFixed(2)})`); }
       }
     }
+    for (const [key, sp] of spell) if (sp.t1 < now) endSpell(key, now, dt);
   }
-  return { S, out, tick };
+  /** A spell of two cats in each other ended: counted if it lasted half a second or more. */
+  function endSpell(key, now, dt) {
+    const sp = spell.get(key);
+    if (!sp) return;
+    spell.delete(key);
+    const len = sp.t1 - sp.t0 + dt;
+    if (len < 0.5 - 1e-9) return;
+    out.spells++; out.spellMax = Math.max(out.spellMax, len);
+    if (out.spellExamples.length < 8) out.spellExamples.push(`${sp.what} for ${len.toFixed(2)} s from ${sp.t0.toFixed(1)} s, up to ${sp.max.toFixed(2)} into each other`);
+  }
+  /** Ends every spell still going (at the end of a run). */
+  function flush(now, dt) { for (const key of [...spell.keys()]) { const sp = spell.get(key); sp.t1 = now; endSpell(key, now + dt, dt); } }
+  return { S, out, tick, flush };
 }
 
 /** Synthetic characters for the garden run with traits: sleepy, lively, gentle, and real ones from data/traits.json. */
@@ -149,6 +167,7 @@ async function gardenRun({ traits, seconds }) {
     w.tick(f * DT, DT);
     if (traits) sim.cats.forEach((c, i) => { if (group(i) === "gentle") seen[i].add(c.motion.action); });
   }
+  w.flush(seconds, DT);
   const out = w.out;
   out.msPerTick = (performance.now() - t0) / Math.round(seconds / DT);
   out.minutes = seconds / 60;
@@ -221,7 +240,7 @@ if (!isMainThread) {
   const characters = inWorker({ traits: true, seconds: SECONDS });
   const bigCats = inWorker({ big: true, seconds: 180 });
 
-  const report = (t, o) => t.diagnostic(`${o.cats} cats, ${o.minutes} min: ${(o.changes / o.cats / o.minutes).toFixed(2)} changes/cat/min (${(o.changesNoTrans / o.cats / o.minutes).toFixed(2)} without posture changes), ${o.msPerTick?.toFixed(2) ?? "-"} ms/tick; longest creep ${o.creepMax.toFixed(2)} s, walked into resting cats ${o.walkInto.toFixed(2)} s, ${o.longOverlaps} pairs in each other for a second`);
+  const report = (t, o) => t.diagnostic(`${o.cats} cats, ${o.minutes} min: ${(o.changes / o.cats / o.minutes).toFixed(2)} changes/cat/min (${(o.changesNoTrans / o.cats / o.minutes).toFixed(2)} without posture changes), ${o.msPerTick?.toFixed(2) ?? "-"} ms/tick; longest creep ${o.creepMax.toFixed(2)} s, walked into resting cats ${o.walkInto.toFixed(2)} s, ${o.longOverlaps} pairs in each other for a second, ${o.spells} for half a second`);
   function assertMoveLikeCats(o) {
     const why = o.examples.join("\n  ");
     assert.equal(o.invalid, 0, `motion the view cannot play:\n  ${why}`);
@@ -237,11 +256,12 @@ if (!isMainThread) {
     const perMin = o.changes / o.cats / o.minutes;
     assert.ok(perMin <= 8, `${perMin.toFixed(2)} changes per cat per minute (at most 8)`);
   }
-  /** Bodies: nobody walks into a resting cat; cats in each other for a second or more are rare. */
+  /** Bodies: nobody walks into a resting cat; no two cats in each other (more than 0.12) for half a second or more. */
   function assertBodies(o, { longOverlaps = 6 } = {}) {
     const why = o.examples.join("\n  ");
     assert.ok(o.walkInto < 0.5, `cats on the move deep in a resting cat's body for ${o.walkInto.toFixed(2)} s:\n  ${why}`);
     assert.ok(o.longOverlaps <= longOverlaps, `${o.longOverlaps} pairs of cats in each other for a second or more (at most ${longOverlaps}):\n  ${why}`);
+    assert.equal(o.spells, 0, `${o.spells} times two cats were in each other for half a second or more (the longest ${o.spellMax.toFixed(2)} s):\n  ${o.spellExamples.join("\n  ")}`);
   }
 
   test("garden cats with no character of their own move like cats", async (t) => {
@@ -284,6 +304,7 @@ if (!isMainThread) {
       m.setFocus(focus[0], focus[1], eye[0], eye[1]);
       const w = watcher(m.cats, { bodies: true });
       for (let f = 1; f <= SECONDS / DT; f++) { m.update(DT); w.tick(f * DT, DT); }
+      w.flush(SECONDS, DT);
       const o = { ...w.out, minutes: SECONDS / 60 };
       assertMoveLikeCats(o);
       assertBodies(o, { longOverlaps: 0 });
@@ -303,6 +324,7 @@ if (!isMainThread) {
       m.update(dt); w.tick(f * dt, dt);
       m.cats.forEach((c, i) => { if (c.motion.action !== prev[i] && seen[c.motion.action] !== undefined) seen[c.motion.action]++; prev[i] = c.motion.action; });
     }
+    w.flush(600, dt);
     const o = { ...w.out, minutes: 10 };
     t.diagnostic(`${seen.flop} times over on its side, ${seen.roll} onto its back; longest creep ${o.creepMax.toFixed(2)} s`);
     assert.ok(seen.roll > 0 && seen.flop > 0, "the Hall of Fame cats do sprawl and roll in the sun now and then");
@@ -312,7 +334,7 @@ if (!isMainThread) {
 
   /** A garden with only the given cats, each placed and given one plain activity (steps), nothing else going on. */
   function scene(defs) {
-    const sim = createSanctuary({ residents: defs.map((d) => ({ id: d.id, name: d.id, style: d.style })), reduced: false, critters: null });
+    const sim = createSanctuary({ residents: defs.map((d) => ({ id: d.id, name: d.id, style: d.style, traits: d.traits })), reduced: false, critters: null });
     for (const c of sim.cats) { c.act = null; c.perch = null; }
     sim.cats.forEach((c, i) => {
       const d = defs[i];
@@ -320,7 +342,7 @@ if (!isMainThread) {
       c.growth = c.growth.map(() => 0);
       c.posture = ACTIONS[d.pose].posture === "lie" ? "lie" : ACTIONS[d.pose].posture;
       Object.assign(c.motion, { action: d.pose, posture: ACTIONS[d.pose].posture, gait: null, u: null, since: -10 });
-      c.pose = { sit: "sit", loaf: "loaf", stand: "walk" }[d.pose];
+      c.pose = { sit: "sit", loaf: "loaf", stand: "walk", sleep: "sleep" }[d.pose];
       c.act = { kind: "rest", steps: d.steps, i: 0, t: 0, started: false, reason: "", ignore: new Set() };
     });
     return sim;
@@ -351,6 +373,33 @@ if (!isMainThread) {
       assert.ok(worst > -0.06, `${label}: the walker went ${(-worst).toFixed(2)} into its body`);
       assert.ok(Math.hypot(walker.x - lane.x1, walker.z - lane.z) < 0.6, `${label}: the walker got round to the far side (${walker.x.toFixed(2)}, ${walker.z.toFixed(2)})`);
       assert.ok(Math.hypot(rest.x - mid, rest.z - lane.z) < 1e-9, `${label}: the resting cat was not pushed about`);
+    }
+  });
+
+  test("a visitor rubs cheeks with its friend touching, not in its body, and settles beside it clear of it", () => {
+    const probe = createSanctuary({ residents: [], reduced: false, critters: null });
+    const lane = openLawn(probe.nav, 6, 2.2);
+    const mid = (lane.x0 + lane.x1) / 2;
+    // (the friend facing its visitor, side on to it, or facing away; an ordinary cat and a big one)
+    for (const [label, yaw, style] of [["facing it", Math.PI, undefined], ["side on", Math.PI / 2, undefined], ["facing away", 0, undefined], ["a big cat facing it", Math.PI, { scale: 1.5 }]]) {
+      const sim = scene([
+        { id: "FRIEND", style, x: mid, z: lane.z, yaw, pose: "sit", steps: [{ type: "hold", action: "sit", dur: 1e6, doing: "" }] },
+        { id: "VISITOR", traits: { social: 0.9, grumpy: 0.1 }, x: lane.x0 - 0.5, z: lane.z, yaw: 0, pose: "stand", steps: [{ type: "hold", action: "stand", dur: 1e6, doing: "" }] },
+      ]);
+      const [f, v] = sim.cats;
+      for (let k = 0; k < 2.5 / DT; k++) sim.update(DT);
+      assert.ok(sim.force("VISITOR", "visit"), `${label}: the visit starts`);
+      let bunt = false, deepest = 0, settled = null;
+      for (let k = 0; k < 40 / DT && v.act && v.act.kind === "visit"; k++) {
+        sim.update(DT);
+        const pen = -bodyGap(v, v.x, v.z, v.yaw, v.pose, f);
+        deepest = Math.max(deepest, pen);
+        if (v.motion.action === "headBunt") bunt = true;
+        if (bunt && ["sit", "loaf"].includes(v.motion.action)) settled = Math.max(settled ?? -1, pen);
+      }
+      assert.ok(bunt, `${label}: it rubbed cheeks`);
+      assert.ok(deepest <= 0.16, `${label}: the visitor went ${deepest.toFixed(2)} into its friend's body (cheek to cheek is 0.1)`);
+      assert.ok(settled !== null && settled <= 0.02, `${label}: it settled beside its friend ${settled?.toFixed(2)} into its body`);
     }
   });
 

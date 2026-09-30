@@ -78,13 +78,16 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
   // (A big cat's body needs its neighbours' slots too, and one next to it would sit in its body: a
   // slot too near a big cat's home, for the two of them, is no one's; the rest go as they always have.)
   const homes = [];
-  const roomy = (s, size) => homes.every((h) => Math.max(size, h.size) < BIG_SIZE || Math.hypot(h.x - s.x, h.z - s.z) >= 1.4 * (size + h.size) * 0.5) && (size < BIG_SIZE || Math.hypot(s.x - H.x, s.z - H.z) >= H.fountain.r + (HALF_LEN.walk + BODY) * size);
+  // (and never a slot that is someone's home already: a search round past the big cats' neighbours wrapped
+  // round onto the first cat's slot, and the two sat in each other for good)
+  const roomy = (s, size) => homes.every((h) => (h.x !== s.x || h.z !== s.z) && (Math.max(size, h.size) < BIG_SIZE || Math.hypot(h.x - s.x, h.z - s.z) >= 1.4 * (size + h.size) * 0.5)) && (size < BIG_SIZE || Math.hypot(s.x - H.x, s.z - H.z) >= H.fountain.r + (HALF_LEN.walk + BODY) * size);
   residents.forEach((r, k) => {
     const rnd = makeRandom(`hall:${r.id}`), size = sizeOf({ style: r.style });
     // Spread the cats over the slots evenly, so a small Hall of Fame still rings the fountain.
     const i0 = slots.length ? Math.floor((k * slots.length) / Math.max(residents.length, 1)) % slots.length : 0;
     let home = null;
     for (let j = 0; j < slots.length && !home; j++) { const s = slots[(i0 + j) % slots.length]; if (roomy(s, size)) home = s; }
+    for (let j = 0; j < slots.length && !home; j++) { const s = slots[(i0 + j) % slots.length]; if (homes.every((h) => h.x !== s.x || h.z !== s.z)) home = s; }
     home ||= slots.length ? slots[i0] : { x: H.x + H.fountain.r + 1.2, z: H.z };
     homes.push({ x: home.x, z: home.z, size });
     cats.push(makeCat(r, { ...home }, rnd));
@@ -321,7 +324,8 @@ export function createMeadow({ residents, startIndex = 0, reduced = false }) {
       case "trans":
         c.speed = 0; c.lookOn = false;
         c.wa = s.name; c.wu = Math.min(1, c.st / s.dur);
-        if (c.st >= s.dur) { c.posture = ACTIONS[s.name].to; return next(); }
+        // (its last frame shown for a tick before what follows: never cut off short of its end)
+        if (c.st >= s.dur) { if (!s.ended) { s.ended = true; return false; } c.posture = ACTIONS[s.name].to; return next(); }
         return false;
       case "go": {
         // Straight across the plaza at a stroll, slowing into turns (stepping round on the spot for

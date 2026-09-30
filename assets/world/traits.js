@@ -492,12 +492,19 @@ export const MODEL_LIMITS = {
   maneki: { avoid: ["earScratch"], why: "the lucky-cat figure: a round body with a big head; its hind paw can't get near its ear" },
   CAITSITH: { avoid: ["earScratch"], why: "a deep body under its cloak: its hind paw can't get near its ear" },
   EMPTANG: { avoid: ["earScratch"], why: "a round, deep-furred body: its hind paw can't get near its ear" },
-  PEWTER: { avoid: ["earScratch"], why: "its cape lets a hind leg come up only a third of the way: the paw would scratch its shoulder" },
   SKEINKIT: { avoid: ["earScratch"], why: "its skin lets a hind leg come up only a third of the way: the paw would scratch its shoulder" },
   TARTANPAW: { avoid: ["earScratch"], why: "its skin lets a hind leg come up only a third of the way: the paw would scratch its shoulder" },
   tsuki: { avoid: ["scratch"], why: "its skin lets it rear only half way up to a trunk: the scratch would read as a lunge" },
   SNOWBELCAT: { avoid: ["scratch"], why: "its skin lets it rear only half way up to a trunk: the scratch would read as a lunge" },
   "vibing-cat-coin": { avoid: ["beckon"], why: "its skin lets a forepaw come up only a third of the way: the beckon would be a twitch" },
+  // (fixer round 4: with the head's skin on the head at last (the head joint at the back of the skull), a head
+  // tipped, bowed or rolled over shows, and these models' skin can't take it even at 0.3 of the move, or at what it can take the move falls short)
+  LACQUER: { avoid: ["earScratch"], why: "a big kitten head: tipped down to the scratching paw, its face pinches" },
+  AMRCAT: { avoid: ["legLick"], why: "a cartoon head as big as its body: bowed to a raised hind leg it buries the leg and folds at the nape" },
+  "hello-kitty-sol": { avoid: ["roll"], why: "rolled onto its back and wriggling, its head rubbed round on the lawn squeezes flat" },
+  SUNSTRETCH: { avoid: ["earScratch"], why: "a tiger cub's big round head: tipped down to the scratching paw, it squeezes at the nape" },
+  CHOUPETCAT: { avoid: ["earScratch"], why: "a deep ruff under a head tipped to the paw: its skin lets the hind paw come only part way up, a paw short of the ear" },
+  PEWTER: { avoid: ["earScratch", "roll"], why: "its cape and feathered hat: a hind leg lifted to the ear catches the cape, and rolled onto its back the hat's feather goes into the lawn" },
 };
 const avoidOf = (r) => { const m = MODEL_LIMITS[r?.id] ?? MODEL_LIMITS[r?.ticker]; return m ? m.avoid.slice() : null; };
 
