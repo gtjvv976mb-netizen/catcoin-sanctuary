@@ -166,7 +166,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const occluders = flora.occluders;
   // Petals, motes, chimney smoke, the vignette, and the clock for the wind and the water.
   // (The chimney's top, measured on sanctuary.glb at HOUSE.height.)
-  const ambient = buildAmbient(scene, { mobile, blossoms: flora.blossoms, chimney: { x: 2.25, y: HOUSE.height + 0.1, z: -0.05 } });
+  const chimney = { x: 2.25, y: HOUSE.height + 0.1, z: -0.05 };
+  const ambient = buildAmbient(scene, { mobile, blossoms: flora.blossoms, chimney });
   let ambientTime = 14; // frozen here with reduced motion: petals and motes hang mid-air
 
   /* The cottage and the cats (these load in parallel). */
@@ -716,6 +717,12 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     } catch (e) { console.warn("post", e); post = null; }
   })() : Promise.resolve();
 
+  // The photoreal garden (photoreal.js: photographed ground, the Tripo models), after the finishing pass (medium and high tiers).
+  const photoLoad = q.tier !== "low" ? postLoad.then(async () => {
+    const { loadPhotoreal } = await import("./photoreal.js");
+    await loadPhotoreal({ renderer, q, loader, post, garden, flora, grass, water, ambient, research, house, chimney, requestRender });
+  }).catch((e) => console.warn("photoreal", e)) : Promise.resolve();
+
   /* ── Each cat's own model, streamed: the ones near the view first, a few at a time ──
      assets/models/cats/index.json lists every model; a key is a cat's id (a stock cat's ticker),
      or a famous coin's contract, symbol or id (ui/models.js matches them). Models are fetched
@@ -833,7 +840,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   if (debug) {
     // For screenshots and checks: step the garden forward without waiting, and read the draw stats.
     Object.assign(api, {
-      research, sim, meadow, renderer, scene, camera, controls, critters, herd, ownLoad, q, postLoad, grass, flora, water, timings,
+      research, sim, meadow, renderer, scene, camera, controls, critters, herd, ownLoad, q, postLoad, photoLoad, grass, flora, water, timings,
       /** Views for screenshots: the first footbridge over the stream, and the Hall of Fame plaza. */
       debugViews: (() => {
         const b = BRIDGES[0], H = HALL_OF_FAME, a = Math.atan2(H.z, H.x);

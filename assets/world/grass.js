@@ -40,7 +40,8 @@ export function buildGrass(scene, { q, blocked }) {
   group.name = "grass";
   scene.add(group);
   const blade = bladeGeometry();
-  const uniforms = { uTime: AMBIENT.uTime, uFade: { value: q.grassFade }, uEye: { value: new THREE.Vector3() } };
+  // uGain: a colour to match the ground under the blades (photoreal.js sets it with the photo lawn).
+  const uniforms = { uTime: AMBIENT.uTime, uFade: { value: q.grassFade }, uEye: { value: new THREE.Vector3() }, uGain: { value: new THREE.Color(1, 1, 1) } };
   const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.78, metalness: 0, side: THREE.DoubleSide, envMapIntensity: 0.6 });
   mat.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, uniforms);
@@ -50,7 +51,7 @@ export function buildGrass(scene, { q, blocked }) {
         attribute vec4 aShape;  // height, width, lean, stiffness
         attribute vec3 aTint;
         uniform float uFade;
-        uniform vec3 uEye;
+        uniform vec3 uEye, uGain;
         varying vec3 vTint;
         varying float vT;
         ${WIND_GLSL}`)
@@ -72,7 +73,7 @@ export function buildGrass(scene, { q, blocked }) {
         transformed.xz += w * t * t * grow * 0.55;
         transformed.y -= dot(w, w) * t * t * grow * 0.12;
         transformed += aBase.xyz;
-        vTint = aTint;
+        vTint = aTint * uGain;
         vT = t;`)
       .replace("#include <project_vertex>", `
         vec4 mvPosition = viewMatrix * vec4(transformed, 1.0);
@@ -150,6 +151,7 @@ export function buildGrass(scene, { q, blocked }) {
   let blades = 0;
   return {
     group,
+    uniforms,
     /**
      * Makes the chunks near the camera (at most `budget` a call), shows what is within reach and
      * thins what is far. Returns how many chunks are still to make near the view.

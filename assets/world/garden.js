@@ -74,6 +74,11 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
   group.name = "garden";
   scene.add(group);
   const stones = L.pathStones();
+  /* Props that photoreal.js swaps for models (medium and high tiers, once loaded): tagged with their
+     kind, merged into a mesh of their own per kind on those tiers (hidden when the models come), and
+     where each stands: spots[kind] = [{ x, y, z, yaw (towards the front), … }]. */
+  const tag = (kind, g) => { g.userData.swap = kind; return g; };
+  const spots = { lamp: [], bed: [], cattower: [], bench: [], fountain: [] };
 
   /* ── Stepping stones along every path ── */
   // (Inside the fence the main paths are gravel: stones only on the little side paths.)
@@ -133,11 +138,11 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
 
   /* ── Lantern posts by the stairs (unlit by day) ── */
   for (const l of L.LANTERNS) {
-    statics.push(paint(place(new THREE.BoxGeometry(0.26, 0.12, 0.26), l.x, 0.06, l.z), COLORS.iron));
-    statics.push(paint(place(new THREE.BoxGeometry(0.09, 1.52, 0.09), l.x, 0.76, l.z), COLORS.iron));
-    statics.push(paint(place(new THREE.BoxGeometry(0.3, 0.04, 0.3), l.x, 1.6, l.z), COLORS.iron));
-    statics.push(paint(place(new THREE.ConeGeometry(0.24, 0.18, 4), l.x, 2.04, l.z, 0, Math.PI / 4, 0), COLORS.iron));
-
+    statics.push(tag("lamp", paint(place(new THREE.BoxGeometry(0.26, 0.12, 0.26), l.x, 0.06, l.z), COLORS.iron)));
+    statics.push(tag("lamp", paint(place(new THREE.BoxGeometry(0.09, 1.52, 0.09), l.x, 0.76, l.z), COLORS.iron)));
+    statics.push(tag("lamp", paint(place(new THREE.BoxGeometry(0.3, 0.04, 0.3), l.x, 1.6, l.z), COLORS.iron)));
+    statics.push(tag("lamp", paint(place(new THREE.ConeGeometry(0.24, 0.18, 4), l.x, 2.04, l.z, 0, Math.PI / 4, 0), COLORS.iron)));
+    spots.lamp.push({ x: l.x, y: 0, z: l.z, yaw: 0, h: 2.13 });
   }
 
   /* ── Flower beds round the cottage, and the vegetable patch: timber boxes of soil ── */
@@ -189,9 +194,10 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
 
   /* ── Cat beds: a round rim, a base and a cushion ── */
   for (const b of L.BEDS) {
-    statics.push(paint(place(new THREE.CylinderGeometry(b.r - 0.02, b.r, 0.08, 16), b.x, 0.04, b.z), shade(b.color, -0.1), rnd, 0.03));
-    statics.push(paint(place(new THREE.TorusGeometry(b.r - 0.14, 0.14, 6, 18), b.x, 0.16, b.z, Math.PI / 2, 0, 0, 1, 1, 0.85), b.color, rnd, 0.04));
-    statics.push(paint(place(new THREE.CylinderGeometry(b.r - 0.2, b.r - 0.18, 0.1, 14), b.x, 0.07, b.z), COLORS.cushion, rnd, 0.03));
+    statics.push(tag("bed", paint(place(new THREE.CylinderGeometry(b.r - 0.02, b.r, 0.08, 16), b.x, 0.04, b.z), shade(b.color, -0.1), rnd, 0.03)));
+    statics.push(tag("bed", paint(place(new THREE.TorusGeometry(b.r - 0.14, 0.14, 6, 18), b.x, 0.16, b.z, Math.PI / 2, 0, 0, 1, 1, 0.85), b.color, rnd, 0.04)));
+    statics.push(tag("bed", paint(place(new THREE.CylinderGeometry(b.r - 0.2, b.r - 0.18, 0.1, 14), b.x, 0.07, b.z), COLORS.cushion, rnd, 0.03)));
+    spots.bed.push({ x: b.x, y: 0, z: b.z, yaw: (b.x * 7.3 + b.z * 3.1) % 6.28, r: b.r, color: b.color });
   }
 
   /* ── Nap piles: a checked picnic blanket (with a basket), a big cushion, a striped mat ── */
@@ -242,12 +248,14 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
     statics.push(paint(place(new THREE.BoxGeometry(b.maxX - b.minX, 0.12, b.maxZ - b.minZ), cx, 0.06, cz), COLORS.carpet, rnd, 0.03));
     for (const p of [T.low, T.high]) {
       const h = p.y - 0.1 - 0.12;
-      statics.push(paint(place(new THREE.CylinderGeometry(0.11, 0.11, h, 8), p.x, 0.12 + h / 2, p.z), COLORS.sisal, rnd, 0.05));
-      for (let y = 0.2; y < 0.12 + h - 0.05; y += 0.16) statics.push(paint(place(new THREE.TorusGeometry(0.115, 0.012, 3, 8), p.x, y, p.z, Math.PI / 2), shade(COLORS.sisal, -0.07)));
-      statics.push(paint(place(new THREE.CylinderGeometry(p.r, p.r, 0.1, 14), p.x, p.y - 0.05, p.z), COLORS.carpet, rnd, 0.03));
+      statics.push(tag("cattower", paint(place(new THREE.CylinderGeometry(0.11, 0.11, h, 8), p.x, 0.12 + h / 2, p.z), COLORS.sisal, rnd, 0.05)));
+      for (let y = 0.2; y < 0.12 + h - 0.05; y += 0.16) statics.push(tag("cattower", paint(place(new THREE.TorusGeometry(0.115, 0.012, 3, 8), p.x, y, p.z, Math.PI / 2), shade(COLORS.sisal, -0.07))));
+      statics.push(tag("cattower", paint(place(new THREE.CylinderGeometry(p.r, p.r, 0.1, 14), p.x, p.y - 0.05, p.z), COLORS.carpet, rnd, 0.03)));
+      // Each platform becomes a cat tree model of its own on the base board, with its perch at the platform's height.
+      spots.cattower.push({ x: p.x, y: 0.12, z: p.z, yaw: Math.PI / 2, top: p.y, low: p === T.low });
     }
-    statics.push(paint(place(new THREE.BoxGeometry(0.012, 0.42, 0.012), T.high.x + 0.36, T.high.y - 0.31, T.high.z - 0.2), 0xe6d7bf));
-    statics.push(paint(place(new THREE.IcosahedronGeometry(0.07, 0), T.high.x + 0.36, T.high.y - 0.55, T.high.z - 0.2), 0xe07a5f));
+    statics.push(tag("cattower", paint(place(new THREE.BoxGeometry(0.012, 0.42, 0.012), T.high.x + 0.36, T.high.y - 0.31, T.high.z - 0.2), 0xe6d7bf)));
+    statics.push(tag("cattower", paint(place(new THREE.IcosahedronGeometry(0.07, 0), T.high.x + 0.36, T.high.y - 0.55, T.high.z - 0.2), 0xe07a5f)));
   }
 
   /* ── The bird bath ── */
@@ -285,9 +293,10 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
     }
     // A bench looking over the water.
     const bx = -14.9, bz = 10.2, ry = 0.95;
-    statics.push(paint(place(new THREE.BoxGeometry(1.8, 0.08, 0.5), bx, 0.5, bz, 0, ry, 0), COLORS.wood, rnd, 0.04));
-    statics.push(paint(place(new THREE.BoxGeometry(1.8, 0.4, 0.07), bx - Math.sin(ry) * 0.24, 0.78, bz - Math.cos(ry) * 0.24, -0.15, ry, 0), COLORS.wood, rnd, 0.04));
-    for (const s of [-0.75, 0.75]) statics.push(paint(place(new THREE.BoxGeometry(0.08, 0.5, 0.46), bx + Math.cos(ry) * s, 0.25, bz - Math.sin(ry) * s, 0, ry, 0), COLORS.woodDark));
+    statics.push(tag("bench", paint(place(new THREE.BoxGeometry(1.8, 0.08, 0.5), bx, 0.5, bz, 0, ry, 0), COLORS.wood, rnd, 0.04)));
+    statics.push(tag("bench", paint(place(new THREE.BoxGeometry(1.8, 0.4, 0.07), bx - Math.sin(ry) * 0.24, 0.78, bz - Math.cos(ry) * 0.24, -0.15, ry, 0), COLORS.wood, rnd, 0.04)));
+    for (const s of [-0.75, 0.75]) statics.push(tag("bench", paint(place(new THREE.BoxGeometry(0.08, 0.5, 0.46), bx + Math.cos(ry) * s, 0.25, bz - Math.sin(ry) * s, 0, ry, 0), COLORS.woodDark)));
+    spots.bench.push({ x: bx, y: 0, z: bz, yaw: ry });
   }
 
   /* ── The second pond, out in the first meadow ring: stones, lily pads, reeds, a little jetty ── */
@@ -334,10 +343,10 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
     statics.push(paint(place(new THREE.CylinderGeometry(H.r + 0.05, H.r + 0.15, 0.06, 64), H.x, 0.02, H.z), 0xd8c9ae));
     statics.push(paint(place(new THREE.TorusGeometry(H.r, 0.09, 4, 72), H.x, 0.09, H.z, Math.PI / 2), 0xd9a832));
     // The fountain: a round basin, its rim, a pedestal and a big gold coin with a cat's face on top.
-    statics.push(paint(place(new THREE.CylinderGeometry(F.r, F.r + 0.1, 0.55, 32, 1, true), F.x, 0.28, F.z), 0xcfc3ae));
-    statics.push(paint(place(new THREE.TorusGeometry(F.r, 0.14, 6, 40), F.x, 0.56, F.z, Math.PI / 2), 0xe8ddc9));
-    statics.push(paint(place(new THREE.CylinderGeometry(0.36, 0.5, 1.5, 12), F.x, 0.75, F.z), 0xe6dccb));
-    statics.push(paint(place(new THREE.CylinderGeometry(0.62, 0.45, 0.22, 16), F.x, 1.55, F.z), 0xd9cbb2));
+    statics.push(tag("fountain", paint(place(new THREE.CylinderGeometry(F.r, F.r + 0.1, 0.55, 32, 1, true), F.x, 0.28, F.z), 0xcfc3ae)));
+    statics.push(tag("fountain", paint(place(new THREE.TorusGeometry(F.r, 0.14, 6, 40), F.x, 0.56, F.z, Math.PI / 2), 0xe8ddc9)));
+    statics.push(tag("fountain", paint(place(new THREE.CylinderGeometry(0.36, 0.5, 1.5, 12), F.x, 0.75, F.z), 0xe6dccb)));
+    statics.push(tag("fountain", paint(place(new THREE.CylinderGeometry(0.62, 0.45, 0.22, 16), F.x, 1.55, F.z), 0xd9cbb2)));
     const coinY = 2.45;
     const faceYaw = Math.atan2(-F.x, -F.z); // the coin faces the cottage
     {
@@ -355,16 +364,18 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
           paint(new THREE.SphereGeometry(0.06, 8, 6).translate(0.2, 0.08, 0.1 * sd), 0x6a4a00),
         ]),
       ];
-      for (const q of parts) statics.push(q.rotateY(faceYaw).translate(F.x, coinY, F.z));
+      for (const q of parts) statics.push(tag("fountain", q.rotateY(faceYaw).translate(F.x, coinY, F.z)));
+      spots.fountain.push({ x: F.x, y: 0, z: F.z, yaw: faceYaw, r: F.r });
     }
     // Lamp posts round the edge, and low flowering hedges between them (open towards the cottage).
     const toGarden = Math.atan2(-H.z, -H.x);
     for (let k = 0; k < 8; k++) {
       const a = toGarden + Math.PI / 8 + (k * Math.PI) / 4;
       const lx = H.x + Math.cos(a) * (H.r + 0.35), lz = H.z + Math.sin(a) * (H.r + 0.35), y0 = groundHeight(lx, lz);
-      statics.push(paint(place(new THREE.BoxGeometry(0.1, 2.0, 0.1), lx, y0 + 1.0, lz), COLORS.iron));
+      statics.push(tag("lamp", paint(place(new THREE.BoxGeometry(0.1, 2.0, 0.1), lx, y0 + 1.0, lz), COLORS.iron)));
       glows.push(place(new THREE.BoxGeometry(0.24, 0.3, 0.24), lx, y0 + 2.1, lz));
-      statics.push(paint(place(new THREE.ConeGeometry(0.24, 0.18, 4), lx, y0 + 2.33, lz, 0, Math.PI / 4, 0), COLORS.iron));
+      statics.push(tag("lamp", paint(place(new THREE.ConeGeometry(0.24, 0.18, 4), lx, y0 + 2.33, lz, 0, Math.PI / 4, 0), COLORS.iron)));
+      spots.lamp.push({ x: lx, y: y0, z: lz, yaw: a, h: 2.42 });
     }
     for (let k = 0; k < 64; k++) {
       const a = toGarden + (k / 64) * Math.PI * 2;
@@ -380,14 +391,16 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
   /* ── Benches along the ring paths ── */
   for (const b of L.BENCHES) {
     const y0 = groundHeight(b.x, b.z), ry = b.yaw;
-    statics.push(paint(place(new THREE.BoxGeometry(1.8, 0.08, 0.5), b.x, y0 + 0.5, b.z, 0, ry, 0), COLORS.wood, rnd, 0.04));
-    statics.push(paint(place(new THREE.BoxGeometry(1.8, 0.4, 0.07), b.x - b.faceX * 0.24, y0 + 0.78, b.z - b.faceZ * 0.24, 0, ry, 0), COLORS.wood, rnd, 0.04));
-    for (const s2 of [-0.75, 0.75]) statics.push(paint(place(new THREE.BoxGeometry(0.08, 0.5, 0.46), b.x + Math.cos(ry) * s2, y0 + 0.25, b.z - Math.sin(ry) * s2, 0, ry, 0), COLORS.woodDark));
+    statics.push(tag("bench", paint(place(new THREE.BoxGeometry(1.8, 0.08, 0.5), b.x, y0 + 0.5, b.z, 0, ry, 0), COLORS.wood, rnd, 0.04)));
+    statics.push(tag("bench", paint(place(new THREE.BoxGeometry(1.8, 0.4, 0.07), b.x - b.faceX * 0.24, y0 + 0.78, b.z - b.faceZ * 0.24, 0, ry, 0), COLORS.wood, rnd, 0.04)));
+    for (const s2 of [-0.75, 0.75]) statics.push(tag("bench", paint(place(new THREE.BoxGeometry(0.08, 0.5, 0.46), b.x + Math.cos(ry) * s2, y0 + 0.25, b.z - Math.sin(ry) * s2, 0, ry, 0), COLORS.woodDark)));
+    spots.bench.push({ x: b.x, y: y0, z: b.z, yaw: Math.atan2(b.faceX, b.faceZ) });
     // A lamp post beside each bench, and a pot of flowers.
     const lx = b.x + Math.cos(ry) * 1.35, lz = b.z - Math.sin(ry) * 1.35;
-    statics.push(paint(place(new THREE.BoxGeometry(0.08, 1.8, 0.08), lx, y0 + 0.9, lz), COLORS.iron));
+    statics.push(tag("lamp", paint(place(new THREE.BoxGeometry(0.08, 1.8, 0.08), lx, y0 + 0.9, lz), COLORS.iron)));
     glows.push(place(new THREE.BoxGeometry(0.2, 0.26, 0.2), lx, y0 + 1.9, lz));
-    statics.push(paint(place(new THREE.ConeGeometry(0.2, 0.16, 4), lx, y0 + 2.1, lz, 0, Math.PI / 4, 0), COLORS.iron));
+    statics.push(tag("lamp", paint(place(new THREE.ConeGeometry(0.2, 0.16, 4), lx, y0 + 2.1, lz, 0, Math.PI / 4, 0), COLORS.iron)));
+    spots.lamp.push({ x: lx, y: y0, z: lz, yaw: ry, h: 2.18 });
     const px = b.x - Math.cos(ry) * 1.3, pz = b.z + Math.sin(ry) * 1.3;
     statics.push(paint(place(new THREE.CylinderGeometry(0.26, 0.2, 0.36, 8), px, y0 + 0.18, pz), 0xc9704a, rnd, 0.04));
     for (let k = 0; k < 7; k++) statics.push(paint(place(new THREE.IcosahedronGeometry(0.09, 0), px + rnd.range(-0.16, 0.16), y0 + 0.42 + rnd.range(0, 0.12), pz + rnd.range(-0.16, 0.16)), rnd.pick([0xf07aa0, 0xfff4dc, 0xf8cf4a, 0xc9a6f0])));
@@ -434,13 +447,13 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
   for (const b of L.MEADOW_BUSHES) bushAt(b.x, b.z, b.r, b.flowers ?? false);
 
   /* ── The bigger pieces: glasshouse, shed, rose arches, benches, hedge, edging, walls, bridges, the third pond ── */
-  const scenery = addScenery({ statics, glass, glows, paint, place, sway, group, q });
+  const scenery = addScenery({ statics, glass, glows, paint, place, sway, group, q, tag, spots });
 
   /* ── One mesh for everything above ── */
   // Near the garden, cut into sectors so the sun's shadow pass (which follows the view) and the
   // camera can skip what is out of reach; everything further out is one mesh with no shadow.
   const SECTORS = 12;
-  const near = [], mid = Array.from({ length: SECTORS }, () => []), far = [];
+  const near = [], mid = Array.from({ length: SECTORS }, () => []), far = [], swapped = {};
   const shadeBlobs = [...treeShade]; // soft contact shadows baked into the ground under the props
   for (const g of statics) {
     const p = g.attributes.position, w = new Float32Array(p.count);
@@ -449,7 +462,8 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
     g.computeBoundingSphere();
     const c = g.boundingSphere.center, rs = g.boundingSphere.radius;
     const rc = Math.hypot(c.x, c.z);
-    if (rc < L.GARDEN.fenceR + 3) near.push(g);
+    if (g.userData.swap && q.tier !== "low") (swapped[g.userData.swap] ??= []).push(g);
+    else if (rc < L.GARDEN.fenceR + 3) near.push(g);
     else if (rc < 118) mid[Math.floor(((Math.atan2(c.z, c.x) + Math.PI) / (Math.PI * 2)) * SECTORS) % SECTORS].push(g);
     else far.push(g);
     // Anything standing up (not flat on the ground) shades the grass round its foot a little.
@@ -474,6 +488,13 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
     farMesh.name = "far props";
     group.add(farMesh);
   }
+  const swaps = {};
+  for (const [kind, list] of Object.entries(swapped)) {
+    const m = new THREE.Mesh(mergeGeometries(list), propsMat);
+    Object.assign(m, { castShadow: true, receiveShadow: true, name: `props ${kind}` });
+    group.add(m);
+    swaps[kind] = { meshes: [m], spots: spots[kind] };
+  }
   statics.forEach((g) => g.dispose());
   // Glass (the glasshouse, the shed's window) and the lamps' glowing glass.
   const posOnly = (g) => { const n = g.index ? g.toNonIndexed() : g; for (const k of Object.keys(n.attributes)) if (k !== "position") n.deleteAttribute(k); return n; };
@@ -485,6 +506,7 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
     const lit = new THREE.Mesh(mergeGeometries(glows.map(posOnly)), new THREE.MeshStandardMaterial({ color: 0xfff3d6, emissive: 0xffc070, emissiveIntensity: 1.6, flatShading: true, roughness: 0.4 }));
     lit.name = "lamp glass";
     group.add(lit);
+    swaps.lamp?.meshes.push(lit); // every glow is a lamp's
   }
   // More contact shade: the cottage, the glasshouse and shed, the hedge and the walls.
   shadeBlobs.push({ rect: L.HOUSE, x: 0, z: 0, r: 1.8, k: 0.35 }, { rect: L.SHED, x: (L.SHED.minX + L.SHED.maxX) / 2, z: (L.SHED.minZ + L.SHED.maxZ) / 2, r: 1.2, k: 0.3 }, { rect: L.GREENHOUSE, x: (L.GREENHOUSE.minX + L.GREENHOUSE.maxX) / 2, z: (L.GREENHOUSE.minZ + L.GREENHOUSE.maxZ) / 2, r: 0.8, k: 0.15 });
@@ -640,6 +662,7 @@ export function buildGarden(scene, { mobile = false, q, renderer, treeShade = []
     fencePosts,
     terrain,
     scenery,
+    swaps,
     blocked,
     flowerFields: flowerSpots,
     /** Moves the balls of yarn to where the simulation has them. */
