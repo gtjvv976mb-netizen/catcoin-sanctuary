@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-09-29T18:21:20.697Z",
+  "lastPostedAt": "2026-09-30T10:02:59.390Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -34,7 +34,10 @@
       "id": "how-it-works",
       "text": "🏡 How Catcoin Sanctuary works 🐾\n🐱 A 3D garden of famous cats, each with its real story\n🧺 Adopt one: its kit lets you launch its coin yourself\n🔥 Trending on X? Our bot launches it\n✅ Only the mint on a cat's card is real\nhttps://catcoinsanctuary.com/\n#catcoin",
       "approved": true,
-      "status": "queued"
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-09-30T10:02:59.390Z",
+      "tweet": "2105236959450829001"
     },
     {
       "id": "trivia-cottage",
