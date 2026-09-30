@@ -165,3 +165,16 @@ and 130-260 KB far. A far copy still over 300 KB gets `sa_lo: true` with `si_lo`
 copy's texture a little, which does not show at far-copy distances). The Hunyuan models were redone this way; the
 old model job is kept as `prev_model_job`. SNOWBALCAT, PUSSBOOCAT, TRIMCAT, TUBBSCAT and SGTTIBBS, listed above as
 failed, have had models since the third run.
+### 2026-09-30: 24 models made by hand through Higgsfield
+
+- A standing reference (gpt_image_2_5, from the lore picture, or from the lore text alone where the picture is the
+  wrong cat), then tripo_h3_1_image_to_3d (12000 faces, texture on, PBR off), packed by section 2. The replaced model's
+  job is kept as `prev_model_job`; `scripts/meshy.state.json` marks each cat done (no Meshy credit) so the Models
+  workflow doesn't rebuild it. Big cats are drawn as adults.
+- `--yaw 180` for MITTENSCAT and OSCARRI (plume tails). CORSAGE's far copy (a cat made of carnations) needs `sa_lo`.
+- New MODEL_LIMITS: AMRCAT (its mound hides the head when curled: it dozes in its loaf), CAMTHECAT, MILKWEED,
+  hosico-cat, ket-3; the old models' limits for SUNSTRETCH and hello-kitty-sol no longer apply. AMRCAT's, MITTENSCAT's and
+  OSCARRI's Cowork leg labels (`.legs.json`) belonged to the old meshes and were dropped; tests/catrig-models.test.mjs
+  takes CASENAP for its joined-forelegs sample, since AMRCAT's new forelegs are apart.
+- GIMBALPAW's new model (bubble helmet and a loose scarf) was held back: the scarf tears into sheets in every pose,
+  walking included, so it keeps its previous model.
