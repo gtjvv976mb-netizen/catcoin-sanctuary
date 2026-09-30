@@ -701,7 +701,7 @@ const GAIT_I = { walk: 0, trot: 1, run: 2, stalk: 3 };
     centred as near as can be on its stance in the gait next to it (catrig's footfalls: walk and
     stalk lateral sequence, trot diagonal pairs, run a rotary gallop), so a paw that is planted in one
     is planted, near the same spot, in the other while they blend. */
-const GAIT_AT = [0, -0.21, -0.18, 0];
+const GAIT_AT = [0, 0, -0.25, 0];
 /** The fastest each gait's legs are stepped (units per second of ground): ground counted faster than
     that (a quick turn on the spot counted as steps, a shove) is not stepped out in a flurry of legs. */
 const GAIT_VMAX = LEG_VMAX; // (catmotion: the sims never carry a cat over more)

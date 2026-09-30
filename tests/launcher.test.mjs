@@ -992,10 +992,12 @@ test("photos: every kind shows its post's photo, credited; data/photo-hide.json 
   assert.deepEqual(back.photos, photos, "unhidden: the file exactly as it was");
   // Every photo the site ships can be hidden and shown again without losing it (the review's probe).
   const shippedPhotos = JSON.parse(readRoot(FILES.realPhotos));
-  const ids = new Set(Object.values(shippedPhotos.cats).map((v) => postIdOf(v.realPhoto.post)));
+  // (the shipped file may already hide some: those stay hidden, so the probe hides them too and keeps them hidden after)
+  const hiddenBefore = new Set(Object.values(shippedPhotos.hidden || {}).map((h) => String(h.postId)));
+  const ids = new Set([...Object.values(shippedPhotos.cats).map((v) => postIdOf(v.realPhoto.post)), ...hiddenBefore]);
   const all = applyPhotoHide(shippedPhotos, ids);
-  assert.deepEqual(Object.keys(all.photos.cats).filter((T) => ids.has(postIdOf(shippedPhotos.cats[T].realPhoto.post))), []);
-  assert.deepEqual(applyPhotoHide(all.photos, new Set()).photos, shippedPhotos);
+  assert.deepEqual(Object.keys(all.photos.cats), []);
+  assert.deepEqual(applyPhotoHide(all.photos, hiddenBefore).photos, shippedPhotos);
   // Any link form of the post: twitter.com, www., a query.
   for (const u of ["https://twitter.com/floppafan/status/2100000000000000401", "https://www.x.com/floppafan/status/2100000000000000401?s=20", "https://x.com/floppafan/status/2100000000000000401/photo/1"]) {
     assert.equal(postIdOf(u), "2100000000000000401", u);

@@ -103,10 +103,19 @@ wrong.
   `buildSkeleton` builds the same bone names for every cat: root, pelvis, spine, chest, neck,
   head, tail1-4, and thigh/shin/foot plus arm/forearm/paw on each side. `skinWeights` weights
   each vertex by region (leg, tail, head, body) with inverse distance to the bones.
-- `makeClips` generates the clips procedurally: walk, trot, run, stalk, stand, sniff, greet,
-  sit, look, pant, groom, knead, loaf, sleep, eat, stretch, crouch, wiggle, pounce and scratch.
-  An AnimationMixer per cat crossfades between them (0.3 s). Gait clips are timed by the
-  distance walked (`cyclesPerUnit`), so paws don't slide.
+- `makeClips` generates the clips procedurally: a clip for every action in catmotion.js (walk, trot,
+  run, stalk, stand, sit, loaf, sleep, groom, pounce, the posture changes, ...), pivot and the
+  pull-ups. Gaits keep real cats' footfalls: walk and stalk are a lateral sequence (left hind, left
+  fore, right hind, right fore, a quarter cycle apart; the shoulders' roll and swing follow the
+  forelegs), trot moves diagonal pairs, and run is a rotary gallop with the back rounding and
+  stretching. The head is held level and steady over the gait; the pounce gathers from the
+  wiggle's crouch, stretches out in the air and lands. tests/catrig.test.mjs checks the footfalls.
+- catviews.js (animateOwn) sets each clip's weight and time from cat.motion: per-clip fades, one
+  gait phase stepped by the distance walked (`cyclesPerUnit`, so paws don't slide) and blended
+  between gaits, idle loops at each cat's own phase; then procedural layers: the head turns to
+  what the cat looks at, the back bends into turns, the tail is a damped spring, ear-flick twitches.
+- Behaviour (cats.js): walking, the head looks along the way ahead, so it leads a turn; chasing or
+  stalking, it stays on the prey.
 - LOD: the nearest 10 cats within 16 units get the full model; the rest use the far copy on the
   same skeleton, and their animation updates at up to 20 Hz.
 - `?still`: no motion. Each cat holds a sit, loaf or sleep pose.
@@ -152,6 +161,22 @@ COUCHCAP failed twice and keep their Tripo models. MAYORSTUB and SEACAT meshes d
 uses si 0.02 with a 1024 texture, and SEACAT's model was generated a second time and uses si 0.015 with a
 1024 texture. SNOWBELCAT needed yaw 180.
 
+### 2026-09-30: Tripo H3.1 multi-view, detailed (the method from now on)
+
+Hunyuan3D failed often when many jobs ran at once, and its fur and markings came out soft. Every cat is now made
+with `generate_3d` and `tripo_h3_1_multiview_to_3d`, with the four view job ids in the order front, left, back,
+right, and `texture: true, pbr: false, texture_quality: "detailed", geometry_quality: "detailed",
+texture_alignment: "original_image"` (about 21 credits). Fur strands, whiskers, collars and markings now come
+through in the texture. The steps before it are the same: a realistic portrait from the proof photo
+(gpt_image_2_5, high), a standing 3/4 reference (high), and four orthographic views (high from this run on).
+
+Job entries carry `hd: true, si: 0.02, si_lo: 0.003, tex: 1024, tex_lo: 256, q: 88`: about 50k triangles and a 1K
+texture at high JPEG quality, 800-1000 KB full and 120-260 KB far (the HD budget is 1.3 MB full, 300 KB far). A 2K
+texture doesn't fit with that much geometry, and the packer's fallback for an over-budget model drops straight to a
+256 px texture, so check `tex` in the entry after packing. A far copy still over 300 KB gets `sa_lo: true` with
+`si_lo` 0.004-0.01 (this scrambles the far copy's texture a little, which does not show at far-copy distances). The Hunyuan models were redone this way; the
+old model job is kept as `prev_model_job`. SNOWBALCAT, PUSSBOOCAT, TRIMCAT, TUBBSCAT and SGTTIBBS, listed above as
+failed, have had models since the third run.
 ### 2026-09-30: 24 models made by hand through Higgsfield
 
 - A standing reference (gpt_image_2_5, from the lore picture, or from the lore text alone where the picture is the
@@ -184,3 +209,17 @@ uses si 0.02 with a 1024 texture, and SEACAT's model was generated a second time
   PEWTER's ear scratch no longer apply (PEWTER's new hat still puts its feather into the lawn when it rolls). The old meshes' leg labels (MOMOTHECAT, PAPRIKA, PEWTER, SANDSTEP, SASSYHB,
   UMBERPAW, michi, pepecat-2, wen-4) were dropped; tests/catrig-models.test.mjs takes HOVERPAW for its
   joined-forelegs sample, since SNOWBELCAT's new forelegs are apart.
+
+### 2026-09-30 (later): rigs that pass whole, leg labels from the shape
+
+- The herd test (tests/catrig-herd.test.mjs) caught Tripo "detailed" meshes whose fur joins the thighs to the
+  tail's root or to each other: those tore in almost every pose. The cure that works is the standing reference:
+  "legs straight and clearly separated with a clear gap under the belly and between the hind legs, fur short and
+  close around the legs, tail held up and away from the legs", and views asked for "the legs clearly apart and the
+  tail up". Peepee, Ruru, Tuxedo Stan, Go-chan and Gatomon were remade that way and pass with no labels.
+- For a model that still tears, `node scripts/quadrant-legs.mjs KEY --cut C` writes leg labels from the model's own
+  shape (each vertex below the leg's top, times C, goes to the leg of its quadrant: fore/hind by the body's middle,
+  left/right by the midline), in scripts/cowork-legs.mjs's format. Pick C per model with the herd test
+  (`CATRIG_HERD=KEY`): Hamlet 1.45, George 1.45, Henri 1.3, Brambleton 1.6. Re-run fit-clips after.
+- Litten failed multi-view twice; its model is tripo_h3_1_image_to_3d from the standing reference.
+- A model repacked from a new mesh loses its old leg labels (their vertex counts no longer match).

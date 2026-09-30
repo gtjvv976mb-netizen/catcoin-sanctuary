@@ -1,7 +1,18 @@
 {
   "note": "Launch kits built by scripts/build-kits.py; read by assets/ui/adopt.js.",
-  "built": "2026-09-26",
+  "built": "2026-09-30",
   "cats": {
+    "AIZUSAKURA": {
+      "token": "assets/kits/AIZUSAKURA/token.png",
+      "banner": "assets/kits/AIZUSAKURA/banner.png",
+      "bannerPlain": "assets/kits/AIZUSAKURA/banner-plain.png",
+      "tokenSha256": "99d035d159ef4d59cbb7738a7d056a18fa98061c52d6772ecd98cf95108e3a9f",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GLAgBbfbQAA3uux.jpg?name=orig",
+        "handle": "ashinomakionsen",
+        "post": "https://x.com/ashinomakionsen/status/1778957067078037540"
+      }
+    },
     "AMBERDROP": {
       "token": "assets/kits/AMBERDROP/token.png",
       "banner": "assets/kits/AMBERDROP/banner.png",
@@ -88,12 +99,59 @@
         "post": "https://x.com/sonic_hedgehog/status/1989740176189374579"
       }
     },
+    "BLEHMILLY": {
+      "token": "assets/kits/BLEHMILLY/token.png",
+      "banner": "assets/kits/BLEHMILLY/banner.png",
+      "bannerPlain": "assets/kits/BLEHMILLY/banner-plain.png",
+      "tokenSha256": "034d23ca221a14637f19b46f25ab8945ba341863ee619e75adb35610602e7212",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/F0uVAL7WcAAA4zH.jpg?name=orig",
+        "handle": "fatfatmillycat",
+        "post": "https://x.com/fatfatmillycat/status/1678599121475624960"
+      }
+    },
+    "BLOFELDCAT": {
+      "token": "assets/kits/BLOFELDCAT/token.png",
+      "banner": "assets/kits/BLOFELDCAT/banner.png",
+      "bannerPlain": "assets/kits/BLOFELDCAT/banner-plain.png",
+      "tokenSha256": "9da1b22c476af5345f69fbd48e13cda102ce8bd708aaef1119c4480e754c354f",
+      "photo": null
+    },
     "BOXWOOD": {
       "token": "assets/kits/BOXWOOD/token.png",
       "banner": "assets/kits/BOXWOOD/banner.png",
       "bannerPlain": "assets/kits/BOXWOOD/banner-plain.png",
       "tokenSha256": "92b4778f0f3d56b9ab839c512fa14423c943d438bd9fb83f66e4c0ff1653ac4a",
       "photo": null
+    },
+    "BROWANTSIN": {
+      "token": "assets/kits/BROWANTSIN/token.png",
+      "banner": "assets/kits/BROWANTSIN/banner.png",
+      "bannerPlain": "assets/kits/BROWANTSIN/banner-plain.png",
+      "tokenSha256": "c67a47fe590b02b6b60b49fbcb7fafbd26ba0d9bbc2967714afffb03c62d981b",
+      "photo": null
+    },
+    "BROWSERCAT": {
+      "token": "assets/kits/BROWSERCAT/token.png",
+      "banner": "assets/kits/BROWSERCAT/banner.png",
+      "bannerPlain": "assets/kits/BROWSERCAT/banner-plain.png",
+      "tokenSha256": "6732a5f789a2dab6faa258c2125ff9182fa4840049ebc277d938c03d93b12d34",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/Gz_udKTWAAAZO0k.jpg?name=orig",
+        "handle": "wfaa",
+        "post": "https://x.com/wfaa/status/1963550152053940374"
+      }
+    },
+    "BUBSYCAT": {
+      "token": "assets/kits/BUBSYCAT/token.png",
+      "banner": "assets/kits/BUBSYCAT/banner.png",
+      "bannerPlain": "assets/kits/BUBSYCAT/banner-plain.png",
+      "tokenSha256": "64e18504aabf00e81d094e54e3858d5001e30331a845ca4d0befbb7b35545421",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/G_RiCzCWsAA2WL4.jpg?name=orig",
+        "handle": "Fabrazz",
+        "post": "https://x.com/Fabrazz/status/2014343483507589292"
+      }
     },
     "BURLYPAW": {
       "token": "assets/kits/BURLYPAW/token.png",
@@ -141,12 +199,34 @@
       "tokenSha256": "892337de5699f106ddfc76c0026657df1cf754517e4a1c3f8c0f5c145d6d4d40",
       "photo": null
     },
+    "CAPOOBUG": {
+      "token": "assets/kits/CAPOOBUG/token.png",
+      "banner": "assets/kits/CAPOOBUG/banner.png",
+      "bannerPlain": "assets/kits/CAPOOBUG/banner-plain.png",
+      "tokenSha256": "c2f7553dc111e3d80b8773b602317c7032f02ade7ce049adf38378d355c2d491",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HIp4caGbkAAcPgb.jpg?name=orig",
+        "handle": "bugcat_capoo_tw",
+        "post": "https://x.com/bugcat_capoo_tw/status/2056588615908757804"
+      }
+    },
     "CASENAP": {
       "token": "assets/kits/CASENAP/token.png",
       "banner": "assets/kits/CASENAP/banner.png",
       "bannerPlain": "assets/kits/CASENAP/banner-plain.png",
       "tokenSha256": "13fec3b9b8a1d7d2521c94b3494ba47d8f11a6fea3a1f08734ad911a779f34d0",
       "photo": null
+    },
+    "CATFLAP": {
+      "token": "assets/kits/CATFLAP/token.png",
+      "banner": "assets/kits/CATFLAP/banner.png",
+      "bannerPlain": "assets/kits/CATFLAP/banner-plain.png",
+      "tokenSha256": "a22556a43e926d453c13f96579ece18877ba3efda73106c66be4a546765f2af5",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GHrqs2mW0AA9vc2.jpg?name=orig",
+        "handle": "PepitoTheCat",
+        "post": "https://x.com/PepitoTheCat/status/1763980265569894461"
+      }
     },
     "CHEETLE": {
       "token": "assets/kits/CHEETLE/token.png",
@@ -168,6 +248,17 @@
       "bannerPlain": "assets/kits/CHIK/banner-plain.png",
       "tokenSha256": "bda6dd9e1061ef0fd524ac2bba6393ce0dee672f7c435bf1f452ba0c8fa3c6f8",
       "photo": null
+    },
+    "CHIKUWACAT": {
+      "token": "assets/kits/CHIKUWACAT/token.png",
+      "banner": "assets/kits/CHIKUWACAT/banner.png",
+      "bannerPlain": "assets/kits/CHIKUWACAT/banner-plain.png",
+      "tokenSha256": "e0a3c8702fd2f42ac5bbd2ca0b0513767742d5e11b14dee95b88dca46fb303d3",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HDDT-PYb0AADsz4.jpg?name=orig",
+        "handle": "sktfd0310",
+        "post": "https://x.com/sktfd0310/status/2031356504000041266"
+      }
     },
     "CHISWEET": {
       "token": "assets/kits/CHISWEET/token.png",
@@ -209,6 +300,17 @@
         "post": "https://x.com/IGN/status/1113188354781339650"
       }
     },
+    "CLIVECAT": {
+      "token": "assets/kits/CLIVECAT/token.png",
+      "banner": "assets/kits/CLIVECAT/banner.png",
+      "bannerPlain": "assets/kits/CLIVECAT/banner-plain.png",
+      "tokenSha256": "6f20dd18c14917f5c8701051dfa10e7ac2f3ac7a0d7cfd643ef3a843c091df18",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/CitWnI4U4AA4u-C.jpg?name=orig",
+        "handle": "KateBeckinsale",
+        "post": "https://x.com/KateBeckinsale/status/732774601969688576"
+      }
+    },
     "COBBLEPAW": {
       "token": "assets/kits/COBBLEPAW/token.png",
       "banner": "assets/kits/COBBLEPAW/banner.png",
@@ -234,6 +336,13 @@
         "post": "https://x.com/ABC7/status/373219245162639360"
       }
     },
+    "COOLBLUE": {
+      "token": "assets/kits/COOLBLUE/token.png",
+      "banner": "assets/kits/COOLBLUE/banner.png",
+      "bannerPlain": "assets/kits/COOLBLUE/banner-plain.png",
+      "tokenSha256": "b7f5dea28a5e22f52e56b5bd4789418c5aa4e11bc9571e671f8dc1e1604eda0b",
+      "photo": null
+    },
     "COOPERCAT": {
       "token": "assets/kits/COOPERCAT/token.png",
       "banner": "assets/kits/COOPERCAT/banner.png",
@@ -258,6 +367,17 @@
       "bannerPlain": "assets/kits/CORSAGE/banner-plain.png",
       "tokenSha256": "3d28298027e7f16e5433645ffcb5d3257dd8b008f890be937ba8e23cd8026062",
       "photo": null
+    },
+    "COSMICGREG": {
+      "token": "assets/kits/COSMICGREG/token.png",
+      "banner": "assets/kits/COSMICGREG/banner.png",
+      "bannerPlain": "assets/kits/COSMICGREG/banner-plain.png",
+      "tokenSha256": "40e5631b98812a21b1c793e47d1eee0097ead0b877ba24695e13d7edcf1001b8",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GYwG_rFWQAA340A.jpg?name=orig",
+        "handle": "AJamesMcCarthy",
+        "post": "https://x.com/AJamesMcCarthy/status/1840854045847953524"
+      }
     },
     "COTTAPAW": {
       "token": "assets/kits/COTTAPAW/token.png",
@@ -287,11 +407,40 @@
       "tokenSha256": "5e61993df63107bca5eff44356688a14ea3c4422a12f5ae22fe149e64a975320",
       "photo": null
     },
+    "CUCUWIG": {
+      "token": "assets/kits/CUCUWIG/token.png",
+      "banner": "assets/kits/CUCUWIG/banner.png",
+      "bannerPlain": "assets/kits/CUCUWIG/banner-plain.png",
+      "tokenSha256": "4c1cc1ca404d967b250d0d4830ba2025013115fba0702fbea6ccf33833da134b",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HPuPobWXAAIkdp7.jpg?name=orig",
+        "handle": "MadridUniversal",
+        "post": "https://x.com/MadridUniversal/status/2088421055371026883"
+      }
+    },
     "CURFEWPAW": {
       "token": "assets/kits/CURFEWPAW/token.png",
       "banner": "assets/kits/CURFEWPAW/banner.png",
       "bannerPlain": "assets/kits/CURFEWPAW/banner-plain.png",
       "tokenSha256": "01e94b4752804beba7d618bbf3b3f0a945b501c0625c6e6d53552b8ac41e05fc",
+      "photo": null
+    },
+    "CZELDA": {
+      "token": "assets/kits/CZELDA/token.png",
+      "banner": "assets/kits/CZELDA/banner.png",
+      "bannerPlain": "assets/kits/CZELDA/banner-plain.png",
+      "tokenSha256": "75b15f20bc010f992dcff1ef09b012ad11e7064e8de82b3a292fa45cfec931bc",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GbPGitHa0AAcN7A.jpg?name=orig",
+        "handle": "CuriousZelda",
+        "post": "https://x.com/CuriousZelda/status/1852047232515870823"
+      }
+    },
+    "DATASPOT": {
+      "token": "assets/kits/DATASPOT/token.png",
+      "banner": "assets/kits/DATASPOT/banner.png",
+      "bannerPlain": "assets/kits/DATASPOT/banner-plain.png",
+      "tokenSha256": "07becec146a25362fb63ba07d2d16405d8acb0cd88155a24d948d65918530094",
       "photo": null
     },
     "DELILAHCAT": {
@@ -300,6 +449,17 @@
       "bannerPlain": "assets/kits/DELILAHCAT/banner-plain.png",
       "tokenSha256": "9fd183a91151d539d4370deec7345cd95afd78075294ab379afad7843fe69473",
       "photo": null
+    },
+    "DEWEYCAT": {
+      "token": "assets/kits/DEWEYCAT/token.png",
+      "banner": "assets/kits/DEWEYCAT/banner.png",
+      "bannerPlain": "assets/kits/DEWEYCAT/banner-plain.png",
+      "tokenSha256": "262e98b83c06a63d4b02a8a06233cbd04f425d98ba481087b0822a6b12f4070a",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/F92azonX0AM8ALu.jpg?name=orig",
+        "handle": "tothemax2050",
+        "post": "https://x.com/tothemax2050/status/1719700847804760423"
+      }
     },
     "DIDGACAT": {
       "token": "assets/kits/DIDGACAT/token.png",
@@ -321,6 +481,17 @@
         "url": "https://pbs.twimg.com/media/Cf7jXCaWsAAiF4-.jpg",
         "handle": "SkyNews",
         "post": "https://x.com/SkyNews/status/720262975987269632"
+      }
+    },
+    "DREAMPATCH": {
+      "token": "assets/kits/DREAMPATCH/token.png",
+      "banner": "assets/kits/DREAMPATCH/banner.png",
+      "bannerPlain": "assets/kits/DREAMPATCH/banner-plain.png",
+      "tokenSha256": "aadfdc91981385797b0ceb8866d98baf38857dd2ec4fc6e85941839d1dba2736",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GjwCVWKWEAAtEJU.jpg?name=orig",
+        "handle": "dreamwastaken",
+        "post": "https://x.com/dreamwastaken/status/1890388512593117335"
       }
     },
     "DROWSEPAW": {
@@ -425,11 +596,47 @@
         "post": "https://x.com/iDenville/status/1919784226167419287"
       }
     },
+    "FISHTOPH": {
+      "token": "assets/kits/FISHTOPH/token.png",
+      "banner": "assets/kits/FISHTOPH/banner.png",
+      "bannerPlain": "assets/kits/FISHTOPH/banner-plain.png",
+      "tokenSha256": "bd1a4f5a625fab0264f2a115f9526cb82d226486cbf09047f9e8f7e2fc48fcb5",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FiVrvG3X0AEliJY.jpg?name=orig",
+        "handle": "mollyaclarke",
+        "post": "https://x.com/mollyaclarke/status/1595800103503151109"
+      }
+    },
     "FLERKENCAT": {
       "token": "assets/kits/FLERKENCAT/token.png",
       "banner": "assets/kits/FLERKENCAT/banner.png",
       "bannerPlain": "assets/kits/FLERKENCAT/banner-plain.png",
       "tokenSha256": "ef69a137f0fca7217b89c2a39c80baab0770d8b4fcc2baa95d16dcfec88987ed",
+      "photo": null
+    },
+    "GANYHOUSE": {
+      "token": "assets/kits/GANYHOUSE/token.png",
+      "banner": "assets/kits/GANYHOUSE/banner.png",
+      "bannerPlain": "assets/kits/GANYHOUSE/banner-plain.png",
+      "tokenSha256": "5b90dc8154b3880634d07bbc58b044d294ebbc7e8d6efcdacc42872ad1189a35",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HDkxwGMX0AA67Zg.jpg?name=orig",
+        "handle": "ganymedeshouse",
+        "post": "https://x.com/ganymedeshouse/status/2033711415002075490"
+      }
+    },
+    "GATEKITTY": {
+      "token": "assets/kits/GATEKITTY/token.png",
+      "banner": "assets/kits/GATEKITTY/banner.png",
+      "bannerPlain": "assets/kits/GATEKITTY/banner-plain.png",
+      "tokenSha256": "a0683d7cbe985bca22bbffdf24683eb9fdda36a675bc190fa41792c9e276c5ce",
+      "photo": null
+    },
+    "GATOMON": {
+      "token": "assets/kits/GATOMON/token.png",
+      "banner": "assets/kits/GATOMON/banner.png",
+      "bannerPlain": "assets/kits/GATOMON/banner-plain.png",
+      "tokenSha256": "370b6cccbc9003aed19676531a04c22ba6cd056f0ed3960c96b26fb3b7f5b3b0",
       "photo": null
     },
     "GENKITTY": {
@@ -441,6 +648,17 @@
         "url": "https://pbs.twimg.com/media/DQEZ1GuVQAAI7eE.jpg",
         "handle": "CryptoKitties",
         "post": "https://x.com/CryptoKitties/status/937058830143254528"
+      }
+    },
+    "GIKKINGEN": {
+      "token": "assets/kits/GIKKINGEN/token.png",
+      "banner": "assets/kits/GIKKINGEN/banner.png",
+      "bannerPlain": "assets/kits/GIKKINGEN/banner-plain.png",
+      "tokenSha256": "8ed5126c4fc85d9258133ef73ab72f8b618c2735603a31ab04a043fcb16ed2c2",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FKybfOQWUAEw7IB.jpg?name=orig",
+        "handle": "GhibliUSA",
+        "post": "https://x.com/GhibliUSA/status/1490339504820948995"
       }
     },
     "GIMBALPAW": {
@@ -467,6 +685,17 @@
       "bannerPlain": "assets/kits/GLINTPAW/banner-plain.png",
       "tokenSha256": "d6e12cfc18a31f8787bb6e71c4e709eaf19dbc653f6faa1688e7a831542f0c0f",
       "photo": null
+    },
+    "GOCCHAN": {
+      "token": "assets/kits/GOCCHAN/token.png",
+      "banner": "assets/kits/GOCCHAN/banner.png",
+      "bannerPlain": "assets/kits/GOCCHAN/banner-plain.png",
+      "tokenSha256": "a623e7810a733740c4694ee36d8084486b3015f9a11cf6b5c3a034009607c0f5",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HSsZ5zAaQAARTm0.jpg?name=orig",
+        "handle": "bijutsu1",
+        "post": "https://x.com/bijutsu1/status/2101802139106640089"
+      }
     },
     "GRIDDLE": {
       "token": "assets/kits/GRIDDLE/token.png",
@@ -504,6 +733,83 @@
         "post": "https://x.com/cartoonnetwork/status/1165368246519963649"
       }
     },
+    "HACHIWA": {
+      "token": "assets/kits/HACHIWA/token.png",
+      "banner": "assets/kits/HACHIWA/banner.png",
+      "bannerPlain": "assets/kits/HACHIWA/banner-plain.png",
+      "tokenSha256": "714369f0c8427524a8bf937981d7f777c1acbb532eab1354ec28f8ba7a274e4e",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HR7F3_0bcAAUAGj.jpg?name=orig",
+        "handle": "anime_chiikawa",
+        "post": "https://x.com/anime_chiikawa/status/2098335750416896007"
+      }
+    },
+    "HAMLETCAT": {
+      "token": "assets/kits/HAMLETCAT/token.png",
+      "banner": "assets/kits/HAMLETCAT/banner.png",
+      "bannerPlain": "assets/kits/HAMLETCAT/banner-plain.png",
+      "tokenSha256": "4941840ea2d4a9e023fe09e05902354b9322d1062f1afc0cdb1544e6494cf708",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GYwiTH6XAAAznXK.jpg?name=orig",
+        "handle": "Nurelah",
+        "post": "https://x.com/Nurelah/status/1840884065492259292"
+      }
+    },
+    "HANK4SEN": {
+      "token": "assets/kits/HANK4SEN/token.png",
+      "banner": "assets/kits/HANK4SEN/banner.png",
+      "bannerPlain": "assets/kits/HANK4SEN/banner-plain.png",
+      "tokenSha256": "13f8521cd184f4a9c77b88367eb3f6a4470393a393307fde12c1aab0484d0ec6",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/CwwbKU0WEAAJWNg.jpg?name=orig",
+        "handle": "Ripleys",
+        "post": "https://x.com/Ripleys/status/796041100624560128"
+      }
+    },
+    "HEIZOU": {
+      "token": "assets/kits/HEIZOU/token.png",
+      "banner": "assets/kits/HEIZOU/banner.png",
+      "bannerPlain": "assets/kits/HEIZOU/banner-plain.png",
+      "tokenSha256": "0735349f8e7f104209d97afa6d5f81c82c8c6ce5d4cffba456ee839f588e8a6f",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/DTAQ9MHUMAAaexL.jpg?name=orig",
+        "handle": "fukaya91",
+        "post": "https://x.com/fukaya91/status/950278177112248321"
+      }
+    },
+    "HENRINOIR": {
+      "token": "assets/kits/HENRINOIR/token.png",
+      "banner": "assets/kits/HENRINOIR/banner.png",
+      "bannerPlain": "assets/kits/HENRINOIR/banner-plain.png",
+      "tokenSha256": "5e7c328c9c08d62e324cc8d96b17830a9501e356426a7f524aea1ad5b50fce86",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FlVIXrDaYAIe1cf.jpg?name=orig",
+        "handle": "HenriLeChatNoir",
+        "post": "https://x.com/HenriLeChatNoir/status/1609272018683428864"
+      }
+    },
+    "HODGECAT": {
+      "token": "assets/kits/HODGECAT/token.png",
+      "banner": "assets/kits/HODGECAT/banner.png",
+      "bannerPlain": "assets/kits/HODGECAT/banner-plain.png",
+      "tokenSha256": "7af41eb5c34715e393d8e51817d874d37dd9e66c2fc1df6f54dd402f066d91b2",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HKCdmWUXwAAFWKE.jpg?name=orig",
+        "handle": "drjohnsonshouse",
+        "post": "https://x.com/drjohnsonshouse/status/2062821917539647900"
+      }
+    },
+    "HOICHAN": {
+      "token": "assets/kits/HOICHAN/token.png",
+      "banner": "assets/kits/HOICHAN/banner.png",
+      "bannerPlain": "assets/kits/HOICHAN/banner-plain.png",
+      "tokenSha256": "48d881327d5c52953b4206bd5a02ddec757da681ab8fbd91a6e9bb81e8c294f6",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/Gwawbz9bEAINNSJ.jpg?name=orig",
+        "handle": "HOIPPU_0722",
+        "post": "https://x.com/HOIPPU_0722/status/1947437886758129798"
+      }
+    },
     "HOVERPAW": {
       "token": "assets/kits/HOVERPAW/token.png",
       "banner": "assets/kits/HOVERPAW/banner.png",
@@ -532,6 +838,28 @@
       "tokenSha256": "c71e114edb2599e9893fb76dc2de1df37207f72f1c986cf6a621ce4078a13643",
       "photo": null
     },
+    "IDPHOTO": {
+      "token": "assets/kits/IDPHOTO/token.png",
+      "banner": "assets/kits/IDPHOTO/banner.png",
+      "bannerPlain": "assets/kits/IDPHOTO/banner-plain.png",
+      "tokenSha256": "812c1a9edf91d3702793985b76cacd29ce04f6d59dae1081415b7180ce11eec0",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FEJVVULacAE3Bp3.jpg?name=orig",
+        "handle": "takeru0321neko",
+        "post": "https://x.com/takeru0321neko/status/1459823058751922179"
+      }
+    },
+    "INDYBONES": {
+      "token": "assets/kits/INDYBONES/token.png",
+      "banner": "assets/kits/INDYBONES/banner.png",
+      "bannerPlain": "assets/kits/INDYBONES/banner-plain.png",
+      "tokenSha256": "6afbacab5c1a6bb60385af880326a1871b5230e4d487b19f6107e316ca26f0e4",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FvdH2zGXwAQy4Fc.jpg?name=orig",
+        "handle": "SirIndianaBones",
+        "post": "https://x.com/SirIndianaBones/status/1654870919012130816"
+      }
+    },
     "INGOTLOAF": {
       "token": "assets/kits/INGOTLOAF/token.png",
       "banner": "assets/kits/INGOTLOAF/banner.png",
@@ -550,12 +878,45 @@
         "post": "https://x.com/Minecraft/status/1063522092057067521"
       }
     },
+    "JESSCAT": {
+      "token": "assets/kits/JESSCAT/token.png",
+      "banner": "assets/kits/JESSCAT/banner.png",
+      "bannerPlain": "assets/kits/JESSCAT/banner-plain.png",
+      "tokenSha256": "305861aa25416ed85ad8f6109dfb972ffb4bb0ae0ccf9accae900574c96784af",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HSWBjA-bEAARbuO.jpg?name=orig",
+        "handle": "cartoonvibes26",
+        "post": "https://x.com/cartoonvibes26/status/2100227248766996860"
+      }
+    },
+    "JETPACKCAT": {
+      "token": "assets/kits/JETPACKCAT/token.png",
+      "banner": "assets/kits/JETPACKCAT/banner.png",
+      "bannerPlain": "assets/kits/JETPACKCAT/banner-plain.png",
+      "tokenSha256": "19a0f068c8c708bcad179d487790e14e62b10f1a4d60bee9c41a3eab33f7dc41",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HBFCfVlakAMLYDh.jpg?name=orig",
+        "handle": "PlayOverwatch",
+        "post": "https://x.com/PlayOverwatch/status/2022471091453858112"
+      }
+    },
     "JITTERPAW": {
       "token": "assets/kits/JITTERPAW/token.png",
       "banner": "assets/kits/JITTERPAW/banner.png",
       "bannerPlain": "assets/kits/JITTERPAW/banner-plain.png",
       "tokenSha256": "900b271c2a875beef40393391b834995f554c4c341e870e180b823e3c9d6e93f",
       "photo": null
+    },
+    "JJINGJJING": {
+      "token": "assets/kits/JJINGJJING/token.png",
+      "banner": "assets/kits/JJINGJJING/banner.png",
+      "bannerPlain": "assets/kits/JJINGJJING/banner-plain.png",
+      "tokenSha256": "f4ea826a534cac57bb43497f9325075a0288e0ddced576bb0a3b0fa12bf29516",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/DA0R4sTV0AA73zO.jpg?name=orig",
+        "handle": "moonriver365",
+        "post": "https://x.com/moonriver365/status/868369983603998720"
+      }
     },
     "JOCKCAT": {
       "token": "assets/kits/JOCKCAT/token.png",
@@ -574,6 +935,17 @@
       "bannerPlain": "assets/kits/KEEPSAKE/banner-plain.png",
       "tokenSha256": "d76eb0ed81b8aa69d9005edb00b4c5591229e9c2bb221476347db1872bf05521",
       "photo": null
+    },
+    "KENCHAN": {
+      "token": "assets/kits/KENCHAN/token.png",
+      "banner": "assets/kits/KENCHAN/banner.png",
+      "bannerPlain": "assets/kits/KENCHAN/banner-plain.png",
+      "tokenSha256": "42387fe03176e86751da1b03759b4a3f038a089e1d6abe3c9f07e275a692faf0",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HTVug3aa0AAHpDX.jpg?name=orig",
+        "handle": "bijutsu1",
+        "post": "https://x.com/bijutsu1/status/2104709918939066741"
+      }
     },
     "KERNELPAW": {
       "token": "assets/kits/KERNELPAW/token.png",
@@ -603,6 +975,17 @@
       "tokenSha256": "3f2c99522929dad6be1afae9b8e43b4ab96c111679d3b42f0a0a3eb14271cf27",
       "photo": null
     },
+    "KOTECHAN": {
+      "token": "assets/kits/KOTECHAN/token.png",
+      "banner": "assets/kits/KOTECHAN/banner.png",
+      "bannerPlain": "assets/kits/KOTECHAN/banner-plain.png",
+      "tokenSha256": "9865769bdee844f7f9107231ce15644bb6dbefa6c0e1542611fcdef550efffb2",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HAnel21bAAA2rLS.jpg?name=orig",
+        "handle": "TBS_LenOfficial",
+        "post": "https://x.com/TBS_LenOfficial/status/2020390663536451954"
+      }
+    },
     "KPURRY": {
       "token": "assets/kits/KPURRY/token.png",
       "banner": "assets/kits/KPURRY/banner.png",
@@ -620,6 +1003,13 @@
         "handle": "mondomascots",
         "post": "https://x.com/mondomascots/status/1800700840094859518"
       }
+    },
+    "KYURUGACAT": {
+      "token": "assets/kits/KYURUGACAT/token.png",
+      "banner": "assets/kits/KYURUGACAT/banner.png",
+      "bannerPlain": "assets/kits/KYURUGACAT/banner-plain.png",
+      "tokenSha256": "72abff148dfd8890f3c9aa505b72d2b6590a07943e2735cc32e2b72f7024ed2e",
+      "photo": null
     },
     "LACQUER": {
       "token": "assets/kits/LACQUER/token.png",
@@ -646,12 +1036,30 @@
         "post": "https://x.com/Number10cat/status/2022986489122972146"
       }
     },
+    "LASERTATER": {
+      "token": "assets/kits/LASERTATER/token.png",
+      "banner": "assets/kits/LASERTATER/banner.png",
+      "bannerPlain": "assets/kits/LASERTATER/banner-plain.png",
+      "tokenSha256": "9215dbf280386d089629a081b9aafedcd28a5b9a7750962c0c643d4ca6b54f0b",
+      "photo": null
+    },
     "LATCHKEY": {
       "token": "assets/kits/LATCHKEY/token.png",
       "banner": "assets/kits/LATCHKEY/banner.png",
       "bannerPlain": "assets/kits/LATCHKEY/banner-plain.png",
       "tokenSha256": "1f74bda53b73957ec2d40b38a2122d84561a71e28af7cc0b26e0f6e7bb13b8a8",
       "photo": null
+    },
+    "LEFTFANG": {
+      "token": "assets/kits/LEFTFANG/token.png",
+      "banner": "assets/kits/LEFTFANG/banner.png",
+      "bannerPlain": "assets/kits/LEFTFANG/banner-plain.png",
+      "tokenSha256": "0e2a457e40375d9b5b5b46553a67bdba1936bd078ef1cc28e832d0acb42904a3",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/ESvwj9fXsAEC4P2.jpg?name=orig",
+        "handle": "rickygervais",
+        "post": "https://x.com/rickygervais/status/1237347029296254977"
+      }
     },
     "LEOTHELION": {
       "token": "assets/kits/LEOTHELION/token.png",
@@ -685,6 +1093,13 @@
       "tokenSha256": "50911c38158559cea9ab6a0377b7902ca8d625660ed932599ae819691d5f7192",
       "photo": null
     },
+    "LITTENCAT": {
+      "token": "assets/kits/LITTENCAT/token.png",
+      "banner": "assets/kits/LITTENCAT/banner.png",
+      "bannerPlain": "assets/kits/LITTENCAT/banner-plain.png",
+      "tokenSha256": "7d4fd24bb204e19829d9fd49ada5b2d5e0bbd8dae8d7e009fc79a8d9bd298968",
+      "photo": null
+    },
     "LUNAMOOCAT": {
       "token": "assets/kits/LUNAMOOCAT/token.png",
       "banner": "assets/kits/LUNAMOOCAT/banner.png",
@@ -714,6 +1129,39 @@
       "tokenSha256": "a9470dba3117a5c056898a83eb616b0115b5c7e1182245bc7ab923a481365077",
       "photo": null
     },
+    "MARUOCAT": {
+      "token": "assets/kits/MARUOCAT/token.png",
+      "banner": "assets/kits/MARUOCAT/banner.png",
+      "bannerPlain": "assets/kits/MARUOCAT/banner-plain.png",
+      "tokenSha256": "08a8691dba2beacd682d77797710a7f5fce201b9e0d1fd236762b9d4e87c265d",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/F8sYcHXagAAilxW.jpg?name=orig",
+        "handle": "hikakin",
+        "post": "https://x.com/hikakin/status/1714490962016378930"
+      }
+    },
+    "MAXWELLCAT": {
+      "token": "assets/kits/MAXWELLCAT/token.png",
+      "banner": "assets/kits/MAXWELLCAT/banner.png",
+      "bannerPlain": "assets/kits/MAXWELLCAT/banner-plain.png",
+      "tokenSha256": "0342844b9c2297031f4d7a984e692391043a23290e90177cec1d6f4aaecd3df1",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FpKspyfXwAIOkOD.jpg?name=orig",
+        "handle": "Executor250624",
+        "post": "https://x.com/Executor250624/status/1626552255888429056"
+      }
+    },
+    "MAYORJINX": {
+      "token": "assets/kits/MAYORJINX/token.png",
+      "banner": "assets/kits/MAYORJINX/banner.png",
+      "bannerPlain": "assets/kits/MAYORJINX/banner-plain.png",
+      "tokenSha256": "a2d7288472a2d72c484acc2c25ca3f5c0471f8893b63e1603c221d41a9b1ddf7",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FQLEBPRUcAAegNY.jpg?name=orig",
+        "handle": "bigfootjinx",
+        "post": "https://x.com/bigfootjinx/status/1513987961632612358"
+      }
+    },
     "MAYORSTUB": {
       "token": "assets/kits/MAYORSTUB/token.png",
       "banner": "assets/kits/MAYORSTUB/banner.png",
@@ -724,6 +1172,13 @@
         "handle": "CNN",
         "post": "https://x.com/CNN/status/889433493813563392"
       }
+    },
+    "MEDIACAT": {
+      "token": "assets/kits/MEDIACAT/token.png",
+      "banner": "assets/kits/MEDIACAT/banner.png",
+      "bannerPlain": "assets/kits/MEDIACAT/banner-plain.png",
+      "tokenSha256": "c09abb0a4dd4ed3ce33f7d4cd2ec594dd5f9f8ca62fcc0350fd73fdb8a08fbf8",
+      "photo": null
     },
     "MEMOPAW": {
       "token": "assets/kits/MEMOPAW/token.png",
@@ -750,6 +1205,13 @@
       "tokenSha256": "080056b478f7accc158127f40951f008d441c2daba036813306ae1d87e404a15",
       "photo": null
     },
+    "MIETTE": {
+      "token": "assets/kits/MIETTE/token.png",
+      "banner": "assets/kits/MIETTE/banner.png",
+      "bannerPlain": "assets/kits/MIETTE/banner-plain.png",
+      "tokenSha256": "9396a77b49b3e4cf83883e9b2b4a4fae1e38ec9a33af5cd0d69f5c3790b46bd0",
+      "photo": null
+    },
     "MIGGLES": {
       "token": "assets/kits/MIGGLES/token.png",
       "banner": "assets/kits/MIGGLES/banner.png",
@@ -759,6 +1221,17 @@
         "url": "https://pbs.twimg.com/media/GStfMGabEAApawq.jpg",
         "handle": "coinbase",
         "post": "https://x.com/coinbase/status/1813651794930925634"
+      }
+    },
+    "MIKANCAT": {
+      "token": "assets/kits/MIKANCAT/token.png",
+      "banner": "assets/kits/MIKANCAT/banner.png",
+      "bannerPlain": "assets/kits/MIKANCAT/banner-plain.png",
+      "tokenSha256": "b036438882e3fcbc40a8e8d7e9c00fc2f668cf177ca55a1a3b2eabf2a32ca6ae",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/Fov9FNNaEAAqtdB.jpg?name=orig",
+        "handle": "weichen_kh",
+        "post": "https://x.com/weichen_kh/status/1624670499673604099"
       }
     },
     "MILKWEED": {
@@ -800,6 +1273,35 @@
         "post": "https://x.com/Google/status/793168672571416576"
       }
     },
+    "MOONRESCUE": {
+      "token": "assets/kits/MOONRESCUE/token.png",
+      "banner": "assets/kits/MOONRESCUE/banner.png",
+      "bannerPlain": "assets/kits/MOONRESCUE/banner-plain.png",
+      "tokenSha256": "0d26fe982e2d1e95055a03c3171bf9616fb31d46c304993f2b666ed045a62e00",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HPXXznuW8AAb1Bi.jpg?name=orig",
+        "handle": "mooncatrescue",
+        "post": "https://x.com/mooncatrescue/status/2086812336526946414"
+      }
+    },
+    "MRBCHONK": {
+      "token": "assets/kits/MRBCHONK/token.png",
+      "banner": "assets/kits/MRBCHONK/banner.png",
+      "bannerPlain": "assets/kits/MRBCHONK/banner-plain.png",
+      "tokenSha256": "fd0f210599fdde1fcf00eb6b079a466ac0371c3f62d360ff7079845ae957b88d",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/EClUieYWwAA8uBP.jpg?name=orig",
+        "handle": "MorrisAnimal",
+        "post": "https://x.com/MorrisAnimal/status/1164554974057107456"
+      }
+    },
+    "MRJINX": {
+      "token": "assets/kits/MRJINX/token.png",
+      "banner": "assets/kits/MRJINX/banner.png",
+      "bannerPlain": "assets/kits/MRJINX/banner-plain.png",
+      "tokenSha256": "2a8f94f013ffccde15cf329e48367ff72c431d9c334ad2807f1e4eebe7a2ead9",
+      "photo": null
+    },
     "MRSNORRCAT": {
       "token": "assets/kits/MRSNORRCAT/token.png",
       "banner": "assets/kits/MRSNORRCAT/banner.png",
@@ -822,6 +1324,17 @@
         "post": "https://x.com/TheMustacheCat/status/983528787361939456"
       }
     },
+    "NAKANOSAN": {
+      "token": "assets/kits/NAKANOSAN/token.png",
+      "banner": "assets/kits/NAKANOSAN/banner.png",
+      "bannerPlain": "assets/kits/NAKANOSAN/banner-plain.png",
+      "tokenSha256": "937032208ed98939310a3f4919e7ed1f73cc652246efd1700adb3047b2a67812",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HHnujvabkAAXiTc.jpg?name=orig",
+        "handle": "choden_inubou",
+        "post": "https://x.com/choden_inubou/status/2051933909211119726"
+      }
+    },
     "NALACATCAT": {
       "token": "assets/kits/NALACATCAT/token.png",
       "banner": "assets/kits/NALACATCAT/banner.png",
@@ -839,6 +1352,17 @@
       "bannerPlain": "assets/kits/NEKOBUS/banner-plain.png",
       "tokenSha256": "cefddc07cbee6ea71a5e82a640eb011c7c45e2e7e4ffd604aaefb8ec182f58c7",
       "photo": null
+    },
+    "NEKOSAMA": {
+      "token": "assets/kits/NEKOSAMA/token.png",
+      "banner": "assets/kits/NEKOSAMA/banner.png",
+      "bannerPlain": "assets/kits/NEKOSAMA/banner-plain.png",
+      "tokenSha256": "7ebf7c13ca21901612e335c8e5213b3907191ebd15f6950d255af1f392e270d2",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/DQpUhK8UIAAQz22.jpg?name=orig",
+        "handle": "hidekiccan",
+        "post": "https://x.com/hidekiccan/status/939656820171214848"
+      }
     },
     "NERMALCAT": {
       "token": "assets/kits/NERMALCAT/token.png",
@@ -860,6 +1384,17 @@
         "url": "https://pbs.twimg.com/media/G8Sme3LbcAAWog4.jpg",
         "handle": "BrutIndia",
         "post": "https://x.com/BrutIndia/status/2000922107421843585"
+      }
+    },
+    "NORAKEYS": {
+      "token": "assets/kits/NORAKEYS/token.png",
+      "banner": "assets/kits/NORAKEYS/banner.png",
+      "bannerPlain": "assets/kits/NORAKEYS/banner-plain.png",
+      "tokenSha256": "7d8e18612dfca549cf363ca03cb12efbb2a65abfce2b6fabfe935fd8464b312c",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HGjhSjpW0AAehnC.png?name=orig",
+        "handle": "MalthusianThan1",
+        "post": "https://x.com/MalthusianThan1/status/2047135127143108633"
       }
     },
     "NOSTROMCAT": {
@@ -891,6 +1426,17 @@
         "post": "https://x.com/AitaiKuji/status/1817266711646683590"
       }
     },
+    "NYAZCATS": {
+      "token": "assets/kits/NYAZCATS/token.png",
+      "banner": "assets/kits/NYAZCATS/banner.png",
+      "bannerPlain": "assets/kits/NYAZCATS/banner-plain.png",
+      "tokenSha256": "e6e81dfee8ce26bf0fc151add4392f42e853ba8ea9297b0520f322601fd58059",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HPkDR3LXUAAXDG5.jpg?name=orig",
+        "handle": "Nyazsche",
+        "post": "https://x.com/Nyazsche/status/2087703510666084646"
+      }
+    },
     "OCTOMONA": {
       "token": "assets/kits/OCTOMONA/token.png",
       "banner": "assets/kits/OCTOMONA/banner.png",
@@ -902,12 +1448,45 @@
         "post": "https://x.com/github/status/1646510295630880770"
       }
     },
+    "OJINEKO": {
+      "token": "assets/kits/OJINEKO/token.png",
+      "banner": "assets/kits/OJINEKO/banner.png",
+      "bannerPlain": "assets/kits/OJINEKO/banner-plain.png",
+      "tokenSha256": "abaee1aa7f6c46d54523eaad4d9ad04fcf583469bf2a84d9d23a3578b86b5182",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/DCHn6j3UwAA1Zfn.jpg?name=orig",
+        "handle": "sakurai_umi_",
+        "post": "https://x.com/sakurai_umi_/status/874235144307068928"
+      }
+    },
+    "OLDFLOSSIE": {
+      "token": "assets/kits/OLDFLOSSIE/token.png",
+      "banner": "assets/kits/OLDFLOSSIE/banner.png",
+      "bannerPlain": "assets/kits/OLDFLOSSIE/banner-plain.png",
+      "tokenSha256": "d8950fa2de5feef5734f4db5a8d3c61cee8213f1e25cb405155d424450f57104",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FiSV-XTVQAM00m_.jpg?name=orig",
+        "handle": "GWR",
+        "post": "https://x.com/GWR/status/1595565081021992960"
+      }
+    },
     "OLIVIACAT": {
       "token": "assets/kits/OLIVIACAT/token.png",
       "banner": "assets/kits/OLIVIACAT/banner.png",
       "bannerPlain": "assets/kits/OLIVIACAT/banner-plain.png",
       "tokenSha256": "0c79499e4e9b4e8687ccb850142be82ae0efe0ece743f8b80a621305b141640a",
       "photo": null
+    },
+    "ORANGEY": {
+      "token": "assets/kits/ORANGEY/token.png",
+      "banner": "assets/kits/ORANGEY/banner.png",
+      "bannerPlain": "assets/kits/ORANGEY/banner-plain.png",
+      "tokenSha256": "77d71f499c6fe3830973f4e1909ea5b3766bbdc607dae85d0cfef07e4a320fa0",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HKx6OE_XMAARHGd.jpg?name=orig",
+        "handle": "WadeJo8",
+        "post": "https://x.com/WadeJo8/status/2066160713836478606"
+      }
     },
     "OSCARRI": {
       "token": "assets/kits/OSCARRI/token.png",
@@ -959,6 +1538,24 @@
       "tokenSha256": "19c6487cad5cbe9678db132de2ba876cd7c9c8872aa815fe88df4af94f008f5f",
       "photo": null
     },
+    "PAYAKE": {
+      "token": "assets/kits/PAYAKE/token.png",
+      "banner": "assets/kits/PAYAKE/banner.png",
+      "bannerPlain": "assets/kits/PAYAKE/banner-plain.png",
+      "tokenSha256": "a77ba8c2470bc89537a6660091ca76c3030f5c5f5d12c42d379d81ef5cc5b450",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HHcIKFDaMAAMiSu.jpg?name=orig",
+        "handle": "donguri_manchi",
+        "post": "https://x.com/donguri_manchi/status/2051120885462171727"
+      }
+    },
+    "PEEPEECAT": {
+      "token": "assets/kits/PEEPEECAT/token.png",
+      "banner": "assets/kits/PEEPEECAT/banner.png",
+      "bannerPlain": "assets/kits/PEEPEECAT/banner-plain.png",
+      "tokenSha256": "fac3879784cac11ca5779544f1aa5de971e9078e02ba7d37ba4f1dbcfa5de8e6",
+      "photo": null
+    },
     "PEPPERCAT": {
       "token": "assets/kits/PEPPERCAT/token.png",
       "banner": "assets/kits/PEPPERCAT/banner.png",
@@ -987,12 +1584,45 @@
       "tokenSha256": "e3d078e52257e13d594d4348cc97e716f85ae1ebffb49fffc32bee089cd77cd3",
       "photo": null
     },
+    "PONTAKUN": {
+      "token": "assets/kits/PONTAKUN/token.png",
+      "banner": "assets/kits/PONTAKUN/banner.png",
+      "bannerPlain": "assets/kits/PONTAKUN/banner-plain.png",
+      "tokenSha256": "84f6ac41da47d14a0331edcc10069833100469cbf661aa4b998d2a9d2aafd45e",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HQpnpAXbcAAYUQj.jpg?name=orig",
+        "handle": "TsuyoshiWood",
+        "post": "https://x.com/TsuyoshiWood/status/2092598937169653987"
+      }
+    },
+    "PRINCEKIT": {
+      "token": "assets/kits/PRINCEKIT/token.png",
+      "banner": "assets/kits/PRINCEKIT/banner.png",
+      "bannerPlain": "assets/kits/PRINCEKIT/banner-plain.png",
+      "tokenSha256": "b1f2c85fc4e47509f5a153e4f1aa85e00325314487d96d3176381fad328c4514",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GYB1nNOWAAAQF26.jpg?name=orig",
+        "handle": "kateferguson4",
+        "post": "https://x.com/kateferguson4/status/1837597975574708260"
+      }
+    },
     "PRISMPAW": {
       "token": "assets/kits/PRISMPAW/token.png",
       "banner": "assets/kits/PRISMPAW/banner.png",
       "bannerPlain": "assets/kits/PRISMPAW/banner-plain.png",
       "tokenSha256": "8a80907c323f3c95441873c7848632c43087f0da29d25c98c7ff1736a75aea92",
       "photo": null
+    },
+    "PROFMEOW": {
+      "token": "assets/kits/PROFMEOW/token.png",
+      "banner": "assets/kits/PROFMEOW/banner.png",
+      "bannerPlain": "assets/kits/PROFMEOW/banner-plain.png",
+      "tokenSha256": "d9124bcb87575b4fbad1288200876c22d1e2743dd60fc972939e4a7f456102c2",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/DOiAnGpV4AI7SFu.jpg?name=orig",
+        "handle": "meowingtons",
+        "post": "https://x.com/meowingtons/status/930134744645455872"
+      }
     },
     "PUMICE": {
       "token": "assets/kits/PUMICE/token.png",
@@ -1023,6 +1653,17 @@
         "post": "https://x.com/Dreamworks/status/1845158492451303649"
       }
     },
+    "QCGENESIS": {
+      "token": "assets/kits/QCGENESIS/token.png",
+      "banner": "assets/kits/QCGENESIS/banner.png",
+      "bannerPlain": "assets/kits/QCGENESIS/banner-plain.png",
+      "tokenSha256": "48ae3301d6f282e054210084fc838cdb7078a38ae059854fc3d92e1ee1fd6b67",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GDpp_iFW8AAeNcX.jpg?name=orig",
+        "handle": "QuantumCats",
+        "post": "https://x.com/QuantumCats/status/1745824349293092904"
+      }
+    },
     "RAFTERPAW": {
       "token": "assets/kits/RAFTERPAW/token.png",
       "banner": "assets/kits/RAFTERPAW/banner.png",
@@ -1030,12 +1671,34 @@
       "tokenSha256": "ea80d5515dede617d913054bb43f6bf8dc92abb8e9ce1ca52adc14a496498f23",
       "photo": null
     },
+    "RAYMONDCAT": {
+      "token": "assets/kits/RAYMONDCAT/token.png",
+      "banner": "assets/kits/RAYMONDCAT/banner.png",
+      "bannerPlain": "assets/kits/RAYMONDCAT/banner-plain.png",
+      "tokenSha256": "beb9d5115fc2556b00f688d064cfeb7230fdc9e92f1d588f1bbb7dc6ff672234",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/EjQEOUeXkAAT0cQ.png?name=orig",
+        "handle": "ACWorldBlog",
+        "post": "https://x.com/ACWorldBlog/status/1311678037507952640"
+      }
+    },
     "RIMESTRIPE": {
       "token": "assets/kits/RIMESTRIPE/token.png",
       "banner": "assets/kits/RIMESTRIPE/banner.png",
       "bannerPlain": "assets/kits/RIMESTRIPE/banner-plain.png",
       "tokenSha256": "8e880b59b58b85aa6d3ebe495e653ad37f5529b06cfe9492b43f7aef52bf12f6",
       "photo": null
+    },
+    "ROLFCAT": {
+      "token": "assets/kits/ROLFCAT/token.png",
+      "banner": "assets/kits/ROLFCAT/banner.png",
+      "bannerPlain": "assets/kits/ROLFCAT/banner-plain.png",
+      "tokenSha256": "b8d89b90614618b99843194e8d584db5e1d4c6424ba5f8e3963dc3b93fa20974",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HO8HVyAWsAAEsMx.jpg?name=orig",
+        "handle": "RolfatWarwick",
+        "post": "https://x.com/RolfatWarwick/status/2084893226348015685"
+      }
     },
     "ROOKIEPAW": {
       "token": "assets/kits/ROOKIEPAW/token.png",
@@ -1057,6 +1720,17 @@
       "bannerPlain": "assets/kits/RUBYCAT/banner-plain.png",
       "tokenSha256": "57d9cc92b581ccd45b884597aa6b2da7d09aca224a33df12e382eb38a5763086",
       "photo": null
+    },
+    "RURUNEKO": {
+      "token": "assets/kits/RURUNEKO/token.png",
+      "banner": "assets/kits/RURUNEKO/banner.png",
+      "bannerPlain": "assets/kits/RURUNEKO/banner-plain.png",
+      "tokenSha256": "d2917154c6cd0aee7bc4d227d3219147755e2bb54deed532c54d9e08b3319cf0",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/Ey6RWWLVUAEXJHK.jpg?name=orig",
+        "handle": "turi2018",
+        "post": "https://x.com/turi2018/status/1382201954357563396"
+      }
     },
     "RUSTLEPAW": {
       "token": "assets/kits/RUSTLEPAW/token.png",
@@ -1083,6 +1757,50 @@
       "tokenSha256": "035fe4fceb17229bfa2c28e8f3bcd3733c9bd2e1bbfcdedfe2c7e4b05613fe7b",
       "photo": null
     },
+    "SAGGYCAT": {
+      "token": "assets/kits/SAGGYCAT/token.png",
+      "banner": "assets/kits/SAGGYCAT/banner.png",
+      "bannerPlain": "assets/kits/SAGGYCAT/banner-plain.png",
+      "tokenSha256": "ea5943245b58c1c3e739b37d2b0b8e56c7f87c9893749b342a55a4301afd9872",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HA8dB6eXUAA_IQr.jpg?name=orig",
+        "handle": "MarkFow74007631",
+        "post": "https://x.com/MarkFow74007631/status/2021866688006824383"
+      }
+    },
+    "SALADCAT": {
+      "token": "assets/kits/SALADCAT/token.png",
+      "banner": "assets/kits/SALADCAT/banner.png",
+      "bannerPlain": "assets/kits/SALADCAT/banner-plain.png",
+      "tokenSha256": "dde0cc8c8dc882dd373fb6f0a9980240b80defec9248b8b6230bae3006c845c9",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GXNN88BW8AAYdmt.jpg?name=orig",
+        "handle": "SmudgeLord",
+        "post": "https://x.com/SmudgeLord/status/1833895189372338546"
+      }
+    },
+    "SAMBROWS": {
+      "token": "assets/kits/SAMBROWS/token.png",
+      "banner": "assets/kits/SAMBROWS/banner.png",
+      "bannerPlain": "assets/kits/SAMBROWS/banner-plain.png",
+      "tokenSha256": "e31268c34e08766b64b9d62c63e5f34feae2b21fec865b4eed0e3906746c046c",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/CkisEbPUgAA6PS-.jpg?name=orig",
+        "handle": "Samhaseyebrows",
+        "post": "https://x.com/Samhaseyebrows/status/741031337776156672"
+      }
+    },
+    "SAMENYAN": {
+      "token": "assets/kits/SAMENYAN/token.png",
+      "banner": "assets/kits/SAMENYAN/banner.png",
+      "bannerPlain": "assets/kits/SAMENYAN/banner-plain.png",
+      "tokenSha256": "bf536cd322afbace550164d8c1353ce529233f33a31faa743227550b9f8db049",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HRtOzUvbcAABzQU.jpg?name=orig",
+        "handle": "mofu_sand",
+        "post": "https://x.com/mofu_sand/status/2097459970849816950"
+      }
+    },
     "SANDSTEP": {
       "token": "assets/kits/SANDSTEP/token.png",
       "banner": "assets/kits/SANDSTEP/banner.png",
@@ -1107,6 +1825,17 @@
       "bannerPlain": "assets/kits/SAVEPAWS/banner-plain.png",
       "tokenSha256": "064f2025c88de0aa426a84ca0539b544ab3b4c9780ef3eafcd4971073f4f77f9",
       "photo": null
+    },
+    "SAYHIBOB": {
+      "token": "assets/kits/SAYHIBOB/token.png",
+      "banner": "assets/kits/SAYHIBOB/banner.png",
+      "bannerPlain": "assets/kits/SAYHIBOB/banner-plain.png",
+      "tokenSha256": "f66c18076704c8a1e934cbf7c6bb39e11df303920d8623b3dd3cf5e2f8cd012b",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FOJVRGCWYAMtWW_.jpg?name=orig",
+        "handle": "rambites",
+        "post": "https://x.com/rambites/status/1504858984116805632"
+      }
     },
     "SCRATCHC": {
       "token": "assets/kits/SCRATCHC/token.png",
@@ -1162,6 +1891,17 @@
       "tokenSha256": "4217ebc224b79e241c1d652aa320adeae5de778ae02d8a5214cb25a2884e4747",
       "photo": null
     },
+    "SINSMILE": {
+      "token": "assets/kits/SINSMILE/token.png",
+      "banner": "assets/kits/SINSMILE/banner.png",
+      "bannerPlain": "assets/kits/SINSMILE/banner-plain.png",
+      "tokenSha256": "a25c6687062767bc9766f3eead9dcf618dbbe675f58494ca81a66ac4362fdf19",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GiujJNyXkAALEGe.jpg?name=orig",
+        "handle": "oreoeocat",
+        "post": "https://x.com/oreoeocat/status/1885780297016287575"
+      }
+    },
     "SKEINKIT": {
       "token": "assets/kits/SKEINKIT/token.png",
       "banner": "assets/kits/SKEINKIT/banner.png",
@@ -1196,6 +1936,17 @@
       "bannerPlain": "assets/kits/SNUGPAW/banner-plain.png",
       "tokenSha256": "efebcdbe488ab151ea09b6cdf7f81d666fa2fb327f0edc46b3791193eef15b04",
       "photo": null
+    },
+    "SOCKAMILL": {
+      "token": "assets/kits/SOCKAMILL/token.png",
+      "banner": "assets/kits/SOCKAMILL/banner.png",
+      "bannerPlain": "assets/kits/SOCKAMILL/banner-plain.png",
+      "tokenSha256": "b6171d086153eab62ef8e2074b0e703448c124e88350a935e2d2f68e0a7c78ee",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/FX_GIqjWIAAHdkp.jpg?name=orig",
+        "handle": "textfiles",
+        "post": "https://x.com/textfiles/status/1549175841082511361"
+      }
     },
     "SOCKFOOT": {
       "token": "assets/kits/SOCKFOOT/token.png",
@@ -1249,6 +2000,17 @@
         "url": "https://pbs.twimg.com/media/FGRIbv9WUAE6RGX.jpg",
         "handle": "Ukraine",
         "post": "https://x.com/Ukraine/status/1469379026196307969"
+      }
+    },
+    "STOURCAT": {
+      "token": "assets/kits/STOURCAT/token.png",
+      "banner": "assets/kits/STOURCAT/banner.png",
+      "bannerPlain": "assets/kits/STOURCAT/banner-plain.png",
+      "tokenSha256": "0bd436da83bef30d9de3958614e4cbeec242274be474849a6a89894741acdf7e",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HTZVS0gWQAEeawr.jpg?name=orig",
+        "handle": "TheStourbridge",
+        "post": "https://x.com/TheStourbridge/status/2104963663115452578"
       }
     },
     "STRAYB12": {
@@ -1308,6 +2070,17 @@
       "tokenSha256": "f6e0a22cc12c0b22ee3b4c9f9bf7a5c9ba6c3cf24783a65c546107511ee3cd62",
       "photo": null
     },
+    "SYBILCAT": {
+      "token": "assets/kits/SYBILCAT/token.png",
+      "banner": "assets/kits/SYBILCAT/banner.png",
+      "bannerPlain": "assets/kits/SYBILCAT/banner-plain.png",
+      "tokenSha256": "78970ba4f1000840fe3a41db57d243934a4ff21a950477b71362a2f9872ca9df",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GALv0aTWAAAIXLo.jpg?name=orig",
+        "handle": "shitbritishpics",
+        "post": "https://x.com/shitbritishpics/status/1730209040473440315"
+      }
+    },
     "TALKTOM": {
       "token": "assets/kits/TALKTOM/token.png",
       "banner": "assets/kits/TALKTOM/banner.png",
@@ -1353,6 +2126,17 @@
         "url": "https://pbs.twimg.com/media/FgQ_x8aXwAERKtG.jpg",
         "handle": "OriginalFunko",
         "post": "https://x.com/OriginalFunko/status/1586463098462175232"
+      }
+    },
+    "THINKTHINK": {
+      "token": "assets/kits/THINKTHINK/token.png",
+      "banner": "assets/kits/THINKTHINK/banner.png",
+      "bannerPlain": "assets/kits/THINKTHINK/banner-plain.png",
+      "tokenSha256": "350b78e6e20f98108fc5e3ab0f92589480cdd9bca215ab9e7b744fcdccba6752",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/Fv7UuytaQAI33oH.jpg?name=orig",
+        "handle": "iingwen",
+        "post": "https://x.com/iingwen/status/1656999867934453760"
       }
     },
     "TOMBILICAT": {
@@ -1427,6 +2211,17 @@
       "tokenSha256": "f897759fa83214777a7297b885041f7301a70dfa554824a85b14ce6b3fd09a6c",
       "photo": null
     },
+    "TSUSAN": {
+      "token": "assets/kits/TSUSAN/token.png",
+      "banner": "assets/kits/TSUSAN/banner.png",
+      "bannerPlain": "assets/kits/TSUSAN/banner-plain.png",
+      "tokenSha256": "27297a28e17a9bc9b1c093afcb59e9b992b9a1bff788ff5e268774be456f9ff7",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/G9iFUeuaMAIAWjS.jpg?name=orig",
+        "handle": "tsushimacat",
+        "post": "https://x.com/tsushimacat/status/2006500235741446601"
+      }
+    },
     "TUBBSCAT": {
       "token": "assets/kits/TUBBSCAT/token.png",
       "banner": "assets/kits/TUBBSCAT/banner.png",
@@ -1441,12 +2236,45 @@
       "tokenSha256": "b6fe421237d7fb3e27de43bfc4091143f21917589701527d69346261c75b6fc7",
       "photo": null
     },
+    "TUXSTAN": {
+      "token": "assets/kits/TUXSTAN/token.png",
+      "banner": "assets/kits/TUXSTAN/banner.png",
+      "bannerPlain": "assets/kits/TUXSTAN/banner-plain.png",
+      "tokenSha256": "f0551fbf3fb63db4afeb2423b561664b4036515240f7904894fb60e77c266cf8",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/D2XL9mCXgAEgpeA.jpg?name=orig",
+        "handle": "uoftcanpol",
+        "post": "https://x.com/uoftcanpol/status/1109517485630464006"
+      }
+    },
+    "ULYSSESCAT": {
+      "token": "assets/kits/ULYSSESCAT/token.png",
+      "banner": "assets/kits/ULYSSESCAT/banner.png",
+      "bannerPlain": "assets/kits/ULYSSESCAT/banner-plain.png",
+      "tokenSha256": "a6c9a042182ac50e917c46d288ab9b2aedc2c249a71c85be659844a905f1e880",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/GXHgxrYaYAAGmFS.jpg?name=orig",
+        "handle": "N7yx_0",
+        "post": "https://x.com/N7yx_0/status/1833493673721680175"
+      }
+    },
     "UMBERPAW": {
       "token": "assets/kits/UMBERPAW/token.png",
       "banner": "assets/kits/UMBERPAW/banner.png",
       "bannerPlain": "assets/kits/UMBERPAW/banner-plain.png",
       "tokenSha256": "c9723bc08cdbdf3e66795e018893c3eea3121f6026f83528171a0c9c179dfa11",
       "photo": null
+    },
+    "UNIUNI": {
+      "token": "assets/kits/UNIUNI/token.png",
+      "banner": "assets/kits/UNIUNI/banner.png",
+      "bannerPlain": "assets/kits/UNIUNI/banner-plain.png",
+      "tokenSha256": "e018a4b6be7a4fbd5010ddeed9e09cc8248bf9d36c2f4a5e126c9d8114fc8a5a",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HRkF-ccaEAAhE8X.jpg?name=orig",
+        "handle": "unicouniuni3",
+        "post": "https://x.com/unicouniuni3/status/2096713681530970406"
+      }
     },
     "UNSINKSAM": {
       "token": "assets/kits/UNSINKSAM/token.png",
@@ -1536,6 +2364,28 @@
       "bannerPlain": "assets/kits/WINDSOCK/banner-plain.png",
       "tokenSha256": "4cd9ff449120b55e8792ebfac30cc850c740e2ca1e2e9a1bcfc1c667328c2ea5",
       "photo": null
+    },
+    "YONTAMACAT": {
+      "token": "assets/kits/YONTAMACAT/token.png",
+      "banner": "assets/kits/YONTAMACAT/banner.png",
+      "bannerPlain": "assets/kits/YONTAMACAT/banner-plain.png",
+      "tokenSha256": "46f673b051dc94db980fdd3909cf6213b9ffcc5489792ce7653c5d86da22f782",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HK6ip3UbsAEX2jq.jpg?name=orig",
+        "handle": "ekichoTAMA",
+        "post": "https://x.com/ekichoTAMA/status/2066768127787258001"
+      }
+    },
+    "YOSHINEKO": {
+      "token": "assets/kits/YOSHINEKO/token.png",
+      "banner": "assets/kits/YOSHINEKO/banner.png",
+      "bannerPlain": "assets/kits/YOSHINEKO/banner-plain.png",
+      "tokenSha256": "9e6c7728670ea6bc03f1b80e04828f937b96fa79ddff9124bec8c8a8d4b4bd93",
+      "photo": {
+        "url": "https://pbs.twimg.com/media/HTHiMJCa8AAYNaP.jpg?name=orig",
+        "handle": "kumamine_kobo",
+        "post": "https://x.com/kumamine_kobo/status/2103711207559676353"
+      }
     }
   }
 }

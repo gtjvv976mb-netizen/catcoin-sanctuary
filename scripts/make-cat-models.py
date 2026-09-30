@@ -37,7 +37,7 @@ ROOT = Path(__file__).resolve().parent.parent
 JOBS = ROOT / "scripts/cat-models.jobs.json"
 CACHE = ROOT / "scripts/.cat-models-cache"
 OUT = ROOT / "assets/models/cats"
-BUDGET_HI, BUDGET_LO, BUDGET_HD, BUDGET_HD_LO = 600_000, 150_000, 800_000, 300_000
+BUDGET_HI, BUDGET_LO, BUDGET_HD, BUDGET_HD_LO = 600_000, 150_000, 1_300_000, 300_000
 COMP = {5120: np.int8, 5121: np.uint8, 5122: np.int16, 5123: np.uint16, 5125: np.uint32, 5126: np.float32}
 NCOMP = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4, "MAT4": 16}
 

@@ -20,12 +20,13 @@ const GRADE = {
     uSun: { value: new THREE.Vector3(0.2, 0.9, 1) }, // the sun on screen (uv) and how much it is in view
     uAspect: { value: 1 },
     uRays: { value: 1 },
+    uSat: { value: 1.22 }, // (photoreal.js lowers it: photographs need less help)
   },
   vertexShader: "varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
   fragmentShader: /* glsl */`
     uniform sampler2D tDiffuse;
     uniform vec3 uSun;
-    uniform float uAspect, uRays;
+    uniform float uAspect, uRays, uSat;
     varying vec2 vUv;
     void main() {
       vec4 c = texture2D(tDiffuse, vUv);
@@ -46,7 +47,7 @@ const GRADE = {
       }
       // Warm, bright grade: a little more colour, lifted shadows, golden highlights.
       float l = dot(col, vec3(0.2126, 0.7152, 0.0722));
-      col = mix(vec3(l), col, 1.22);
+      col = mix(vec3(l), col, uSat);
       col = col * vec3(1.03, 1.0, 0.95) + vec3(0.006, 0.005, 0.003);
       gl_FragColor = vec4(max(col, 0.0), c.a);
     }`,
@@ -95,6 +96,7 @@ export async function createPost(renderer, scene, camera, { q, aoSkip, sunDir })
   return {
     composer,
     gtao,
+    grade,
     render() {
       // Where the sun is on screen, for the soft rays.
       sunV.copy(sunDir).multiplyScalar(1000).add(camera.position).project(camera);

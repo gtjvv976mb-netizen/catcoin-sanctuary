@@ -16,13 +16,15 @@ const _m = new THREE.Matrix4(), _q = new THREE.Quaternion(), _v = new THREE.Vect
  * @param {Array} o.statics   geometries merged into the props (garden.js)
  * @param {Array} o.glass     geometries for the glass material
  * @param {Array} o.glows     geometries for the glowing lamp glass
+ * @param {Function} o.tag    marks a geometry as part of a prop photoreal.js may swap for a model
+ * @param {object} o.spots    where each such prop stands, by kind
  * @param {Function} o.paint  paint(geo, hex, rnd?, jitter?)
  * @param {Function} o.place  place(geo, x, y, z, rx, ry, rz, sx, sy, sz)
  * @param {Function} o.sway   sway(geo, y0, k)
  * @param {THREE.Group} o.group
  * @param {object} o.q        the quality tier
  */
-export function addScenery({ statics, glass, glows, paint, place, sway, group, q }) {
+export function addScenery({ statics, glass, glows, paint, place, sway, group, q, tag, spots }) {
   const rnd = makeRandom("scenery-v1");
   const H = L.groundHeight;
   const box = (w, h, d, x, y, z, ry, hex, j = 0.03) => statics.push(paint(place(new THREE.BoxGeometry(w, h, d), x, y, z, 0, ry), hex, rnd, j));
@@ -136,12 +138,13 @@ export function addScenery({ statics, glass, glows, paint, place, sway, group, q
   /* ── Benches in the garden, with a terracotta planter of flowers at each end ── */
   for (const b of L.GARDEN_BENCHES) {
     const c = Math.cos(b.yaw), s = Math.sin(b.yaw), fx = -s, fz = -c; // the seat's back is towards -forward
-    for (let k = 0; k < 4; k++) statics.push(paint(place(new THREE.BoxGeometry(1.8, 0.05, 0.11), b.x + fx * (-0.18 + k * 0.12), 0.48, b.z + fz * (-0.18 + k * 0.12), 0, b.yaw), 0xc08a58, rnd, 0.05));
-    for (let k = 0; k < 3; k++) statics.push(paint(place(new THREE.BoxGeometry(1.8, 0.1, 0.04), b.x - fx * 0.26, 0.66 + k * 0.14, b.z - fz * 0.26, -0.18, b.yaw), 0xc08a58, rnd, 0.05));
+    for (let k = 0; k < 4; k++) statics.push(tag("bench", paint(place(new THREE.BoxGeometry(1.8, 0.05, 0.11), b.x + fx * (-0.18 + k * 0.12), 0.48, b.z + fz * (-0.18 + k * 0.12), 0, b.yaw), 0xc08a58, rnd, 0.05)));
+    for (let k = 0; k < 3; k++) statics.push(tag("bench", paint(place(new THREE.BoxGeometry(1.8, 0.1, 0.04), b.x - fx * 0.26, 0.66 + k * 0.14, b.z - fz * 0.26, -0.18, b.yaw), 0xc08a58, rnd, 0.05)));
     for (const e of [-0.8, 0.8]) {
-      statics.push(paint(place(new THREE.BoxGeometry(0.07, 0.5, 0.5), b.x + c * e, 0.25, b.z - s * e, 0, b.yaw), 0x4a3f44));
-      statics.push(paint(place(new THREE.BoxGeometry(0.07, 0.07, 0.5), b.x + c * e, 0.72, b.z - s * e, 0, b.yaw), 0x4a3f44));
+      statics.push(tag("bench", paint(place(new THREE.BoxGeometry(0.07, 0.5, 0.5), b.x + c * e, 0.25, b.z - s * e, 0, b.yaw), 0x4a3f44)));
+      statics.push(tag("bench", paint(place(new THREE.BoxGeometry(0.07, 0.07, 0.5), b.x + c * e, 0.72, b.z - s * e, 0, b.yaw), 0x4a3f44)));
     }
+    spots.bench.push({ x: b.x, y: 0, z: b.z, yaw: Math.atan2(fx, fz) });
   }
   for (const p of L.PLANTERS) {
     statics.push(paint(place(new THREE.CylinderGeometry(0.34, 0.25, 0.52, 12), p.x, 0.26, p.z), 0xc9704a, rnd, 0.03));

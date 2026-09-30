@@ -103,11 +103,16 @@ export function buildResearch(scene, { house = null, requestRender: rr = () => {
   /* ── The rooftop dish antenna: a mast, a dish that turns and nods ── */
   const ant = new THREE.Group();
   ant.position.set(RESEARCH.antenna.x, RESEARCH.antenna.y, RESEARCH.antenna.z);
-  if (house) {
-    house.updateMatrixWorld(true);
-    const down = new THREE.Raycaster(new THREE.Vector3(RESEARCH.antenna.x, 20, RESEARCH.antenna.z), new THREE.Vector3(0, -1, 0));
-    const h = down.intersectObject(house, true)[0];
-    if (h) ant.position.y = h.point.y - 0.05;
+  /** Sets the antenna on the cottage's roof (by a ray; with `wall`, the plaque on its front wall too) and takes its glowing materials. */
+  function fitHouse(h, wall = false) {
+    h.updateMatrixWorld(true);
+    const A = RESEARCH.antenna, P = RESEARCH.plaque;
+    const roof = new THREE.Raycaster(new THREE.Vector3(A.x, 20, A.z), new THREE.Vector3(0, -1, 0)).intersectObject(h, true)[0];
+    if (roof) ant.position.y = roof.point.y - 0.05;
+    const front = wall && new THREE.Raycaster(new THREE.Vector3(P.x, P.y, 8), new THREE.Vector3(0, 0, -1)).intersectObject(h, true)[0];
+    plaque.position.z = front ? front.point.z + 0.04 : P.z;
+    houseMats.length = 0;
+    h.traverse((o) => { if (o.isMesh && o.material?.emissive) houseMats.push(o.material); });
   }
   const mast = shadowed(new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 1.0, 6), lambert(0x9aa3ad)));
   mast.position.y = 0.5;
@@ -219,7 +224,7 @@ export function buildResearch(scene, { house = null, requestRender: rr = () => {
   let status = researchStatus(null, null);
   let log = null, inbox = null, pinned = false;
   const houseMats = [];
-  house?.traverse((o) => { if (o.isMesh && o.material?.emissive) houseMats.push(o.material); });
+  if (house) fitHouse(house);
   function apply() {
     const on = status.active;
     porchLight.intensity = on ? 6 : 0;
@@ -318,6 +323,8 @@ export function buildResearch(scene, { house = null, requestRender: rr = () => {
     setData(l, i, now = Date.now()) { pinned = true; log = l; inbox = i; status = researchStatus(l, i, now); apply(); return status; },
     open,
     hit,
+    /** A new cottage (photoreal.js): the antenna, the plaque and the glow follow it. */
+    setHouse(h) { fitHouse(h, true); apply(); },
     update(still) {
       const t = AMBIENT.uTime.value;
       if (status.active && !still) {

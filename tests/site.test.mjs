@@ -297,7 +297,12 @@ test("page weight: the first view stays within budget", () => {
   // legs the view shows shared with the sims so no paw skates (catmotion legStep); 1066 KB at the merge with cat-motion.)
   // (Then, 2026-09-30, to 1140 KB (1133 KB measured) with main's own growth to 724 KB merged in: the Trending tab,
   // adopted cats on cards, the launcher's routing and the holder rewards, on top of the cat-motion and big-cat work.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1140 * 1024, "the page's own scripts over 1140 KB");
+  // (Then, 2026-09-30, to 1160 KB for the photoreal garden on the medium and high tiers, ~17.5 KB:
+  // assets/world/photoreal.js (~10 KB, imported only once the first view is up, but counted here as every module
+  // is) and the hooks it uses: the terrain's swappable textures, bark and the tree models in flora.js, the
+  // swappable props kept apart in garden.js and scenery.js, research.js following a new cottage. Its textures
+  // and models are fetched by path afterwards, so they are not in this budget at all.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1160 * 1024, "the page's own scripts over 1160 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");

@@ -1581,7 +1581,8 @@ export function makeClips(rig, style = {}, fit = null) {
     const bob = g.bob * st.bob * lt, sway = 1 + st.sway * 2.5;
     const lift = -lower - bob * (1 - C(TAU * (u - (g.hi ?? 0.31)) * (g.bobs ?? 2))) / 2;
     const rollP = g.roll * sway * C(TAU * (u - (g.rollAt ?? 0.81))), yawP = g.yaw * sway * C(TAU * u);
-    const rollC = g.roll * 0.7 * C(TAU * (u - (g.rollAt ?? 0.81) + 0.25)), yawC = g.yaw * 0.8 * C(TAU * (u - 0.75));
+    // (the shoulders as far off the hips as the forelegs' footfalls: `fore`)
+    const rollC = g.roll * 0.7 * C(TAU * (u - (g.rollAt ?? 0.81) + (g.fore ?? 0.25))), yawC = g.yaw * 0.8 * C(TAU * (u - 1 + (g.fore ?? 0.25)));
     const flexW = g.flex ? C(TAU * (u + 0.05)) : 0; // gallop: back rounded (+) as the hind legs come under, stretched (-) at full reach
     const pelvis = [g.flex * flexW * 0.45, yawP, rollP], spine = [g.flex * flexW * 0.25, 0, 0], chest = [-g.flex * flexW * 1.15, yawC - yawP, rollC - rollP];
     const B0 = body(K, { lift, pelvis, spine, chest }, 0);
@@ -1605,14 +1606,17 @@ export function makeClips(rig, style = {}, fit = null) {
   };
   const gait = (u, g) => pose(gaitSpec(u, g));
   const FPS = 32;
+  const LATERAL = { hL: 0, fL: 0.75, hR: 0.5, fR: 0.25 };
   const GAITS = {
-    walk: { rate: GAIT_RATE.walk, duty: 0.62, lift: 0.1, phase: { hL: 0, fL: 0.25, hR: 0.5, fR: 0.75 }, crouch: 0, bob: 0.016, roll: 0.035, yaw: 0.05, tail: -0.05, nod: 0.026 },
-    trot: { rate: GAIT_RATE.trot, duty: 0.45, lift: 0.16, phase: { hL: 0, fR: 0, hR: 0.5, fL: 0.5 }, crouch: 0, bob: 0.024, roll: 0.025, yaw: 0.035, rollAt: 0.75, tail: 0.1, tailSway: 0.14, nod: 0.02 },
+    // (Walk and stalk: a lateral sequence, left hind, left fore, right hind, right fore, a quarter cycle
+    // apart; trot: diagonal pairs, the fore a touch first (so a walk blends into it unslid); run: rotary.)
+    walk: { rate: GAIT_RATE.walk, duty: 0.62, lift: 0.1, phase: LATERAL, fore: 0.75, crouch: 0, bob: 0.016, roll: 0.035, yaw: 0.05, tail: -0.05, nod: 0.026 },
+    trot: { rate: GAIT_RATE.trot, duty: 0.45, lift: 0.16, phase: { hL: 0, fR: 0.05, hR: 0.5, fL: 0.55 }, crouch: 0, bob: 0.024, roll: 0.025, yaw: 0.035, rollAt: 0.75, tail: 0.1, tailSway: 0.14, nod: 0.02 },
     run: { rate: GAIT_RATE.run, duty: 0.32, lift: 0.22, phase: { hL: 0, hR: 0.1, fR: 0.4, fL: 0.52 }, crouch: 0, flex: 0.2, bob: 0.05, bobs: 1, hi: 0.93, roll: 0.02, yaw: 0.02, tail: -0.1, tailWave: 0.06, headLow: 1, headPitch: -0.04,
       tailSides: (u) => [0, 0.04 * S(TAU * u), 0.06 * S(TAU * u - 0.8), 0.08 * S(TAU * u - 1.6)] },
     // Stalking: low and slow, each paw lifted, held and placed with care; head low, level and still;
     // tail low, only its tip twitching.
-    stalk: { rate: GAIT_RATE.stalk, duty: 0.74, lift: 0.08, phase: { hL: 0, fL: 0.25, hR: 0.5, fR: 0.75 }, crouch: 0.28 * amp("stalk"), bob: 0.004, roll: 0.02, yaw: 0.02, tail: -0.35, headLow: 1, headDrop: 0.12, headPitch: 0.1,
+    stalk: { rate: GAIT_RATE.stalk, duty: 0.74, lift: 0.08, phase: LATERAL, fore: 0.75, crouch: 0.28 * amp("stalk"), bob: 0.004, roll: 0.02, yaw: 0.02, tail: -0.35, headLow: 1, headDrop: 0.12, headPitch: 0.1,
       swing: (s) => [smoother((s - 0.12) / 0.76), S(PI * Math.min(1, s * 1.15)) ** 0.5],
       tailSides: (u) => [0, 0, 0.04 * S(TAU * u), 0.3 * S(TAU * u * 3) * S(TAU * u * 2)] },
   };

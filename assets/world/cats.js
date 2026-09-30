@@ -1264,6 +1264,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     }
     const dl = Math.hypot(dx, dz) || 1;
     dx /= dl; dz /= dl;
+    // (Its head looks along the way ahead, so it leads a turn; a hunter's stays on its prey.)
+    if (!cat.lookOn) setLook(cat, { x: cat.x + dx * 2 * g, z: cat.z + dz * 2 * g }, 0.15 * g);
     // Personal space: ease away from other cats nearby, more from ones lying still; one lying in its path
     // ahead it passes beside, in good time (by size: a big cat is passed wider, seen from further off).
     const look = 1.3, my = cat.size;
@@ -1882,7 +1884,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         if (act.t > step.until) { if (step.endOk) { skipTo(act, cat); return true; } return abortAct(cat); }
         // Aim at a point short of the target, on the cat's side of it.
         const k = d > 1e-3 ? Math.max(0, d - step.stopAt) / d : 0;
-        cat.wa = "move"; cat.stalk = !!step.stalk; cat.lookOn = false;
+        cat.wa = "move"; cat.stalk = !!step.stalk; setLook(cat, tg, 0.15);
         const r = walk(cat, step, cat.x + (tg.x - cat.x) * k, cat.z + (tg.z - cat.z) * k, dt, speedOf(cat, step.mode), 0.15, act.ignoreNow);
         if (r === "arrived") { cat.route = null; return nextStep(act, step); }
         if (r === "stuck") { if (cat.big) cat.hemmedUntil = time + HEMMED; return abortAct(cat); }
