@@ -30,33 +30,33 @@ Normalized: y up, facing +X, 1 unit tall, feet on y = 0; texture 1024 px JPEG; g
 | Cat | Picture job | Clean image job | 3D job | Model | Full | Far |
 |---|---|---|---|---|---|---|
 | PATCHPAW | 6dc202df-47c4-426b-99c1-40f6dfe915e0 | 155eb386-ccfa-45b1-9153-329929408fe2 | 40724ed0-b4b6-49e1-9784-34398e20882e | tripo_h3_1_image_to_3d, 12000 faces | 322 KB | 112 KB |
-| WHISK100 | 5c75f0aa-dcb6-4641-aa4d-f14bef38bb9f | 736ecb30-955e-4e81-9955-64a8582fd9e2 | b9b7bfb3-969e-4243-bd64-760bff75d346 | tripo_h3_1_image_to_3d, 12000 faces | 257 KB | 87 KB |
+| WHISK100 | e761b7ed-331e-4205-889d-43dae5f45625 | ebe4e914-f4b5-426f-adfc-11d117b71a3b | 8c6d24df-3d09-4522-83f1-4eb42459b760 | tripo_h3_1_image_to_3d, 12000 faces | 339 KB | 127 KB |
 | INGOTLOAF | 39421f6e-3df3-48c8-8f97-3a1af2442c13 | e3f54c2e-783d-41db-b31b-5645a8e22a12 | 01a0e00d-29a0-750f-a214-840e56bec41d | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 367 KB | 113 KB |
 | SNOWCURL | 7dc12802-ae82-4c29-a1f1-ad88e8bd7dbf | 206d3c7f-bfe5-4561-b744-bc5f7d4f2312 | 90cd79b0-7437-4ca3-8a11-86dadb8e34b6 | tripo_h3_1_image_to_3d, 12000 faces | 223 KB | 72 KB |
 | SOCKFOOT | 7238ed56-6b09-4fa5-b544-5bc1958b09a1 | c227931b-5d5a-4c9f-b696-6d2243eba811 | 91390165-a186-45c3-bb02-a4d384abebc9 | tripo_h3_1_image_to_3d, 12000 faces | 262 KB | 88 KB |
 | ROSETTE | 0b8d62bd-eb9b-49a9-a401-3ffde0343e72 | 3d82cf8e-2cda-4d68-bd1e-e7c9262b187e | 6fd8f278-ec26-4ab5-82af-55af78f75766 | tripo_h3_1_image_to_3d, 12000 faces | 493 KB | 142 KB |
 | JELLIECAT | fd831572-17ef-4a93-954b-1750f4da7807 | 41c39825-f4c0-4634-a0a1-4d0532afcdea | 01a0df82-420f-7585-ab77-eabf8e8d5710 | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 426 KB | 121 KB |
-| MOMOTHECAT | 7c94bc69-4ab0-4d38-9949-4b0569170132 | f9a74bdb-5d8c-45c0-9324-87951a2d40d1 | 047b97f4-565a-40b1-ab96-ccdd49ca8f2c | tripo_h3_1_image_to_3d, 12000 faces | 240 KB | 81 KB |
+| MOMOTHECAT | 0a09386a-39a9-4b9d-a421-adcf6b7f0b7a | 1950dfcc-6cb1-4600-a0a0-bb6d7b943ea0 | 50a64ebb-519e-4a49-87a1-8e1fca364132 | tripo_h3_1_image_to_3d, 12000 faces | 250 KB | 80 KB |
 | LEOTHELION | 4f477fe4-bd4c-4508-a7f3-28a33937e9bf | cb326575-c939-4c60-8443-fc1f99184656 | 35d47414-7a17-4b10-a966-0a25467dc6db | tripo_h3_1_image_to_3d, 12000 faces | 340 KB | 109 KB |
 | COUCHCAP | c38d8c5e-d93c-4fbd-984b-19bd944ac1ef | 69cbc884-dfd6-427f-956d-f3cd74fe9346 | 01a0df7c-8816-7280-b8d2-d8fb9cbceef0 | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 470 KB | 127 KB |
-| MIGGLES | 9ea321cd-3074-4e34-b115-5f9b70884c90 | 35d34aad-1ace-4b37-a02f-bfb946f267b4 | 7f717969-b6e5-46d5-8268-fa2c36dc1575 | tripo_h3_1_image_to_3d, 12000 faces | 242 KB | 78 KB |
-| PEWTER | bf35b288-f673-4645-a450-9d085c900154 | aa5bd8fc-ae61-4700-a7eb-0a039e75b058 | ebc84ede-6aa8-4050-98e0-e2592fca3ae7 | tripo_h3_1_image_to_3d, 12000 faces | 293 KB | 100 KB |
-| TRINKETCAT | 2cff5eee-3522-450e-b4e6-02041bb0c4f6 | 1a566b0d-f68c-4e2a-9171-8fca5fc3e6e6 | af0bf37b-bb76-48fd-837f-a8fef4a4f20b | tripo_h3_1_image_to_3d, 12000 faces | 295 KB | 97 KB |
+| MIGGLES | fb4252b2-a99b-48b8-b24d-83a2fb5ddfb3 | edc08b59-c02f-43ed-a3c6-81f74cd5a533 | c049dc48-036e-4297-849a-6f0321ea03ff | tripo_h3_1_image_to_3d, 12000 faces | 385 KB | 144 KB |
+| PEWTER | 9c42b032-2cbb-46f8-82a7-f5a1b034fe33 | 151c7ac7-c7d7-4499-b492-fa2b284bb9ac | be835183-867b-46e2-8109-208ff1d81540 | tripo_h3_1_image_to_3d, 12000 faces | 281 KB | 136 KB |
+| TRINKETCAT | 69d6fa56-b4e0-436c-a17f-c67eff7a3519 | e31038a2-78a2-492f-9988-bfd2cbc8404d | 93b141a4-0d37-403c-a993-e799a60a3c4f | tripo_h3_1_image_to_3d, 12000 faces | 438 KB | 98 KB |
 | TUPPENCE | 7bd9b225-9d13-4462-a9c9-9f23091f82e1 | 06b4cd7e-d2eb-4c83-969a-b7824f3751e0 | 575d9717-9d79-4967-b6f6-b0be4afedf82 | tripo_h3_1_image_to_3d, 12000 faces | 244 KB | 81 KB |
 | WARMSPOT | 41380148-ea4b-4853-bd90-ab6b886b8eeb | 22360428-fa91-417b-875f-cb2212398c83 | 01a0df9d-8192-76f5-8ed8-0ed572bbc8ba | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 215 KB | 64 KB |
-| SKEINKIT | 38e5f17c-c00a-43ab-8778-a5857461c2e5 | 9154cc0b-519e-42df-ab51-a5036b9c2eda | d107494f-769c-4718-b28f-2b6d79c31a0b | tripo_h3_1_image_to_3d, 12000 faces | 231 KB | 76 KB |
+| SKEINKIT | 9ceecb76-f384-412d-b261-776b7ab2f21c | 1781cfae-7451-49d6-8421-bf7646e71e94 | 34eff4a8-a31e-4e48-883f-8df23a35f3b8 | tripo_h3_1_image_to_3d, 12000 faces | 318 KB | 118 KB |
 | SAVEPAWS | 3ca4900e-e25e-412c-96de-030c0dbeba0c | 88bc132d-01d5-4070-a007-52dcd67d4fc0 | 01a0e127-1305-7462-8dec-0865846a207b (far: 01a0e128-2ba3-72ea-8954-b6b859f647fb) | meshy retexture (meshy retexture (meshy retexture (tripo_h3_1_image_to_3d))), ? faces | 538 KB | 88 KB |
 | EVERLOOP | 059815cc-8a55-4f7c-bad1-07766da5cdc1 | 55a6905c-9aa7-42f2-a50d-054f95c2a8d0 | 01a0df7d-cc4c-7485-9e95-15802d0276e7 | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 406 KB | 123 KB |
 | MILKWEED | b998dff3-c08e-4e41-afed-9b8996d741b5 | e7666d6f-f624-4ff8-a475-f43f8cd4c8d9 | 08540282-1782-40b3-9978-f03653ac8147 | tripo_h3_1_image_to_3d, 12000 faces | 289 KB | 119 KB |
 | CAMTHECAT | 4c87475a-5482-4fa7-a134-fe46c98525bb | 750bbb4a-0330-4a16-bc2c-5ecda9fa8407 | aba57d7d-42c3-4f58-a648-007b4bd9ddae | tripo_h3_1_image_to_3d, 12000 faces | 259 KB | 85 KB |
 | OLIVIACAT | a5934974-191e-43e2-8a3f-4e74fb06fd05 | 5498a925-90e8-452d-a8a5-c0b0330723d5 | 01a0df85-6f54-75ea-878c-f72a6a49951b | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 383 KB | 120 KB |
-| UPDATECAT | 0061cfa8-eb81-45fa-9e32-1fe7d2808cc7 | dcfcfddd-e526-46af-b8c1-94b92c53ef3a | f9e57a51-ca33-4c81-af46-5c6484d877b5 | tripo_h3_1_image_to_3d, 12000 faces | 275 KB | 92 KB |
+| UPDATECAT | c2ab60ab-45ec-4e74-91de-3b090a2b191e | 27fec5bb-c660-4593-ad58-3e16c9dbd352 | 97e26e9a-d848-49c7-8017-3cc33b193842 | tripo_h3_1_image_to_3d, 12000 faces | 343 KB | 114 KB |
 | TRILLBY | 97a34f6d-4ed7-4bfa-9d65-31e0825b94f8 | e4878c8f-df17-411b-a77a-f63d412a3217 | 01a0e120-925c-758b-9ba5-a693fc81eda5 (far: 01a0e121-d457-7756-8f73-56d658567334) | meshy retexture (meshy retexture (tripo_h3_1_image_to_3d)), ? faces | 343 KB | 117 KB |
 | LATCHKEY | d1caa958-0ec2-45cf-924e-261123dcabfc | 862995bc-a02e-4a9d-9ac4-2f7b1435505b | 01a0e0fc-a48f-709c-9e94-3ff66241279f | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 351 KB | 107 KB |
-| MEMOPAW | 802a7f1e-7935-4fb4-818b-ae216628c300 | 88de237c-4bde-4e34-b833-c3b57c72f133 | af81be0b-b70e-4299-bffa-78f7e12c2fde | tripo_h3_1_image_to_3d, 12000 faces | 259 KB | 87 KB |
-| GIMBALPAW | fc2c2bc9-4ea0-4bfe-9249-836d07c362d2 | f9028e05-ccc9-4d10-abfb-d717f93593dd | ac3f3ec6-33b0-4a70-8a47-71032dd2c6b6 | tripo_h3_1_image_to_3d, 12000 faces | 252 KB | 87 KB |
+| MEMOPAW | 08c5dd18-be40-44dc-83f8-0507bec4d545 | 803f24e5-7d27-49fd-a6bd-67dddf99c2c6 | 4f5c98bd-6dbd-4512-942f-293ddbeab537 | tripo_h3_1_image_to_3d, 12000 faces | 327 KB | 103 KB |
+| GIMBALPAW | 606aa415-db7e-4222-89b7-bbc42f9836b7 | 200c838d-d44f-4e10-b7c5-b193e8a233d9 | 77cee2f5-bb34-4517-b43a-d9fc5e949c0a | tripo_h3_1_image_to_3d, 12000 faces | 279 KB | 91 KB |
 | CHIK | 998b11b6-0522-40b1-83ef-8063d2863424 | 3d37f24c-cd3f-456c-97af-08d31102688b | 01a0e009-0159-767c-9f03-0ebfa7c1643c | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 332 KB | 129 KB |
-| KEEPSAKE | 200fd29f-c084-46fe-9563-0183ea88b102 | f56596dd-cfcb-487f-ae27-aef3f64ef25e | cbe509a9-deca-4be1-96ef-bc05394a4992 | tripo_h3_1_image_to_3d, 12000 faces | 250 KB | 82 KB |
+| KEEPSAKE | 8341acf3-6fff-4e1a-b277-86cf423488cd | 8223c797-48ef-43ea-bb3e-de72ebba452d | 7214d70d-8a99-4ac6-bb9f-b74bfc318a36 | tripo_h3_1_image_to_3d, 12000 faces | 289 KB | 88 KB |
 | PINROW | 25b72af9-663d-4fac-ad0c-0d8253476f71 | 076f1ecd-8695-4b0f-bdea-271d90b48895 | 16fac88a-4437-402b-b1b6-4746aab65cfb | tripo_h3_1_image_to_3d, 12000 faces | 231 KB | 76 KB |
 | COOPERCAT | 7432d69c-414a-4d14-9f2b-de42d0740680 | 7643b69b-390e-48ae-868d-df81547441ec | 01a0df7b-43ac-7123-883e-513d040f3e1e | meshy retexture (tripo_h3_1_image_to_3d), ? faces | 315 KB | 117 KB |
 | SAFFWHISK | d464d85f-0794-4b83-b94b-5b9e38e266d2 | d6f20c06-e240-48a8-ab1c-dda9359844ea | 30b186fd-3da0-4741-a41e-d268535ea770 | tripo_h3_1_image_to_3d, 12000 faces | 475 KB | 143 KB |
@@ -64,12 +64,12 @@ Normalized: y up, facing +X, 1 unit tall, feet on y = 0; texture 1024 px JPEG; g
 | APOTHECAT | 9120e5d9-fa40-4606-a947-98fd553faab5 | b8a15ab5-2797-4db8-8bda-a1a9faedcaf6 | 14e84a21-3f71-441a-bd04-317c61971d6e | tripo_h3_1_image_to_3d, 12000 faces | 252 KB | 83 KB |
 | COBBLEPAW | 2871b897-958c-4363-b7a8-d99581108e75 | 04fc0e9e-06a2-4375-87e6-a1969122e4f2 | f6db8548-1512-445e-8d7b-52c8c1a92739 | tripo_h3_1_image_to_3d, 12000 faces | 275 KB | 93 KB |
 | SCUFFPAW | 859d9e31-5ed9-4253-ae2b-aa1e187340ef | dd759b87-43d8-4cec-af0a-bbc0d275fbc1 | 01a0df8d-2435-7306-8fa6-ef5ecc68080f | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 726 KB | 228 KB |
-| KERNELPAW | 9db38511-b5d8-48bc-91ac-afe63e4f0d2d | 4efdac07-1464-4f29-9429-5932eb197026 | d0d1b7db-c1dc-4f41-802f-d3c8cfa9d62b | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 715 KB | 283 KB |
+| KERNELPAW | b8005629-7968-45e6-9a0a-95a0f527b92e | 853678f6-6f49-4e69-bf93-7fbdad0f949a | 8bfb8b12-cae8-4ddc-8f02-3130f8d6b902 | tripo_h3_1_image_to_3d, 12000 faces | 260 KB | 87 KB |
 | TREADPAW | 81d52a1c-e8da-47c8-bf5c-2d35f81c94a3 | 2359fb5b-d499-4882-956e-185f18abb150 | f90f3925-5a68-42d9-99f9-ff0844cfd489 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 505 KB | 163 KB |
-| COWARDLION | c6e3659c-8f85-475f-8f94-3355971598c9 | dcffd2a3-2f7b-4d13-bc5a-15ec04808e76 | f7bac78b-8f2f-45b6-bb41-561b8e7e7c5e | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 724 KB | 198 KB |
+| COWARDLION | ce350aa3-6166-43f4-b624-013668135270 | fdd14377-8e5b-4264-87c5-234f798735ca | f62d6fed-386b-4328-a2d0-cf14fb128180 | tripo_h3_1_image_to_3d, 12000 faces | 365 KB | 124 KB |
 | GLINTPAW | 01d2a042-9d44-4d93-b097-59bed06f7a48 | 10b28cf2-605c-4393-8559-df69bcbe78fa | 01a0e11b-b256-7406-ba67-41234ceda465 (far: 01a0e11c-f51f-70c8-bc59-6fb0d36493fe) | meshy retexture (meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right))), ? faces | 662 KB | 123 KB |
-| HUBBUB | d5d45b7f-3a0d-4777-ba3b-7b62dc77c5e4 | 653d5843-6166-4a63-bf33-eaf3df22c267 | c327dddd-0f24-4f68-8525-a8307687a837 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 738 KB | 152 KB |
-| BOXWOOD | 34a652db-5a86-41fb-9460-0205f839e9b8 | d424e085-c7db-4c84-9af5-c96a3f13c28e | 3f408056-44ca-44ef-a152-abc8fd9475f1 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 767 KB | 139 KB |
+| HUBBUB | f1a049a6-c90b-49a5-a44a-6ad911cbb03c | f035ac64-e775-4178-8677-f5adc3536f0a | 14fb3a38-64f2-4629-92c9-8ac7af37ca5f | tripo_h3_1_image_to_3d, 12000 faces | 371 KB | 108 KB |
+| BOXWOOD | 95ec18b8-522d-438c-98e1-e3ebb5f8faa3 | 02d678bb-1494-4baa-9a8d-fd8d37339867 | 431f8e41-91b4-46f8-83f5-ba7bb66edd7d | tripo_h3_1_image_to_3d, 12000 faces | 301 KB | 97 KB |
 | LIDNAP | da64a8dc-a402-429f-8aa9-78bfd05b7d2e | fbd8693d-5020-4328-a7a2-b58796628067 | 259b6332-fd0d-4b9e-b63b-ea9278fef0ab | tripo_h3_1_image_to_3d, 12000 faces | 338 KB | 132 KB |
 | PAWPOST | a49c8723-f630-4dbe-98b7-966303fec451 | 737eb0a0-aef2-4b6a-b594-70e3a4a0eaed | e7b3b530-d427-4def-9679-98b1a92799e7 | tripo_h3_1_image_to_3d, 12000 faces | 363 KB | 137 KB |
 | TALLYSPOT | 238d1ffb-4622-4495-bf7b-a3cbc9be29f9 | 67ff74a5-ff0c-443f-8c72-e6ae07d557be | 587522fd-33ec-4708-83b7-584dbc17ce56 | tripo_h3_1_image_to_3d, 12000 faces | 444 KB | 144 KB |
@@ -101,68 +101,68 @@ Normalized: y up, facing +X, 1 unit tall, feet on y = 0; texture 1024 px JPEG; g
 | NEKOBUS | 01a0dfa2-ebe8-7589-9cf9-49c15c14d5e7 | 01a0dfa2-ebe8-7589-9cf9-49c15c14d5e7 | 01a0dfa3-3e1f-77cb-8a20-378489421008 (far: 01a0dfa4-a719-75ac-9db3-a93aa07e5b75) | meshy-7.1 multi-image-to-3d, 10000 faces | 493 KB | 146 KB |
 | PRISMPAW | 8593bcc0-988b-44b8-9be6-4861295ac28a | c937d629-9c51-4834-944b-964229195506 | 01a0e124-64e6-7039-8bf8-d36a214de8fe (far: 01a0e125-f8f3-77f0-b88d-acabf3e25683) | meshy retexture (meshy retexture (meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)))), ? faces | 651 KB | 125 KB |
 | TARTANPAW | ca631046-0de9-4835-892e-79fa35c1ad92 | 785f2687-2b6d-400b-9111-1d927ca71c64 | 01a0e102-33e0-7472-b615-e193bd069ff6 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 582 KB | 152 KB |
-| BURLYPAW | f58a999a-a602-4f54-8345-57acf8889f89 | 91d383a1-e8e2-403a-8f37-2e1019f4f706 | 777cdb4e-4ff5-4dba-bd8e-d0bf2193520b | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 670 KB | 143 KB |
+| BURLYPAW | c83639b2-2016-4f35-9032-3debf95f4ebb | 2617df05-6c13-4b81-9724-66ae2d476e88 | 73fe89d0-d2ad-4573-b07b-0739f732668e | tripo_h3_1_image_to_3d, 12000 faces | 314 KB | 94 KB |
 | SUNSTRETCH | 6ace2fa0-2a5d-43b0-b6ba-3c22dfbbc354 | 26cfe982-f890-4f68-896c-abac6a4a4c0b | a4d051e2-8110-426e-83ef-52f256f1ba75 | tripo_h3_1_image_to_3d, 12000 faces | 407 KB | 129 KB |
 | AMRCAT | 0b9abab6-a5fe-4f0a-970e-ced6b3fbb59f | db1b6783-5a1c-44a6-af6d-9f71886e9a13 | 554ebd0d-785d-43b0-8c0b-15eeea892294 | tripo_h3_1_image_to_3d, 12000 faces | 271 KB | 87 KB |
 | PEPPERCAT | a81587e5-651e-479f-998f-a53c2506f052 | a4337dfd-c4fa-4305-b5b3-e80a196d4a11 | 5113431e-1211-4d12-a7fb-2074da7a7fad | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 596 KB | 235 KB |
-| KIOSKPAW | ae874b63-f7bb-4db7-a0b8-11f2593d1f8f | dba5baf5-805b-491d-b6a0-5723e0e8e65c | 4f078f51-aa68-4bdc-a520-980336bbf003 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 697 KB | 171 KB |
-| SANDSTEP | 50f48c51-282b-4920-b21f-8bf6d917b7f0 | 9591736b-8bcf-442a-954b-03a4f5d5e73d | 7dad27d3-b3da-4513-9c51-f513daec7b9f | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 667 KB | 177 KB |
+| KIOSKPAW | b6bfee1f-93a8-49e3-ab29-88b240d0442a | 7de740f6-23d0-42d1-a96b-31eb1f861746 | 39e5a54d-6202-4623-a2ed-6879a2061b7e | tripo_h3_1_image_to_3d, 12000 faces | 317 KB | 95 KB |
+| SANDSTEP | 3a2368ec-c4e6-4025-97ee-9a7e5ecd8d43 | 16a309b9-16ab-4c96-beda-532aeddabcbb | e3a58a63-8b09-4344-b837-c0b590c57c99 | tripo_h3_1_image_to_3d, 12000 faces | 319 KB | 95 KB |
 | WAYBILL | 883dfb7b-c218-4733-b75f-80f56027c2eb | fa445e8f-3887-4288-a0ed-ef336bc9d8c3 | 01a0df9e-9dd5-76cc-ab21-305724723a53 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 661 KB | 256 KB |
 | WHIRRPAW | 02e55294-028b-4f9c-8b51-247eba1f680c | 8bae05d5-b7ac-4388-a845-409be6d6196b | 01a0e106-cf0c-7735-b296-1f13d74798ff | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 672 KB | 263 KB |
 | WINDSOCK | 6ccb0891-24bc-4536-9cff-a95b3a901281 | 9719f0d5-7ff3-4b0a-9834-bd1768e5a6eb | 01a0e108-693b-7178-95b6-a4eff306a7ed | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 639 KB | 225 KB |
-| VIGNETPAW | 63ad12f6-f0f2-4f00-b7a1-6b074266bb6d | bb33594e-fa97-4b21-9671-3cf6f8182d8c | f561f144-9e3a-447c-bdf3-72b3b24f6123 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 664 KB | 166 KB |
+| VIGNETPAW | bc7bc77b-f3fa-48b1-8b34-68ad5b476622 | d1e39154-3cfd-4196-8c63-e91a55c7057e | 3e03e04d-c313-446e-a06d-43b1117cd471 | tripo_h3_1_image_to_3d, 12000 faces | 289 KB | 88 KB |
 | CANDLEWICK | ed88159c-0f8c-4c40-80ff-e7f52ce07cf5 | 2fdab00c-6573-4661-a3c3-d63db1c1c870 | 01a0df79-d21f-73f8-8c5c-3d2fc1f5b31c | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 739 KB | 229 KB |
 | TOMRUTGERS | 646837df-0e17-46aa-8856-133d5fe837cb | d6efdfe5-dd21-4138-aba5-892b9f43c02f | 01a0e103-cbd7-75d5-87ea-77cd26400f9d | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 696 KB | 221 KB |
-| LACQUER | c26aa725-6b9f-4a37-8402-8d1c895d827e | ddfd98ee-76ed-47f8-8776-cec41174804b | 1837621c-033d-4a06-8654-547475dffc9e | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 517 KB | 206 KB |
+| LACQUER | 7b94ae27-d994-4e00-b86b-46c8d79e1dea | e2a2978a-9259-4c4b-8c22-e84378636242 | 9d597602-c3f0-465d-a85d-0a0576c1d1ad | tripo_h3_1_image_to_3d, 12000 faces | 216 KB | 69 KB |
 | RUBYCAT | d2c969b6-aaf8-4683-b7c5-9b17ae5871df | 18f7011d-772e-4563-a9ae-a43c32706617 | 01a0e0f0-c90a-7179-b44d-428792356ca1 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 648 KB | 159 KB |
 | SORRELPAW | 096864d7-66e2-4352-bb39-a48fc271b740 | 3c8181f0-2972-4561-9386-e5d70cf85275 | a4e13d75-f2af-4656-96ed-f1d82f6439b0 | tripo_h3_1_image_to_3d, 12000 faces | 266 KB | 86 KB |
 | SUGARSOOT | 01a0df9a-8663-703c-89f5-3f78865af1fd | 01a0df9a-8663-703c-89f5-3f78865af1fd | 01a0df9a-d804-73ec-b994-5b3fb2619cc3 (far: 01a0df9c-1901-76e4-9aa4-8338537fa684) | meshy-7.1 multi-image-to-3d, 10000 faces | 431 KB | 119 KB |
-| GRIDDLE | f9151e9b-6e70-4b49-97a4-97fe8a737bce | b4c4f8cc-3c52-4283-b467-41159b857fac | d87eadf2-afb8-4858-8a1d-c473b6994436 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 636 KB | 191 KB |
+| GRIDDLE | d11fab11-b9cb-4f5c-8b55-bed8532aee99 | 7426f4ef-785e-4df9-af95-07cc9a97168b | 245b21ae-0272-49e5-8861-c4b54dfc925e | tripo_h3_1_image_to_3d, 12000 faces | 252 KB | 83 KB |
 | ROOKIEPAW | 008e1a1f-01f8-45b3-9168-c2ecf2b925a9 | ed191574-ba61-4f8c-916b-d58db0bf445a | 01a0df89-876c-7348-b064-fb8aea4714dc | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 677 KB | 246 KB |
 | CORSAGE | a4b04f9f-48ba-4c5b-83c1-90950b5e712b | 5b28c76d-6c6b-489d-b4f8-548d07494e7c | 90ab12b6-b9e2-4f71-a260-b17c382d92ad | tripo_h3_1_image_to_3d, 12000 faces | 305 KB | 57 KB |
 | RAFTERPAW | 15202185-b82e-4c16-944e-0e75a9e31cec | b56518c0-4d09-44f2-96a2-97362fda178a | 01a0df86-db70-720b-9348-3bb8abcfb056 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 693 KB | 238 KB |
-| UMBERPAW | 1ee2ccca-18a3-482c-b483-e394a2545615 | c5cef2d7-1985-4b19-b7a9-0e9e94b3373d | 1344fbb9-0632-40c7-82d0-f046b3f4250a | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 604 KB | 189 KB |
+| UMBERPAW | 59d7074b-0aa1-43da-b96c-3e307ee8bbae | 00649499-8921-46cd-afab-373926e3a7d9 | e4d1d46d-3127-4ec4-a17b-01bccab3ee2f | tripo_h3_1_image_to_3d, 12000 faces | 283 KB | 82 KB |
 | PUMICE | 9164a17e-9977-4348-ace3-a582cd339d37 | 0d87c687-96f5-41e5-a8aa-4fea33b8b7b8 | 01a0e12f-4f17-75be-ad8f-38a983d6b866 (far: 01a0e130-93a1-7364-9981-cbdcc6f2adc8) | meshy retexture (meshy retexture (meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)))), ? faces | 627 KB | 112 KB |
 | JITTERPAW | 5ea33fff-438d-46fb-ad4c-ef14c4a0b5a3 | 5c1fbd9e-e3f1-447b-80ce-2848ae4bfe58 | 01a0e0ec-2c9f-71b4-8531-f2c20f94eeb2 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 777 KB | 231 KB |
 | STUBTAIL | 2b972e3d-abb0-459c-90ee-967abbf21c6b | 9540654c-7495-4be4-b25c-c78d6f6d1ea5 | db1b910a-88b0-4f05-b440-93c1cf1413d5 | tripo_h3_1_image_to_3d, 12000 faces | 426 KB | 122 KB |
 | CASENAP | d6778401-7005-40bc-ba5c-35a16857af5a | 1a6e6e76-cf4a-49ae-9233-f89d182efb3b | 01a0e007-8f95-752d-914d-fcae3d7b43ea | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 645 KB | 233 KB |
-| PAPRIKA | a5d7d132-bdf3-4e24-b5f2-e28f92185435 | 1caa6deb-e8d8-461e-ba8b-3640932bf258 | d8026a08-b6fb-48c8-86db-a2f4f8019c02 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 737 KB | 179 KB |
+| PAPRIKA | b1a26bf4-ddcf-4c8a-a686-ddc8efddff0f | f0355bea-8b32-43ad-98cc-f5a9b29ed323 | b4d80a34-b7fd-4e14-8313-6c9941cea221 | tripo_h3_1_image_to_3d, 12000 faces | 337 KB | 102 KB |
 | SNUGPAW | 600846d9-db7a-4cbd-96f4-4841387fef96 | 01cbf0d2-7d9c-4454-b99e-645279238d91 | b143071b-ad2d-4fdc-9449-a28d1dcb25da | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 600 KB | 179 KB |
 | MITTENSCAT | cb985a78-9335-44ea-86da-51b142471c98 | 7d7efc7c-7b6e-4e3a-a055-031441849db5 | 28059869-2470-479d-add3-71e52fabade7 | tripo_h3_1_image_to_3d, 12000 faces | 392 KB | 135 KB |
 | AMBERDROP | 5d536c15-569d-48ff-97dc-4a16dc202a4a | e784a470-d63e-4920-98d9-64030f9ae210 | 01a0df0f-bd87-736a-8383-fbb68a52a73e | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 639 KB | 225 KB |
 | DROWSEPAW | 8a890d60-127e-4c8d-85fd-2ccbec7426f1 | 9cff00f8-7829-479b-95f0-dc5ff44e48cf | b167996d-d904-45eb-af5c-e144f7e5ce70 | tripo_h3_1_image_to_3d, 12000 faces | 332 KB | 130 KB |
 | CURFEWPAW | c91a2418-bfc2-4ae7-8d05-c8873ebe6ad2 | 89a8f552-ef9a-4b0b-9631-ed9491af6f0c | d5f93a93-858d-40a8-9d8d-78b35077241d | tripo_h3_1_image_to_3d, 12000 faces | 311 KB | 96 KB |
-| LICHENPAW | 50468c7b-9d25-469b-b73f-f011f49bab6c | 4ef421fd-9e86-42b1-8bab-12fea9e86279 | 9d953cfe-490d-4f01-872b-6865dce4bd46 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 627 KB | 175 KB |
+| LICHENPAW | cae10923-ed86-4199-b926-547aaa36b62b | 405045e3-720c-41fc-b547-881e97883095 | 8af878c0-9280-40a0-9e52-f1ca28d356fc | tripo_h3_1_image_to_3d, 12000 faces | 358 KB | 98 KB |
 | RUSTLEPAW | ddffc02f-300e-4c0d-80b4-ff61dc63e190 | 4d70480b-a817-4982-974d-acdcf54bea7a | 01a0e100-9831-7108-b1f3-4f0fcb6bd5a1 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 688 KB | 285 KB |
 | ICICLEPAW | 92b099e7-fee9-4a0b-83b4-442894375dc1 | 21a867aa-8a0c-4648-97b5-8c770da27041 | 01a0df80-80d3-77bc-9192-e67aa599a4ff | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 652 KB | 292 KB |
 | RIMESTRIPE | 2afcae69-f530-4cc8-b151-00d568f24817 | c3961773-e4e2-482e-bf71-35e043421884 | b48696b6-05fb-4f18-b504-2bf463b3bc84 | tripo_h3_1_image_to_3d, 12000 faces | 374 KB | 114 KB |
 | CABLETAIL | 462e9356-d55d-4c2c-abf7-e3733a116d05 | 0e15d2e8-f78d-4810-9b21-206d44ab9a84 | 01a0df78-1533-7115-803a-2eddcf2b76f4 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 691 KB | 236 KB |
 | MILLRACE | c0ebd947-9ae4-4bfc-bcac-ea77506d0374 | c0d9df61-1b9a-49cb-a69d-21ed9bb225d0 | 01a0df83-ae9e-768a-b1b2-68c35ba5c638 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 727 KB | 233 KB |
-| PARLORPUFF | 6f7107d1-434e-4399-b914-ac02bbc27b3d | 0404d332-ca71-4a5b-9070-4e1c03c4e9be | ad408cca-2bdd-4f2a-886c-b1924d7ef56c | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 753 KB | 79 KB |
-| SQUINTPAW | 0bff4973-bfc3-4069-9c1a-f551b5ccf47d | e30f814e-d690-4418-9ad5-2ab9c92b5a56 | 3eda6799-b532-4436-8ecb-643b77e37af3 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 640 KB | 176 KB |
+| PARLORPUFF | e8d262b7-10e0-49fa-ad0d-c7130095a79b | 05ac11a3-4edd-494d-ac41-ab9dc973bdb5 | 080637f6-5988-4204-a640-6257148fcf10 | tripo_h3_1_image_to_3d, 12000 faces | 403 KB | 94 KB |
+| SQUINTPAW | 2d1e4a60-dbe4-40a6-9294-f72c16a67fe7 | 0346a6e9-0202-47e8-8d7e-953f7e030b6e | 61a819fc-8b24-4df4-b685-4f9df37a3f31 | tripo_h3_1_image_to_3d, 12000 faces | 364 KB | 106 KB |
 | COTTAPAW | 6cae6a8e-8473-4a13-a10e-be19a828e97d | c4c8effd-211d-4313-a82e-f05fbe72c490 | 01a0e00a-1e22-7684-b093-c96f4c6ebc96 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 530 KB | 246 KB |
 | HOVERPAW | 6a2cc088-3f3b-4379-b52e-8e9c6225ebd8 | f87bc0f0-71c7-4b09-8802-c7296ae07e99 | 01a0e00b-b815-75f0-8130-567a03206189 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 674 KB | 266 KB |
 | HUNCHPAW | 6aae254b-0d97-4ef3-afda-ea26e1c2e18a | 1cebe000-53c4-4378-8eb4-0061e08f1540 | 01a0df7e-e879-7460-bacf-6f8e3afa9993 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 642 KB | 221 KB |
 | SILKSTRIPE | 862481a3-c3d9-4a27-acf6-dc2b3f476fc7 | 16e45363-be5c-4761-a960-bc58ddeb19ec | 01a0df90-992a-741e-a248-2d63b9429d78 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 666 KB | 223 KB |
-| KNITPAW | 8386d67d-bbc2-4da8-80b7-88d039a81964 | 390dde20-2b18-4d77-80de-8b770ee6137f | 3a6e5dfc-a2fa-4a04-aed1-c95ac452dde8 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 694 KB | 151 KB |
-| cate-meme | ac49f491-6382-4ebc-870c-e0699d99910e | 9adb6305-d216-4b3b-b955-6b5d436e7a50 | 5443d9b3-5bda-44cd-bacd-eed18438ee35 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 751 KB | 275 KB |
+| KNITPAW | 47a4c4fb-d237-4986-99d8-daaa526459b4 | 3a19ef73-7a60-423e-a848-41ef9df2507e | f2da6add-557d-45cd-85cf-c7f4290edc37 | tripo_h3_1_image_to_3d, 12000 faces | 388 KB | 119 KB |
+| cate-meme | 19b7fb14-8233-4704-962c-f9ab61fdd174 | 531a869e-956f-4ef4-9475-a4c6e6fee36c | 370dfae6-d443-467c-940b-ea3d84a37283 | tripo_h3_1_image_to_3d, 12000 faces | 441 KB | 105 KB |
 | anonymous-cat | 0240d536-3841-4a7b-b0f2-17b9144639b4 | 9953a607-d63a-48a1-a154-cd4ac73ea8a2 | 01a0dfd3-e45c-736c-9c76-8b4e025ef3b6 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 721 KB | 238 KB |
 | popcat | 01a0dfe7-730e-7171-8734-f3a597ba8354 | 01a0dfe7-730e-7171-8734-f3a597ba8354 | 01a0dfea-35ef-744b-a513-9812b36f8f3c (far: 01a0dfeb-76aa-7321-b492-7538b43402b8) | meshy-7.1 multi-image-to-3d, 10000 faces | 358 KB | 126 KB |
 | cat-in-a-dogs-world | 6fca4051-f76c-457b-9005-69a8c6f6c29e | f1302775-0ec4-4d17-8096-ba5c454428b6 | e94128bd-4d82-4e70-ac4a-5c37f4187b8f | tripo_h3_1_image_to_3d, 12000 faces | 231 KB | 74 KB |
 | catwifhat-2 | 7c0e4a84-ad50-47fa-bb8c-ead7f44c92e6 | 5917e56d-1d72-4007-8216-04d21d98874b | 01a0dfce-6138-71fa-993d-eb6acca624de | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 636 KB | 214 KB |
-| pepecat-2 | eb0ee238-4cf4-44d9-b51d-86824da6b825 | c5c6e3d9-3f7a-4d09-a285-a45d94a39633 | 3da610b5-6f44-499d-9b51-d97c3bcd408a | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 422 KB | 44 KB |
-| wen-4 | fe49e93a-00e8-47d3-8fa7-88ce2f500b8a | 1401de02-bc73-451a-b334-a02c536504bc | ed28afd4-1754-4c3c-b46e-423de00aabb2 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 732 KB | 137 KB |
+| pepecat-2 | cc32fcda-f361-4a8c-9ed6-64cdf92fa95b | 19303dda-1668-4798-8fd9-28900c8a5fb9 | 3e465f6d-2d7a-4e72-89af-770e301592cb | tripo_h3_1_image_to_3d, 12000 faces | 267 KB | 90 KB |
+| wen-4 | 759491d1-b647-4072-ae4a-f4725224772b | f48ae9f6-d8f4-4f6e-8595-c3234d089948 | c4304755-7de1-49a5-b633-a176abd38476 | tripo_h3_1_image_to_3d, 12000 faces | 243 KB | 78 KB |
 | tsuki | 59eea9a9-a278-4295-b2c4-23662a621e3f | 3eb24131-3bc4-4a01-90ab-6a6350a19957 | 01a0e129-1d72-72d7-a765-a1797005fde2 (far: 01a0e12a-6195-77b7-ba39-e9afea11c053) | meshy retexture (meshy retexture (meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)))), ? faces | 728 KB | 96 KB |
 | hello-kitty-sol | 9ed12031-7040-4b48-b12a-83f8367ca1cf | 3f6a500a-7a4a-457d-8ab8-a20dd4256f82 | 8723529f-f8cc-4e5e-b628-5ae68d1c2aa8 | tripo_h3_1_image_to_3d, 12000 faces | 256 KB | 87 KB |
-| sillynubcat | a3df8bed-8bb0-421c-8790-95f11ff1556d | ebbb7c34-3146-43d4-9f53-ed5fa06fb0b5 | ff918e3b-2686-43ea-8129-9efb69993a3c | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 602 KB | 224 KB |
-| michi | b505333a-245b-45b7-a2fc-46550d36628c | 05d3e005-73f0-4d84-ae6b-7e901fb9187c | f150633d-fbde-4cef-97ff-c3d076722cbc | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 744 KB | 120 KB |
+| sillynubcat | 5fb45010-84d5-4149-a50b-1fe125fb05be | ffa32c02-b9e4-4f86-b0af-5bbca7923dbf | 79135ca2-1bb7-4b2c-9ff3-1e1bdd79a6bc | tripo_h3_1_image_to_3d, 12000 faces | 219 KB | 70 KB |
+| michi | b1de4592-3904-4e01-a98e-d2fbf5a6418d | a327badd-8022-418b-8d91-20d967acd8a2 | 5e384279-856e-4569-932f-9b7bf7583dd4 | tripo_h3_1_image_to_3d, 12000 faces | 332 KB | 146 KB |
 | vibing-cat-coin | fe9c1ad4-976e-4098-875c-d253535675ad | 7cda7214-d9b4-49a4-b6c0-76196913592e | 01a0e12b-7caf-74e5-af77-92a062a96aaf (far: 01a0e12e-20bc-76bf-8f60-7688b16da55b) | meshy retexture (meshy retexture (meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)))), ? faces | 548 KB | 120 KB |
 | catcoin-6 | 01a0dfe6-d11a-73c0-8e37-f5d24c1f7ce8 | 01a0dfe6-d11a-73c0-8e37-f5d24c1f7ce8 | 01a0dfe7-de57-70ea-b534-220e695f1e69 (far: 01a0dfe9-1f64-70f4-ae6a-f4c243a36f88) | meshy-7.1 multi-image-to-3d, 10000 faces | 400 KB | 127 KB |
-| raydium-cat | c51b09f1-fdce-4bd4-951e-5967c02fe04e | 753f46bf-5189-4d92-841e-dd75d49a7a36 | 69560d59-6c42-41ec-b8a0-97e85a8cb22c | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 689 KB | 179 KB |
+| raydium-cat | d907fdc6-8214-4727-9e7f-8d3a11d1138e | fb73450b-ec89-43dc-b1dc-97641b9d0e93 | 71ca8367-b98a-4903-8f9f-6665e088c851 | tripo_h3_1_image_to_3d, 12000 faces | 332 KB | 128 KB |
 | ket-3 | d0ab740a-c1b0-4fc0-b1af-feedc7fef9d1 | d8055a3f-8cc0-4b37-8320-c03b38b5f423 | 0d68574d-02ec-4571-970f-31223e0d8568 | tripo_h3_1_image_to_3d, 12000 faces | 248 KB | 79 KB |
 | maneki | 742dbcac-6773-431a-aaca-5fdd76076fb8 | a8ca7343-6e06-42c7-a61d-47a7595b4484 | 01a0e0f4-720a-76f8-9641-dfa06e5c7c20 | meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right)), ? faces | 587 KB | 218 KB |
-| gta6cat | 1e5feb48-0d6f-40d9-a5a6-611218b30325 | 79ab9ea1-270d-4b45-b8b7-b7239a8d6373 | b450d126-af65-4848-be95-c8d9124358f2 | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 691 KB | 127 KB |
-| stonk-cats | 889a1bd9-a1af-4752-9299-e9a0a5ccc46b | 57a42c60-4980-4489-8f76-2b00cb94bd11 | 701d99c8-9556-48ab-ad18-bd669e098d3a | hunyuan3d_v3_image_to_3d (multiview front,left,back,right), ~500k raw, packed ~20k faces | 765 KB | 218 KB |
+| gta6cat | 9a905b82-a280-4016-9312-56a515ce3eae | aae3f951-9bab-43d1-a852-081ca2612189 | 13d8bf27-fcb5-4195-b44e-cef7940ddbc4 | tripo_h3_1_image_to_3d, 12000 faces | 415 KB | 118 KB |
+| stonk-cats | 33ab3544-9836-4b95-9c5f-70c2d73ee940 | 717ea1a7-3db6-4c60-ae5f-197ebe5ed609 | ca7cefee-d3c0-46ec-8131-bacb48f92899 | tripo_h3_1_image_to_3d, 12000 faces | 326 KB | 127 KB |
 | hosico-cat | 56eba927-a687-43da-b9e6-f8be556a281d | 12ebe815-060b-42c5-a2b4-9cb2710a2d9e | dc90c657-b38b-4a2d-8b03-67d636bfcb36 | tripo_h3_1_image_to_3d, 12000 faces | 388 KB | 109 KB |
 | TRIMCAT | - | - | 01a0df11-99c2-76cf-9360-d554bf008249 (far: 01a0df27-8317-77b2-ad3b-6ca6c5c698b1) | meshy retexture (site model), ? faces | 481 KB | 112 KB |
 | COLMEOW2 | - | - | 01a0df3d-cc05-73b9-aa41-98f8abfe54f6 (far: 01a0df3e-e23a-751b-836a-2fae6d7e65a0) | meshy retexture (site model), ? faces | 549 KB | 83 KB |
@@ -213,3 +213,66 @@ Normalized: y up, facing +X, 1 unit tall, feet on y = 0; texture 1024 px JPEG; g
 | MEDIACAT | 406ae68e-fbd1-420e-8717-e213f3e106c4 | 8c2a7fd2-5e62-4e3f-a9b9-4ef76f884cf6 | 47727821-2b5c-412a-855c-24bf59478902 | tripo_h3_1_image_to_3d, 12000 faces | 298 KB | 94 KB |
 | GROOVYPETE | ddc57627-faaf-4bd4-931d-258d0476f009 | bce99fcb-85b2-4d53-84a0-e25e1f864740 | 1773bf5a-b555-4e20-95f2-3093ba6840bb | tripo_h3_1_image_to_3d, 12000 faces | 325 KB | 115 KB |
 | OSCARRI | 44b0a66a-4de0-4989-bedf-1367d64ce8ea | 185ffe07-da90-4c6b-aec3-717ca7b5725c | fe341a9e-1bf5-48dc-a2e3-1a701f27d141 | tripo_h3_1_image_to_3d, 12000 faces | 369 KB | 119 KB |
+| SPRIGATO | 0edf0c08-c839-44bf-abb9-38e681dc64f5 | 972cf1ad-0eca-4b81-a945-5f9c0fb84920 | d36ddec6-a88e-41ec-a062-3b61be5f1152 | tripo_h3_1_image_to_3d, 12000 faces | 273 KB | 91 KB |
+| PUSSBOOCAT | dc9f604b-55d4-4f9e-ae5a-9c7149341453 | 930901e9-c37b-4d04-8212-0d366d216a80 | 3337ebdd-92c6-413e-ba1e-9b5de26c9065 | tripo_h3_1_image_to_3d, 12000 faces | 341 KB | 145 KB |
+| ARTEMISCAT | a5957df9-14c0-4524-b50d-a4ab6c704379 | 8e213452-5e04-41b0-b669-d4fd07d3781c | b60ad0d9-cf4e-4ec7-8803-bd0eb221e904 | tripo_h3_1_image_to_3d, 12000 faces | 252 KB | 83 KB |
+| CAITSITH | fc1640ee-3885-4edc-9156-dd02b12ba961 | a1205c4e-403c-4d3e-b09e-978639ab3d1b | 21b428e0-bd78-417e-b890-aed5fdbfd1e7 | tripo_h3_1_image_to_3d, 12000 faces | 328 KB | 127 KB |
+| CHEETLE | 7146590c-9e54-4c47-92a9-7417b285ef49 | c7a7ab63-3cc5-47a7-a241-f81f9abcab1c | db41dbe5-fe4f-459e-aa4f-cea904a9bc95 | tripo_h3_1_image_to_3d, 12000 faces | 401 KB | 138 KB |
+| FELICETCAT | fa669ad9-882a-41b7-b7d1-b1f95cb4aa72 | 5b82a479-be37-40d5-b49b-0c245578a465 | 64daee21-8bf0-4c6b-b4ac-71cc9bb0e587 | tripo_h3_1_image_to_3d, 12000 faces | 304 KB | 96 KB |
+| PALICO | 4de2827c-2f35-412e-9e38-53d7e91d89ca | c409cc33-6f98-414a-81a7-49322f435717 | c533413c-0f1d-4ae5-ac29-64987a157e22 | tripo_h3_1_image_to_3d, 12000 faces | 395 KB | 135 KB |
+| red-kitten-crew | 9340a13c-addf-4655-85d4-2ee3fa7d06f2 | bf2a901c-efb6-4ed8-9710-82014fdf27d6 | 2b1d0c41-953c-4caa-926c-04667e3d6b70 | tripo_h3_1_image_to_3d, 12000 faces | 436 KB | 142 KB |
+| SASSYHB | d4011784-9fa6-4040-baee-366dc19b537f | e91f07d0-b95c-4ac9-b6bb-4887847de226 | 51986aba-9f4f-4ad4-acd1-25bdf6051959 | tripo_h3_1_image_to_3d, 12000 faces | 379 KB | 123 KB |
+| SCRATCHC | 8527da7a-d49e-41b1-b638-21738a09513f | 346742dc-a7cf-4109-90b2-d5b0eb96756d | 43b351d2-3e97-44df-9b05-eaa1c3bec4d4 | tripo_h3_1_image_to_3d, 12000 faces | 246 KB | 82 KB |
+| SERPOUNCE | 85321a28-cefe-4ab7-adfa-79f8db50a936 | f246ab03-0127-4de8-b052-369a81ed301d | e54086f3-a06f-42fb-bf94-a4d9812bded1 | tripo_h3_1_image_to_3d, 12000 faces | 373 KB | 121 KB |
+| SGTTIBBS | a1b524fa-f8b3-40a4-9bac-c08f79ec30ae | 442110f9-1beb-42ba-b1ac-61f23e16ef63 | 9cede885-580e-41f8-8322-823864421267 | tripo_h3_1_image_to_3d, 12000 faces | 261 KB | 86 KB |
+| SNOWBALCAT | 7e01bb4b-8dc6-403c-a0ab-c24bf4ae3a5d | 00255b2e-ee23-470c-ab2b-4aad66c82b48 | 97292c1a-75de-44bf-a6a0-330556c128f5 | tripo_h3_1_image_to_3d, 12000 faces | 227 KB | 71 KB |
+| SNOWBELCAT | 3d20be85-50c1-49aa-8be0-a873c8580102 | 41bbcdeb-4f9d-4ada-aad1-cb6dad818228 | d65d829e-7a20-46e5-b41d-8a9efa39f33e | tripo_h3_1_image_to_3d, 12000 faces | 276 KB | 109 KB |
+| TALKTOM | cf94fbf3-8ef1-47be-beb3-7c9e32ce4ad5 | 814880cf-d449-451d-b492-b8d5d12e4a05 | 96c52dce-a2f8-4d94-914e-a8535f044bf8 | tripo_h3_1_image_to_3d, 12000 faces | 253 KB | 82 KB |
+| TREMAINE | dedaa837-a93d-439c-a3bf-972415833ad3 | 8caa7e66-0a05-4d49-bacf-ec873cb39fee | 55e63314-24fc-456b-a9bf-afd737b291d2 | tripo_h3_1_image_to_3d, 12000 faces | 294 KB | 114 KB |
+| TUBBSCAT | 810d9a2b-15bc-4dc1-aa56-a4476c122b76 | 08ffda73-06c2-4f97-9263-4bc3f32b9c33 | 299b0aa8-3275-428e-8445-b26872222a75 | tripo_h3_1_image_to_3d, 12000 faces | 199 KB | 61 KB |
+| UNSINKSAM | ['77df70c0-a016-4ccb-9ec4-2a08cb42157a', '81c3433c-b65b-43aa-a2fc-909fae0b7cac'] | c018cf20-53f4-48df-be34-bcf556a4cee0 | f3bc6bc1-7276-4aea-9117-73926f311d86 | tripo_h3_1_image_to_3d, 12000 faces | 250 KB | 78 KB |
+| GATEKITTY | - | 32d2765f-09bd-4ee1-9291-6d1d3dd45bbf | d1ec07a5-8629-4538-908b-0733a704d0f8 | tripo_h3_1_image_to_3d, 12000 faces | 319 KB | 100 KB |
+| CZELDA | - | d41bb9c3-0261-44b1-a5ce-69bb616e323a | c8982e6f-d4d4-4f65-90cd-8429a390dd43 | tripo_h3_1_image_to_3d, 12000 faces | 246 KB | 79 KB |
+| PAYAKE | - | 08731a0e-08b5-43d7-8877-95a4f2cc0d15 | e8932c07-22de-4393-aac0-1ef570e4cd2b | tripo_h3_1_image_to_3d, 12000 faces | 386 KB | 118 KB |
+| OJINEKO | - | 0c3b57c3-2ca7-4bf4-98f0-911d7165cf80 | 9b0aae3d-02e7-4be2-a4af-86583e66b4f7 | tripo_h3_1_image_to_3d, 12000 faces | 249 KB | 80 KB |
+| GANYHOUSE | - | 07a23e59-c4c4-4be6-b19c-4df1460dfb5d | cef7da69-033f-4224-b879-d6d572e6c015 | tripo_h3_1_image_to_3d, 12000 faces | 277 KB | 87 KB |
+| COSMICGREG | - | a72f42a5-eaa4-40db-b129-ceef8c466231 | c6b2cec1-e142-40fb-92d7-935bd5a30566 | tripo_h3_1_image_to_3d, 12000 faces | 336 KB | 109 KB |
+| MARUOCAT | - | c0fd8bc1-1128-465e-8d44-53d3860d373f | df7ff4af-537a-408f-a234-f49e1e4d3709 | tripo_h3_1_image_to_3d, 12000 faces | 319 KB | 100 KB |
+| NEKOSAMA | - | ede2fa33-1901-4fa9-aa9c-ce97850cded1 | b28d4527-ff13-482d-8a7c-dca563e165ff | tripo_h3_1_image_to_3d, 12000 faces | 262 KB | 83 KB |
+| LEFTFANG | - | 54cb39cc-9e69-45cb-b3dc-684a22216c38 | cc3b0e2b-d6ed-47b4-851b-d0da9fd8774f | tripo_h3_1_image_to_3d, 12000 faces | 292 KB | 91 KB |
+| DREAMPATCH | - | f14b36b6-e1de-4d6a-8b71-3769d6316c9e | 9602bda7-9226-419f-bd46-bc28ddd4ad5f | tripo_h3_1_image_to_3d, 12000 faces | 400 KB | 118 KB |
+| PONTAKUN | - | bb811f37-a29c-4b63-a144-775cae24f666 | 1850ba48-0f71-4fce-8fc7-4548ae41f238 | tripo_h3_1_image_to_3d, 12000 faces | 244 KB | 81 KB |
+| ROLFCAT | - | ca4b7a01-dd64-4c9c-b103-f83c37c78054 | 0e1eaa02-e034-4dc9-894f-4caf3ef03823 | tripo_h3_1_image_to_3d, 12000 faces | 249 KB | 81 KB |
+| IDPHOTO | - | bbe22921-13e2-4d86-93f2-d54d161659c3 | 3d3578f2-76ac-4d5c-8029-fbe992d8961e | tripo_h3_1_image_to_3d, 12000 faces | 234 KB | 75 KB |
+| THINKTHINK | - | f1b5d782-f730-4cb3-b871-4517556e3622 | 65e95eae-131e-4858-9a4b-b67129876169 | tripo_h3_1_image_to_3d, 12000 faces | 392 KB | 117 KB |
+| TSUSAN | - | 92644d9a-9cdc-41b9-8db4-91f7fe203732 | 970c423e-8540-48f6-80d1-64b75393cb43 | tripo_h3_1_image_to_3d, 12000 faces | 406 KB | 114 KB |
+| SAYHIBOB | - | ba324b1f-c0ed-43c6-b26b-5922ab62c733 | cb7d16c2-9b6f-4ddb-9447-dea48477abe7 | tripo_h3_1_image_to_3d, 12000 faces | 317 KB | 95 KB |
+| CHIKUWACAT | - | 9237dfce-d465-43fc-adb0-8d06b28325a6 | f91420a6-c00c-4ade-8153-4553016e5106 | tripo_h3_1_image_to_3d, 12000 faces | 291 KB | 112 KB |
+| BLEHMILLY | - | 2e047c22-32bc-43f4-82cf-8a4e3297e4bc | 614caa17-b160-4de4-86f2-1b44733b810c | tripo_h3_1_image_to_3d, 12000 faces | 294 KB | 91 KB |
+| SINSMILE | - | f2015377-36c0-4e62-88d0-406254990508 | e4effc94-3546-4e77-960c-ee4a308af67f | tripo_h3_1_image_to_3d, 12000 faces | 303 KB | 97 KB |
+| PEEPEECAT | - | 7c4807ef-2509-4607-a610-05b747daa1d2 | 90de2760-d4a5-4ab4-83be-6fbeb265d80a | tripo_h3_1_image_to_3d, 12000 faces | 276 KB | 88 KB |
+| PRINCEKIT | - | f77c5800-89c8-44b6-8f63-6f6117726d3a | 36402cb1-d0a8-4e5e-805d-cd87329df025 | tripo_h3_1_image_to_3d, 12000 faces | 265 KB | 110 KB |
+| COOLBLUE | - | 0b83a23b-0138-4d71-8dc9-c30335a2e2dc | b08e09b8-323d-4407-ba96-28cc1f2e67c2 | tripo_h3_1_image_to_3d, 12000 faces | 281 KB | 97 KB |
+| BROWANTSIN | - | 24120be4-d0a6-43bd-bdaa-b7463895404a | 34f44fd6-3074-4c72-9610-a55b33858bc2 | tripo_h3_1_image_to_3d, 12000 faces | 208 KB | 64 KB |
+| CAPOOBUG | - | 3c8a6df0-089d-4bf3-aca4-98aa50b938af | 8d642a2c-f16a-44b5-ab89-b70b82152864 | tripo_h3_1_image_to_3d, 12000 faces | 233 KB | 77 KB |
+| FISHTOPH | - | a48138e5-312e-4055-94f1-3d7afdd76d27 | 4f3e5167-7050-4b23-9bf2-0a830c6b3fc9 | tripo_h3_1_image_to_3d, 12000 faces | 384 KB | 114 KB |
+| QCGENESIS | - | 8f23f3fc-9d4c-4973-a7e9-748d51a49b4c | edd21273-59f0-4abf-a5b1-db4c5e145f8a | tripo_h3_1_image_to_3d, 12000 faces | 361 KB | 123 KB |
+| HOICHAN | - | fa2640ac-7971-4360-9a20-143d9ef85726 | 2b9c5ada-3a60-477b-9b34-0937a6766661 | tripo_h3_1_image_to_3d, 12000 faces | 239 KB | 81 KB |
+| MAYORJINX | - | 42a72ec4-555c-474b-a6a4-42691729d152 | de654fd3-43d1-49e1-92fe-ed7d9efd2d2d | tripo_h3_1_image_to_3d, 12000 faces | 261 KB | 78 KB |
+| JJINGJJING | - | 8c8e582e-5804-4037-bece-3394b53321b2 | 00b141f9-d6b5-409a-ab63-2e3644821e1a | tripo_h3_1_image_to_3d, 12000 faces | 271 KB | 90 KB |
+| KOTECHAN | - | b4a9cc5f-11d5-40fc-9b64-424172569952 | 2487c995-8e73-4eee-99db-0893cad74d69 | tripo_h3_1_image_to_3d, 12000 faces | 320 KB | 101 KB |
+| KYURUGACAT | - | 60136f5b-e585-4b3b-9048-3aa5abf36235 | e6ad4848-c8cf-4413-860f-c2d1629d5b66 | tripo_h3_1_image_to_3d, 12000 faces | 311 KB | 94 KB |
+| MIETTE | - | aa80895f-ceae-45c9-82ae-6ded15052d19 | 0105550c-6d09-4dd0-bd72-33d03b30be97 | tripo_h3_1_image_to_3d, 12000 faces | 317 KB | 105 KB |
+| MOONRESCUE | - | f58c4900-3588-4ef6-a94e-7eb31922d6d3 | 16ba306a-797a-42fd-8cc0-eaa9eb7757fb | tripo_h3_1_image_to_3d, 12000 faces | 280 KB | 143 KB |
+| CATFLAP | - | 46972ed4-602b-449e-93ec-6640bdf66aba | 3d7b57bc-fd8d-4011-bd2c-8be55b0f1c34 | tripo_h3_1_image_to_3d, 12000 faces | 267 KB | 78 KB |
+| PROFMEOW | - | 1f1ccf39-44c9-4fb4-b9d4-05ffd749bf31 | 6fb9958a-b7e6-40cd-b708-8e4f8a36ddee | tripo_h3_1_image_to_3d, 12000 faces | 270 KB | 87 KB |
+| RURUNEKO | - | b2685ed8-6971-4de3-9304-66450673c75f | 71b03350-cf57-465f-8a5a-810b64965654 | tripo_h3_1_image_to_3d, 12000 faces | 268 KB | 78 KB |
+| SAMENYAN | - | ef33699f-b9e0-4a86-90ae-9e697f3c3210 | 54855229-072f-4817-88d6-36e0306dff01 | tripo_h3_1_image_to_3d, 12000 faces | 306 KB | 106 KB |
+| SOCKAMILL | - | bbb37591-90a6-49eb-bf70-427113bcc458 | 426e6281-06a0-46b6-856a-05f10f06678e | tripo_h3_1_image_to_3d, 12000 faces | 293 KB | 90 KB |
+| UNIUNI | - | f4347ec4-3d2f-48cd-a931-780383ae6743 | a05fd53e-00ef-4f4d-b5af-59df40219668 | tripo_h3_1_image_to_3d, 12000 faces | 267 KB | 87 KB |
+| MRBCHONK | - | b52eb1a5-4e40-4d72-b99b-2ee870eba442 | 9c3f0412-0ccc-4d77-9357-ecb01233ec81 | tripo_h3_1_image_to_3d, 12000 faces | 390 KB | 114 KB |
+| NYAZCATS | - | 9620daa4-97f1-474b-ab8e-4c145c718fe8 | fa9f375e-007c-4fc0-9428-4444b461d608 | tripo_h3_1_image_to_3d, 12000 faces | 218 KB | 68 KB |
+| LASERTATER | - | 2deeb374-8d73-4cc6-9d84-01d99f8d4a5e | 7dfeee19-5578-4ccd-98f8-6430332ab7d9 | tripo_h3_1_image_to_3d, 12000 faces | 312 KB | 98 KB |
+| HEIZOU | - | ce3c4e24-795b-4320-9c16-ab1e896ea47e | ce5a40bb-2c29-4154-9997-3a1ef0ef6330 | tripo_h3_1_image_to_3d, 12000 faces | 260 KB | 84 KB |
+| YOSHINEKO | - | c811e447-62d7-4cc8-934b-2d747e22de6d | d5c401dd-7d31-4fa1-a76a-fc97423cddb5 | tripo_h3_1_image_to_3d, 12000 faces | 271 KB | 92 KB |
+| HACHIWA | - | 792df273-f5bb-4050-97f4-c6888bd6a2c1 | 7d3ef1d5-37a1-4693-8039-8abce2a1e157 | tripo_h3_1_image_to_3d, 12000 faces | 231 KB | 76 KB |

@@ -458,26 +458,22 @@ export function textsOf(r, extra = {}) {
 /** What a resident's own 3D model cannot show without its skin tearing (measured over every clip by the
     herd survey behind tests/catrig-herd.test.mjs): the actions (catmotion.js ACTIONS) the sims never give
     it and the view never shows for it (catviews shows the posture's plain pose, or standing, instead).
-    Keyed by id; `why` says what the model is. Everything a model can do it still does: three keep to
-    standing and walking, Pusheen to its loaf; the rest skip only a wash, a scratch or a wave that their
-    shape can't bring off (a move toned down that far would read as a half gesture, or as nothing). */
+    Keyed by id; `why` says what the model is. Everything else a model can do it still does (a move
+    toned down past what its shape can bring off would read as a half gesture, or as nothing). */
 const STANDING_ONLY = ["sit", "look", "pant", "groom", "legLick", "earScratch", "knead", "beckon", "chatter", "yawn", "loaf", "dab", "flop", "roll", "sleep", "hop", "pounce", "sitDown", "standUp", "lieDown", "getUp", "sitToLie", "lieToSit", "curlUp", "wake", "hindStand", "scratch", "headBunt", "crouch", "wiggle", "stretch", "stalk"];
 export const MODEL_LIMITS = {
   NEKOBUS: { avoid: STANDING_ONLY, why: "the Catbus: a bus on twelve legs; it stands, walks and runs, and does nothing a bus cannot" },
   ATCHOUMCAT: { avoid: STANDING_ONLY, why: "floor-length fur stands in for the hind legs in the model: only standing and walking hold together" },
   JITTERPAW: { avoid: STANDING_ONLY, why: "fur modelled as loose spiky shards, which come apart in any fold" },
   PUSHEENX: { avoid: ["groom", "legLick", "earScratch", "beckon", "hindStand", "scratch", "stretch", "dab", "flop", "roll", "hop", "pounce", "sleep", "curlUp", "wake", "crouch", "wiggle"], why: "Pusheen: stub legs on a loaf of a body; no paw reaches the face, and it neither rolls over nor curls up (it dozes in its loaf)" },
-  // (the final survey round: its full copy's tail root, modelled lying along the ground from the hip, twists
-  // into a sheet when a hind leg comes up to the ear or is lifted to lick, even at 0.3 of the move)
+  // (the final survey round: its tail root, lying along the ground from the hip, twists into a sheet even at 0.3)
   MILLRACE: { avoid: ["earScratch", "legLick"], why: "its tail lies along the ground from the hip: a hind leg raised to the ear or to lick twists the tail's root" },
-  // (fixer round 3, from renders of every model's wash, leg lick and ear scratch and the reach they measure
-  // (mouth to paw or leg, hind paw to ear) against what their skin lets them do (fit.json): a move that
-  // can't read on the model is left out, rather than shown as a half gesture or a cat sitting still)
+  // (fixer round 3, from renders of every wash, leg lick and ear scratch against what the skin allows (fit.json):
+  // a move that can't read on the model is left out, not shown as a half gesture)
   GUMBALLW: { avoid: ["groom", "legLick", "earScratch"], why: "a cartoon cat with a head as big as its body: no paw or leg comes near its mouth or ear" },
   CHOCOCACAT: { avoid: ["groom", "legLick", "earScratch"], why: "a chibi: a head as big as its body on stub legs; no paw or leg comes near its mouth or ear" },
   NYANKOSEN: { avoid: ["groom", "legLick", "earScratch"], why: "a round ball of a cat on stub legs: no paw or leg comes near its mouth or ear" },
   BIGFROGGY: { avoid: ["groom", "legLick", "earScratch"], why: "a round cartoon body: no paw or leg comes near its mouth or ear" },
-  TUBBSCAT: { avoid: ["legLick", "earScratch"], why: "a very round cat: a hind leg lifted as far as its skin lets it stays down by its belly" },
   MEDIACAT: { avoid: ["earScratch"], why: "its hand-made model's hind leg lifted as far as it goes stays down by its shoulder, well short of the ear" },
   WAYBILL: { avoid: ["legLick"], why: "its skin lets a hind leg come up only a third of the way: the lick would be a nod at its knee" },
   OCTOMONA: { avoid: ["legLick"], why: "tentacles for hind legs, which sink into the lawn when one is lifted" },
@@ -488,28 +484,42 @@ export const MODEL_LIMITS = {
   COLMEOW2: { avoid: ["earScratch"], why: "a deep, round body: its hind paw can't get near its ear" },
   MUSTACHCAT: { avoid: ["earScratch"], why: "a deep, round body: its hind paw can't get near its ear" },
   "catcoin-6": { avoid: ["earScratch"], why: "a big head on a round body: its hind paw can't get near its ear" },
-  sillynubcat: { avoid: ["earScratch"], why: "long fur over a round body: its hind paw can't get near its ear" },
   CROOKSHNK: { avoid: ["earScratch"], why: "a squashed, deep-furred body: its hind paw can't get near its ear" },
   maneki: { avoid: ["earScratch"], why: "the lucky-cat figure: a round body with a big head; its hind paw can't get near its ear" },
-  CAITSITH: { avoid: ["earScratch"], why: "a deep body under its cloak: its hind paw can't get near its ear" },
   EMPTANG: { avoid: ["earScratch"], why: "a round, deep-furred body: its hind paw can't get near its ear" },
-  SKEINKIT: { avoid: ["earScratch"], why: "its skin lets a hind leg come up only a third of the way: the paw would scratch its shoulder" },
   TARTANPAW: { avoid: ["earScratch"], why: "its skin lets a hind leg come up only a third of the way: the paw would scratch its shoulder" },
   tsuki: { avoid: ["scratch"], why: "its skin lets it rear only half way up to a trunk: the scratch would read as a lunge" },
-  SNOWBELCAT: { avoid: ["scratch"], why: "its skin lets it rear only half way up to a trunk: the scratch would read as a lunge" },
   "vibing-cat-coin": { avoid: ["beckon"], why: "its skin lets a forepaw come up only a third of the way: the beckon would be a twitch" },
-  // (fixer round 4: with the head's skin on the head at last (the head joint at the back of the skull), a head
-  // tipped, bowed or rolled over shows, and these models' skin can't take it even at 0.3 of the move, or at what it can take the move falls short)
-  LACQUER: { avoid: ["earScratch"], why: "a big kitten head: tipped down to the scratching paw, its face pinches" },
+  // (fixer round 4: with the head's own skin on it, a tipped, bowed or rolled head shows; these models' skin can't take it)
   CHOUPETCAT: { avoid: ["earScratch"], why: "a deep ruff under a head tipped to the paw: its skin lets the hind paw come only part way up, a paw short of the ear" },
-  PEWTER: { avoid: ["earScratch", "roll"], why: "its cape and feathered hat: a hind leg lifted to the ear catches the cape, and rolled onto its back the hat's feather goes into the lawn" },
-  // (the hand-made Higgsfield models of 2026-09-30 (tripo_h3_1_image_to_3d): what fit-clips.mjs and the herd test
-  // found each new model's skin can't take even at 0.3 of the move, or where the move falls short)
-  AMRCAT: { avoid: ["legLick", "earScratch", "sleep", "curlUp", "wake"], why: "a huge round mound of a body on short legs: a hind leg raised to lick or to the ear stays down by its belly, and curled up the mound hides its head (it dozes in its loaf)" },
+  // (the Higgsfield models of 2026-09-30: what fit-clips.mjs and the herd test found each one can't take, or falls short of)
+  AMRCAT: { avoid: ["legLick", "earScratch", "sleep", "curlUp", "wake"], why: "a huge round mound on short legs: a hind leg raised to lick or to the ear stays by its belly, and curled up the mound hides its head (it dozes in its loaf)" },
   CAMTHECAT: { avoid: ["legLick", "earScratch", "pounce"], why: "a round Squishmallow plush with no separate legs: no hind leg lifts to lick or reach the ear, and a pounce sinks it into the lawn" },
-  MILKWEED: { avoid: ["legLick", "earScratch", "scratch", "hop", "pounce"], why: "the Hello Kitty Godzilla-suit toy: stub legs in a stiff spiky suit; a raised hind leg or a rear up the trunk tears the suit, and a leap sinks it in the lawn" },
+  MILKWEED: { avoid: ["legLick", "earScratch", "scratch", "hop", "pounce"], why: "a Godzilla-suit toy on stub legs: a raised hind leg or a rear up a trunk tears the suit, and a leap sinks it in the lawn" },
   "hosico-cat": { avoid: ["earScratch"], why: "a stocky, round-headed Scottish Straight: its hind paw can't get near its ear" },
   "ket-3": { avoid: ["earScratch"], why: "a plush cartoon head as big as its body, in a shirt and tie: its hind paw can't get near its ear" },
+  // (second Higgsfield batch, 2026-09-30; old limits dropped: CAITSITH, SKEINKIT, SNOWBELCAT, PEWTER's ear scratch)
+  PEWTER: { avoid: ["roll"], why: "its feathered hat: rolled over, the feather goes into the lawn" },
+  HUBBUB: { avoid: ["earScratch"], why: "stocky and low-slung: no hind paw to the ear" },
+  KEEPSAKE: { avoid: ["earScratch"], why: "a deep Persian coat: no hind paw to the ear" },
+  MOMOTHECAT: { avoid: ["earScratch"], why: "a round kitten in a robe: no hind paw to the ear" },
+  PARLORPUFF: { avoid: ["earScratch"], why: "round and deep-furred: no hind paw to the ear" },
+  SASSYHB: { avoid: ["earScratch"], why: "a deep Himalayan coat: no hind paw to the ear" },
+  SNOWBELCAT: { avoid: ["earScratch"], why: "a deep Persian coat: no hind paw to the ear" },
+  TREMAINE: { avoid: ["earScratch"], why: "Lucifer's fat round body: no hind paw to the ear" },
+  "pepecat-2": { avoid: ["earScratch"], why: "a head as big as its body: no hind paw to the ear" },
+  sillynubcat: { avoid: ["earScratch"], why: "round on short legs: no hind paw to the ear" },
+  SPRIGATO: { avoid: ["legLick", "earScratch"], why: "a chibi, head as big as its body: no bow to a leg, no paw to the ear" },
+  LACQUER: { avoid: ["legLick", "earScratch"], why: "the Tmall cat's box of a head: no bow to a leg, no paw to the ear" },
+  TUBBSCAT: { avoid: ["legLick", "earScratch", "flop", "roll"], why: "a round bean on stub legs: a raised hind leg or a roll onto its side tears it" },
+  GATEKITTY: { avoid: ["earScratch"], why: "a huge round belly: no hind paw to the ear" },
+  MRBCHONK: { avoid: ["earScratch"], why: "a very heavy body: no hind paw to the ear" },
+  OJINEKO: { avoid: ["earScratch"], why: "a huge round Exotic: no hind paw to the ear" },
+  PONTAKUN: { avoid: ["earScratch"], why: "big, round and thick-furred: no hind paw to the ear" },
+  IDPHOTO: { avoid: ["earScratch"], why: "a short-legged Munchkin: no hind paw to the ear" },
+  PAYAKE: { avoid: ["earScratch"], why: "a short-legged Munchkin: no hind paw to the ear" },
+  UNIUNI: { avoid: ["earScratch"], why: "a short-legged Minuet: no hind paw to the ear" },
+  HACHIWA: { avoid: ["legLick", "earScratch"], why: "a round mochi on stub legs: no bow to a leg, no paw to the ear" },
 };
 const avoidOf = (r) => { const m = MODEL_LIMITS[r?.id] ?? MODEL_LIMITS[r?.ticker]; return m ? m.avoid.slice() : null; };
 

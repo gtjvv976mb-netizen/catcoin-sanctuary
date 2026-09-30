@@ -13,7 +13,8 @@ This script then, for every ticker with a "url" (or only the tickers named on th
   1. downloads the raw GLB (cached in scripts/.cat-models-cache/, which is git-ignored; a cached
      <TICKER>.raw.glb whose stamp <TICKER>.raw.job holds the job's model_job is used as it is, which
      is how scripts/tripo.mjs make hands over the model it downloaded),
-  2. normalizes it: y up, facing +X like the shared base models, 1 unit tall, feet on y = 0,
+  2. drops loose crumbs floating off the model (small pieces joined to nothing, away from the body),
+     then normalizes it: y up, facing +X like the shared base models, 1 unit tall, feet on y = 0,
      centred on x/z (a wrapper node carrying the fit; gltfpack bakes it in),
   3. re-encodes the colour texture (JPEG, PNG or WebP) to 1024 px JPEG (512 px for the far copy), drops PBR extras,
   4. packs it with gltfpack -kn -km -tr (quantized, no decoder needed), and writes
@@ -94,10 +95,73 @@ def world_points(js, binc):
         if "mesh" in n:
             for p in js["meshes"][n["mesh"]]["primitives"]:
                 v = accessor(js, binc, p["attributes"]["POSITION"])
+                if "indices" in p: v = v[np.unique(accessor(js, binc, p["indices"]).astype(np.int64).ravel())]
                 pts.append((np.c_[v, np.ones(len(v))] @ m.T)[:, :3])
         for c in n.get("children", []): walk(c, m)
     for r in js["scenes"][js.get("scene", 0)]["nodes"]: walk(r, np.eye(4))
     return np.concatenate(pts)
+
+
+def drop_floaters(js, binc, share=0.1, gap=0.02):
+    """Drop the loose crumbs an image-to-3D model sometimes leaves floating beside the cat (a speck
+    over the back, a chip in front of the face, a clump of blobs over the tail): pieces of the mesh
+    joined to nothing and further than about `gap` of the model's height from the body and from
+    anything touching it, together under `share` of its triangles. Eyes, whiskers, collars and
+    buttons are separate pieces too, but they sit on the body, so they stay. Only the index buffer
+    changes (the crumbs' vertices are left unused, and gltfpack drops them).
+    Returns (js, binc, number of pieces dropped)."""
+    dropped = 0
+    for mesh in js.get("meshes", []):
+        for p in mesh["primitives"]:
+            if "indices" not in p or p.get("mode", 4) != 4: continue
+            pos = accessor(js, binc, p["attributes"]["POSITION"])
+            idx = accessor(js, binc, p["indices"]).astype(np.int64).reshape(-1, 3)
+            if len(idx) < 100: continue
+            lo, hi = pos[idx.ravel()].min(0), pos[idx.ravel()].max(0)
+            q = np.round((pos - lo) / (np.linalg.norm(hi - lo) * 1e-5)).astype(np.int64)
+            _, weld = np.unique(q, axis=0, return_inverse=True)
+            weld = weld.ravel()
+            parent = list(range(int(weld.max()) + 1))
+            def find(a):
+                while parent[a] != a: parent[a] = parent[parent[a]]; a = parent[a]
+                return a
+            for a, b, c in weld[idx]:
+                ra, rb, rc = find(a), find(b), find(c)
+                parent[rb] = ra; parent[find(rc)] = ra
+            root = np.array([find(weld[i]) for i in range(len(pos))])
+            tri_root = root[idx[:, 0]]
+            roots, counts = np.unique(tri_root, return_counts=True)
+            if len(roots) < 2: continue
+            # Pieces in the same or a neighbouring cell of a grid half `gap` of the height across are
+            # near each other (under about 1.7 gap apart); the body is the largest piece and all it reaches.
+            used = np.unique(idx.ravel())
+            cell = np.floor((pos[used] - lo) / (gap * (hi[1] - lo[1]) / 2)).astype(np.int64)
+            where = {}
+            for c, r in zip(map(tuple, cell), root[used]): where.setdefault(c, set()).add(int(r))
+            near = {int(r): set() for r in roots}
+            for (x, y, z), rs in where.items():
+                for dx in (-1, 0, 1):
+                    for dy in (-1, 0, 1):
+                        for dz in (-1, 0, 1):
+                            for r2 in where.get((x + dx, y + dy, z + dz), ()):
+                                for r in rs: near[r].add(r2)
+            body, todo = set(), [int(roots[np.argmax(counts)])]
+            while todo:
+                r = todo.pop()
+                if r in body: continue
+                body.add(r); todo.extend(near[r] - body)
+            rest = {int(r): int(n) for r, n in zip(roots, counts) if int(r) not in body}
+            drop = set(rest) if rest and sum(rest.values()) < share * len(idx) else set()
+            if not drop: continue
+            keep = idx[~np.isin(tri_root, list(drop))].astype(np.uint32).ravel()
+            binc = bytes(binc) + b"\0" * (-len(binc) % 4)
+            js["bufferViews"].append({"buffer": 0, "byteOffset": len(binc), "byteLength": keep.nbytes, "target": 34963})
+            binc += keep.tobytes()
+            js["accessors"].append({"bufferView": len(js["bufferViews"]) - 1, "componentType": 5125, "count": int(keep.size), "type": "SCALAR"})
+            p["indices"] = len(js["accessors"]) - 1
+            js["buffers"] = [{"byteLength": len(binc)}]
+            dropped += len(drop)
+    return js, binc, dropped
 
 
 def tex_source(t):
@@ -233,6 +297,8 @@ def build(ticker, job, exe, yaw):
         def pack(si, tex, sa):
             if tex not in fits:
                 js, binc = read_glb(src.read_bytes())
+                js, binc, crumbs = drop_floaters(js, binc)
+                if crumbs and not tag: print(f"  dropped {crumbs} loose crumb(s) floating off the model")
                 js, binc = retexture(js, binc, tex, job.get("q", 86))
                 js, dims = normalize(js, binc, yaw if yaw is not None else job.get("yaw", 0), base)
                 tmp = CACHE / f"{ticker}{tag}-{tex}.fit.glb"; tmp.write_bytes(write_glb(js, binc))

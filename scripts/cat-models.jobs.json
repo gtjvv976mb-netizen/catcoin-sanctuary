@@ -28,23 +28,25 @@
   }
  },
  "WHISK100": {
-  "image_job": "5c75f0aa-dcb6-4641-aa4d-f14bef38bb9f",
-  "clean_job": "736ecb30-955e-4e81-9955-64a8582fd9e2",
-  "model_job": "b9b7bfb3-969e-4243-bd64-760bff75d346",
+  "image_job": "e761b7ed-331e-4205-889d-43dae5f45625",
+  "clean_job": "ebe4e914-f4b5-426f-adfc-11d117b71a3b",
+  "pose": "standing on all fours",
+  "model_job": "8c6d24df-3d09-4522-83f1-4eb42459b760",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032545_b9b7bfb3-969e-4243-bd64-760bff75d346.glb",
-  "pose": "standing on all fours",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133129_8c6d24df-3d09-4522-83f1-4eb42459b760.glb",
   "status": "done",
+  "prev_model_job": "b9b7bfb3-969e-4243-bd64-760bff75d346",
   "sizes": {
-   "hi": 262836,
-   "lo": 88916
+   "hi": 346696,
+   "lo": 130556
   },
   "dims": {
-   "len": 1.462,
-   "height": 1,
-   "width": 0.7025
-  }
+   "len": 1.5644,
+   "height": 1.0,
+   "width": 0.6021
+  },
+  "yaw": 180.0
  },
  "INGOTLOAF": {
   "image_job": "39421f6e-3df3-48c8-8f97-3a1af2442c13",
@@ -190,22 +192,23 @@
   }
  },
  "MOMOTHECAT": {
-  "image_job": "7c94bc69-4ab0-4d38-9949-4b0569170132",
-  "clean_job": "f9a74bdb-5d8c-45c0-9324-87951a2d40d1",
-  "model_job": "047b97f4-565a-40b1-ab96-ccdd49ca8f2c",
+  "image_job": "0a09386a-39a9-4b9d-a421-adcf6b7f0b7a",
+  "clean_job": "1950dfcc-6cb1-4600-a0a0-bb6d7b943ea0",
+  "pose": "standing on all fours",
+  "model_job": "50a64ebb-519e-4a49-87a1-8e1fca364132",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032555_047b97f4-565a-40b1-ab96-ccdd49ca8f2c.glb",
-  "pose": "standing on all fours",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133111_50a64ebb-519e-4a49-87a1-8e1fca364132.glb",
   "status": "done",
+  "prev_model_job": "047b97f4-565a-40b1-ab96-ccdd49ca8f2c",
   "sizes": {
-   "hi": 246060,
-   "lo": 82512
+   "hi": 256016,
+   "lo": 81932
   },
   "dims": {
-   "len": 1.2679,
-   "height": 1,
-   "width": 0.5261
+   "len": 1.3903,
+   "height": 1.0,
+   "width": 0.6261
   }
  },
  "LEOTHELION": {
@@ -268,61 +271,71 @@
   }
  },
  "MIGGLES": {
-  "image_job": "9ea321cd-3074-4e34-b115-5f9b70884c90",
-  "clean_job": "35d34aad-1ace-4b37-a02f-bfb946f267b4",
-  "model_job": "7f717969-b6e5-46d5-8268-fa2c36dc1575",
+  "image_job": "fb4252b2-a99b-48b8-b24d-83a2fb5ddfb3",
+  "clean_job": "edc08b59-c02f-43ed-a3c6-81f74cd5a533",
+  "pose": "standing on all fours",
+  "model_job": "c049dc48-036e-4297-849a-6f0321ea03ff",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032600_7f717969-b6e5-46d5-8268-fa2c36dc1575.glb",
-  "pose": "standing on all fours",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132732_c049dc48-036e-4297-849a-6f0321ea03ff.glb",
   "status": "done",
+  "prev_model_job": "7f717969-b6e5-46d5-8268-fa2c36dc1575",
+  "si_lo": 0.18,
+  "tex_lo": 256,
   "sizes": {
-   "hi": 248300,
-   "lo": 79932
+   "hi": 394748,
+   "lo": 146976
   },
   "dims": {
-   "len": 1.3971,
-   "height": 1,
-   "width": 0.5592
-  }
+   "len": 1.772,
+   "height": 1.0,
+   "width": 0.6352
+  },
+  "yaw": 180.0
  },
  "PEWTER": {
-  "image_job": "bf35b288-f673-4645-a450-9d085c900154",
-  "clean_job": "aa5bd8fc-ae61-4700-a7eb-0a039e75b058",
-  "model_job": "ebc84ede-6aa8-4050-98e0-e2592fca3ae7",
+  "image_job": "9c42b032-2cbb-46f8-82a7-f5a1b034fe33",
+  "clean_job": "151c7ac7-c7d7-4499-b492-fa2b284bb9ac",
+  "pose": "standing on all fours",
+  "model_job": "be835183-867b-46e2-8109-208ff1d81540",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032602_ebc84ede-6aa8-4050-98e0-e2592fca3ae7.glb",
-  "pose": "standing on all fours",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133221_be835183-867b-46e2-8109-208ff1d81540.glb",
   "status": "done",
+  "prev_model_job": "ebc84ede-6aa8-4050-98e0-e2592fca3ae7",
+  "si_lo": 0.18,
+  "tex_lo": 256,
   "sizes": {
-   "hi": 300264,
-   "lo": 101996
+   "hi": 288076,
+   "lo": 139620
   },
   "dims": {
-   "len": 1.1988,
-   "height": 1,
-   "width": 0.4899
+   "len": 1.278,
+   "height": 1.0,
+   "width": 0.5597
   }
  },
  "TRINKETCAT": {
-  "image_job": "2cff5eee-3522-450e-b4e6-02041bb0c4f6",
-  "clean_job": "1a566b0d-f68c-4e2a-9171-8fca5fc3e6e6",
-  "model_job": "af0bf37b-bb76-48fd-837f-a8fef4a4f20b",
+  "image_job": "69d6fa56-b4e0-436c-a17f-c67eff7a3519",
+  "clean_job": "e31038a2-78a2-492f-9988-bfd2cbc8404d",
+  "pose": "standing on all fours",
+  "model_job": "93b141a4-0d37-403c-a993-e799a60a3c4f",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032633_af0bf37b-bb76-48fd-837f-a8fef4a4f20b.glb",
-  "pose": "standing on all fours",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133319_93b141a4-0d37-403c-a993-e799a60a3c4f.glb",
   "status": "done",
+  "prev_model_job": "af0bf37b-bb76-48fd-837f-a8fef4a4f20b",
   "sizes": {
-   "hi": 302504,
-   "lo": 99508
+   "hi": 448960,
+   "lo": 100000
   },
   "dims": {
-   "len": 1.2045,
-   "height": 1,
-   "width": 0.5122
-  }
+   "len": 1.4531,
+   "height": 1.0,
+   "width": 0.4522
+  },
+  "sa_lo": true,
+  "yaw": 180.0
  },
  "TUPPENCE": {
   "image_job": "7bd9b225-9d13-4462-a9c9-9f23091f82e1",
@@ -381,22 +394,23 @@
   }
  },
  "SKEINKIT": {
-  "image_job": "38e5f17c-c00a-43ab-8778-a5857461c2e5",
-  "clean_job": "9154cc0b-519e-42df-ab51-a5036b9c2eda",
-  "model_job": "d107494f-769c-4718-b28f-2b6d79c31a0b",
+  "image_job": "9ceecb76-f384-412d-b261-776b7ab2f21c",
+  "clean_job": "1781cfae-7451-49d6-8421-bf7646e71e94",
+  "pose": "standing on all fours",
+  "model_job": "34eff4a8-a31e-4e48-883f-8df23a35f3b8",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032638_d107494f-769c-4718-b28f-2b6d79c31a0b.glb",
-  "pose": "standing on all fours",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132731_34eff4a8-a31e-4e48-883f-8df23a35f3b8.glb",
   "status": "done",
+  "prev_model_job": "d107494f-769c-4718-b28f-2b6d79c31a0b",
   "sizes": {
-   "hi": 236124,
-   "lo": 77444
+   "hi": 326012,
+   "lo": 120712
   },
   "dims": {
-   "len": 1.2615,
-   "height": 1,
-   "width": 0.5622
+   "len": 1.5203,
+   "height": 1.0,
+   "width": 0.649
   }
  },
  "SAVEPAWS": {
@@ -558,22 +572,23 @@
   }
  },
  "UPDATECAT": {
-  "image_job": "0061cfa8-eb81-45fa-9e32-1fe7d2808cc7",
-  "clean_job": "dcfcfddd-e526-46af-b8c1-94b92c53ef3a",
-  "model_job": "f9e57a51-ca33-4c81-af46-5c6484d877b5",
+  "image_job": "c2ab60ab-45ec-4e74-91de-3b090a2b191e",
+  "clean_job": "27fec5bb-c660-4593-ad58-3e16c9dbd352",
+  "pose": "standing on all fours",
+  "model_job": "97e26e9a-d848-49c7-8017-3cc33b193842",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_032648_f9e57a51-ca33-4c81-af46-5c6484d877b5.glb",
-  "pose": "standing on all fours",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133501_97e26e9a-d848-49c7-8017-3cc33b193842.glb",
   "status": "done",
+  "prev_model_job": "f9e57a51-ca33-4c81-af46-5c6484d877b5",
   "sizes": {
-   "hi": 281480,
-   "lo": 94120
+   "hi": 350832,
+   "lo": 116344
   },
   "dims": {
-   "len": 1.4078,
-   "height": 1,
-   "width": 0.5522
+   "len": 1.1231,
+   "height": 1.0,
+   "width": 0.4916
   }
  },
  "TRILLBY": {
@@ -652,47 +667,43 @@
   }
  },
  "MEMOPAW": {
-  "image_job": "802a7f1e-7935-4fb4-818b-ae216628c300",
-  "clean_job": "88de237c-4bde-4e34-b833-c3b57c72f133",
-  "model_job": "af81be0b-b70e-4299-bffa-78f7e12c2fde",
+  "image_job": "08c5dd18-be40-44dc-83f8-0507bec4d545",
+  "clean_job": "803f24e5-7d27-49fd-a6bd-67dddf99c2c6",
+  "pose": "standing on all fours",
+  "model_job": "4f5c98bd-6dbd-4512-942f-293ddbeab537",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "pose": "standing on all fours",
-  "source": "launch-sheet",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133109_4f5c98bd-6dbd-4512-942f-293ddbeab537.glb",
   "status": "done",
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_034351_af81be0b-b70e-4299-bffa-78f7e12c2fde.glb",
-  "redo": "hunyuan3d_v3 multiview",
-  "credits": 9.25,
+  "prev_model_job": "af81be0b-b70e-4299-bffa-78f7e12c2fde",
   "sizes": {
-   "hi": 264812,
-   "lo": 89548
+   "hi": 335336,
+   "lo": 105756
   },
   "dims": {
-   "len": 1.2921,
-   "height": 1,
-   "width": 0.4821
+   "len": 1.5394,
+   "height": 1.0,
+   "width": 0.5993
   }
  },
  "GIMBALPAW": {
-  "image_job": "fc2c2bc9-4ea0-4bfe-9249-836d07c362d2",
-  "clean_job": "f9028e05-ccc9-4d10-abfb-d717f93593dd",
-  "model_job": "ac3f3ec6-33b0-4a70-8a47-71032dd2c6b6",
+  "image_job": "606aa415-db7e-4222-89b7-bbc42f9836b7",
+  "clean_job": "200c838d-d44f-4e10-b7c5-b193e8a233d9",
+  "pose": "standing on all fours",
+  "model_job": "77cee2f5-bb34-4517-b43a-d9fc5e949c0a",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "pose": "standing on all fours",
-  "source": "launch-sheet",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133205_77cee2f5-bb34-4517-b43a-d9fc5e949c0a.glb",
   "status": "done",
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_034352_ac3f3ec6-33b0-4a70-8a47-71032dd2c6b6.glb",
-  "redo": "hunyuan3d_v3 multiview",
-  "credits": 9.25,
+  "prev_model_job": "ac3f3ec6-33b0-4a70-8a47-71032dd2c6b6",
   "sizes": {
-   "hi": 258444,
-   "lo": 89112
+   "hi": 285300,
+   "lo": 93560
   },
   "dims": {
-   "len": 1.1679,
-   "height": 1,
-   "width": 0.5192
+   "len": 1.3204,
+   "height": 1.0,
+   "width": 0.5489
   }
  },
  "CHIK": {
@@ -736,25 +747,23 @@
   }
  },
  "KEEPSAKE": {
-  "image_job": "200fd29f-c084-46fe-9563-0183ea88b102",
-  "clean_job": "f56596dd-cfcb-487f-ae27-aef3f64ef25e",
-  "model_job": "cbe509a9-deca-4be1-96ef-bc05394a4992",
+  "image_job": "8341acf3-6fff-4e1a-b277-86cf423488cd",
+  "clean_job": "8223c797-48ef-43ea-bb3e-de72ebba452d",
+  "pose": "standing on all fours",
+  "model_job": "7214d70d-8a99-4ac6-bb9f-b74bfc318a36",
   "model": "tripo_h3_1_image_to_3d",
   "faces": 12000,
-  "pose": "standing on all fours",
-  "source": "launch-sheet",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133337_7214d70d-8a99-4ac6-bb9f-b74bfc318a36.glb",
   "status": "done",
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_034355_cbe509a9-deca-4be1-96ef-bc05394a4992.glb",
-  "redo": "hunyuan3d_v3 multiview",
-  "credits": 9.25,
+  "prev_model_job": "cbe509a9-deca-4be1-96ef-bc05394a4992",
   "sizes": {
-   "hi": 255712,
-   "lo": 83828
+   "hi": 295904,
+   "lo": 90588
   },
   "dims": {
-   "len": 1.4952,
-   "height": 1,
-   "width": 0.5623
+   "len": 1.6469,
+   "height": 1.0,
+   "width": 0.5561
   }
  },
  "PINROW": {
@@ -981,36 +990,23 @@
   }
  },
  "KERNELPAW": {
-  "image_job": "9db38511-b5d8-48bc-91ac-afe63e4f0d2d",
-  "clean_job": "4efdac07-1464-4f29-9429-5932eb197026",
-  "view_jobs": {
-   "front": "e39c1cef-6855-425b-aa9d-470ae4ec72ec",
-   "left": "9e373cf6-5ebf-4960-bb16-437b2feab493",
-   "back": "64edd134-3cce-4c5a-ad02-e6a5b122c694",
-   "right": "3157a84f-ff76-4cf9-8c81-43b3e5ec6a7e"
-  },
-  "model_job": "d0d1b7db-c1dc-4f41-802f-d3c8cfa9d62b",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "b8005629-7968-45e6-9a0a-95a0f527b92e",
+  "clean_job": "853678f6-6f49-4e69-bf93-7fbdad0f949a",
   "pose": "standing on all fours",
-  "source": "launch-sheet",
+  "model_job": "8bfb8b12-cae8-4ddc-8f02-3130f8d6b902",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133340_8bfb8b12-cae8-4ddc-8f02-3130f8d6b902.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_035325_d0d1b7db-c1dc-4f41-802f-d3c8cfa9d62b.glb",
+  "prev_model_job": "d0d1b7db-c1dc-4f41-802f-d3c8cfa9d62b",
   "sizes": {
-   "hi": 731800,
-   "lo": 289324
+   "hi": 265920,
+   "lo": 89252
   },
   "dims": {
-   "len": 1.3097,
-   "height": 1,
-   "width": 0.4757
+   "len": 1.1662,
+   "height": 1.0,
+   "width": 0.6605
   }
  },
  "TREADPAW": {
@@ -1047,36 +1043,25 @@
   }
  },
  "COWARDLION": {
-  "image_job": "c6e3659c-8f85-475f-8f94-3355971598c9",
-  "clean_job": "dcffd2a3-2f7b-4d13-bc5a-15ec04808e76",
-  "view_jobs": {
-   "front": "ab2aebd0-ab83-4dda-b454-fe520313c616",
-   "left": "7ee249d3-a83c-45a5-bdd0-ad7f1fee23bc",
-   "back": "a961c4d2-c055-484a-9596-71aebf19fd8e",
-   "right": "f9d360a5-f0e2-4ec3-8dd8-76d6f0bfcf3d"
-  },
-  "model_job": "f7bac78b-8f2f-45b6-bb41-561b8e7e7c5e",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "ce350aa3-6166-43f4-b624-013668135270",
+  "clean_job": "fdd14377-8e5b-4264-87c5-234f798735ca",
   "pose": "standing on all fours",
-  "source": "launch-sheet",
+  "model_job": "f62d6fed-386b-4328-a2d0-cf14fb128180",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132735_f62d6fed-386b-4328-a2d0-cf14fb128180.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
+  "prev_model_job": "f7bac78b-8f2f-45b6-bb41-561b8e7e7c5e",
+  "si_lo": 0.18,
   "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_035330_f7bac78b-8f2f-45b6-bb41-561b8e7e7c5e.glb",
   "sizes": {
-   "hi": 741864,
-   "lo": 202804
+   "hi": 373596,
+   "lo": 127464
   },
   "dims": {
-   "len": 1.122,
-   "height": 1,
-   "width": 0.5838
+   "len": 1.7178,
+   "height": 1.0,
+   "width": 0.5643
   }
  },
  "GLINTPAW": {
@@ -1128,69 +1113,43 @@
   }
  },
  "HUBBUB": {
-  "image_job": "d5d45b7f-3a0d-4777-ba3b-7b62dc77c5e4",
-  "clean_job": "653d5843-6166-4a63-bf33-eaf3df22c267",
-  "view_jobs": {
-   "front": "6ba52501-0fbb-4c09-b8f9-464f1fdf3e23",
-   "left": "582584ff-c534-4e6d-8499-8e9ea3b535d4",
-   "back": "0b8c6b04-1233-48b7-97fd-3c58157d8148",
-   "right": "741dc012-7f8d-4e41-a366-3a0b549b1d67"
-  },
-  "model_job": "c327dddd-0f24-4f68-8525-a8307687a837",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "f1a049a6-c90b-49a5-a44a-6ad911cbb03c",
+  "clean_job": "f035ac64-e775-4178-8677-f5adc3536f0a",
   "pose": "standing on all fours",
-  "source": "launch-sheet",
+  "model_job": "14fb3a38-64f2-4629-92c9-8ac7af37ca5f",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133051_14fb3a38-64f2-4629-92c9-8ac7af37ca5f.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_035456_c327dddd-0f24-4f68-8525-a8307687a837.glb",
+  "prev_model_job": "c327dddd-0f24-4f68-8525-a8307687a837",
   "sizes": {
-   "hi": 755756,
-   "lo": 155348
+   "hi": 379544,
+   "lo": 110612
   },
   "dims": {
-   "len": 1.2481,
-   "height": 1,
-   "width": 0.5417
+   "len": 1.8973,
+   "height": 1.0,
+   "width": 0.5856
   }
  },
  "BOXWOOD": {
-  "image_job": "34a652db-5a86-41fb-9460-0205f839e9b8",
-  "clean_job": "d424e085-c7db-4c84-9af5-c96a3f13c28e",
-  "view_jobs": {
-   "front": "6796cbc0-d8f5-4521-88c2-438fef75bf61",
-   "left": "47b2941a-4240-4463-bdc1-6452a4147db1",
-   "back": "42b313ca-de0c-4bda-9d99-d314749e5230",
-   "right": "0c7dc14d-e2de-4cb0-8f6c-a471a92296e4"
-  },
-  "model_job": "3f408056-44ca-44ef-a152-abc8fd9475f1",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "95ec18b8-522d-438c-98e1-e3ebb5f8faa3",
+  "clean_job": "02d678bb-1494-4baa-9a8d-fd8d37339867",
   "pose": "standing on all fours",
-  "source": "launch-sheet",
+  "model_job": "431f8e41-91b4-46f8-83f5-ba7bb66edd7d",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133201_431f8e41-91b4-46f8-83f5-ba7bb66edd7d.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3JZSMzfLba5srJNn6vNI9xpZHJd/hf_20260926_035458_3f408056-44ca-44ef-a152-abc8fd9475f1.glb",
+  "prev_model_job": "3f408056-44ca-44ef-a152-abc8fd9475f1",
   "sizes": {
-   "hi": 785484,
-   "lo": 142480
+   "hi": 308252,
+   "lo": 98920
   },
   "dims": {
-   "len": 1.2669,
-   "height": 1,
-   "width": 0.6066
+   "len": 1.3435,
+   "height": 1.0,
+   "width": 0.6099
   }
  },
  "LIDNAP": {
@@ -2723,36 +2682,23 @@
   "tex_lo": 256
  },
  "BURLYPAW": {
-  "image_job": "f58a999a-a602-4f54-8345-57acf8889f89",
-  "clean_job": "91d383a1-e8e2-403a-8f37-2e1019f4f706",
-  "view_jobs": {
-   "front": "9da590f1-2c70-41ab-bb88-63f0ad49737d",
-   "left": "42f30d7c-3d10-45a3-9f79-3c512e3ec92e",
-   "back": "c65fa266-d4b1-4f89-93b1-4bf2ad73578b",
-   "right": "e8b51752-5004-41ff-9794-2e97543c01d3"
-  },
-  "model_job": "777cdb4e-4ff5-4dba-bd8e-d0bf2193520b",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "c83639b2-2016-4f35-9032-3debf95f4ebb",
+  "clean_job": "2617df05-6c13-4b81-9724-66ae2d476e88",
   "pose": "standing on all fours",
-  "source": "queue (site portrait)",
+  "model_job": "73fe89d0-d2ad-4573-b07b-0739f732668e",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132719_73fe89d0-d2ad-4573-b07b-0739f732668e.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_080138_777cdb4e-4ff5-4dba-bd8e-d0bf2193520b.glb",
+  "prev_model_job": "777cdb4e-4ff5-4dba-bd8e-d0bf2193520b",
   "sizes": {
-   "hi": 685568,
-   "lo": 146396
+   "hi": 322028,
+   "lo": 95760
   },
   "dims": {
-   "len": 1.1072,
-   "height": 1,
-   "width": 0.4987
+   "len": 1.5299,
+   "height": 1.0,
+   "width": 0.53
   }
  },
  "SUNSTRETCH": {
@@ -2829,69 +2775,43 @@
   }
  },
  "KIOSKPAW": {
-  "image_job": "ae874b63-f7bb-4db7-a0b8-11f2593d1f8f",
-  "clean_job": "dba5baf5-805b-491d-b6a0-5723e0e8e65c",
-  "view_jobs": {
-   "front": "ec02f9a3-41af-45b2-ad48-39799d52cb48",
-   "left": "e5018239-c6f4-4be9-81f9-7d74c69c0c39",
-   "back": "fe89f80c-94fe-45fa-a57f-db72d3b60956",
-   "right": "c5a6c713-6407-40f9-a82c-4297ebe9ffc3"
-  },
-  "model_job": "4f078f51-aa68-4bdc-a520-980336bbf003",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "b6bfee1f-93a8-49e3-ab29-88b240d0442a",
+  "clean_job": "7de740f6-23d0-42d1-a96b-31eb1f861746",
   "pose": "standing on all fours",
-  "source": "queue (site portrait)",
+  "model_job": "39e5a54d-6202-4623-a2ed-6879a2061b7e",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133414_39e5a54d-6202-4623-a2ed-6879a2061b7e.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_080609_4f078f51-aa68-4bdc-a520-980336bbf003.glb",
+  "prev_model_job": "4f078f51-aa68-4bdc-a520-980336bbf003",
   "sizes": {
-   "hi": 713596,
-   "lo": 175576
+   "hi": 325048,
+   "lo": 97556
   },
   "dims": {
-   "len": 1.1785,
-   "height": 1,
-   "width": 0.6237
+   "len": 1.4718,
+   "height": 1.0,
+   "width": 0.5108
   }
  },
  "SANDSTEP": {
-  "image_job": "50f48c51-282b-4920-b21f-8bf6d917b7f0",
-  "clean_job": "9591736b-8bcf-442a-954b-03a4f5d5e73d",
-  "view_jobs": {
-   "front": "22ba8a3e-4d3f-4352-9208-4a5a35121864",
-   "left": "b31d26fe-4be1-4631-bcb8-dc1a528f6d81",
-   "back": "6f741f6c-74fc-4b85-8e20-159bad0032bc",
-   "right": "2802692c-23bb-451a-a943-f39d4ec7e01b"
-  },
-  "model_job": "7dad27d3-b3da-4513-9c51-f513daec7b9f",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "3a2368ec-c4e6-4025-97ee-9a7e5ecd8d43",
+  "clean_job": "16a309b9-16ab-4c96-beda-532aeddabcbb",
   "pose": "standing on all fours",
-  "source": "queue (site portrait)",
+  "model_job": "e3a58a63-8b09-4344-b837-c0b590c57c99",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133257_e3a58a63-8b09-4344-b837-c0b590c57c99.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_080611_7dad27d3-b3da-4513-9c51-f513daec7b9f.glb",
+  "prev_model_job": "7dad27d3-b3da-4513-9c51-f513daec7b9f",
   "sizes": {
-   "hi": 683304,
-   "lo": 181000
+   "hi": 326476,
+   "lo": 97736
   },
   "dims": {
-   "len": 1.132,
-   "height": 1,
-   "width": 0.5662
+   "len": 1.5101,
+   "height": 1.0,
+   "width": 0.5107
   }
  },
  "WAYBILL": {
@@ -3066,36 +2986,23 @@
   }
  },
  "VIGNETPAW": {
-  "image_job": "63ad12f6-f0f2-4f00-b7a1-6b074266bb6d",
-  "clean_job": "bb33594e-fa97-4b21-9671-3cf6f8182d8c",
-  "view_jobs": {
-   "front": "6865bc42-27e2-4067-b4ec-36924e65f601",
-   "left": "bae16c72-3535-469e-9ab2-a80bd849c843",
-   "back": "f110e8b0-df4b-42c2-84d1-81f3be417714",
-   "right": "f24c413a-285b-420b-8f08-ab5d1574cd2f"
-  },
-  "model_job": "f561f144-9e3a-447c-bdf3-72b3b24f6123",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "bc7bc77b-f3fa-48b1-8b34-68ad5b476622",
+  "clean_job": "d1e39154-3cfd-4196-8c63-e91a55c7057e",
   "pose": "standing on all fours",
-  "source": "queue (site portrait)",
+  "model_job": "3e03e04d-c313-446e-a06d-43b1117cd471",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133526_3e03e04d-c313-446e-a06d-43b1117cd471.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_080737_f561f144-9e3a-447c-bdf3-72b3b24f6123.glb",
+  "prev_model_job": "f561f144-9e3a-447c-bdf3-72b3b24f6123",
   "sizes": {
-   "hi": 679572,
-   "lo": 170492
+   "hi": 296008,
+   "lo": 90316
   },
   "dims": {
-   "len": 1.1647,
-   "height": 1,
-   "width": 0.5966
+   "len": 1.2827,
+   "height": 1.0,
+   "width": 0.4298
   }
  },
  "CANDLEWICK": {
@@ -3213,36 +3120,23 @@
   }
  },
  "LACQUER": {
-  "image_job": "c26aa725-6b9f-4a37-8402-8d1c895d827e",
-  "clean_job": "ddfd98ee-76ed-47f8-8776-cec41174804b",
-  "view_jobs": {
-   "front": "4088332c-8937-46ea-a727-f9f72f948f0c",
-   "left": "78ba6cd6-281a-49e3-ac56-c0025b3a28f5",
-   "back": "baf7667f-ce2a-4168-9c97-cabb47bee14a",
-   "right": "62e658cc-a38b-49ac-b144-312b9fe7f23b"
-  },
-  "model_job": "1837621c-033d-4a06-8654-547475dffc9e",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "7b94ae27-d994-4e00-b86b-46c8d79e1dea",
+  "clean_job": "e2a2978a-9259-4c4b-8c22-e84378636242",
   "pose": "standing on all fours",
-  "source": "queue (site portrait)",
+  "model_job": "9d597602-c3f0-465d-a85d-0a0576c1d1ad",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132721_9d597602-c3f0-465d-a85d-0a0576c1d1ad.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_080923_1837621c-033d-4a06-8654-547475dffc9e.glb",
+  "prev_model_job": "1837621c-033d-4a06-8654-547475dffc9e",
   "sizes": {
-   "hi": 529376,
-   "lo": 210592
+   "hi": 221392,
+   "lo": 70340
   },
   "dims": {
-   "len": 1.1946,
-   "height": 1,
-   "width": 0.6368
+   "len": 1.5648,
+   "height": 1.0,
+   "width": 0.9723
   }
  },
  "RUBYCAT": {
@@ -3369,36 +3263,23 @@
   }
  },
  "GRIDDLE": {
-  "image_job": "f9151e9b-6e70-4b49-97a4-97fe8a737bce",
-  "clean_job": "b4c4f8cc-3c52-4283-b467-41159b857fac",
-  "view_jobs": {
-   "front": "03fd4407-d6d6-4c10-8ab6-0f0d59c1f99f",
-   "left": "38d8d6e7-7fc6-439e-a6c1-9c4b1d4d3877",
-   "back": "595792aa-573c-40f7-8017-990c097565a4",
-   "right": "86f8738d-80b8-493e-a555-c82f64408ee4"
-  },
-  "model_job": "d87eadf2-afb8-4858-8a1d-c473b6994436",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "d11fab11-b9cb-4f5c-8b55-bed8532aee99",
+  "clean_job": "7426f4ef-785e-4df9-af95-07cc9a97168b",
   "pose": "standing on all fours",
-  "source": "queue (site portrait)",
+  "model_job": "245b21ae-0272-49e5-8861-c4b54dfc925e",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133049_245b21ae-0272-49e5-8861-c4b54dfc925e.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_081102_d87eadf2-afb8-4858-8a1d-c473b6994436.glb",
+  "prev_model_job": "d87eadf2-afb8-4858-8a1d-c473b6994436",
   "sizes": {
-   "hi": 650888,
-   "lo": 196088
+   "hi": 258128,
+   "lo": 85200
   },
   "dims": {
-   "len": 1.2057,
-   "height": 1,
-   "width": 0.5796
+   "len": 1.0785,
+   "height": 1.0,
+   "width": 0.5165
   }
  },
  "ROOKIEPAW": {
@@ -3537,36 +3418,23 @@
   }
  },
  "UMBERPAW": {
-  "image_job": "1ee2ccca-18a3-482c-b483-e394a2545615",
-  "clean_job": "c5cef2d7-1985-4b19-b7a9-0e9e94b3373d",
-  "view_jobs": {
-   "front": "6133268e-2fc1-4494-a1e7-7552fd41c1e8",
-   "left": "29f6ea2a-2653-4671-959d-fba76d48266f",
-   "back": "6821dd3a-4683-4c8e-ba93-4e4329691bb0",
-   "right": "0a69fb9c-2273-47df-8376-fa13f6df256f"
-  },
-  "model_job": "1344fbb9-0632-40c7-82d0-f046b3f4250a",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "59d7074b-0aa1-43da-b96c-3e307ee8bbae",
+  "clean_job": "00649499-8921-46cd-afab-373926e3a7d9",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "e4d1d46d-3127-4ec4-a17b-01bccab3ee2f",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133432_e4d1d46d-3127-4ec4-a17b-01bccab3ee2f.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_081221_1344fbb9-0632-40c7-82d0-f046b3f4250a.glb",
+  "prev_model_job": "1344fbb9-0632-40c7-82d0-f046b3f4250a",
   "sizes": {
-   "hi": 618248,
-   "lo": 193700
+   "hi": 289616,
+   "lo": 84372
   },
   "dims": {
-   "len": 1.2088,
-   "height": 1,
-   "width": 0.5751
+   "len": 1.412,
+   "height": 1.0,
+   "width": 0.505
   }
  },
  "PUMICE": {
@@ -3754,36 +3622,23 @@
   }
  },
  "PAPRIKA": {
-  "image_job": "a5d7d132-bdf3-4e24-b5f2-e28f92185435",
-  "clean_job": "1caa6deb-e8d8-461e-ba8b-3640932bf258",
-  "view_jobs": {
-   "front": "a6292bd3-f42d-471c-9c78-4cfa9d0d5330",
-   "left": "b6ba7f6b-f3cb-43b4-94de-4a1001c6bd35",
-   "back": "b4d38799-798e-4132-9089-7786ebc3fa75",
-   "right": "25370f55-6781-4f79-8114-149d1f215841"
-  },
-  "model_job": "d8026a08-b6fb-48c8-86db-a2f4f8019c02",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "b1a26bf4-ddcf-4c8a-a686-ddc8efddff0f",
+  "clean_job": "f0355bea-8b32-43ad-98cc-f5a9b29ed323",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "b4d80a34-b7fd-4e14-8313-6c9941cea221",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133218_b4d80a34-b7fd-4e14-8313-6c9941cea221.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_081351_d8026a08-b6fb-48c8-86db-a2f4f8019c02.glb",
+  "prev_model_job": "d8026a08-b6fb-48c8-86db-a2f4f8019c02",
   "sizes": {
-   "hi": 755108,
-   "lo": 183208
+   "hi": 344892,
+   "lo": 104132
   },
   "dims": {
-   "len": 1.238,
-   "height": 1,
-   "width": 0.6517
+   "len": 1.5088,
+   "height": 1.0,
+   "width": 0.4901
   }
  },
  "SNUGPAW": {
@@ -3938,36 +3793,23 @@
   }
  },
  "LICHENPAW": {
-  "image_job": "50468c7b-9d25-469b-b73f-f011f49bab6c",
-  "clean_job": "4ef421fd-9e86-42b1-8bab-12fea9e86279",
-  "view_jobs": {
-   "front": "7cf9e411-f325-4db2-9868-2327ffd967e2",
-   "left": "2f0222dd-f10d-4c9b-abd0-651f66ad0810",
-   "back": "d31b9f65-3036-4ddf-aab6-dab9ff7fca26",
-   "right": "5715edc0-5eb7-49b0-ad6b-a7b87637b290"
-  },
-  "model_job": "9d953cfe-490d-4f01-872b-6865dce4bd46",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "cae10923-ed86-4199-b926-547aaa36b62b",
+  "clean_job": "405045e3-720c-41fc-b547-881e97883095",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "8af878c0-9280-40a0-9e52-f1ca28d356fc",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132724_8af878c0-9280-40a0-9e52-f1ca28d356fc.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_081622_9d953cfe-490d-4f01-872b-6865dce4bd46.glb",
+  "prev_model_job": "9d953cfe-490d-4f01-872b-6865dce4bd46",
   "sizes": {
-   "hi": 641608,
-   "lo": 179452
+   "hi": 366812,
+   "lo": 100304
   },
   "dims": {
-   "len": 1.2164,
-   "height": 1,
-   "width": 0.5589
+   "len": 1.5273,
+   "height": 1.0,
+   "width": 0.5231
   }
  },
  "RUSTLEPAW": {
@@ -4219,70 +4061,45 @@
   }
  },
  "PARLORPUFF": {
-  "image_job": "6f7107d1-434e-4399-b914-ac02bbc27b3d",
-  "clean_job": "0404d332-ca71-4a5b-9070-4e1c03c4e9be",
-  "view_jobs": {
-   "front": "e9981934-5359-42aa-bf85-351083e5fe02",
-   "left": "8727909f-6d4e-4bfd-a9be-5497783fdbb6",
-   "back": "2f5c4f46-3975-41f6-9156-5a35544abcca",
-   "right": "78a53d22-43c3-4fb6-afb4-c603e78372de"
-  },
-  "model_job": "ad408cca-2bdd-4f2a-886c-b1924d7ef56c",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "e8d262b7-10e0-49fa-ad0d-c7130095a79b",
+  "clean_job": "05ac11a3-4edd-494d-ac41-ab9dc973bdb5",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "080637f6-5988-4204-a640-6257148fcf10",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132754_080637f6-5988-4204-a640-6257148fcf10.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.0256,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 62,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_081847_ad408cca-2bdd-4f2a-886c-b1924d7ef56c.glb",
+  "prev_model_job": "ad408cca-2bdd-4f2a-886c-b1924d7ef56c",
   "sizes": {
-   "hi": 771420,
-   "lo": 80932
+   "hi": 412952,
+   "lo": 96728
   },
   "dims": {
-   "len": 1.308,
-   "height": 1,
-   "width": 0.6688
+   "len": 1.5073,
+   "height": 1.0,
+   "width": 0.6767
   },
-  "sa_lo": true
+  "sa_lo": true,
+  "yaw": 180.0
  },
  "SQUINTPAW": {
-  "image_job": "0bff4973-bfc3-4069-9c1a-f551b5ccf47d",
-  "clean_job": "e30f814e-d690-4418-9ad5-2ab9c92b5a56",
-  "view_jobs": {
-   "front": "ea10ea45-dc42-4b6e-bcaa-dd172813ef08",
-   "left": "09706592-54d7-4c9d-b94c-50b0014bb857",
-   "back": "a9a51c09-48f5-4b5a-97c2-c42b1809a815",
-   "right": "12e4fb69-d0ac-49ef-bb94-accbe43a055d"
-  },
-  "model_job": "3eda6799-b532-4436-8ecb-643b77e37af3",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "2d1e4a60-dbe4-40a6-9294-f72c16a67fe7",
+  "clean_job": "0346a6e9-0202-47e8-8d7e-953f7e030b6e",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "61a819fc-8b24-4df4-b685-4f9df37a3f31",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133024_61a819fc-8b24-4df4-b685-4f9df37a3f31.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_081935_3eda6799-b532-4436-8ecb-643b77e37af3.glb",
+  "prev_model_job": "3eda6799-b532-4436-8ecb-643b77e37af3",
   "sizes": {
-   "hi": 655308,
-   "lo": 179972
+   "hi": 372432,
+   "lo": 108528
   },
   "dims": {
-   "len": 1.2653,
-   "height": 1,
-   "width": 0.484
+   "len": 1.6405,
+   "height": 1.0,
+   "width": 0.4936
   }
  },
  "COTTAPAW": {
@@ -4514,70 +4331,45 @@
   }
  },
  "KNITPAW": {
-  "image_job": "8386d67d-bbc2-4da8-80b7-88d039a81964",
-  "clean_job": "390dde20-2b18-4d77-80de-8b770ee6137f",
-  "view_jobs": {
-   "front": "e5ac1d23-7220-4b3f-8313-feec68f0794d",
-   "left": "40e6f744-6ebd-4609-9370-37d45f3274b8",
-   "back": "20f9e5d4-4d15-44b9-9aa8-acd50d8121b8",
-   "right": "38b6ead2-0b09-4269-8960-1e54eeecedd0"
-  },
-  "model_job": "3a6e5dfc-a2fa-4a04-aed1-c95ac452dde8",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "47a4c4fb-d237-4986-99d8-daaa526459b4",
+  "clean_job": "3a19ef73-7a60-423e-a848-41ef9df2507e",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "f2da6add-557d-45cd-85cf-c7f4290edc37",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132719_f2da6add-557d-45cd-85cf-c7f4290edc37.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082111_3a6e5dfc-a2fa-4a04-aed1-c95ac452dde8.glb",
+  "prev_model_job": "3a6e5dfc-a2fa-4a04-aed1-c95ac452dde8",
   "sizes": {
-   "hi": 710656,
-   "lo": 155076
+   "hi": 397820,
+   "lo": 122272
   },
   "dims": {
-   "len": 1.2318,
-   "height": 1,
-   "width": 0.6116
+   "len": 1.4943,
+   "height": 1.0,
+   "width": 0.508
   }
  },
  "cate-meme": {
-  "image_job": "ac49f491-6382-4ebc-870c-e0699d99910e",
-  "clean_job": "9adb6305-d216-4b3b-b955-6b5d436e7a50",
-  "view_jobs": {
-   "front": "a5afa817-b7bd-498a-8017-948bb512b448",
-   "left": "52027dbf-8e7d-4ae0-853f-bd7e40e7daec",
-   "back": "52902cc3-4449-4476-b747-cce20c4c6a0f",
-   "right": "117ee790-e886-473b-a4f2-21f0382965fa"
-  },
-  "model_job": "5443d9b3-5bda-44cd-bacd-eed18438ee35",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "19b7fb14-8233-4704-962c-f9ab61fdd174",
+  "clean_job": "531a869e-956f-4ef4-9475-a4c6e6fee36c",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "370dfae6-d443-467c-940b-ea3d84a37283",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133005_370dfae6-d443-467c-940b-ea3d84a37283.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082333_5443d9b3-5bda-44cd-bacd-eed18438ee35.glb",
+  "prev_model_job": "5443d9b3-5bda-44cd-bacd-eed18438ee35",
   "sizes": {
-   "hi": 768532,
-   "lo": 281528
+   "hi": 451472,
+   "lo": 107176
   },
   "dims": {
-   "len": 1.2067,
-   "height": 1,
-   "width": 0.531
-  }
+   "len": 1.4139,
+   "height": 1.0,
+   "width": 0.6491
+  },
+  "sa_lo": true
  },
  "anonymous-cat": {
   "image_job": "0240d536-3841-4a7b-b0f2-17b9144639b4",
@@ -4759,71 +4551,43 @@
   }
  },
  "pepecat-2": {
-  "image_job": "eb0ee238-4cf4-44d9-b51d-86824da6b825",
-  "clean_job": "c5c6e3d9-3f7a-4d09-a285-a45d94a39633",
-  "view_jobs": {
-   "front": "f5484e68-94f7-44b4-9e0d-d888814e86b2",
-   "left": "1121b3c2-8676-41a4-91bb-7ec6e0de8190",
-   "back": "fd9f2047-36f0-44b2-a898-cf3a26940dff",
-   "right": "c14cdcb1-a8c4-4f9f-8a9b-cee447468a73"
-  },
-  "model_job": "3da610b5-6f44-499d-9b51-d97c3bcd408a",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "cc32fcda-f361-4a8c-9ed6-64cdf92fa95b",
+  "clean_job": "19303dda-1668-4798-8fd9-28900c8a5fb9",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "3e465f6d-2d7a-4e72-89af-770e301592cb",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132800_3e465f6d-2d7a-4e72-89af-770e301592cb.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.02,
-  "si_lo": 0.004,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082600_3da610b5-6f44-499d-9b51-d97c3bcd408a.glb",
+  "prev_model_job": "3da610b5-6f44-499d-9b51-d97c3bcd408a",
   "sizes": {
-   "hi": 431704,
-   "lo": 44928
+   "hi": 272924,
+   "lo": 92000
   },
   "dims": {
-   "len": 1.0648,
-   "height": 1,
-   "width": 0.6468
-  },
-  "sa_lo": true,
-  "sa": true
+   "len": 1.3163,
+   "height": 1.0,
+   "width": 0.6851
+  }
  },
  "wen-4": {
-  "image_job": "fe49e93a-00e8-47d3-8fa7-88ce2f500b8a",
-  "clean_job": "1401de02-bc73-451a-b334-a02c536504bc",
-  "view_jobs": {
-   "front": "a1b3c7a7-7b54-4f46-95bf-2367f34535bd",
-   "left": "ff7de27c-3cea-46f0-a26f-94f6e6e517a8",
-   "back": "d75852bf-1f2e-49f8-bb95-7d986f5f10a5",
-   "right": "fa30d37d-1e23-44f9-99b7-b888516dc99d"
-  },
-  "model_job": "ed28afd4-1754-4c3c-b46e-423de00aabb2",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "759491d1-b647-4072-ae4a-f4725224772b",
+  "clean_job": "f48ae9f6-d8f4-4f6e-8595-c3234d089948",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "c4304755-7de1-49a5-b633-a176abd38476",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133633_c4304755-7de1-49a5-b633-a176abd38476.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082602_ed28afd4-1754-4c3c-b46e-423de00aabb2.glb",
+  "prev_model_job": "ed28afd4-1754-4c3c-b46e-423de00aabb2",
   "sizes": {
-   "hi": 749300,
-   "lo": 140304
+   "hi": 249136,
+   "lo": 79964
   },
   "dims": {
-   "len": 1.1962,
-   "height": 1,
-   "width": 0.6273
+   "len": 1.2314,
+   "height": 1.0,
+   "width": 0.6111
   }
  },
  "tsuki": {
@@ -4895,70 +4659,47 @@
   }
  },
  "sillynubcat": {
-  "image_job": "a3df8bed-8bb0-421c-8790-95f11ff1556d",
-  "clean_job": "ebbb7c34-3146-43d4-9f53-ed5fa06fb0b5",
-  "view_jobs": {
-   "front": "8b99b656-693d-4625-8b32-f3b00898b71f",
-   "left": "b51b9ebb-2c32-41e6-8018-a9b3e5e3b969",
-   "back": "b1a4944b-c2a5-4229-ac5f-55fdc1609edb",
-   "right": "d25fc90e-89a3-40ef-a320-7c163ffa5b04"
-  },
-  "model_job": "ff918e3b-2686-43ea-8129-9efb69993a3c",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "5fb45010-84d5-4149-a50b-1fe125fb05be",
+  "clean_job": "ffa32c02-b9e4-4f86-b0af-5bbca7923dbf",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "79135ca2-1bb7-4b2c-9ff3-1e1bdd79a6bc",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133116_79135ca2-1bb7-4b2c-9ff3-1e1bdd79a6bc.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082741_ff918e3b-2686-43ea-8129-9efb69993a3c.glb",
+  "prev_model_job": "ff918e3b-2686-43ea-8129-9efb69993a3c",
   "sizes": {
-   "hi": 615972,
-   "lo": 229444
+   "hi": 224416,
+   "lo": 71184
   },
   "dims": {
-   "len": 1.2651,
-   "height": 1,
-   "width": 0.7517
+   "len": 1.5947,
+   "height": 1.0,
+   "width": 0.6638
   }
  },
  "michi": {
-  "image_job": "b505333a-245b-45b7-a2fc-46550d36628c",
-  "clean_job": "05d3e005-73f0-4d84-ae6b-7e901fb9187c",
-  "view_jobs": {
-   "front": "9fcad90e-c7bf-45a8-b023-61ae3aff92ee",
-   "left": "0e29f6e1-c851-4444-b8ed-63e2a286ec28",
-   "back": "4e38683a-c7cd-4d44-90d7-54d0b90c38a5",
-   "right": "196c1001-f6fc-4dd1-9c9d-9b8dc32dda9d"
-  },
-  "model_job": "f150633d-fbde-4cef-97ff-c3d076722cbc",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "b1de4592-3904-4e01-a98e-d2fbf5a6418d",
+  "clean_job": "a327badd-8022-418b-8d91-20d967acd8a2",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "5e384279-856e-4569-932f-9b7bf7583dd4",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132729_5e384279-856e-4569-932f-9b7bf7583dd4.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.04,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 78,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082742_f150633d-fbde-4cef-97ff-c3d076722cbc.glb",
+  "prev_model_job": "f150633d-fbde-4cef-97ff-c3d076722cbc",
+  "si_lo": 0.12,
+  "tex_lo": 512,
   "sizes": {
-   "hi": 761436,
-   "lo": 123096
+   "hi": 340296,
+   "lo": 149968
   },
   "dims": {
-   "len": 1.2558,
-   "height": 1,
-   "width": 0.6058
-  }
+   "len": 1.5909,
+   "height": 1.0,
+   "width": 0.7016
+  },
+  "yaw": 180.0
  },
  "vibing-cat-coin": {
   "image_job": "fe9c1ad4-976e-4098-875c-d253535675ad",
@@ -5054,38 +4795,24 @@
   }
  },
  "raydium-cat": {
-  "image_job": "c51b09f1-fdce-4bd4-951e-5967c02fe04e",
-  "clean_job": "753f46bf-5189-4d92-841e-dd75d49a7a36",
-  "view_jobs": {
-   "front": "92a38709-e119-4e16-943e-d0d0bf42bbbd",
-   "left": "05df0aa3-54b1-49dc-a2a0-571b0485fdfa",
-   "back": "7555f9df-7d21-4e45-81fb-146804aa35c0",
-   "right": "40e0e054-87c2-4592-b6e8-e15a7d1e84bf"
-  },
-  "model_job": "69560d59-6c42-41ec-b8a0-97e85a8cb22c",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "d907fdc6-8214-4727-9e7f-8d3a11d1138e",
+  "clean_job": "fb73450b-ec89-43dc-b1dc-97641b9d0e93",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "71ca8367-b98a-4903-8f9f-6665e088c851",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132806_71ca8367-b98a-4903-8f9f-6665e088c851.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.02,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_082956_69560d59-6c42-41ec-b8a0-97e85a8cb22c.glb",
+  "prev_model_job": "69560d59-6c42-41ec-b8a0-97e85a8cb22c",
   "sizes": {
-   "hi": 705384,
-   "lo": 183056
+   "hi": 340184,
+   "lo": 130772
   },
   "dims": {
-   "len": 1.1052,
-   "height": 1,
-   "width": 0.439
-  },
-  "sa": true
+   "len": 1.3601,
+   "height": 1.0,
+   "width": 0.517
+  }
  },
  "ket-3": {
   "image_job": "d0ab740a-c1b0-4fc0-b1af-feedc7fef9d1",
@@ -5165,70 +4892,43 @@
   }
  },
  "gta6cat": {
-  "image_job": "1e5feb48-0d6f-40d9-a5a6-611218b30325",
-  "clean_job": "79ab9ea1-270d-4b45-b8b7-b7239a8d6373",
-  "view_jobs": {
-   "front": "4a5b4800-2d95-4724-80ed-ed1cbe76a197",
-   "left": "1192d381-cfdb-408b-a41d-758de2c396f7",
-   "back": "5496908c-c8c1-4035-8085-9c236d2d8bc2",
-   "right": "f8afcdc1-582b-44ba-b0e0-e3690cb3c841"
-  },
-  "model_job": "b450d126-af65-4848-be95-c8d9124358f2",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "9a905b82-a280-4016-9312-56a515ce3eae",
+  "clean_job": "aae3f951-9bab-43d1-a852-081ca2612189",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "13d8bf27-fcb5-4195-b44e-cef7940ddbc4",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133048_13d8bf27-fcb5-4195-b44e-cef7940ddbc4.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.02,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_083141_b450d126-af65-4848-be95-c8d9124358f2.glb",
+  "prev_model_job": "b450d126-af65-4848-be95-c8d9124358f2",
   "sizes": {
-   "hi": 707232,
-   "lo": 130140
+   "hi": 424844,
+   "lo": 121312
   },
   "dims": {
-   "len": 1.1704,
-   "height": 1,
-   "width": 0.4917
-  },
-  "sa": true
+   "len": 1.3879,
+   "height": 1.0,
+   "width": 0.4681
+  }
  },
  "stonk-cats": {
-  "image_job": "889a1bd9-a1af-4752-9299-e9a0a5ccc46b",
-  "clean_job": "57a42c60-4980-4489-8f76-2b00cb94bd11",
-  "view_jobs": {
-   "front": "7b0d8ac0-aa42-4a3d-b58c-7b0f0b0e9c72",
-   "left": "f0c18f62-1a23-4d6d-9eed-c706d6032c8a",
-   "back": "088d0ad3-6476-4c13-b77d-89d9f11356cb",
-   "right": "eb83ac8a-1ffb-4a28-b718-69d6398d0ef0"
-  },
-  "model_job": "701d99c8-9556-48ab-ad18-bd669e098d3a",
-  "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-  "faces": "~500k raw, packed ~20k",
+  "image_job": "33ab3544-9836-4b95-9c5f-70c2d73ee940",
+  "clean_job": "717ea1a7-3db6-4c60-ae5f-197ebe5ed609",
   "pose": "standing on all fours",
-  "source": "queue (site portrait or coin logo)",
+  "model_job": "ca7cefee-d3c0-46ec-8131-bacb48f92899",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133051_ca7cefee-d3c0-46ec-8131-bacb48f92899.glb",
   "status": "done",
-  "hd": true,
-  "si": 0.032,
-  "si_lo": 0.01,
-  "tex": 2048,
-  "tex_lo": 256,
-  "q": 70,
-  "credits": 16.25,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_083142_701d99c8-9556-48ab-ad18-bd669e098d3a.glb",
+  "prev_model_job": "701d99c8-9556-48ab-ad18-bd669e098d3a",
   "sizes": {
-   "hi": 783312,
-   "lo": 223536
+   "hi": 334316,
+   "lo": 130236
   },
   "dims": {
-   "len": 1.1644,
-   "height": 1,
-   "width": 0.4216
+   "len": 1.234,
+   "height": 1.0,
+   "width": 0.5408
   }
  },
  "hosico-cat": {
@@ -6361,5 +6061,1213 @@
    "width": 0.47
   },
   "yaw": 180.0
+ },
+ "SPRIGATO": {
+  "image_job": "0edf0c08-c839-44bf-abb9-38e681dc64f5",
+  "clean_job": "972cf1ad-0eca-4b81-a945-5f9c0fb84920",
+  "pose": "standing on all fours",
+  "model_job": "d36ddec6-a88e-41ec-a062-3b61be5f1152",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133530_d36ddec6-a88e-41ec-a062-3b61be5f1152.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 279952,
+   "lo": 92804
+  },
+  "dims": {
+   "len": 1.1897,
+   "height": 1.0,
+   "width": 0.6668
+  }
+ },
+ "PUSSBOOCAT": {
+  "image_job": "dc9f604b-55d4-4f9e-ae5a-9c7149341453",
+  "clean_job": "930901e9-c37b-4d04-8212-0d366d216a80",
+  "pose": "standing on all fours",
+  "model_job": "3337ebdd-92c6-413e-ba1e-9b5de26c9065",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_134252_3337ebdd-92c6-413e-ba1e-9b5de26c9065.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 349180,
+   "lo": 148016
+  },
+  "dims": {
+   "len": 1.336,
+   "height": 1.0,
+   "width": 0.5498
+  }
+ },
+ "ARTEMISCAT": {
+  "image_job": "a5957df9-14c0-4524-b50d-a4ab6c704379",
+  "clean_job": "8e213452-5e04-41b0-b669-d4fd07d3781c",
+  "pose": "standing on all fours",
+  "model_job": "b60ad0d9-cf4e-4ec7-8803-bd0eb221e904",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132716_b60ad0d9-cf4e-4ec7-8803-bd0eb221e904.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 257732,
+   "lo": 84952
+  },
+  "dims": {
+   "len": 1.3237,
+   "height": 1.0,
+   "width": 0.489
+  }
+ },
+ "CAITSITH": {
+  "image_job": "fc1640ee-3885-4edc-9156-dd02b12ba961",
+  "clean_job": "a1205c4e-403c-4d3e-b09e-978639ab3d1b",
+  "pose": "standing on all fours",
+  "model_job": "21b428e0-bd78-417e-b890-aed5fdbfd1e7",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132722_21b428e0-bd78-417e-b890-aed5fdbfd1e7.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 335472,
+   "lo": 130052
+  },
+  "dims": {
+   "len": 1.381,
+   "height": 1.0,
+   "width": 0.6262
+  }
+ },
+ "CHEETLE": {
+  "image_job": "7146590c-9e54-4c47-92a9-7417b285ef49",
+  "clean_job": "c7a7ab63-3cc5-47a7-a241-f81f9abcab1c",
+  "pose": "standing on all fours",
+  "model_job": "db41dbe5-fe4f-459e-aa4f-cea904a9bc95",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132731_db41dbe5-fe4f-459e-aa4f-cea904a9bc95.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 410848,
+   "lo": 141552
+  },
+  "dims": {
+   "len": 1.4734,
+   "height": 1.0,
+   "width": 0.5573
+  }
+ },
+ "FELICETCAT": {
+  "image_job": "fa669ad9-882a-41b7-b7d1-b1f95cb4aa72",
+  "clean_job": "5b82a479-be37-40d5-b49b-0c245578a465",
+  "pose": "standing on all fours",
+  "model_job": "64daee21-8bf0-4c6b-b4ac-71cc9bb0e587",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133019_64daee21-8bf0-4c6b-b4ac-71cc9bb0e587.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 310812,
+   "lo": 98668
+  },
+  "dims": {
+   "len": 1.4793,
+   "height": 1.0,
+   "width": 0.5379
+  }
+ },
+ "PALICO": {
+  "image_job": "4de2827c-2f35-412e-9e38-53d7e91d89ca",
+  "clean_job": "c409cc33-6f98-414a-81a7-49322f435717",
+  "pose": "standing on all fours",
+  "model_job": "c533413c-0f1d-4ae5-ac29-64987a157e22",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132746_c533413c-0f1d-4ae5-ac29-64987a157e22.glb",
+  "status": "done",
+  "si_lo": 0.18,
+  "tex_lo": 256,
+  "sizes": {
+   "hi": 404332,
+   "lo": 138592
+  },
+  "dims": {
+   "len": 1.208,
+   "height": 1.0,
+   "width": 0.6191
+  }
+ },
+ "red-kitten-crew": {
+  "image_job": "9340a13c-addf-4655-85d4-2ee3fa7d06f2",
+  "clean_job": "bf2a901c-efb6-4ed8-9710-82014fdf27d6",
+  "pose": "standing on all fours",
+  "model_job": "2b1d0c41-953c-4caa-926c-04667e3d6b70",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133248_2b1d0c41-953c-4caa-926c-04667e3d6b70.glb",
+  "status": "done",
+  "si_lo": 0.18,
+  "tex_lo": 256,
+  "sizes": {
+   "hi": 446532,
+   "lo": 144936
+  },
+  "dims": {
+   "len": 1.5702,
+   "height": 1.0,
+   "width": 0.63
+  }
+ },
+ "SASSYHB": {
+  "image_job": "d4011784-9fa6-4040-baee-366dc19b537f",
+  "clean_job": "e91f07d0-b95c-4ac9-b6bb-4887847de226",
+  "pose": "standing on all fours",
+  "model_job": "51986aba-9f4f-4ad4-acd1-25bdf6051959",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133302_51986aba-9f4f-4ad4-acd1-25bdf6051959.glb",
+  "status": "done",
+  "si_lo": 0.18,
+  "tex_lo": 256,
+  "sizes": {
+   "hi": 388428,
+   "lo": 125512
+  },
+  "dims": {
+   "len": 1.9619,
+   "height": 1.0,
+   "width": 0.6839
+  },
+  "yaw": 180.0
+ },
+ "SCRATCHC": {
+  "image_job": "8527da7a-d49e-41b1-b638-21738a09513f",
+  "clean_job": "346742dc-a7cf-4109-90b2-d5b0eb96756d",
+  "pose": "standing on all fours",
+  "model_job": "43b351d2-3e97-44df-9b05-eaa1c3bec4d4",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132720_43b351d2-3e97-44df-9b05-eaa1c3bec4d4.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 251980,
+   "lo": 83992
+  },
+  "dims": {
+   "len": 1.2062,
+   "height": 1.0,
+   "width": 0.6455
+  }
+ },
+ "SERPOUNCE": {
+  "image_job": "85321a28-cefe-4ab7-adfa-79f8db50a936",
+  "clean_job": "f246ab03-0127-4de8-b052-369a81ed301d",
+  "pose": "standing on all fours",
+  "model_job": "e54086f3-a06f-42fb-bf94-a4d9812bded1",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132935_e54086f3-a06f-42fb-bf94-a4d9812bded1.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 381852,
+   "lo": 123436
+  },
+  "dims": {
+   "len": 1.5324,
+   "height": 1.0,
+   "width": 0.618
+  }
+ },
+ "SGTTIBBS": {
+  "image_job": "a1b524fa-f8b3-40a4-9bac-c08f79ec30ae",
+  "clean_job": "442110f9-1beb-42ba-b1ac-61f23e16ef63",
+  "pose": "standing on all fours",
+  "model_job": "9cede885-580e-41f8-8322-823864421267",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132728_9cede885-580e-41f8-8322-823864421267.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 266880,
+   "lo": 87972
+  },
+  "dims": {
+   "len": 1.4392,
+   "height": 1.0,
+   "width": 0.4922
+  }
+ },
+ "SNOWBALCAT": {
+  "image_job": "7e01bb4b-8dc6-403c-a0ab-c24bf4ae3a5d",
+  "clean_job": "00255b2e-ee23-470c-ab2b-4aad66c82b48",
+  "pose": "standing on all fours",
+  "model_job": "97292c1a-75de-44bf-a6a0-330556c128f5",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132735_97292c1a-75de-44bf-a6a0-330556c128f5.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 232604,
+   "lo": 73048
+  },
+  "dims": {
+   "len": 1.3187,
+   "height": 1.0,
+   "width": 0.4917
+  }
+ },
+ "SNOWBELCAT": {
+  "image_job": "3d20be85-50c1-49aa-8be0-a873c8580102",
+  "clean_job": "41bbcdeb-4f9d-4ada-aad1-cb6dad818228",
+  "pose": "standing on all fours",
+  "model_job": "d65d829e-7a20-46e5-b41d-8a9efa39f33e",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132940_d65d829e-7a20-46e5-b41d-8a9efa39f33e.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 283016,
+   "lo": 111812
+  },
+  "dims": {
+   "len": 1.5728,
+   "height": 1.0,
+   "width": 0.7071
+  }
+ },
+ "TALKTOM": {
+  "image_job": "cf94fbf3-8ef1-47be-beb3-7c9e32ce4ad5",
+  "clean_job": "814880cf-d449-451d-b492-b8d5d12e4a05",
+  "pose": "standing on all fours",
+  "model_job": "96c52dce-a2f8-4d94-914e-a8535f044bf8",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133120_96c52dce-a2f8-4d94-914e-a8535f044bf8.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 259364,
+   "lo": 83912
+  },
+  "dims": {
+   "len": 1.1765,
+   "height": 1.0,
+   "width": 0.6783
+  }
+ },
+ "TREMAINE": {
+  "image_job": "dedaa837-a93d-439c-a3bf-972415833ad3",
+  "clean_job": "8caa7e66-0a05-4d49-bacf-ec873cb39fee",
+  "pose": "standing on all fours",
+  "model_job": "55e63314-24fc-456b-a9bf-afd737b291d2",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133231_55e63314-24fc-456b-a9bf-afd737b291d2.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 301180,
+   "lo": 116384
+  },
+  "dims": {
+   "len": 1.4799,
+   "height": 1.0,
+   "width": 0.7243
+  }
+ },
+ "TUBBSCAT": {
+  "image_job": "810d9a2b-15bc-4dc1-aa56-a4476c122b76",
+  "clean_job": "08ffda73-06c2-4f97-9263-4bc3f32b9c33",
+  "pose": "standing on all fours",
+  "model_job": "299b0aa8-3275-428e-8445-b26872222a75",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133334_299b0aa8-3275-428e-8445-b26872222a75.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 203640,
+   "lo": 62816
+  },
+  "dims": {
+   "len": 1.7399,
+   "height": 1.0,
+   "width": 0.8492
+  }
+ },
+ "UNSINKSAM": {
+  "image_job": [
+   "77df70c0-a016-4ccb-9ec4-2a08cb42157a",
+   "81c3433c-b65b-43aa-a2fc-909fae0b7cac"
+  ],
+  "clean_job": "c018cf20-53f4-48df-be34-bcf556a4cee0",
+  "pose": "standing on all fours",
+  "model_job": "f3bc6bc1-7276-4aea-9117-73926f311d86",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132816_f3bc6bc1-7276-4aea-9117-73926f311d86.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 255496,
+   "lo": 79644
+  },
+  "dims": {
+   "len": 1.5211,
+   "height": 1.0,
+   "width": 0.5068
+  }
+ },
+ "GATEKITTY": {
+  "image_job": "-",
+  "clean_job": "32d2765f-09bd-4ee1-9291-6d1d3dd45bbf",
+  "pose": "standing on all fours",
+  "model_job": "d1ec07a5-8629-4538-908b-0733a704d0f8",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133312_d1ec07a5-8629-4538-908b-0733a704d0f8.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 326968,
+   "lo": 102140
+  },
+  "dims": {
+   "len": 1.4015,
+   "height": 1.0,
+   "width": 0.6052
+  }
+ },
+ "CZELDA": {
+  "image_job": "-",
+  "clean_job": "d41bb9c3-0261-44b1-a5ce-69bb616e323a",
+  "pose": "standing on all fours",
+  "model_job": "c8982e6f-d4d4-4f65-90cd-8429a390dd43",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133314_c8982e6f-d4d4-4f65-90cd-8429a390dd43.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 252388,
+   "lo": 80788
+  },
+  "dims": {
+   "len": 1.3766,
+   "height": 1.0,
+   "width": 0.4901
+  }
+ },
+ "PAYAKE": {
+  "image_job": "-",
+  "clean_job": "08731a0e-08b5-43d7-8877-95a4f2cc0d15",
+  "pose": "standing on all fours",
+  "model_job": "e8932c07-22de-4393-aac0-1ef570e4cd2b",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133317_e8932c07-22de-4393-aac0-1ef570e4cd2b.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 395660,
+   "lo": 121028
+  },
+  "dims": {
+   "len": 1.9534,
+   "height": 1.0,
+   "width": 0.5689
+  }
+ },
+ "OJINEKO": {
+  "image_job": "-",
+  "clean_job": "0c3b57c3-2ca7-4bf4-98f0-911d7165cf80",
+  "pose": "standing on all fours",
+  "model_job": "9b0aae3d-02e7-4be2-a4af-86583e66b4f7",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133448_9b0aae3d-02e7-4be2-a4af-86583e66b4f7.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 255088,
+   "lo": 81856
+  },
+  "dims": {
+   "len": 1.8048,
+   "height": 1.0,
+   "width": 0.642
+  }
+ },
+ "GANYHOUSE": {
+  "image_job": "-",
+  "clean_job": "07a23e59-c4c4-4be6-b19c-4df1460dfb5d",
+  "pose": "standing on all fours",
+  "model_job": "cef7da69-033f-4224-b879-d6d572e6c015",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133320_cef7da69-033f-4224-b879-d6d572e6c015.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 284116,
+   "lo": 89596
+  },
+  "dims": {
+   "len": 1.4924,
+   "height": 1.0,
+   "width": 0.5229
+  }
+ },
+ "COSMICGREG": {
+  "image_job": "-",
+  "clean_job": "a72f42a5-eaa4-40db-b129-ceef8c466231",
+  "pose": "standing on all fours",
+  "model_job": "c6b2cec1-e142-40fb-92d7-935bd5a30566",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133334_c6b2cec1-e142-40fb-92d7-935bd5a30566.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 344424,
+   "lo": 111940
+  },
+  "dims": {
+   "len": 1.4919,
+   "height": 1.0,
+   "width": 0.4968
+  }
+ },
+ "MARUOCAT": {
+  "image_job": "-",
+  "clean_job": "c0fd8bc1-1128-465e-8d44-53d3860d373f",
+  "pose": "standing on all fours",
+  "model_job": "df7ff4af-537a-408f-a234-f49e1e4d3709",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133337_df7ff4af-537a-408f-a234-f49e1e4d3709.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 326900,
+   "lo": 102312
+  },
+  "dims": {
+   "len": 1.5553,
+   "height": 1.0,
+   "width": 0.5021
+  }
+ },
+ "NEKOSAMA": {
+  "image_job": "-",
+  "clean_job": "ede2fa33-1901-4fa9-aa9c-ce97850cded1",
+  "pose": "standing on all fours",
+  "model_job": "b28d4527-ff13-482d-8a7c-dca563e165ff",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133342_b28d4527-ff13-482d-8a7c-dca563e165ff.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 267936,
+   "lo": 85296
+  },
+  "dims": {
+   "len": 1.749,
+   "height": 1.0,
+   "width": 0.4945
+  }
+ },
+ "LEFTFANG": {
+  "image_job": "-",
+  "clean_job": "54cb39cc-9e69-45cb-b3dc-684a22216c38",
+  "pose": "standing on all fours",
+  "model_job": "cc3b0e2b-d6ed-47b4-851b-d0da9fd8774f",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133345_cc3b0e2b-d6ed-47b4-851b-d0da9fd8774f.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 299076,
+   "lo": 93500
+  },
+  "dims": {
+   "len": 1.262,
+   "height": 1.0,
+   "width": 0.5074
+  }
+ },
+ "DREAMPATCH": {
+  "image_job": "-",
+  "clean_job": "f14b36b6-e1de-4d6a-8b71-3769d6316c9e",
+  "pose": "standing on all fours",
+  "model_job": "9602bda7-9226-419f-bd46-bc28ddd4ad5f",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133348_9602bda7-9226-419f-bd46-bc28ddd4ad5f.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 409404,
+   "lo": 120732
+  },
+  "dims": {
+   "len": 1.3839,
+   "height": 1.0,
+   "width": 0.4613
+  }
+ },
+ "PONTAKUN": {
+  "image_job": "-",
+  "clean_job": "bb811f37-a29c-4b63-a144-775cae24f666",
+  "pose": "standing on all fours",
+  "model_job": "1850ba48-0f71-4fce-8fc7-4548ae41f238",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133351_1850ba48-0f71-4fce-8fc7-4548ae41f238.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 250272,
+   "lo": 82576
+  },
+  "dims": {
+   "len": 1.348,
+   "height": 1.0,
+   "width": 0.6472
+  }
+ },
+ "ROLFCAT": {
+  "image_job": "-",
+  "clean_job": "ca4b7a01-dd64-4c9c-b103-f83c37c78054",
+  "pose": "standing on all fours",
+  "model_job": "0e1eaa02-e034-4dc9-894f-4caf3ef03823",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133403_0e1eaa02-e034-4dc9-894f-4caf3ef03823.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 254792,
+   "lo": 82716
+  },
+  "dims": {
+   "len": 1.4205,
+   "height": 1.0,
+   "width": 0.4696
+  }
+ },
+ "IDPHOTO": {
+  "image_job": "-",
+  "clean_job": "bbe22921-13e2-4d86-93f2-d54d161659c3",
+  "pose": "standing on all fours",
+  "model_job": "3d3578f2-76ac-4d5c-8029-fbe992d8961e",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133951_3d3578f2-76ac-4d5c-8029-fbe992d8961e.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 239548,
+   "lo": 76476
+  },
+  "dims": {
+   "len": 1.8179,
+   "height": 1.0,
+   "width": 0.5733
+  }
+ },
+ "THINKTHINK": {
+  "image_job": "-",
+  "clean_job": "f1b5d782-f730-4cb3-b871-4517556e3622",
+  "pose": "standing on all fours",
+  "model_job": "65e95eae-131e-4858-9a4b-b67129876169",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133451_65e95eae-131e-4858-9a4b-b67129876169.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 401152,
+   "lo": 119600
+  },
+  "dims": {
+   "len": 1.4014,
+   "height": 1.0,
+   "width": 0.4972
+  }
+ },
+ "TSUSAN": {
+  "image_job": "-",
+  "clean_job": "92644d9a-9cdc-41b9-8db4-91f7fe203732",
+  "pose": "standing on all fours",
+  "model_job": "970c423e-8540-48f6-80d1-64b75393cb43",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133454_970c423e-8540-48f6-80d1-64b75393cb43.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 415368,
+   "lo": 116652
+  },
+  "dims": {
+   "len": 1.5759,
+   "height": 1.0,
+   "width": 0.5071
+  }
+ },
+ "SAYHIBOB": {
+  "image_job": "-",
+  "clean_job": "ba324b1f-c0ed-43c6-b26b-5922ab62c733",
+  "pose": "standing on all fours",
+  "model_job": "cb7d16c2-9b6f-4ddb-9447-dea48477abe7",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133457_cb7d16c2-9b6f-4ddb-9447-dea48477abe7.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 324948,
+   "lo": 96824
+  },
+  "dims": {
+   "len": 1.536,
+   "height": 1.0,
+   "width": 0.4202
+  }
+ },
+ "CHIKUWACAT": {
+  "image_job": "-",
+  "clean_job": "9237dfce-d465-43fc-adb0-8d06b28325a6",
+  "pose": "standing on all fours",
+  "model_job": "f91420a6-c00c-4ade-8153-4553016e5106",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133500_f91420a6-c00c-4ade-8153-4553016e5106.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 297880,
+   "lo": 115076
+  },
+  "dims": {
+   "len": 1.5105,
+   "height": 1.0,
+   "width": 0.5329
+  }
+ },
+ "BLEHMILLY": {
+  "image_job": "-",
+  "clean_job": "2e047c22-32bc-43f4-82cf-8a4e3297e4bc",
+  "pose": "standing on all fours",
+  "model_job": "614caa17-b160-4de4-86f2-1b44733b810c",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133505_614caa17-b160-4de4-86f2-1b44733b810c.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 301144,
+   "lo": 93352
+  },
+  "dims": {
+   "len": 1.5947,
+   "height": 1.0,
+   "width": 0.5269
+  }
+ },
+ "SINSMILE": {
+  "image_job": "-",
+  "clean_job": "f2015377-36c0-4e62-88d0-406254990508",
+  "pose": "standing on all fours",
+  "model_job": "e4effc94-3546-4e77-960c-ee4a308af67f",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133526_e4effc94-3546-4e77-960c-ee4a308af67f.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 310184,
+   "lo": 98912
+  },
+  "dims": {
+   "len": 1.5221,
+   "height": 1.0,
+   "width": 0.4365
+  }
+ },
+ "PEEPEECAT": {
+  "image_job": "-",
+  "clean_job": "7c4807ef-2509-4607-a610-05b747daa1d2",
+  "pose": "standing on all fours",
+  "model_job": "90de2760-d4a5-4ab4-83be-6fbeb265d80a",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133955_90de2760-d4a5-4ab4-83be-6fbeb265d80a.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 282652,
+   "lo": 89628
+  },
+  "dims": {
+   "len": 1.2588,
+   "height": 1.0,
+   "width": 0.4408
+  }
+ },
+ "PRINCEKIT": {
+  "image_job": "-",
+  "clean_job": "f77c5800-89c8-44b6-8f63-6f6117726d3a",
+  "pose": "standing on all fours",
+  "model_job": "36402cb1-d0a8-4e5e-805d-cd87329df025",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133528_36402cb1-d0a8-4e5e-805d-cd87329df025.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 271140,
+   "lo": 112668
+  },
+  "dims": {
+   "len": 1.3565,
+   "height": 1.0,
+   "width": 0.5857
+  }
+ },
+ "COOLBLUE": {
+  "image_job": "-",
+  "clean_job": "0b83a23b-0138-4d71-8dc9-c30335a2e2dc",
+  "pose": "standing on all fours",
+  "model_job": "b08e09b8-323d-4407-ba96-28cc1f2e67c2",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133531_b08e09b8-323d-4407-ba96-28cc1f2e67c2.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 287588,
+   "lo": 99024
+  },
+  "dims": {
+   "len": 1.2098,
+   "height": 1.0,
+   "width": 0.5635
+  }
+ },
+ "BROWANTSIN": {
+  "image_job": "-",
+  "clean_job": "24120be4-d0a6-43bd-bdaa-b7463895404a",
+  "pose": "standing on all fours",
+  "model_job": "34f44fd6-3074-4c72-9610-a55b33858bc2",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133533_34f44fd6-3074-4c72-9610-a55b33858bc2.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 213176,
+   "lo": 65600
+  },
+  "dims": {
+   "len": 1.5151,
+   "height": 1.0,
+   "width": 0.606
+  }
+ },
+ "CAPOOBUG": {
+  "image_job": "-",
+  "clean_job": "3c8a6df0-089d-4bf3-aca4-98aa50b938af",
+  "pose": "standing on all fours",
+  "model_job": "8d642a2c-f16a-44b5-ab89-b70b82152864",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133609_8d642a2c-f16a-44b5-ab89-b70b82152864.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 238932,
+   "lo": 78348
+  },
+  "dims": {
+   "len": 1.2879,
+   "height": 1.0,
+   "width": 0.6381
+  }
+ },
+ "FISHTOPH": {
+  "image_job": "-",
+  "clean_job": "a48138e5-312e-4055-94f1-3d7afdd76d27",
+  "pose": "standing on all fours",
+  "model_job": "4f3e5167-7050-4b23-9bf2-0a830c6b3fc9",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133612_4f3e5167-7050-4b23-9bf2-0a830c6b3fc9.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 393260,
+   "lo": 116920
+  },
+  "dims": {
+   "len": 1.4762,
+   "height": 1.0,
+   "width": 0.5399
+  }
+ },
+ "QCGENESIS": {
+  "image_job": "-",
+  "clean_job": "8f23f3fc-9d4c-4973-a7e9-748d51a49b4c",
+  "pose": "standing on all fours",
+  "model_job": "edd21273-59f0-4abf-a5b1-db4c5e145f8a",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133615_edd21273-59f0-4abf-a5b1-db4c5e145f8a.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 369576,
+   "lo": 126052
+  },
+  "dims": {
+   "len": 1.3623,
+   "height": 1.0,
+   "width": 0.518
+  }
+ },
+ "HOICHAN": {
+  "image_job": "-",
+  "clean_job": "fa2640ac-7971-4360-9a20-143d9ef85726",
+  "pose": "standing on all fours",
+  "model_job": "2b9c5ada-3a60-477b-9b34-0937a6766661",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133619_2b9c5ada-3a60-477b-9b34-0937a6766661.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 245160,
+   "lo": 83208
+  },
+  "dims": {
+   "len": 1.4769,
+   "height": 1.0,
+   "width": 0.4987
+  }
+ },
+ "MAYORJINX": {
+  "image_job": "-",
+  "clean_job": "42a72ec4-555c-474b-a6a4-42691729d152",
+  "pose": "standing on all fours",
+  "model_job": "de654fd3-43d1-49e1-92fe-ed7d9efd2d2d",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133621_de654fd3-43d1-49e1-92fe-ed7d9efd2d2d.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 267568,
+   "lo": 79492
+  },
+  "dims": {
+   "len": 1.5256,
+   "height": 1.0,
+   "width": 0.5202
+  }
+ },
+ "JJINGJJING": {
+  "image_job": "-",
+  "clean_job": "8c8e582e-5804-4037-bece-3394b53321b2",
+  "pose": "standing on all fours",
+  "model_job": "00b141f9-d6b5-409a-ab63-2e3644821e1a",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133626_00b141f9-d6b5-409a-ab63-2e3644821e1a.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 277640,
+   "lo": 92644
+  },
+  "dims": {
+   "len": 1.5783,
+   "height": 1.0,
+   "width": 0.4298
+  }
+ },
+ "KOTECHAN": {
+  "image_job": "-",
+  "clean_job": "b4a9cc5f-11d5-40fc-9b64-424172569952",
+  "pose": "standing on all fours",
+  "model_job": "2487c995-8e73-4eee-99db-0893cad74d69",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133631_2487c995-8e73-4eee-99db-0893cad74d69.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 327812,
+   "lo": 103092
+  },
+  "dims": {
+   "len": 1.5107,
+   "height": 1.0,
+   "width": 0.5179
+  }
+ },
+ "KYURUGACAT": {
+  "image_job": "-",
+  "clean_job": "60136f5b-e585-4b3b-9048-3aa5abf36235",
+  "pose": "standing on all fours",
+  "model_job": "e6ad4848-c8cf-4413-860f-c2d1629d5b66",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133633_e6ad4848-c8cf-4413-860f-c2d1629d5b66.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 318020,
+   "lo": 96552
+  },
+  "dims": {
+   "len": 1.6087,
+   "height": 1.0,
+   "width": 0.4859
+  }
+ },
+ "MIETTE": {
+  "image_job": "-",
+  "clean_job": "aa80895f-ceae-45c9-82ae-6ded15052d19",
+  "pose": "standing on all fours",
+  "model_job": "0105550c-6d09-4dd0-bd72-33d03b30be97",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133637_0105550c-6d09-4dd0-bd72-33d03b30be97.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 324372,
+   "lo": 108020
+  },
+  "dims": {
+   "len": 1.3532,
+   "height": 1.0,
+   "width": 0.5183
+  },
+  "yaw": 180.0
+ },
+ "MOONRESCUE": {
+  "image_job": "-",
+  "clean_job": "f58c4900-3588-4ef6-a94e-7eb31922d6d3",
+  "pose": "standing on all fours",
+  "model_job": "16ba306a-797a-42fd-8cc0-eaa9eb7757fb",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133641_16ba306a-797a-42fd-8cc0-eaa9eb7757fb.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 286424,
+   "lo": 146228
+  },
+  "dims": {
+   "len": 1.4647,
+   "height": 1.0,
+   "width": 0.4618
+  }
+ },
+ "CATFLAP": {
+  "image_job": "-",
+  "clean_job": "46972ed4-602b-449e-93ec-6640bdf66aba",
+  "pose": "standing on all fours",
+  "model_job": "3d7b57bc-fd8d-4011-bd2c-8be55b0f1c34",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133644_3d7b57bc-fd8d-4011-bd2c-8be55b0f1c34.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 273896,
+   "lo": 79856
+  },
+  "dims": {
+   "len": 1.4773,
+   "height": 1.0,
+   "width": 0.5039
+  }
+ },
+ "PROFMEOW": {
+  "image_job": "-",
+  "clean_job": "1f1ccf39-44c9-4fb4-b9d4-05ffd749bf31",
+  "pose": "standing on all fours",
+  "model_job": "6fb9958a-b7e6-40cd-b708-8e4f8a36ddee",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133646_6fb9958a-b7e6-40cd-b708-8e4f8a36ddee.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 276984,
+   "lo": 89388
+  },
+  "dims": {
+   "len": 1.4717,
+   "height": 1.0,
+   "width": 0.5462
+  }
+ },
+ "RURUNEKO": {
+  "image_job": "-",
+  "clean_job": "b2685ed8-6971-4de3-9304-66450673c75f",
+  "pose": "standing on all fours",
+  "model_job": "71b03350-cf57-465f-8a5a-810b64965654",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133751_71b03350-cf57-465f-8a5a-810b64965654.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 274420,
+   "lo": 80288
+  },
+  "dims": {
+   "len": 1.3938,
+   "height": 1.0,
+   "width": 0.4426
+  }
+ },
+ "SAMENYAN": {
+  "image_job": "-",
+  "clean_job": "ef33699f-b9e0-4a86-90ae-9e697f3c3210",
+  "pose": "standing on all fours",
+  "model_job": "54855229-072f-4817-88d6-36e0306dff01",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133754_54855229-072f-4817-88d6-36e0306dff01.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 313376,
+   "lo": 108520
+  },
+  "dims": {
+   "len": 1.2772,
+   "height": 1.0,
+   "width": 0.5741
+  }
+ },
+ "SOCKAMILL": {
+  "image_job": "-",
+  "clean_job": "bbb37591-90a6-49eb-bf70-427113bcc458",
+  "pose": "standing on all fours",
+  "model_job": "426e6281-06a0-46b6-856a-05f10f06678e",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_134104_426e6281-06a0-46b6-856a-05f10f06678e.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 300540,
+   "lo": 91704
+  },
+  "dims": {
+   "len": 1.5238,
+   "height": 1.0,
+   "width": 0.5183
+  }
+ },
+ "UNIUNI": {
+  "image_job": "-",
+  "clean_job": "f4347ec4-3d2f-48cd-a931-780383ae6743",
+  "pose": "standing on all fours",
+  "model_job": "a05fd53e-00ef-4f4d-b5af-59df40219668",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_134107_a05fd53e-00ef-4f4d-b5af-59df40219668.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 273456,
+   "lo": 88920
+  },
+  "dims": {
+   "len": 1.7621,
+   "height": 1.0,
+   "width": 0.5075
+  }
+ },
+ "MRBCHONK": {
+  "image_job": "-",
+  "clean_job": "b52eb1a5-4e40-4d72-b99b-2ee870eba442",
+  "pose": "standing on all fours",
+  "model_job": "9c3f0412-0ccc-4d77-9357-ecb01233ec81",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133802_9c3f0412-0ccc-4d77-9357-ecb01233ec81.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 399148,
+   "lo": 116292
+  },
+  "dims": {
+   "len": 1.5387,
+   "height": 1.0,
+   "width": 0.624
+  }
+ },
+ "NYAZCATS": {
+  "image_job": "-",
+  "clean_job": "9620daa4-97f1-474b-ab8e-4c145c718fe8",
+  "pose": "standing on all fours",
+  "model_job": "fa9f375e-007c-4fc0-9428-4444b461d608",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_134216_fa9f375e-007c-4fc0-9428-4444b461d608.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 223352,
+   "lo": 69652
+  },
+  "dims": {
+   "len": 1.2353,
+   "height": 1.0,
+   "width": 0.515
+  }
+ },
+ "LASERTATER": {
+  "image_job": "-",
+  "clean_job": "2deeb374-8d73-4cc6-9d84-01d99f8d4a5e",
+  "pose": "standing on all fours",
+  "model_job": "7dfeee19-5578-4ccd-98f8-6430332ab7d9",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_134235_7dfeee19-5578-4ccd-98f8-6430332ab7d9.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 319912,
+   "lo": 99972
+  },
+  "dims": {
+   "len": 1.4667,
+   "height": 1.0,
+   "width": 0.5414
+  }
+ },
+ "HEIZOU": {
+  "image_job": "-",
+  "clean_job": "ce3c4e24-795b-4320-9c16-ab1e896ea47e",
+  "pose": "standing on all fours",
+  "model_job": "ce5a40bb-2c29-4154-9997-3a1ef0ef6330",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133813_ce5a40bb-2c29-4154-9997-3a1ef0ef6330.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 266044,
+   "lo": 86116
+  },
+  "dims": {
+   "len": 1.1967,
+   "height": 1.0,
+   "width": 0.63
+  }
+ },
+ "YOSHINEKO": {
+  "image_job": "-",
+  "clean_job": "c811e447-62d7-4cc8-934b-2d747e22de6d",
+  "pose": "standing on all fours",
+  "model_job": "d5c401dd-7d31-4fa1-a76a-fc97423cddb5",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_134240_d5c401dd-7d31-4fa1-a76a-fc97423cddb5.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 277744,
+   "lo": 94120
+  },
+  "dims": {
+   "len": 1.3375,
+   "height": 1.0,
+   "width": 0.5456
+  }
+ },
+ "HACHIWA": {
+  "image_job": "-",
+  "clean_job": "792df273-f5bb-4050-97f4-c6888bd6a2c1",
+  "pose": "standing on all fours",
+  "model_job": "7d3ef1d5-37a1-4693-8039-8abce2a1e157",
+  "model": "tripo_h3_1_image_to_3d",
+  "faces": 12000,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_133818_7d3ef1d5-37a1-4693-8039-8abce2a1e157.glb",
+  "status": "done",
+  "sizes": {
+   "hi": 236844,
+   "lo": 77792
+  },
+  "dims": {
+   "len": 1.3627,
+   "height": 1.0,
+   "width": 0.7203
+  }
  }
 }

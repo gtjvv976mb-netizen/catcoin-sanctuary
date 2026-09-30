@@ -35,8 +35,9 @@ used. The cats are rigged in the browser instead (see 3).
     npm i gltfpack           # or any gltfpack 0.24 on PATH
     python3 scripts/make-cat-models.py --gltfpack node_modules/.bin/gltfpack [TICKER ...]
 
-This downloads each raw GLB (cached in `scripts/.cat-models-cache/`, ignored by git) and turns
-the model so its head points at +X. The body's long axis comes from the principal axis of its
+This downloads each raw GLB (cached in `scripts/.cat-models-cache/`, ignored by git), drops any
+loose crumbs floating off the model (pieces joined to nothing and away from the body: a speck over the
+back, a clump of blobs over the tail), and turns the model so its head points at +X. The body's long axis comes from the principal axis of its
 footprint, and the head end is the end with more of the model up high. It then sets y up,
 1 unit tall, feet on y = 0, centred. The colour texture becomes a 1024 px JPEG (512 px for the
 far copy), and the PBR extras go. gltfpack packs it with `-kn -km -tr`, and `-si 0.25` for
@@ -164,3 +165,22 @@ uses si 0.02 with a 1024 texture, and SEACAT's model was generated a second time
   takes CASENAP for its joined-forelegs sample, since AMRCAT's new forelegs are apart.
 - GIMBALPAW's new model (bubble helmet and a loose scarf) was held back: the scarf tears into sheets in every pose,
   walking included, so it keeps its previous model.
+
+### 2026-09-30 (later): 97 more by hand through Higgsfield
+
+- The same recipe (tripo_h3_1_image_to_3d, 12000 faces) for 52 remodelled cats (PUSSBOOCAT's reference from
+  seedream_v4_5) and 45 adoptables that had no model at all (new rows in `index.json`, no `prev_model_job`;
+  drawn from their written `look`, since none has a lore picture). Famous coins under their ids (cate-meme,
+  gta6cat, michi, sillynubcat, pepecat-2, raydium-cat, red-kitten-crew, stonk-cats, wen-4).
+- make-cat-models.py now drops loose crumbs floating off a model (GIMBALPAW, SPRIGATO, LICHENPAW, MOMOTHECAT,
+  SQUINTPAW, OJINEKO, MOONRESCUE, UNIUNI had some). `--yaw 180` for WHISK100, michi, MIGGLES, PARLORPUFF,
+  SASSYHB, TRINKETCAT and MIETTE (big plume tails outweigh the head); cate-meme's, PARLORPUFF's and
+  TRINKETCAT's far copies need `sa_lo`.
+- GIMBALPAW's redrawn model (a snug collar, a solid helmet) holds together and ships. Held back, keeping
+  their previous models: SNOWCURL (a balloon cat: its balloon joints tear in every pose, walking included),
+  TUPPENCE (its bat wings tear walking and sitting) and OCTOMONA (its tentacle legs spike sitting and lying).
+- New MODEL_LIMITS for the new shapes (mostly the ear scratch for round, deep-furred or short-legged cats;
+  TUBBSCAT also skips flopping and rolling); the old models' limits for CAITSITH, SKEINKIT and SNOWBELCAT and
+  PEWTER's ear scratch no longer apply (PEWTER's new hat still puts its feather into the lawn when it rolls). The old meshes' leg labels (MOMOTHECAT, PAPRIKA, PEWTER, SANDSTEP, SASSYHB,
+  UMBERPAW, michi, pepecat-2, wen-4) were dropped; tests/catrig-models.test.mjs takes HOVERPAW for its
+  joined-forelegs sample, since SNOWBELCAT's new forelegs are apart.
