@@ -150,3 +150,18 @@ failed twice on Hunyuan and have no model yet. 21 of 24 xStock cats were redone 
 COUCHCAP failed twice and keep their Tripo models. MAYORSTUB and SEACAT meshes did not simplify well: MAYORSTUB
 uses si 0.02 with a 1024 texture, and SEACAT's model was generated a second time and uses si 0.015 with a
 1024 texture. SNOWBELCAT needed yaw 180.
+
+### 2026-09-30: Tripo H3.1 multi-view, detailed (the method from now on)
+
+Hunyuan3D failed often when many jobs ran at once, and its fur and markings came out soft. Every cat is now made
+with `generate_3d` and `tripo_h3_1_multiview_to_3d`, with the four view job ids in the order front, left, back,
+right, and `texture: true, pbr: false, texture_quality: "detailed", geometry_quality: "detailed",
+texture_alignment: "original_image"` (about 21 credits). Fur strands, whiskers, collars and markings now come
+through in the texture. The steps before it are the same: a realistic portrait from the proof photo
+(gpt_image_2_5, high), a standing 3/4 reference (high), and four orthographic views (high from this run on).
+
+Job entries carry `hd: true, si: 0.04, si_lo: 0.003, tex: 2048, tex_lo: 256, q: 78`; most pack at 560-640 KB full
+and 130-260 KB far. A far copy still over 300 KB gets `sa_lo: true` with `si_lo` 0.004-0.01 (this scrambles the far
+copy's texture a little, which does not show at far-copy distances). The Hunyuan models were redone this way; the
+old model job is kept as `prev_model_job`. SNOWBALCAT, PUSSBOOCAT, TRIMCAT, TUBBSCAT and SGTTIBBS, listed above as
+failed, have had models since the third run.
