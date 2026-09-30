@@ -62,7 +62,7 @@ export async function loadPhotoreal({ renderer, q, loader, post, garden, flora, 
     U.uFlatL.value.copy(meanOf(lawn.image)); U.uFlatE.value.copy(meanOf(earth.image)); U.uFlatG.value.copy(meanOf(gravel.image)); U.uFlatS.value.copy(meanOf(stone.image));
     U.uTint.value.setHex(0x86ca5a); // the lawn's usual tint (terrain.js tintAt): greener or sunnier than it tints the photo
     U.uPhoto.value = 1;
-    if (post) post.grade.uniforms.uSat.value = 1.06;
+    if (post) post.grade.uniforms.uSat.value = 1.16;
     // The blades take the photo lawn's colour.
     const L = U.uFlatL.value, T = U.uTint.value;
     grass.uniforms.uGain.value.setRGB(L.r / T.r, L.g / T.g, L.b / T.b).multiplyScalar(1.25);
