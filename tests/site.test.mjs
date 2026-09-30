@@ -275,8 +275,13 @@ test("page weight: the first view stays within budget", () => {
   // the holder rewards' review fixes, ~2.7 KB: the three lines built from the rules in force that
   // state.json records (rewardsText and the check of those rules, rewards.js), and the section's
   // stylesheet, assets/ui/rewards.css, linked only when About is first opened (panels.js calls its
-  // show()), never on the first view: tests/panels.test.mjs checks it. About 2 KB are spare after it.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 724 * 1024, "the page's own scripts over 724 KB");
+  // show()), never on the first view: tests/panels.test.mjs checks it. About 2 KB are spare after it;
+  // then from 724 KB to 734 KB for the cats' motion, ~11 KB: real footfalls for the walk, trot and
+  // gallop with the body, shoulder blades and a steady head moving with the legs, new pounce, stretch,
+  // groom and knead clips (catrig.js), the layer over the clips (turns, gaze, tail springs, twitches)
+  // and per-clip crossfades on one gait phase (catrig.js, catviews.js), and cats that look before they
+  // go, amble and glance about (cats.js). About 1 KB is spare after it.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 734 * 1024, "the page's own scripts over 734 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");

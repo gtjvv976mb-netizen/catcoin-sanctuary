@@ -398,20 +398,23 @@ export function skinWeights(pos, rig, sk, index = null) {
 /* ── Clips ─────────────────────────────────────────────────────────────── */
 
 const E = new THREE.Euler(), Q = new THREE.Quaternion();
-/** A pose: { bone: [z, y, x] radians } plus `lift` (root height change, units of the model). */
+/** A pose: { bone: [z, y, x] radians } plus `lift` (root height change, units of the model), `shift`
+    (the root moved forward) and `at` ({ bone: [x, y, z] }, bones moved from their rest place). */
 function sampleClip(name, dur, fps, fn, loop = true) {
   const frames = Math.max(2, Math.round(dur * fps) + (loop ? 1 : 0));
-  const times = [], per = {}, lift = [];
+  const times = [], per = {}, at = {}, lift = [];
   for (let f = 0; f < frames; f++) {
     const t = (f / (frames - 1)) * dur; times.push(t);
     const pose = fn(t / dur);
     for (const [bone, r] of Object.entries(pose)) {
       if (bone === "lift" || bone === "shift") continue;
+      if (bone === "at") { for (const b in r) (at[b] ||= []).push(...r[b]); continue; }
       (per[bone] ||= []).push(...Q.setFromEuler(E.set(r[2] || 0, r[1] || 0, r[0] || 0, "ZYX")).toArray());
     }
     lift.push(pose.shift || 0, pose.lift || 0, 0);
   }
   const tracks = Object.entries(per).map(([b, v]) => new THREE.QuaternionKeyframeTrack(`${b}.quaternion`, times, v));
+  for (const b in at) tracks.push(new THREE.VectorKeyframeTrack(`${b}.position`, times, at[b]));
   tracks.push(new THREE.VectorKeyframeTrack("root.position", times, lift)); // the root rests at the origin
   const clip = new THREE.AnimationClip(name, dur, tracks);
   clip.userData = { loop };
@@ -434,7 +437,8 @@ export function kinematics(rig) {
   const legs = {};
   for (const k of KEYS) {
     const g = rig.legs[k];
-    legs[k] = { top: g.top, a: [ang(g.top, g.knee), ang(g.knee, g.low), ang(g.low, g.toe)], l: [len2(g.top, g.knee), len2(g.knee, g.low), len2(g.low, g.toe)], toe: g.toe, hind: k[0] === "h" };
+    legs[k] = { top: g.top, a: [ang(g.top, g.knee), ang(g.knee, g.low), ang(g.low, g.toe)], l: [len2(g.top, g.knee), len2(g.knee, g.low), len2(g.low, g.toe)], toe: g.toe, hind: k[0] === "h",
+      rel: g.top.clone().sub(k[0] === "h" ? rig.pelvis : rig.chest).toArray(), side: g.top.z - rig.zc };
     legs[k].reach = legs[k].l[0] + legs[k].l[1] + legs[k].l[2];
   }
   const tail = [];
@@ -507,38 +511,58 @@ export function makeClips(rig) {
   const rest = (k) => ({ x: K.legs[k].toe.x, y: 0 });
   const stride0 = walkStride(rig);
 
-  // How far to lower the body so every paw can reach the ends of a stance `sweep` long (a model's
-  // legs are straight at rest, so a cat walks on slightly bent legs, as real cats do).
-  const bend = (sweep) => {
+  // How far to lower the body so every paw can reach the ends of a stance `sweep` long, `off` ahead
+  // of where it stands (a model's legs are straight at rest, so a cat walks on slightly bent legs, as real cats do).
+  const bend = (sweep, off = 0) => {
     let need = 0;
     for (const k of KEYS) {
-      const L = K.legs[k], off = Math.abs(L.toe.x - L.top.x) + sweep / 2, r = 0.95 * L.reach;
-      need = Math.max(need, L.top.y - Math.sqrt(Math.max(0, r * r - off * off)));
+      const L = K.legs[k], dx = Math.abs(L.toe.x - L.top.x) + sweep / 2 + (L.hind ? off * d : 0), r = 0.95 * L.reach;
+      need = Math.max(need, L.top.y - Math.sqrt(Math.max(0, r * r - dx * dx)));
     }
     return Math.max(0, need);
   };
-  // Walking gaits: each paw is planted for `duty` of the cycle and slides back under the body as the
-  // body moves on (so it stays still on the ground), then swings forward in an arc.
-  const gait = (u, { rate = 1, duty = 0.62, lift = 0.1, phase = { hL: 0, fL: 0.25, hR: 0.5, fR: 0.75 }, crouch = 0, flex = 0, bob = 0.008, tail = PI - 0.25, head = 0 } = {}) => {
-    const stride = stride0 / rate, sweep = stride * duty;
-    const p = { lift: -crouch * lt - bend(sweep) - bob * Math.abs(S(TAU * u * 2)), pelvis: [flex * S(TAU * u) * 0.5, S(TAU * u) * 0.05, S(TAU * u) * 0.03], spine: [0, 0, 0], chest: [-flex * S(TAU * u) * 0.8, -S(TAU * u) * 0.06, 0] };
-    p.neck = [-0.05 + head - crouch * 0.6 + S(TAU * u * 2) * 0.03, S(TAU * u) * 0.05, 0];
-    p.head = [crouch * 0.5 - S(TAU * u * 2) * 0.03, 0, 0];
-    const B = body(K, p);
+  const nx = Math.max(0.12, K.H0.x - K.N0.x);
+  // Walking gaits. f, each paw's place in its own cycle, is 0 as it lands: the paw is planted for `duty`
+  // of the cycle and slides back under the body as the body moves on (so it stays still on the
+  // ground), then swings forward in an arc. `phase` sets the footfalls: walk, a lateral sequence
+  // (left hind, left fore, right hind, right fore, a quarter cycle apart); trot, diagonal pairs; run,
+  // a rotary gallop (hinds, then fores the other way round, a flight after each pair). The body moves
+  // with the legs: it vaults over the planted legs walking and sinks onto them trotting; the hips and
+  // shoulders drop on the side of the leg in the air and swing forward with it; the shoulder blades
+  // ride up over each planted foreleg; galloping, the spine arches to bring the hinds forward under
+  // the chest, then stretches out. The head is held level and steady over all of it.
+  const WALK = { hL: 0, fL: 0.75, hR: 0.5, fR: 0.25 };
+  const gait = (u, { rate = 1, duty = 0.62, lift = 0.1, phase = WALK, crouch = 0, flex = 0, bob = 0.01, tail = PI - 0.25, head = 0, blade = 0.05, reach = 0, roll = 0.035, yaw = 0.04, gallop = false, pitch = 0, off = 0 } = {}) => {
+    const stride = stride0 / rate, sweep = stride * duty, c = (x) => C(TAU * x), mid = (duty + 1) / 2;
+    const bounce = gallop ? c(2 * u - 0.8) : (duty > 0.5 ? 1 : -1) * c(2 * u - duty);
+    const rH = roll * c(u - mid), rF = roll * c(u + phase.fL - mid), yH = yaw * c(u), yF = yaw * c(u + phase.fL);
+    const fx = flex * c(u - 0.95), g = pitch * c(u - 0.3), base = -crouch * lt - bend(sweep, off), nb = -0.05 + head - crouch * 0.6;
+    const p = { lift: base + bob * bounce, pelvis: [fx * 0.5 + g, yH, rH], spine: [fx * 0.3, -yH * 0.5, 0], chest: [-fx * 1.1, yF - yH * 0.5, rF - rH], neck: [nb, -yF * 0.5, 0], head: [0, -yF * 0.5, -rF], at: {} };
+    let B = body(K, p);
+    p.neck[0] += Math.max(-0.25, Math.min(0.25, (body(K, { lift: base, neck: [nb] }).hed.y - B.hed.y) / nx * 0.8));
+    B = body(K, p);
+    p.head[0] = nb + crouch * 0.5 - B.aN;
     for (const k of KEYS) {
-      const L = K.legs[k], f = (u + phase[k]) % 1, r0 = rest(k);
-      let x, y, e = L.a[2];
-      if (f < duty) { x = r0.x + sweep * (0.5 - f / duty); y = 0; }
-      else { const s = (f - duty) / (1 - duty); x = r0.x + sweep * (ease(s) - 0.5); y = lift * lt * S(PI * s) ** 0.8; e = L.a[2] + (L.hind ? 0.45 : -0.6) * S(PI * s); }
-      legTo(K, p, B, k, { x, y }, e);
+      const L = K.legs[k], f = (u + phase[k]) % 1, x0 = rest(k).x + (L.hind ? off * d : 0), T = B.top[k], sw = f >= duty, s = sw ? (f - duty) / (1 - duty) : f / duty;
+      let x = x0 + sweep * (0.5 - s), y = 0, e = L.a[2];
+      if (sw) { x = x0 + sweep * (ease(s) - 0.5 + (L.hind ? 0 : reach * S(PI * s) * s)); y = lift * lt * S(PI * s) ** 0.8; e += (L.hind ? 0.45 : -0.6) * S(PI * s) * (1 + lift * 2); }
+      // The hip or shoulder where the pelvis's (chest's) roll and yaw have carried it.
+      const r = L.hind ? rH : rF;
+      T.y -= L.side * r; T.x += L.side * (L.hind ? yH : yF);
+      if (!L.hind) {
+        const bx = blade * lt * 0.5 * (sw ? ease(s) - 0.5 : 0.5 - s), by = sw ? 0 : blade * lt * S(PI * s), [ox, oy] = rot2(bx, by, B.aC);
+        T.x += ox; T.y += oy;
+        p.at[LEG[k][0]] = [L.rel[0] + bx, L.rel[1] + by, L.rel[2]];
+      }
+      legTo(K, p, B, k, { x, y }, e, -r);
     }
-    tailTo(K, p, B, curve(tail + S(TAU * u) * 0.04, -0.12), [0, S(TAU * u - 0.5) * 0.25, S(TAU * u - 1.2) * 0.3, S(TAU * u - 1.9) * 0.35]);
+    tailTo(K, p, B, curve(tail + S(TAU * u) * 0.04 + fx * 0.4, -0.12), [0, S(TAU * u - 0.5) * 0.2, S(TAU * u - 1.2) * 0.25, S(TAU * u - 1.9) * 0.3]);
     return p;
   };
   clips.walk = sampleClip("walk", 1, 32, (u) => gait(u));
-  clips.trot = sampleClip("trot", 1, 32, (u) => gait(u, { rate: GAIT_RATE.trot, duty: 0.45, lift: 0.16, phase: { hL: 0, fR: 0, hR: 0.5, fL: 0.5 }, bob: 0.014, tail: PI - 0.45 }));
-  clips.run = sampleClip("run", 1, 32, (u) => gait(u, { rate: GAIT_RATE.run, duty: 0.32, lift: 0.22, phase: { hL: 0, hR: 0.08, fL: 0.5, fR: 0.58 }, flex: 0.22, bob: 0.03, tail: PI - 0.1 }));
-  clips.stalk = sampleClip("stalk", 1, 32, (u) => gait(u, { rate: GAIT_RATE.stalk, duty: 0.72, lift: 0.07, crouch: 0.28, bob: 0.003, tail: PI + 0.15, head: 0.1 }));
+  clips.trot = sampleClip("trot", 1, 32, (u) => gait(u, { rate: GAIT_RATE.trot, duty: 0.45, lift: 0.16, phase: { hL: 0, fR: 0.97, hR: 0.5, fL: 0.47 }, bob: 0.012, tail: PI - 0.45, reach: 0.15, blade: 0.04 }));
+  clips.run = sampleClip("run", 1, 32, (u) => gait(u, { rate: GAIT_RATE.run, duty: 0.28, lift: 0.24, phase: { hL: 0, hR: 0.92, fR: 0.55, fL: 0.45 }, gallop: true, flex: 0.3, pitch: 0.07, bob: 0.03, off: 0.1, reach: 0.3, roll: 0.015, yaw: 0.015, blade: 0.03, tail: PI - 0.1 }));
+  clips.stalk = sampleClip("stalk", 1, 32, (u) => gait(u, { rate: GAIT_RATE.stalk, duty: 0.72, lift: 0.07, crouch: 0.28, bob: 0.003, tail: PI + 0.15, head: 0.1, blade: 0.1, roll: 0.02, yaw: 0.03 }));
 
   // Standing: paws planted, breathing, a slow look about, a lazy tail; `extra` bends it.
   const stand = (u, extra = {}, tail = null) => {
@@ -586,20 +610,20 @@ export function makeClips(rig) {
   clips.sit = sampleClip("sit", 8, 12, (u) => sit(u));
   clips.look = sampleClip("look", 6, 12, (u) => sit(u, { neck: [-sitPitch * 0.7 + 0.1, S(TAU * u) * 0.6, 0], head: [0.1, S(TAU * u * 2) * 0.2, S(TAU * u) * 0.12] }));
   clips.pant = sampleClip("pant", 1, 24, (u) => sit(u, { spine: [0.04 + S(TAU * u * 3) * 0.03, 0, 0], head: [-0.2, 0, 0] }));
-  clips.groom = sampleClip("groom", 2.4, 20, (u) => {
-    const lick = Math.max(0, S(TAU * u * 3));
-    const p = sit(u, { neck: [-sitPitch * 0.75 - 0.35, -0.3, 0], head: [-0.25 - lick * 0.2, -0.25, -0.2] });
-    const B = body(K, p), T = B.top.fR, L = K.legs.fR;
-    // The right forepaw raised to the mouth, paw turned up.
-    legTo(K, p, B, "fR", { x: B.hed.x + (rig.noseX - K.H0.x) * 0.5, y: B.hed.y - 0.02 - lick * 0.02 }, PI / 2 + 0.2, -0.25);
-    void T; void L;
+  // Grooming in rounds: five licks at the raised forepaw, then two wipes of the paw over the face (up
+  // behind the ear, down over the eye to the nose), the head tipped into it.
+  clips.groom = sampleClip("groom", 4, 20, (u) => {
+    const w = u > 0.6, s = w ? ((u - 0.6) / 0.2) % 1 : 0, lick = w ? 0 : Math.max(0, S(TAU * u * 5 / 0.6)), k = S(PI * s), hr = rig.headR;
+    const p = sit(u, { neck: [-sitPitch * 0.75 - 0.35 + k * 0.12, -0.3, 0], head: [-0.25 - lick * 0.2 - k * 0.15, -0.25 - k * 0.1, -0.2 - k * 0.25] });
+    const B = body(K, p);
+    legTo(K, p, B, "fR", { x: B.hed.x + (rig.noseX - K.H0.x) * 0.5 - S(TAU * s) * hr * 0.4, y: B.hed.y - 0.02 - lick * 0.02 + k * hr * 0.6 }, PI / 2 + 0.2 + k * 0.3, -0.25);
     return p;
   });
+  // Kneading: the forepaws tread in turn, pressing down and out, the weight rocking onto the paw that stays.
   clips.knead = sampleClip("knead", 1.2, 24, (u) => {
     const a = Math.max(0, S(TAU * u)), b = Math.max(0, -S(TAU * u));
-    const p0 = { lift: sitLift, pelvis: [sitPitch * 0.7, 0, 0] }, B0 = body(K, p0);
-    return sit(u, { pelvis: [sitPitch * 0.7, 0, 0], neck: [-sitPitch * 0.5, 0, 0], head: [-0.15, 0, 0],
-      toes: { fL: { x: B0.top.fL.x + 0.1 * d + a * 0.02, y: a * 0.06 * lt }, fR: { x: B0.top.fR.x + 0.1 * d + b * 0.02, y: b * 0.06 * lt } } });
+    const B0 = body(K, { lift: sitLift, pelvis: [sitPitch * 0.7, 0, 0] }), at = (k, v) => ({ x: B0.top[k].x + 0.1 * d + v * 0.03, y: v * 0.14 * lt });
+    return sit(u, { pelvis: [sitPitch * 0.7, 0, 0], chest: [0, 0, (b - a) * 0.06], neck: [-sitPitch * 0.5, 0, 0], head: [-0.15 - (a + b) * 0.05, 0, (a - b) * 0.06], toes: { fL: at("fL", a), fR: at("fR", b) } });
   });
 
   // Lying (sphinx): belly on the ground, forelegs flat in front, hind legs tucked alongside.
@@ -625,14 +649,15 @@ export function makeClips(rig) {
     return p;
   });
 
-  // Stretch: a play bow, forelegs flat out in front, chest down, bottom up.
-  clips.stretch = sampleClip("stretch", 2.2, 20, (u) => {
-    const k = S(PI * Math.min(1, u * 1.1));
-    const p = { pelvis: [-0.32 * k, 0, 0], spine: [0, 0, 0], chest: [0.08 * k, 0, 0], neck: [0.3 * k, 0, 0], head: [0.1 * k, 0, 0.05 * k], lift: -0.06 * k };
+  // Stretch: a play bow (forelegs flat out in front, chest down, bottom and tail up), then the weight
+  // goes forward over the forepaws and a hind leg stretches out behind.
+  clips.stretch = sampleClip("stretch", 2, 20, (u) => {
+    const k = S(PI * Math.min(1, u / 0.6)), h = S(PI * Math.max(0, Math.min(1, (u - 0.5) / 0.45)));
+    const p = { pelvis: [-0.62 * k + 0.06 * h, 0, 0], spine: [-0.08 * k, 0, 0], chest: [0.18 * k, 0, 0], neck: [0.45 * k + 0.15 * h, 0, 0], head: [0.12 * k - 0.1 * h, 0, 0.05 * k], lift: -0.12 * k * lt, shift: 0.05 * h * d };
     const B = body(K, p);
-    for (const kk of ["hL", "hR"]) legTo(K, p, B, kk, rest(kk));
-    for (const kk of ["fL", "fR"]) { const T = B.top[kk], L = K.legs[kk], lie = { x: T.x + (L.l[1] + L.l[2]) * 0.95, y: 0.012 }, r0 = rest(kk); legTo(K, p, B, kk, { x: r0.x + (lie.x - r0.x) * k, y: 0.012 * k }, K.legs[kk].a[2] + (-0.04 - K.legs[kk].a[2]) * k); }
-    tailTo(K, p, B, curve(PI / 2 + 0.35 * (1 - k) + 0.2, -0.1), [0, 0.1 * S(TAU * u), 0.15 * S(TAU * u), 0.2 * S(TAU * u)]);
+    for (const kk of ["hL", "hR"]) { const L = K.legs[kk], r0 = rest(kk), g = kk === "hL" ? h : 0; legTo(K, p, B, kk, { x: r0.x - L.reach * 0.55 * g, y: 0.08 * lt * g }, L.a[2] + (0.4 - PI - L.a[2]) * g); }
+    for (const kk of ["fL", "fR"]) { const T = B.top[kk], L = K.legs[kk], lie = { x: T.x + (L.l[1] + L.l[2]) * 0.95, y: 0.012 }, r0 = rest(kk); legTo(K, p, B, kk, { x: r0.x + (lie.x - r0.x) * k, y: 0.012 * k }, L.a[2] + (-0.04 - L.a[2]) * k); }
+    tailTo(K, p, B, curve(PI / 2 + 0.35 * (1 - k) + 0.2 + 0.5 * h, -0.1), [0, 0.1 * S(TAU * u), 0.15 * S(TAU * u), 0.2 * S(TAU * u)]);
     return p;
   }, false);
   // Hunting crouch, the bottom wiggle before a pounce, and the pounce.
@@ -645,13 +670,16 @@ export function makeClips(rig) {
   };
   clips.crouch = sampleClip("crouch", 2, 16, (u) => crouch(u, 0));
   clips.wiggle = sampleClip("wiggle", 1, 30, (u) => crouch(u, 1));
+  // The pounce, timed by the leap itself (the renderer sets its time from the hop's progress): from
+  // the wiggle's crouch the hind legs drive, the body stretches out in the air with the forepaws
+  // reaching ahead and the hind legs trailing, then the forepaws come down to meet the ground and the
+  // hind legs swing under to land in a crouch.
   clips.pounce = sampleClip("pounce", 0.6, 30, (u) => {
-    const k = S(PI * u), up = 0.12 * lt * k;
-    const p = { lift: up, pelvis: [0.18 * k, 0, 0], spine: [-0.05 * k, 0, 0], chest: [0.05 * k, 0, 0], neck: [0.1 * k, 0, 0], head: [-0.05 * k, 0, 0] };
+    const k = S(PI * Math.min(1, u / 0.8)), kh = S(PI * Math.max(0, Math.min(1, (u - 0.12) / 0.7))), c0 = 1 - ease(Math.min(1, u / 0.22)), c1 = ease(Math.max(0, (u - 0.7) / 0.3));
+    const p = { lift: (-0.42 * c0 + 0.1 * k - 0.28 * c1) * lt, pelvis: [0.06 * c0 + 0.18 * k, 0, 0], spine: [-0.05 * k, 0, 0], chest: [-0.06 * c0 + 0.05 * k + 0.08 * c1, 0, 0], neck: [-0.35 * c0 + 0.1 * k - 0.2 * c1, 0, 0], head: [0.45 * c0 - 0.05 * k + 0.3 * c1, 0, 0] };
     const B = body(K, p);
-    for (const kk of ["fL", "fR"]) { const T = B.top[kk], L = K.legs[kk], a = -PI / 2 + 1.35 * k; legTo(K, p, B, kk, { x: T.x + L.reach * 0.97 * C(a), y: Math.max(0, T.y + L.reach * 0.97 * S(a)) }, a); }
-    for (const kk of ["hL", "hR"]) { const T = B.top[kk], L = K.legs[kk], a = -PI / 2 - 0.9 * k; legTo(K, p, B, kk, { x: T.x + L.reach * 0.97 * C(a), y: Math.max(0, T.y + L.reach * 0.97 * S(a)) }, a); }
-    tailTo(K, p, B, curve(PI - 0.1, 0.02), [0, 0, 0, 0]);
+    for (const kk of KEYS) { const T = B.top[kk], L = K.legs[kk], a = -PI / 2 + (L.hind ? -0.9 * kh : 1.35 * k); legTo(K, p, B, kk, { x: T.x + L.reach * 0.97 * C(a), y: Math.max(0, T.y + L.reach * 0.97 * S(a)) }, a); }
+    tailTo(K, p, B, curve(PI - 0.1 + 0.3 * c0 - 0.4 * c1, 0.02 + 0.1 * c1), [0, 0, 0, 0]);
     return p;
   }, false);
   // Claws on the cat tree: reared up, paws high on the trunk pulling down in turn.
@@ -664,7 +692,57 @@ export function makeClips(rig) {
     tailTo(K, p, B, curve(PI + 0.6, -0.2), [0, 0.15 * S(TAU * u), 0.2 * S(TAU * u), 0.25 * S(TAU * u)]);
     return p;
   });
+  // Clips that leave the shoulder blades alone hold them at rest (so blending from a gait settles them).
+  for (const c of Object.values(clips)) for (const k of ["fL", "fR"]) {
+    const n = `${LEG[k][0]}.position`;
+    if (!c.tracks.some((t) => t.name === n)) c.tracks.push(new THREE.VectorKeyframeTrack(n, [0], K.legs[k].rel));
+  }
   return clips;
+}
+
+/* ── Over the clips ────────────────────────────────────────────────────── */
+
+const _q = new THREE.Quaternion(), _p = new THREE.Quaternion(), _a = V(), UP = V(0, 1, 0), X = V(1, 0, 0);
+const clampA = (v, m) => Math.max(-m, Math.min(m, v));
+
+/**
+ * What plays over a cat's clips, each time its mixer steps (the renderer calls it right after): the
+ * spine bends into a turn; the head turns (about the upright, whatever the pose does with the neck)
+ * to what the cat looks at, `gaze` (radians from straight ahead, + to its right like the heading), or
+ * else leads the turn; the tail follows through on damped springs, joint after joint: the inertia of
+ * a turn starting swings it out, then it comes round into the turn and settles; now and then the tail
+ * tip flicks and the head gives a quick twitch (as an ear flick would). `w` is the turning rate
+ * (rad/s), `calm` a sleeping cat (rare flicks, no twitch). `st` keeps each cat's state.
+ */
+export function layer(sk, rig, st, dt, w, gaze = null, calm = false) {
+  const b = sk.bones, x = st.x ||= new Float32Array(10), rnd = Math.random;
+  st.ax ||= [1, 2, 3, 4].map((k) => V().subVectors(rig.tail[k], rig.tail[k - 1]).cross(V(0, 0, 1)).normalize());
+  dt = Math.min(dt, 0.05);
+  const pw = st.w ?? 0;
+  w = st.w = pw + (clampA(w, 5) - pw) * Math.min(1, dt * 8);
+  const bend = st.bend = (st.bend || 0) + (clampA(w * 0.1, 0.3) - (st.bend || 0)) * Math.min(1, dt * 5);
+  for (const n of ["spine", "chest"]) b[n].quaternion.premultiply(_q.setFromAxisAngle(UP, bend * 0.5));
+  st.gz = (st.gz || 0) + (clampA((gaze ?? bend * 2.5) - bend, 1.2) - (st.gz || 0)) * Math.min(1, dt * 4);
+  _p.identity(); for (const n of ["root", "pelvis", "spine", "chest"]) _p.multiply(b[n].quaternion);
+  for (const [n, f] of [["neck", 0.45], ["head", 0.55]]) {
+    b[n].quaternion.premultiply(_q.setFromAxisAngle(_a.copy(UP).applyQuaternion(_q.copy(_p).invert()), st.gz * f));
+    _p.multiply(b[n].quaternion);
+  }
+  // Springs: x[0..3] the tail joints' swing (x[4..7] their speeds), x[8] the head's twitch (x[9] its speed).
+  if ((st.next = (st.next ?? rnd() * 5) - dt) < 0) {
+    const s = rnd() < 0.5 ? -1 : 1;
+    x[7] += s * 4; x[6] -= s * 1.5;
+    if (!calm && rnd() < 0.5) x[9] += s * 2.5;
+    st.next = (calm ? 6 : 2) + rnd() * (calm ? 12 : 6);
+  }
+  const kick = pw - w;
+  for (let k = 0; k < 4; k++) {
+    x[k + 4] += ((k ? x[k - 1] : clampA(w * 0.12, 0.35)) * 40 - x[k] * 40 - x[k + 4] * 5) * dt + (k ? 0 : clampA(kick, 2) * 0.6);
+    x[k] += x[k + 4] * dt;
+    if (!rig.tailStub) b[`tail${k + 1}`].quaternion.multiply(_q.setFromAxisAngle(st.ax[k], x[k]));
+  }
+  x[9] += (-x[8] * 300 - x[9] * 8) * dt; x[8] += x[9] * dt;
+  b.head.quaternion.multiply(_q.setFromAxisAngle(X, x[8]));
 }
 
 /** How many walk cycles per unit of ground covered, for a cat drawn at `scale` (model units -> world). */

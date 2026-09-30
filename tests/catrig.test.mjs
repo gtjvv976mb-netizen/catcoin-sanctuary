@@ -1,6 +1,7 @@
 /* The quadruped rig (assets/world/catrig.js) on a simple box cat: joints in order, skin weights
    that add up and never cross from one leg to another, and clips that keep paws on the ground:
-   planted while walking (no sliding), and on the ground when sitting or lying. */
+   planted while walking (no sliding), and on the ground when sitting or lying; each gait's
+   footfalls in a real cat's order; and the layer over the clips (turns, gaze, tail springs). */
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -122,4 +123,39 @@ test("sitting and lying cats keep all four paws on the ground and the body out o
 test("the renderer steps each gait by distance walked", () => {
   for (const g of ["walk", "trot", "run", "stalk"]) assert.ok(R.GAIT_RATE[g] > 0, g);
   assert.ok(Math.abs(R.cyclesPerUnit(rig, 2) * R.walkStride(rig) * 2 - 1) < 1e-9, "one walk cycle per stride");
+});
+
+// When each paw lands in a gait: the first sample of each planted stretch, as a share of the cycle.
+function landings(clips, name) {
+  const N = 64, down = {};
+  for (const k of ["hL", "hR", "fL", "fR"]) down[k] = [];
+  for (let f = 0; f < N; f++) { pose(clips, name, f / N); for (const k in down) down[k].push(toeAt(k).y < 0.004); }
+  const at = {};
+  for (const k in down) { const d = down[k]; at[k] = d.findIndex((v, f) => v && !d[(f + N - 1) % N]) / N; }
+  return at;
+}
+const after = (a, b) => (((b - a) % 1) + 1) % 1; // how long after a comes b, in cycles
+
+test("the gaits' footfalls: walk a lateral sequence, trot diagonal pairs, run a rotary gallop", () => {
+  const clips = R.makeClips(rig);
+  const w = landings(clips, "walk");
+  // Left hind, then left fore, right hind, right fore, about a quarter cycle apart.
+  for (const [a, b] of [["hL", "fL"], ["fL", "hR"], ["hR", "fR"], ["fR", "hL"]]) assert.ok(Math.abs(after(w[a], w[b]) - 0.25) < 0.06, `walk: ${a} to ${b} ${after(w[a], w[b]).toFixed(2)}`);
+  const t = landings(clips, "trot");
+  assert.ok(after(t.hL, t.fR) < 0.08 && after(t.hR, t.fL) < 0.08, "trot: each hind lands with the opposite fore");
+  assert.ok(Math.abs(after(t.hL, t.hR) - 0.5) < 0.06, "trot: the pairs half a cycle apart");
+  const g = landings(clips, "run");
+  // Rotary: the hinds one after the other, then the fores starting on the side the hinds ended on.
+  const order = Object.keys(g).sort((a, b) => after(g.hL, g[a]) - after(g.hL, g[b]));
+  assert.deepEqual(order, ["hL", "hR", "fR", "fL"], `run: footfalls ${order.join(" ")}`);
+});
+
+test("over the clips: the spine and tail swing with a turn, the head turns to what the cat looks at", () => {
+  const clips = R.makeClips(rig), st = {};
+  pose(clips, "stand", 0.2);
+  const q0 = sk.bones.head.quaternion.clone(), t0 = sk.bones.tail2.quaternion.clone();
+  for (let i = 0; i < 30; i++) { pose(clips, "stand", 0.2); R.layer(sk, rig, st, 1 / 30, 2, 0.8); }
+  assert.ok(sk.bones.head.quaternion.angleTo(q0) > 0.2, "the head turned");
+  assert.ok(sk.bones.tail2.quaternion.angleTo(t0) > 0.02, "the tail swung");
+  for (const b of sk.skeleton.bones) assert.ok(b.quaternion.toArray().every(Number.isFinite), b.name);
 });
