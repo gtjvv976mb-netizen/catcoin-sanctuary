@@ -133,6 +133,7 @@ test("build: a rebuild keeps the sanctuary's launches: a launch field survives, 
   // The launcher writes launch fields (and adds a cat of its own).
   const cur = structuredClone(first.data);
   cur.cats[0].launch = launch(1);
+  cur.cats[0].pair = { symbol: "SOL", mint: "So11111111111111111111111111111111111111112" };   // launched on pump.fun in SOL (a sanctuary cat)
   cur.cats[1].launch = launch(2);
   const own = { ...structuredClone(cur.cats[2]), id: "delta", ticker: "DELTACAT", name: "delta", coinName: "delta", launch: launch(3) };
   cur.cats.push(own);
@@ -145,6 +146,7 @@ test("build: a rebuild keeps the sanctuary's launches: a launch field survives, 
   assert.deepEqual(written, r.data);
   assert.deepEqual(written.cats.map((c) => [c.ticker, c.launch?.mint ?? null]), [["ALPHACAT", launch(1).mint], ["BETACAT", launch(2).mint], ["DELTACAT", launch(3).mint]]);
   assert.equal(written.cats[1].coinName, "beta", "the coin exists on chain under its launched name: the launched row is kept");
+  assert.deepEqual(written.cats[0].pair, { symbol: "SOL", mint: "So11111111111111111111111111111111111111112" }, "the fresh row keeps the pair its coin launched in");
   assert.ok(!written.cats.some((c) => c.ticker === "GAMMACAT"), "a dropped cat with no launch goes");
   assert.equal(logs.filter((m) => /launched by the sanctuary/.test(m)).length, 2);
   assert.deepEqual(validateAdoptables(written).refused, []);

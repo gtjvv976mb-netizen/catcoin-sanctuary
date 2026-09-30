@@ -309,3 +309,10 @@ test("trending workflow: pinned actions, every 20 min and by hand, contents: wri
   assert.match(next, /gh workflow run trending\.yml/);
   assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(next));
 });
+
+test("catIndex: a mint the launcher's ledger has sent is the sanctuary's own (a sanctuary cat's coin, before its record reaches data/adoptables.json), never its copycat", () => {
+  const coin = { mint: MINT(42), symbol: "CATBUS", name: "Nekobasu" };
+  assert.equal(copycatOf(coin, catIndex(data())), "NEKOBUS", "control: a coin under the cat's ticker");
+  const idx = catIndex({ ...data(), launches: { launches: [{ postId: "1", status: "sending", mintPublic: MINT(42) }] } });
+  assert.equal(copycatOf(coin, idx), null);
+});

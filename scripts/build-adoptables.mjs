@@ -121,7 +121,8 @@ export function keepLaunches(picked, current, log = () => {}) {
   for (const c of current) {
     if (!c || typeof c !== "object" || c.launch === undefined) continue;
     const i = out.findIndex((x) => x.id === c.id);
-    if (i >= 0 && LAUNCH_IDENTITY.every((k) => out[i][k] === c[k])) { out[i] = { ...out[i], launch: c.launch }; continue; }
+    // The coin exists on chain in the pair it launched in: the row keeps that pair with its launch.
+    if (i >= 0 && LAUNCH_IDENTITY.every((k) => out[i][k] === c[k])) { out[i] = { ...out[i], ...(c.pair ? { pair: { ...c.pair } } : {}), launch: c.launch }; continue; }
     if (i >= 0) { out[i] = c; log(`${c.ticker}: launched by the sanctuary as ${c.coinName} (${c.launchTicker || c.ticker}); its current row is kept, not the research's.`); continue; }
     log(`${c.ticker}: launched by the sanctuary; kept though the research no longer picks it.`);
     tail.push(c);

@@ -27,7 +27,7 @@ import {
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
-  sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE,
+  sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, DIED,
 } from "../scripts/lib/launcher.mjs";
 import * as R from "../scripts/lib/rewards.mjs";
 import { creatorVault, EVENT_IX_TAG, EVENT_DISC } from "../scripts/lib/pump-fees.mjs";
@@ -2246,7 +2246,10 @@ test("shipped: the ledger and every coin's metadata are valid (the ledger and th
     assert.equal(m.createdOn, SITE_ORIGIN); assert.equal(m.showName, true);
     assert.ok(/^https:\/\/x\.com\/[A-Za-z0-9_]{1,15}\/status\/\d{5,25}$/.test(m.twitter) && postIdOf(m.twitter) === f.slice(0, -5), `${f}: its X link is the cat's own post`);
     assert.equal(m.website, `${SITE_ORIGIN}/#cat=${m.symbol}`);
-    assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE, `${f}: the post's photo, or the site's own for a hidden one`);
+    // A sanctuary cat's coin (launched from the sanctuary's own post) shows its picture on the site.
+    const own = ledger.launches.find((r) => r.postId === f.slice(0, -5))?.policy === "sanctuary";
+    assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE || (own && SITE_PICTURE.test(m.image) && m.twitter.startsWith(`https://x.com/${OWN_HANDLE}/status/`)),
+      `${f}: the post's photo, the site's own for a hidden one, or a sanctuary cat's picture on the site`);
     assert.ok(Buffer.byteLength(metadataUri(f.slice(0, -5))) <= 200);
   }
   // The mint of a row not sent yet is never public.
@@ -2303,15 +2306,15 @@ test("sanctuary cats: once posted on X, a cat with no coin launches from the san
   for (const e of [{ ...released(c.ticker), status: undefined }, { ...released(c.ticker), tweet: undefined }]) assert.match(sanctuaryRow(e, ownCtx({ entries: [e] })).problem, /not posted on X yet/);
 });
 
-test("sanctuary cats: never one with a coin (its launch, a visitor's adoption, a Collection entry, a live ledger row), in memoriam, with a sensitivity note, of low confidence, with no portrait, or whose kit launches as another ticker", () => {
+test("sanctuary cats: never one with a coin (its launch, a visitor's adoption, a Collection entry, a live ledger row), with a sensitivity note other than its memorial, of low confidence, with no portrait, or whose kit launches as another ticker", () => {
   const c = ownCat();
   const e = released(c.ticker);
   const cats = shipped(FILES.adoptables).cats;
   const withCat = (patch) => ({ ...shipped(FILES.adoptables), cats: cats.map((x) => (x.ticker === c.ticker ? { ...x, ...patch } : x)) });
   const why = (o) => sanctuaryRow(e, ownCtx({ entries: [e], ...o })).problem;
   assert.match(why({ adoptables: withCat({ launch: { mint: "24NGWC9iFkLtUrPEN6EAnYLNW3zHqSv9oDuNqcpuNmN9", tx: "3yffugUngPkXoyTorbs24MnPZYyi96YPt6dBbRSaNkcLKR1oHNCoQbiXvacMVQVUku85wwTbzN9P8Tywyqa8UFyH", launchpad: "pump.fun", at: "2026-09-29T17:07:25Z" } }) }), /has a coin already/);
-  assert.match(why({ adoptables: withCat({ memorial: true }) }), /in memoriam/);
-  assert.match(why({ adoptables: withCat({ sensitivity: "Died in 2020 (source)." }) }), /sensitivity/);
+  assert.equal(why({ adoptables: withCat({ memorial: true, sensitivity: `In loving memory of ${c.name}.` }) }), undefined, "a cat that died is a tribute (the owner's choice)");
+  assert.match(why({ adoptables: withCat({ sensitivity: "Ill since 2024; the owners asked for privacy." }) }), /sensitivity note/);
   assert.match(why({ adoptables: withCat({ confidence: "low" }) }), /low confidence/);
   assert.match(why({ adoptables: withCat({ launchTicker: "OTHERTKR" }) }), /launches as OTHERTKR/);
   assert.match(why({ adoptables: withCat({ existingCoin: { symbol: c.ticker, contract: "x", mcapUsd: 10 } }) }), /older coin has its ticker/);
@@ -2365,18 +2368,8 @@ test("sanctuary rows: only from the sanctuary's own post, with its picture on th
 test("sanctuary cats end to end: with no trending cat, prepare takes the posted cat; it is sent from its own post's mint, recorded on its own row (the launch and the SOL pair, no new row, no model or photo queued), shown launched on its card, and its launch post goes out", async () => {
   const c = ownCat();
   const w = throwaway();
-  const t = site({ wallet: w.address, posts: [] });
-  const queue = t.json("data/release-queue.json");
-  queue.cats = [...queue.cats.filter((q) => q.key !== c.ticker), released(c.ticker)];
-  fs.writeFileSync(path.join(t.root, "data/release-queue.json"), `${JSON.stringify(queue, null, 2)}\n`);
-  fs.writeFileSync(path.join(t.root, "data/adoptions.json"), JSON.stringify({ note: "test", adoptions: [] }));
-  const pic = [c.portrait, c.lore?.image].find((p) => typeof p === "string" && fs.existsSync(path.join(ROOT, p)));
-  fs.mkdirSync(path.dirname(path.join(t.root, pic)), { recursive: true });
-  fs.copyFileSync(path.join(ROOT, pic), path.join(t.root, pic));
-  // Only this cat is posted and free: the others in the shipped queue are taken (or not posted) in this sandbox.
-  const ledger = { note: LEDGER_NOTE, launches: [] };
-  fs.writeFileSync(path.join(t.root, FILES.ledger), ledgerText(ledger));
-  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c0 = clock(), logs = [];
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root), c0 = clock(), logs = [];
   const before = t.json(FILES.adoptables).cats.length;
   const meshyBefore = t.json(FILES.meshy).cats?.[c.ticker] ?? null;
   const photosBefore = JSON.stringify(t.json(FILES.realPhotos).cats?.[c.ticker] ?? null);
@@ -2425,9 +2418,10 @@ test("sanctuary cats: a failed launch is tried again with the same post (the sam
   assert.deepEqual([again.postId, again.status, again.attempts], [OWN_TWEET, "prepared", 1]);
 });
 
-/** A throwaway site where `c` is posted on X (released, with the sanctuary's tweet) and its portrait is on disk. */
+/** A throwaway site where `c` is posted on X (released, with the sanctuary's tweet), its portrait on disk, and the trend watch's last pump.fun scan an hour ago. */
 function ownSite(c, opts = {}) {
   const t = site(opts);
+  fs.writeFileSync(path.join(t.root, "data/trending.json"), JSON.stringify({ ...t.json("data/trending.json"), fresh: { updatedAt: iso(NOW - HOUR), items: [] } }));
   const queue = t.json("data/release-queue.json");
   queue.cats = [...queue.cats.filter((q) => q.key !== c.ticker), released(c.ticker)];
   fs.writeFileSync(path.join(t.root, "data/release-queue.json"), `${JSON.stringify(queue, null, 2)}\n`);
@@ -2453,7 +2447,7 @@ test("sanctuary cats: adopted by a visitor (or given a coin) between prepare and
     const c = ownCat();
     const w = throwaway();
     const t = ownSite(c, { wallet: w.address, posts: [] });
-    const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c0 = clock();
+    const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root), c0 = clock();
     const p = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: () => {} });
     assert.equal(p.prepared, OWN_TWEET);
     if (change === "adoption") fs.writeFileSync(path.join(t.root, "data/adoptions.json"), JSON.stringify({ note: "test", adoptions: [{ key: c.ticker }] }));
@@ -2469,4 +2463,176 @@ test("sanctuary cats: adopted by a visitor (or given a coin) between prepare and
     const row = t.json(FILES.ledger).launches[0];
     assert.deepEqual([row.status, row.retry], ["failed", false], change);
   }
+});
+
+/**
+ * The fake site, and pump.fun's public list of new coins (newest first, 50 a page): `coins` ({ mint, name, symbol,
+ * creator, created_timestamp }), or `down` (it does not answer). Every page asked is recorded.
+ */
+function pumpSite(root, { coins = [], down = false } = {}) {
+  const web = fakeSite(root);
+  const site0 = web.fetchImpl;
+  web.pumpAsked = [];
+  web.fetchImpl = async (url, init) => {
+    if (String(url).startsWith("https://frontend-api-v3.pump.fun/coins?")) {
+      web.pumpAsked.push(url);
+      if (down) return new Response("busy", { status: 503 });
+      const offset = Number(new URL(url).searchParams.get("offset"));
+      const list = [...coins].sort((a, b) => b.created_timestamp - a.created_timestamp).slice(offset, offset + 50);
+      return new Response(JSON.stringify(list), { status: 200 });
+    }
+    return site0(url, init);
+  };
+  return web;
+}
+/** A pump.fun coin (its list's row). */
+const pumpCoin = (i, { name = "Some Cat", symbol = "SOME", creator = "8xstrangerWa11etAddress1111111111111111111", at = NOW - 10 * 60_000 } = {}) =>
+  ({ mint: `${String(i).padStart(4, "0")}pumpMint1111111111111111111111111111pump`, name, symbol, creator, created_timestamp: at });
+
+/** One sanctuary cat prepared and deployed, then sent against pump.fun's list as `pump` says: { t, s, sol, web, row }. */
+async function ownSend(pump = {}, { c = ownCat(), patch = null } = {}) {
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root, typeof pump === "function" ? pump(c, w) : pump), c0 = clock();
+  const p = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: () => {} });
+  assert.equal(p.prepared, OWN_TWEET);
+  if (patch) patch(t, c);
+  web.deployed = true;
+  const logs = [];
+  const s = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: (l) => logs.push(l), ...quick });
+  return { t, s, sol, web, logs, c, row: t.json(FILES.ledger).launches[0] };
+}
+
+test("sanctuary cats: a visitor's coin from the cat's kit on pump.fun since the last scan (not yet in data/adoptions.json) is found live before signing: never sent, failed for good", async () => {
+  const r = await ownSend((c) => ({ coins: [pumpCoin(1), pumpCoin(2, { name: c.coinName || c.name, symbol: c.ticker }), pumpCoin(3, { at: NOW - 3 * HOUR })] }));
+  assert.equal(r.s.outcome, "taken", r.logs.join("\n"));
+  assert.equal(r.sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
+  assert.deepEqual([r.row.status, r.row.retry], ["failed", false]);
+  assert.match(r.row.reason, /visitor's adoption/);
+  assert.ok(r.web.pumpAsked.length >= 1);
+});
+
+test("sanctuary cats: the live check reads pump.fun back to the trend watch's last scan (less a margin), pages as it must, and ignores the sanctuary's own wallets and older coins", async () => {
+  // Older than the scan less its margin: the trend watch's scan saw it (and data/adoptions.json has what it found). Not this check's.
+  const old = await ownSend((c) => ({ coins: [pumpCoin(1, { name: c.coinName || c.name, symbol: c.ticker, at: NOW - 2 * HOUR })] }));
+  assert.equal(old.s.outcome, "launched", old.logs.join("\n"));
+  // A launcher wallet's own coin with the kit's name: the sanctuary's, never an adoption.
+  const mine = await ownSend((c, w) => ({ coins: [pumpCoin(1, { name: c.coinName || c.name, symbol: c.ticker, creator: w.address })] }));
+  assert.equal(mine.s.outcome, "launched", mine.logs.join("\n"));
+  // 120 newer coins: three pages read, the kit's coin on the third found.
+  const many = await ownSend((c) => ({ coins: [...Array.from({ length: 120 }, (_, i) => pumpCoin(i + 10, { at: NOW - i * 1000 })), pumpCoin(9, { name: c.coinName || c.name, symbol: c.ticker, at: NOW - 200_000 })] }));
+  assert.equal(many.s.outcome, "taken");
+  assert.equal(many.web.pumpAsked.length, 3);
+});
+
+test("sanctuary cats: pump.fun not answering, or no time for the last scan: nothing sent, the row waits (no attempt used) and the next run tries again", async () => {
+  const down = await ownSend({ down: true });
+  assert.equal(down.s.outcome, "adoption_unchecked", down.logs.join("\n"));
+  assert.equal(down.sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
+  assert.deepEqual([down.row.status, down.row.attempts], ["prepared", 0]);
+  const noScan = await ownSend({}, { patch: (t) => fs.writeFileSync(path.join(t.root, "data/trending.json"), JSON.stringify({ note: "x" })) });
+  assert.equal(noScan.s.outcome, "adoption_unchecked");
+  assert.equal(noScan.row.status, "prepared");
+  const pages = await kitLaunchedSince({ fetchImpl: pumpSite(os.tmpdir(), { coins: Array.from({ length: 200 }, (_, i) => pumpCoin(i, { at: NOW - i })) }).fetchImpl, kit: { key: "ZZ", name: "Zed", ticker: "ZED" }, sinceMs: NOW - 10 * HOUR, pages: 2 });
+  assert.match(pages.unchecked, /do not reach back/);
+});
+
+test("sanctuary cats: data/adoptions.json unreadable is never \"nobody adopted anything\": no cat is prepared, and a prepared one waits", async () => {
+  const c = ownCat();
+  const e = released(c.ticker);
+  assert.match(sanctuaryRow(e, ownCtx({ entries: [e], adoptions: null })).problem, /cannot be read/);
+  assert.equal(selectSanctuary(ownCtx({ entries: [e], adoptions: { note: "x" } })).row, null);
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  fs.writeFileSync(path.join(t.root, "data/adoptions.json"), "{ not json");
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root), logs = [];
+  const p = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW, log: (l) => logs.push(l) });
+  assert.equal(p.prepared, null);
+  assert.ok(logs.some((l) => /data\/adoptions\.json cannot be read/.test(l)));
+  const r = await ownSend({}, { patch: (t2) => fs.writeFileSync(path.join(t2.root, "data/adoptions.json"), "{ not json") });
+  assert.equal(r.s.outcome, "adoption_unchecked");
+  assert.equal(r.row.status, "prepared");
+});
+
+test("sanctuary cats: a cat that died is launched as a tribute (the owner's choice): its lore line is \"In loving memory of <name>.\" (one cat; a pair keeps its own); a sensitivity note, a new coin name or ticker since it was prepared stops the send", async () => {
+  const c = ownCat();
+  const e = released(c.ticker);
+  const cats = shipped(FILES.adoptables).cats;
+  const withCat = (patch) => ({ ...shipped(FILES.adoptables), cats: cats.map((x) => (x.ticker === c.ticker ? { ...x, ...patch } : x)) });
+  for (const story of ["She died on 16 August 2026, aged 17.", "Venus (2009–2026) had two faces.", "He passed away in his sleep.", "Crossed the rainbow bridge in 2021.", "A funeral was held at the station."]) {
+    const r = sanctuaryRow(e, ownCtx({ entries: [e], adoptables: withCat({ memorial: false, story: `${c.name} was famous. ${story}` }) }));
+    assert.equal(r.row?.lore, `In loving memory of ${c.name}.`, story);
+  }
+  const flagged = sanctuaryRow(e, ownCtx({ entries: [e], adoptables: withCat({ memorial: true, sensitivity: `In loving memory of ${c.name}.` }) }));
+  assert.equal(flagged.row.lore, `In loving memory of ${c.name}.`);
+  assert.ok(coinMetadata(flagged.row).description.startsWith(`In loving memory of ${c.name}.`));
+  assert.equal(loreLinesOf({ ticker: "ZZ", name: "Cole & Marmalade", story: "Cole died in 2021. Marmalade lives on." }).includes("In loving memory of Cole & Marmalade."), false, "a pair may have lost only one");
+  for (const text of ["He died.", "death", "In loving memory", "(1998-2014)"]) assert.ok(DIED.test(text), text);
+  assert.equal(DIED.test("She dyed her hair"), false);
+  // Changed after it was prepared: the send-time check refuses it.
+  const { row } = sanctuaryRow(e, ownCtx({ entries: [e] }));
+  const now = (patch) => ownProblemNow(row, { ...ownCtx({ entries: [e], adoptables: withCat(patch) }) });
+  assert.equal(now({}), null);
+  assert.equal(now({ memorial: true, sensitivity: `In loving memory of ${c.name}.` }), null);
+  assert.match(now({ sensitivity: "Ill since 2024; the owners asked for privacy." }), /sensitivity/);
+  assert.match(now({ coinName: "Something Else Entirely" }), /names its coin otherwise/);
+  assert.match(now({ launchTicker: "OTHERT" }), /launches as OTHERT/);
+});
+
+test("sanctuary cats: the day's last launch is kept for a trending cat (a sanctuary cat never takes it)", async () => {
+  const c = ownCat();
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root), logs = [];
+  const p = await prepare({ io: t.io, env: ON(w, { LAUNCH_MAX_PER_DAY: "1" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW, log: (l) => logs.push(l) });
+  assert.equal(p.prepared, null);
+  assert.ok(logs.some((l) => /last launch .* is kept for one/.test(l)), logs.join("\n"));
+  const p2 = await prepare({ io: t.io, env: ON(w, { LAUNCH_MAX_PER_DAY: "2" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW, log: () => {} });
+  assert.equal(p2.prepared, OWN_TWEET);
+});
+
+test("sanctuary cats: lore lines never stop at a title (\"Mr.\", \"Dr.\") and never cut a quote; the kind reads the look's lead clause (a plush coat is a real cat's; a logo or a render is a character)", () => {
+  assert.equal(loreLinesOf({ ticker: "ZZ", name: "BeeJay", story: 'BeeJay, "Mr. B" for short, was a 26-pound cat at the refuge. He was big.' })[0], 'BeeJay, "Mr. B" for short, was a 26-pound cat at the refuge.');
+  assert.equal(loreLinesOf({ ticker: "ZZ", name: "Oscar", story: "Oscar lived with Dr. Dosa at the home. He was calm." })[0], "Oscar lived with Dr. Dosa at the home.");
+  assert.ok(loreLinesOf({ ticker: "ZZ", name: "Q", story: 'Q said "hello. And then left' }).every((l) => (l.match(/"/g) ?? []).length % 2 === 0));
+  const kind = (look, category = "viral") => kindOfAdoptable({ category, look });
+  assert.equal(kind("Two real cats. Cole is a solid jet-black semi-longhair with a plush, fluffy coat"), "real");
+  assert.equal(kind("A grey tabby with a plush coat and green eyes"), "real");
+  assert.equal(kind("A black flat graphic logo cat, Yamato Transport's 2021 Kuroneko mark"), "cartoon");
+  assert.equal(kind("A 3D-rendered cat, not a real cat"), "cartoon");
+  assert.equal(kind("A real black cat. His avatar is drawn as a cartoon"), "real");
+  assert.equal(kind("Anything at all", "tv-movie"), "fiction");
+});
+
+test("sanctuary cats: record refuses a cat whose card names its coin otherwise now (a person must look), never writing a launch the page could not match", async () => {
+  const c = ownCat();
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root), c0 = clock();
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: () => {} });
+  web.deployed = true;
+  const s = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: () => {}, ...quick });
+  assert.equal(s.outcome, "launched");
+  const a = t.json(FILES.adoptables);
+  a.cats = a.cats.map((x) => (x.ticker === c.ticker ? { ...x, coinName: "Renamed Since" } : x));
+  fs.writeFileSync(path.join(t.root, FILES.adoptables), `${JSON.stringify(a, null, 2)}\n`);
+  const r = record({ io: t.io, env: ON(w), now: c0.now, log: () => {} });
+  assert.deepEqual(r.recorded, []);
+  assert.match(r.problems[0], /not in data\/adoptables\.json as it was/);
+  assert.equal(t.json(FILES.adoptables).cats.find((x) => x.ticker === c.ticker).launch, undefined);
+});
+
+test("shipped data after a sanctuary prepare: its coin file passes the shipped coins check (a sanctuary cat's picture on the site, from the sanctuary's own post)", async () => {
+  const c = ownCat();
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root);
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW, log: () => {} });
+  const ledger = validateLedger(t.json(FILES.ledger));
+  const row = ledger.launches.find((r) => r.postId === OWN_TWEET);
+  const m = JSON.parse(t.read(row.metadataPath));
+  assert.equal(t.read(row.metadataPath), metadataText(m));
+  assert.ok(SITE_PICTURE.test(m.image) && m.twitter === `https://x.com/${OWN_HANDLE}/status/${OWN_TWEET}` && postIdOf(m.twitter) === OWN_TWEET);
+  assert.equal(m.website, `${SITE_ORIGIN}/#cat=${m.symbol}`);
+  assert.ok(Buffer.byteLength(metadataUri(OWN_TWEET)) <= 200);
 });

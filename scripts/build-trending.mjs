@@ -74,9 +74,11 @@ export const crude = (name, symbol) => CRUDE.test(`${name} ${symbol}`) || checkF
 
 const norm = (s) => String(s || "").normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
 
-/** What a copycat is matched against: every sanctuary cat's tickers and coin name; `ours`, the sanctuary's own coins (ownMints). */
-export function catIndex({ planned = { cats: [] }, adoptables = { cats: [] }, collection = { cats: [] } }) {
+/** What a copycat is matched against: every sanctuary cat's tickers and coin name; `ours`, the sanctuary's own coins (ownMints,
+ *  and every mint the launcher's ledger has sent: a sanctuary cat's own coin is never its copycat, recorded on its card yet or not). */
+export function catIndex({ planned = { cats: [] }, adoptables = { cats: [] }, collection = { cats: [] }, launches = { launches: [] } }) {
   const tickers = new Map(), names = new Map(), ours = new Set(ownMints({ collection, adoptables }));
+  for (const r of launches?.launches || []) if (typeof r?.mintPublic === "string") ours.add(r.mintPublic);
   for (const c of planned.cats || []) if (c.ticker) tickers.set(c.ticker.toUpperCase(), c.ticker);
   for (const c of adoptables.cats || []) {
     tickers.set(c.ticker.toUpperCase(), c.ticker);
@@ -313,6 +315,7 @@ async function main() {
     famous: read("data/famous.json", { coins: [] }), collection: read("data/collection.json", { cats: [] }), planned: read("data/planned.json", { cats: [] }),
     adoptables: read("data/adoptables.json", { cats: [] }), announced: read("data/announced.json", { cats: {} }), trending: read("data/trending.json", {}),
     kits: read("assets/kits/kits.json", null), wallets: read("data/wallets.json", { launchers: [] }), adoptions,
+    launches: read("data/sanctuary-launches.json", { launches: [] }),
   };
   const { trending: next, adoptions: nextAdoptions } = await buildTrending({ data, env: process.env, log: (m) => console.log(m) });
   const checked = checkTrending(next);
