@@ -475,6 +475,13 @@ export const MODEL_LIMITS = {
   // can't read on the model is left out, rather than shown as a half gesture or a cat sitting still)
   GUMBALLW: { avoid: ["groom", "legLick", "earScratch"], why: "a cartoon cat with a head as big as its body: no paw or leg comes near its mouth or ear" },
   CHOCOCACAT: { avoid: ["groom", "legLick", "earScratch"], why: "a chibi: a head as big as its body on stub legs; no paw or leg comes near its mouth or ear" },
+  // (2026-09-30, the Tripo H3.1 detailed remodels: chibi and round-headed characters whose hind paw stops short of the ear)
+  CAPOOBUG: { avoid: ["earScratch"], why: "a round chibi bug-cat: its hind paw stops well short of its ear" },
+  HACHIWA: { avoid: ["earScratch"], why: "a round chibi with a big head on short legs: the hind paw can't reach the ear" },
+  NEKOSAMA: { avoid: ["earScratch"], why: "a big round head on short legs: the hind paw can't reach the ear" },
+  OJINEKO: { avoid: ["earScratch"], why: "a big round head on short legs: the hind paw can't reach the ear" },
+  PONTAKUN: { avoid: ["earScratch"], why: "a stout, round-headed cat: the hind paw stops short of the ear" },
+  CLIVECAT: { avoid: ["earScratch"], why: "a flat-faced Persian in a thick coat: the hind paw stops short of the ear" },
   NYANKOSEN: { avoid: ["groom", "legLick", "earScratch"], why: "a round ball of a cat on stub legs: no paw or leg comes near its mouth or ear" },
   BIGFROGGY: { avoid: ["groom", "legLick", "earScratch"], why: "a round cartoon body: no paw or leg comes near its mouth or ear" },
   TUBBSCAT: { avoid: ["legLick", "earScratch"], why: "a very round cat: a hind leg lifted as far as its skin lets it stays down by its belly" },
