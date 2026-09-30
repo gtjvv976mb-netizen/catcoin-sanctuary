@@ -275,13 +275,29 @@ test("page weight: the first view stays within budget", () => {
   // the holder rewards' review fixes, ~2.7 KB: the three lines built from the rules in force that
   // state.json records (rewardsText and the check of those rules, rewards.js), and the section's
   // stylesheet, assets/ui/rewards.css, linked only when About is first opened (panels.js calls its
-  // show()), never on the first view: tests/panels.test.mjs checks it. About 2 KB are spare after it;
-  // then from 724 KB to 734 KB for the cats' motion, ~11 KB: real footfalls for the walk, trot and
-  // gallop with the body, shoulder blades and a steady head moving with the legs, new pounce, stretch,
-  // groom and knead clips (catrig.js), the layer over the clips (turns, gaze, tail springs, twitches)
-  // and per-clip crossfades on one gait phase (catrig.js, catviews.js), and cats that look before they
-  // go, amble and glance about (cats.js). About 1 KB is spare after it.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 734 * 1024, "the page's own scripts over 734 KB");
+  // show()), never on the first view: tests/panels.test.mjs checks it. About 2 KB are spare after it.)
+  // blended along the surface; then, 2026-09-27, to 940 KB for cats that move like real cats: the
+  // shared motion vocabulary (world/catmotion.js), each cat's character (world/traits.js), transition
+  // and mannerism clips (catrig.js), a sim that never jumps between postures (cats.js, meadow.js) and
+  // an animation controller with head, spine, tail and breathing layers (catviews.js); 860 KB then.)
+  // (Then, 2026-09-27, to 980 KB for the skin of the whole herd: catrig.js seeds the neck's own skin, blends
+  // every seam a bone's skin has with its neighbours', not only the nearest, and rests heads by their skin;
+  // with the behaviour sim's fixes of the same round.)
+  // (Then, 2026-09-28, to 1010 KB (999 KB measured) for the herd survey's last fixes: each model's own fit and
+  // leg labels read with its far copy (world.js, catviews.js), the clips' shorter steps, straight-armed claws
+  // on the trunk and paws lifted clear on the way (catrig.js), and the sims keeping each cat to what its own
+  // model can show (cats.js, meadow.js, catmotion.js).)
+  // (Then, 2026-09-29, to 1040 KB (1027 KB measured) for the verifier's last round: the leg lick found once per
+  // model, chest licks, the head joint at the back of the skull with the head's own skin on it, sleepers curled
+  // round (catrig.js); crowding, company and perches in the sim (cats.js); a glance turned mostly at the neck
+  // (catviews.js); per-model limits (traits.js).)
+  // (Then, 2026-09-30, to 1090 KB (1082 KB measured) for the big cats: lions, tigers and the rest drawn and moving by
+  // their size (traits.js species, catmotion gaitScale, a route-finder and places of their own in cats.js, the camera
+  // and labels in catviews.js and world.js), their whole bodies kept out of the props with nothing popped out, and the
+  // legs the view shows shared with the sims so no paw skates (catmotion legStep); 1066 KB at the merge with cat-motion.)
+  // (Then, 2026-09-30, to 1140 KB (1133 KB measured) with main's own growth to 724 KB merged in: the Trending tab,
+  // adopted cats on cards, the launcher's routing and the holder rewards, on top of the cat-motion and big-cat work.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1140 * 1024, "the page's own scripts over 1140 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");

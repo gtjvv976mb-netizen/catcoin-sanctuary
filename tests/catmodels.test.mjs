@@ -11,7 +11,9 @@ import { modelIdFor } from "../assets/ui/models.js";
 
 const DIR = path.join(ROOT, "assets/models/cats");
 const BUDGET = { "": 600_000, "-lo": 150_000 };
-const BUDGET_HD = { "": 800_000, "-lo": 300_000 }; // Hunyuan3D multiview models (2K texture)
+// HD multiview models (Hunyuan3D, then Tripo H3.1 detailed) with a 2K texture. 2026-09-30: raised from 800 KB to
+// 1.3 MB so Tripo's fur keeps its 2K texture (at 800 KB it fell to 256 px); only the nearest ~10 cats load a full copy.
+const BUDGET_HD = { "": 1_300_000, "-lo": 300_000 };
 const OK_EXT = new Set(["KHR_mesh_quantization", "KHR_texture_transform"]);
 const index = JSON.parse(fs.readFileSync(path.join(DIR, "index.json"), "utf8"));
 const planned = new Set(JSON.parse(fs.readFileSync(path.join(ROOT, "data/planned.json"), "utf8")).cats.map((c) => c.ticker));

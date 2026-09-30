@@ -29,6 +29,8 @@ import { buildResearch } from "./research.js";
 import { createSanctuary } from "./cats.js";
 import { createMeadow } from "./meadow.js";
 import { loadCatModels, CatHerd, coatFor, OWN } from "./catviews.js";
+import { decodeLegs } from "./catrig.js";
+import { traitsOf, styleOf } from "./traits.js";
 import { HOUSE, GARDEN, MEADOW, HALL_OF_FAME, BRIDGES, EASEL, groundHeight } from "./layout.js";
 import { modelIdFor } from "../ui/models.js";
 
@@ -200,7 +202,14 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   let saved = null; // the view before the first cat was chosen, to go back to
   let hovered = null, hoverQueued = null;
   const coats = new Map(residents.map((r, i) => [r.id, coatFor(r, i)]));
-  const simOf = (r) => ({ id: r.id, name: r.name, tier: r.tier, model: coats.get(r.id).ginger ? "ginger" : "cat" });
+  // Each cat's character (traits.js: from data/traits.json, else read from its story) and the way
+  // it moves because of it (its style: tempo, stride, tail and head carriage, size); the sim and
+  // the herd both use them. A cat whose traits can't be read is an ordinary adult.
+  // (A big cat is drawn at its species' size: traits.js SPECIES.)
+  const character = new Map(residents.map((r) => {
+    try { const traits = traitsOf(r); return [r.id, { traits, style: styleOf(traits) }]; } catch { return [r.id, { traits: null, style: null }]; }
+  }));
+  const simOf = (r) => ({ id: r.id, name: r.name, tier: r.tier, model: coats.get(r.id).ginger ? "ginger" : "cat", traits: character.get(r.id).traits, style: character.get(r.id).style });
   const mainResidents = residents.filter((r) => !livesInHall(r)).map(simOf);
   // The Hall of Fame cats, biggest first, so the biggest sit nearest the fountain.
   const meadowResidents = residents.filter(livesInHall).sort((a, b) => (b.market?.marketCapUsd || 0) - (a.market?.marketCapUsd || 0)).map(simOf);
@@ -210,7 +219,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     fencePosts: garden.fencePosts,
     flowerFields: garden.flowerFields,
     lawnFree: (x, z) => !sim || sim.nav.pointFree(x, z, 0.35),
-    catsNear: (x, z, r) => !!sim && sim.cats.some((c) => Math.abs(c.x - x) < r && Math.abs(c.z - z) < r && Math.hypot(c.x - x, c.z - z) < r),
+    // (a big cat's reach is as much bigger as it is: no bird lands under a lion)
+    catsNear: (x, z, r) => !!sim && sim.cats.some((c) => { const R = r * (c.size > 1 ? c.size : 1); return Math.abs(c.x - x) < R && Math.abs(c.z - z) < R && Math.hypot(c.x - x, c.z - z) < R; }),
   });
   const garden0 = createSanctuary({ residents: mainResidents, reduced: still, critters });
   const meadow = createMeadow({ residents: meadowResidents, startIndex: garden0.cats.length, reduced: still });
@@ -221,14 +231,14 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     yarns: garden0.yarns, nav: garden0.nav,
     byId: (id) => garden0.byId(id) || meadow.byId(id),
     update(dt) { garden0.update(dt); meadow.update(dt); },
-    setViewer(x, z) { garden0.setViewer(x, z); },
+    setViewer(x, z, y) { garden0.setViewer(x, z, y); },
     setReduced(on) { garden0.setReduced(on); meadow.setReduced(on); },
     get time() { return garden0.time; },
     census() { return { ...garden0.census(), ...meadow.census() }; },
     force: (...a) => garden0.force(...a),
   };
   // On phones the cats don't cast into the shadow map (the most costly pass there); each gets a soft blob shadow instead.
-  const herd = new CatHerd(scene, models, sim, coats, { blobShadows: q.tier === "low", contact: true });
+  const herd = new CatHerd(scene, models, sim, coats, { blobShadows: q.tier === "low", contact: true, character });
   herd.still = still;
   herd.camera = camera;
   const byId = new Map(residents.map((r) => [r.id, r]));
@@ -393,6 +403,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     if (chosenId && chosenId !== id) herd.highlight.delete(chosenId);
     chosenId = cat ? cat.id : null;
     ring.visible = !!cat;
+    // (no zooming in closer than the chosen cat's body allows: a big cat is not seen from inside)
+    controls.minDistance = cat ? Math.max(4.5, 1.4 * herd.extentOf(cat)) : 4.5;
     if (!cat) {
       focus = null;
       if (saved && ease) {
@@ -410,7 +422,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     // Keep the direction we look from, unless the cottage or a tree stands in the way: then come round.
     const off = new THREE.Vector3().subVectors(camera.position, controls.target);
     const sph = new THREE.Spherical().setFromVector3(off);
-    sph.radius = mobile ? 10.5 : 9.5;
+    // (Far enough back to frame the whole animal: a lion's length takes a little over a third of the frame.)
+    sph.radius = Math.max(mobile ? 10.5 : 9.5, (mobile ? 3.2 : 2.6) * herd.extentOf(cat));
     sph.phi = Math.min(Math.max(sph.phi, 1.0), 1.28);
     const toP = new THREE.Vector3().setFromSpherical(sph).add(mid);
     const theta0 = sph.theta, phi0 = sph.phi;
@@ -603,7 +616,7 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     if (!still && !controls.autoRotate && !chosenId && performance.now() - lastInput > 20000) controls.autoRotate = true;
     if (!still) ambientTime += real;
     ambient.update(ambientTime, canvas.clientHeight, camera.aspect, renderer.getPixelRatio());
-    sim.setViewer(camera.position.x, camera.position.z);
+    sim.setViewer(camera.position.x, camera.position.z, camera.position.y); // (a cat looking at you looks up at the camera)
     meadow.setFocus(controls.target.x, controls.target.z, camera.position.x, camera.position.z);
     for (let k = 0; k < steps; k++) { critters.update(dt, still); if (!still) sim.update(dt); }
     if (still) meadow.update(0); // still: nothing moves, but the cats near the view still appear
@@ -631,7 +644,8 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
     const cc = chosenId ? sim.byId(chosenId) : null;
     if (cc) {
       ring.position.set(cc.x, cc.y + 0.04, cc.z);
-      const k = still ? 1 : 1 + Math.sin(tt * 3) * 0.06;
+      // (round a big cat's body, not a spot between its forepaws)
+      const k = (still ? 1 : 1 + Math.sin(tt * 3) * 0.06) * Math.max(1, herd.scaleOf(cc));
       ring.scale.set(k, 1, k);
     }
     // No hover labels while the camera glides to a chosen cat (the pointer is still where the click was).
@@ -721,6 +735,20 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
   const LOAD_DIST = 70;
   const ownFrustum = new THREE.Frustum(), ownPv = new THREE.Matrix4(), ownP = new THREE.Vector3();
   const loadGlb = (f) => loader.loadAsync(`assets/models/cats/${encodeURIComponent(f)}.glb`).then((g) => g.scene).catch(() => null);
+  // Leg labels made offline for the cats whose legs the model fuses (assets/models/cats/<KEY>.legs.json,
+  // scripts/cowork-legs.mjs; legs-index.json lists them): fetched with the far copy, kept for the full one.
+  const legsIndex = fetch("assets/models/cats/legs-index.json").then((r) => (r.ok ? r.json() : null)).then((j) => new Set(j?.v === 1 && Array.isArray(j.cats) ? j.cats : [])).catch(() => new Set());
+  const loadLegs = async (f) => {
+    if (!(await legsIndex).has(f)) return null;
+    try {
+      const j = await (await fetch(`assets/models/cats/${encodeURIComponent(f)}.legs.json`)).json();
+      return j?.v === 1 ? { far: j.far ? decodeLegs(j.far, j.nlo) : null, full: j.full ? decodeLegs(j.full, j.n) : null } : null;
+    } catch { return null; }
+  };
+  // How far each model's own skin lets a mannerism go (assets/models/cats/fit.json, measured by
+  // scripts/fit-clips.mjs; catrig FIT_KNOBS): one small fetch for the whole herd, read with the far copy.
+  const fitIndex = fetch("assets/models/cats/fit.json").then((r) => (r.ok ? r.json() : null)).then((j) => (j?.v === 1 && j.cats && typeof j.cats === "object" ? j.cats : {})).catch(() => ({}));
+  const loadFit = async (f) => { const c = (await fitIndex)[f]; return c && typeof c === "object" ? c : null; };
   /* A budget for the full models' GPU memory: at most tier.hiMax of them are kept (the farthest
      is freed, and queued again, to make room), and their textures are shrunk to tier.hiTex. */
   const tierQ = q;
@@ -765,9 +793,9 @@ export async function startWorld({ canvas, residents, reduce, onPick, onHover, o
       if (q.stage === 1 && q.id !== chosenId && !makeRoomForHi(q)) { q.wait = now + 3000; continue; }
       q.busy = true; ownState.loading++;
       jobs.push((async () => {
-        const root = await loadGlb(q.file + (q.stage === 0 ? "-lo" : ""));
+        const [root, legs, fit] = await Promise.all([loadGlb(q.file + (q.stage === 0 ? "-lo" : "")), q.stage === 0 ? loadLegs(q.file) : null, q.stage === 0 ? loadFit(q.file) : null]);
         if (root && q.stage === 1) shrinkTextures(root, tierQ.hiTex);
-        if (root) { herd.attachOwn(q.id, q.stage === 0 ? { lo: root, dims: q.dims } : { hi: root, dims: q.dims }); requestRender(); }
+        if (root) { herd.attachOwn(q.id, q.stage === 0 ? { lo: root, dims: q.dims, legs, fit } : { hi: root, dims: q.dims }); requestRender(); }
         ownState.loading--; q.busy = false;
         if (q.stage === 0) q.stage = 1; else { ownState.queue.splice(ownState.queue.indexOf(q), 1); if (root) ownState.hi.push(q); }
       })());

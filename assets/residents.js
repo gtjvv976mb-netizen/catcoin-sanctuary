@@ -37,6 +37,8 @@
      explorer:  null | { token, tx, stonkfun | pumpfun }  Solscan and launchpad pages of a launched token
      adoption:  absent, or { mint, name, symbol, launchpad, createdAt }: a coin a stranger
        launched from the cat's kit (data/adoptions.json), never on a launched cat
+     traits,  the cat's character, its row in data/traits.json (see assets/world/traits.js;
+       a cat not listed there has none, and traitsOf reads it from its story)
    }
    An adoptable the sanctuary launched also has sanctuaryLaunch (see adoptableResident).
 
@@ -210,6 +212,17 @@ export async function loadResidents({ fetchImpl = (...a) => globalThis.fetch(...
       if (ph && !r.realPhoto) r.realPhoto = ph;
     }
   } catch (e) { if (typeof console !== "undefined") console.warn("The real photos could not be read", e); }
+  // The cats' characters (data/traits.json, built by scripts/build-traits.mjs): optional. A cat
+  // listed there, by id or ticker, gets r.traits; without the file every cat is read from its story.
+  try {
+    const t = await getJson(fetchImpl, new URL("data/traits.json", base));
+    const rows = t && typeof t.cats === "object" && t.cats ? t.cats : {};
+    const rowOf = (k) => (typeof k === "string" && Object.prototype.hasOwnProperty.call(rows, k) && rows[k] && typeof rows[k] === "object" && !Array.isArray(rows[k]) ? rows[k] : null);
+    for (const r of [...stock, ...adoptable, ...famous]) {
+      const row = rowOf(r.id) ?? rowOf(r.ticker);
+      if (row && !r.traits) r.traits = row;
+    }
+  } catch { /* no traits file: the garden reads each cat's character from its words */ }
   // The release queue (data/release-queue.json): a queued cat is hidden until the announcer has
   // posted it on X and marked it released. Optional: a missing file hides nothing.
   let hidden = new Set();

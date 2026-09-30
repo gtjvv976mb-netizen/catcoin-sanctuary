@@ -102,36 +102,19 @@ wrong.
   `buildSkeleton` builds the same bone names for every cat: root, pelvis, spine, chest, neck,
   head, tail1-4, and thigh/shin/foot plus arm/forearm/paw on each side. `skinWeights` weights
   each vertex by region (leg, tail, head, body) with inverse distance to the bones.
-- `makeClips` generates the clips procedurally: walk, trot, run, stalk, stand, sniff, greet,
-  sit, look, pant, groom, knead, loaf, sleep, eat, stretch, crouch, wiggle, pounce and scratch.
-  - Gaits, with real cats' footfalls: walk is a lateral sequence (left hind, left fore, right hind,
-    right fore, a quarter cycle apart); trot moves diagonal pairs (the hind a touch ahead); run is a
-    rotary gallop (the hinds, then the fores the other way round, a flight after each pair) with the
-    spine arching to bring the hinds forward under the chest, then stretching out, and the body
-    pitching and surging with it. Walking, the body vaults over the planted legs; trotting it sinks
-    onto them. Hips and shoulders roll and swing with the legs (each leg rolled back so the paw
-    stays put), the shoulder blades ride up over each planted foreleg (the arm bones move, most in
-    the stalk), and the head is held level and at an even height over all of it.
-  - Pounce: out of the wiggle's crouch, the hinds drive, the body stretches out with the forepaws
-    reaching and the hinds trailing, then the forepaws meet the ground and the cat lands in a crouch.
-    Stretch: a play bow (chest down, bottom and tail up), then the weight goes forward and a hind leg
-    stretches out behind. Groom: licks at the raised paw, then wipes over the face. Knead: the paws
-    tread in turn, the weight rocking onto the one that stays.
-- catviews.js plays them on an AnimationMixer per cat. Crossfades depend on the clip (0.1 s into a
-  pounce, 0.6 s into a sit, 1.4 s into sleep). Gait clips are timed by the distance walked
-  (`cyclesPerUnit`), so paws don't slide, all on one phase, so a change of gait (walk -> trot -> run
-  by speed, with a little hysteresis) blends leg for leg. A cat turning on the spot steps round. The
-  pounce is timed by the leap's progress (`hopU`). Looping clips start at a random point and run at
-  each cat's own tempo (0.88-1.12), so cats don't move in step.
-- `layer` runs over the clips after each mixer step: the spine bends into turns; the head turns
-  (about the upright) to `gaze`, what the cat looks at (set by cats.js: where it is going, its prey,
-  a friend, a cat going by, the player), or leads the turn; the tail follows through on damped
-  springs joint by joint (the start of a turn swings it out, then it comes round into the turn and
-  settles); tail-tip flicks and quick head twitches come at random. There are no ear or eyelid
-  bones, so no ear movement or blinks.
-- Behaviour (cats.js): a cat about to set off stands and looks where it is going first; at a stroll
-  its path wanders a little from side to side, its pace varies, and now and then it stops for a sniff
-  or a look round; resting cats glance at cats going by and at the player.
+- `makeClips` generates the clips procedurally: a clip for every action in catmotion.js (walk, trot,
+  run, stalk, stand, sit, loaf, sleep, groom, pounce, the posture changes, ...), pivot and the
+  pull-ups. Gaits keep real cats' footfalls: walk and stalk are a lateral sequence (left hind, left
+  fore, right hind, right fore, a quarter cycle apart; the shoulders' roll and swing follow the
+  forelegs), trot moves diagonal pairs, and run is a rotary gallop with the back rounding and
+  stretching. The head is held level and steady over the gait; the pounce gathers from the
+  wiggle's crouch, stretches out in the air and lands. tests/catrig.test.mjs checks the footfalls.
+- catviews.js (animateOwn) sets each clip's weight and time from cat.motion: per-clip fades, one
+  gait phase stepped by the distance walked (`cyclesPerUnit`, so paws don't slide) and blended
+  between gaits, idle loops at each cat's own phase; then procedural layers: the head turns to
+  what the cat looks at, the back bends into turns, the tail is a damped spring, ear-flick twitches.
+- Behaviour (cats.js): walking, the head looks along the way ahead, so it leads a turn; chasing or
+  stalking, it stays on the prey.
 - LOD: the nearest 10 cats within 16 units get the full model; the rest use the far copy on the
   same skeleton, and their animation updates at up to 20 Hz.
 - `?still`: no motion. Each cat holds a sit, loaf or sleep pose.
@@ -176,3 +159,33 @@ failed twice on Hunyuan and have no model yet. 21 of 24 xStock cats were redone 
 COUCHCAP failed twice and keep their Tripo models. MAYORSTUB and SEACAT meshes did not simplify well: MAYORSTUB
 uses si 0.02 with a 1024 texture, and SEACAT's model was generated a second time and uses si 0.015 with a
 1024 texture. SNOWBELCAT needed yaw 180.
+
+### 2026-09-30: Tripo H3.1 multi-view, detailed (the method from now on)
+
+Hunyuan3D failed often when many jobs ran at once, and its fur and markings came out soft. Every cat is now made
+with `generate_3d` and `tripo_h3_1_multiview_to_3d`, with the four view job ids in the order front, left, back,
+right, and `texture: true, pbr: false, texture_quality: "detailed", geometry_quality: "detailed",
+texture_alignment: "original_image"` (about 21 credits). Fur strands, whiskers, collars and markings now come
+through in the texture. The steps before it are the same: a realistic portrait from the proof photo
+(gpt_image_2_5, high), a standing 3/4 reference (high), and four orthographic views (high from this run on).
+
+Job entries carry `hd: true, si: 0.02, si_lo: 0.003, tex: 1024, tex_lo: 256, q: 88`: about 50k triangles and a 1K
+texture at high JPEG quality, 800-1000 KB full and 120-260 KB far (the HD budget is 1.3 MB full, 300 KB far). A 2K
+texture doesn't fit with that much geometry, and the packer's fallback for an over-budget model drops straight to a
+256 px texture, so check `tex` in the entry after packing. A far copy still over 300 KB gets `sa_lo: true` with
+`si_lo` 0.004-0.01 (this scrambles the far copy's texture a little, which does not show at far-copy distances). The Hunyuan models were redone this way; the
+old model job is kept as `prev_model_job`. SNOWBALCAT, PUSSBOOCAT, TRIMCAT, TUBBSCAT and SGTTIBBS, listed above as
+failed, have had models since the third run.
+### 2026-09-30: 24 models made by hand through Higgsfield
+
+- A standing reference (gpt_image_2_5, from the lore picture, or from the lore text alone where the picture is the
+  wrong cat), then tripo_h3_1_image_to_3d (12000 faces, texture on, PBR off), packed by section 2. The replaced model's
+  job is kept as `prev_model_job`; `scripts/meshy.state.json` marks each cat done (no Meshy credit) so the Models
+  workflow doesn't rebuild it. Big cats are drawn as adults.
+- `--yaw 180` for MITTENSCAT and OSCARRI (plume tails). CORSAGE's far copy (a cat made of carnations) needs `sa_lo`.
+- New MODEL_LIMITS: AMRCAT (its mound hides the head when curled: it dozes in its loaf), CAMTHECAT, MILKWEED,
+  hosico-cat, ket-3; the old models' limits for SUNSTRETCH and hello-kitty-sol no longer apply. AMRCAT's, MITTENSCAT's and
+  OSCARRI's Cowork leg labels (`.legs.json`) belonged to the old meshes and were dropped; tests/catrig-models.test.mjs
+  takes CASENAP for its joined-forelegs sample, since AMRCAT's new forelegs are apart.
+- GIMBALPAW's new model (bubble helmet and a loose scarf) was held back: the scarf tears into sheets in every pose,
+  walking included, so it keeps its previous model.
