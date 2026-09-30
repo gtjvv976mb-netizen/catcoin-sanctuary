@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-09-30T10:02:59.390Z",
+  "lastPostedAt": "2026-09-30T13:03:01.559Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -43,7 +43,10 @@
       "id": "trivia-cottage",
       "text": "🐾 Sanctuary trivia 1/5\nThe cottage in the garden has cat-ear gables 🏡😺\nIt's Research HQ, where every cat's story gets checked before it moves in 🔍\nhttps://catcoinsanctuary.com/\n#catcoin #CatsOfX",
       "approved": true,
-      "status": "queued"
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-09-30T13:03:01.559Z",
+      "tweet": "2105282267073466428"
     },
     {
       "id": "trivia-sources",
