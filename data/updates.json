@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-10-01T00:32:00.137Z",
+  "lastPostedAt": "2026-10-01T03:32:36.516Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -79,7 +79,10 @@
       "id": "trivia-browser",
       "text": "🐾 Sanctuary trivia 5/5\nThe whole 3D garden runs in your browser 🌐\nNo app, no sign-up: everything it shows loads from the sanctuary's own site 🐾\nhttps://catcoinsanctuary.com/\n#catcoin",
       "approved": true,
-      "status": "queued"
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-01T03:32:36.516Z",
+      "tweet": "2105501104792629416"
     }
   ],
   "adoptionsPosted": {
