@@ -230,7 +230,7 @@ function clock(start = NOW) {
 }
 
 // (no mint suffix in these tests: a scan for "pump" takes minutes; the scan has its own tests below)
-const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, LAUNCH_MINT_SUFFIX: "", ...extra });
+const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, LAUNCH_MINT_SUFFIX: "none", ...extra });
 /** Whether a serialized transaction (base64) carries only zero-filled signature slots. */
 const unsignedTx = (b64) => decodeTransaction(new Uint8Array(Buffer.from(b64, "base64"))).signatures.every((x) => x.every((b) => b === 0));
 const quick = { metadataWaitMs: 60_000, metadataPollMs: 20_000, confirmWaitMs: 30_000, confirmPollMs: 3_000 };
@@ -2111,7 +2111,7 @@ test("the key and the RPC URL never appear in the output, whatever happens", asy
       const sol = tweak(fakeSolana({ wallet: w.address })), web = fakeSite(t.root), c = clock();
       const out = [];
       const fetchImpl = async (url, init) => (url.startsWith("https://rpc.example.test") ? sol.fetchImpl(url, init) : web.fetchImpl(url, init));
-      const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: key, SOLANA_RPC_URL: RPC_URL, GITHUB_OUTPUT: path.join(t.root, "out.txt"), LAUNCH_MINT_SUFFIX: "" };
+      const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: key, SOLANA_RPC_URL: RPC_URL, GITHUB_OUTPUT: path.join(t.root, "out.txt"), LAUNCH_MINT_SUFFIX: "none" };
       // Once through the real client built from SOLANA_RPC_URL; otherwise the same fake Solana without its pacing and back-off waits.
       const real = what === "listed, a full launch" && key === w.base58;
       const io = { env, root: t.root, fetchImpl, now: c.now, sleep: c.sleep, stdout: (l) => out.push(String(l)), stderr: (l) => out.push(String(l)), ...(real ? {} : { rpc: sol.rpc }) };
@@ -2142,7 +2142,7 @@ test("the CLI's outputs for the workflow: pending, deploy, launched, recorded", 
   const t = site({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
   const out = path.join(t.root, "gh-output");
-  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, GITHUB_OUTPUT: out, LAUNCH_MINT_SUFFIX: "" };
+  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, GITHUB_OUTPUT: out, LAUNCH_MINT_SUFFIX: "none" };
   const io = { env, root: t.root, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, stdout: () => {}, stderr: () => {}, rpc: sol.rpc };
   assert.equal(await main(["prepare"], io), 0);
   assert.equal(fs.readFileSync(out, "utf8"), "pending=true\ndeploy=true\n");
@@ -2877,7 +2877,9 @@ test("shipped coins check: a sanctuary coin's file passes on its own (its X link
 test("the mint address ends in LAUNCH_MINT_SUFFIX (\"pump\" unless set): the send scans for the smallest nonce, keeps it on the row, and sends that mint; a scan out of its minutes goes on next run; a dry run scans nothing", async () => {
   const d = launchCaps({});
   assert.deepEqual([d.mintSuffix, d.mintGrindMs], ["pump", 12 * 60_000]);
-  assert.deepEqual([launchCaps({ LAUNCH_MINT_SUFFIX: "" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: " cat " }).mintSuffix, launchCaps({ LAUNCH_MINT_GRIND_MINUTES: "99" }).mintGrindMs], ["", "cat", 30 * 60_000]);
+  assert.deepEqual([launchCaps({ LAUNCH_MINT_SUFFIX: "none" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: "OFF" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: " cat " }).mintSuffix, launchCaps({ LAUNCH_MINT_GRIND_MINUTES: "99" }).mintGrindMs], ["", "", "cat", 30 * 60_000]);
+  // A repository variable nobody set reaches the workflow as "": that is "pump", never "none" (Blehmilly, 2026-10-01).
+  assert.deepEqual([launchCaps({}).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: "" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: "  " }).mintSuffix], ["pump", "pump", "pump"]);
   const odd = launchCaps({ LAUNCH_MINT_SUFFIX: "pump!" });
   assert.equal(odd.mintSuffix, "pump");
   assert.ok(odd.notes.some((n) => /LAUNCH_MINT_SUFFIX/.test(n)), odd.notes.join("; "));
