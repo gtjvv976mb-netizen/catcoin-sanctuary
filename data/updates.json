@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-10-01T20:35:58.681Z",
+  "lastPostedAt": "2026-10-01T23:56:47.185Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -128,6 +128,13 @@
       "attempts": 1,
       "postedAt": "2026-10-01T20:35:58.681Z",
       "tweet": "2105758643681395034"
+    },
+    "CAPOOBUG": {
+      "postId": "2105753628418187702",
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-01T23:56:47.185Z",
+      "tweet": "2105809178589532588"
     }
   }
 }
