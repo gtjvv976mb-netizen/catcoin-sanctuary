@@ -223,18 +223,21 @@ export async function adoptionsIn(launched, { kits, collectionMints, ownerWallet
 export async function fresh({ prev, idx, adopt, fetchImpl, nowMs, pause, log }) {
   // Read back to the coverage mark (every launch older than it was read by some run), catching up after a gap.
   const covered = Date.parse(prev?.coveredUntil ?? "") || 0;
-  const since = (covered && covered > nowMs - 24 * 3600_000 ? covered : Math.max(Date.parse(prev?.updatedAt ?? 0) || 0, nowMs - 30 * 60_000)) - 60_000;
+  // (a mark more than a day old is past any read: the run reads the last half hour, and the window up to it is a gap)
+  const stale = covered > 0 && covered <= nowMs - 24 * 3600_000;
+  const since = (covered && !stale ? covered : Math.max(Date.parse(prev?.updatedAt ?? 0) || 0, nowMs - 30 * 60_000)) - 60_000;
   const behind = nowMs - since > 31 * 60_000;
   const launched = await pumpLaunches(fetchImpl, since, { pause, pages: behind ? CATCH_UP_PAGES : MAX_PAGES });
   // The mark moves to now only when this read reached it; a page that failed keeps it (the next run reads the gap again).
-  // A gap past even the catch-up read is let go, with a warning (no run can read it any more), and noted in `gaps`.
+  // A gap past even the catch-up read, or up to a mark too old to read back to, is let go, with a warning (no run can read
+  // it any more), and noted in `gaps`: the launcher's live adoption check reads back over it, or waits for a person.
   let coveredUntil = prev?.coveredUntil ?? null, gap = null;
-  if (launched?.reached) coveredUntil = iso(nowMs);
+  if (launched?.reached) { coveredUntil = iso(nowMs); if (stale) gap = { from: iso(covered), to: iso(since) }; }
   else if (launched && launched.length >= (behind ? CATCH_UP_PAGES : MAX_PAGES) * PAGE) {
-    gap = { from: iso(since), to: iso(Math.min(...launched.map((c) => num(c.created_timestamp)).filter((t) => t > 0))) };
+    gap = { from: iso(stale ? covered : since), to: iso(Math.min(...launched.map((c) => num(c.created_timestamp)).filter((t) => t > 0))) };
     coveredUntil = iso(nowMs);
-    log(`::warning::pump.fun's launches from ${gap.from} to ${gap.to} were not read (too many to catch up): adoptions in that window are not tracked.`);
   }
+  if (gap) log(`::warning::pump.fun's launches from ${gap.from} to ${gap.to} were not read (${stale ? "the coverage mark was more than a day old" : "too many to catch up"}): adoptions in that window are not tracked; the launcher reads back over it before a cat posted before then launches, or waits for a person.`);
   // A coin the launcher is launching now (its ticker pending in the ledger) from a launcher wallet is the sanctuary's own from its first sighting.
   const owners = new Set(adopt.ownerWallets || []);
   for (const c of launched || []) if (owners.has(c.creator) && idx.pending?.has(String(c.symbol || "").toUpperCase())) idx.ours.add(c.mint);

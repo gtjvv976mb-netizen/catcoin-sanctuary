@@ -339,6 +339,14 @@ test("coverage mark: fresh.coveredUntil moves to now only when the read reached 
   // A read that only reached 20 minutes back while the mark is 80 minutes back: not reached, kept.
   const short = await buildTrending({ data: { ...data(), trending: second.trending }, fetchImpl: pumpAt(later + 20 * 60_000, { back: 20 * 60_000 }), nowMs: later + 20 * 60_000, pause: 0 });
   assert.equal(short.trending.fresh.coveredUntil, first.trending.fresh.coveredUntil);
+  // A mark more than a day old is past any read: the run reads the last half hour, the mark moves, and the window up to
+  // the read is noted as a gap (fresh.gaps), with a warning: the launcher reads back over it or waits for a person.
+  const aged = { ...first.trending, fresh: { ...first.trending.fresh, updatedAt: "2026-09-26T08:00:00Z", coveredUntil: "2026-09-26T08:00:00Z" } };
+  const logs = [];
+  const after = await buildTrending({ data: { ...data(), trending: aged }, fetchImpl: pumpAt(NOW), nowMs: NOW, pause: 0, log: (l) => logs.push(l) });
+  assert.equal(after.trending.fresh.coveredUntil, "2026-09-27T09:00:00Z");
+  assert.deepEqual(after.trending.fresh.gaps, [{ from: "2026-09-26T08:00:00Z", to: "2026-09-27T08:29:00Z" }]);
+  assert.ok(logs.some((l) => /^::warning::pump\.fun's launches from 2026-09-26T08:00:00Z to 2026-09-27T08:29:00Z were not read \(the coverage mark was more than a day old\)/.test(l)), logs.join("\n"));
 });
 
 test("the launcher's coins: a coin from a launcher wallet under a ticker the launcher is sending now is the sanctuary's own on first sighting (never a copycat), and a cat it is sending or launched has no kit (a coin under its name after that is no adoption)", async () => {

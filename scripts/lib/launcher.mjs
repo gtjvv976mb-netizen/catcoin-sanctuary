@@ -25,12 +25,16 @@
  * already (its own launch, a visitor's adoption in data/adoptions.json, a Collection entry under its name
  * or ticker, or a coin on pump.fun under its kit's name and ticker since the trend watch's coverage mark,
  * data/trending.json fresh.coveredUntil, read live right before the signature: a visitor who adopts
- * first wins; StonkFun and GetStonked adoptions are tracked by nothing yet, so they are not seen), one
+ * first wins; a window of launches the trend watch never read (fresh.gaps) since the cat's post is read
+ * back over too, and past the list's reach the cat waits until a person has looked and approved its
+ * post in data/launch-approvals.json; StonkFun and GetStonked adoptions are tracked by nothing yet, so
+ * they are not seen), one
  * with a sensitivity note other than "In loving memory of …", one whose story mentions a death while
  * its data does not mark it memorial (never guessed: the death may be another's), or one of low
  * confidence. A cat that died (memorial: true) is a tribute: its lore line "In loving memory of <name>."
- * A prepared cat follows its card until it is sent, and gives way to a trending cat that may launch;
- * it never takes the day's last launch (kept for a trending cat); and
+ * A prepared cat follows its card until it is sent (one that could not be prepared as it was any more
+ * fails for good), and gives way to a trending cat that may launch; it never takes the day's last launch
+ * (kept for a trending cat), tried again or not; and
  * the caps, the content rules and every check before and after the send are the same as a trending cat's.
  *
  * WHERE (scripts/lib/venues.mjs chooseVenue, the owner's rule in scripts/lib/venues-routing.mjs): by
@@ -903,8 +907,10 @@ export function ownProblemNow(row, ctx) {
   return null;
 }
 
-/** The row a prepared sanctuary cat would be prepared as now (its lore line and kind follow its card), or null when it could not be. */
-export const ownRowNow = (row, ctx) => sanctuaryRow({ key: row.ticker, status: "released", tweet: row.postId }, { ...ctx, ledger: { launches: [] } }).row ?? null;
+/** A prepared sanctuary cat as it would be prepared now ({ row }: its lore line and kind follow its card), or { problem } when it could not be. */
+export const ownRowRecheck = (row, ctx) => { const r = sanctuaryRow({ key: row.ticker, status: "released", tweet: row.postId }, { ...ctx, ledger: { launches: [] } }); return r.row ? { row: r.row } : { problem: r.problem }; };
+/** The row a prepared sanctuary cat would be prepared as now, or null when it could not be. */
+export const ownRowNow = (row, ctx) => ownRowRecheck(row, ctx).row ?? null;
 /** Hours a prepared sanctuary cat may wait to be sent before a person is told (::error). */
 export const OWN_WAIT_ALERT_HOURS = 6;
 
@@ -951,6 +957,22 @@ export async function kitLaunchedSince({ fetchImpl, sleep = async () => {}, kit,
   }
   return taken.size ? { taken: [...taken] } : { unchecked: `pump.fun's list did not reach back to the trend watch's coverage mark within ${pages} pages` };
 }
+
+/**
+ * The trend watch's unread windows of pump.fun's launches (data/trending.json fresh.gaps: too many to catch up after a
+ * stop, or a coverage mark too old to read back to) a visitor could have adopted this cat in: the ones ending after its
+ * X post (a visitor adopts a cat it has seen: its post; with no post time known, every one since the kits went live), as
+ * { fromMs, toMs }, oldest first. A window with no readable time counts from the kits' first day (the check then waits).
+ * None once a person has approved the post (data/launch-approvals.json): they looked on pump.fun themselves.
+ */
+export function unreadWindows(gaps, postedMs, approved = false) {
+  if (approved || !Array.isArray(gaps)) return [];
+  const live = Date.parse(KITS_LIVE), floor = Number.isFinite(postedMs) ? postedMs : live;
+  return gaps.map((g) => { const from = Date.parse(g?.from ?? ""), to = Date.parse(g?.to ?? ""); return { fromMs: Number.isFinite(from) ? from : live, toMs: Number.isFinite(to) ? to : Infinity }; })
+    .filter((g) => g.toMs > floor).sort((a, b) => a.fromMs - b.fromMs);
+}
+/** When a sanctuary cat's X post went out (its release in data/release-queue.json), in ms, or NaN. */
+const postedMsOf = (row, ctx) => Date.parse((Array.isArray(ctx.queue?.cats) ? ctx.queue.cats : []).find((q) => String(q?.tweet ?? "") === row.postId)?.releasedAt ?? "");
 
 /** The sanctuary cat to launch next: the one the announcer posted last that may launch. { row, route, skipped } or { row: null, skipped }. */
 export function selectSanctuary(ctx) {
@@ -1316,12 +1338,16 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
       // A trending post is tried again only while it is fresh; a sanctuary cat's own post has no age limit.
       if (tooOld(again, ctx.trending, nowMs)) {
         replaceRow(ledger, { ...again, retry: false, reason: `${again.reason} (not tried again: the post is older than ${MAX_POST_AGE_HOURS} hours)`.slice(0, 300) });
+        out.changed = true;
+      } else if (again.policy === "sanctuary" && dayStats(ledger, nowMs, caps).count + 1 >= caps.maxPerDay) {
+        // (a sanctuary cat tried again keeps the rule a fresh pick keeps: never the day's last launch)
+        log(`Launcher: ${again.ticker} (a sanctuary cat) is not prepared again yet: the day's last launch (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}) is kept for a trending cat.`);
       } else {
         next.status = "prepared";
         replaceRow(ledger, next);
         log(`Launcher: ${again.ticker} is prepared again (attempt ${again.attempts + 1} of ${MAX_ATTEMPTS}; last time: ${again.reason}).`);
+        out.changed = true;
       }
-      out.changed = true;
     }
   }
 
@@ -1619,11 +1645,21 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     fail(taken, false);
     return { ...out, outcome: "taken" };
   }
-  // Its card changed since it was prepared (a new lore line, a death marked): the prepare phase rewrites its metadata first.
-  const fresh = row.policy === "sanctuary" && !virtual ? ownRowNow(row, ctx) : null;
-  if (fresh && (fresh.lore !== row.lore || fresh.kind !== row.kind)) {
-    log(`Launcher: ${row.ticker} waits: its card changed since it was prepared; the prepare phase rewrites its metadata, then it is sent.`);
-    return { ...out, outcome: "card_changed" };
+  // Its card as it would be prepared now: changed (a new lore line, a death marked), the prepare phase rewrites its
+  // metadata first; one that could not be prepared as it was any more (its portrait gone from the site, its row refused,
+  // no lore line that passes) fails for good, like one taken: nothing is sent that record could not write back.
+  if (row.policy === "sanctuary" && !virtual) {
+    const re = ownRowRecheck(row, ctx);
+    if (re.problem) {
+      const why = `it could not be prepared as it was any more (${re.problem})`;
+      log(`::warning title=Launcher::${row.ticker} is not launched: ${why}.`);
+      fail(why, false);
+      return { ...out, outcome: "ineligible" };
+    }
+    if (re.row.lore !== row.lore || re.row.kind !== row.kind) {
+      log(`Launcher: ${row.ticker} waits: its card changed since it was prepared; the prepare phase rewrites its metadata, then it is sent.`);
+      return { ...out, outcome: "card_changed" };
+    }
   }
 
   // 5. The metadata: the committed file, served by the site at the coin's uri.
@@ -1641,9 +1677,39 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     }
   }
 
-  // 6. The day's count, then build and simulate UNSIGNED.
+  // 6. The day's count (a sanctuary cat never takes the day's last launch: kept for a trending cat), the live adoption
+  //    check, the funds, then build and simulate UNSIGNED.
   const stats = dayStats(ledger, nowMs, caps);
   if (stats.count >= caps.maxPerDay) { log(`Launcher: ${stats.count} launch(es) in the last 24 hours (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}); ${row.ticker} waits.`); return { ...out, outcome: "cap" }; }
+  if (row.policy === "sanctuary" && stats.count + 1 >= caps.maxPerDay) {
+    log(`Launcher: ${stats.count} launch(es) in the last 24 hours; the day's last launch (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}) is kept for a trending cat, so ${row.ticker} waits.`);
+    return { ...out, outcome: "cap" };
+  }
+  // A sanctuary cat: adopted on pump.fun since the trend watch's last scan? Read live, right before the funds are read and
+  // the coin is built. The windows of pump.fun's launches the trend watch never read (fresh.gaps) since the cat's X post are
+  // read back over too: a visitor who adopted it then is in no file. Past the list's reach, the row waits until a person
+  // has looked (the cat's post id approved in data/launch-approvals.json).
+  if (row.policy === "sanctuary") {
+    const kit = kitsOf({ planned: ctx.planned ?? { cats: [] }, adoptables: ctx.adoptables ?? { cats: [] } }).find((k) => k.key === row.ticker);
+    const scanned = readOwned(io, FILES.pumpScan, null, log)?.fresh;
+    const scan = Date.parse(scanned?.coveredUntil ?? "");
+    const owners = new Set((walletsFile.launchers ?? []).map((w) => w?.address).filter(Boolean));
+    const unread = unreadWindows(scanned?.gaps, postedMsOf(row, ctx), ctx.approvals.has(row.postId));
+    const sinceMs = Math.max(Date.parse(KITS_LIVE), Math.min(scan - PUMP_CHECK_MARGIN_MS, ...unread.map((g) => g.fromMs)));
+    const live = !kit ? { unchecked: "the cat has no kit to compare" } : !Number.isFinite(scan) ? { unchecked: `${FILES.pumpScan} gives no pump.fun coverage mark (fresh.coveredUntil) yet` }
+      : await kitLaunchedSince({ fetchImpl, sleep, kit, sinceMs, owners });
+    if (live.taken?.length) {
+      const why = `a coin with its kit's name and ticker was launched on pump.fun (${live.taken[0]}): a visitor's adoption`;
+      log(`::warning title=Launcher::${row.ticker} is not launched: ${why}.`);
+      fail(why, false);
+      return { ...out, outcome: "taken" };
+    }
+    if (live.unchecked) {
+      const hint = unread.length ? ` (pump.fun's launches from ${ISO_SECONDS(Math.max(Date.parse(KITS_LIVE), unread[0].fromMs))} to ${ISO_SECONDS(Math.min(nowMs, unread[unread.length - 1].toMs))} were never read by the trend watch, so the check reads back to them; a person who has looked on pump.fun for a coin named ${kit?.name ?? row.coinName} / ${row.ticker} since the cat's post may approve post ${row.postId} in ${FILES.approvals} to let it launch)` : "";
+      log(`::warning title=Launcher::${dry}${row.ticker} waits: ${live.unchecked}${hint}; nothing was sent, the next run tries again.`);
+      return { ...out, outcome: "adoption_unchecked" };
+    }
+  }
   const balance = await rpc.getBalance(wallet.publicKey);
   if (!Number.isSafeInteger(balance)) throw new LaunchError("the RPC gave no balance for the wallet");
   // The $CATSANC holders' SOL (the creator fees claimed for them, not paid out yet) is never the launcher's to spend:
@@ -1659,24 +1725,6 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   if (free <= caps.minBalanceLamports) {
     log(`::warning title=Launcher::the wallet holds ${sol(balance)}${earmark > 0 ? `, ${sol(earmark)} of it the holders'` : ""}: ${sol(free)} is at or under LAUNCH_MIN_BALANCE_SOL (${sol(caps.minBalanceLamports)}); ${row.ticker} waits until it is funded.`);
     return { ...out, outcome: "cap" };
-  }
-  // A sanctuary cat: adopted on pump.fun since the trend watch's last scan? Read live, the last thing before the build and the signature.
-  if (row.policy === "sanctuary") {
-    const kit = kitsOf({ planned: ctx.planned ?? { cats: [] }, adoptables: ctx.adoptables ?? { cats: [] } }).find((k) => k.key === row.ticker);
-    const scan = Date.parse(readOwned(io, FILES.pumpScan, null, log)?.fresh?.coveredUntil ?? "");
-    const owners = new Set((walletsFile.launchers ?? []).map((w) => w?.address).filter(Boolean));
-    const live = !kit ? { unchecked: "the cat has no kit to compare" } : !Number.isFinite(scan) ? { unchecked: `${FILES.pumpScan} gives no pump.fun coverage mark (fresh.coveredUntil) yet` }
-      : await kitLaunchedSince({ fetchImpl, sleep, kit, sinceMs: Math.max(Date.parse(KITS_LIVE), scan - PUMP_CHECK_MARGIN_MS), owners });
-    if (live.taken?.length) {
-      const why = `a coin with its kit's name and ticker was launched on pump.fun (${live.taken[0]}): a visitor's adoption`;
-      log(`::warning title=Launcher::${row.ticker} is not launched: ${why}.`);
-      fail(why, false);
-      return { ...out, outcome: "taken" };
-    }
-    if (live.unchecked) {
-      log(`::warning title=Launcher::${dry}${row.ticker} waits: ${live.unchecked}; nothing was sent, the next run tries again.`);
-      return { ...out, outcome: "adoption_unchecked" };
-    }
   }
   const bh = await rpc.getLatestBlockhash();
   if (!bh?.blockhash || !Number.isSafeInteger(bh.lastValidBlockHeight)) throw new LaunchError("the RPC gave no blockhash");

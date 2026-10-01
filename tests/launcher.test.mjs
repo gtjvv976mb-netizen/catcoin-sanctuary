@@ -2513,6 +2513,61 @@ test("sanctuary cats: a visitor's coin from the cat's kit on pump.fun since the 
   assert.deepEqual([r.row.status, r.row.retry], ["failed", false]);
   assert.match(r.row.reason, /visitor's adoption/);
   assert.ok(r.web.pumpAsked.length >= 1);
+  // (the wallet's balance is read after the live check, right before the build: a deposit meanwhile never understates the loss)
+  assert.equal(r.sol.calls.filter((x) => x.method === "getBalance").length, 0, "the funds are read after the live check");
+});
+
+test("sanctuary cats: pump.fun's launches the trend watch never read (fresh.gaps) since the cat's post are read back over by the live check; past the list's reach the row waits until a person approves the post; a window before the post, or an approved post, changes nothing", async () => {
+  const gaps = (list) => (t) => fs.writeFileSync(path.join(t.root, "data/trending.json"), JSON.stringify({ ...t.json("data/trending.json"), fresh: { updatedAt: iso(NOW - HOUR), coveredUntil: iso(NOW - HOUR), gaps: list, items: [] } }));
+  // pump.fun's list reaches two hours back and no further: enough for the mark less its margin, not for a window from three hours back.
+  const reach = { coins: [pumpCoin(1, { at: NOW - 2 * HOUR })], tail: false };
+  // (the cat was posted an hour before NOW: released())
+  const before = await ownSend(reach, { patch: gaps([{ from: iso(NOW - 3 * HOUR), to: iso(NOW - 90 * 60_000) }]) });
+  assert.equal(before.s.outcome, "launched", before.logs.join("\n"));
+  const over = await ownSend(reach, { patch: gaps([{ from: iso(NOW - 3 * HOUR), to: iso(NOW - 50 * 60_000) }]) });
+  assert.equal(over.s.outcome, "adoption_unchecked", over.logs.join("\n"));
+  assert.ok(over.logs.some((l) => /were never read by the trend watch.*approve post \d+ in data\/launch-approvals\.json/.test(l)), over.logs.join("\n"));
+  assert.equal(over.sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
+  assert.deepEqual([over.row.status, over.row.attempts], ["prepared", 0]);
+  // Within the list's reach: a visitor's coin from the cat's kit in the window (older than the mark less its margin) is found.
+  const found = await ownSend((c) => ({ coins: [pumpCoin(1, { at: NOW - 2 * HOUR }), pumpCoin(2, { name: c.coinName || c.name, symbol: c.ticker, at: NOW - 100 * 60_000 })] }), { patch: gaps([{ from: iso(NOW - 2 * HOUR), to: iso(NOW - 50 * 60_000) }]) });
+  assert.equal(found.s.outcome, "taken", found.logs.join("\n"));
+  // A person approved the post (they looked on pump.fun themselves): the window is not waited on.
+  const ok = await ownSend(reach, { patch: (t) => { gaps([{ from: iso(NOW - 3 * HOUR), to: iso(NOW - 50 * 60_000) }])(t); fs.writeFileSync(path.join(t.root, FILES.approvals), JSON.stringify({ note: "test", approve: [OWN_TWEET] })); } });
+  assert.equal(ok.s.outcome, "launched", ok.logs.join("\n"));
+  // A window with no readable time counts from the kits' first day: the check waits.
+  const bad = await ownSend(reach, { patch: gaps([{ from: "?", to: "?" }]) });
+  assert.equal(bad.s.outcome, "adoption_unchecked", bad.logs.join("\n"));
+});
+
+test("sanctuary cats: a row tried again keeps the reserved slot too: with only the day's last launch left it is not prepared again, and a prepared one waits at the send, nothing sent", async () => {
+  const c = ownCat();
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root), c0 = clock();
+  await prepare({ io: t.io, env: ON(w, { LAUNCH_MAX_PER_DAY: "2" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: () => {} });
+  const l = t.json(FILES.ledger);
+  l.launches[0] = { ...l.launches[0], status: "failed", retry: true, reason: "gave way to a trending cat; prepared again once the slot is free", settledAt: iso(NOW) };
+  fs.writeFileSync(path.join(t.root, FILES.ledger), `${JSON.stringify(l, null, 2)}\n`);
+  const logs = [];
+  await prepare({ io: t.io, env: ON(w, { LAUNCH_MAX_PER_DAY: "1" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: (x) => logs.push(x) });
+  assert.equal(t.json(FILES.ledger).launches[0].status, "failed", logs.join("\n"));
+  assert.ok(logs.some((x) => /not prepared again yet: the day's last launch .* is kept for a trending cat/.test(x)), logs.join("\n"));
+  await prepare({ io: t.io, env: ON(w, { LAUNCH_MAX_PER_DAY: "2" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: () => {} });
+  assert.equal(t.json(FILES.ledger).launches[0].status, "prepared");
+  web.deployed = true;
+  const s = await send({ io: t.io, env: ON(w, { LAUNCH_MAX_PER_DAY: "1" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: (x) => logs.push(x), ...quick });
+  assert.equal(s.outcome, "cap", logs.join("\n"));
+  assert.equal(sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
+  assert.equal(t.json(FILES.ledger).launches[0].status, "prepared");
+});
+
+test("sanctuary cats: a cat that could not be prepared as it was any more at the send (its portrait gone from the site) is never sent: failed for good, like one taken", async () => {
+  const r = await ownSend({}, { patch: (t, c) => { const pic = [c.portrait, c.lore?.image].find((p) => typeof p === "string" && fs.existsSync(path.join(t.root, p))); fs.rmSync(path.join(t.root, pic)); } });
+  assert.equal(r.s.outcome, "ineligible", r.logs.join("\n"));
+  assert.equal(r.sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
+  assert.deepEqual([r.row.status, r.row.retry], ["failed", false]);
+  assert.match(r.row.reason, /no portrait on the site/);
 });
 
 test("sanctuary cats: the live check reads pump.fun back to the trend watch's last scan (less a margin), pages as it must, and ignores the sanctuary's own wallets and older coins", async () => {

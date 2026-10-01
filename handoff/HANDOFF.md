@@ -45,15 +45,28 @@ Reviews: first review (12 confirmed) and second review (12 confirmed) are ALL fi
      spot right beside a sleeping third cat, could neither turn nor step off afterwards, and stood 0.12 into its
      friend for 31 s (CAT69/CAT237). Fix: the nuzzle spot must be clear of every other cat's body whichever way the
      visitor faces there (`crowdingBut`, as `besideSpot` already requires); otherwise no visit.
-   - `node --test tests/cats.test.mjs`: 25 of 25 pass. Full `npm test` (after `npm ci`): 1242 tests, 1241 pass, 0 fail, 1 skipped.
+   - `node --test tests/cats.test.mjs`: 25 of 25 pass. Full `npm test` (after `npm ci`), with the launcher fixes below too: 1245 tests, 1244 pass, 0 fail, 1 skipped.
 2. Dependencies: this container had no node_modules; `npm ci` is needed before `npm test` or two files
    (trendwatch, venues-routing) fail on a missing `@anthropic-ai/sdk`. That is an environment matter, not code.
+3. The optional third review of the money path (one agent, read-only) found 4 things; all fixed, with tests
+   (tests/launcher.test.mjs, tests/trending.test.mjs):
+   - The trend watch's coverage mark could jump past launches nobody read (a mark older than a day, or a gap "let go"),
+     and the launcher's live check only read back to the mark: a visitor's adoption in that window was in no file, so a
+     second coin could have been launched for an adopted cat. Now every unread window is in `fresh.gaps`
+     (build-trending), and the live check reads back over the windows since the cat's X post (`unreadWindows`); past
+     the list's reach the row waits (`adoption_unchecked`) until the owner, having looked on pump.fun, approves the
+     cat's post id in `data/launch-approvals.json`. A window before the post changes nothing.
+   - A sanctuary row tried again (it gave way, or a send failed) could take the day's last launch. The retry (prepare
+     step 2) and the send now keep the reserved-slot rule too.
+   - At the send, a cat that could not be prepared as it was any more (portrait gone, row refused, no lore line that
+     passes) was sent anyway and then record refused to write it. Now it fails for good (`ineligible`), like one taken.
+   - The wallet's balance was read minutes before the simulation (the live check in between). It is read after it.
 
 **Remaining before merge:**
-1. PR #27's head branch is `claude/practical-cray-ln7m3z`, which this session could not push to. Either push this
-   branch's commits onto it (same history plus the fix), or merge this branch instead (a PR from
-   `claude/vigilant-davinci-utlztf` to main, closing #27). Then watch the first Launch run (logs: prepare picks the
-   newest posted cat; send waits until build-trending has written `fresh.coveredUntil`, i.e. one Trending run after merge).
+1. PR #27's head branch is `claude/practical-cray-ln7m3z`, which this session could not push to. This branch
+   (`claude/vigilant-davinci-utlztf`, the same history plus the fixes) is up as its own PR against main, ready for
+   review: the owner merges that one and closes #27. Then watch the first Launch run (logs: prepare picks the newest
+   posted cat; send waits until build-trending has written `fresh.coveredUntil`, i.e. one Trending run after merge).
 2. Known, pre-existing, not fixed: cats "Waiting its turn" for 5-80 s happen 50-80 times per 2-minute garden run
    (hemmed in by resting cats); they only fail the test when the waiter is more than 0.12 into another's body.
    A general fix to the hemmed-in logic (`stepOut`/`turnBlocked`, cats.js) is a separate job.
