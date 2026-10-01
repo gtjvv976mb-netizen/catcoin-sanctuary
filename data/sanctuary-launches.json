@@ -2,6 +2,77 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105654129674633645",
+      "url": "https://x.com/catcosanctuary/status/2105654129674633645",
+      "name": "Milly",
+      "coinName": "Milly",
+      "ticker": "BLEHMILLY",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Milly is the original 'BLEHHHHH :P' cat.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/BLEHMILLY.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/BLEHMILLY.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105654129674633645.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-01T14:48:53Z",
+      "attempts": 0,
+      "cat": {
+        "id": "milly-fatfatmillycat",
+        "ticker": "BLEHMILLY",
+        "name": "Milly",
+        "coinName": "Milly",
+        "owner": "fatfatmillycat (Milly's owner; @fatfatmillycat on X and Instagram)",
+        "category": "viral",
+        "story": "Milly is the original 'BLEHHHHH :P' cat. Her owner's Instagram, fatfatmillycat, posted her tongue-out photo on 23 July 2022, and on 5 Aug 2022 posted the first meme of it, captioned 'i can act rather silly at times'. On 24 Aug 2022 @vampiric_shirin posted the photo on X as a kid refusing homework: 'BLEHHHHH :P i am NOT doing that u can't make me'. Know Your Meme says that post started the 'I Am Not Doing That Cat' format, and that the photo helped launch the 2022 Silly Cats trend. Her own X bio reads 'milly the “bleh” cat, certified panko clone', and her posts often show her on a black ping-pong table ('The sniffer is back on the ping pong table'). Her official Linktree links a Milly merch shop.",
+        "look": "Chunky white dilute calico with short plush fur. Face, chest, belly and legs are mostly white. A pale ginger-orange and soft grey cap covers the crown and ears, with more orange over one ear. Cream-orange patches on the back and flanks, and a round smoky-grey spot on the front of one shoulder and upper leg. Pink nose. Pale green-hazel eyes, often squeezed shut. Her signature pose is a long pink tongue stuck out at the camera. She often sits on a black ping-pong table with red paddles, and once wore a rainbow-striped bandana.",
+        "coat": {
+          "base": "white",
+          "second": "cream",
+          "pattern": "calico",
+          "eyes": "hazel"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/fatfatmillycat/status/1678599121475624960",
+          "author": "fatfatmillycat",
+          "handle": "fatfatmillycat",
+          "date": "2023-07-11",
+          "dateType": "posted",
+          "text": "The sniffer is back on the ping pong table",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Milly's official Linktree (links YouTube, Milly merch on Redbubble, Spotify, X, Instagram)",
+            "url": "https://linktr.ee/fatfatmillycat"
+          },
+          {
+            "label": "Know Your Meme: BLEHHHHH :P Cat",
+            "url": "https://knowyourmeme.com/memes/blehhhhh-p-cat"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "MILLY",
+          "contract": "7J4Dgq21tNHTHfRzgRzcGLUTeEoKAPANDpBBERahfRVK",
+          "mcapUsd": 3335
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by fatfatmillycat (Milly's owner; @fatfatmillycat on X and Instagram).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/BLEHMILLY.jpg",
+        "portraitStatus": "ready",
+        "confidence": "medium",
+        "lore": null
+      }
+    },
+    {
       "postId": "2105559745822372023",
       "url": "https://x.com/catcosanctuary/status/2105559745822372023",
       "name": "Rolf",
