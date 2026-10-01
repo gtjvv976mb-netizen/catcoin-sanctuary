@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/COOLBLUE.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105720432263360546.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-01T18:06:51Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "blue-cat-cool-cats",
         "ticker": "COOLBLUE",
@@ -79,7 +79,14 @@
         "confidence": "high",
         "lore": null
       },
-      "mintNonce": 9298887
+      "mintNonce": 9298887,
+      "tx": "4mrN1MHpMuFcyYvYjZyhd3TqA7ZAapwyncGrdzjPSmuSWB2Kaiqeoqks8Bg53aVPAMFkCEUUhynENcRtbwcwds3n",
+      "sentAt": "2026-10-01T19:14:00Z",
+      "lastValidBlockHeight": 430417322,
+      "mintPublic": "2PKuTDBUKFNcD2XefiCrKUjk4pkP864nJ2ovF6vapump",
+      "spentLamports": 5475760,
+      "settledAt": "2026-10-01T19:14:09Z",
+      "launchedAt": "2026-10-01T19:14:00Z"
     },
     {
       "postId": "2105654129674633645",
