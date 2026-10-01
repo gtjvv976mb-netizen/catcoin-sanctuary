@@ -21,6 +21,8 @@
 # and nothing new is written), anything else (or unset) stops every job here. The caps, each clamped:
 # LAUNCH_MAX_PER_DAY (3), LAUNCH_MAX_SOL_PER_LAUNCH (0.03), LAUNCH_MAX_SOL_PER_DAY (0.1),
 # LAUNCH_MIN_BALANCE_SOL (0.02, what must be left after a launch), LAUNCH_PRIORITY_MICROLAMPORTS.
+# LAUNCH_MINT_SUFFIX ("pump": the coin's address ends so, as pump.fun's own coins do; "" for none) and
+# LAUNCH_MINT_GRIND_MINUTES (12, 1..30): how long one run scans for such an address before it goes on next run.
 # LAUNCH_OPEN (on unless "off"): real pets in viral or rising posts, and any cat a big account names,
 # launch without approval; "off" sends them to data/launch-approvals.json again.
 # LAUNCH_PUMP_QUOTE "on" opts in to pump.fun launches priced in a listed coin (unverified: no such launch
@@ -165,6 +167,8 @@ jobs:
           LAUNCH_MIN_BALANCE_SOL: ${{ vars.LAUNCH_MIN_BALANCE_SOL }}
           LAUNCH_PRIORITY_MICROLAMPORTS: ${{ vars.LAUNCH_PRIORITY_MICROLAMPORTS }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
+          LAUNCH_MINT_SUFFIX: ${{ vars.LAUNCH_MINT_SUFFIX }}
+          LAUNCH_MINT_GRIND_MINUTES: ${{ vars.LAUNCH_MINT_GRIND_MINUTES }}
           REWARDS_ENABLED: ${{ vars.REWARDS_ENABLED }}
           LAUNCH_WALLET_KEY: ${{ secrets.LAUNCH_WALLET_KEY }}
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
