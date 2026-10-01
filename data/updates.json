@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-10-01T10:20:22.409Z",
+  "lastPostedAt": "2026-10-01T17:24:05.543Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -114,6 +114,13 @@
       "attempts": 1,
       "postedAt": "2026-10-01T10:20:22.409Z",
       "tweet": "2105603721568604406"
+    },
+    "BLEHMILLY": {
+      "postId": "2105654129674633645",
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-01T17:24:05.543Z",
+      "tweet": "2105710353795706929"
     }
   }
 }
