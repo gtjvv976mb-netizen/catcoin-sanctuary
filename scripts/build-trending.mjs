@@ -169,6 +169,11 @@ export async function pumpLaunches(fetchImpl, sinceMs, { pause = 400, pages = MA
 
 /** Pages the scan may read to catch up to its coverage mark after a gap (a late or failed run): about 2 hours of pump.fun. */
 export const CATCH_UP_PAGES = 40;
+/**
+ * Coins of pump.fun's newest list past which an empty page is the list's end, not a hiccup: it serves about 1,000 coins
+ * (2026-10-01: an empty page at offset 1050, about 20 minutes back at its busiest). No later run reads further back.
+ */
+export const LIST_DEPTH = 900;
 /** How old a coverage mark may be and still be read back to; an older one is let go as a gap (about what CATCH_UP_PAGES reads at pump.fun's busiest). */
 export const STALE_MARK_MS = 90 * 60_000;
 
@@ -241,12 +246,13 @@ export async function fresh({ prev, idx, adopt, fetchImpl, nowMs, pause, log }) 
   // it any more), and noted in `gaps`: the launcher's live adoption check reads back over it, or waits for a person.
   let coveredUntil = prev?.coveredUntil ?? null, gap = null;
   if (launched?.reached) { coveredUntil = iso(nowMs); if (stale) gap = { from: iso(covered), to: iso(since) }; }
-  else if (launched && launched.length >= (behind ? CATCH_UP_PAGES : MAX_PAGES) * PAGE) {
+  // Past pump.fun's list's end (an empty page after LIST_DEPTH coins), as past the page budget: no later run reads further.
+  else if (launched && (launched.length >= (behind ? CATCH_UP_PAGES : MAX_PAGES) * PAGE || (/came back empty$/.test(launched.stop ?? "") && launched.length >= LIST_DEPTH))) {
     gap = { from: iso(stale ? covered : since), to: iso(Math.min(...launched.map((c) => num(c.created_timestamp)).filter((t) => t > 0))) };
     coveredUntil = iso(nowMs);
   }
   if (launched && !launched.reached && !gap) log(`::notice::pump.fun's list was read back to ${launched.oldest ? iso(launched.oldest) : "nothing"} in ${launched.read} page(s) (${launched.stop}), not to the coverage mark ${iso(since)}: the mark is kept, the next run reads again.`);
-  if (gap) log(`::warning::pump.fun's launches from ${gap.from} to ${gap.to} were not read (${stale ? `the coverage mark was more than ${STALE_MARK_MS / 60_000} minutes old` : "too many to catch up"}): adoptions in that window are not tracked; the launcher reads back over it before a cat posted before then launches, or waits for a person.`);
+  if (gap) log(`::warning::pump.fun's launches from ${gap.from} to ${gap.to} were not read (${stale ? `the coverage mark was more than ${STALE_MARK_MS / 60_000} minutes old` : /came back empty$/.test(launched?.stop ?? "") ? "past the end of pump.fun's list" : "too many to catch up"}): adoptions in that window are not tracked; the launcher reads back over it before a cat posted before then launches, or waits for a person.`);
   // A coin the launcher is launching now (its ticker pending in the ledger) from a launcher wallet is the sanctuary's own from its first sighting.
   const owners = new Set(adopt.ownerWallets || []);
   for (const c of launched || []) if (owners.has(c.creator) && idx.pending?.has(String(c.symbol || "").toUpperCase())) idx.ours.add(c.mint);

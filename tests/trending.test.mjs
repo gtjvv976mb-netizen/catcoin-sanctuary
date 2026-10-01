@@ -9,7 +9,7 @@ import { ROOT } from "./helpers.mjs";
 import { installDom, Element } from "./minidom.mjs";
 import { checkTrending, clean, createTrending, usd, pct } from "../assets/ui/trending.js";
 import { shell } from "../assets/ui/panels.js";
-import { buildTrending, isCatCoin, crude, catIndex, copycatOf, imageSha256, X_EVERY_MINUTES, pumpLaunches } from "../scripts/build-trending.mjs";
+import { buildTrending, isCatCoin, crude, catIndex, copycatOf, imageSha256, X_EVERY_MINUTES, pumpLaunches, LIST_DEPTH } from "../scripts/build-trending.mjs";
 
 const NOW = Date.parse("2026-09-27T09:00:00Z");
 const MINT = (n) => `${"So1anaMint".padEnd(38, "x")}${String(n).padStart(4, "0")}`.replace(/[0OIl]/g, "9");
@@ -356,6 +356,24 @@ test("coverage mark: fresh.coveredUntil moves to now only when the read reached 
   const freed = await buildTrending({ data: { ...data(), trending: markAged(100) }, fetchImpl: pumpAt(T, { back: 30 * 60_000 }), nowMs: T, pause: 0 });
   assert.equal(freed.trending.fresh.coveredUntil, at(T), "100 minutes: let go, the mark moves to now");
   assert.deepEqual(freed.trending.fresh.gaps, [{ from: at(T - 100 * 60_000), to: at(T - 21 * 60_000) }], "the unread stretch is a gap, up to the run's own start (its last run, less a minute)");
+});
+
+test("coverage mark: pump.fun's list ends about 1,000 coins back (an empty page past LIST_DEPTH coins): the unread rest is a gap and the mark moves to now; an empty page sooner keeps the mark", async () => {
+  const at = (ms) => new Date(ms).toISOString().replace(/\.\d{3}Z$/, "Z"), T = NOW + 5 * 3_600_000;
+  // pump.fun's list at T: `n` coins a second apart, then empty pages (mints of their own: MINT's run together past 999).
+  const listOf = (n) => async (url, init) => {
+    if (!String(url).startsWith("https://frontend-api-v3.pump.fun/coins")) return fakeFetch().fn(url, init);
+    const offset = Number(new URL(url).searchParams.get("offset"));
+    return new Response(JSON.stringify(Array.from({ length: Math.max(0, Math.min(50, n - offset)) }, (_, i) => ({ mint: `${"So1anaMint".padEnd(38, "x")}${String(1000 + offset + i).replace(/0/g, "z")}`, name: "Some Coin", symbol: "SOME", created_timestamp: T - (offset + i) * 1000 }))));
+  };
+  const marked = (min) => ({ ...data().trending, fresh: { updatedAt: at(T - 20 * 60_000), coveredUntil: at(T - min * 60_000), items: [], all: [] } });
+  const logs = [];
+  const ended = await buildTrending({ data: { ...data(), trending: marked(40) }, fetchImpl: listOf(LIST_DEPTH + 100), nowMs: T, pause: 0, log: (l) => logs.push(l) });
+  assert.equal(ended.trending.fresh.coveredUntil, at(T), "past the list's end: the mark moves to now");
+  assert.deepEqual(ended.trending.fresh.gaps, [{ from: at(T - 41 * 60_000), to: at(T - (LIST_DEPTH + 99) * 1000) }]);
+  assert.ok(logs.some((l) => /^::warning::pump\.fun's launches from .* were not read \(past the end of pump\.fun's list\)/.test(l)), logs.join("\n"));
+  const early = await buildTrending({ data: { ...data(), trending: marked(40) }, fetchImpl: listOf(200), nowMs: T, pause: 0 });
+  assert.deepEqual([early.trending.fresh.coveredUntil, early.trending.fresh.gaps], [at(T - 40 * 60_000), undefined], "an empty page at 200 coins: a hiccup, the mark is kept");
 });
 
 test("the launcher's coins: a coin from a launcher wallet under a ticker the launcher is sending now is the sanctuary's own on first sighting (never a copycat), and a cat it is sending or launched has no kit (a coin under its name after that is no adoption)", async () => {

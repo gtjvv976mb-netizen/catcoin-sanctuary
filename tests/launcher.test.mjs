@@ -27,7 +27,7 @@ import {
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
-  sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, unreadWindows, DIED, OWN_WAIT_ALERT_HOURS,
+  sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, pumpSearchSince, SEARCH_LEADERS, unreadWindows, DIED, OWN_WAIT_ALERT_HOURS,
 } from "../scripts/lib/launcher.mjs";
 import * as R from "../scripts/lib/rewards.mjs";
 import { creatorVault, EVENT_IX_TAG, EVENT_DISC } from "../scripts/lib/pump-fees.mjs";
@@ -2472,12 +2472,20 @@ test("sanctuary cats: adopted by a visitor (or given a coin) between prepare and
  * creator, created_timestamp }) and, unless `tail` is false, a day-old coin past them (the list goes on), or `down`
  * (it does not answer). Every page asked is recorded.
  */
-function pumpSite(root, { coins = [], down = false, tail = true } = {}) {
+function pumpSite(root, { coins = [], down = false, tail = true, search = false } = {}) {
   coins = tail ? [...coins, pumpCoin(9999, { name: "Old Coin", symbol: "OLD", at: NOW - 24 * HOUR })] : coins;
   const web = fakeSite(root);
   const site0 = web.fetchImpl;
   web.pumpAsked = [];
+  web.searchAsked = [];
   web.fetchImpl = async (url, init) => {
+    // pump.fun's search (with `search`): every coin whose name or ticker carries the term, newest first.
+    if (search && String(url).startsWith("https://frontend-api-v3.pump.fun/coins/search-unrestricted?")) {
+      const u = new URL(url), offset = Number(u.searchParams.get("offset")), term = u.searchParams.get("searchTerm").toUpperCase();
+      web.searchAsked.push(term);
+      const hits = coins.filter((c) => [c.name, c.symbol].some((x) => String(x).toUpperCase().includes(term))).sort((a, b) => b.created_timestamp - a.created_timestamp);
+      return new Response(JSON.stringify(hits.slice(offset, offset + 50)), { status: 200 });
+    }
     if (String(url).startsWith("https://frontend-api-v3.pump.fun/coins?")) {
       web.pumpAsked.push(url);
       if (down) return new Response("busy", { status: 503 });
@@ -2740,6 +2748,72 @@ test("sanctuary cats: the live check reads past a short page (a filtered row), a
   const nul = await kitLaunchedSince({ fetchImpl: pumpSite(os.tmpdir(), { coins: [{ ...pumpCoin(5, { name: "Zed", symbol: "ZED" }), created_timestamp: null }, pumpCoin(6)] }).fetchImpl,
     kit: { key: "ZZ", name: "Zed", ticker: "ZED" }, sinceMs: NOW - HOUR });
   assert.deepEqual(nul.taken, [pumpCoin(5).mint]);
+});
+
+test("sanctuary cats: past the end of pump.fun's list (about 1,000 coins) the live check asks pump.fun's search for the kit's ticker, once the search has found one of the walk's oldest coins by its ticker; a search that is down, behind, ignores the term or is out of order waits", async () => {
+  const kit = { key: "ZZ", name: "Zed", ticker: "ZED" }, json = (x) => new Response(JSON.stringify(x), { status: 200 });
+  const byTime = (a, b) => b.created_timestamp - a.created_timestamp;
+  // The list: 150 coins a minute apart, then an empty page (its end), short of `sinceMs` four hours back.
+  const listed = Array.from({ length: 150 }, (_, i) => pumpCoin(i, { name: `Coin ${i}`, symbol: `COIN${i}`, at: NOW - i * 60_000 }));
+  const site = ({ extra = [], mode = "ok", leaders = [] } = {}) => {
+    const asked = [];
+    const fetchImpl = async (url) => {
+      const u = new URL(url), offset = Number(u.searchParams.get("offset"));
+      if (u.pathname === "/coins") return json(listed.slice(offset, offset + 50));
+      if (u.pathname !== "/coins/search-unrestricted") return new Response("not found", { status: 404 });
+      const term = u.searchParams.get("searchTerm").toUpperCase();
+      asked.push(term);
+      if (mode === "down") return new Response("busy", { status: 503 });
+      let all = [...listed, ...extra].filter((c) => [c.name, c.symbol].some((x) => x.toUpperCase().includes(term))).sort(byTime);
+      if (mode === "behind") all = all.filter((c) => c.created_timestamp < NOW - 3 * HOUR);
+      if (mode === "ignored") all = [...listed, ...extra].sort(byTime);
+      if (mode === "oldest first") all.reverse();
+      return json([...leaders, ...all].slice(offset, offset + 50));
+    };
+    return { fetchImpl, asked };
+  };
+  const check = (opts, since = NOW - 4 * HOUR) => { const w = site(opts); return kitLaunchedSince({ fetchImpl: w.fetchImpl, kit, sinceMs: since }).then((r) => ({ ...r, asked: w.asked })); };
+  // Nobody launched it: the search, shown to hold the walk's oldest coin (COIN100, by its ticker), finds no ZED (an empty
+  // answer is asked twice more before it is believed, as the list's empty page).
+  const none = await check();
+  assert.deepEqual([none.taken, none.searched, none.asked], [[], true, ["COIN100", "ZED", "ZED", "ZED"]], JSON.stringify(none));
+  // A visitor's coin three hours back, past the list's end: found by the search.
+  const zed = pumpCoin(500, { name: "Zed", symbol: "ZED", at: NOW - 3 * HOUR });
+  assert.deepEqual((await check({ extra: [zed] })).taken, [zed.mint]);
+  // Before `sinceMs`, from a launcher wallet, or only the ticker (another name): not the kit's adoption.
+  assert.deepEqual((await check({ extra: [{ ...zed, created_timestamp: NOW - 5 * HOUR }] })).taken, []);
+  const mine = site({ extra: [zed] });
+  assert.deepEqual((await kitLaunchedSince({ fetchImpl: mine.fetchImpl, kit, sinceMs: NOW - 4 * HOUR, owners: new Set([zed.creator]) })).taken, []);
+  assert.deepEqual((await check({ extra: [{ ...zed, name: "Zed Two" }] })).taken, []);
+  // The search's closest matches come first, out of time order: up to SEARCH_LEADERS of them, the rest newest first.
+  const lead = Array.from({ length: SEARCH_LEADERS }, (_, i) => pumpCoin(600 + i, { name: "Zedd", symbol: "ZEDD", at: NOW - (100 + i) * HOUR }));
+  assert.deepEqual((await check({ extra: [zed], leaders: lead })).taken, [zed.mint]);
+  // Down, behind (the walk's oldest coins not in it yet), ignoring the term, or out of order: unchecked, nothing believed.
+  assert.match((await check({ mode: "down" })).unchecked, /did not reach back .*empty list\), and pump.fun's search did not find any of the walk's oldest coins by ticker \(down or behind\)$/);
+  assert.match((await check({ mode: "behind" })).unchecked, /search did not find any of the walk's oldest coins/);
+  assert.match((await check({ mode: "ignored" })).unchecked, /search did not find any of the walk's oldest coins/);
+  const many = Array.from({ length: 60 }, (_, i) => pumpCoin(700 + i, { name: "Zed", symbol: "ZED", at: NOW - (2 * HOUR + i * 60_000) }));
+  const unordered = site({ extra: many, mode: "oldest first" });
+  assert.match((await pumpSearchSince({ fetchImpl: unordered.fetchImpl, term: "ZED", sinceMs: NOW - 4 * HOUR })).unchecked, /was not newest first/);
+  const tooMany = site({ extra: many, leaders: [...lead, pumpCoin(650, { name: "Zedd", symbol: "ZEDD", at: NOW - 200 * HOUR })] });
+  assert.match((await pumpSearchSince({ fetchImpl: tooMany.fetchImpl, term: "ZED", sinceMs: NOW - 4 * HOUR })).unchecked, /search for "ZED" was not newest first/, "one leader too many");
+  // More results back to `sinceMs` than its pages: unchecked.
+  assert.match((await pumpSearchSince({ fetchImpl: site({ extra: many }).fetchImpl, term: "ZED", sinceMs: NOW - 4 * HOUR, pages: 1 })).unchecked, /gave more than 50 coins back to/);
+  // The walk reaching `sinceMs` asks no search at all; neither does a walk that read nothing.
+  assert.deepEqual((await check({}, NOW - 30 * 60_000)).asked, []);
+  const blank = await kitLaunchedSince({ fetchImpl: async (url) => (new URL(url).pathname === "/coins" ? json([]) : site().fetchImpl(url)), kit, sinceMs: NOW - HOUR });
+  assert.match(blank.unchecked, /0 page\(s\) read/);
+});
+
+test("sanctuary cats: a cat posted before a gap in the trend watch's reading, past the list's reach, launches once pump.fun's search shows no coin of its kit, and is never launched when it shows one", async () => {
+  const recent = (list) => (t) => fs.writeFileSync(path.join(t.root, "data/trending.json"), JSON.stringify({ ...t.json("data/trending.json"), fresh: { updatedAt: iso(NOW - 10 * 60_000), coveredUntil: iso(NOW - 10 * 60_000), gaps: list, items: [] } }));
+  const gap = recent([{ from: iso(NOW - 5 * HOUR), to: iso(NOW - 20 * 60_000) }]);
+  const ok = await ownSend({ coins: [pumpCoin(1, { at: NOW - 40 * 60_000 })], tail: false, search: true }, { patch: gap });
+  assert.equal(ok.s.outcome, "launched", ok.logs.join("\n"));
+  assert.deepEqual(ok.web.searchAsked, ["SOME", ...Array(3).fill(ok.row.ticker)]);
+  const taken = await ownSend((c) => ({ coins: [pumpCoin(1, { at: NOW - 40 * 60_000 }), pumpCoin(2, { name: c.coinName || c.name, symbol: c.ticker, at: NOW - 50 * 60_000 })], tail: false, search: true }), { patch: gap });
+  assert.equal(taken.s.outcome, "taken", taken.logs.join("\n"));
+  assert.equal(taken.sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
 });
 
 test("sanctuary cats: a prepared cat that waits (pump.fun's list down) gives way to a trending cat that may launch, and is prepared again once the slot is free; one waiting for hours is an error a person sees", async () => {
