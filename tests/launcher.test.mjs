@@ -2605,6 +2605,15 @@ test("sanctuary cats: pump.fun not answering, or no time for the last scan: noth
   assert.equal(noScan.row.status, "prepared");
   const pages = await kitLaunchedSince({ fetchImpl: pumpSite(os.tmpdir(), { coins: Array.from({ length: 200 }, (_, i) => pumpCoin(i, { at: NOW - i })) }).fetchImpl, kit: { key: "ZZ", name: "Zed", ticker: "ZED" }, sinceMs: NOW - 10 * HOUR, pages: 2 });
   assert.match(pages.unchecked, /did not reach back/);
+  // An empty page mid-walk is asked again: answered the second time, the walk goes on and reaches back (2026-10-01).
+  const flaky = pumpSite(os.tmpdir(), { coins: Array.from({ length: 120 }, (_, i) => pumpCoin(i, { at: NOW - i * 60_000 })) }).fetchImpl;
+  let emptied = 0;
+  const once = async (url, init) => { if (String(url).includes("offset=50&") && emptied++ === 0) return new Response("[]", { status: 200 }); return flaky(url, init); };
+  const went = await kitLaunchedSince({ fetchImpl: once, kit: { key: "ZZ", name: "Zed", ticker: "ZED" }, sinceMs: NOW - 90 * 60_000 });
+  assert.deepEqual([went.unchecked, emptied], [undefined, 2], JSON.stringify(went));
+  // Still empty after the retries: unchecked, and the log says how far it got.
+  const stuck = await kitLaunchedSince({ fetchImpl: async (url, init) => (String(url).includes("offset=50&") ? new Response("[]", { status: 200 }) : flaky(url, init)), kit: { key: "ZZ", name: "Zed", ticker: "ZED" }, sinceMs: NOW - 90 * 60_000 });
+  assert.match(stuck.unchecked, /did not reach back .* \(1 page\(s\) read, back to 2026-09-25T16:11:00Z of the 2026-09-25T15:30:00Z needed; pump\.fun answered offset 50 with an empty list\)/);
   // An empty page (HTTP 200, []) is not the list's end: unchecked, never "nobody adopted it".
   const empty = await ownSend({ tail: false });
   assert.equal(empty.s.outcome, "adoption_unchecked");

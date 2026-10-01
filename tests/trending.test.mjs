@@ -9,7 +9,7 @@ import { ROOT } from "./helpers.mjs";
 import { installDom, Element } from "./minidom.mjs";
 import { checkTrending, clean, createTrending, usd, pct } from "../assets/ui/trending.js";
 import { shell } from "../assets/ui/panels.js";
-import { buildTrending, isCatCoin, crude, catIndex, copycatOf, imageSha256, X_EVERY_MINUTES } from "../scripts/build-trending.mjs";
+import { buildTrending, isCatCoin, crude, catIndex, copycatOf, imageSha256, X_EVERY_MINUTES, pumpLaunches } from "../scripts/build-trending.mjs";
 
 const NOW = Date.parse("2026-09-27T09:00:00Z");
 const MINT = (n) => `${"So1anaMint".padEnd(38, "x")}${String(n).padStart(4, "0")}`.replace(/[0OIl]/g, "9");
@@ -379,4 +379,20 @@ test("the launcher's coins: a coin from a launcher wallet under a ticker the lau
   const ctl = await buildTrending({ data: d, fetchImpl: fakeFetch({ launched }).fn, nowMs: NOW, pause: 0 });
   assert.equal(ctl.trending.fresh.all.find((x) => x.mint === MINT(60))?.copycatOf, "CATBUS");
   assert.deepEqual(ctl.adoptions.adoptions.map((a) => [a.key, a.mint]), [["CATBUS", MINT(61)]]);
+});
+
+test("pump.fun's list: an empty page mid-walk is asked again (answered, the walk reaches back); still empty, the walk stops not reached and says where", async () => {
+  const coins = (t, from) => Array.from({ length: 50 }, (_, i) => ({ mint: MINT(400 + from + i), name: "Some Coin", symbol: "SOME", created_timestamp: t - (from + i) * 60_000 }));
+  let empties = 0;
+  const flaky = (emptyTimes) => async (url) => {
+    const offset = Number(new URL(url).searchParams.get("offset"));
+    if (offset === 50 && empties < emptyTimes) { empties++; return new Response("[]"); }
+    return new Response(JSON.stringify(coins(NOW, offset)));
+  };
+  const ok = await pumpLaunches(flaky(1), NOW - 70 * 60_000, { pause: 0 });
+  assert.deepEqual([ok.reached, ok.read, ok.stop, empties], [true, 2, null, 1]);
+  empties = 0;
+  const stuck = await pumpLaunches(flaky(9), NOW - 70 * 60_000, { pause: 0 });
+  assert.deepEqual([stuck.reached, stuck.read, stuck.stop, empties], [false, 1, "offset 50 came back empty", 3]);
+  assert.equal(stuck.oldest, NOW - 49 * 60_000);
 });
