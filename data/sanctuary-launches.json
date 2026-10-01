@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/CAPOOBUG.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105753628418187702.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-01T20:18:39Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "bugcat-capoo",
         "ticker": "CAPOOBUG",
@@ -67,9 +67,14 @@
         "confidence": "high",
         "lore": null
       },
-      "mintGrind": {
-        "next": 23928001
-      }
+      "mintNonce": 32332045,
+      "tx": "3aJBPjoTKUcfSKhsUx1vKGroxpPM5muNc8GKxKin7rzfNiSSkfg1g742ZuzUNGgRrJiCzUqMnYSJ5PkEymkVF4u4",
+      "sentAt": "2026-10-01T21:26:29Z",
+      "lastValidBlockHeight": 430446903,
+      "mintPublic": "2qy8uGKD6coS2eyMa8YMShZ5w1Re2dM4VhQJsuuxpump",
+      "spentLamports": 5496080,
+      "settledAt": "2026-10-01T21:26:39Z",
+      "launchedAt": "2026-10-01T21:26:29Z"
     },
     {
       "postId": "2105720432263360546",
