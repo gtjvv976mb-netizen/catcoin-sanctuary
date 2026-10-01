@@ -52,14 +52,17 @@
  *   lazily    a wallet whose counted balance did not change is not touched: its points for the
  *             intervals since `ptsAt` are brought up to date (bit-identical) only when its lots change
  *             or at a close, so an hourly commit only touches the wallets that traded.
- *   close     when T ≥ periodEnd, after this sample's credit (closePeriod): the points of an owner that
+ *   close     when T ≥ periodEnd (RELEASE_PCT of the pot), or when the unallocated pot E − A is worth
+ *             REWARDS_CLOSE_USD at the sample (all of it; the workflow reads SOL's price on DexScreener;
+ *             no price, no such close that hour), after this sample's credit (closePeriod): the points of an owner that
  *             can never be paid (opts.unpayable: executable, owned by a program, a System account
  *             holding data; read by the workflow at the close) are set to 0 and listed in the audit;
  *             U = E − A, pot = U > 0 ? floor(U × RELEASE_PCT / 100) : 0; each wallet with points gets
  *             alloc_j = min(floor(pot × pts_j / Σpts), capAmt), capAmt = floor(pot × CAP_PCT / 100)
  *             (allocate): what the cap holds back is not handed to other wallets, it stays in E − A for
  *             later closes. owed += alloc, A += Σalloc, every pts = 0, k += 1, periodEnd += EVERY days
- *             until it is past T.
+ *             until it is past T (a close before periodEnd, the pot's: the next period runs EVERY days
+ *             from T; the record says which, `trigger`).
  *
  * mFp(a) = 1,000,000 + floor(1,000,000 × a / (a + 1,209,600)), a = max(0, verified-clock seconds):
  * bounded (< 2×), strictly increasing, concave; 1.333 at 7 days, 1.5 at 14, 1.682 at 30.
@@ -233,15 +236,15 @@ export function rewardsMode(env = {}) {
 }
 
 export const REWARDS_DEFAULTS = Object.freeze({
-  holderSharePct: 100, everyDays: 7, releasePct: 50, walletCapPct: 10, minBalancePpm: 100,
+  holderSharePct: 100, everyDays: 7, releasePct: 50, closeUsd: 100, walletCapPct: 10, minBalancePpm: 100,
   minPayoutSol: 0.001, minClaimSol: 0.01, maxTxPerRun: 10, maxSolPerRun: 2, priorityMicroLamports: 100_000,
 });
 export const REWARDS_RANGES = Object.freeze({
-  holderSharePct: [0, 100], everyDays: [1, 30], releasePct: [10, 100], walletCapPct: [1, 100], minBalancePpm: [10, 10_000],
+  holderSharePct: [0, 100], everyDays: [1, 30], releasePct: [10, 100], closeUsd: [0, 100_000], walletCapPct: [1, 100], minBalancePpm: [10, 10_000],
   minPayoutSol: [0.0001, 0.1], minClaimSol: [0.001, 1], maxTxPerRun: [1, 50], maxSolPerRun: [0, 20], priorityMicroLamports: [0, 1_000_000],
 });
 export const REWARDS_VARS = Object.freeze({
-  holderSharePct: "REWARDS_HOLDER_SHARE_PCT", everyDays: "REWARDS_EVERY_DAYS", releasePct: "REWARDS_RELEASE_PCT",
+  holderSharePct: "REWARDS_HOLDER_SHARE_PCT", everyDays: "REWARDS_EVERY_DAYS", releasePct: "REWARDS_RELEASE_PCT", closeUsd: "REWARDS_CLOSE_USD",
   walletCapPct: "REWARDS_WALLET_CAP_PCT", minBalancePpm: "REWARDS_MIN_BALANCE_PPM", minPayoutSol: "REWARDS_MIN_PAYOUT_SOL",
   minClaimSol: "REWARDS_MIN_CLAIM_SOL", maxTxPerRun: "REWARDS_MAX_TX_PER_RUN", maxSolPerRun: "REWARDS_MAX_SOL_PER_RUN",
   priorityMicroLamports: "LAUNCH_PRIORITY_MICROLAMPORTS",
@@ -251,7 +254,7 @@ const SOL_KEYS = ["minPayoutSol", "minClaimSol", "maxSolPerRun"];
 /**
  * The rewards configuration from the repository variables, each with its default when unset or not a
  * number, clamped into its range (whole numbers except the SOL amounts): { mode, holderSharePct,
- * everyDays, releasePct, walletCapPct, minBalancePpm, maxTxPerRun, priorityMicroLamports (Numbers),
+ * everyDays, releasePct, closeUsd (0: no close on the pot's worth), walletCapPct, minBalancePpm, maxTxPerRun, priorityMicroLamports (Numbers),
  * minPayoutLamports, minClaimLamports, maxLamportsPerRun (BigInt lamports), notes (what was defaulted
  * or clamped, for the log) }.
  */
@@ -270,7 +273,7 @@ export function rewardsConfig(env = {}) {
   const lamports = (k) => BigInt(Math.round(read(k) * 1e9));
   return {
     mode: rewardsMode(env),
-    holderSharePct: read("holderSharePct"), everyDays: read("everyDays"), releasePct: read("releasePct"),
+    holderSharePct: read("holderSharePct"), everyDays: read("everyDays"), releasePct: read("releasePct"), closeUsd: read("closeUsd"),
     walletCapPct: read("walletCapPct"), minBalancePpm: read("minBalancePpm"), maxTxPerRun: read("maxTxPerRun"),
     priorityMicroLamports: read("priorityMicroLamports"),
     minPayoutLamports: lamports("minPayoutSol"), minClaimLamports: lamports("minClaimSol"), maxLamportsPerRun: lamports("maxSolPerRun"),
@@ -282,7 +285,7 @@ export function rewardsConfig(env = {}) {
 function rulesOf(cfg = {}) {
   const d = REWARDS_DEFAULTS;
   const c = {
-    everyDays: cfg.everyDays ?? d.everyDays, releasePct: cfg.releasePct ?? d.releasePct,
+    everyDays: cfg.everyDays ?? d.everyDays, releasePct: cfg.releasePct ?? d.releasePct, closeUsd: cfg.closeUsd ?? d.closeUsd,
     walletCapPct: cfg.walletCapPct ?? d.walletCapPct, minBalancePpm: cfg.minBalancePpm ?? d.minBalancePpm,
   };
   for (const k of Object.keys(c)) {
@@ -446,9 +449,9 @@ const HOLD_FIELDS = ["until", "slot", "reason"];
 export const STATE_VERSION = 1;
 
 /** The rules the site quotes (state.json "rules", written by each sample from the repository variables). */
-export const RULE_KEYS = Object.freeze(["everyDays", "releasePct", "walletCapPct", "minBalancePpm", "minPayoutLamports"]);
+export const RULE_KEYS = Object.freeze(["everyDays", "releasePct", "closeUsd", "walletCapPct", "minBalancePpm", "minPayoutLamports"]);
 const MIN_PAYOUT_RANGE = REWARDS_RANGES.minPayoutSol.map((s) => BigInt(Math.round(s * 1e9)));
-/** { everyDays, releasePct, walletCapPct, minBalancePpm, minPayoutLamports (BigInt) } from rewardsConfig's answer (or a part of it; the defaults fill the rest). */
+/** { everyDays, releasePct, closeUsd, walletCapPct, minBalancePpm, minPayoutLamports (BigInt) } from rewardsConfig's answer (or a part of it; the defaults fill the rest). */
 export function siteRules(cfg = {}) {
   const r = rulesOf(cfg);
   const minPayoutLamports = cfg.minPayoutLamports ?? BigInt(Math.round(REWARDS_DEFAULTS.minPayoutSol * 1e9));
@@ -698,8 +701,8 @@ export function pruneWallets(state, ledger = null, only = null) {
  * file, exclusionSet), isExcluded (a further predicate), unpayable (Map address → why: owners whose
  * account can never be paid, read at a close; their points are not allocated), eager (credit every
  * wallet at every sample; for the tests' lazy = eager proof) }. Off-curve owners, NEVER_EARN and the
- * mint itself are always excluded. A close due at this sample allocates into owed and adds to
- * ledger.A (closePeriod).
+ * mint itself are always excluded. A close due at this sample (T ≥ periodEnd, or opts.closeNow: the
+ * caller found the pot worth REWARDS_CLOSE_USD) allocates into owed and adds to ledger.A (closePeriod).
  * Returns { status: "genesis" | "sampled" | "skipped", reason?, closed (the period's audit record or
  * null), changed (wallets whose lots changed), excludedNow (addresses newly excluded), minBalance }.
  */
@@ -781,7 +784,7 @@ export function applySample(state, ledger, sample, cfg = {}, opts = {}) {
   state.V = Vn; state.tPrev = T; state.slotPrev = slot;
 
   let closed = null;
-  if (T >= state.periodEnd) closed = closePeriod(state, ledger, { T, slot }, c, { isExcluded: ex, memo, unpayable: opts.unpayable ?? null });
+  if (T >= state.periodEnd || opts.closeNow === true) closed = closePeriod(state, ledger, { T, slot }, c, { isExcluded: ex, memo, unpayable: opts.unpayable ?? null, trigger: T >= state.periodEnd ? "time" : "pot" });
   pruneWallets(state, ledger, closed ? null : touched);
   return { status: "sampled", closed, changed: touched.length, excludedNow, minBalance: minBal };
 }
@@ -824,11 +827,13 @@ export function allocate(pot, entries, capPct) {
  * set to 0 the points of an excluded owner and of one in `unpayable` (Map address → why: its account
  * can never be paid; listed in the record's `refused`), release pot = floor(max(0, E − A) × releasePct
  * / 100), allocate it (walletCapPct), owed += alloc, ledger.A += Σalloc, every pts = 0, period += 1,
- * periodEnd moves on by everyDays until it is past T. Returns the audit record { k, start, end, T,
- * slot, E, A_before, pot, capAmt, totalPts, releasePct, capPct, refused: [[address, pts, why]], rows:
+ * periodEnd moves on by everyDays until it is past T (closed before periodEnd, `trigger` "pot": the next
+ * period runs everyDays from T). Returns the audit record { k, start, end, T, slot, E, A_before, pot,
+ * capAmt, totalPts, releasePct, capPct, trigger ("time" | "pot"), refused: [[address, pts, why]], rows:
  * [[address, pts, alloc]] } (BigInts; auditJson / auditText to write it).
  */
-export function closePeriod(state, ledger, { T, slot }, cfg = {}, { isExcluded = null, memo = new Map(), unpayable = null } = {}) {
+export function closePeriod(state, ledger, { T, slot }, cfg = {}, { isExcluded = null, memo = new Map(), unpayable = null, trigger = "time" } = {}) {
+  if (trigger !== "time" && trigger !== "pot") throw new RewardsError('a close is triggered by "time" or by the "pot"');
   const c = rulesOf(cfg);
   if (state.epoch === null) throw new RewardsError("no period is open before genesis");
   if (!ledger || typeof ledger.E !== "bigint" || typeof ledger.A !== "bigint") throw new RewardsError("closePeriod needs the ledger");
@@ -844,7 +849,8 @@ export function closePeriod(state, ledger, { T, slot }, cfg = {}, { isExcluded =
   }
   refused.sort((x, y) => (x[0] < y[0] ? -1 : 1));
   const U = ledger.E - ledger.A;
-  const pot = U > 0n ? (U * BigInt(c.releasePct)) / 100n : 0n;
+  const releasePct = trigger === "pot" ? 100 : c.releasePct; // (the pot's worth reached: all of it goes out)
+  const pot = U > 0n ? (U * BigInt(releasePct)) / 100n : 0n;
   const { alloc, capAmt, total } = allocate(pot, entries, c.walletCapPct);
   const A_before = ledger.A;
   for (const [a, v] of alloc) {
@@ -856,15 +862,18 @@ export function closePeriod(state, ledger, { T, slot }, cfg = {}, { isExcluded =
   entries.sort((x, y) => (x[1] === y[1] ? (x[0] < y[0] ? -1 : 1) : x[1] > y[1] ? -1 : 1));
   const record = {
     k: state.period, start: state.periodStart, end: state.periodEnd, T, slot, E: ledger.E, A_before, pot, capAmt, totalPts,
-    releasePct: c.releasePct, capPct: c.walletCapPct, refused, rows: entries.map(([a, p]) => [a, p, alloc.get(a) ?? 0n]),
+    releasePct, capPct: c.walletCapPct, trigger, refused, rows: entries.map(([a, p]) => [a, p, alloc.get(a) ?? 0n]),
   };
   for (const w of state.wallets.values()) { w.pts = 0n; w.ptsAt = 0; }
   state.intervals = [];
   state.period += 1;
   const step = c.everyDays * DAY_SECONDS;
-  state.periodStart = state.periodEnd;
-  state.periodEnd += step;
-  while (state.periodEnd <= T) { state.periodStart = state.periodEnd; state.periodEnd += step; }
+  if (T < state.periodEnd) { state.periodStart = T; state.periodEnd = T + step; } // (early, on the pot's worth: a whole period from here)
+  else {
+    state.periodStart = state.periodEnd;
+    state.periodEnd += step;
+    while (state.periodEnd <= T) { state.periodStart = state.periodEnd; state.periodEnd += step; }
+  }
   return record;
 }
 
@@ -872,7 +881,7 @@ export function closePeriod(state, ledger, { T, slot }, cfg = {}, { isExcluded =
 export function auditJson(r) {
   return {
     k: r.k, start: r.start, end: r.end, T: r.T, slot: r.slot, E: String(r.E), A_before: String(r.A_before), pot: String(r.pot),
-    capAmt: String(r.capAmt), totalPts: String(r.totalPts), releasePct: r.releasePct, capPct: r.capPct,
+    capAmt: String(r.capAmt), totalPts: String(r.totalPts), releasePct: r.releasePct, capPct: r.capPct, trigger: r.trigger ?? "time",
     refused: (r.refused ?? []).map(([a, p, why]) => [a, String(p), why]),
     rows: r.rows.map(([a, p, v]) => [a, String(p), String(v)]),
   };
@@ -1479,7 +1488,7 @@ export function rewardsSiteText(rules = {}) {
   return Object.freeze([
     Object.freeze({ title: "Hold $CATSANC, earn SOL.", text: `Once an hour, at a random moment, we check every wallet. You earn points for tokens you held at both this check and the one before: balance × hours × age bonus. You need at least ${(r.minBalancePpm * 1_000).toLocaleString("en-US")} $CATSANC (${r.minBalancePpm / 10_000}% of the 1 billion supply). Pools, bonding curves and team wallets don't count.` }),
     Object.freeze({ title: "Older tokens earn more.", text: "Each token's bonus grows from 1× toward 2×: 1.33× after 1 week, 1.5× after 2 weeks, 1.68× after a month. A brand-new holder always earns at least half the top rate. When you sell, your newest tokens go first, so your oldest keep their age. Tokens you buy or receive start at 1×, and age counts from the first rewards check, so tokens held before the rewards started also begin at 1×." }),
-    Object.freeze({ title: r.everyDays === 1 ? "Every day," : `Every ${r.everyDays} days,`, text: `${share} of the unpaid holder pot (the creator fees our launcher bot has claimed) is split by points${cap} and sent to you automatically. Amounts under ${solText(r.minPayoutLamports).slice(0, -4)} SOL are saved for your next payout and never lost. Every payout's points and amounts are published.` }),
+    Object.freeze({ title: r.everyDays === 1 ? "Every day," : `Every ${r.everyDays} days,`, text: `${share} of the unpaid holder pot (the creator fees our launcher bot has claimed) is split by points${cap} and sent to you automatically.${r.closeUsd > 0 ? ` As soon as the pot is worth $${r.closeUsd.toLocaleString("en-US")}, all of it is split and sent, without waiting for the day.` : ""} Amounts under ${solText(r.minPayoutLamports).slice(0, -4)} SOL are saved for your next payout and never lost. Every payout's points and amounts are published.` }),
   ]);
 }
 /** The site's three lines with the defaults (what the page shows until state.json has its rules). */

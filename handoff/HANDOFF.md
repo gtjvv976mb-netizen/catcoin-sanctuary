@@ -62,7 +62,25 @@ Reviews: first review (12 confirmed) and second review (12 confirmed) are ALL fi
      passes) was sent anyway and then record refused to write it. Now it fails for good (`ineligible`), like one taken.
    - The wallet's balance was read minutes before the simulation (the live check in between). It is read after it.
 
-**Remaining before merge:**
+**Done after the merge of PR #28 (third session, this branch):**
+- First sanctuary launch worked end to end: Ponta (PONTAKUN) on pump.fun at 06:24 UTC 2026-10-01, mint
+  8MPC8bNZwD8a7wNJk6KbmJ2dvk3g9FS4hM4WS8wxJg8Y, 0.0055 SOL, recorded on its card, no warnings.
+- **Mint addresses end in "pump"** (owner's ask): `LAUNCH_MINT_SUFFIX` ("pump" by default, "" for none) and
+  `LAUNCH_MINT_GRIND_MINUTES` (12). The send scans derivation nonces (solana-tx.mjs grindMintNonce, every core,
+  about 10k derivations a second a core, 11.3 million on average for four characters: roughly 5 minutes on a
+  4-core runner, resumable across runs: the row keeps `mintGrind.next`, then `mintNonce`). Deterministic (the
+  smallest nonce), so the lost-commit recovery still finds the mint. Launched rows without a nonce keep the old
+  derivation.
+- **Creator fees paid out at $100** (owner's ask): `REWARDS_CLOSE_USD` (100; 0 for never). Each hourly sample
+  values the unallocated holders' pot (E − A) at SOL's DexScreener price; at $100 or more the period closes early
+  and ALL of the pot is released (the 7-day close still releases REWARDS_RELEASE_PCT, 50%). "Longer holders get
+  more, newer holders treated fairly" was already the rule: points = tokens × hours × an age bonus from 1× to 2×
+  (1.5× at two weeks), so a newcomer earns at least half the top rate. The site's rules text says so.
+- Not done: the scout intake (needs network egress to api.fxtwitter.com, api.dexscreener.com, lite-api.jup.ag,
+  stonkfun.com, en.wikipedia.org and news sites; 71 deduplicated candidates are batched in the session's scratchpad
+  only, redo from handoff/scout/scout-results.json), and the HD remodels (credits shared with the scout cats).
+
+**Remaining before merge (historical, PR #28 merged 2026-10-01 06:05 UTC):**
 1. PR #27's head branch is `claude/practical-cray-ln7m3z`, which this session could not push to. This branch
    (`claude/vigilant-davinci-utlztf`, the same history plus the fixes) is up as its own PR against main, ready for
    review: the owner merges that one and closes #27. Then watch the first Launch run (logs: prepare picks the newest

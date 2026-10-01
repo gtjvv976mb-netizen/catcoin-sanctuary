@@ -255,9 +255,22 @@ function fakeChain({ wallet, balance = 2_000_000_000, claimable = 0, holders = [
 }
 
 /** Run one phase through the CLI: { code, logs, errs }. `rpc`: another RPC than the chain's own (a slow one, a failing one). */
-async function run(phase, { env, chain, c, random = () => 1234, confirmWaitMs = 9_000, confirmPollMs = 3_000, site, rpc = chain.rpc }) {
+/** The tests' web: nothing answers (the pot's worth, SOL's price on DexScreener, is then unknown: no early close). */
+const noNetwork = async (url) => { throw new Error(`no network in the tests (${String(url).slice(0, 40)})`); };
+/** DexScreener's answer for wrapped SOL: one pair at `price` dollars (or down); how often it was asked. */
+function solPrice(price, { down = false } = {}) {
+  const f = async (url) => {
+    f.calls += 1;
+    if (!String(url).startsWith("https://api.dexscreener.com/tokens/v1/solana/So11111111111111111111111111111111111111112")) throw new Error(`unexpected fetch ${url}`);
+    if (down) throw new Error("down");
+    return new Response(JSON.stringify([{ chainId: "solana", baseToken: { address: "So11111111111111111111111111111111111111112" }, priceUsd: String(price), liquidity: { usd: 500_000_000 } }]), { status: 200 });
+  };
+  f.calls = 0;
+  return f;
+}
+async function run(phase, { env, chain, c, random = () => 1234, confirmWaitMs = 9_000, confirmPollMs = 3_000, site, rpc = chain.rpc, fetchImpl = noNetwork }) {
   const logs = [], errs = [];
-  const code = await main([phase], { env, root: site.root, rpc, now: c.now, sleep: c.sleep, random, stdout: (l) => logs.push(l), stderr: (l) => errs.push(l), confirmWaitMs, confirmPollMs });
+  const code = await main([phase], { env, root: site.root, rpc, fetchImpl, now: c.now, sleep: c.sleep, random, stdout: (l) => logs.push(l), stderr: (l) => errs.push(l), confirmWaitMs, confirmPollMs });
   return { code, logs, errs, all: [...logs, ...errs].join("\n") };
 }
 
@@ -1066,7 +1079,7 @@ test("snapshot: at a close the accounts of the wallets with points are read, and
   assert.ok(logs.some((l) => /1 owner\(s\) with points can never be paid \(its account is executable \(a program\)\)/.test(l)), logs.join("\n"));
   // The rules in force, recorded for the site (REWARDS_MIN_PAYOUT_SOL included).
   const st = site.load().state;
-  assert.deepEqual(site.json(FILES.state).rules, { everyDays: 1, releasePct: 50, walletCapPct: 10, minBalancePpm: 100, minPayoutLamports: "2000000" });
+  assert.deepEqual(site.json(FILES.state).rules, { everyDays: 1, releasePct: 50, closeUsd: 100, walletCapPct: 10, minBalancePpm: 100, minPayoutLamports: "2000000" });
   assert.equal(R.rewardsSiteText(st.rules)[2].title, "Every day,");
   assert.match(R.rewardsSiteText(st.rules)[2].text, /under 0\.002 SOL/);
 });
@@ -1179,4 +1192,61 @@ test("rewards workflow: a commit after each job of data/rewards only, the token 
   assert.match(c1, /\n\s+if: \$\{\{ !cancelled\(\) \}\}\n/);
   assert.match(c2, /\n\s+if: \$\{\{ always\(\) \}\}\n/, "a transaction sent is committed even when the send step failed or the run was cancelled");
   assert.ok(!/sanctuary-launches|socials|wallets\.json|rewards-exclude/.test(commits.join("\n")), "the owner's files are never committed by the bot");
+});
+
+test("the pot's worth: a period closes early at the sample where the unallocated pot is worth REWARDS_CLOSE_USD at SOL's price, all of it released; under that, or with no price, the period runs on; 0 asks for no price", async (t) => {
+  const pop = population();
+  const landed = () => { const L = R.emptyLedger(), g = fakeSig(); R.recordClaimSending(L, { sig: g, lastValidBlockHeight: 1, sharePct: 100, sentAt: iso(START) }); R.settleClaim(L, g, { status: "landed", claimed: 1_000_000_000n, walletFee: 0n, net: 1_000_000_000n }, { settledAt: iso(START) }); return L; };
+  const twoHours = async ({ env = { REWARDS_ENABLED: "on" }, fetchImpl }) => {
+    const site = makeSite(t, { ledger: landed() });
+    const chain = fakeChain({ wallet: holderAddress(), holders: pop.rows }), c = clock(), logs = [];
+    for (let h = 0; h <= 1; h++) {
+      c.t = START + (h + 1) * HOUR; chain.s.time = T0 + h * 3600; chain.s.slot += 9000;
+      const r = await run("snapshot", { env, chain, c, site, fetchImpl });
+      assert.equal(r.code, 0, r.all);
+      logs.push(...r.logs);
+    }
+    return { site, logs: logs.join("\n"), state: site.load().state };
+  };
+  // 1 SOL unallocated at $150 a SOL: $150, over $100: closed at the second sample (an hour in), the whole pot released.
+  const rich = solPrice(150);
+  const early = await twoHours({ fetchImpl: rich });
+  assert.equal(rich.calls, 1, "asked once: not at genesis (no close before it), once at the next sample");
+  assert.equal(early.state.period, 2, early.logs);
+  assert.deepEqual([early.state.periodStart, early.state.periodEnd], [T0 + 3600, T0 + 3600 + 7 * 86_400], "the next period runs its 7 days from the close");
+  const audit = early.site.json(R.periodPath(1));
+  assert.deepEqual([audit.trigger, audit.releasePct, audit.pot, audit.E, audit.A_before, audit.T], ["pot", 100, "1000000000", "1000000000", "0", T0 + 3600]);
+  assert.equal(audit.rows.reduce((s, r) => s + BigInt(r[2]), 0n) > 0n, true, "allocated by points");
+  assert.match(early.logs, /period 1 closed early \(the pot is worth about \$150\.00 at \$150\.00 a SOL, \$100 or more\): 1 SOL released \(100% of the unallocated 1 SOL\)/);
+  // $50 a SOL: $50, under $100: no close, and the log says how far it is.
+  const poor = await twoHours({ fetchImpl: solPrice(50) });
+  assert.equal(poor.state.period, 1);
+  assert.match(poor.logs, /the unallocated holder pot \(1 SOL\) is worth about \$50\.00 at \$50\.00 a SOL; the period closes early once it is worth \$100/);
+  assert.ok(!poor.site.exists(R.periodPath(1)));
+  // DexScreener down: a notice, no close (the period's end still closes it).
+  const blind = await twoHours({ fetchImpl: solPrice(150, { down: true }) });
+  assert.equal(blind.state.period, 1);
+  assert.match(blind.logs, /::notice title=Rewards::SOL's price could not be read \(DexScreener could not be reached \(network error\)\): whether the pot is worth \$100 is checked again next hour/);
+  // REWARDS_CLOSE_USD 0: never asked.
+  const off = solPrice(150);
+  const never = await twoHours({ env: { REWARDS_ENABLED: "on", REWARDS_CLOSE_USD: "0" }, fetchImpl: off });
+  assert.equal(off.calls, 0);
+  assert.equal(never.state.period, 1);
+  assert.equal(never.site.json(FILES.state).rules.closeUsd, 0);
+  // The rules themselves: closePeriod on the pot releases all of it and starts the next period at T; on time, the share, from the period's end.
+  const L = landed(), state = R.emptyState(), cfg = R.rewardsConfig({});
+  const holders = new Map(pop.rows.filter((h) => (h[2] ?? 1) === 1).map(([o, v]) => [o, v]));
+  const sampleAt = (h) => ({ T: T0 + h * 3600, slot: 1 + h, mint: MINT, tokenProgram: TOKEN_2022_PROGRAM, decimals: 6, supply: SUPPLY, holders });
+  R.applySample(state, L, sampleAt(0), cfg, { excluded: new Set([OWNER]) });
+  const r1 = R.applySample(state, L, sampleAt(1), cfg, { excluded: new Set([OWNER]), closeNow: true });
+  assert.deepEqual([r1.closed.trigger, r1.closed.releasePct, r1.closed.pot, L.A, state.period, state.periodStart, state.periodEnd], ["pot", 100, 1_000_000_000n, 300_000_000n, 2, T0 + 3600, T0 + 3600 + 7 * 86_400], "all of the pot released; the 10% wallet cap keeps 700M of it in the pot");
+  assert.equal(R.auditJson(r1.closed).trigger, "pot");
+  assert.deepEqual(JSON.parse(R.auditText(r1.closed)), R.auditJson(r1.closed));
+  const g2 = fakeSig(); R.recordClaimSending(L, { sig: g2, lastValidBlockHeight: 1, sharePct: 100, sentAt: iso(START) }); R.settleClaim(L, g2, { status: "landed", claimed: 400_000_000n, walletFee: 0n, net: 400_000_000n }, { settledAt: iso(START) });
+  for (let h = 2; h <= 7 * 24; h++) R.applySample(state, L, sampleAt(h), cfg, { excluded: new Set([OWNER]) });
+  const closes = [];
+  for (let h = 7 * 24 + 1; h <= 7 * 24 + 2; h++) { const r = R.applySample(state, L, sampleAt(h), cfg, { excluded: new Set([OWNER]) }); if (r.closed) closes.push(r.closed); }
+  assert.equal(closes.length, 1, "the time close, a week after the early one");
+  assert.deepEqual([closes[0].trigger, closes[0].releasePct, closes[0].pot], ["time", 50, 550_000_000n], "half of what the cap kept plus the new claim");
+  assert.throws(() => R.closePeriod(state, L, { T: T0 + 9 * 86_400, slot: 9 }, cfg, { trigger: "bogus" }), /triggered by "time" or by the "pot"/);
 });

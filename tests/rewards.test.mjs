@@ -233,7 +233,7 @@ test("floorDiv rounds toward −∞; minBalance rounds up", () => {
 
 test("the repository variables: defaults, clamping (logged), whole numbers, SOL in lamports, the mode", () => {
   assert.deepEqual({ ...CFG, notes: undefined }, {
-    mode: "off", holderSharePct: 100, everyDays: 7, releasePct: 50, walletCapPct: 10, minBalancePpm: 100, maxTxPerRun: 10,
+    mode: "off", holderSharePct: 100, everyDays: 7, releasePct: 50, closeUsd: 100, walletCapPct: 10, minBalancePpm: 100, maxTxPerRun: 10,
     priorityMicroLamports: 100_000, minPayoutLamports: 1_000_000n, minClaimLamports: 10_000_000n, maxLamportsPerRun: 2_000_000_000n, notes: undefined,
   });
   assert.deepEqual(CFG.notes, []);
@@ -1132,7 +1132,7 @@ test("the state and the ledger files: round trips, and every kind of corruption 
   assert.equal(R.setRules(e.state, R.rewardsConfig({ REWARDS_EVERY_DAYS: "2", REWARDS_MIN_PAYOUT_SOL: "0.002" })), false, "unchanged: nothing to write");
   R.holdWallets(e.state, [addr("zz")], { until: NOW, slot: 12, reason: "its payout failed in simulation" });
   const sj = JSON.parse(R.stateText(e.state)), lj = JSON.parse(R.ledgerText(e.ledger));
-  assert.deepEqual(sj.rules, { everyDays: 2, releasePct: 50, walletCapPct: 10, minBalancePpm: 100, minPayoutLamports: "2000000" });
+  assert.deepEqual(sj.rules, { everyDays: 2, releasePct: 50, closeUsd: 100, walletCapPct: 10, minBalancePpm: 100, minPayoutLamports: "2000000" });
   assert.deepEqual(sj.wallets[addr("zz")].hold, { until: NOW, slot: 12, reason: "its payout failed in simulation" });
   assert.equal(R.stateText(e.state).split("\n").filter((l) => l.includes('"hold"')).length, 1, "only a held wallet's line carries a hold");
   assert.deepEqual(R.validateRewardsState(sj), e.state);
@@ -1190,7 +1190,7 @@ test("the state and the ledger files: round trips, and every kind of corruption 
   // an audit file is plain JSON of the close
   const rec = e.periods[0].record;
   assert.deepEqual(JSON.parse(R.auditText(rec)), R.auditJson(rec));
-  assert.deepEqual(Object.keys(R.auditJson(rec)), ["k", "start", "end", "T", "slot", "E", "A_before", "pot", "capAmt", "totalPts", "releasePct", "capPct", "refused", "rows"]);
+  assert.deepEqual(Object.keys(R.auditJson(rec)), ["k", "start", "end", "T", "slot", "E", "A_before", "pot", "capAmt", "totalPts", "releasePct", "capPct", "trigger", "refused", "rows"]);
 });
 
 /* ── the spec's scenarios (§13), through the module ─────────────────────────────────── */
@@ -1538,4 +1538,20 @@ test("the website's three lines say what the rules do, with the numbers of the r
   assert.equal(R.solText(4_491_000n), "0.004491 SOL");
   assert.equal(R.solText(-5_001n), "-0.000005001 SOL");
   assert.equal(R.solText(2_000_000_000n), "2 SOL");
+});
+
+test("REWARDS_CLOSE_USD: 100 unless set, 0 for never, clamped to 0..100,000; the site's third line says the pot is paid out whole as soon as it is worth that much", () => {
+  assert.equal(CFG.closeUsd, 100);
+  assert.deepEqual([R.rewardsConfig({ REWARDS_CLOSE_USD: "250" }).closeUsd, R.rewardsConfig({ REWARDS_CLOSE_USD: "0" }).closeUsd, R.rewardsConfig({ REWARDS_CLOSE_USD: "-5" }).closeUsd, R.rewardsConfig({ REWARDS_CLOSE_USD: "1e9" }).closeUsd, R.rewardsConfig({ REWARDS_CLOSE_USD: "12.9" }).closeUsd], [250, 0, 0, 100_000, 12]);
+  const junk = R.rewardsConfig({ REWARDS_CLOSE_USD: "soon" });
+  assert.equal(junk.closeUsd, 100);
+  assert.ok(junk.notes.some((n) => /REWARDS_CLOSE_USD is not a number/.test(n)), junk.notes.join("; "));
+  assert.deepEqual(R.RULE_KEYS, ["everyDays", "releasePct", "closeUsd", "walletCapPct", "minBalancePpm", "minPayoutLamports"]);
+  assert.equal(R.siteRules(R.rewardsConfig({})).closeUsd, 100);
+  assert.throws(() => R.siteRules({ closeUsd: -1 }), R.RewardsError);
+  const line = (rules) => R.rewardsSiteText(rules)[2];
+  assert.equal(line({}).title, "Every 7 days,");
+  assert.match(line({}).text, /^half of the unpaid holder pot .* As soon as the pot is worth \$100, all of it is split and sent, without waiting for the day\. Amounts under 0\.001 SOL/);
+  assert.match(line({ closeUsd: 2500 }).text, /worth \$2,500, all of it/);
+  assert.ok(!/As soon as/.test(line({ closeUsd: 0 }).text), "no such sentence when the rule is off");
 });
