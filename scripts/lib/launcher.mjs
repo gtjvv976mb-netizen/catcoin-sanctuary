@@ -931,11 +931,11 @@ export const OWN_WAIT_ALERT_HOURS = 6;
 export const PUMP_CHECK_PAGES = 40;
 /** How far before the trend watch's coverage mark (data/trending.json fresh.coveredUntil) the live check reads back. */
 export const PUMP_CHECK_MARGIN_MS = 15 * 60_000;
-/** One page of pump.fun's list, as the trend watch reads it (3 tries, a longer wait after a 429), or null. */
-async function pumpPage(fetchImpl, sleep, offset) {
+/** One page of pump.fun's list (or its search), as the trend watch reads it (3 tries, a longer wait after a 429), or null. */
+async function pumpPage(fetchImpl, sleep, url) {
   for (let t = 0; t < 3; t++) {
     try {
-      const res = await fetchImpl(PUMP_LIST(offset), { headers: { accept: "application/json", "user-agent": "catcoinsanctuary.com launcher" }, signal: AbortSignal.timeout(20_000) });
+      const res = await fetchImpl(url, { headers: { accept: "application/json", "user-agent": "catcoinsanctuary.com launcher" }, signal: AbortSignal.timeout(20_000) });
       if (res.ok) { const j = await res.json(); if (Array.isArray(j)) return j; }
       await sleep(res.status === 429 ? 3000 * (t + 2) * 2 : 1500);
     } catch { await sleep(1500); }
@@ -943,39 +943,107 @@ async function pumpPage(fetchImpl, sleep, offset) {
   return null;
 }
 const PUMP_LIST = (offset) => `https://frontend-api-v3.pump.fun/coins?offset=${offset}&limit=50&sort=created_timestamp&order=DESC&includeNsfw=false`;
+/**
+ * pump.fun's own search (the site's search box: Solana coins whose name or ticker carries the term, nsfw ones too; a few
+ * close matches first, then newest first). Its list of newest coins ends about 1,000 coins back (an empty page past there,
+ * 2026-10-01: about 20 minutes at its busiest), so a check that must read further back asks the search for the kit's ticker.
+ */
+const PUMP_SEARCH = (term, offset) => `https://frontend-api-v3.pump.fun/coins/search-unrestricted?offset=${offset}&limit=50&sort=created_timestamp&order=DESC&includeNsfw=true&searchTerm=${encodeURIComponent(term)}`;
+/** Pages of pump.fun's search the live check reads at most for one term (50 a page). */
+export const PUMP_SEARCH_PAGES = 10;
+/** Coins of the walk's oldest page the search is asked for by ticker (one found is enough) before its answers are believed. */
+export const SEARCH_PROOFS = 3;
+/** Results pump.fun's search may put first, out of time order (its closest matches: 2026-10-01, two for "Bob"). */
+export const SEARCH_LEADERS = 5;
+const realTime = (c) => { const t = Number(c?.created_timestamp); return Number.isFinite(t) && t > 0 ? t : null; };
+
+/**
+ * pump.fun's search for `term` back to `sinceMs`: { coins } (every result read), or { unchecked: why } when it did
+ * not answer, gave more than `pages` pages since then, or was not newest first after its first SEARCH_LEADERS results
+ * (then where it stopped proves nothing). A page shorter than 50 is the results' end; an empty one is asked again twice
+ * first (as the list's).
+ */
+export async function pumpSearchSince({ fetchImpl, sleep = async () => {}, term, sinceMs, pages = PUMP_SEARCH_PAGES }) {
+  const coins = [];
+  let last = Infinity;
+  for (let page = 0, offset = 0; page < pages; page++) {
+    let list = await pumpPage(fetchImpl, sleep, PUMP_SEARCH(term, offset));
+    for (let again = 0; again < EMPTY_PAGE_RETRIES && Array.isArray(list) && !list.length; again++) { await sleep(2000); list = await pumpPage(fetchImpl, sleep, PUMP_SEARCH(term, offset)); }
+    if (!list) return { unchecked: `pump.fun's search for "${term}" did not answer` };
+    coins.push(...list);
+    const times = list.map(realTime).filter((t) => t !== null);
+    // (the first page's closest matches come first, whatever their time: the order is checked from where it holds to the end)
+    let from = 0;
+    for (let i = times.length - 1; i > 0; i--) if (times[i] > times[i - 1]) { from = i; break; }
+    if (page ? times.some((t, i) => t > (i ? times[i - 1] : last)) : from > SEARCH_LEADERS) return { unchecked: `pump.fun's search for "${term}" was not newest first` };
+    if (times.length) last = times[times.length - 1];
+    if (list.length < 50 || (times.length && last < sinceMs)) return { coins };
+    offset += list.length;
+    await sleep(400);
+  }
+  return { unchecked: `pump.fun's search for "${term}" gave more than ${pages * 50} coins back to ${ISO_SECONDS(sinceMs)}` };
+}
+
+/**
+ * Does pump.fun's search hold its launches as far back as the walk read them? Some coin of the walk's oldest page (the
+ * longest tickers first: the fewest other results) is found by its ticker within 2 pages: the search answers, matches
+ * tickers, and holds what was launched by then (a search that ignored the term would give the newest coins, not that one).
+ */
+async function searchHolds({ fetchImpl, sleep, page }) {
+  const proofs = page.filter((c) => realTime(c) !== null && c?.mint && String(c?.symbol ?? "").trim().length >= 3)
+    .sort((a, b) => String(b.symbol).trim().length - String(a.symbol).trim().length).slice(0, SEARCH_PROOFS);
+  for (const c of proofs) {
+    const r = await pumpSearchSince({ fetchImpl, sleep, term: String(c.symbol).trim(), sinceMs: realTime(c), pages: 2 });
+    if (r.coins?.some((x) => x?.mint === c.mint)) return true;
+  }
+  return false;
+}
 
 /**
  * The live adoption check, right before a sanctuary cat's coin is signed: pump.fun's launches since `sinceMs`
  * carrying the cat's kit name and ticker (sameKit), not the sanctuary's own (its launcher wallets). Returns
- * { taken: [mints] }, or { unchecked: why } when pump.fun's list could not be read back to `sinceMs` (then
- * nothing is sent: the next run tries again). data/adoptions.json only knows what the trend watch's last scan
+ * { taken: [mints] }, or { unchecked: why } when pump.fun could not be read back to `sinceMs` (then nothing is sent:
+ * the next run tries again). The newest coins are walked first; past the list's reach (about 1,000 coins), pump.fun's
+ * search is asked for the kit's ticker back to `sinceMs` (a kit's coin carries it: sameKit), once it has found a coin
+ * of the walk's oldest page by its ticker (so it holds every launch the walk did not read). data/adoptions.json only knows what the trend watch's last scan
  * saw; a visitor who adopted since is found here, so the sanctuary never launches a second coin for a cat.
  */
-export async function kitLaunchedSince({ fetchImpl, sleep = async () => {}, kit, sinceMs, owners = new Set(), pages = PUMP_CHECK_PAGES }) {
+export async function kitLaunchedSince({ fetchImpl, sleep = async () => {}, kit, sinceMs, owners = new Set(), pages = PUMP_CHECK_PAGES, search = true }) {
   const taken = new Set();
-  let read = 0, oldest = Infinity, emptyAt = null;
+  const look = (coin) => {
+    const t = Number(coin?.created_timestamp);
+    // A coin with no real time is matched too (its time unknown): a kit's name and ticker there is never let through.
+    if (!owners.has(coin?.creator) && sameKit(coin, [kit]).length && (!(t > 0) || t >= sinceMs)) taken.add(String(coin.mint));
+  };
+  let read = 0, oldest = Infinity, emptyAt = null, down = false, lastPage = null;
   for (let page = 0, offset = 0; page < pages; page++) {
-    let list = await pumpPage(fetchImpl, sleep, offset);
+    let list = await pumpPage(fetchImpl, sleep, PUMP_LIST(offset));
     // (pump.fun at times answers a page with an empty list mid-walk, 2026-10-01: asked again twice before the walk ends)
-    for (let again = 0; again < EMPTY_PAGE_RETRIES && Array.isArray(list) && !list.length; again++) { await sleep(2000); list = await pumpPage(fetchImpl, sleep, offset); }
-    if (!list) return taken.size ? { taken: [...taken] } : { unchecked: "pump.fun's list of new coins did not answer" };
-    if (list.length) read++;
-    for (const coin of list) {
-      const t = Number(coin?.created_timestamp);
-      // A coin with no real time is matched too (its time unknown): a kit's name and ticker there is never let through.
-      if (!owners.has(coin?.creator) && sameKit(coin, [kit]).length && (!(t > 0) || t >= sinceMs)) taken.add(String(coin.mint));
-    }
+    for (let again = 0; again < EMPTY_PAGE_RETRIES && Array.isArray(list) && !list.length; again++) { await sleep(2000); list = await pumpPage(fetchImpl, sleep, PUMP_LIST(offset)); }
+    if (!list) { down = true; break; }
+    if (list.length) { read++; lastPage = list; }
+    for (const coin of list) look(coin);
     // Only a real time proves the walk reached `sinceMs` (Number(null) is 0); pump.fun's list never ends within these pages.
-    const times = list.map((c) => Number(c?.created_timestamp)).filter((t) => Number.isFinite(t) && t > 0);
+    const times = list.map(realTime).filter((t) => t !== null);
     if (times.length) oldest = Math.min(oldest, ...times);
     if (times.length && Math.min(...times) < sinceMs) return { taken: [...taken] };
     if (!list.length) { emptyAt = offset; break; }
     offset += list.length;
     await sleep(400);
   }
-  // (how far the walk got, for the log: an empty page, or the page budget, and the oldest launch read)
-  const how = `${read} page(s) read${Number.isFinite(oldest) ? `, back to ${ISO_SECONDS(oldest)}` : ""} of the ${ISO_SECONDS(sinceMs)} needed${emptyAt !== null ? `; pump.fun answered offset ${emptyAt} with an empty list` : ""}`;
-  return taken.size ? { taken: [...taken] } : { unchecked: `pump.fun's list did not reach back to the trend watch's coverage mark within ${pages} pages (${how})` };
+  if (taken.size) return { taken: [...taken] };
+  if (down && !read) return { unchecked: "pump.fun's list of new coins did not answer" };
+  // (how far the walk got, for the log: an empty page, the list not answering, or the page budget, and the oldest launch read)
+  const end = emptyAt !== null ? `; pump.fun answered offset ${emptyAt} with an empty list` : down ? "; pump.fun's list stopped answering" : "";
+  const how = `${read} page(s) read${Number.isFinite(oldest) ? `, back to ${ISO_SECONDS(oldest)}` : ""} of the ${ISO_SECONDS(sinceMs)} needed${end}`;
+  const short = `pump.fun's list did not reach back to the trend watch's coverage mark within ${pages} pages (${how})`;
+  if (!search || !lastPage) return { unchecked: short };
+  // Past the list's reach: pump.fun's search for the kit's ticker, once it is shown to hold what the walk read.
+  if (!(await searchHolds({ fetchImpl, sleep, page: lastPage }))) return { unchecked: `${short}, and pump.fun's search did not find any of the walk's oldest coins by ticker (down or behind)` };
+  const r = await pumpSearchSince({ fetchImpl, sleep, term: String(kit.ticker ?? "").trim(), sinceMs });
+  if (r.unchecked) return { unchecked: `${short}, and ${r.unchecked}` };
+  for (const coin of r.coins) look(coin);
+  return { taken: [...taken], searched: true };
 }
 /** Times an empty page is asked again before a walk of pump.fun's list ends (it never ends within the pages read). */
 export const EMPTY_PAGE_RETRIES = 2;

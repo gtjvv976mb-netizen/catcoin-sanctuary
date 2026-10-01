@@ -56,6 +56,13 @@ Reviews: first review (12 confirmed) and second review (12 confirmed) are ALL fi
      (build-trending), and the live check reads back over the windows since the cat's X post (`unreadWindows`); past
      the list's reach the row waits (`adoption_unchecked`) until the owner, having looked on pump.fun, approves the
      cat's post id in `data/launch-approvals.json`. A window before the post changes nothing.
+   - Later the same day: pump.fun's newest-coins list ends about 1,000 coins back (an empty page at offset ~1050,
+     ~20 minutes at its busiest), so both the trend watch's mark and the live check stalled for hours. Now the trend
+     watch lets a mark go as a gap once the list runs out past `LIST_DEPTH` (900) coins. Past the list's end, the live
+     check asks pump.fun's own search (`/coins/search-unrestricted`, newest first, the site's search box) for the kit's
+     ticker. It believes the search only after the search has found one of the walk's oldest coins by its ticker,
+     which shows the search is up, filters, and is current. Tested live 2026-10-01: a coin 8 s old was already there,
+     and ROLFCAT's real mint was found.
    - A sanctuary row tried again (it gave way, or a send failed) could take the day's last launch. The retry (prepare
      step 2) and the send now keep the reserved-slot rule too.
    - At the send, a cat that could not be prepared as it was any more (portrait gone, row refused, no lore line that
