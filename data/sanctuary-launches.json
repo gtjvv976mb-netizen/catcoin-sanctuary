@@ -2,6 +2,73 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105753628418187702",
+      "url": "https://x.com/catcosanctuary/status/2105753628418187702",
+      "name": "Bugcat Capoo",
+      "coinName": "Bugcat Capoo",
+      "ticker": "CAPOOBUG",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "cartoon",
+      "lore": "Bugcat Capoo (貓貓蟲咖波, Māomāochóng Kābō) is a chubby blue cat with six legs, created in 2014 by the Taiwanese artist Yara (亞拉).",
+      "image": "https://catcoinsanctuary.com/assets/portraits/CAPOOBUG.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/CAPOOBUG.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105753628418187702.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-01T20:18:39Z",
+      "attempts": 0,
+      "cat": {
+        "id": "bugcat-capoo",
+        "ticker": "CAPOOBUG",
+        "name": "Bugcat Capoo",
+        "coinName": "Bugcat Capoo",
+        "owner": "Yara (亞拉), Taiwanese artist; official X account @bugcat_capoo_tw",
+        "category": "viral",
+        "story": "Bugcat Capoo (貓貓蟲咖波, Māomāochóng Kābō) is a chubby blue cat with six legs, created in 2014 by the Taiwanese artist Yara (亞拉). His official description: \"a little monster like a cat and like a bug, both violent and cute, who loves to eat meat\". He is always hungry for meat, dislikes vegetables, and lives with his owner Lala and the dog Dogdog. Capoo began as an amateur strip on the Taiwanese site Bahamut. A set of 40 LINE stickers followed in October 2014. After winning the short-comic category of the 2015 WEBTOON Original Comic Competition, he ran as a LINE WEBTOON comic until March 2020. Marking his 12th birthday, @bugcat_capoo_tw posted on 19 May 2026 in Yara's own voice: \"I've been drawing Capoo for 12 years now\" and \"I'll keep drawing ... until Capoo reaches Mars!\"",
+        "look": "Drawn character in a flat cartoon style with thick dark outlines. A chubby, gumdrop-shaped sky-blue body on four short stubby legs like a real cat, with two small pointed triangular cat ears. A large white oval belly patch runs from chest to base. A row of darker-blue rounded scale bumps runs down the edge of his back: the 'bug' part. Small black oval dot eyes spaced wide apart, and a tiny cat 'ω' mouth that opens into a red-pink mouth when he is happy. He wears no accessories. In the official 7-ELEVEN Taichung video, a giant blue Capoo plush sits with a yellow chick on its head.",
+        "coat": {
+          "base": "blue",
+          "second": "white",
+          "pattern": "solid",
+          "eyes": "black"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/bugcat_capoo_tw/status/2056588615908757804",
+          "author": "bugcat_capoo_tw",
+          "handle": "bugcat_capoo_tw",
+          "date": "2026-05-19",
+          "dateType": "posted",
+          "text": "Capoo is turning 12! I hope you all love the new Baby Capoo comic series~ I've been drawing Capoo for 12 years now. At this point, I can draw him with my eyes closed! (Though it turns out pretty ugly...) Thank you all so much for your incredible support. You keep me going without a pause. I'II keep drawing until I'm 200 years old, and until Capoo reaches Mars!❤️🚀",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Wikipedia: Bugcat Capoo",
+            "url": "https://en.wikipedia.org/wiki/Bugcat_Capoo"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "CAPOO",
+          "contract": "Ac9og1YG9vAYc2TN9G4KhTBoyuMC5s79ux1gjpCMRbRv",
+          "mcapUsd": 6256
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Yara (亞拉), Taiwanese artist; official X account @bugcat_capoo_tw.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/CAPOOBUG.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      }
+    },
+    {
       "postId": "2105720432263360546",
       "url": "https://x.com/catcosanctuary/status/2105720432263360546",
       "name": "Blue Cat",
