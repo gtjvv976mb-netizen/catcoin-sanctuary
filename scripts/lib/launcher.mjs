@@ -974,14 +974,14 @@ export async function kitLaunchedSince({ fetchImpl, sleep = async () => {}, kit,
 /**
  * The trend watch's unread windows of pump.fun's launches (data/trending.json fresh.gaps: too many to catch up after a
  * stop, or a coverage mark too old to read back to) a visitor could have adopted this cat in: the ones ending after its
- * X post (a visitor adopts a cat it has seen: its post; with no post time known, every one since the kits went live), as
- * { fromMs, toMs }, oldest first. A window with no readable time counts from the kits' first day (the check then waits).
+ * X post, from the post on (a visitor adopts a cat it has seen: its post; with no post time known, every one since the
+ * kits went live), as { fromMs, toMs }, oldest first. A window with no readable time counts from the kits' first day (the check then waits).
  * None once a person has approved the post (data/launch-approvals.json): they looked on pump.fun themselves.
  */
 export function unreadWindows(gaps, postedMs, approved = false) {
   if (approved || !Array.isArray(gaps)) return [];
   const live = Date.parse(KITS_LIVE), floor = Number.isFinite(postedMs) ? postedMs : live;
-  return gaps.map((g) => { const from = Date.parse(g?.from ?? ""), to = Date.parse(g?.to ?? ""); return { fromMs: Number.isFinite(from) ? from : live, toMs: Number.isFinite(to) ? to : Infinity }; })
+  return gaps.map((g) => { const from = Date.parse(g?.from ?? ""), to = Date.parse(g?.to ?? ""); return { fromMs: Math.max(Number.isFinite(from) ? from : live, floor), toMs: Number.isFinite(to) ? to : Infinity }; })
     .filter((g) => g.toMs > floor).sort((a, b) => a.fromMs - b.fromMs);
 }
 /** When a sanctuary cat's X post went out (its release in data/release-queue.json), in ms, or NaN. */

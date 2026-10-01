@@ -339,14 +339,23 @@ test("coverage mark: fresh.coveredUntil moves to now only when the read reached 
   // A read that only reached 20 minutes back while the mark is 80 minutes back: not reached, kept.
   const short = await buildTrending({ data: { ...data(), trending: second.trending }, fetchImpl: pumpAt(later + 20 * 60_000, { back: 20 * 60_000 }), nowMs: later + 20 * 60_000, pause: 0 });
   assert.equal(short.trending.fresh.coveredUntil, first.trending.fresh.coveredUntil);
-  // A mark more than a day old is past any read: the run reads the last half hour, the mark moves, and the window up to
+  // A mark more than 90 minutes old is past what a run reads reliably: the run reads the last half hour, the mark moves, and the window up to
   // the read is noted as a gap (fresh.gaps), with a warning: the launcher reads back over it or waits for a person.
   const aged = { ...first.trending, fresh: { ...first.trending.fresh, updatedAt: "2026-09-26T08:00:00Z", coveredUntil: "2026-09-26T08:00:00Z" } };
   const logs = [];
   const after = await buildTrending({ data: { ...data(), trending: aged }, fetchImpl: pumpAt(NOW), nowMs: NOW, pause: 0, log: (l) => logs.push(l) });
   assert.equal(after.trending.fresh.coveredUntil, "2026-09-27T09:00:00Z");
   assert.deepEqual(after.trending.fresh.gaps, [{ from: "2026-09-26T08:00:00Z", to: "2026-09-27T08:29:00Z" }]);
-  assert.ok(logs.some((l) => /^::warning::pump\.fun's launches from 2026-09-26T08:00:00Z to 2026-09-27T08:29:00Z were not read \(the coverage mark was more than a day old\)/.test(l)), logs.join("\n"));
+  assert.ok(logs.some((l) => /^::warning::pump\.fun's launches from 2026-09-26T08:00:00Z to 2026-09-27T08:29:00Z were not read \(the coverage mark was more than 90 minutes old\)/.test(l)), logs.join("\n"));
+  // The stuck mark (2026-10-01): each run failed partway, kept the mark, and had more to read the next time. At 80 minutes old
+  // the run still reads back to it (and keeps it when it can't); past 90 it reads from its own last run, and the rest is a gap.
+  const at = (ms) => new Date(ms).toISOString().replace(/\.\d{3}Z$/, "Z"), T = NOW + 5 * 3_600_000;
+  const markAged = (min) => ({ ...first.trending, fresh: { ...first.trending.fresh, updatedAt: at(T - 20 * 60_000), coveredUntil: at(T - min * 60_000) } });
+  const kept = await buildTrending({ data: { ...data(), trending: markAged(80) }, fetchImpl: pumpAt(T, { back: 30 * 60_000 }), nowMs: T, pause: 0 });
+  assert.deepEqual([kept.trending.fresh.coveredUntil, kept.trending.fresh.gaps], [at(T - 80 * 60_000), undefined], "80 minutes: still read back to, kept when not reached");
+  const freed = await buildTrending({ data: { ...data(), trending: markAged(100) }, fetchImpl: pumpAt(T, { back: 30 * 60_000 }), nowMs: T, pause: 0 });
+  assert.equal(freed.trending.fresh.coveredUntil, at(T), "100 minutes: let go, the mark moves to now");
+  assert.deepEqual(freed.trending.fresh.gaps, [{ from: at(T - 100 * 60_000), to: at(T - 21 * 60_000) }], "the unread stretch is a gap, up to the run's own start (its last run, less a minute)");
 });
 
 test("the launcher's coins: a coin from a launcher wallet under a ticker the launcher is sending now is the sanctuary's own on first sighting (never a copycat), and a cat it is sending or launched has no kit (a coin under its name after that is no adoption)", async () => {
