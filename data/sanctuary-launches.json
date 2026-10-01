@@ -2,6 +2,77 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105768725148230028",
+      "url": "https://x.com/catcosanctuary/status/2105768725148230028",
+      "name": "Fishtopher",
+      "coinName": "Fishtopher",
+      "ticker": "FISHTOPH",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Fishtopher was a 5-year-old stray at Homeward Bound Pet Adoption Center in Blackwood, New Jersey.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/FISHTOPH.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/FISHTOPH.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105768725148230028.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-01T21:34:45Z",
+      "attempts": 0,
+      "cat": {
+        "id": "fishtopher",
+        "ticker": "FISHTOPH",
+        "name": "Fishtopher",
+        "coinName": "Fishtopher",
+        "owner": "Laura Folts and Tanner Callahan, who adopted him; Folts created @mrfishtopher",
+        "category": "viral",
+        "story": "Fishtopher was a 5-year-old stray at Homeward Bound Pet Adoption Center in Blackwood, New Jersey. His Petfinder listing said he was 'very sad and depressed', would only eat when he had company and 'wouldn't even look up for pictures'. On 24 Nov 2022 @mollyaclarke tweeted 'i swear to god. if one of you doesn't go get fishtopher…', and the post went viral (over 168,000 likes and 21,000 retweets, per NBC News). Laura Folts and Tanner Callahan drove two hours from Baltimore and were first in line to adopt him, and the shelter said 16 other animals were adopted that weekend. His own account, @mrfishtopher ('FIV+ internet cat, animal rescue fan'), shares photos of him at home with his cat friends and promotes other rescues.",
+        "look": "A big-cheeked brown classic tabby. His warm grey-brown coat has bold black marbled swirls on the flanks and back (his shelter listing said he 'reminds you of a Bengal with his cool coloring'), black stripes and an 'M' on the forehead, striped legs and a dark tail. Green-yellow eyes with droopy, heavy lids gave him his famous sad look. Brick-pink nose, pale chin, long white whiskers and a stocky, heavy build. In recent home photos he looks alert and relaxed beside a black cat and an orange-and-white cat.",
+        "coat": {
+          "base": "brown",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "yellow"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/mollyaclarke/status/1595800103503151109",
+          "author": "mollyaclarke",
+          "handle": "mollyaclarke",
+          "date": "2022-11-24",
+          "dateType": "posted",
+          "text": "i swear to god. if one of you doesn’t go get fishtopher…",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "NBC News: Fishtopher the cat finds forever home after his adoption listing went viral (28 Nov 2022)",
+            "url": "https://www.nbcnews.com/news/amp/rcna58956"
+          },
+          {
+            "label": "The A.V. Club: Fishtopher adoption viral cat (29 Nov 2022)",
+            "url": "https://www.avclub.com/cats-fishtopher-adoption-viral-cat-1849831531"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Fishtopher",
+          "contract": "BGvQxrAnEAePdxZVoNjg7aJduLMSUKw1P7p9DQfyAGdT",
+          "mcapUsd": 3061
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Laura Folts and Tanner Callahan, who adopted him; Folts created @mrfishtopher.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/FISHTOPH.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      }
+    },
+    {
       "postId": "2105753628418187702",
       "url": "https://x.com/catcosanctuary/status/2105753628418187702",
       "name": "Bugcat Capoo",
