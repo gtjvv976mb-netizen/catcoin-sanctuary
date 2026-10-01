@@ -2,6 +2,77 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105559745822372023",
+      "url": "https://x.com/catcosanctuary/status/2105559745822372023",
+      "name": "Rolf",
+      "coinName": "Rolf",
+      "ticker": "ROLFCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Rolf is the University of Warwick's campus cat; Wikipedia's Warwick article says the university 'has a campus cat named Rolf'.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/ROLFCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/ROLFCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105559745822372023.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-01T07:27:58Z",
+      "attempts": 0,
+      "cat": {
+        "id": "rolf-warwick-campus-cat",
+        "ticker": "ROLFCAT",
+        "name": "Rolf",
+        "coinName": "Rolf",
+        "owner": "Helen Bevan, Robb Corrigan and family (live near the University of Warwick campus)",
+        "category": "viral",
+        "story": "Rolf is the University of Warwick's campus cat; Wikipedia's Warwick article says the university 'has a campus cat named Rolf'. He lives with his family (Helen Bevan, Robb Corrigan and family) near campus and calls himself an 'Ambassacat for student health & wellbeing', with #RelaxWithRolf on Fridays. His X account was set up to track his movements across campus and tell students where to find him for a quick meet-up (The Boar). On 7 March 2021 hackers took over the account and replaced his daily updates with posts including a protest about bitcoin. The #CatsOfTwitter community let fans know he was safe, and Twitter support returned the account that Sunday night. Students have called for him to get an honorary degree. His daily 'Rolf report' still runs: posing with his staff ID card for the Exam Team, or being carried round the uni by his 'American Human' with all four paws dangling.",
+        "look": "Sleek solid-black short-haired cat with golden-amber eyes, upright pointed ears and a slim, long body (he calls himself 'quite a long cat'); black paws. He wears a yellow reflective collar, and on duty a yellow hi-vis vest printed 'CAMPUS CAT'; his humans hold up his small staff ID card, which has his photo on it.",
+        "coat": {
+          "base": "black",
+          "second": "",
+          "pattern": "solid",
+          "eyes": "amber"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/RolfatWarwick/status/2084893226348015685",
+          "author": "RolfatWarwick",
+          "handle": "RolfatWarwick",
+          "date": "2026-08-05",
+          "dateType": "posted",
+          "text": "Rolf report 5 Aug: This is how my American Human typically totes me about the uni. I don’t mind this at all. Yes all 4 paws are dangling, but that means I can easily spring into action if required. Plus he has a free paw himself - to feed me treats of course, as and when. Rolf x",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "The Boar: The University of Warwick's campus cat Rolf has Twitter hacked (25 Mar 2021)",
+            "url": "https://theboar.org/2021/03/the-university-of-warwicks-campus-cat-rolf-has-twitter-hacked/"
+          },
+          {
+            "label": "Wikipedia: University of Warwick ('The university has a campus cat named Rolf.')",
+            "url": "https://en.wikipedia.org/wiki/University_of_Warwick"
+          },
+          {
+            "label": "PetsRadar: cats on Twitter (Rolf, 'ambassacat' for student wellbeing)",
+            "url": "https://www.petsradar.com/news/cats-on-twitter"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Helen Bevan, Robb Corrigan and family (live near the University of Warwick campus).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/ROLFCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      }
+    },
+    {
       "postId": "2105541404730572998",
       "url": "https://x.com/catcosanctuary/status/2105541404730572998",
       "name": "Ponta",
