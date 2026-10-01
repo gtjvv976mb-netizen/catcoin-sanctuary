@@ -953,9 +953,13 @@ const PUMP_LIST = (offset) => `https://frontend-api-v3.pump.fun/coins?offset=${o
  */
 export async function kitLaunchedSince({ fetchImpl, sleep = async () => {}, kit, sinceMs, owners = new Set(), pages = PUMP_CHECK_PAGES }) {
   const taken = new Set();
+  let read = 0, oldest = Infinity, emptyAt = null;
   for (let page = 0, offset = 0; page < pages; page++) {
-    const list = await pumpPage(fetchImpl, sleep, offset);
+    let list = await pumpPage(fetchImpl, sleep, offset);
+    // (pump.fun at times answers a page with an empty list mid-walk, 2026-10-01: asked again twice before the walk ends)
+    for (let again = 0; again < EMPTY_PAGE_RETRIES && Array.isArray(list) && !list.length; again++) { await sleep(2000); list = await pumpPage(fetchImpl, sleep, offset); }
     if (!list) return taken.size ? { taken: [...taken] } : { unchecked: "pump.fun's list of new coins did not answer" };
+    if (list.length) read++;
     for (const coin of list) {
       const t = Number(coin?.created_timestamp);
       // A coin with no real time is matched too (its time unknown): a kit's name and ticker there is never let through.
@@ -963,13 +967,18 @@ export async function kitLaunchedSince({ fetchImpl, sleep = async () => {}, kit,
     }
     // Only a real time proves the walk reached `sinceMs` (Number(null) is 0); pump.fun's list never ends within these pages.
     const times = list.map((c) => Number(c?.created_timestamp)).filter((t) => Number.isFinite(t) && t > 0);
+    if (times.length) oldest = Math.min(oldest, ...times);
     if (times.length && Math.min(...times) < sinceMs) return { taken: [...taken] };
-    if (!list.length) break;
+    if (!list.length) { emptyAt = offset; break; }
     offset += list.length;
     await sleep(400);
   }
-  return taken.size ? { taken: [...taken] } : { unchecked: `pump.fun's list did not reach back to the trend watch's coverage mark within ${pages} pages` };
+  // (how far the walk got, for the log: an empty page, or the page budget, and the oldest launch read)
+  const how = `${read} page(s) read${Number.isFinite(oldest) ? `, back to ${ISO_SECONDS(oldest)}` : ""} of the ${ISO_SECONDS(sinceMs)} needed${emptyAt !== null ? `; pump.fun answered offset ${emptyAt} with an empty list` : ""}`;
+  return taken.size ? { taken: [...taken] } : { unchecked: `pump.fun's list did not reach back to the trend watch's coverage mark within ${pages} pages (${how})` };
 }
+/** Times an empty page is asked again before a walk of pump.fun's list ends (it never ends within the pages read). */
+export const EMPTY_PAGE_RETRIES = 2;
 
 /**
  * The trend watch's unread windows of pump.fun's launches (data/trending.json fresh.gaps: too many to catch up after a

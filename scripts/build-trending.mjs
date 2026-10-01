@@ -148,19 +148,23 @@ export async function activity({ famous, collection, fetchImpl, pause }) {
  */
 export async function pumpLaunches(fetchImpl, sinceMs, { pause = 400, pages = MAX_PAGES } = {}) {
   const seen = new Map();
-  let answered = false, reached = false;
+  let answered = false, reached = false, read = 0, oldest = null, stop = "pages";
   for (let page = 0, offset = 0; page < pages; page++) {
-    const r = await getJson(fetchImpl, `https://frontend-api-v3.pump.fun/coins?offset=${offset}&limit=${PAGE}&sort=created_timestamp&order=DESC&includeNsfw=false`);
-    if (!Array.isArray(r)) break;
-    answered = true;
+    const url = `https://frontend-api-v3.pump.fun/coins?offset=${offset}&limit=${PAGE}&sort=created_timestamp&order=DESC&includeNsfw=false`;
+    let r = await getJson(fetchImpl, url);
+    // (pump.fun at times answers a page with an empty list mid-walk: asked again twice before the walk ends)
+    for (let again = 0; again < 2 && Array.isArray(r) && !r.length; again++) { if (pause) await sleep(2000); r = await getJson(fetchImpl, url); }
+    if (!Array.isArray(r)) { stop = `offset ${offset} did not answer`; break; }
+    answered = true; if (r.length) read++;
     for (const c of r) if (c?.mint && num(c.created_timestamp) >= sinceMs) seen.set(c.mint, c);
     const times = r.map((c) => num(c?.created_timestamp)).filter((t) => t > 0);
+    if (times.length) oldest = Math.min(oldest ?? Infinity, ...times);
     if (times.length && Math.min(...times) < sinceMs) { reached = true; break; }
-    if (!r.length) break;
+    if (!r.length) { stop = `offset ${offset} came back empty`; break; }
     offset += r.length;
     if (pause) await sleep(pause);
   }
-  return answered ? Object.assign([...seen.values()], { reached }) : null;
+  return answered ? Object.assign([...seen.values()], { reached, read, oldest, stop: reached ? null : stop }) : null;
 }
 
 /** Pages the scan may read to catch up to its coverage mark after a gap (a late or failed run): about 2 hours of pump.fun. */
@@ -241,6 +245,7 @@ export async function fresh({ prev, idx, adopt, fetchImpl, nowMs, pause, log }) 
     gap = { from: iso(stale ? covered : since), to: iso(Math.min(...launched.map((c) => num(c.created_timestamp)).filter((t) => t > 0))) };
     coveredUntil = iso(nowMs);
   }
+  if (launched && !launched.reached && !gap) log(`::notice::pump.fun's list was read back to ${launched.oldest ? iso(launched.oldest) : "nothing"} in ${launched.read} page(s) (${launched.stop}), not to the coverage mark ${iso(since)}: the mark is kept, the next run reads again.`);
   if (gap) log(`::warning::pump.fun's launches from ${gap.from} to ${gap.to} were not read (${stale ? `the coverage mark was more than ${STALE_MARK_MS / 60_000} minutes old` : "too many to catch up"}): adoptions in that window are not tracked; the launcher reads back over it before a cat posted before then launches, or waits for a person.`);
   // A coin the launcher is launching now (its ticker pending in the ledger) from a launcher wallet is the sanctuary's own from its first sighting.
   const owners = new Set(adopt.ownerWallets || []);
