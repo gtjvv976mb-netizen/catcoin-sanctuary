@@ -27,7 +27,7 @@ import {
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
-  sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, DIED, OWN_WAIT_ALERT_HOURS,
+  sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, unreadWindows, DIED, OWN_WAIT_ALERT_HOURS,
 } from "../scripts/lib/launcher.mjs";
 import * as R from "../scripts/lib/rewards.mjs";
 import { creatorVault, EVENT_IX_TAG, EVENT_DISC } from "../scripts/lib/pump-fees.mjs";
@@ -2520,24 +2520,35 @@ test("sanctuary cats: a visitor's coin from the cat's kit on pump.fun since the 
 
 test("sanctuary cats: pump.fun's launches the trend watch never read (fresh.gaps) since the cat's post are read back over by the live check; past the list's reach the row waits until a person approves the post; a window before the post, or an approved post, changes nothing", async () => {
   const gaps = (list) => (t) => fs.writeFileSync(path.join(t.root, "data/trending.json"), JSON.stringify({ ...t.json("data/trending.json"), fresh: { updatedAt: iso(NOW - HOUR), coveredUntil: iso(NOW - HOUR), gaps: list, items: [] } }));
+  // (a mark ten minutes old: the cat, posted an hour ago, is then read back to only over a gap that ends after its post)
+  const recent = (list) => (t) => fs.writeFileSync(path.join(t.root, "data/trending.json"), JSON.stringify({ ...t.json("data/trending.json"), fresh: { updatedAt: iso(NOW - 10 * 60_000), coveredUntil: iso(NOW - 10 * 60_000), gaps: list, items: [] } }));
+  // A gap that began long before the cat's post is read back over only from the post on (nobody adopts a cat before it is
+  // posted): from the post an hour ago, inside the list's two hours, so it launches; a list of 40 minutes does not reach it.
+  const fromPost = await ownSend({ coins: [pumpCoin(1, { at: NOW - 2 * HOUR })], tail: false }, { patch: recent([{ from: iso(NOW - 5 * HOUR), to: iso(NOW - 20 * 60_000) }]) });
+  assert.equal(fromPost.s.outcome, "launched", fromPost.logs.join("\n"));
+  const short = await ownSend({ coins: [pumpCoin(1, { at: NOW - 40 * 60_000 })], tail: false }, { patch: recent([{ from: iso(NOW - 5 * HOUR), to: iso(NOW - 20 * 60_000) }]) });
+  assert.equal(short.s.outcome, "adoption_unchecked", short.logs.join("\n"));
+  assert.ok(short.logs.some((l) => /launches from 2026-09-25T16:00:00Z to/.test(l)), "the window named from the post on: " + short.logs.join("\n"));
+  assert.deepEqual(unreadWindows([{ from: iso(NOW - 5 * HOUR), to: iso(NOW) }], NOW - HOUR).map((g) => g.fromMs), [NOW - HOUR]);
   // pump.fun's list reaches two hours back and no further: enough for the mark less its margin, not for a window from three hours back.
   const reach = { coins: [pumpCoin(1, { at: NOW - 2 * HOUR })], tail: false };
   // (the cat was posted an hour before NOW: released())
   const before = await ownSend(reach, { patch: gaps([{ from: iso(NOW - 3 * HOUR), to: iso(NOW - 90 * 60_000) }]) });
   assert.equal(before.s.outcome, "launched", before.logs.join("\n"));
-  const over = await ownSend(reach, { patch: gaps([{ from: iso(NOW - 3 * HOUR), to: iso(NOW - 50 * 60_000) }]) });
+  // (past the list's reach: a mark ten minutes old, a gap over the post an hour ago, a list of 40 minutes)
+  const over = await ownSend({ coins: [pumpCoin(1, { at: NOW - 40 * 60_000 })], tail: false }, { patch: recent([{ from: iso(NOW - 3 * HOUR), to: iso(NOW - 20 * 60_000) }]) });
   assert.equal(over.s.outcome, "adoption_unchecked", over.logs.join("\n"));
   assert.ok(over.logs.some((l) => /were never read by the trend watch.*approve post \d+ in data\/launch-approvals\.json/.test(l)), over.logs.join("\n"));
   assert.equal(over.sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
   assert.deepEqual([over.row.status, over.row.attempts], ["prepared", 0]);
-  // Within the list's reach: a visitor's coin from the cat's kit in the window (older than the mark less its margin) is found.
-  const found = await ownSend((c) => ({ coins: [pumpCoin(1, { at: NOW - 2 * HOUR }), pumpCoin(2, { name: c.coinName || c.name, symbol: c.ticker, at: NOW - 100 * 60_000 })] }), { patch: gaps([{ from: iso(NOW - 2 * HOUR), to: iso(NOW - 50 * 60_000) }]) });
+  // Within the list's reach: a visitor's coin from the cat's kit in the window after the post (older than the mark less its margin) is found.
+  const found = await ownSend((c) => ({ coins: [pumpCoin(1, { at: NOW - 2 * HOUR }), pumpCoin(2, { name: c.coinName || c.name, symbol: c.ticker, at: NOW - 50 * 60_000 })] }), { patch: recent([{ from: iso(NOW - 2 * HOUR), to: iso(NOW - 20 * 60_000) }]) });
   assert.equal(found.s.outcome, "taken", found.logs.join("\n"));
   // A person approved the post (they looked on pump.fun themselves): the window is not waited on.
-  const ok = await ownSend(reach, { patch: (t) => { gaps([{ from: iso(NOW - 3 * HOUR), to: iso(NOW - 50 * 60_000) }])(t); fs.writeFileSync(path.join(t.root, FILES.approvals), JSON.stringify({ note: "test", approve: [OWN_TWEET] })); } });
+  const ok = await ownSend({ coins: [pumpCoin(1, { at: NOW - 40 * 60_000 })], tail: false }, { patch: (t) => { recent([{ from: iso(NOW - 3 * HOUR), to: iso(NOW - 20 * 60_000) }])(t); fs.writeFileSync(path.join(t.root, FILES.approvals), JSON.stringify({ note: "test", approve: [OWN_TWEET] })); } });
   assert.equal(ok.s.outcome, "launched", ok.logs.join("\n"));
   // A window with no readable time counts from the kits' first day: the check waits.
-  const bad = await ownSend(reach, { patch: gaps([{ from: "?", to: "?" }]) });
+  const bad = await ownSend({ coins: [pumpCoin(1, { at: NOW - 40 * 60_000 })], tail: false }, { patch: recent([{ from: "?", to: "?" }]) });
   assert.equal(bad.s.outcome, "adoption_unchecked", bad.logs.join("\n"));
 });
 
