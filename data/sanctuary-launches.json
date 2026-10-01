@@ -2,6 +2,73 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105803551884890433",
+      "url": "https://x.com/catcosanctuary/status/2105803551884890433",
+      "name": "Hoi-chan",
+      "coinName": "Hoi-chan",
+      "ticker": "HOICHAN",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Hoi-chan (full name ホイップクリーム, 'Whipped Cream') is the clingy cat of HOIPPU_0722, where her manga-loving owner 'Hoi-nushi' posts their everyday life.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/HOICHAN.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/HOICHAN.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105803551884890433.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-01T23:36:53Z",
+      "attempts": 0,
+      "cat": {
+        "id": "hoi-chan-hoippu",
+        "ticker": "HOICHAN",
+        "name": "Hoi-chan",
+        "coinName": "Hoi-chan",
+        "owner": "ホイ主 ('Hoi-nushi'), her manga-loving owner, who runs @HOIPPU_0722",
+        "category": "viral",
+        "story": "Hoi-chan (full name ホイップクリーム, 'Whipped Cream') is the clingy cat of @HOIPPU_0722, where her manga-loving owner 'Hoi-nushi' posts their everyday life. The bio jokingly gives her breed as 'Whippish Whipfold' (ホイティッシュホイルド) with a 'chikuwa pattern'. On her 10th birthday in July 2025 fans sent her into X trends, and the owner posted 'I-it's trending...! Thank you for putting up with 10 years of me showing off my cat.' Her October 2025 post, about her coming downstairs sleepy-eyed while breakfast is made, reached 35.5k likes. The cat exhibition ねこ休み展 gave her a spin-off show, 'Marugoto Hoi-chan Exhibition in Shizuoka' (Shizuoka Parco, 7-23 Sep 2019), and her bio links two LINE sticker sets.",
+        "look": "A fluffy, plush white cat with pale cream (dilute ginger) patches: a cream cap over the crown and both ears, a cream mask around and above each eye split by a white forehead blaze, and light cream smudges on the cheeks beside the pink nose. Big round amber-gold eyes, pink toe beans, a round face, a soft chunky build. Small, wide-set, round-tipped ears with pink insides sit up, unfolded. Everyday: a dark beaded collar with a small round charm, sometimes a pink bow with a gold 'LOVE' bell. 10th birthday: a crocheted pale-yellow party hat with a blue pompom and a pastel crocheted ruff.",
+        "coat": {
+          "base": "white",
+          "second": "cream",
+          "pattern": "solid",
+          "eyes": "gold"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/HOIPPU_0722/status/1947437886758129798",
+          "author": "HOIPPU_0722",
+          "handle": "HOIPPU_0722",
+          "date": "2025-07-21",
+          "dateType": "posted",
+          "text": "ホイちゃんお誕生日おめでとう🎊 もう10歳だなんて驚きです。 まだまだ子猫ちゃんのように思えます。 生まれてきてくれて本当にありがとう。 まだまだ元気で隣にいてね。",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "ねこ休み展スピンオフ企画「まるごとホイちゃん展 in 静岡」 (Shizuoka Parco, 7-23 Sep 2019)",
+            "url": "https://tgs.jp.net/event/neko-break-hoippu/"
+          },
+          {
+            "label": "＃OSHINEKO (日本猫ねこ協会): ホイップ@ねこ休み展/毎日お元気ホイちゃんねる",
+            "url": "https://oshineko.nekoneko-kyokai.jp/archives/oshineko/hoippu_0722"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by ホイ主 ('Hoi-nushi'), her manga-loving owner, who runs @HOIPPU_0722.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/HOICHAN.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      }
+    },
+    {
       "postId": "2105768725148230028",
       "url": "https://x.com/catcosanctuary/status/2105768725148230028",
       "name": "Fishtopher",
