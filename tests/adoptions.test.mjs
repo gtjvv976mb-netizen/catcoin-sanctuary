@@ -142,7 +142,8 @@ test("the shipped data/adoptions.json passes its check, and each adoption is a s
   const planned = read("data/planned.json"), adoptables = read("data/adoptables.json"), collection = read("data/collection.json"), wallets = read("data/wallets.json");
   const keys = [...planned.cats, ...adoptables.cats].map((c) => c.ticker);
   assert.deepEqual(checkAdoptions(j, { keys }), []);
-  const kits = kitsOf({ planned, adoptables, kits: read("assets/kits/kits.json") });
+  // Each cat's kit as it was offered, launched since or not: a visitor may adopt a cat before (or while) the sanctuary launches it.
+  const kits = kitsOf({ planned, adoptables: { ...adoptables, cats: adoptables.cats.map(({ launch, ...c }) => c) }, kits: read("assets/kits/kits.json") });
   const ours = new Set(collection.cats.map((c) => c.mint));
   for (const a of j.adoptions) {
     assert.ok(!ours.has(a.mint), `${a.key}: the owner's own launch is not an adoption`);

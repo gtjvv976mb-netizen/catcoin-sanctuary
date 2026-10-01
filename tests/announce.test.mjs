@@ -176,7 +176,14 @@ test("announce workflow: pinned actions, push on planned.json + every 20 min, co
   assert.match(W, /cron: "\*\/20 \* \* \* \*"/);
   assert.match(W, /^permissions: \{\}$/m);
   const perms = [...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim());
-  assert.deepEqual(perms, ["contents: write", "actions: write"]);
+  assert.deepEqual(perms, ["contents: write", "actions: write", "actions: write"]);
+  // The launcher job (a cat was released: its coin follows its post) only starts the Launch workflow: no checkout, no node, no secrets.
+  const launcher = W.slice(W.indexOf("\n  launcher:"), W.indexOf("\n  next:"));
+  assert.match(launcher, /needs: announce/);
+  assert.match(launcher, /needs\.announce\.outputs\.released == 'true'/);
+  assert.match(launcher, /vars\.LAUNCH_ENABLED == 'on' \|\| vars\.LAUNCH_ENABLED == 'dry'/);
+  assert.match(launcher, /gh workflow run launch\.yml -R "\$REPO" --ref main/);
+  assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(launcher), "the launcher job runs repository code or sees a secret");
   // The next-run job runs no code of the repository's: no checkout, no node, no secrets.
   const next = W.slice(W.indexOf("\n  next:"));
   assert.match(next, /needs: announce/);

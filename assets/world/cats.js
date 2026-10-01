@@ -967,6 +967,11 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           if (bodyGap(cat, x, z, yawTo(f.x - x, f.z - z), "walk", f) >= -NUZZLE) { s = { x, z }; break; }
         }
         if (!s || !cat.nav.pointFree(s.x, s.z, cat.bodyR)) return null;
+        // (and clear of every other cat's body whichever way it faces there, as a spot beside the friend is
+        // (besideSpot): squeezed in between its friend and a sleeper, a visitor that had rubbed cheeks could
+        // neither turn round nor step off, and stood in its friend's body half a minute)
+        const sy = yawTo(f.x - s.x, f.z - s.z);
+        if ([0, 1, 2, 3].some((q) => crowdingBut(cat, s.x, s.z, sy + (q * Math.PI) / 4, "walk", f))) return null;
         act.nuzzle = f; act.mate = f; act.friend = f;
         act.reason = `Saying hello to ${f.name}`;
         cat.dest = s;
@@ -1183,9 +1188,14 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     if (!cat.route || Math.hypot(cat.route.goal.x - tx, cat.route.goal.z - tz) > 0.6 * g || cat.route.stale) {
       // Standing in the clearance of a prop it has no business in (nudged there by another cat), it
       // first steps straight back out of it: a route from in there would run through the prop.
+      // (So does one a prop has just held fast (the stall check: route.stale "prop"): brushing a bed's corner,
+      // its middle a hair inside the corner's clearance, the planner lets it set off beside the prop and hands
+      // it the same way along the prop again, and it would shove at the prop every tenth of a second, its
+      // walk shown on the spot; stepped out to the planner's clearance first, it is routed round.)
       let sx = cat.x, sz = cat.z, out = null;
+      const heldByProp = cat.route?.stale === "prop";
       // (merely beside something solid, no nearer than bodyR, it just sets off)
-      if (nav.containing(sx, sz).some((id) => !(ignore && ignore.has(id)) && (USABLE.has(id) || distToObstacle(nav.byId.get(id), sx, sz) < cat.bodyR - 0.02))) {
+      if (heldByProp || nav.containing(sx, sz).some((id) => !(ignore && ignore.has(id)) && (USABLE.has(id) || distToObstacle(nav.byId.get(id), sx, sz) < cat.bodyR - 0.02))) {
         const q = { x: sx, z: sz };
         nav.project(q, ignore, nav.clearR + 0.03);
         // (A long cat alongside the prop walks out along a heading it can turn to (outAlong): turned to step straight
@@ -2651,7 +2661,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
             // (Even the way round blocked: it waits; blocked again, it gives up the walk. Held up this near
             // where it was going, it has arrived. Up against a prop, it finds its way again from there.)
             if (near) R.closeEnough = true;
-            else if (R && byProp) { R.stale = true; R.replans = (R.replans || 0) + 1; cat.detour = null; }
+            else if (R && byProp) { R.stale = "prop"; R.replans = (R.replans || 0) + 1; cat.detour = null; } // (walk: it steps out of the prop's clearance first)
             else {
               if (R) R.stalls = (R.stalls || 0) + 1;
               cat.detour = cat.detour ? null : aside(cat);

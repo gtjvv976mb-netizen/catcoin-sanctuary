@@ -16,6 +16,27 @@
  * pbs.twimg.com picture, and never one whose coin text, metadata or X post would break the site's
  * content rules (the post is drafted before the launch: scripts/post-updates.mjs draftLaunch).
  *
+ * AND THE SANCTUARY'S OWN CATS, after their X post (the owner's choice, 2026-09-30): when no trending
+ * cat may launch, the adoptable cat the announcer released last (data/release-queue.json "released",
+ * with the id of the sanctuary's own post) that has no coin yet (sanctuaryRow, policy "sanctuary"). It
+ * launches from that post (its mint derived from the post id, like any other), on pump.fun in SOL,
+ * named as its card names it, its coin's picture its portrait on the site; its row in
+ * data/adoptables.json takes the launch (and the SOL pair) once launched. Never a cat with a coin
+ * already (its own launch, a visitor's adoption in data/adoptions.json, a Collection entry under its name
+ * or ticker, or a coin on pump.fun under its kit's name and ticker since the trend watch's coverage mark,
+ * data/trending.json fresh.coveredUntil, read live right before the signature: a visitor who adopts
+ * first wins; a window of launches the trend watch never read (fresh.gaps) since the cat's post is read
+ * back over too, and past the list's reach the cat waits until a person has looked and approved its
+ * post in data/launch-approvals.json; StonkFun and GetStonked adoptions are tracked by nothing yet, so
+ * they are not seen), one
+ * with a sensitivity note other than "In loving memory of …", one whose story mentions a death while
+ * its data does not mark it memorial (never guessed: the death may be another's), or one of low
+ * confidence. A cat that died (memorial: true) is a tribute: its lore line "In loving memory of <name>."
+ * A prepared cat follows its card until it is sent (one that could not be prepared as it was any more
+ * fails for good), and gives way to a trending cat that may launch; it never takes the day's last launch
+ * (kept for a trending cat), tried again or not; and
+ * the caps, the content rules and every check before and after the send are the same as a trending cat's.
+ *
  * WHERE (scripts/lib/venues.mjs chooseVenue, the owner's rule in scripts/lib/venues-routing.mjs): by
  * default on pump.fun priced in SOL ("pump-sol"); a cat tied to a company with a stock pair (data/
  * cat-watch.json: a figure's "stock", or accountLinks for the big account that posted it) on StonkFun
@@ -98,7 +119,7 @@
  * "on" (a repository variable, never a secret) opts in to the unverified coin-priced pump.fun venue.
  */
 import { validateWallets, activeLauncher, isAddress, isSignature, textProblem, httpsProblem, coatProblem, parseTime, base58Encode, TICKER, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes, MAX_CATS } from "../../assets/collection.js";
-import { adoptableProblem, validateAdoptables, tributeLine, ADOPTABLE_CATEGORIES, realPhotoOf } from "../../assets/ui/adoptables.js";
+import { adoptableProblem, validateAdoptables, tributeLine, ADOPTABLE_CATEGORIES, realPhotoOf, nameKey } from "../../assets/ui/adoptables.js";
 import { keypairFromSecret, deriveMintKeypair, decodeCompactU16, decodeLegacyMessage, decompileInstructions, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT } from "./solana-tx.mjs";
 import { TOKEN_PROGRAM, TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
 import { LAUNCH_DEFAULTS } from "./pump.mjs";
@@ -109,6 +130,7 @@ import { RpcError } from "./rpc.mjs";
 import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
 import { validateRewardsLedger, earmarkSignatures, earmarkLamports, rewardsMode, REWARDS_FILES } from "./rewards.mjs";
 import { measureClaim } from "./pump-fees.mjs";
+import { kitsOf, sameKit, KITS_LIVE } from "./adoptions.mjs";
 
 /* ── constants ─────────────────────────────────────────────────────────────────────────── */
 
@@ -119,6 +141,10 @@ export const X_ACCOUNT = "https://x.com/catcosanctuary";
  * photo (a stranger's photo can show faces, children or a home).
  */
 export const SITE_IMAGE = `${SITE_ORIGIN}/assets/og-image.jpg`;
+/** The sanctuary's X handle (its own posts are the posts its own cats launch from). */
+export const OWN_HANDLE = "catcosanctuary";
+/** A picture the site itself serves: a sanctuary cat's portrait or lore picture (its coin's image). */
+export const SITE_PICTURE = /^https:\/\/catcoinsanctuary\.com\/assets\/(?:portraits|lore)\/[A-Za-z0-9_-]{1,40}\.(?:jpg|webp|png)$/;
 export const FILES = Object.freeze({
   ledger: "data/sanctuary-launches.json",
   approvals: "data/launch-approvals.json",
@@ -134,6 +160,10 @@ export const FILES = Object.freeze({
   collection: "data/collection.json",
   pumpQuotes: "data/pump-quotes.json",
   meshy: "scripts/meshy.queue.json",
+  queue: "data/release-queue.json",
+  adoptions: "data/adoptions.json",
+  lore: "data/lore.json",
+  pumpScan: "data/trending.json",
 });
 export const LAMPORTS_PER_SOL = 1_000_000_000;
 export const HOUR_MS = 3_600_000;
@@ -324,11 +354,12 @@ export async function waitForMetadata({ fetchImpl, uri, text, now, sleep, waitMs
 
 /* ── the ledger ────────────────────────────────────────────────────────────────────────── */
 
-export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
+export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per post it prepared (a trending post, or the sanctuary's own X post of one of its cats), newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
 const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "kind", "lore", "image", "coinImage", "photoCredit", "metadataPath", "status", "preparedAt", "attempts", "cat",
   "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback"];
-export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved", "viral"]);
+/** Why a cat launched: a trending post by the owner's rules (policyOf), or "sanctuary": one of the sanctuary's own cats, after its X post (sanctuaryRow). */
+export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved", "viral", "sanctuary"]);
 /** The trend watch's reading kinds a launched cat may have (a row's `kind`: "real" is a pet, the others characters). */
 export const KINDS = Object.freeze(["real", "cartoon", "fiction"]);
 const isObj = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
@@ -349,7 +380,8 @@ export function rowProblem(r) {
   if (r.figure !== undefined && (typeof r.figure !== "string" || textProblem(r.figure, { maxChars: 60 }))) return "figure must be a watch-list figure's name";
   if (r.kind !== undefined && !KINDS.includes(r.kind)) return `kind must be one of ${KINDS.join(", ")}`;
   if (typeof r.lore !== "string" || r.lore.length < 1 || r.lore.length > 200) return "lore must be one line";
-  if (!PBS_IMAGE.test(r.image ?? "")) return "image must be a pbs.twimg.com picture";
+  if (r.policy === "sanctuary" ? !SITE_PICTURE.test(r.image ?? "") : !PBS_IMAGE.test(r.image ?? "")) return r.policy === "sanctuary" ? "image must be the cat's picture on the site" : "image must be a pbs.twimg.com picture";
+  if (r.policy === "sanctuary" && (X_POST_URL.exec(r.url ?? "")?.[1] !== OWN_HANDLE || r.photoCredit === true || r.cat?.launch !== undefined)) return "a sanctuary cat launches from the sanctuary's own post, with no photo credit and no launch yet";
   if (r.coinImage !== undefined && r.coinImage !== r.image && r.coinImage !== SITE_IMAGE) return "coinImage must be the post's picture, or the site's own";
   if (r.photoCredit !== undefined && typeof r.photoCredit !== "boolean") return "photoCredit must be true or false";
   if (r.metadataPath !== metadataPath(r.postId)) return "metadataPath must be coins/<postId>.json";
@@ -722,6 +754,241 @@ export function selectCandidate(ctx) {
   return { row: null, skipped };
 }
 
+/* ── the sanctuary's own cats, after their X post ──────────────────────────────────────── */
+
+const PICTURE_PATH = /^assets\/(?:portraits|lore)\/[A-Za-z0-9_-]{1,40}\.(?:jpg|webp|png)$/;
+/* A drawn cat's look (a cartoon, an anime or a game character, a mascot, a logo, a render): its tribute names the
+   character's owners. Read in the look's lead clause only ("a real cat with a plush coat" is a real cat). */
+const NOT_REAL_LOOK = /\bnot (?:a )?real (?:cats?|animals?)\b/i;
+const REAL_LOOK = /\breal cats?\b/i;
+const DRAWN_LOOK = /\b(?:cartoon|anime|manga|animated|illustrat\w*|drawn|character|mascot|sticker|pixel(?:-art)?|emoji|chibi|kawaii|logo|graphic|vector|CGI|3D|render(?:ed)?|doodles?|painting|digital|artwork|inscription|NFT|AI-generated)\b/i;
+/** A sanctuary cat's kind, as the fan-tribute line reads it: a show's cat or a drawn one is a character, the rest real cats. */
+export function kindOfAdoptable(c) {
+  if (c?.category === "tv-movie") return "fiction";
+  const look = String(c?.look ?? "");
+  if (NOT_REAL_LOOK.test(look)) return "cartoon";
+  const lead = look.split(/(?<=[.:;])\s/)[0];
+  if (REAL_LOOK.test(lead)) return "real";
+  return DRAWN_LOOK.test(lead) ? "cartoon" : "real";
+}
+/** A death in a cat's own words (its story or lore caption): its own, or another's ("Love, who died in 2022"). */
+export const DIED = /\b(?:died|dies|death|passed away|funeral|obituary|memorial|in loving memory|rainbow bridge|euthan\w*|r\.?i\.?p)\b|\(\d{4}\s*[–-]\s*\d{4}\)/i;
+const diedText = (c, captions = {}) => [c?.story, c?.lore?.caption, captions?.[c?.ticker]].some((t) => DIED.test(String(t ?? "")));
+/** A cat that died, as its data says (its memorial flag, never guessed from its words): its coin is a tribute, its lore line "In loving memory of <name>." */
+export const inMemoriam = (c) => c?.memorial === true;
+const MEMORY_NOTE = /^In loving memory of /i;
+const PAIR_NAME = /&|\band\b|\+/i;
+/**
+ * Why a sanctuary cat (its adoptable row) may not get a coin from the launcher at all, or null. A cat that
+ * died is launched as a tribute (the owner's choice, 2026-09-30); a sensitivity note other than its
+ * "In loving memory of …" (an illness, a controversy) never is.
+ */
+function ownEligibility(c, captions) {
+  if (c.launch) return "it has a coin already";
+  const note = String(c.sensitivity ?? "").trim();
+  if (note && !MEMORY_NOTE.test(note)) return "a sensitivity note: never launched by the launcher";
+  // A death in its words without the memorial flag may be another's ("Love, who died in 2022"; "after his 2019 death"): never guessed.
+  // A pair ("Cole & Marmalade") keeps its own line: one of them may live on.
+  if (c.memorial !== true && diedText(c, captions) && !PAIR_NAME.test(String(c.name ?? ""))) return "its story mentions a death but it is not marked memorial (set memorial, and its \"In loving memory of …\" note, if the cat died)";
+  if (c.confidence === "low") return "low confidence";
+  if (c.launchTicker !== undefined && c.launchTicker !== c.ticker) return `its kit launches as ${c.launchTicker}`;
+  // An older, unrelated small coin the research found (the card says so, and still offers the cat) does not stop it; its ticker would.
+  if (String(c.existingCoin?.symbol ?? "").toUpperCase() === c.ticker) return "an older coin has its ticker";
+  return null;
+}
+
+/* A sentence ends at . ! ? or … before a space or the end, never after a title or an abbreviation ("Mr.", "Dr.", "St."). */
+const ABBR = /(?:^|[^\p{L}])(?:Mr|Mrs|Ms|Dr|St|Mt|Jr|Sr|Sgt|Lt|Capt|Col|Gen|Prof|Rev|No|vs|etc|Inc|Co|Ltd)\.$/iu;
+function firstSentence(t) {
+  const re = /[.!?…](?=\s|$)/gu;
+  for (let m; (m = re.exec(t));) { const s = t.slice(0, m.index + m[0].length); if (s.length >= 11 && !ABBR.test(s)) return s; }
+  return t;
+}
+/** Quotes and brackets that close: a line cut mid-quote is not one. */
+const balanced = (s) => (s.match(/"/g) ?? []).length % 2 === 0 && (s.match(/\(/g) ?? []).length === (s.match(/\)/g) ?? []).length;
+
+/**
+ * A sanctuary cat's lore lines (each at most 200 characters), best first: its lore caption, its story's
+ * first sentence (cut at a word), and last a plain line naming it; the launcher takes the first one its
+ * coin's description and launch post pass the content rules with.
+ */
+export function loreLinesOf(c, captions = {}) {
+  const clean = (s) => oneLine(s, 400).replace(/https?:\/\/\S+|www\.\S+/gi, "").replace(/[@#$]/g, "").replace(/\s+/g, " ").trim();
+  const out = [];
+  for (const text of [captions[c?.ticker], c?.lore?.caption, c?.story]) {
+    const t = clean(text);
+    if (t.length < 10) continue;
+    const first = firstSentence(t).trim();
+    const cut = first.slice(0, 199);
+    const line = first.length <= 200 ? first : `${(cut.lastIndexOf(" ") > 100 ? cut.slice(0, cut.lastIndexOf(" ")) : cut).replace(/[\s,;:.!?…-]+$/u, "")}…`;
+    if (balanced(line)) out.push(line);
+  }
+  const name = clean(c?.name);
+  if (name) out.push(`${name}, one of the Catcoin Sanctuary's cats.`);
+  // A cat that died: a tribute, never its story told in the present tense. Only for one cat: a pair ("Cole & Marmalade")
+  // may have lost only one of them, so it keeps its own lore line.
+  if (name && inMemoriam(c)) out.unshift(`In loving memory of ${name}.`);
+  return [...new Set(out)];
+}
+
+/**
+ * The ledger row a sanctuary cat the announcer has posted on X would get, or { problem }. `entry` is its
+ * data/release-queue.json row (released, with the tweet id of the sanctuary's post): the coin launches
+ * from that post (its mint is derived from its id), on pump.fun in SOL, named as the cat's card names it
+ * (coinName, ticker), its picture the cat's portrait on the site. Never a cat with a coin already (its
+ * `launch`, an adoption by a visitor, an entry of the Collection's under its name or ticker; an older,
+ * unrelated coin the research found only under the same ticker), one with a sensitivity note other than
+ * "In loving memory of …", one whose story mentions a death while it is not marked memorial (a cat that
+ * died, memorial: true, is a tribute), one of low confidence, or one whose kit launches under another ticker; and every rule a trending cat's coin keeps (its text on
+ * pump.fun, its metadata's description and its launch post by the site's content rules, the whole
+ * adoptables file still valid with the cat priced in SOL).
+ */
+export function sanctuaryRow(entry, ctx) {
+  const no = (problem) => ({ problem });
+  const key = String(entry?.key ?? "");
+  if (entry?.status !== "released" || !X_POST_ID.test(String(entry?.tweet ?? ""))) return no("not posted on X yet");
+  const postId = String(entry.tweet);
+  const cats = ctx.adoptables?.cats ?? [];
+  const i = cats.findIndex((c) => c?.ticker === key);
+  if (i < 0) return no("not an adoptable cat");
+  const c = cats[i];
+  const ineligible = ownEligibility(c, ctx.captions);
+  if (ineligible) return no(ineligible);
+  if (!Array.isArray(ctx.adoptions?.adoptions)) return no(`${FILES.adoptions} cannot be read`);
+  if (ctx.adoptions.adoptions.some((a) => a?.key === key)) return no("a visitor adopted it (data/adoptions.json)");
+  const coinName = oneLine(c.coinName || c.name, 60), name = oneLine(c.name, 60), ticker = c.ticker;
+  if ((ctx.collection?.cats ?? []).some((e) => String(e?.symbol ?? "").toUpperCase() === ticker || nameKey(e?.name) === nameKey(coinName))) return no("the Collection lists a coin under its name or ticker");
+  for (const r of ctx.ledger?.launches ?? []) {
+    if (r.postId === postId) return no("already in the ledger");
+    if (r.ticker === ticker && !(r.status === "failed" && (!r.retry || r.attempts >= MAX_ATTEMPTS))) return no("already in the ledger");
+  }
+  const picture = [c.portrait, c.lore?.image].find((p) => typeof p === "string" && PICTURE_PATH.test(p) && ctx.exists?.(p));
+  if (!picture) return no("no portrait on the site");
+  const uri = metadataUri(postId);
+  const bad = PUMP_SOL.textProblem({ name: coinName, symbol: ticker, uri });
+  if (bad) return no(`the coin cannot be launched as named: ${bad}`);
+  const cat = { ...structuredClone(c), pair: { ...SOL_PAIR } };
+  const v = validateAdoptables({ cats: cats.map((x, j) => (j === i ? cat : x)) }, { taken: new Set((ctx.planned?.cats ?? []).map((p) => p.ticker)) });
+  if (v.refused.some((x) => x.index === i)) return no(`the adoptable row would be refused: ${v.refused.find((x) => x.index === i).detail}`);
+  const image = `${SITE_ORIGIN}/${picture}`;
+  const kind = kindOfAdoptable(c);
+  const cited = [name, coinName, ticker];
+  const tributeCited = [...cited, fanTribute(kind)];
+  // The first lore line its coin's description and its launch post (drafted now: a held post means no launch) pass the content rules with.
+  let problem = "no lore line";
+  for (const lore of loreLinesOf(c, ctx.captions)) {
+    const row = {
+      postId, url: `https://x.com/${OWN_HANDLE}/status/${postId}`, name, coinName, ticker, venue: PUMP_SOL.id, policy: "sanctuary", kind, lore, image,
+      coinImage: image, photoCredit: false, metadataPath: metadataPath(postId), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat,
+    };
+    const d = checkUpdate(coinMetadata(row).description, tributeCited);
+    if (!d.ok) { problem = `the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`; continue; }
+    const post = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad: PUMP_SOL.launchpad, cited, tribute: fanTribute(kind) });
+    if (!post.ok) { problem = `its launch post would be held (${post.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`; continue; }
+    if (rowProblem(row)) return no(`the ledger row would be malformed: ${rowProblem(row)}`);
+    return { row, route: { venue: PUMP_SOL.id, pair: { ...SOL_PAIR }, reason: "a sanctuary cat, after its X post" } };
+  }
+  return no(problem);
+}
+
+/**
+ * Why a prepared sanctuary cat may no longer launch, or null: its row in data/adoptables.json is gone or
+ * has a coin, a visitor adopted it, or the Collection lists a coin under its name or ticker since it was
+ * prepared. Checked again right before the send.
+ */
+export function ownProblemNow(row, ctx) {
+  const c = (ctx.adoptables?.cats ?? []).find((x) => x?.ticker === row.ticker && x?.id === row.cat?.id);
+  if (!c) return "its row in data/adoptables.json is gone";
+  const ineligible = ownEligibility(c, ctx.captions);
+  if (ineligible) return `${ineligible} (since it was prepared)`;
+  if (nameKey(c.coinName || c.name) !== nameKey(row.coinName)) return "its card names its coin otherwise now";
+  if ((ctx.adoptions?.adoptions ?? []).some((a) => a?.key === row.ticker)) return "a visitor adopted it";
+  if ((ctx.collection?.cats ?? []).some((e) => String(e?.symbol ?? "").toUpperCase() === row.ticker || nameKey(e?.name) === nameKey(row.coinName))) return "the Collection lists a coin under its name or ticker";
+  return null;
+}
+
+/** A prepared sanctuary cat as it would be prepared now ({ row }: its lore line and kind follow its card), or { problem } when it could not be. */
+export const ownRowRecheck = (row, ctx) => { const r = sanctuaryRow({ key: row.ticker, status: "released", tweet: row.postId }, { ...ctx, ledger: { launches: [] } }); return r.row ? { row: r.row } : { problem: r.problem }; };
+/** The row a prepared sanctuary cat would be prepared as now, or null when it could not be. */
+export const ownRowNow = (row, ctx) => ownRowRecheck(row, ctx).row ?? null;
+/** Hours a prepared sanctuary cat may wait to be sent before a person is told (::error). */
+export const OWN_WAIT_ALERT_HOURS = 6;
+
+/** Pages of pump.fun's newest launches the live adoption check reads at most (50 a page). */
+export const PUMP_CHECK_PAGES = 40;
+/** How far before the trend watch's coverage mark (data/trending.json fresh.coveredUntil) the live check reads back. */
+export const PUMP_CHECK_MARGIN_MS = 15 * 60_000;
+/** One page of pump.fun's list, as the trend watch reads it (3 tries, a longer wait after a 429), or null. */
+async function pumpPage(fetchImpl, sleep, offset) {
+  for (let t = 0; t < 3; t++) {
+    try {
+      const res = await fetchImpl(PUMP_LIST(offset), { headers: { accept: "application/json", "user-agent": "catcoinsanctuary.com launcher" }, signal: AbortSignal.timeout(20_000) });
+      if (res.ok) { const j = await res.json(); if (Array.isArray(j)) return j; }
+      await sleep(res.status === 429 ? 3000 * (t + 2) * 2 : 1500);
+    } catch { await sleep(1500); }
+  }
+  return null;
+}
+const PUMP_LIST = (offset) => `https://frontend-api-v3.pump.fun/coins?offset=${offset}&limit=50&sort=created_timestamp&order=DESC&includeNsfw=false`;
+
+/**
+ * The live adoption check, right before a sanctuary cat's coin is signed: pump.fun's launches since `sinceMs`
+ * carrying the cat's kit name and ticker (sameKit), not the sanctuary's own (its launcher wallets). Returns
+ * { taken: [mints] }, or { unchecked: why } when pump.fun's list could not be read back to `sinceMs` (then
+ * nothing is sent: the next run tries again). data/adoptions.json only knows what the trend watch's last scan
+ * saw; a visitor who adopted since is found here, so the sanctuary never launches a second coin for a cat.
+ */
+export async function kitLaunchedSince({ fetchImpl, sleep = async () => {}, kit, sinceMs, owners = new Set(), pages = PUMP_CHECK_PAGES }) {
+  const taken = new Set();
+  for (let page = 0, offset = 0; page < pages; page++) {
+    const list = await pumpPage(fetchImpl, sleep, offset);
+    if (!list) return taken.size ? { taken: [...taken] } : { unchecked: "pump.fun's list of new coins did not answer" };
+    for (const coin of list) {
+      const t = Number(coin?.created_timestamp);
+      // A coin with no real time is matched too (its time unknown): a kit's name and ticker there is never let through.
+      if (!owners.has(coin?.creator) && sameKit(coin, [kit]).length && (!(t > 0) || t >= sinceMs)) taken.add(String(coin.mint));
+    }
+    // Only a real time proves the walk reached `sinceMs` (Number(null) is 0); pump.fun's list never ends within these pages.
+    const times = list.map((c) => Number(c?.created_timestamp)).filter((t) => Number.isFinite(t) && t > 0);
+    if (times.length && Math.min(...times) < sinceMs) return { taken: [...taken] };
+    if (!list.length) break;
+    offset += list.length;
+    await sleep(400);
+  }
+  return taken.size ? { taken: [...taken] } : { unchecked: `pump.fun's list did not reach back to the trend watch's coverage mark within ${pages} pages` };
+}
+
+/**
+ * The trend watch's unread windows of pump.fun's launches (data/trending.json fresh.gaps: too many to catch up after a
+ * stop, or a coverage mark too old to read back to) a visitor could have adopted this cat in: the ones ending after its
+ * X post (a visitor adopts a cat it has seen: its post; with no post time known, every one since the kits went live), as
+ * { fromMs, toMs }, oldest first. A window with no readable time counts from the kits' first day (the check then waits).
+ * None once a person has approved the post (data/launch-approvals.json): they looked on pump.fun themselves.
+ */
+export function unreadWindows(gaps, postedMs, approved = false) {
+  if (approved || !Array.isArray(gaps)) return [];
+  const live = Date.parse(KITS_LIVE), floor = Number.isFinite(postedMs) ? postedMs : live;
+  return gaps.map((g) => { const from = Date.parse(g?.from ?? ""), to = Date.parse(g?.to ?? ""); return { fromMs: Number.isFinite(from) ? from : live, toMs: Number.isFinite(to) ? to : Infinity }; })
+    .filter((g) => g.toMs > floor).sort((a, b) => a.fromMs - b.fromMs);
+}
+/** When a sanctuary cat's X post went out (its release in data/release-queue.json), in ms, or NaN. */
+const postedMsOf = (row, ctx) => Date.parse((Array.isArray(ctx.queue?.cats) ? ctx.queue.cats : []).find((q) => String(q?.tweet ?? "") === row.postId)?.releasedAt ?? "");
+
+/** The sanctuary cat to launch next: the one the announcer posted last that may launch. { row, route, skipped } or { row: null, skipped }. */
+export function selectSanctuary(ctx) {
+  // Who adopted what must be known: an unreadable data/adoptions.json is never "nobody".
+  if (!Array.isArray(ctx.adoptions?.adoptions)) return { row: null, skipped: [{ id: "*", why: `${FILES.adoptions} cannot be read` }] };
+  const released = (Array.isArray(ctx.queue?.cats) ? ctx.queue.cats : []).filter((q) => q?.status === "released" && q.tweet)
+    .sort((a, b) => (Date.parse(b.releasedAt) || 0) - (Date.parse(a.releasedAt) || 0));
+  const skipped = [];
+  for (const entry of released) {
+    const s = sanctuaryRow(entry, ctx);
+    if (s.row) return { row: s.row, route: s.route, skipped };
+    skipped.push({ id: String(entry.key), why: s.problem });
+  }
+  return { row: null, skipped };
+}
+
 /* ── the watch list, once a cat moves in ───────────────────────────────────────────────── */
 
 /** A text as a figure term is compared: CamelCase split, "&" as "and", lower case, words by single spaces. */
@@ -960,6 +1227,8 @@ const json1 = (v) => `${JSON.stringify(v, null, 1)}\n`;
 const inFlight = (ledger) => ledger.launches.filter((r) => r.status === "prepared" || r.status === "sending");
 const replaceRow = (ledger, row) => { ledger.launches = ledger.launches.map((r) => (r.postId === row.postId ? row : r)); };
 const saveLedger = (io, ledger) => io.writeText(FILES.ledger, ledgerText(ledger));
+/** Whether a row's post is too old to launch: a trending post past MAX_POST_AGE_HOURS; a sanctuary cat's own post never is. */
+const tooOld = (row, trending, nowMs) => row.policy !== "sanctuary" && postAgeMs(row, trending, nowMs) > MAX_POST_AGE_HOURS * HOUR_MS;
 const postAgeMs = (row, trending, nowMs) => {
   const p = (trending?.posts ?? []).find((x) => String(x?.id) === row.postId);
   const t = Date.parse(p?.postedAt ?? row.cat?.proof?.date ?? "");
@@ -1019,6 +1288,16 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
     pumpQuotes: quotes.usable,
     pumpQuoteOptIn: pumpQuoteOptIn(env),
     open: openLaunches(env),
+    // The sanctuary's own cats (sanctuaryRow): the ones the announcer released, adoptions, lore captions, files on disk.
+    queue: readOwned(io, FILES.queue, { cats: [] }, log),
+    // Strict: unreadable or malformed is null (unknown), never "nobody adopted anything".
+    adoptions: (() => {
+      try { const a = readJson(io, FILES.adoptions, { adoptions: [] }); if (Array.isArray(a?.adoptions)) return a; } catch { /* below */ }
+      log(`::warning title=Launcher::${FILES.adoptions} cannot be read; no sanctuary cat is launched until it is fixed.`);
+      return null;
+    })(),
+    captions: (() => { const l = readOwned(io, FILES.lore, { cats: {} }, log); return isObj(l?.cats) ? l.cats : {}; })(),
+    exists: (rel) => io.readText(rel) !== null,
   };
 }
 
@@ -1056,14 +1335,19 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     if (again) {
       const next = { ...again };
       for (const k of ["tx", "mintPublic", "lastValidBlockHeight", "settledAt", "retry"]) delete next[k];
-      if (postAgeMs(again, ctx.trending, nowMs) > MAX_POST_AGE_HOURS * HOUR_MS) {
+      // A trending post is tried again only while it is fresh; a sanctuary cat's own post has no age limit.
+      if (tooOld(again, ctx.trending, nowMs)) {
         replaceRow(ledger, { ...again, retry: false, reason: `${again.reason} (not tried again: the post is older than ${MAX_POST_AGE_HOURS} hours)`.slice(0, 300) });
+        out.changed = true;
+      } else if (again.policy === "sanctuary" && dayStats(ledger, nowMs, caps).count + 1 >= caps.maxPerDay) {
+        // (a sanctuary cat tried again keeps the rule a fresh pick keeps: never the day's last launch)
+        log(`Launcher: ${again.ticker} (a sanctuary cat) is not prepared again yet: the day's last launch (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}) is kept for a trending cat.`);
       } else {
         next.status = "prepared";
         replaceRow(ledger, next);
         log(`Launcher: ${again.ticker} is prepared again (attempt ${again.attempts + 1} of ${MAX_ATTEMPTS}; last time: ${again.reason}).`);
+        out.changed = true;
       }
-      out.changed = true;
     }
   }
 
@@ -1077,9 +1361,34 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
       log(`Launcher: ${row.ticker}'s coin picture is now ${coinImage === SITE_IMAGE ? "the site's own (its post's photo is hidden in data/photo-hide.json)" : "its post's photo"}.`);
     }
   }
+  // A sanctuary cat not sent yet follows its card: its lore line and kind as it would be prepared now (its metadata is
+  // rewritten below and deployed before the send). One that may not launch any more is left to the send's check.
+  for (const row of ledger.launches.filter((r) => r.status === "prepared" && r.policy === "sanctuary")) {
+    const fresh = mode === "on" ? ownRowNow(row, ctx) : null;
+    if (fresh && (fresh.lore !== row.lore || fresh.kind !== row.kind)) {
+      replaceRow(ledger, { ...row, lore: fresh.lore, kind: fresh.kind });
+      out.changed = true;
+      log(`Launcher: ${row.ticker}'s lore line is now "${fresh.lore}" (its card changed since it was prepared).`);
+    }
+  }
   for (const row of ledger.launches.filter((r) => r.status === "prepared")) {
     const text = metadataText(coinMetadata(row));
     if (io.readText(row.metadataPath) !== text) { io.writeText(row.metadataPath, text); out.changed = true; }
+  }
+
+  // 3b. A sanctuary cat prepared but not sent (waiting on pump.fun's list, the deploy, the funds) gives way to a trending
+  //     cat the rules let launch now: failed with a retry and no attempt used, it is prepared again once the slot is free.
+  const held = inFlight(ledger);
+  if (mode === "on" && held.length === 1 && held[0].policy === "sanctuary" && held[0].status === "prepared") {
+    const waited = (nowMs - Date.parse(held[0].preparedAt)) / HOUR_MS;
+    const room = collectionRoom(ctx);
+    if (dayStats(ledger, nowMs, caps).count < caps.maxPerDay && room !== null && room >= 1 && selectCandidate(ctx).row) {
+      replaceRow(ledger, { ...held[0], status: "failed", retry: true, reason: "gave way to a trending cat; prepared again once the slot is free", settledAt: ISO_SECONDS(nowMs) });
+      out.changed = true;
+      log(`Launcher: ${held[0].ticker} (a sanctuary cat, not sent yet) gives way to a trending cat; it is prepared again once the slot is free.`);
+    } else if (waited > OWN_WAIT_ALERT_HOURS) {
+      log(`::error title=Launcher::${held[0].ticker} has waited ${Math.round(waited)} hours to be sent (see the send step's warnings: pump.fun's list, the deploy, the funds).`);
+    }
   }
 
   // 4. Nothing in flight: at most one new cat, while the day's count and the Collection's room allow it.
@@ -1090,9 +1399,18 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     else if (room === null || room < 1) {
       log(`::warning title=Launcher::${room === null ? `${FILES.collection} or ${FILES.planned} cannot be read` : `${FILES.collection} is near its ${MAX_CATS} cats (the Collection's hard cap, past which it proves nothing new), with room kept for the planned cats and ${COLLECTION_MARGIN} more`}; no new cat is prepared.`);
     } else {
-      const pick = selectCandidate(ctx);
+      let pick = selectCandidate(ctx);
       for (const s of pick.skipped) log(`Launcher: post ${s.id} skipped: ${s.why}.`);
-      if (!pick.row) log("Launcher: no trending cat to launch now.");
+      if (!pick.row && stats.count + 1 >= caps.maxPerDay) log(`Launcher: no trending cat to launch now; the day's last launch (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}) is kept for one.`);
+      else if (!pick.row) {
+        // No trending cat: the sanctuary's own cat the announcer posted last that has no coin yet (never the day's last slot).
+        log("Launcher: no trending cat to launch now; looking at the sanctuary's cats posted on X.");
+        pick = selectSanctuary(ctx);
+        const why = new Map();
+        for (const s of pick.skipped) why.set(s.why, [...(why.get(s.why) ?? []), s.id]);
+        for (const [w, ids] of why) log(`Launcher: ${ids.length} posted cat(s) skipped (${w}): ${ids.slice(0, 12).join(", ")}${ids.length > 12 ? ", …" : ""}.`);
+      }
+      if (!pick.row) log("Launcher: no cat to launch now.");
       else if (mode === "dry") {
         log(`Launcher (dry run): would prepare ${pick.row.coinName} (${pick.row.ticker}) from ${pick.row.url} (${pick.row.policy}), ${whereText(pick.row, pick.route)}; nothing written.`);
         out.pending = true;
@@ -1273,7 +1591,8 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   let row = ledger.launches.find((r) => r.status === "prepared") ?? null;
   const virtual = !row && mode === "dry";
   if (virtual) {
-    if (dayStats(ledger, nowMs, caps).count < caps.maxPerDay) row = selectCandidate(ctx).row;
+    const count = dayStats(ledger, nowMs, caps).count;
+    if (count < caps.maxPerDay) row = selectCandidate(ctx).row ?? (count + 1 < caps.maxPerDay ? selectSanctuary(ctx).row : null);
   }
   if (!row) { log("Launcher: nothing prepared to send."); return out; }
   let venue = venueById(row.venue);
@@ -1310,11 +1629,37 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   if (found.state === "foreign") { log(`::warning title=Launcher::${row.ticker}: ${found.detail}; it is never sent.`); fail(found.detail, false); return { ...out, outcome: "foreign" }; }
   if (found.state === "unknown") { log(`::error title=Launcher::${row.ticker}: ${found.detail}. Nothing was sent; a person must look.`); return { ...out, outcome: "unknown", code: 1 }; }
 
-  // 4. Too old now?
-  if (postAgeMs(row, ctx.trending, nowMs) > MAX_POST_AGE_HOURS * HOUR_MS) {
+  // 4. Too old now? (A sanctuary cat's own post has no age limit; the cat must still be free: no coin since it was prepared.)
+  if (tooOld(row, ctx.trending, nowMs)) {
     log(`Launcher: ${row.ticker}'s post is older than ${MAX_POST_AGE_HOURS} hours now; it is not launched.`);
     fail(`the post is older than ${MAX_POST_AGE_HOURS} hours`, false);
     return { ...out, outcome: "stale" };
+  }
+  if (row.policy === "sanctuary" && !Array.isArray(ctx.adoptions?.adoptions)) {
+    log(`::warning title=Launcher::${row.ticker} waits: ${FILES.adoptions} cannot be read; nothing was sent.`);
+    return { ...out, outcome: "adoption_unchecked" };
+  }
+  const taken = row.policy === "sanctuary" ? ownProblemNow(row, ctx) : null;
+  if (taken) {
+    log(`::warning title=Launcher::${row.ticker} is not launched: ${taken}.`);
+    fail(taken, false);
+    return { ...out, outcome: "taken" };
+  }
+  // Its card as it would be prepared now: changed (a new lore line, a death marked), the prepare phase rewrites its
+  // metadata first; one that could not be prepared as it was any more (its portrait gone from the site, its row refused,
+  // no lore line that passes) fails for good, like one taken: nothing is sent that record could not write back.
+  if (row.policy === "sanctuary" && !virtual) {
+    const re = ownRowRecheck(row, ctx);
+    if (re.problem) {
+      const why = `it could not be prepared as it was any more (${re.problem})`;
+      log(`::warning title=Launcher::${row.ticker} is not launched: ${why}.`);
+      fail(why, false);
+      return { ...out, outcome: "ineligible" };
+    }
+    if (re.row.lore !== row.lore || re.row.kind !== row.kind) {
+      log(`Launcher: ${row.ticker} waits: its card changed since it was prepared; the prepare phase rewrites its metadata, then it is sent.`);
+      return { ...out, outcome: "card_changed" };
+    }
   }
 
   // 5. The metadata: the committed file, served by the site at the coin's uri.
@@ -1332,9 +1677,39 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     }
   }
 
-  // 6. The day's count, then build and simulate UNSIGNED.
+  // 6. The day's count (a sanctuary cat never takes the day's last launch: kept for a trending cat), the live adoption
+  //    check, the funds, then build and simulate UNSIGNED.
   const stats = dayStats(ledger, nowMs, caps);
   if (stats.count >= caps.maxPerDay) { log(`Launcher: ${stats.count} launch(es) in the last 24 hours (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}); ${row.ticker} waits.`); return { ...out, outcome: "cap" }; }
+  if (row.policy === "sanctuary" && stats.count + 1 >= caps.maxPerDay) {
+    log(`Launcher: ${stats.count} launch(es) in the last 24 hours; the day's last launch (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}) is kept for a trending cat, so ${row.ticker} waits.`);
+    return { ...out, outcome: "cap" };
+  }
+  // A sanctuary cat: adopted on pump.fun since the trend watch's last scan? Read live, right before the funds are read and
+  // the coin is built. The windows of pump.fun's launches the trend watch never read (fresh.gaps) since the cat's X post are
+  // read back over too: a visitor who adopted it then is in no file. Past the list's reach, the row waits until a person
+  // has looked (the cat's post id approved in data/launch-approvals.json).
+  if (row.policy === "sanctuary") {
+    const kit = kitsOf({ planned: ctx.planned ?? { cats: [] }, adoptables: ctx.adoptables ?? { cats: [] } }).find((k) => k.key === row.ticker);
+    const scanned = readOwned(io, FILES.pumpScan, null, log)?.fresh;
+    const scan = Date.parse(scanned?.coveredUntil ?? "");
+    const owners = new Set((walletsFile.launchers ?? []).map((w) => w?.address).filter(Boolean));
+    const unread = unreadWindows(scanned?.gaps, postedMsOf(row, ctx), ctx.approvals.has(row.postId));
+    const sinceMs = Math.max(Date.parse(KITS_LIVE), Math.min(scan - PUMP_CHECK_MARGIN_MS, ...unread.map((g) => g.fromMs)));
+    const live = !kit ? { unchecked: "the cat has no kit to compare" } : !Number.isFinite(scan) ? { unchecked: `${FILES.pumpScan} gives no pump.fun coverage mark (fresh.coveredUntil) yet` }
+      : await kitLaunchedSince({ fetchImpl, sleep, kit, sinceMs, owners });
+    if (live.taken?.length) {
+      const why = `a coin with its kit's name and ticker was launched on pump.fun (${live.taken[0]}): a visitor's adoption`;
+      log(`::warning title=Launcher::${row.ticker} is not launched: ${why}.`);
+      fail(why, false);
+      return { ...out, outcome: "taken" };
+    }
+    if (live.unchecked) {
+      const hint = unread.length ? ` (pump.fun's launches from ${ISO_SECONDS(Math.max(Date.parse(KITS_LIVE), unread[0].fromMs))} to ${ISO_SECONDS(Math.min(nowMs, unread[unread.length - 1].toMs))} were never read by the trend watch, so the check reads back to them; a person who has looked on pump.fun for a coin named ${kit?.name ?? row.coinName} / ${row.ticker} since the cat's post may approve post ${row.postId} in ${FILES.approvals} to let it launch)` : "";
+      log(`::warning title=Launcher::${dry}${row.ticker} waits: ${live.unchecked}${hint}; nothing was sent, the next run tries again.`);
+      return { ...out, outcome: "adoption_unchecked" };
+    }
+  }
   const balance = await rpc.getBalance(wallet.publicKey);
   if (!Number.isSafeInteger(balance)) throw new LaunchError("the RPC gave no balance for the wallet");
   // The $CATSANC holders' SOL (the creator fees claimed for them, not paid out yet) is never the launcher's to spend:
@@ -1507,11 +1882,26 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     // The cat, with its launch (the whole file must still validate).
     const cats = files.adoptables.cats ?? [];
     const existing = cats.find((c) => c.ticker === T || c.id === row.cat.id);
-    if (existing && !(existing.launch?.mint === launch.mint && existing.launch?.tx === launch.tx)) {
+    const own = row.policy === "sanctuary";
+    // A sanctuary cat is in the file already: its own row takes the launch, priced in the pair it launched in.
+    if (own && existing && existing.id === row.cat.id && existing.ticker === T && !existing.launch
+      && nameKey(existing.coinName || existing.name) === nameKey(row.coinName) && (existing.launchTicker || existing.ticker) === T) {
+      const next = { ...files.adoptables, cats: cats.map((c) => (c === existing ? { ...existing, pair: { ...row.cat.pair }, launch } : c)) };
+      const v = validateAdoptables(next, { taken: plannedTickers });
+      if (v.refused.length) {
+        const p = `${T}: data/adoptables.json would not validate (${v.refused.map((x) => x.detail).join("; ").slice(0, 200)}); nothing was recorded for it`;
+        out.problems.push(p); log(`::error title=Launcher::${p}`); continue;
+      }
+      files.adoptables = next;
+    } else if (own && !(existing?.launch?.mint === launch.mint && existing?.launch?.tx === launch.tx)) {
+      const p = `${T}: the sanctuary cat ${row.cat.id} is not in data/adoptables.json as it was (its row, coin name or ticker), or has another coin; ${row.coinName} was launched (${row.tx.slice(0, 12)}…) but is not recorded: a person must add it`;
+      out.problems.push(p); log(`::error title=Launcher::${p}`); continue;
+    }
+    if (!own && existing && !(existing.launch?.mint === launch.mint && existing.launch?.tx === launch.tx)) {
       const p = `${T}: the adoptable ticker or id is taken by another cat; ${row.coinName} was launched (${row.tx.slice(0, 12)}…) but is not in the sanctuary: a person must add it`;
       out.problems.push(p); log(`::error title=Launcher::${p}`); continue;
     }
-    if (!existing) {
+    if (!own && !existing) {
       const next = { ...files.adoptables, cats: [...cats, { ...row.cat, launch }] };
       const v = validateAdoptables(next, { taken: plannedTickers });
       if (v.refused.length) {
@@ -1527,9 +1917,9 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     if (!rows.some((l) => l.tx === row.tx) && !proved.has(row.tx)) rows.push({ tx: row.tx, note: `Sanctuary launcher: ${T}` });
     if (rows.length <= 200) files.launches = { ...files.launches, launches: rows };
     else log(`::warning title=Launcher::data/launches.json holds 200 rows; ${T}'s launch is left to the Collection's wallet scan.`);
-    // A 3D model of its own, from the post's picture.
+    // A 3D model of its own, from the post's picture (a sanctuary cat has its model, its portrait and its card already).
     files.meshy.cats ??= {};
-    if (!files.meshy.cats[T]) {
+    if (!own && !files.meshy.cats[T]) {
       const order = Math.max(0, ...Object.values(files.meshy.cats).map((q) => (Number.isFinite(q?.order) ? q.order : 0))) + 1;
       const look = row.cat.look.startsWith(`${row.cat.name}, drawn from the picture`) ? DEFAULT_REFERENCE : row.cat.look;
       files.meshy.cats[T] = { action: "rebuild", priority: 1, why: "A trending cat the sanctuary launched: it has no model of its own yet (the garden draws the shared model in its coat).",
@@ -1539,14 +1929,14 @@ export function record({ io, env = {}, now = Date.now, log = () => {} }) {
     // ruled it out (`none`) or hides the post (data/photo-hide.json: then it waits in `hidden`, and the card keeps its portrait).
     files.photos.cats ??= {};
     const photo = photoOfRow(row);
-    if (!(T in files.photos.cats) && !(T in (files.photos.none ?? {})) && !(T in (files.photos.hidden ?? {})) && realPhotoOf(photo)) {
+    if (!own && !(T in files.photos.cats) && !(T in (files.photos.none ?? {})) && !(T in (files.photos.hidden ?? {})) && realPhotoOf(photo)) {
       const entry = { realPhoto: photo, source: "proof" };
       if (files.photoHide.has(row.postId)) files.photos = { ...files.photos, hidden: { ...(files.photos.hidden ?? {}), [T]: { postId: row.postId, entry } } };
       else files.photos.cats[T] = entry;
     }
     replaceRow(ledger, { ...row, recordedAt: ISO_SECONDS(nowMs) });
     out.recorded.push(T);
-    log(`Launcher: ${row.name} (${T}), launched ${whereText(row)}, moves into the sanctuary; its X post ("launched by the sanctuary on ${venue.announceAs}") waits for the Collection to prove ${row.tx.slice(0, 12)}….`);
+    log(`Launcher: ${row.name} (${T}), launched ${whereText(row)}, ${own ? "has its coin on its card" : "moves into the sanctuary"}; its X post ("launched by the sanctuary on ${venue.announceAs}") waits for the Collection to prove ${row.tx.slice(0, 12)}….`);
   }
   // The watch list lets go of the figures that live in the sanctuary now (the trend watch no longer looks for them).
   if (out.recorded.length && isObj(files.watch) && Array.isArray(files.watch.figures)) {

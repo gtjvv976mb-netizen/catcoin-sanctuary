@@ -309,3 +309,65 @@ test("trending workflow: pinned actions, every 20 min and by hand, contents: wri
   assert.match(next, /gh workflow run trending\.yml/);
   assert.ok(!/uses:|\bnode\b|\bnpm\b|secrets\./.test(next));
 });
+
+test("catIndex: a mint the launcher's ledger has sent is the sanctuary's own (a sanctuary cat's coin, before its record reaches data/adoptables.json), never its copycat", () => {
+  const coin = { mint: MINT(42), symbol: "CATBUS", name: "Nekobasu" };
+  assert.equal(copycatOf(coin, catIndex(data())), "NEKOBUS", "control: a coin under the cat's ticker");
+  const idx = catIndex({ ...data(), launches: { launches: [{ postId: "1", status: "sending", mintPublic: MINT(42) }] } });
+  assert.equal(copycatOf(coin, idx), null);
+});
+
+test("coverage mark: fresh.coveredUntil moves to now only when the read reached it; a page that failed keeps it (the gap is read again next run), and a run after a gap reads back to it", async () => {
+  // pump.fun's list at time `t`: page 1 is 50 coins from the last 50 s, then (unless `fail`) a page of coins `back` ms older.
+  const pumpAt = (t, { fail = false, back = 3_600_000 } = {}) => async (url, init) => {
+    if (!String(url).startsWith("https://frontend-api-v3.pump.fun/coins")) return fakeFetch().fn(url, init);
+    const offset = Number(new URL(url).searchParams.get("offset"));
+    if (offset === 0) return new Response(JSON.stringify(Array.from({ length: 50 }, (_, i) => ({ mint: MINT(200 + i), name: "Some Coin", symbol: "SOME", created_timestamp: t - i * 1000 }))));
+    if (fail) return new Response("busy", { status: 503 });
+    return new Response(JSON.stringify([{ mint: MINT(300 + offset), name: "Old Coin", symbol: "OLD", created_timestamp: t - back }]));
+  };
+  const first = await buildTrending({ data: data(), fetchImpl: pumpAt(NOW), nowMs: NOW, pause: 0 });
+  assert.equal(first.trending.fresh.coveredUntil, "2026-09-27T09:00:00Z");
+  // An hour later, page 2 fails: the mark stays where it was (the tab's own time still moves).
+  const later = NOW + 3_600_000;
+  const second = await buildTrending({ data: { ...data(), trending: first.trending }, fetchImpl: pumpAt(later, { fail: true }), nowMs: later, pause: 0 });
+  assert.equal(second.trending.fresh.coveredUntil, first.trending.fresh.coveredUntil, "not reached: kept");
+  assert.equal(second.trending.fresh.updatedAt, "2026-09-27T10:00:00Z");
+  // The next run reads back to the old mark (past the 30-minute window) and moves it.
+  const third = await buildTrending({ data: { ...data(), trending: second.trending }, fetchImpl: pumpAt(later + 20 * 60_000, { back: 2 * 3_600_000 }), nowMs: later + 20 * 60_000, pause: 0 });
+  assert.equal(third.trending.fresh.coveredUntil, "2026-09-27T10:20:00Z");
+  // A read that only reached 20 minutes back while the mark is 80 minutes back: not reached, kept.
+  const short = await buildTrending({ data: { ...data(), trending: second.trending }, fetchImpl: pumpAt(later + 20 * 60_000, { back: 20 * 60_000 }), nowMs: later + 20 * 60_000, pause: 0 });
+  assert.equal(short.trending.fresh.coveredUntil, first.trending.fresh.coveredUntil);
+  // A mark more than a day old is past any read: the run reads the last half hour, the mark moves, and the window up to
+  // the read is noted as a gap (fresh.gaps), with a warning: the launcher reads back over it or waits for a person.
+  const aged = { ...first.trending, fresh: { ...first.trending.fresh, updatedAt: "2026-09-26T08:00:00Z", coveredUntil: "2026-09-26T08:00:00Z" } };
+  const logs = [];
+  const after = await buildTrending({ data: { ...data(), trending: aged }, fetchImpl: pumpAt(NOW), nowMs: NOW, pause: 0, log: (l) => logs.push(l) });
+  assert.equal(after.trending.fresh.coveredUntil, "2026-09-27T09:00:00Z");
+  assert.deepEqual(after.trending.fresh.gaps, [{ from: "2026-09-26T08:00:00Z", to: "2026-09-27T08:29:00Z" }]);
+  assert.ok(logs.some((l) => /^::warning::pump\.fun's launches from 2026-09-26T08:00:00Z to 2026-09-27T08:29:00Z were not read \(the coverage mark was more than a day old\)/.test(l)), logs.join("\n"));
+});
+
+test("the launcher's coins: a coin from a launcher wallet under a ticker the launcher is sending now is the sanctuary's own on first sighting (never a copycat), and a cat it is sending or launched has no kit (a coin under its name after that is no adoption)", async () => {
+  // A sanctuary cat launches under its own ticker (the launcher refuses a kit with another one).
+  const base = data();
+  const cat = { ...base.adoptables.cats[0], ticker: "CATBUS" };
+  delete cat.launchTicker;
+  const d = { ...base, adoptables: { cats: [cat] }, kits: { cats: {} } };
+  const kit = { name: "Nekobasu", symbol: "CATBUS", description: STORY, twitter: PROOF, website: "https://catcoinsanctuary.com/#cat=CATBUS" };
+  const launched = [
+    { mint: MINT(60), ...kit, created_timestamp: NOW - 60_000, creator: MINT(97), usd_market_cap: 100 },   // the launcher wallet's own coin, its mint not in the ledger yet
+    { mint: MINT(61), ...kit, created_timestamp: NOW - 30_000, creator: CREATOR, usd_market_cap: 50 },     // a stranger's, after it
+  ];
+  const ledger = { launches: [{ postId: "1", ticker: "CATBUS", policy: "sanctuary", status: "sending" }] };
+  const r = await buildTrending({ data: { ...d, launches: ledger }, fetchImpl: fakeFetch({ launched }).fn, nowMs: NOW, pause: 0 });
+  const all = r.trending.fresh.all;
+  assert.equal(all.find((x) => x.mint === MINT(60))?.copycatOf ?? null, null, "the sanctuary's own coin");
+  assert.equal(all.find((x) => x.mint === MINT(61))?.copycatOf, "CATBUS", "a stranger's coin after it: a copycat");
+  assert.ok(!r.adoptions.adoptions.some((a) => a.key === "CATBUS"), "never its adoption");
+  // Control: with nothing in the ledger the launcher wallet's coin is not known as ours yet, and the stranger's coin is the cat's adoption.
+  const ctl = await buildTrending({ data: d, fetchImpl: fakeFetch({ launched }).fn, nowMs: NOW, pause: 0 });
+  assert.equal(ctl.trending.fresh.all.find((x) => x.mint === MINT(60))?.copycatOf, "CATBUS");
+  assert.deepEqual(ctl.adoptions.adoptions.map((a) => [a.key, a.mint]), [["CATBUS", MINT(61)]]);
+});
