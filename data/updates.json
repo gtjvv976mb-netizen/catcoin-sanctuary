@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-09-30T19:41:59.628Z",
+  "lastPostedAt": "2026-10-01T00:32:00.137Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -70,7 +70,10 @@
       "id": "trivia-routines",
       "text": "🐾 Sanctuary trivia 4/5\nThe cats keep their own schedule 😸\nThey wander, play, eat, groom and nap in the sun, among the birds, butterflies and the pond 🦋\nCatch one mid-nap 😴\nhttps://catcoinsanctuary.com/\n#CatsOfX",
       "approved": true,
-      "status": "queued"
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-01T00:32:00.137Z",
+      "tweet": "2105455653644845276"
     },
     {
       "id": "trivia-browser",
