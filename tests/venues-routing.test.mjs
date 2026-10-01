@@ -119,11 +119,13 @@ test("watchLinksProblems and linkProblem: a tie is exactly one stock pair symbol
   assert.deepEqual(watchLinksProblems(null), []);
 });
 
-test("usedStockPairs: one cat per stock pair, as the site keeps it for planned cats, plus proved launches and adoptables; today only tOpenAI and tKalshi are free", () => {
+test("usedStockPairs: one cat per stock pair, as the site keeps it for planned cats, plus proved launches and adoptables; today only tOpenAI, tKalshi and the held-back cats' pairs are free", () => {
   const used = usedStockPairs({ planned: PLANNED, collection: read("collection.json"), adoptables: read("adoptables.json") });
   const free = STOCK_PAIRS.filter((s) => !used.has(s.mint)).map((s) => s.symbol);
-  // Only the two pairs no planned cat has can be free; the launcher may give one of them its StonkFun cat (then it is used too).
-  assert.ok(free.every((s) => ["tOpenAI", "tKalshi"].includes(s)), free.join(", "));
+  // Only the pairs no planned cat has can be free: the two that never had one, and those of the cats held back with no lore
+  // (data/held.json, 2026-10-01); the launcher may give one of them its StonkFun cat (then it is used too).
+  assert.ok(free.length <= 2 + read("held.json").held.length, free.join(", "));
+  assert.ok(free.length > 2, "the held-back cats' pairs are free again");
   for (const c of validatePlanned(PLANNED, { nowMs: DATA_NOW }).cats) assert.ok(used.has(c.pair.mint), `${c.ticker}'s pair`);
   // a proved StonkFun launch takes its pair; a pump.fun one (SOL) takes none; so does a launch sent but not yet proved (extra)
   const launched = usedStockPairs({ collection: { cats: [{ pair: pair("tOpenAI") }, { pair: { symbol: "SOL", mint: "So11111111111111111111111111111111111111112" }, launchpad: "pump.fun" }] } });

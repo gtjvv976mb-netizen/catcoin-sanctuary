@@ -53,25 +53,25 @@ const snapshot = (root) => {
 };
 
 test("build: sheets + research make data/planned.json and the portraits; the sheets' internal notes are not published", () => {
-  const { root, paths } = tempRoot([[sheetEntry("PATCHPAW"), sheetEntry("SAVEPAWS")]]);
+  const { root, paths } = tempRoot([[sheetEntry("ROSETTE"), sheetEntry("SAVEPAWS")]]);
   const r = buildPlanned({ root, sheets: paths, nowMs: NOW });
   assert.equal(r.cats, 2);
   assert.equal(r.stocks, 93);
-  assert.deepEqual(r.written, { planned: true, portraits: ["PATCHPAW", "SAVEPAWS"], removed: [], proofImages: ["SAVEPAWS"], proofRemoved: [] });
+  assert.deepEqual(r.written, { planned: true, portraits: ["ROSETTE", "SAVEPAWS"], removed: [], proofImages: ["SAVEPAWS"], proofRemoved: [] });
   const out = readPlanned(root);
   assert.deepEqual(validatePlanned(out, { nowMs: NOW }).refused, []);
-  assert.deepEqual(out.cats, PLANNED.cats.filter((c) => ["PATCHPAW", "SAVEPAWS"].includes(c.ticker)));
+  assert.deepEqual(out.cats, PLANNED.cats.filter((c) => ["ROSETTE", "SAVEPAWS"].includes(c.ticker)));
   assert.deepEqual(out.stocks, PLANNED.stocks);
   const text = fs.readFileSync(path.join(root, "data/planned.json"), "utf8");
   for (const secret of ["INTERNAL", "internal", "cloudfront", "imageJobId", "/tmp/"]) assert.ok(!text.includes(secret), secret);
   assert.equal(text, serialize(out));
-  for (const t of ["PATCHPAW", "SAVEPAWS"]) {
+  for (const t of ["ROSETTE", "SAVEPAWS"]) {
     assert.deepEqual(fs.readFileSync(path.join(root, `assets/portraits/${t}.jpg`)), fs.readFileSync(path.join(ROOT, `assets/portraits/${t}.jpg`)));
   }
 });
 
 test("build: a re-run writes nothing; a sheet that is not there yet is skipped", () => {
-  const { root, paths } = tempRoot([[sheetEntry("PATCHPAW")]]);
+  const { root, paths } = tempRoot([[sheetEntry("ROSETTE")]]);
   buildPlanned({ root, sheets: paths, nowMs: NOW });
   const before = snapshot(root);
   const r = buildPlanned({ root, sheets: [...paths, path.join(root, "not-yet.json")], nowMs: NOW });
@@ -81,7 +81,7 @@ test("build: a re-run writes nothing; a sheet that is not there yet is skipped",
 });
 
 test("build: it never drops a planned cat unless told to", () => {
-  const { root, paths } = tempRoot([[sheetEntry("PATCHPAW"), sheetEntry("SAVEPAWS")], [sheetEntry("PATCHPAW")]]);
+  const { root, paths } = tempRoot([[sheetEntry("ROSETTE"), sheetEntry("SAVEPAWS")], [sheetEntry("ROSETTE")]]);
   buildPlanned({ root, sheets: [paths[0]], nowMs: NOW });
   const before = snapshot(root);
   assert.throws(() => buildPlanned({ root, sheets: [paths[1]], nowMs: NOW }), (e) => e instanceof PlannedError && /drop 1 planned cat \(SAVEPAWS\)/.test(e.message));
@@ -89,11 +89,11 @@ test("build: it never drops a planned cat unless told to", () => {
   const r = buildPlanned({ root, sheets: [paths[1]], allowDrop: true, nowMs: NOW });
   assert.deepEqual(r.dropped, ["SAVEPAWS"]);
   assert.ok(!fs.existsSync(path.join(root, "assets/portraits/SAVEPAWS.jpg")), "a dropped cat's portrait is removed");
-  assert.deepEqual(readPlanned(root).cats.map((c) => c.ticker), ["PATCHPAW"]);
+  assert.deepEqual(readPlanned(root).cats.map((c) => c.ticker), ["ROSETTE"]);
 });
 
 test("build: the pair is the sheet's mint (checked against the symbol), else the symbol's pair; OPENAI and KALSHI by the research's category", () => {
-  const base = { ...sheetEntry("PATCHPAW"), ticker: "OAITEST", name: "Test Cat", imageJpg512: undefined, quoteMint: undefined, proof: undefined };
+  const base = { ...sheetEntry("ROSETTE"), ticker: "OAITEST", name: "Test Cat", imageJpg512: undefined, quoteMint: undefined, proof: undefined };
   const { root, paths } = tempRoot([[{ ...base, stonkfunSymbol: "OPENAI" }], [{ ...base, stonkfunSymbol: "OPENAI", pairMint: "oPAiAikWTaFj9RYoRFD35ccfwhnMcB3ThgBZRHSkjTZ" }],
     [{ ...base, stonkfunSymbol: "OPENAI", pairMint: "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc" }], [{ ...base, stonkfunSymbol: "DOGE" }], [{ ...base, stonkfunSymbol: "MU" }]]);
   buildPlanned({ root, sheets: [paths[0]], nowMs: NOW });
@@ -109,12 +109,12 @@ test("build: the pair is the sheet's mint (checked against the symbol), else the
 
 test("build: bad sheets stop the run and write nothing", () => {
   const cases = [
-    [[{ ...sheetEntry("PATCHPAW"), ticker: "patch paw" }], /ticker/],
-    [[sheetEntry("PATCHPAW"), sheetEntry("PATCHPAW")], /twice/],
-    [[{ ...sheetEntry("PATCHPAW"), name: "<img src=x onerror=alert(1)>" }], /would not validate.*name: markup/],
-    [[{ ...sheetEntry("PATCHPAW"), story: "Visit <a href=x>here</a>" }], /would not validate.*story: markup/],
-    [[{ ...sheetEntry("PATCHPAW"), look: "" }], /would not validate.*look: empty/],
-    [[sheetEntry("PATCHPAW"), sheetEntry("WHISK100", { stonkfunSymbol: "SPYX", quoteMint: pairByMint("XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W").mint })], /already has a planned cat/],
+    [[{ ...sheetEntry("ROSETTE"), ticker: "patch paw" }], /ticker/],
+    [[sheetEntry("ROSETTE"), sheetEntry("ROSETTE")], /twice/],
+    [[{ ...sheetEntry("ROSETTE"), name: "<img src=x onerror=alert(1)>" }], /would not validate.*name: markup/],
+    [[{ ...sheetEntry("ROSETTE"), story: "Visit <a href=x>here</a>" }], /would not validate.*story: markup/],
+    [[{ ...sheetEntry("ROSETTE"), look: "" }], /would not validate.*look: empty/],
+    [[sheetEntry("ROSETTE"), sheetEntry("TUPPENCE", { stonkfunSymbol: "APPLX", quoteMint: pairByMint("XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp").mint })], /already has a planned cat/],
   ];
   for (const [sheet, why] of cases) {
     const { root, paths } = tempRoot([sheet]);
@@ -125,7 +125,7 @@ test("build: bad sheets stop the run and write nothing", () => {
 });
 
 test("build: a sheet's own coat wins over the look's words", () => {
-  const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", { coat: { base: "Orange", second: "white", pattern: "Mackerel tabby", eyes: "amber-gold" } })]]);
+  const { root, paths } = tempRoot([[sheetEntry("ROSETTE", { coat: { base: "Orange", second: "white", pattern: "Mackerel tabby", eyes: "amber-gold" } })]]);
   buildPlanned({ root, sheets: paths, nowMs: NOW });
   const c = readPlanned(root).cats[0];
   assert.deepEqual([c.coat, c.coatFrom], [{ base: "ginger", second: "white", pattern: "tabby", eyes: "gold" }, "sheet"]);
@@ -136,9 +136,9 @@ test("build: a portrait that is not a 512 px JPEG is resized (Pillow) to one, wi
   const src = path.join(path.dirname(png), "big.png");
   const made = spawnSync("python3", ["-c", "import sys\nfrom PIL import Image\nImage.new('RGB', (900, 700), (200, 120, 60)).save(sys.argv[1])", src]);
   assert.equal(made.status, 0);
-  fs.writeFileSync(png, JSON.stringify([sheetEntry("PATCHPAW", { imageJpg512: undefined, image: src })]));
+  fs.writeFileSync(png, JSON.stringify([sheetEntry("ROSETTE", { imageJpg512: undefined, image: src })]));
   buildPlanned({ root, sheets: [png], nowMs: NOW });
-  const info = jpegInfo(fs.readFileSync(path.join(root, "assets/portraits/PATCHPAW.jpg")));
+  const info = jpegInfo(fs.readFileSync(path.join(root, "assets/portraits/ROSETTE.jpg")));
   assert.deepEqual(info, { width: 512, height: 512, metadata: false });
 });
 
@@ -224,16 +224,16 @@ const TRIBUTE_LINE = tributeLine("Acme");
 
 test("build: a cat whose whyLook says its picture follows or copies a company's cat must carry the fan-tribute line, or the run stops", () => {
   for (const why of [COPYING, "He copies the real cat in a company's blog post.", "She follows the white cat avatar in a car's update.", "The coin copies that cat."]) {
-    const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", { whyLook: why })]]);
+    const { root, paths } = tempRoot([[sheetEntry("ROSETTE", { whyLook: why })]]);
     const before = snapshot(root);
     assert.throws(() => buildPlanned({ root, sheets: paths, nowMs: NOW }), (e) => e instanceof PlannedError && /Fan tribute to <Company>'s cat\. Not affiliated with or endorsed by <Company>\./.test(e.message), why);
     assert.deepEqual(snapshot(root), before);
   }
   // With the line in its description, the same cat is planned and carries the line as its tribute.
-  const base = sheetEntry("PATCHPAW");
-  const description = `${base.story} ${TRIBUTE_LINE} A cat coin priced in SPYx. Not affiliated with State Street or StonkFun. No intrinsic value; not financial advice.`;
+  const base = sheetEntry("ROSETTE");
+  const description = `${base.story} ${TRIBUTE_LINE} A cat coin priced in AAPLx. Not affiliated with Apple Inc. or StonkFun. No intrinsic value; not financial advice.`;
   for (const extra of [{ whyLook: COPYING, description }, { whyLook: COPYING, description, tribute: TRIBUTE_LINE }]) {
-    const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", extra)]]);
+    const { root, paths } = tempRoot([[sheetEntry("ROSETTE", extra)]]);
     buildPlanned({ root, sheets: paths, nowMs: NOW });
     const cat = readPlanned(root).cats[0];
     assert.equal(cat.tribute, TRIBUTE_LINE);
@@ -245,7 +245,7 @@ test("build: a cat whose whyLook says its picture follows or copies a company's 
     { whyLook: COPYING, tribute: "Fan tribute to Acme's cat. Not affiliated with or endorsed by Other.", description },
     { whyLook: COPYING, tribute: TRIBUTE_LINE },
   ]) {
-    const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", extra)]]);
+    const { root, paths } = tempRoot([[sheetEntry("ROSETTE", extra)]]);
     assert.throws(() => buildPlanned({ root, sheets: paths, nowMs: NOW }), PlannedError, JSON.stringify(extra));
   }
   assert.equal(copiesACat("No cat link was found. She is a honey-golden cat in the 'loaf' pose."), false);
@@ -268,12 +268,12 @@ test("rules: a planned cat's tribute is the exact line, and its description carr
 });
 
 test("build: a cat held in data/held.json is left out with its portrait, and is not counted as dropped", () => {
-  const { root, paths } = tempRoot([[sheetEntry("PATCHPAW"), sheetEntry("SAVEPAWS", { whyLook: COPYING })]]);
+  const { root, paths } = tempRoot([[sheetEntry("ROSETTE"), sheetEntry("SAVEPAWS", { whyLook: COPYING })]]);
   fs.writeFileSync(path.join(root, "data/held.json"), JSON.stringify({ held: [{ ticker: "SAVEPAWS", since: "2026-09-25", reason: "Its picture follows a company's cat." }] }));
   fs.mkdirSync(path.join(root, "assets/portraits"), { recursive: true });
   fs.copyFileSync(path.join(ROOT, "assets/portraits/SAVEPAWS.jpg"), path.join(root, "assets/portraits/SAVEPAWS.jpg"));
   const r = buildPlanned({ root, sheets: paths, nowMs: NOW });
-  assert.deepEqual(readPlanned(root).cats.map((c) => c.ticker), ["PATCHPAW"]);
+  assert.deepEqual(readPlanned(root).cats.map((c) => c.ticker), ["ROSETTE"]);
   assert.deepEqual(r.held, ["SAVEPAWS"]);
   assert.deepEqual(r.written.removed, ["SAVEPAWS"]);
   assert.ok(!fs.existsSync(path.join(root, "assets/portraits/SAVEPAWS.jpg")));
@@ -283,8 +283,11 @@ test("build: a cat held in data/held.json is left out with its portrait, and is 
     assert.throws(() => readHeld(root), PlannedError);
   }
   // The owner ruled that the eight xStock cats look exactly like their companies' cats, as fan tributes.
+  // 2026-10-01, the owner: "remove all cats with no lore and just speculation": the 33 invented cats (no real cat found
+  // for their stock) are held, each for that reason, and none is planned.
   const shipped = readHeld(ROOT);
-  assert.equal(shipped.size, 0);
+  assert.equal(shipped.size, 33);
+  for (const [t, why] of shipped) { assert.match(why, /^No lore: an invented cat/, t); assert.ok(!PLANNED.cats.some((c) => c.ticker === t), t); }
   const companies = { MIGGLES: "Coinbase", PEWTER: "Robinhood", SNOWCURL: "Tesla", CAMTHECAT: "Berkshire Hathaway", COUCHCAP: "Meta", WARMSPOT: "SpaceX", SOCKFOOT: "NVIDIA", JELLIECAT: "Microsoft" };
   for (const [t, company] of Object.entries(companies)) {
     const cat = PLANNED.cats.find((c) => c.ticker === t);
@@ -321,9 +324,10 @@ const WEB_PROOF = { kind: "web", url: "https://www.spdrgoldshares.com/", author:
 const HOSTS = ["www.spdrgoldshares.com"];
 
 test("proof: every shipped planned cat has a valid proof, X proofs are status posts by their handle, pictures exist and are small WebP", () => {
-  assert.equal(PLANNED.cats.length, 91);
-  // The first 24 cats shipped with a proof; the 67 of the second launch sheet have none recorded yet.
-  assert.ok(PLANNED.cats.slice(0, 24).every((c) => c.proof), "the first 24 cats keep their proofs");
+  assert.equal(PLANNED.cats.length, 58);
+  // The first 24 cats shipped with a proof; the 67 of the second launch sheet have none recorded yet. Of the first
+  // 24, the 16 still planned keep theirs (2026-10-01: 8 were held back with the other invented cats, data/held.json).
+  assert.ok(PLANNED.cats.slice(0, 16).every((c) => c.proof), "the first sheet's cats keep their proofs");
   for (const c of PLANNED.cats.filter((x) => x.proof)) {
     const stock = PLANNED.stocks.find((s) => s.pair.mint === c.pair.mint);
     const hosts = stock.links.map((l) => new URL(l.url).hostname);
@@ -362,7 +366,7 @@ test("proof: the rules refuse what is not a real post or a recorded source", () 
 });
 
 test("proof: a bad proof in a sheet stops the build and writes nothing", () => {
-  const { root, paths } = tempRoot([[sheetEntry("PATCHPAW", { proof: { ...WEB_PROOF, url: "https://example.com/" } })]]);
+  const { root, paths } = tempRoot([[sheetEntry("ROSETTE", { proof: { ...WEB_PROOF, url: "https://example.com/" } })]]);
   assert.throws(() => buildPlanned({ root, sheets: paths, nowMs: NOW }), (e) => e instanceof PlannedError && /host the research records/.test(e.message));
   assert.ok(!fs.existsSync(path.join(root, "data/planned.json")));
   const png = path.join(root, "x.png");

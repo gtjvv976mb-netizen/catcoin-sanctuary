@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const [outFile = "clips.png", ticker = "PATCHPAW", phase = "0.3", stripClips = "walk,trot,run", view = "side"] = process.argv.slice(2);
+const [outFile = "clips.png", ticker = "JELLIECAT", phase = "0.3", stripClips = "walk,trot,run", view = "side"] = process.argv.slice(2);
 const require = createRequire(import.meta.url);
 let playwright;
 try { playwright = require("playwright"); } catch { playwright = require(path.join(process.execPath, "../../lib/node_modules/playwright")); }

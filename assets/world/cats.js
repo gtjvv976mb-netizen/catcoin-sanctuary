@@ -69,9 +69,10 @@
    nav.js, and are pushed back out of anything they would otherwise walk into. A cat found in the
    water or a solid prop walks straight out (walkOut), and never sits or lies down in one.
 
-   Big cats (a lion, a tiger, a cheetah: drawn BIG_SIZE × an ordinary cat or more, traits.js
-   SPECIES). Everything about a cat's body goes by the size it is drawn at (sizeOf): its body, the
-   room it needs and leaves, where it stands to watch the pond or visit a friend. It moves as a big
+   Big cats (a lion, a tiger, a cheetah: traits.js SPECIES, size "bigcat"; drawn 1.2 × an ordinary cat since
+   the owner's 2026-10-01 "only 120% bigger", traits.js BIG_CAT_SCALE, and keeping their big-cat ways at that
+   size; a cat drawn BIG_SIZE × or more is one too, whatever it is: bigOf). Everything about a cat's body
+   goes by the size it is drawn at (sizeOf): its body, the room it needs and leaves, where it stands to watch the pond or visit a friend. It moves as a big
    animal does (catmotion gaitScale): walks, trots and runs at √size times the speeds, in gait bands
    that much faster, turns and steps √size times more slowly and takes that much longer over each
    move, so its paws stay planted and its cadence is slow and heavy. A big cat finds its way on a
@@ -222,17 +223,22 @@ export const sizeOf = (cat) => { const s = cat.style && cat.style.scale; return 
 /** A big cat (a leopard, a lion; not a bobcat or a Savannah): too big for the house cats' beds, cat
     trees, porch step, piles, bowls and yarn, and finding its way on a route-finder of its own. */
 export const BIG_SIZE = 1.5;
+/** Is this a big cat: one of the big-cat species (traits size "bigcat", drawn only 1.2 × since 2026-10-01), or any cat
+    drawn BIG_SIZE × or more? Its ways (no house cats' things), its route-finder and its room go by this. */
+export const bigOf = (size, traits) => size >= BIG_SIZE || traits?.size === "bigcat";
 /** Cats drawn this big or more (a Savannah, a bobcat, the big cats) keep their whole body, nose to
     hindquarters, out of the props (propDepth); a smaller one's middle is kept out, and its route-finder's
     berth keeps the rest. */
 export const LONG = 1.25;
+/** A cat whose whole body is kept out of the props: drawn LONG × or more, or a big cat (bigOf) at any size. */
+const isLong = (cat) => cat.size >= LONG || !!cat.big;
 /** Cats that keep company (follow, visit, chase): not more than this many times the other's size. */
 export const ALIKE = 1.5;
 export const alike = (a, b) => Math.max(a.size, b.size) <= ALIKE * Math.min(a.size, b.size);
 /** How far apart two cats settle when one of them is big (0 when neither is): far enough for either
     to get up and turn round (its body swinging right round) clear of the other, so a big cat is never
     left hemmed in by house cats sat down within its reach, nor one settles within a big one's. */
-export const bigRoom = (a, b) => (a.size >= BIG_SIZE || b.size >= BIG_SIZE ? (HALF_LEN.walk + BODY) * (a.size + b.size) + 0.1 : 0);
+export const bigRoom = (a, b) => (a.big || b.big || a.size >= BIG_SIZE || b.size >= BIG_SIZE ? (HALF_LEN.walk + BODY) * (a.size + b.size) + 0.1 : 0);
 /* Cats are long, not round: for the "no overlapping" checks each one is a capsule along its heading,
    as long as its (shared) pose, and as big as it is drawn (sizeOf: a lion's is half as big again):
    half its length HALF_LEN[pose] x size, its radius BODY x size. */
@@ -307,10 +313,10 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   // The big cats' own route-finder: its routes keep the biggest one's whole body (BODY × its size, and
   // a little) clear of every prop, where a house cat's keep only a house cat's clear (a lion routed on
   // those walks through lantern posts and bushes). Built once, only when there is a big cat.
-  const bigMax = Math.max(0, ...residents.map((r) => sizeOf({ style: r.style })).filter((s) => s >= BIG_SIZE)), bigR = bigMax * BODY;
+  const bigMax = Math.max(0, ...residents.map((r) => [sizeOf({ style: r.style }), r.traits]).filter(([s, tr]) => bigOf(s, tr)).map(([s]) => s)), bigR = bigMax * BODY;
   /** How far round a big cat of this size its whole body reaches, at its longest (stretching): the
       room it needs clear of every prop where it settles, whichever way it lies (0 for a house cat). */
-  const reachPad = (size) => (size >= BIG_SIZE ? (BODY + HALF_LEN.stretch) * size : size >= LONG ? (BODY + HALF_LEN.walk) * size : 0);
+  const reachPad = (size, big = size >= BIG_SIZE) => (big ? (BODY + HALF_LEN.stretch) * size : size >= LONG ? (BODY + HALF_LEN.walk) * size : 0);
   const NO_POND = new Set([L.POND.id]);
   // (and its head out from under the garden trees' lowest leaves: a crown (flora.js: centre 3.9 s up,
   // 2 s across, s = 0.85 of the tree's scale) hangs lowest by the trunk, so a big cat taller than that
@@ -319,7 +325,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   const TREE_OF = new Map(L.GARDEN_TREES.map((t) => [t.id, t]));
   const bigObstacles = L.obstacles().map((o) => (TREE_OF.has(o.id) ? { ...o, r: Math.max(o.r, crown(TREE_OF.get(o.id))) } : o));
   const bigNav = bigR ? new NavWorld({ obstacles: bigObstacles, walkR: L.GARDEN.walkR, clearR: Math.round((bigR + 0.12) * 100) / 100, bodyR: Math.round(bigR * 100) / 100 }) : null;
-  const navOf = (size) => (size >= BIG_SIZE && bigNav ? bigNav : nav);
+  const navOf = (big) => (big && bigNav ? bigNav : nav);
   const reserved = new Map(); // place id → cat id
   const cats = [];
   const yarns = L.YARNS.map((y) => ({ ...y, vx: 0, vz: 0, q: [0, 0, 0, 1], player: null }));
@@ -352,7 +358,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   const POSTS = L.obstacles().filter((o) => /^(arch-\d+-(-)?1|lantern-\d+)$/.test(o.id));
   const NOT_POSTS = new Set(L.obstacles().map((o) => o.id).filter((id) => !POSTS.some((q) => q.id === id)));
   /** The props a whole-body check leaves out: a long cat's `ign`; a house cat's, and all but the posts. */
-  const bodyIgnore = (cat, ign) => (cat.size >= LONG ? ign : new Set([...NOT_POSTS, ...(ign || [])]));
+  const bodyIgnore = (cat, ign) => (isLong(cat) ? ign : new Set([...NOT_POSTS, ...(ign || [])]));
   /** Whether a house cat is near enough a post for its body to reach it. */
   const nearPost = (cat) => POSTS.some((o) => { const r = o.r + (HALF_LEN.stretch + BODY) * cat.size + 0.25; return Math.abs(o.x - cat.x) < r && Math.abs(o.z - cat.z) < r; });
   const TREE_FOOT = new Set(L.TREES.map((t) => t.id));
@@ -365,8 +371,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   const BIG_POND = !bigNav ? [] : L.POND_SPOTS.map((p) => {
     const d = BANK;
     return { ...p, x: L.POND.x + Math.cos(Math.atan2(p.z - L.POND.z, p.x - L.POND.x)) * d, z: L.POND.z + Math.sin(Math.atan2(p.z - L.POND.z, p.x - L.POND.x)) * d };
-  }).filter((p) => bigNav.pointFree(p.x, p.z, bigNav.clearR - 0.02) && bigNav.pointFree(p.x, p.z, reachPad(bigMax) * 0.85, NO_POND));
-  const BIG_SUN = !bigNav ? [] : L.SUN_PATCHES.filter((s) => bigNav.pointFree(s.x, s.z, Math.max(bigNav.clearR, reachPad(bigMax))));
+  }).filter((p) => bigNav.pointFree(p.x, p.z, bigNav.clearR - 0.02) && bigNav.pointFree(p.x, p.z, reachPad(bigMax, true) * 0.85, NO_POND));
+  const BIG_SUN = !bigNav ? [] : L.SUN_PATCHES.filter((s) => bigNav.pointFree(s.x, s.z, Math.max(bigNav.clearR, reachPad(bigMax, true))));
   const sunIds = (s) => s.slots.map((_, k) => `${s.id}#${k}`);
   const PILE_SLOTS = L.NAP_PILES.flatMap((p) => p.slots.map((_, k) => ({ id: `${p.id}#${k}`, pile: p, k, ...L.slotAt(p, k) })));
   const inPile = (x, z, pad = 0) => L.NAP_PILES.some((p) => p.r ? Math.hypot(p.x - x, p.z - z) < p.r + pad : Math.hypot(p.x - x, p.z - z) < Math.max(p.w, p.d) / 2 + pad);
@@ -376,7 +382,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   function spotOk(x, z, self, space = L.CAT.personal * 1.12) {
     const N = self ? self.nav : nav, g = self ? Math.max(1, self.size) : 1;
     // (a big cat's whole body clear of the props, however it lies or stretches there)
-    if (!N.pointFree(x, z, Math.max(N.clearR + 0.05, self ? reachPad(self.size) : 0))) return false;
+    if (!N.pointFree(x, z, Math.max(N.clearR + 0.05, self ? reachPad(self.size, self.big) : 0))) return false;
     const k = (self ? self.size : 1) * 0.5;
     for (const c of cats) {
       if (c === self) continue;
@@ -487,10 +493,10 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     const need = (bias = 0) => clamp(rnd.range(0.05, 0.85) + bias, 0.02, 0.95), start = allowedAction(t, "sit");
     const needs = { sleep: need((t.sleepy - 0.5) * 0.4), hunger: need((t.foodie - 0.5) * 0.2), thirst: need(), play: need((t.playful - 0.5) * 0.3), groom: need(), social: need((t.social - 0.5) * 0.2), explore: need((t.curious - 0.5) * 0.2) };
     // Its size: its body, the route-finder for it, and how its motion scales (gaitScale: fr).
-    const size = sizeOf({ style }), cnav = navOf(size);
+    const size = sizeOf({ style }), big = bigOf(size, t), cnav = navOf(big);
     return {
       id: r.id, name: r.name, model: r.model === "ginger" ? "ginger" : "cat", index: i,
-      rnd, traits: t, style, tune, p, needs, size, fr: gaitScale(size), big: size >= BIG_SIZE, nav: cnav, bodyR: Math.max(cnav.bodyR, BODY * size),
+      rnd, traits: t, style, tune, p, needs, size, fr: gaitScale(size), big, nav: cnav, bodyR: Math.max(cnav.bodyR, BODY * size),
       kitten: kit, gentle, blind, lazy: t.energy < 0.3 || (old && t.energy < 0.45),
       x: 0, y: 0, z: 0, yaw: rnd.range(-Math.PI, Math.PI), speed: 0,
       // (it starts sitting, or standing if its own model can't sit: traits.avoid)
@@ -1200,7 +1206,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         nav.project(q, ignore, nav.clearR + 0.03);
         // (A long cat alongside the prop walks out along a heading it can turn to (outAlong): turned to step straight
         // out, end on to the prop, its hindquarters would be in it.)
-        const A = cat.size >= LONG && outAlong(cat, ignore);
+        const A = isLong(cat) && outAlong(cat, ignore);
         if (A) { q.x = A.x; q.z = A.z; }
         if (Math.hypot(q.x - sx, q.z - sz) > 1e-3) { out = q; sx = q.x; sz = q.z; }
       }
@@ -1214,7 +1220,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       if (!pts) return "stuck";
       // (A long cat that can't turn onto its way's first leg either way round, a prop at its flank: it walks out
       // first along a heading it can turn to.)
-      if (!out && cat.size >= LONG && pts.length && !turnFree(cat, yawTo(pts[0].x - sx, pts[0].z - sz), ignore)) { const A = outAlong(cat, ignore); if (A) { out = A; pts = nav.route(A.x, A.z, tx, tz, ignore) || pts; } }
+      if (!out && isLong(cat) && pts.length && !turnFree(cat, yawTo(pts[0].x - sx, pts[0].z - sz), ignore)) { const A = outAlong(cat, ignore); if (A) { out = A; pts = nav.route(A.x, A.z, tx, tz, ignore) || pts; } }
       if (out) pts.unshift(out);
       cat.route = { pts, i: 0, out: !!out, goal: { x: tx, z: tz }, check: 0, best: Infinity, bestAt: time, replans: (cat.route?.replans || 0), rx: NaN, rz: NaN, qx: tx, qz: tz };
     }
@@ -1596,7 +1602,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     // (walking out of a prop it is in (walkOut): that prop doesn't hold it back)
     if (cat.act && cat.act.steps[cat.act.i]?.escapeOut && solidDepth(cat, landIgnore(ign)) > 0) return false;
     // (a long cat: its own body, as the hard check keeps it: further into a prop than a brush and than it is)
-    if (cat.size >= LONG) { const bank = onBank(cat, cat.x, cat.z); return propDepth(cat, x, z, yawTo(dx, dz), "walk", ign, bank) > Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, cat.yaw, cat.pose, ign, bank)) + 0.01; }
+    if (isLong(cat)) { const bank = onBank(cat, cat.x, cat.z); return propDepth(cat, x, z, yawTo(dx, dz), "walk", ign, bank) > Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, cat.yaw, cat.pose, ign, bank)) + 0.01; }
     if (N.segmentClear(cat.x, cat.z, x, z, ign, cat.bodyR)) return false;
     // (Inside a prop's clearance already, only a step further into the prop itself counts.)
     const p = { x, z };
@@ -1742,7 +1748,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     // (by its body's reach, not its route-finder's clearance: a big cat merely near a post is not let into it)
     // (Only what a cat uses (USABLE; for a long cat, not its tree's foot): let into the pond or a vegetable bed it
     // stood in as a step began, a cat stayed there a minute and more.)
-    for (const id of cat.nav.containing(cat.x, cat.z, Math.min(cat.nav.clearR, cat.bodyR + 0.12))) { if (!USABLE.has(id) || (cat.size >= LONG && TREE_FOOT.has(id))) continue; const b = RIM_OF.get(id); if (!b || Math.hypot(cat.x - b.x, cat.z - b.z) < b.r + 0.2) s.add(id); }
+    for (const id of cat.nav.containing(cat.x, cat.z, Math.min(cat.nav.clearR, cat.bodyR + 0.12))) { if (!USABLE.has(id) || (isLong(cat) && TREE_FOOT.has(id))) continue; const b = RIM_OF.get(id); if (!b || Math.hypot(cat.x - b.x, cat.z - b.z) < b.r + 0.2) s.add(id); }
     return s;
   };
 
@@ -1842,7 +1848,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       // (Standing, it doesn't stretch out (a stretch, a crouch, a wiggle) into a cat: it stands instead.)
       // (A long cat not into a prop either: a lion crouched to pounce beside a cat bed had its chest in it.)
       if (step.type === "hold" && cat.posture === "stand" && !cat.perch && (HALF_LEN[POSE_OF[step.action]] || 0) > (HALF_LEN[cat.pose] || 0.3) + 0.03
-        && (growsInto(cat, POSE_OF[step.action]) || ((cat.size >= LONG || nearPost(cat)) && propDepth(cat, cat.x, cat.z, cat.yaw, POSE_OF[step.action], bodyIgnore(cat, act.ignoreNow), onBank(cat, cat.x, cat.z)) > Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, cat.yaw, cat.pose, bodyIgnore(cat, act.ignoreNow), onBank(cat, cat.x, cat.z))) + 1e-3))) {
+        && (growsInto(cat, POSE_OF[step.action]) || ((isLong(cat) || nearPost(cat)) && propDepth(cat, cat.x, cat.z, cat.yaw, POSE_OF[step.action], bodyIgnore(cat, act.ignoreNow), onBank(cat, cat.x, cat.z)) > Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, cat.yaw, cat.pose, bodyIgnore(cat, act.ignoreNow), onBank(cat, cat.x, cat.z))) + 1e-3))) {
         if (ACTIONS[step.action].kind === "once") { step.skip = true; return true; }
         step.action = allowedAction(cat.traits, "stand"); step.fidget = false;
       }
@@ -1972,7 +1978,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           step.from = { x: cat.x, y: cat.y, z: cat.z };
           // (A long cat with no room to stretch out for the leap where it stands, a prop at its chest or its
           // hindquarters, thinks better of it.)
-          if (step.pounce && cat.size >= LONG) {
+          if (step.pounce && isLong(cat)) {
             const bank = onBank(cat, cat.x, cat.z), g0 = Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, cat.yaw, cat.pose, act.ignoreNow, bank)) + 1e-3;
             if (propDepth(cat, cat.x, cat.z, cat.yaw, "stretch", act.ignoreNow, bank) > g0) { step.from = null; cat.hopPitch = 0; return nextStep(act, step); }
           }
@@ -1989,7 +1995,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
             // (Every cat: on dry, clear ground (dryLanding), nothing solid on the way. A house cat that leapt at a
             // butterfly over the pond sat in the water 40 s.)
             // (nor into another cat on the way or as it lands, nor where one trotting up will be: flightHits)
-            const long = cat.size >= LONG, ign = landIgnore(act.ignoreNow), yw = Math.atan2(-dz, dx), D = step.air / (AIR1 - AIR0);
+            const long = isLong(cat), ign = landIgnore(act.ignoreNow), yw = Math.atan2(-dz, dx), D = step.air / (AIR1 - AIR0);
             const busy = (x, z) => !!crowding(cat, x, z, yw, "walk", 0.06) || landsNear(cat, x, z) || flightHits(cat, x, z, yw, D)
               // (at the leap's heading, and at its own, should the turn as it gathers fall short)
               || !dryLanding(cat, x, z, yw, ign) || !dryLanding(cat, x, z, cat.yaw, ign)
@@ -2013,7 +2019,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
           // lining up while it gathers (a long cat's body not swung round into a prop)
           const y0 = cat.yaw;
           turnToward(cat, step.aim, 4 / cat.fr, dt);
-          if (cat.size >= LONG && step.pounce && propDepth(cat, cat.x, cat.z, cat.yaw, "stretch", act.ignoreNow) > Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, y0, "stretch", act.ignoreNow)) + 1e-3) cat.yaw = y0;
+          if (isLong(cat) && step.pounce && propDepth(cat, cat.x, cat.z, cat.yaw, "stretch", act.ignoreNow) > Math.max(PROP_BRUSH, propDepth(cat, cat.x, cat.z, y0, "stretch", act.ignoreNow)) + 1e-3) cat.yaw = y0;
         }
         // (Up onto a platform: up first, over after, never through the tree's foot or the platform.)
         const eh = step.y > f.y + 0.3 ? e * e : e;
@@ -2564,7 +2570,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       const vl = (cat.legs.cur < 0 ? LEG_VMAX[cat.stalk ? 3 : 0] : legCapAhead(cat.legs, dt)) * cat.fr * dt, ml = Math.hypot(cat.x - cat.px, cat.z - cat.pz);
       if (vl > 0 && ml > vl && cat.y < 0.05) { const k = vl / ml; cat.x = cat.px + (cat.x - cat.px) * k; cat.z = cat.pz + (cat.z - cat.pz) * k; }
       // (a big cat turning on the spot too: its nose and hindquarters swing round)
-      const long = cat.size >= LONG, whole = long || nearPost(cat);
+      const long = isLong(cat), whole = long || nearPost(cat);
       if (!cat.perch && !airborne(cat) && (cat.moving || cat.x !== cat.px || cat.z !== cat.pz || cat.ySettle || (whole && cat.yaw !== cat.pyaw))) {
         // Nothing is walked through: the hard check after steering and personal space.
         const p = scratch; p.x = cat.x; p.z = cat.z;

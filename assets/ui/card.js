@@ -75,20 +75,20 @@ export function loreFigure(r) {
   return fig;
 }
 
-/** Our generated picture, lower on the card, labelled as the in-game look. */
+/** Our picture of the cat (the in-game look), beside its real photo. */
 export function inGameFigure(src, alt) {
   const fig = el("figure", "card-ingame");
   const img = el("img", "card-ingame-img");
   img.src = src; img.alt = alt; img.width = 112; img.height = 112; img.loading = "lazy"; img.decoding = "async";
   img.addEventListener("error", () => fig.remove(), { once: true });
-  fig.append(img, el("figcaption", "card-ingame-caption", "🎮 In-game look"));
+  fig.append(img, el("figcaption", "card-ingame-caption", "🎨 Our version"));
   return fig;
 }
 
 /**
  * The real photo from the cat's X post, at the top of its card: hotlinked from pbs.twimg.com
- * (never hosted here), credited to its source: "📸 Photo: @handle on X", linked to the post. If the image
- * cannot load, our own picture (`fallback`, the in-game look) takes its place.
+ * (never hosted here), credited to its source: "📸 Real photo: @handle on X", linked to the post. If the
+ * image cannot load, `fallback` takes its place (or the photo simply goes).
  */
 export function realPhotoFigure(ph, fallback = null) {
   const fig = el("figure", "card-real-photo");
@@ -96,7 +96,7 @@ export function realPhotoFigure(ph, fallback = null) {
   img.src = ph.url; img.alt = ph.alt; img.decoding = "async";
   img.referrerPolicy = "no-referrer";
   img.addEventListener("error", () => { if (fallback) fig.replaceWith(fallback); else fig.remove(); }, { once: true });
-  const cap = el("figcaption", "card-real-photo-caption", "📸 Photo: ");
+  const cap = el("figcaption", "card-real-photo-caption", "📸 Real photo: ");
   const a = link(ph.post, `@${ph.handle} on X`, "card-real-photo-link");
   a.setAttribute("aria-label", `Photo by @${ph.handle}: view the post on X (opens in a new tab)`);
   cap.append(a);
@@ -104,12 +104,14 @@ export function realPhotoFigure(ph, fallback = null) {
   return fig;
 }
 
-/** Puts the real photo at the top of a card body, with our picture just under it as the in-game look. */
+/** Puts the real photo and our version of the cat side by side, the same size, at the top of a card body (the
+    owner, 2026-10-01: "put the real picture there as well as our version of the cat"). A photo that cannot
+    load goes, and our version is left on its own. */
 function addTopPhoto(r, body, ours) {
   if (!r.realPhoto) return;
-  const game = ours ? inGameFigure(ours.src, ours.alt) : null;
-  const top = realPhotoFigure(r.realPhoto, game);
-  body.prepend(...[top, game].filter(Boolean));
+  const pics = el("div", "card-pics");
+  pics.append(...[realPhotoFigure(r.realPhoto), ours ? inGameFigure(ours.src, ours.alt) : null].filter(Boolean));
+  body.prepend(pics);
 }
 
 /** A note, under the proof, naming the post the real photo comes from when it is not the proof itself. */

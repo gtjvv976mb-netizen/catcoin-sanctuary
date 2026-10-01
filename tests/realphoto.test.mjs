@@ -1,6 +1,6 @@
 /* The real photos (data/real-photos.json): every cat card with one shows it at the top of its body,
-   hotlinked from pbs.twimg.com and credited to its source, "📸 Photo: @handle on X", linked to the X post;
-   our own picture sits under it as "🎮 In-game look" and takes its place if the photo fails.
+   hotlinked from pbs.twimg.com and credited to its source, "📸 Real photo: @handle on X", linked to the X post;
+   our own picture sits beside it, the same size, as "🎨 Our version", and is left on its own if the photo fails.
    No image from X is ever hosted in this repository. */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -70,7 +70,7 @@ test("no image from X is hosted in the repo: nothing under assets/ or data/ came
   for (const v of Object.values(PHOTOS.cats)) assert.ok(!fs.existsSync(path.join(ROOT, new URL(v.realPhoto.url).pathname)));
 });
 
-test("the real-photo block: at the top of the card body, credited and linked; our picture below as the in-game look", async () => {
+test("the real-photo block: at the top of the card body, credited and linked; our version beside it", async () => {
   const list = await residents();
   const withPhoto = list.filter((r) => r.realPhoto);
   assert.ok(withPhoto.length >= 50, `${withPhoto.length} cards with a real photo`);
@@ -81,13 +81,15 @@ test("the real-photo block: at the top of the card body, credited and linked; ou
   for (const r of withPhoto) {
     card.open(r, { focus: false });
     const body = root.querySelector("div.card-body");
-    const first = body.children[0];
+    const pics = body.children[0];
+    assert.ok(pics.classList.contains("card-pics"), `${r.id}: the pictures come first`);
+    const first = pics.children[0];
     assert.ok(first.classList.contains("card-real-photo"), `${r.id}: the real photo comes first`);
     const img = first.querySelector("img.card-real-photo-img");
     assert.equal(img.src, r.realPhoto.url);
     assert.match(img.src, /^https:\/\/pbs\.twimg\.com\//);
     const cap = first.querySelector("figcaption.card-real-photo-caption");
-    assert.equal(cap.textContent, `📸 Photo: @${r.realPhoto.handle} on X`, `${r.id}: credited to its source`);
+    assert.equal(cap.textContent, `📸 Real photo: @${r.realPhoto.handle} on X`, `${r.id}: credited to its source`);
     const a = cap.querySelector("a.card-real-photo-link");
     assert.equal(a.href, r.realPhoto.post);
     assert.equal(a.target, "_blank");
@@ -95,10 +97,10 @@ test("the real-photo block: at the top of the card body, credited and linked; ou
     if (r.kind !== "famous") {
       assert.equal(root.querySelector("img.card-portrait"), null, `${r.id}: our picture is not in the head`);
       if (r.portrait) {
-        const game = body.children[1];
-        assert.ok(game.classList.contains("card-ingame"), `${r.id}: the in-game look follows`);
+        const game = pics.children[1];
+        assert.ok(game.classList.contains("card-ingame"), `${r.id}: our version is beside it`);
         assert.equal(game.querySelector("img.card-ingame-img").src, r.portrait);
-        assert.equal(game.querySelector("figcaption").textContent, "🎮 In-game look");
+        assert.equal(game.querySelector("figcaption").textContent, "🎨 Our version");
       }
     }
     if (r.realPhoto.source === "search") assert.ok(root.querySelector("p.card-photo-source"), `${r.id}: names its photo source`);
@@ -111,7 +113,7 @@ test("the real-photo block: at the top of the card body, credited and linked; ou
   assert.ok(root.querySelector("img.card-portrait"));
 });
 
-test("fallback: when the real photo fails to load, our picture takes its place", async () => {
+test("fallback: when the real photo fails to load, it goes and our version is left on its own", async () => {
   const list = await residents();
   const r = list.find((x) => x.realPhoto && x.portrait && x.kind === "adoptable");
   const root = new Element("aside");
@@ -120,7 +122,8 @@ test("fallback: when the real photo fails to load, our picture takes its place",
   const body = root.querySelector("div.card-body");
   fire(root.querySelector("img.card-real-photo-img"), "error");
   assert.equal(root.querySelector("figure.card-real-photo"), null, "the broken photo is gone");
-  assert.ok(body.children[0].classList.contains("card-ingame"), "our picture is at the top");
+  assert.ok(body.children[0].classList.contains("card-pics"), "the pictures are still at the top");
+  assert.deepEqual([...body.children[0].children].map((c) => c.classList.contains("card-ingame")), [true], "our version alone");
   assert.equal(root.querySelectorAll("figure.card-ingame").length, 1);
   // With no picture of ours, the broken photo simply goes.
   const holder = new Element("div");

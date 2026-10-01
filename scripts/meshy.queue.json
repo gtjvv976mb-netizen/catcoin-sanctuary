@@ -2,14 +2,6 @@
  "note": "What Meshy should fix in each cat 3D model, from the lore audit (data/research/exact-looks.json). action: retexture (colours/markings only, 10 credits), rebuild (shape or style wrong, about 36 credits) or ok. priority 1 = wrong at a glance, 2 = clear marking/eye/accessory errors, 3 = small drift. Run with scripts/meshy.mjs.",
  "made": "2026-09-26",
  "cats": {
-  "AMBERDROP": {
-   "action": "retexture",
-   "priority": 1,
-   "why": "Shape is fine (four-legged sleek shorthair); only the paint is wrong: a brown base with 35-40% hard-edged pumpkin-orange mosaic blocks and yellow eyes instead of mostly jet-black with soft honey-gold tortie patches and green-gold eyes. The portrait matches the look.",
-   "styleImage": "assets/portraits/AMBERDROP.jpg",
-   "retexturePrompt": "Photo-real sleek shorthair tortoiseshell cat, no white anywhere. Coat mostly glossy neutral jet-black (not brown). Soft-edged, blended honey-gold/amber tortie patches and fine brindling on only about 20% of the coat: a gold blaze on the forehead, gold on the cheeks, chest and legs, small gold flecks on the tail. No hard-edged geometric blocks, no pumpkin-orange camouflage, no tabby bands. Green-gold (yellow-green) eyes with black pupils, dark nose, dark inner ears. Short realistic fur texture. No clothing or accessories.",
-   "order": 90
-  },
   "AMRCAT": {
    "action": "rebuild",
    "priority": 1,
@@ -17,13 +9,6 @@
    "styleImage": "generate",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Hand-drawn picture-book cartoon style with soft crayon/brush texture, as a stylised 3D toy. A huge, very plump, rounded mound-shaped cat on short legs mostly hidden under the body. Pale peach-cream fur (#FFF2E6). A warm charcoal brown-grey cap (#4C4140, not black) covers the top of the head from brow to crown. Small rounded pink ears (#F7B9C3) at the edges of the cap. Oval eyes with mustard olive-gold irises, tiny pink nose, long thin dark whiskers. Charcoal patches run down the back to the hip and form the capital letters A, M, R stacked along the spine. Long fluffy charcoal tail with a cream-white tip, curled into a question-mark hook. No clothing.",
    "order": 91
-  },
-  "APOTHECAT": {
-   "action": "ok",
-   "priority": 3,
-   "why": "Shape and pattern are right (a grey mackerel tabby with olive eyes). The only drift is a slightly warm taupe cast instead of a faint sage-grey, which is not worth credits.",
-   "styleImage": "assets/portraits/APOTHECAT.jpg",
-   "order": 92
   },
   "ARTEMISCAT": {
    "action": "rebuild",
@@ -83,14 +68,6 @@
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Sonic the Hedgehog series 3D cartoon style: slim body, big head, large expressive eyes. Blaze the Cat on four legs. Lavender fur, white muzzle, small black nose, golden-amber eyes with long eyelashes, triangular ears with peach inner ears, a red oval gem on the forehead. Fur longer at the sides of the head, sweeping upward; four violet-tipped plumes tied into a high ponytail with a red hair tie. Long lavender tail with a frayed violet tip. Outfit: gold collar necklace; a purple (violet) tailcoat over the back and chest with rose/magenta trim at the hem; white leggings; white gloves with fluffy white cuffs on the front paws; rose/magenta shoes with a thick white stripe down the front, white fluffy ankle cuffs and grey soles on the hind feet.",
    "order": 24
   },
-  "BOXWOOD": {
-   "action": "rebuild",
-   "priority": 2,
-   "why": "Wrong build and colours: a slim low-poly kitten that is mostly bright orange with black bars, where the lore is a big, sturdy, broad-chested adult calico that is mostly white, with muted cardboard-tan and black patches. The portrait's patches are too ginger to use.",
-   "styleImage": "generate",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. A big, sturdy, broad-chested adult calico house cat with a short-to-medium coat. Mostly white (#F4EFE6): white blaze, muzzle, chin, chest, belly, legs and paws. Large muted cardboard-tan patches (#C39A6B, brown-tan, not bright ginger-orange) and solid black patches on the back, flanks, hips and tail. On the head, tan covers the cat's right eye and ear (viewer's left) and black covers its left ear (viewer's right), with a white blaze between them. Honey-gold eyes, pink nose. No clothing.",
-   "order": 93
-  },
   "BURLYPAW": {
    "action": "rebuild",
    "priority": 2,
@@ -108,15 +85,6 @@
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real sturdy, well-fed male domestic shorthair. Warm medium ginger coat, softer and less saturated than traffic-cone orange, in a soft mackerel tabby: darker ginger M and forehead stripes, cheek lines, faint barring on the legs, ringed tail. White only on the chin, throat and chest bib; legs and paws ginger, with no white socks. Pink nose. Clear light green eyes. An orange-red and black buffalo-plaid collar with a silver ID tag. A small smear of pale yellow butter on top of the head.",
    "order": 0
   },
-  "CABLETAIL": {
-   "action": "retexture",
-   "priority": 1,
-   "why": "Shape is fine (a lean shorthair with a ringed tail). The coat is a warm cocoa-brown tabby with tan paws and inner ears instead of cool charcoal-grey with black stripes. The portrait has a slight warm cast, so a clean reference is better.",
-   "styleImage": "generate",
-   "retexturePrompt": "Lean short-haired house cat. A cool, neutral charcoal-grey tabby base with no brown or warm tint. Bold black, narrow vertical mackerel stripes down the flanks like bundled cables, a striped face with an M on the brow, barred legs, and a black-ringed tail with a dark tip. Grey paws and grey inner ears, no tan anywhere, and no white markings. Warm gold eyes, dark grey nose. No clothing.",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. Lean short-haired house cat. A cool, neutral charcoal-grey tabby base with no brown or warm tint. Bold black, narrow vertical mackerel stripes down the flanks like bundled cables, a striped face with an M on the brow, barred legs, and a black-ringed tail with a dark tip. Grey paws and grey inner ears, no tan anywhere, and no white markings. Warm gold eyes, dark grey nose. No clothing.",
-   "order": 95
-  },
   "CAITSITH": {
    "action": "rebuild",
    "priority": 2,
@@ -132,22 +100,6 @@
    "styleImage": "generate",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Squishmallows plush toy style: ultra-soft velvety fabric, a round egg-shaped chubby body on four very short stubby legs. Cream/off-white body. A light caramel-tan patch covers his right ear and the upper right of the head (viewer's left), reaching down to just above that eye. His left ear (viewer's right) is solid black. A large black patch wraps the lower left side of the body (viewer's right) round to the back. A small tan stub tail. Embroidered face: closed happy arched eyes in black thread, three thin black whiskers on each side, a small pink nose and a pink w-shaped smile. No clothing.",
    "order": 96
-  },
-  "CANDLEWICK": {
-   "action": "retexture",
-   "priority": 1,
-   "why": "Shape is fine. The coat is bright orange-ginger with scattered triangular blotches, solid dark feet and a red-pink nose, instead of a tawny brown tabby with vertical candle bars. The portrait matches the look.",
-   "styleImage": "assets/portraits/CANDLEWICK.jpg",
-   "retexturePrompt": "Female brown tabby shorthair with realistic fur. A warm tawny-brown ground colour, not orange or ginger. Bold dark-brown to black vertical mackerel bars run down her sides like chart candles, not blotches or triangles. Barred legs, tawny-brown paws (not solid dark), a ringed tail with a dark tip, and a tabby M and pencilled lines on the forehead. Cream-white muzzle and chest. Green eyes, pink-brick nose. No clothing.",
-   "order": 97
-  },
-  "CASENAP": {
-   "action": "retexture",
-   "priority": 2,
-   "why": "Shape is fine. The body is tan instead of pale cream, there is no face mask, the tail is body-coloured with only a ginger tip, and the points are rust-brown, so it reads as a Siamese rather than a flame point. The portrait matches the look.",
-   "styleImage": "assets/portraits/CASENAP.jpg",
-   "retexturePrompt": "Small shorthair flame-point cat. Pale cream body (#F3E7D3), not tan or sand. Ginger/orange points (#D97E3A), not rust-brown: a ginger face mask over the forehead, around the eyes and over the muzzle; ginger ears; ginger lower legs and paws; and a fully ginger tail from base to tip. Blue eyes (#79B4E3), pink nose. No clothing.",
-   "order": 98
   },
   "CATCOIN": {
    "action": "rebuild",
@@ -227,13 +179,6 @@
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. Church from Pet Sematary (2019): a large Maine Coon mix with long, shaggy, slightly matted, damp-looking fur. Dark brown-grey mackerel tabby with black striping over the body, legs and bushy tail, a buff/grey undercoat, and a busy dark forehead with a tabby M. Cream-white chin, lips and upper chest. A tan-ochre bridge down the nose, dark brown nose leather. Green eyes, one slightly drooping. Lynx-tipped ears with ear tufts, long white whiskers. A small dark-red wound on the forehead.",
    "order": 30
   },
-  "COBBLEPAW": {
-   "action": "ok",
-   "priority": 3,
-   "why": "It is already a lean brown mackerel tabby with green eyes and a nicked ear. The only drift is a slightly warm caramel tone and paler paws, which is not worth credits.",
-   "styleImage": "assets/portraits/COBBLEPAW.jpg",
-   "order": 100
-  },
   "COLEMARM": {
    "action": "rebuild",
    "priority": 1,
@@ -308,14 +253,6 @@
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. Crookshanks from the Harry Potter films: a very large, heavy red (ginger) long-haired Persian. A medium ginger-orange coat, thick, long and tatty: unkempt and clumped, not a groomed show coat. Faint darker red-tabby markings on the face and legs. A very flat, squashed face with a permanent grumpy scowl, and big yellow eyes. A huge bottle-brush plume tail and bandy legs. No accessories.",
    "order": 2
   },
-  "CURFEWPAW": {
-   "action": "rebuild",
-   "priority": 1,
-   "why": "The chestnut red-brown coat is about twice too light, and that dark seal-brown is the colour the cat is named for. The whites render beige, and the body is a small, big-headed low-poly kitten where the lore is a big, sturdy, photo-real adult tuxedo. The portrait matches.",
-   "styleImage": "assets/portraits/CURFEWPAW.jpg",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. A big, sturdy adult domestic shorthair tuxedo. The coat is dark seal-brown: a deep, nearly black-brown chocolate (about RGB 53,27,15), not chestnut, rust or red. A crisp pure-white bib and chest running down the belly, a white muzzle and chin with an inverted-V tuxedo blaze up to the nose bridge, and four pure-white socks. Brass-gold/amber eyes, pink-brown nose. No accessories.",
-   "order": 106
-  },
   "CWIF": {
    "action": "retexture",
    "priority": 1,
@@ -365,15 +302,6 @@
    "styleImage": "https://pbs.twimg.com/media/EWZPthHXQAIXuPJ.jpg",
    "retexturePrompt": "Photoreal calico Persian with long fluffy fur, mostly white. A solid black hood covers both eyes, both ears (black to the ear tips, no orange rims) and the sides of the crown, split by a white blaze running from the forehead down the nose. One small orange-cream patch on the crown at the base of her right ear only. Muzzle, chin, ruff, chest, shoulders, belly and all four legs pure white, with no orange on the shoulders or forward flank. A long orange-cream patch along the lower back and rump to the tail base. Full black tail plume with orange at its base. Copper-orange eyes, pink nose.",
    "order": 36
-  },
-  "EVERLOOP": {
-   "action": "retexture",
-   "priority": 1,
-   "why": "A different cat: a warm brown/orange mackerel tabby instead of a dove-grey and cream blue-cream. The realistic domestic-cat mesh is usable (a bit lean), so a repaint fixes the identity. The portrait matches the colours but shows her curled with eyes shut, so generate an awake standing reference.",
-   "styleImage": "generate",
-   "retexturePrompt": "Photoreal plush medium-haired house cat in blue-cream (dilute tortoiseshell): soft dove-grey fur with broad, soft patches of pale cream/buff. Cream blaze from the forehead down the nose bridge, cream cheeks, cream-white muzzle and chin, broad cream patches on both flanks, tail in irregular broad grey and cream sections. Only faint darker grey lines on the forehead; no tabby stripes on the body, legs or tail, no white bib, no orange or brown anywhere. Pink nose, pink-cream inner ears, soft copper eyes. No collar.",
-   "referencePrompt": "One four-legged cat standing, full body, 3/4 side view, plain light grey background, photoreal. A soft, round-faced, plush medium-haired female house cat with a blue-cream (dilute tortoiseshell) coat: dove-grey fur with broad soft patches of pale cream/buff: a cream blaze down the nose bridge, cream cheeks, cream-white muzzle and chin, broad cream flank patches, and a tail in irregular grey and cream sections. Faint grey lines on the forehead only; no tabby stripes, no white bib, no orange. Pink nose, pink-cream inner ears, soft copper eyes open. No collar, no props.",
-   "order": 108
   },
   "FAITHCAT": {
    "action": "retexture",
@@ -476,15 +404,6 @@
    "referencePrompt": "One four-legged cat standing, full body, 3/4 side view, plain light grey background, photoreal. Gli of Hagia Sophia, a sturdy, fairly large female domestic shorthair: brown mackerel tabby all over on a golden-tawny to grey-brown ground, with bold black stripes, a tabby 'M', dark cheek bars and a banded, dark-tipped tail. No white bib or paws: buff tabby chest and paws, with cream whisker pads and chin only. Green eyes, slightly crossed. Brick-pink nose. No collar.",
    "order": 5
   },
-  "GLINTPAW": {
-   "action": "retexture",
-   "priority": 3,
-   "why": "The right solid grey shorthair with copper eyes; only a warm greige shade drift, a matte finish and dark-brown inner ears. A cheap repaint at low priority.",
-   "styleImage": "generate",
-   "retexturePrompt": "Domestic shorthair with a solid, even, cool neutral silver-grey coat, a mid-to-light metallic grey (not pinkish, lavender or beige-greige), short, smooth and glossy with a just-washed sheen. No markings, stripes or white anywhere. Copper eyes. Grey nose leather. Grey-pink inner ears (not dark brown). No collar.",
-   "referencePrompt": "One four-legged cat standing, full body, 3/4 side view, plain light grey background. An ordinary-build domestic shorthair with a solid, even, cool neutral silver-grey coat, short, smooth and glossy with a sheen, and no markings or white. Copper eyes, grey nose, grey-pink inner ears. No collar.",
-   "order": 110
-  },
   "GRIDDLE": {
    "action": "rebuild",
    "priority": 1,
@@ -526,15 +445,6 @@
    "order": 185,
    "modelKey": "hosico-cat"
   },
-  "HOVERPAW": {
-   "action": "retexture",
-   "priority": 2,
-   "why": "The right four-legged shorthair with gold eyes, but the coat is a saturated tangerine instead of cinnamon sorrel, and a cream bib runs down the chest. A repaint fixes it.",
-   "styleImage": "generate",
-   "retexturePrompt": "Lean short-haired house cat in a solid warm cinnamon: a light reddish-brown like an Abyssinian sorrel (about #A35A25 to #C07A45), not bright tangerine or ginger. An even coat with no visible tabby pattern. Cream only on the chin: no chest bib, and the chest and belly are cinnamon like the body. Cinnamon paws. Bright gold eyes, pink nose. No collar.",
-   "referencePrompt": "One four-legged cat standing, full body, 3/4 side view, plain light grey background. A lean, long-legged short-haired house cat in a solid warm cinnamon (Abyssinian sorrel, light reddish-brown), with no tabby pattern, cream only on the chin and no chest bib. Bright gold eyes. No collar.",
-   "order": 112
-  },
   "HUBBUB": {
    "action": "rebuild",
    "priority": 1,
@@ -551,23 +461,6 @@
    "retexturePrompt": "Golden British Shorthair-type kitten with a short, dense, plush coat. An even warm golden-tan (about #BB9449) on the crown, back, flanks, legs and tail, shading to pale cream (about #E3CE9C) on the cheeks and muzzle. Faint darker golden tabby streaks over the forehead and crown and faint banding across the chest. No white patches: no white bib, no white socks. Pale cream muzzle, chin and whisker pads, pale cream paws. Large round very dark eyes with only a thin amber-brown rim. A small pinkish-brick nose. Golden ears with darker apricot shading inside.",
    "referencePrompt": "One four-legged kitten standing, full body, 3/4 side view, plain light grey background, photoreal. A golden British Shorthair-type kitten with a round face, full cheeks and a short, dense plush coat: an even warm golden-tan shading to pale cream on the cheeks and muzzle, faint golden tabby streaks on the forehead, no white patches and pale cream paws. Big round very dark eyes with a thin amber rim, a small pinkish-brick nose. Head tilted about 20 degrees. No collar.",
    "order": 114
-  },
-  "ICICLEPAW": {
-   "action": "retexture",
-   "priority": 1,
-   "why": "The right pointed shorthair with blue eyes and correct point placement, but the tan body with navy points reads as a seal-point instead of icy white with slate-blue points.",
-   "styleImage": "generate",
-   "retexturePrompt": "Shorthair with a blue-point Siamese-type pattern. Body a cool icy white, slightly bluish-white, not cream, ivory or tan. Points a soft slate blue-grey (dilute blue), not navy and not seal-brown: on the ears, a face mask over the nose and muzzle and around the eyes that fades into the cheeks, the lower legs and paws, and the whole tail. Bright sapphire-blue eyes. Slate grey-blue nose leather. No white spotting, no stripes, no collar.",
-   "referencePrompt": "One four-legged cat standing, full body, 3/4 side view, plain light grey background. An ordinary shorthair blue-point Siamese-type cat: a cool icy bluish-white body, soft slate blue-grey points on the ears, face mask, lower legs, paws and whole tail, bright sapphire-blue eyes and a slate grey-blue nose. No collar.",
-   "order": 115
-  },
-  "INGOTLOAF": {
-   "action": "retexture",
-   "priority": 2,
-   "why": "The correct realistic solid-coat shorthair, but it renders deep ginger/tangerine instead of pale honey-gold, with no paler muzzle or chest and dull eyes. The portrait (verdict match) has the exact coat; the loaf pose is a rig limit.",
-   "styleImage": "assets/portraits/INGOTLOAF.jpg",
-   "retexturePrompt": "Photoreal short-haired house cat with a sleek PALE honey-gold/apricot coat, light and warm (mid-tone about RGB 190,128,78, sunlit fur about 235,180,122), not deep orange, ginger or tangerine, with a soft golden sheen. Muzzle, chin and chest slightly paler cream. Only faint darker apricot ghost ticking on the forehead; otherwise solid, with no tabby stripes. Bright amber-orange eyes with round black pupils, a pink nose and pink inner ears. No collar, logos or text.",
-   "order": 116
   },
   "JELLIECAT": {
    "action": "retexture",
@@ -619,14 +512,6 @@
    "referencePrompt": "One four-legged cartoon cat standing, full body, 3/4 side view, plain light grey background. The KET mascot as a soft, plush-like 3D cartoon, not realistic: a round-headed pure white cat with a single solid black patch covering its LEFT ear (the viewer's right) and the upper-right part of the crown; the rest of the head is white. Heavy-lidded, half-closed, unimpressed eyes, drawn as flat black lid lines with half-round black pupils peeking under them. A small black triangular nose, a small wavy 'ω' mouth and a cluster of black whisker-pore dots on each side of the muzzle. It wears a white office shirt with a black tie and a small 'KET' name badge.",
    "order": 186,
    "modelKey": "ket-3"
-  },
-  "KIOSKPAW": {
-   "action": "rebuild",
-   "priority": 3,
-   "why": "The colours and spots are close, but it is a slim, leggy kitten where the look says plump, with a few extra spots on the head and tail and cream paws. Only the build is really off, so this is low priority.",
-   "styleImage": "generate",
-   "referencePrompt": "One four-legged cat standing, full body, 3/4 side view, plain light grey background. A plump short-haired house cat with a warm ginger coat (#DB8A45) and round, darker rust-red spots (#9C4A1E) on the body and legs only, with a plain ginger head and tail. A paler cream belly, ginger paws and green-gold eyes (#A9B84A). No collar.",
-   "order": 121
   },
   "KITTENPLZ": {
    "action": "rebuild",
@@ -693,14 +578,6 @@
    "retexturePrompt": "Realistic domestic shorthair brown tabby-and-white male cat. Cool grey-brown coat with bold black mackerel/classic tabby stripes on crown, ears, cheeks, back, flanks and hind legs; no ginger or orange anywhere. Tail grey-brown with dark rings and a black tip. Narrow white blaze from the nose up between the eyes onto the forehead. White muzzle, chin, throat, chest, belly, front legs and all four paws. One dark brown-tabby patch in the middle of the white chest and a dark tabby stripe across the white shoulder. Greenish-gold eyes, pink nose, pink inner ears, white whiskers.",
    "order": 51
   },
-  "LATCHKEY": {
-   "action": "retexture",
-   "priority": 3,
-   "why": "The shape is fine: a sturdy ginger-and-white shorthair. The drift is small: the orange is too saturated, the tail has a white tip where it should have a white band and a ginger tip, the hind socks are white, and the chin and bib have torn-texture artifacts. The strongbox and key are props and are dropped.",
-   "styleImage": "assets/portraits/LATCHKEY.jpg",
-   "retexturePrompt": "Realistic ginger-and-white bicolour shorthair house cat. Soft medium ginger (warm light orange, not deep saturated orange) with faint darker ginger tabby stripes on forehead, flanks, legs and tail. Ginger head, ears, back, flanks, hind legs and tail. White muzzle and chin with a narrow white blaze up the nose bridge; white throat, chest and belly. White front socks only up to the lower foreleg; hind legs ginger. Tail ginger with one white band partway along it and a GINGER tip, not a white tip. Clean even fur, no torn patches on chin or chest. Sleepy half-closed grey-green/hazel eyes, pink nose. No collar, no markings or symbols.",
-   "order": 124
-  },
   "LEOTHELION": {
    "action": "rebuild",
    "priority": 2,
@@ -717,14 +594,6 @@
    "retexturePrompt": "Photoreal chubby brown tabby-and-white shorthair cat. Tabby is medium brown agouti / cool grey-brown with black mackerel stripes, never ginger, red or orange. Face mostly white: broad white blaze from nose up the middle of the forehead to the crown, white muzzle, cheeks and chin. Brown tabby cap with black stripes on top of the head either side of the blaze and around and behind the ears; striped brown tabby patches on the outer cheeks. White chest, belly, front legs and paws. Brown tabby saddle with black stripes over back, shoulders and flanks. Tail brown tabby with black rings and dark tip. Pink nose, pink inner ears. Very wide round pale yellow-green eyes with huge black pupils. Long white whiskers.",
    "order": 188,
    "modelKey": "leveraged-cat"
-  },
-  "LICHENPAW": {
-   "action": "rebuild",
-   "priority": 2,
-   "why": "The colour is close: pale grey-khaki with lime eyes. But the model is a low-poly, faceted cartoon kitten with big toon eyes, and the lore says a photo-real adult domestic shorthair. That is a style mismatch, so a repaint is not enough. The portrait is rated minor (too warm, not sage), so a new reference is generated.",
-   "styleImage": "generate",
-   "referencePrompt": "One photoreal adult domestic shorthair house cat standing on all four legs, full body, 3/4 side view, plain light grey background. Solid pale green-grey coat: soft grey with a distinct cool sage-green cast (not beige, taupe or khaki), a shade darker along the back, no markings and no white anywhere. Bright lime-green eyes, grey-pink nose, grey-pink inner ears. Realistic proportions and fur, not low-poly, not cartoon. Wears nothing.",
-   "order": 126
   },
   "LIDNAP": {
    "action": "rebuild",
@@ -843,15 +712,6 @@
    "referencePrompt": "One Hello Kitty in Sanrio style as a glossy vinyl toy, a chibi cat standing on all four legs, full body, 3/4 side view, plain light grey background. Oversized wide oval white head, small solid black vertical-oval eyes set wide apart, small yellow horizontal-oval nose, NO mouth, three short black whisker dashes on each side. Solid red bow with a red knot on her left ear (viewer's right). She wears a dark charcoal-grey scaly Godzilla kigurumi: the hood frames her white face, with a row of white triangular teeth along the top of the face opening and angry white Godzilla eyes and a snout above it; silver-grey jagged dorsal plates run down the back and along a thick grey tail; stubby grey legs with small white claws.",
    "order": 130
   },
-  "MILLRACE": {
-   "action": "retexture",
-   "priority": 1,
-   "why": "The shape is an ordinary four-legged cat, and the look text asks for no particular art style. The paint is the glaring problem: saturated indigo and periwinkle bands with a big white bib and four white socks, where it should be a soft dilute blue-grey tabby with slate stripes and no white. The portrait is rated minor (it shows white paws), so a new reference is generated.",
-   "styleImage": "generate",
-   "retexturePrompt": "Plush dense-coated ordinary cat, soft desaturated blue-grey (dilute grey) tabby: cool light grey base, no saturated blue, indigo, periwinkle or violet. Darker slate blue-grey stripes ripple like water across the flanks and legs; striped brow and forehead; ringed tail. Chest, belly, legs and paws are the same soft blue-grey with stripes: NO white bib, NO white chest, NO white socks or paws. Pale green eyes, grey-pink nose, pink inner ears. No collar.",
-   "referencePrompt": "One plush, dense-coated ordinary cat standing on all four legs, full body, 3/4 side view, plain light grey background, realistic. Soft desaturated blue-grey (dilute grey) tabby with darker slate blue-grey stripes rippling like water across the flanks and legs, striped brow, ringed tail. Chest, belly, legs and paws blue-grey with stripes: no white bib, no white chest, no white paws. Pale green eyes. Wears nothing.",
-   "order": 131
-  },
   "MISTO": {
    "action": "rebuild",
    "priority": 1,
@@ -935,14 +795,6 @@
    "referencePrompt": "One photoreal lean, medium-sized, short-coated ginger American Shorthair tom (Jones from Alien) standing on all four legs, full body, 3/4 side view, plain light grey background. Light-to-medium soft ginger mackerel tabby on a creamy ground, with darker ginger forehead stripes, cheek lines, barred legs and a ringed tail. Pale cream muzzle, chin and throat; no white bib, belly or socks; paws ginger/cream with stripes. Pale green / grey-green eyes, pinkish-brick nose, alert wary expression. No carrier or props.",
    "order": 11
   },
-  "NOTEPAW": {
-   "action": "retexture",
-   "priority": 3,
-   "why": "Small drift. The shape and pattern are right (a four-legged tabby with flank swirls and green eyes), but the base is warm beige and the stripes are a low-contrast brown-grey where they should be cool silver with dark charcoal. The notes are a prop and are dropped. The portrait matches.",
-   "styleImage": "assets/portraits/NOTEPAW.jpg",
-   "retexturePrompt": "Silver classic tabby cat: cool pale silver-grey base (no beige, taupe or warm tint) with bold DARK CHARCOAL, near-black markings: a ribbon-like spiral swirl on each flank, stripes on shoulders and back, ringed legs, ringed tail with dark tip, tabby M on the forehead and cheek lines. High contrast between silver and charcoal. Green eyes, pink nose, pink inner ears, white whiskers. No collar.",
-   "order": 134
-  },
   "NUB": {
    "action": "rebuild",
    "priority": 1,
@@ -1009,14 +861,6 @@
    "referencePrompt": "One round, ball-shaped, extremely fluffy long-haired Persian/doll-face cat standing on all four legs, full body, 3/4 side view, plain light grey background, soft painterly-photoreal style. Broad round head, short muzzle, small low-set ears with pale ear tufts, very long, dense, wispy fur. Muted desaturated taupe / mushroom-brown coat (about #7A685C), darkest on the crown, cheeks, outer back and lower flanks, shading into deep mauve-brown with a faint greyish-lilac cast. Soft fine darker taupe lines on the forehead and from the outer eye corners; soft taupe bars on pale grey-white forelegs; no bold stripes. White muzzle and chin, a huge white ruff and bib. Pale whitish-mauve paws. Very large, round, glossy near-black eyes with white catch-lights under slightly worried upturned brows, small peach-pink nose, long white whiskers. Wears nothing.",
    "order": 137
   },
-  "PATCHPAW": {
-   "action": "retexture",
-   "priority": 2,
-   "why": "The shape is right: a small, realistic, short-haired four-legged calico. The markings are wrong: a mostly white body with about three big bold patches, a regular ringed tail, all four legs white, and no grey or cream quilt. The mouth hangs slightly open, which is a small shape drift. The portrait matches.",
-   "styleImage": "assets/portraits/PATCHPAW.jpg",
-   "retexturePrompt": "Realistic short-haired calico house cat. White base covered with a quilt of MANY irregular small-to-medium patches of orange/ginger, charcoal-black and soft blue-grey, with some pale cream, over back, flanks, hind legs and tail. Tail in irregular patchy sections (grey, charcoal, orange, grey), not regular tabby rings. White chest, throat, chin, muzzle and a white blaze up the nose. Face split: orange on the cat's right side with a thin dark stripe; charcoal/grey on the crown and around the cat's left eye with some orange. Cat's LEFT front leg pure white elbow to toes; RIGHT front leg patched orange and charcoal. Bright green eyes, pink nose, pink inner ears. No collar.",
-   "order": 138
-  },
   "PAWPOST": {
    "action": "rebuild",
    "priority": 1,
@@ -1057,13 +901,6 @@
    "retexturePrompt": "Photo-real short-coated female brown mackerel tabby. Cool grey-brown agouti ground (not orange or ginger) with crisp black mackerel stripes down the body, black bars on the legs, a black-ringed tail, a black 'M' and fine stripes on the forehead. Only a subtle rusty tint on the nose bridge and cheeks; soft buff-cream chest, belly and inner legs with dark belly spots; no ginger patches. White/cream muzzle, lips and chin. Brick-pink nose with a dark outline. Pale buff toes, pink pads. Large, vivid emerald-green eyes (not amber or yellow). No collar.",
    "order": 67
   },
-  "PINROW": {
-   "action": "ok",
-   "priority": 3,
-   "why": "Shape and look are right: a black shorthair with copper eyes and silver whiskers. The coat is a slightly brownish matte black instead of glossy neutral black, and it stands instead of lying flat (pose only). Not worth credits.",
-   "styleImage": "assets/portraits/PINROW.jpg",
-   "order": 142
-  },
   "POPCAT": {
    "action": "rebuild",
    "priority": 1,
@@ -1073,22 +910,6 @@
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. Oatmeal the Pop Cat: a mostly white domestic shorthair with a white body, legs, tail, chest and face. A light grey-brown/tan tabby cap covers the top of the head and the backs and rims of both ears. A large dark brown-black patch behind the ear and cheek on the cat's right side, a smaller dark grey-black patch at the back of the left cheek. Pink inner ears, big round near-black eyes, small pink nose. Head tilted up, mouth open in a huge, perfectly round 'O' with a dark pink-red inside. No clothing.",
    "order": 194,
    "modelKey": "popcat"
-  },
-  "PRISMPAW": {
-   "action": "retexture",
-   "priority": 2,
-   "why": "Shape is fine (a sleek four-legged spotted shorthair with the right ice-blue eyes); only the base coat is a warm pinkish-beige with brown spots instead of a cool blue-leaning silver with slate-grey spots.",
-   "styleImage": "assets/portraits/PRISMPAW.jpg",
-   "retexturePrompt": "Sleek shorthair house cat. Cool, blue-leaning silver-grey coat (#CDD2D9), not beige, pink or taupe. Evenly dappled all over with small, round, dark slate-grey spots (#474E59) on the body, legs, head and tail; no brown spots and no stripes. Ice-blue eyes (#9FD3EA), pink nose, pale pink inner ears. No collar or accessories.",
-   "order": 143
-  },
-  "PUMICE": {
-   "action": "retexture",
-   "priority": 3,
-   "why": "Shape is fine; the coat has a pinkish-mauve cast that makes it render like CORSAGE, the signature pumice speckles are barely visible and the eyes are orange-amber instead of honey-gold. The portrait matches, so a cheap repaint makes it distinct.",
-   "styleImage": "assets/portraits/PUMICE.jpg",
-   "retexturePrompt": "Shorthair house cat. Pale ash-grey coat, the neutral, very slightly warm grey of moon dust (#BDB8AF), with no pink, mauve or beige cast. Flecked all over the body, legs, head and tail with small, soft, clearly visible darker-grey speckles (#8C867D) like pumice stone. No stripes, no tail rings, no white patches. Honey-gold eyes (#D6A13F), not orange. Grey-pink nose, pale pink inner ears. No collar or accessories.",
-   "order": 144
   },
   "PUSHEENX": {
    "action": "retexture",
@@ -1140,14 +961,6 @@
    "order": 196,
    "modelKey": "red-kitten-crew"
   },
-  "ROOKIEPAW": {
-   "action": "retexture",
-   "priority": 1,
-   "why": "Shape is fine (a four-legged shorthair); the paint is wrong: bright orange/ginger with a broad white bib and belly, where the lore is solid chestnut brown with only a thin white chest stripe. The white toes and gold-ish eyes are right. The portrait matches.",
-   "styleImage": "assets/portraits/ROOKIEPAW.jpg",
-   "retexturePrompt": "Realistic male shorthair house cat. Solid chestnut reddish-brown coat all over (#7B4A2B), deeper and browner than ginger, not orange, with no tabby stripes. Only a thin, narrow white stripe down the centre of the chest (#F4EFE6); no white bib and no white belly. White toes on all four paws. Gold eyes (#C8902E), brownish-pink nose, pinkish-brown inner ears. No collar or accessories.",
-   "order": 147
-  },
   "ROSETTE": {
    "action": "rebuild",
    "priority": 1,
@@ -1164,14 +977,6 @@
    "retexturePrompt": "Realistic black-and-white tuxedo shorthair. Black head, ears, back, flanks, legs and tail (no white tail tip), slightly rusty in sun. A THIN white blaze from the forehead down the nose bridge, slightly off-centre, widening at the nose onto the cat's RIGHT whisker pad only; the left whisker pad is black. Black chin and lower lip form a black goatee band between the white muzzle and the bib. Two-tone nose: pink on the white side, dark grey on the black side. White throat and chest bib narrowing to a stripe down the chest, white belly patch, white toes on a hind foot. Pale yellow-green eyes, long white whiskers.",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real normal-sized black-and-white tuxedo shorthair. Black head, ears, back, flanks, legs and tail (no white tail tip), slightly rusty-brown in sunlight. A thin white blaze starts on the forehead between the eyes and runs down the nose bridge, slightly off-centre, widening at the nose onto the cat's right whisker pad only; the cat's left whisker pad is black. The chin and lower lip are black, a black goatee band between the white muzzle and the white bib. Two-tone nose: pink on the white side, dark grey on the black side. White throat and chest bib narrowing into a stripe down the chest, a white belly patch, white toes on a hind foot. Pale yellow-green eyes, very long bright white whiskers. No collar.",
    "order": 149
-  },
-  "RUSTLEPAW": {
-   "action": "retexture",
-   "priority": 3,
-   "why": "Shape is fine; the orange is a bright pumpkin ginger (the same hue as the PAPRIKA model) instead of burnished coppery red-orange, and the stripes are blocky dashes with no clear 'M'. The portrait matches, so a cheap repaint separates it from PAPRIKA.",
-   "styleImage": "assets/portraits/RUSTLEPAW.jpg",
-   "retexturePrompt": "Photo-real shorthair: a burnished coppery red-orange mackerel tabby, deeper and redder than bright ginger, not pumpkin orange. Dark rust-brown stripes, narrow, neat and parallel on the body (not blocky dashes), a ringed tail, a striped face with a clear 'M' on the forehead. Paler cream chin and chest. Green eyes, pink nose. No collar or accessories.",
-   "order": 150
   },
   "SABERHACAT": {
    "action": "retexture",
@@ -1262,14 +1067,6 @@
    "retexturePrompt": "Slim, sleek female shorthair: a lilac tabby in soft pinkish dove-grey (pale lilac-grey, not rose-pink or saturated pink) with very fine darker lilac-grey pinstripes on the body and legs, a ringed tail and a tabby 'M' on the forehead. White chin and a pale cream-white chest. Paws the same pale lilac-grey (no bright white socks). Green eyes, pale pink nose, pale pink inner ears. No collar or accessories.",
    "order": 155
   },
-  "SKEINKIT": {
-   "action": "rebuild",
-   "priority": 1,
-   "why": "Wrong coat and colour: a smooth, short-coated ginger/peach kitten with a dark blotch under the chin, a red nose and dark eyes, where Skein is a very fluffy pale-cream kitten with grey-green eyes. The fluffy coat needs new geometry; the portrait matches. The yarn is a scene prop and is left out.",
-   "styleImage": "assets/portraits/SKEINKIT.jpg",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real small, very fluffy kitten with a solid pale cream coat (light warm cream with a soft apricot tint, about rgb 200,165,135; not ginger or orange). Faint pale-apricot ghost tabby markings on the forehead and a paler streak down the nose bridge. Big, round, curious grey-green/blue-grey kitten eyes, a small soft-pink nose, pink inner ears, long fine white whiskers. No collar, no yarn.",
-   "order": 156
-  },
   "SNOWBALCAT": {
    "action": "rebuild",
    "priority": 1,
@@ -1293,13 +1090,6 @@
    "styleImage": "generate",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. A twisted balloon-animal cat: a smooth, glossy pearl-white sculpture like white latex or glazed porcelain with soft grey reflections, and no fur, eyes, mouth, whiskers or markings. The body, neck and legs are rounded sausage-shaped balloon segments with pinched joints. A round balloon head with a small round nub muzzle, turned to the viewer's right. Two short pointed balloon ears with a small twist knot between them. A long thin balloon tail rising straight up from the rump and hooking forward over the back in a question-mark curl. Plain white all over, no collar or logo.",
    "order": 157
-  },
-  "SNUGPAW": {
-   "action": "ok",
-   "priority": 3,
-   "why": "Shape and colour are basically right (a solid dark grey shorthair). The mauve cast is partly the garden's warm light, and the only clear drift is deep amber eyes instead of pale gold. Not worth credits.",
-   "styleImage": "assets/portraits/SNUGPAW.jpg",
-   "order": 158
   },
   "SOCKFOOT": {
    "action": "retexture",
@@ -1498,14 +1288,6 @@
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Classic hand-drawn 1950 Disney Cinderella cel-animation style, as a stylised 3D cartoon with flat colours. Lucifer: an obese, round-bellied cat. Black fur covers most of the body, head, back and tail, and the head is ruffled, with spiky black tufts at the cheeks and brow. A large round white muzzle and lower face with a few dark whisker dots and two long white whiskers on each side. A large bulbous pink nose and pink inner ears. Eyes with yellow sclera, green irises and narrow slit pupils under heavy black lids, with a sly, sinister grin. Cream/light-tan fur on the belly, all four paws and the tail tip. No white chest bib, no white socks, no collar.",
    "order": 85
   },
-  "TRILLBY": {
-   "action": "retexture",
-   "priority": 3,
-   "why": "Shape is right: a slim, realistic Siamese with blue eyes and an open chirping mouth. The points drift to a warm reddish chocolate instead of cool near-black seal, the body is peachy, and the forelegs are dark only from mid-leg. The portrait matches.",
-   "styleImage": "assets/portraits/TRILLBY.jpg",
-   "retexturePrompt": "Photo-real slim, elegant short-haired Siamese-type colourpoint. Pale ivory-cream body, slightly warmer on the back, with no peach cast. Cool, dark seal-brown points, near black-brown (about rgb 65,42,32) and not reddish: a full face mask around the eyes and muzzle, the ears, the forelegs dark along the whole front from the chest to the paws, the hind legs and paws, and the whole tail. Bright sapphire-blue eyes, dark nose leather, pink tongue in the open mouth. No clothing.",
-   "order": 169
-  },
   "TRIMCAT": {
    "action": "retexture",
    "priority": 1,
@@ -1514,14 +1296,6 @@
    "retexturePrompt": "Photo-real large, fine domestic cat. A clear jet-black coat all over, with no brown or reddish tint. Exactly four white feet, as if dipped in snow, white only on the paws. A white under-lip and chin. A small white star-shaped spot in the middle of the breast, not a bib or stripe. No other white: no fleck on the face. Black nose, long white whiskers, a long black tail. Fiery amber-gold eyes. No accessories.",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real large, fine domestic cat. A clear jet-black coat all over, with no brown or reddish tint. Exactly four white feet, as if dipped in snow, white only on the paws. A white under-lip and chin. A small white star-shaped spot in the middle of the breast, not a bib or stripe. No other white: no fleck on the face. Black nose, long white whiskers, a long black tail. Fiery amber-gold eyes. No accessories.",
    "order": 86
-  },
-  "TRINKETCAT": {
-   "action": "rebuild",
-   "priority": 1,
-   "why": "Wrong coat length and pattern: a slim, short-coated copper tabby with flank stripes and a ringed tail, where the lore is a round, fluffy, medium-long-haired, black-based brindled tortoiseshell. The pebble heap and rain barrel are scene props and are dropped. The portrait matches the look; the proof image is unrelated (a puppy).",
-   "styleImage": "assets/portraits/TRINKETCAT.jpg",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. A round, fluffy, medium-long-haired tortoiseshell house cat with a plush, full body. A black base coat finely mottled and brindled all over with warm amber/copper and a little light buff/cream, mostly on the chest and cheeks. No tabby stripes and no ringed tail. Amber brindling on the face with a dark mask down the nose, black nose leather and dark brindled toes. Pale yellow-green eyes. No clothing.",
-   "order": 170
   },
   "TSUKI": {
    "action": "retexture",
@@ -1547,14 +1321,6 @@
    "styleImage": "generate",
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Stylised photo-real 3D. A fat, pear-shaped cat on four short legs, styled after the 'Fat Cat Bat Rat wif hat' mascot. Dark grey/black head and upper back; a big white/cream belly, chest and front. A black patch on its right hip (viewer's left). A small pink nose, pink rounded rat-like ears and pink paws. Big brown leathery bat wings spread from the shoulders. A long, thin banded rat tail with dark rings on buff. A brown collar with a small silver bell. A bright blue knit beanie on its head. No tweed, no flat cap.",
    "order": 171
-  },
-  "UMBERPAW": {
-   "action": "rebuild",
-   "priority": 2,
-   "why": "Wrong style and colour: a small, big-headed low-poly kitten with cartoon eyes and a medium reddish chocolate coat with copper-orange inner ears. The lore is a sleek, realistic shorthair in deep umber brown that looks near-black in shade, with copper eyes. It still reads as a solid brown cat. The portrait matches the look.",
-   "styleImage": "assets/portraits/UMBERPAW.jpg",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. A sleek adult shorthair house cat with a solid deep umber-brown coat (#3A2519) shading to near-black (#24170F) in shadow. No white and no tabby or ghost markings. Dark brown inner ears and nose. Warm copper eyes (#C07A3E). No clothing.",
-   "order": 172
   },
   "UNSINKSAM": {
    "action": "rebuild",
@@ -1597,14 +1363,6 @@
    "order": 199,
    "modelKey": "vibing-cat-coin"
   },
-  "VIGNETPAW": {
-   "action": "rebuild",
-   "priority": 2,
-   "why": "Wrong style and markings: a small, big-headed low-poly kitten with reddish sienna points and a hard diamond mask that leaves the eyes ringed in cream. The lore is a normal, realistic seal-point shorthair with dark, cool seal points and a full soft mask around both eyes. The portrait matches.",
-   "styleImage": "assets/portraits/VIGNETPAW.jpg",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. A normal adult pale-cream shorthair house cat with seal-point Siamese colouring. The points are a dark, cool seal brown close to black-brown (about rgb 65,40,26), not reddish or milk-chocolate. A full, soft-edged seal mask surrounds both eyes and covers the nose bridge and muzzle, fading into cream on the forehead and outer cheeks. Seal-brown ears, lower legs, paws and whole tail. Pale cream body. Wide sky-blue eyes, dark seal nose. No clothing.",
-   "order": 175
-  },
   "WARMSPOT": {
    "action": "retexture",
    "priority": 1,
@@ -1614,15 +1372,6 @@
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real short-haired black-and-white tuxedo cat in a dense winter coat. Head almost all jet black (true black, not brown): black ears with pinkish insides, and a black forehead, crown, eye area and cheeks. Only a thin, hair-narrow white line from between the eyes (starting at eye level) down the nose bridge, joining a small white muzzle patch round the pink nose and mouth; the outer whisker pads stay black. White chin, throat and a broad chest bib. Back, sides, legs, paws and tail jet black, with no white socks. Pale mint/grey-green eyes, white whiskers.",
    "order": 176
   },
-  "WAYBILL": {
-   "action": "retexture",
-   "priority": 1,
-   "why": "Shape is fine: a simple four-legged shorthair with white socks and chest. The paint is wrong: a warm brown-taupe that the look avoids on purpose, instead of cool slate blue-grey, plus an invented white tail tip, orange-lined ears, a dark red nose, and a rounded chest patch instead of a square label. The portrait is close but not exact.",
-   "styleImage": "generate",
-   "retexturePrompt": "Shorthair house cat, slate-grey and white bicolour. The coat is a cool blue-grey slate (#5D6873), with no brown or taupe tint, on the head, ears, back, flanks, upper legs and the whole tail; no white tail tip. A crisp square white (#F4F1EA) chest patch like a shipping label. Four white socks. Grey inner ears with pale pink, no orange. Honey-gold eyes (#D9A441), pinkish-grey nose. No clothing.",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Shorthair house cat, slate-grey and white bicolour. The coat is a cool blue-grey slate (#5D6873), with no brown or taupe tint, on the head, ears, back, flanks, upper legs and the whole tail; no white tail tip. A crisp square white (#F4F1EA) chest patch like a shipping label. Four white socks. Grey inner ears with pale pink, no orange. Honey-gold eyes (#D9A441), pinkish-grey nose. No clothing.",
-   "order": 177
-  },
   "WEN": {
    "action": "rebuild",
    "priority": 1,
@@ -1631,23 +1380,6 @@
    "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Anime/chibi cartoon style, a soft, cute 3D character. Wen: a kitten with a light blue-grey (steel/sky-blue) coat on the head, back, legs, paws and tail, with no hood or hat. White lower face (cheeks, muzzle, around the mouth) and a white chest. A dark navy/slate tabby mark on the forehead: a central stripe flanked by two curved stripes, like a V or trident. Huge glossy turquoise/cyan eyes with white highlights and dark upper lash lines. A tiny pink nose and a ':3' mouth. Bright coral/orange-red inner ears with white ear tufts. Pink paw pads. A plain blue-grey tail with no stripes or white tip.",
    "order": 200,
    "modelKey": "wen-4"
-  },
-  "WHIRRPAW": {
-   "action": "retexture",
-   "priority": 3,
-   "why": "Shape is acceptable: a simple solid-grey shorthair with vivid green eyes, though kitten-proportioned rather than sleek. The grey drifts warm/lavender (#897F7D) instead of smoky blue-grey (#6E7B8B). A cheap repaint fixes the colour; not urgent.",
-   "styleImage": "generate",
-   "retexturePrompt": "Shorthair house cat with a solid smoky blue-grey coat and no markings: a cool grey with a clear blue cast (#6E7B8B, shading to #56626F), with no warm, brown or lavender tint. Grey inner ears with a slight pink, dark grey nose. Bright, vivid true-green 'status-light' eyes (#3FD16A), not yellow-green. No white, no clothing.",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Shorthair house cat with a solid smoky blue-grey coat and no markings: a cool grey with a clear blue cast (#6E7B8B, shading to #56626F), with no warm, brown or lavender tint. Grey inner ears with a slight pink, dark grey nose. Bright, vivid true-green 'status-light' eyes (#3FD16A), not yellow-green. No white, no clothing.",
-   "order": 178
-  },
-  "WHISK100": {
-   "action": "rebuild",
-   "priority": 1,
-   "why": "Wrong coat length and a missing signature feature: a smooth, short-coated reddish chestnut cat with ordinary thin dark whiskers and torn-texture artefacts on the bib. The lore is a fluffy, semi-long-haired, cool dark chocolate cat whose very long bright white whiskers fan out past the shoulders. The portrait matches; the proof image shows unrelated cats.",
-   "styleImage": "assets/portraits/WHISK100.jpg",
-   "referencePrompt": "One four-legged cat, full body, 3/4 side view, standing on all four legs, plain light grey background. Photo-real. A fluffy, semi-long-haired house cat with a rich, solid, dark chocolate-brown coat (a cool, fairly desaturated brown, not red or chestnut). Long body fur, a neck ruff and a plumed, bushy tail. A neat white chest bib starts just below the chin, which stays brown. Four small white paws. Light yellow-green eyes, dusky brown-pink nose. Very long, bright white whiskers fan out wide on both sides of the face, past the shoulders. No clothing.",
-   "order": 179
   },
   "WILLOWCAT": {
    "action": "retexture",

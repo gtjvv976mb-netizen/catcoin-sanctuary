@@ -1,6 +1,6 @@
 /* Which cat a model in assets/models/cats/index.json belongs to. A key there is the file's name
    (<key>.glb and <key>-lo.glb) and names its cat by one of:
-     - the cat's id: a stock cat's ticker ("PATCHPAW"), or a famous coin's id ("popcat");
+     - the cat's id: a stock cat's ticker ("JELLIECAT"), or a famous coin's id ("popcat");
      - a famous coin's contract ("7GCihgDB…W2hr"), letter case aside, or "<chain>:<contract>";
      - a famous coin's symbol ("POPCAT" or "$POPCAT"), only when exactly one famous coin has it and
        no stock cat's ticker is the same.

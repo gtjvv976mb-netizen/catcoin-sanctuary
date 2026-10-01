@@ -1,4 +1,170 @@
 {
-  "note": "Planned cats held back from the garden (none now). A cat whose look follows a company's cat is planned as a fan tribute: its description and card carry \"Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>.\" (scripts/build-planned.mjs requires it). A cat listed here is left out of data/planned.json with its portrait. To bring one back, delete its row and run scripts/build-planned.mjs with every sheet.",
-  "held": []
+  "note": "Planned cats held back from the garden. A cat whose look follows a company's cat is planned as a fan tribute: its description and card carry \"Fan tribute to <Company>'s cat. Not affiliated with or endorsed by <Company>.\" (scripts/build-planned.mjs requires it). A cat listed here is left out of data/planned.json with its portrait. To bring one back, delete its row and run scripts/build-planned.mjs with every sheet. 2026-10-01, the owner: \"remove all cats with no lore and just speculation\": the invented cats whose research found no real cat (whyLook: no cat link, an original cat, no usable cat) are held here.",
+  "held": [
+    {
+      "ticker": "PATCHPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "WHISK100",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "INGOTLOAF",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "TRINKETCAT",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "SKEINKIT",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "EVERLOOP",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "TRILLBY",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "LATCHKEY",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "PINROW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "NOTEPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "APOTHECAT",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "COBBLEPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "GLINTPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "BOXWOOD",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "PRISMPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "KIOSKPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "WAYBILL",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "WHIRRPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "VIGNETPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "CANDLEWICK",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "ROOKIEPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "UMBERPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "PUMICE",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "CASENAP",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "SNUGPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "AMBERDROP",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "CURFEWPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "LICHENPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "RUSTLEPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "ICICLEPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "CABLETAIL",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "MILLRACE",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    },
+    {
+      "ticker": "HOVERPAW",
+      "since": "2026-10-01",
+      "reason": "No lore: an invented cat, its link to its stock only a guess (no real cat was found for it)."
+    }
+  ]
 }
