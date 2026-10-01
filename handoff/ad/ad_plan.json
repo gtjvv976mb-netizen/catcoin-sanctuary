@@ -1,0 +1,189 @@
+{
+ "title": "Look Closer: The Newcomer",
+ "totalSeconds": 38,
+ "voice": "seed_audio preset: a warm, gently amused British female storyteller. Hushed and intimate, unhurried (about 140 wpm), smiling, never salesy. A small breath before each question.",
+ "shots": [
+  {
+   "n": 1,
+   "seconds": 2.2,
+   "model": "veo3_1",
+   "keyframePrompt": "Photoreal extreme macro, 16:9 frame: the left eye of a young silver-grey classic tabby cat fills the frame. A large amber-gold iris with fine radial fibres and a thin darker outer rim, and a crisp vertical slit pupil. The iris is a perfect circle centred exactly in frame, its diameter 60% of the frame height (circle guide shared with shot 2). Around it: short plush silver-grey fur with fine charcoal tabby lines, a hint of the white blaze at the lower inner corner, long white whiskers catching the light, and the pale-pink inner edge of an ear out of focus at the top. Bright late-afternoon golden sun from frame left makes the iris glow. The glossy cornea holds a tiny soft reflection of a pink cherry blossom tree and an orange tiled roof. 100mm macro, f/4, razor-thin focus on the iris, fur melting into soft warm bokeh, natural film grain, true-to-life colour. The cat is the hero cat from the attached reference sheet: a young, slim silver-grey classic tabby with a white blaze into a white muzzle, a white chest bib, four white socks, large amber-gold eyes and no collar. No text, letters, logos or watermarks; no people; no cartoon or CGI look; no extra eyes.",
+   "motionPrompt": "The cat slowly blinks once. The eyelids close softly and reopen, and the amber iris and slit pupil return to exactly the same centred position and size. The whiskers tremble slightly in the breeze. Camera: locked-off macro with a very slow 5% push-in. Warm, intimate, calm. Sound: a soft close purr and faint distant birdsong.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/refs/hero_sheet.png"
+   ],
+   "onScreenText": "'Look closer.' in small white rounded type, lower third, 0.3-2.0 s (the sound-off hook). Edit: cut on the frame where the eye is fully open again, then match-cut to shot 2 with the iris ring aligned to the window ring (transform the clip to fit, plus a 4-frame luma dissolve).",
+   "audioIdea": "Veo native purr and faint birdsong. Music opens on a single celesta note over a soft pizzicato pickup. An airy whoosh rises from 1.9 s into the match cut."
+  },
+  {
+   "n": 2,
+   "seconds": 3,
+   "model": "kling3_0",
+   "keyframePrompt": "Photoreal front-elevation close-up, 16:9 frame, of the round cat's-eye window in the front gable of a storybook cottage (match the attached cottage references). A round honey-oak frame surrounds glowing golden glass, split by a dark vertical lens-shaped mullion like a cat's slit pupil, with thin crossing glazing bars. The window circle is centred exactly in frame, its diameter 60% of the frame height, with the mullion dead centre (same circle guide as shot 1). Around it: cream lime plaster and honey-oak half-timbering. At the top corners, the terracotta-tiled bases of the two cat-ear gable points with pale-pink insides. Warm light glows from inside. Bright late-afternoon golden sun from frame left rakes across the plaster texture, and one or two pink cherry petals drift past. 50mm, f/5.6, crisp detail, natural film grain. No text, signs, logos or watermarks; no people; no low-poly, cartoon or CGI look.",
+   "endFramePrompt": "Photoreal straight-on front view, 16:9 frame, eye level, of the whole storybook cottage in a sunny garden: the exact cottage and window from the start frame and the attached references. Cream lime-plaster walls with honey-oak half-timbering; a steep roof of weathered hand-made orange terracotta clay tiles; two cat-ear points on the front gable with terracotta rims and pale-pink insides; the round golden cat's-eye window with its dark vertical slit mullion centred in the gable; a white plaster chimney; an arched oak plank door with a small four-pane window and a black iron lantern beside it; warm glowing windows with cream curtains; oak flower boxes spilling pink, white and violet flowers; a raised oak porch with chunky log rails, three wide oak steps and a cream plush sisal cat tree. A tuxedo cat (black with a white chest, white paws and white muzzle, green eyes, no collar) sits on the top porch step. White stepping stones lead to the steps between two black Victorian lamp posts. Pink cherry blossom and a broad oak rise behind the roof, and a round pink cushion cat bed sits on the green lawn. The cottage fills the centre 60% of the frame, with the round window on the vertical centre line. Bright late-afternoon golden sun from frame left, vivid colours, drifting petals. 35mm, f/8. No text, signs, easels, logos or watermarks; no people; no statues; no low-poly, cartoon or CGI look.",
+   "motionPrompt": "One continuous camera move: the camera pulls straight back and slightly down from the round cat's-eye window to reveal the whole front of the cottage, its porch and the stepping-stone path, with no rotation. The tuxedo cat on the step stays seated and only flicks an ear, and petals drift across the frame. The architecture stays rigid, with every tile and timber identical. The move starts brisk and eases into a gentle float.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/house/hd_front.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/house/hd_q34.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/refs/cottage_sheet.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/world/shots/v5-high-cottage.jpg"
+   ],
+   "onScreenText": "(none) Edit: speed-ramp the first 1.2 s to 200%, then run at 100%.",
+   "audioIdea": "The whoosh resolves into a soft wind-chime shimmer as the cottage appears. Pizzicato strings start a light, curious pulse over distant birdsong (library)."
+  },
+  {
+   "n": 3,
+   "seconds": 4,
+   "model": "seedance_2_5",
+   "keyframePrompt": "Photoreal high drone view, 16:9 frame, of a sunny cottage garden full of real cats, laid out like the attached layout screenshot but as a real, live-action place. At the centre, seen in three-quarter view as in the attached render, is the storybook cottage: cream lime-plaster walls, honey-oak half-timbering, a weathered orange terracotta clay-tile roof, two cat-ear points on the front gable with pale-pink insides, a glowing round golden cat's-eye window with a dark vertical slit mullion, a white chimney with a thin thread of smoke, flower boxes and an oak porch. Around it: a winding pale gravel path edged with red bricks that runs from the lower-left corner to the porch; a loop of flat white stepping stones; a lily-pad pond ringed with pale rocks on the left; cherry blossom trees in full pink bloom; broad oak trees; black Victorian lamp posts; a row of tall sunflowers and raised vegetable beds on the right; a small glass greenhouse; a white picket fence; and rolling green hills and pine forest beyond, under a peach-and-blue sky with a few birds. Dozens of real cats of every coat are scattered small across the lawn, mostly resting: tabbies, tuxedos, gingers, calicos, whites, blacks and greys curled in round pink cushion beds, loafing on a red-and-white gingham picnic blanket or sitting on stepping stones. One ginger tabby bats a red yarn ball near the path. At the far right edge, small and sunlit, a slim silver-grey tabby with a white chest bib and white socks sits on a low mossy dry-stone wall at the garden's edge, looking in. Bright late-afternoon golden sun low at frame left, long soft shadows, vivid saturated colours. 24mm, f/8, deep focus, real grass, real stone, real fur, natural film grain. No text, signs, easels or speech bubbles; no sign above the cottage; no statues, figurines or giant cats; no tiger; no purple or costumed cats; no laptops or desks; no people; no collars; no low-poly, cartoon or CGI look.",
+   "motionPrompt": "Slow forward drone glide with a gentle descent along the gravel path toward the cottage. Only one clear action: the ginger tabby near the path bats the red yarn ball. Every other cat stays resting, with small ear and tail flicks, while petals and birds drift. The cottage and garden layout stay rigid and identical to the reference images. Warm, wondrous, calm.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/world/shots/v5-high-home.jpg",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/house/hd_q34.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/refs/cottage_sheet.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/refs/hero_sheet.png"
+   ],
+   "onScreenText": "5.5-9.0 s: the Catcoin Sanctuary wordmark (assets/brand/wordmark-960.webp), small and lower-centre, with 'A free 3D cat garden to explore' beneath. A micro tag sits bottom-right for the same span: 'Dramatised. The real site is a stylised 3D world.'",
+   "audioIdea": "The music swells warm at 5.2 s (strings, celesta and felt piano). Library ambience underneath: birdsong, breeze in leaves and a couple of distant happy mews. The VO ducks the music by 6 dB."
+  },
+  {
+   "n": 4,
+   "seconds": 2.2,
+   "model": "veo3_1",
+   "keyframePrompt": "Photoreal side-on shot at water level, 16:9 frame, at the edge of a garden lily pond. A sleek solid-black shorthair cat with a glossy coat and copper-orange eyes, no collar, crouches on a flat, sun-warmed pale rock at the water's edge, one front paw lifted just above a round green lily pad that holds a pink water-lily flower. The still water mirrors a pink cherry blossom tree and blue sky, and a few pink petals float on the surface. Golden rim light outlines the cat's fur and whiskers. The cat and the lily pad sit in the centre third of the frame. Bright late-afternoon golden sun from frame left, vivid colours. 70mm, f/2.8, cherry blossom behind in soft bokeh, natural film grain. No text, signs or logos; no people; no statues; no collars; no cartoon or CGI look.",
+   "motionPrompt": "The black cat dips its raised paw and taps the lily pad once, sending gold-lit ripple rings across the mirror-still water, and its ears flick forward. Camera: slow push-in at water level. Gentle and playful. Sound: a delicate water plip, soft lapping, a bee humming, birdsong.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/world/shots/v5-high-cottage.jpg"
+   ],
+   "onScreenText": "(none)",
+   "audioIdea": "Veo native plip, water lap and bee hum. The music drops to pizzicato only for this beat."
+  },
+  {
+   "n": 5,
+   "seconds": 5,
+   "model": "veo3_1",
+   "keyframePrompt": "Photoreal medium close-up, 16:9 frame. An adult brown mackerel tabby cat with narrow dark-brown stripes on a warm honey-tan coat, a white chin, green eyes and a brick-red nose, no collar, sits upright in a plush round pink cushion cat bed on a sunlit lawn beside a wooden flower bed of pink and red tulips. The cat is placed on the right third of the frame, facing slightly toward the lens. The left 45% of the frame is uncluttered, softly out-of-focus garden (green lawn and pink cherry blossom bokeh), kept clean for a graphic. Bright late-afternoon golden sun from frame left, with a warm rim light on the fur and vivid colours. 85mm, f/2, shallow depth of field, natural film grain. No text, signs, cards or logos; no people; no collars; no cartoon or CGI look.",
+   "motionPrompt": "The tabby looks into the lens, gives one slow, contented blink and then settles its shoulders; only a few petals drift past. Camera: locked-off with a very slow 3% push-in. Calm and trusting. Sound: a soft purr and gentle birdsong.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/world/shots/v5-high-trees.jpg"
+   ],
+   "onScreenText": "Higgsedit card overlay, which pops in and settles in the empty left side at 11.7 s. The card is cream paper with a plum outline and rounded corners. It holds a round photo thumbnail from this frame, a blurred name line and three blurred body lines, a stamp reading 'SOURCES & DATES' and a micro tag reading 'Illustrative'. There is no name, ticker or number. At 14.7 s a single-line badge lands on the card: 'Meme coin \u00b7 No intrinsic value \u00b7 Not financial advice'. Caption: 'Every cat has a card, with sources and dates.'",
+   "audioIdea": "Veo native soft purr. A paper pop SFX plays as the card springs in at 11.7 s, and a soft tick as the badge lands at 14.7 s. The music is light and warm."
+  },
+  {
+   "n": 6,
+   "seconds": 2.8,
+   "model": "kling3_0",
+   "keyframePrompt": "Photoreal eye-level medium-wide shot, 16:9 frame, of a circular garden plaza paved with pale limestone flagstones and a thin gold inlay ring. It is edged by clipped round boxwood hedges and black Victorian lamp posts, with pink cherry blossom trees and a low dry-stone wall beyond (layout like the attached reference, rebuilt as real stone and planting). At the centre stands a three-tier carved stone fountain with sparkling water spilling between the basins, crowned by a weathered bronze statue of a generic seated cat. A plump ginger tabby with white paws, no collar, loafs on the lower basin rim with half-closed eyes. A tuxedo cat (black with a white chest and paws, no collar) sits upright on the flagstones in front. The fountain is in the centre third of the frame. Bright late-afternoon golden sun from frame left glints on the water, with vivid colours. 28mm, f/5.6, natural film grain. No text, signs, plaques or logos; no other statues; no people; no collars; no cartoon or CGI look.",
+   "endFramePrompt": "The same plaza, fountain and bronze seated-cat statue, with the same two cats in the same places, seen from 30 degrees further round to the right and slightly lower, 16:9 frame. The three-tier fountain is centred, and the bronze cat statue is rimmed by the low golden sun, with a starburst glint off the falling water. The ginger tabby still loafs on the rim, the tuxedo is still seated in front, and lamp posts and cherry blossom stand behind. Photoreal, 28mm, bright late-afternoon golden light, vivid colours, natural film grain. No text, signs, plaques or logos; no other statues; no people; no collars; no cartoon or CGI look.",
+   "motionPrompt": "Slow 30-degree clockwise arc around the fountain at low height. Water sparkles and spills between the basins, and the ginger tabby flicks one ear. The fountain and bronze statue stay rigid and identical. Serene.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/world/shots/v5-high-plaza.jpg"
+   ],
+   "onScreenText": "'New cats arrive every hour.' 16.7-19.0 s. The plaza stays unnamed scenery: no 'Hall of Fame' super.",
+   "audioIdea": "Library fountain splash and trickle with birdsong. The music keeps building lightly."
+  },
+  {
+   "n": 7,
+   "seconds": 4.5,
+   "model": "kling3_0",
+   "keyframePrompt": "Photoreal low-angle shot, 16:9 frame, at the sunny edge of a cottage garden. A young, slim silver-grey classic tabby cat sits upright in pure side profile, facing frame right, on top of a low mossy dry-stone wall. It is seen as a crisp jet-black silhouette against a huge low golden sun directly behind it. Its fur edges, small ear tufts and long whiskers glow with a thin gold rim light, and its long tail hangs down over the wall's edge with the tip curled. Behind it, in warm golden haze and soft focus, are pink cherry blossom and the orange terracotta roof of a cottage. The cat sits in the centre third of the frame. Bright, warm, glowing light with a soft sun flare, never dark. 50mm, f/2.8, natural film grain. The cat is the hero cat from the attached reference sheet (silver-grey classic tabby, white blaze, white muzzle, white chest bib, four white socks, amber-gold eyes, no collar), shown here only as a silhouette. No text, signs, easels or logos; no people; no collars; no cartoon or CGI look.",
+   "endFramePrompt": "Photoreal low-angle shot, 16:9 frame, on the same mossy dry-stone wall with the same sun and background. The camera is now 60 degrees round to the cat's front-left, so the low golden sun side-lights its face. The same cat is clearly visible and matches the attached reference sheet exactly: a young, slim six-month-old silver-grey classic tabby with a short plush coat; bold charcoal swirl markings on the flanks; fine charcoal tabby lines on the forehead; a narrow white blaze from between the eyes down the nose into a white muzzle and chin; a white chest bib; four white socks; a pink nose; large round amber-gold eyes; upright ears with pale-pink insides and small ear tufts; a long charcoal-ringed tail with a solid charcoal tip; no collar. It has turned its head and looks straight into the lens with calm curiosity. Behind it are soft pink cherry blossom and the cottage's orange roof in warm haze. The cat is in the centre third. 50mm, f/2.8, bright late-afternoon golden light, vivid colours, natural film grain. No text, signs, easels or logos; no people; no collars; no cartoon or CGI look.",
+   "motionPrompt": "The camera arcs slowly about 60 degrees around the seated cat, from a backlit black silhouette into warm side-light. As the light reaches its face, the cat turns its head and looks into the lens. One smooth move; the cat's markings, white blaze and amber eyes stay identical throughout.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/refs/hero_sheet.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/house/hd_q34.png"
+   ],
+   "onScreenText": "'Who's that cat?' 19.4-21.8 s, over the pure silhouette. Plain rounded type only: no sunburst board and no silhouette-to-colour wipe. The silhouette comes from the hero's own generic pose, not traced from a teaser PNG.",
+   "audioIdea": "The music thins to one held string note and a ticking pizzicato for the mystery, with a soft breeze. A small curious 'mrrp' from the library plays as the cat turns. The Kling audio is muted."
+  },
+  {
+   "n": 8,
+   "seconds": 4.8,
+   "model": "veo3_1",
+   "keyframePrompt": "Photoreal eye-level medium shot, 16:9 frame, of the oak porch of the storybook cottage from the attached references, in warm golden late-afternoon light. We see the oak porch boards and chunky round log rails, the arched oak plank door with its small glowing four-pane window, the black iron lantern glowing beside the door, oak flower boxes spilling pink, white and violet flowers and the cream plush sisal cat tree. Above, centred in the cream plaster gable under the orange terracotta tiles, the round golden cat's-eye window glows, with its dark vertical slit-pupil mullion. In the centre foreground on the porch boards, the hero cat lies curled in a plush round pink cushion cat bed, its chin resting on its white front paws and its eyes half-open and drowsy. The hero cat is a young, slim six-month-old silver-grey classic tabby with a short plush coat, bold charcoal swirl markings, fine charcoal forehead lines, a narrow white blaze down the nose into a white muzzle and chin, a white chest bib, four white socks, a pink nose, large round amber-gold eyes, upright ears with pale-pink insides and small ear tufts, and a charcoal-ringed tail with a solid charcoal tip wrapped around its body. It wears no collar. A fluffy white long-haired cat sleeps in a second pink bed at the far right end of the porch, not touching it. Composition: the round window top-centre and the hero cat lower-centre, both inside the centre third. 50mm, f/4, vivid warm colours, natural film grain. No text, signs, plaques or logos; no people; no collars; no low-poly, cartoon or CGI look.",
+   "motionPrompt": "The hero cat's eyes slowly close as it drifts to sleep, and its flank rises and falls with one soft breath. The lantern flame flickers gently. Camera: slow push-in from the medium shot to a close-up of the cat's sleeping face. Warm, peaceful, cosy. Sound: slow, deep purring and soft evening birdsong.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/house/hd_front.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/house/hd_q34.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/refs/cottage_sheet.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/refs/hero_sheet.png"
+   ],
+   "onScreenText": "'Settling right in.' small, 24.6-26.8 s.",
+   "audioIdea": "Veo native deep purr and evening birdsong, with a faint lantern crackle. The music is warm and slow."
+  },
+  {
+   "n": 9,
+   "seconds": 2,
+   "model": "veo3_1",
+   "keyframePrompt": "Photoreal low-angle shot, 16:9 frame, with the same framing, lens, wall, sun and background as the attached reference frame (the shot 7 start frame). The same low mossy dry-stone wall stands before the same huge low golden sun, with soft pink cherry blossom and an orange cottage roof in warm haze behind. A different cat now sits on the wall in pure side profile, facing frame right, as a crisp jet-black silhouette. It is a big fluffy long-haired cat with tall lynx-like ear tufts, a thick ruff and a full plume tail curled up behind it, and its long fur edges glow with a gold rim light. The cat is in the centre third. Bright, warm, glowing light with a soft sun flare, never dark. 50mm, f/2.8, natural film grain. No text, signs, easels or logos; no people; no collars; no cartoon or CGI look.",
+   "motionPrompt": "The silhouetted long-haired cat sweeps its plume tail once and flicks one ear; nothing else moves. Camera: locked-off, completely still. Curious and teasing. Sound: one soft questioning mrrp and a gentle breeze.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/keyframes/shot07_start.png"
+   ],
+   "onScreenText": "'Who's next?' 28.7-30.5 s, then a lower line from 29.0 s: 'New cats every hour on X \u00b7 @catcosanctuary' (text only, no X logo).",
+   "audioIdea": "Veo native soft 'mrrp?' and breeze. A single pizzicato phrase shaped like a question mark."
+  },
+  {
+   "n": 10,
+   "seconds": 7.5,
+   "model": "kling3_0",
+   "keyframePrompt": "Photoreal close view, 16:9 frame, of the roof of the storybook cottage from the attached references at golden hour. The two cat-ear points on the front gable are rimmed in weathered orange terracotta tiles with pale-pink insides, and below them the round oak-framed golden cat's-eye window glows, with its dark vertical slit-pupil mullion. Weathered hand-made terracotta roof tiles, the white plaster chimney with a thin thread of smoke, pink cherry blossom branches at the frame edges and a few drifting petals. Bright late-afternoon golden sun from frame left, warm and vivid. 35mm, f/5.6, natural film grain. No text, signs or logos; no people; no low-poly, cartoon or CGI look.",
+   "endFramePrompt": "Photoreal high wide aerial, 16:9 frame, framed exactly like the attached layout screenshot but as a real place. The storybook cottage is centred, with its orange terracotta tile roof, cat-ear gable points and glowing round cat's-eye window. The winding red-brick-edged gravel path runs to the lower left, the lily pond with pale rocks is on the left, and cherry blossom and oak trees, black lamp posts, sunflowers, vegetable beds and a small greenhouse are on the right. A white picket fence surrounds dozens of tiny cats resting on the lawn and on pink cushion beds, with rolling hills and pine forest behind. The top third of the frame is clear, soft peach-and-blue sky with a few birds, kept empty for a logo. Bright late-afternoon golden light, vivid colours. 24mm, f/8, natural film grain. No text, signs, easels or speech bubbles; no sign above the cottage; no statues; no tiger; no purple or costumed cats; no people; no low-poly, cartoon or CGI look.",
+   "motionPrompt": "In one smooth drone move, the camera rises and pulls back from the cottage's cat-ear gable and glowing round window up into a high wide view of the whole sunny garden. It eases out to a locked final frame with clear sky in the top third. Petals and birds drift; the cottage and garden stay rigid.",
+   "references": [
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/world/shots/v5-high-home.jpg",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/house/hd_front.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/house/hd_q34.png",
+    "/tmp/claude-0/-home-user-catcoin-sanctuary/97601727-25f6-5c8d-b77f-d375d8c5cb0b/scratchpad/ad/refs/cottage_sheet.png"
+   ],
+   "onScreenText": "30.5-33.5 s: the last 3 s of the drone clip, with no text. 33.5-34.5 s: a 1.0 s dissolve into a matched screen capture of the live site from the same angle, with a small 'The real site' label. Recapture it clean: no UI or speech bubbles, the in-world sign hidden behind the wordmark, and no tribute, mascot or third-party-lookalike cats or statues in frame (crop or mask the blue tiger statue and the purple crescent-marked cat seen in v5-high-home.jpg). If a clean capture is not possible, stay on the photoreal plate. 33.8 s: the wordmark (assets/brand/wordmark-960.webp; never crop og-image.jpg) pops in top-centre in the clear sky with a soft paw bounce. Beneath it, in order: 'A free 3D cat garden to explore.', 'catcoinsanctuary.com' and 'New cats every hour on X \u00b7 @catcosanctuary'. From 33.8 to 38.0 s the legal line sits at the bottom, small but legible (see endCard.disclaimer).",
+   "audioIdea": "The music rises with the drone and resolves on one glockenspiel note as the wordmark lands at 33.8 s. A tiny contented purr at 37.2 s is the sonic logo."
+  }
+ ],
+ "voiceover": [
+  {
+   "at": 0.3,
+   "line": "Look closer."
+  },
+  {
+   "at": 5.4,
+   "line": "Welcome to Catcoin Sanctuary: a free 3D garden full of cats."
+  },
+  {
+   "at": 11.7,
+   "line": "Every cat has a card, with sources and dates."
+  },
+  {
+   "at": 14.8,
+   "line": "Some cats get a meme coin."
+  },
+  {
+   "at": 16.6,
+   "line": "And new cats arrive every hour."
+  },
+  {
+   "at": 19.6,
+   "line": "Who's that cat?"
+  },
+  {
+   "at": 24.5,
+   "line": "Someone new. Settling right in."
+  },
+  {
+   "at": 28.8,
+   "line": "Who's next?"
+  },
+  {
+   "at": 34,
+   "line": "Catcoin Sanctuary. Free to explore."
+  }
+ ],
+ "endCard": {
+  "headline": "Catcoin Sanctuary wordmark (assets/brand/wordmark-960.webp) + 'A free 3D cat garden to explore.'",
+  "url": "catcoinsanctuary.com",
+  "handle": "@catcosanctuary (set as: 'New cats every hour on X \u00b7 @catcosanctuary', text only, no X logo)",
+  "disclaimer": "Meme coins: not affiliated with any company, no intrinsic value, not financial advice. Scenes dramatised; the site is a stylised 3D world."
+ },
+ "cut916": "PRE-PRODUCTION (applies to both cuts): before any keyframe, generate two reference sheets with gpt_image_2_5 and attach them wherever a shot lists them. hero_sheet.png is a photoreal studio turnaround on plain light grey (front sitting, left and right profile, back, face close-up) of the hero cat exactly as written in shots 7 and 8: a young, slim silver-grey classic tabby with a white blaze into a white muzzle, a white bib, four white socks, amber-gold eyes, a charcoal-tipped ringed tail and no collar. cottage_sheet.png is a photoreal live-action build of the cottage from hd_front.png and hd_q34.png (real terracotta, lime plaster and oak), in front and three-quarter views. Generate shot 7 START first and save it as ad/keyframes/shot07_start.png, because shot 9 is built from it.\n\n9:16 CUT (1080x1920): same 38 s, same shot order, VO, music and text timings.\n1) Native vertical keyframes: regenerate shots 1, 2 (start+end), 3, 7 (start+end), 8, 9 and 10 (start+end) at 9:16 with the same prompts and references.\n- Shot 1: the iris circle at 60% of frame width, dead centre, with shot 2's window on the same circle so the match cut holds.\n- Shot 2: the end frame is the cottage front and porch filling the tall frame.\n- Shot 3: the cottage and path stacked vertically, with the hero on the wall at lower right.\n- Shots 7 and 9: the sun in the upper half and the cat on the wall in the lower-middle. Shot 9 is still built from shot 7 START.\n- Shot 8: the round window at the top and the curled hero in the lower-middle.\n- Shot 10: ends with clear sky in the top 30%.\n2) Reframe shots 4, 5 and 6 from the 16:9 masters with Higgsfield reframe/outpaint, centred on the action. Shot 4 centres on the paw and lily pad. Shot 5 puts the tabby's face in the upper half and slides the card up into the lower-middle. Shot 6 centres on the fountain and statue.\n3) Text placement:\n- All supers, the card and captions sit inside a centred 1080x1420 safe area (250 px clear at top and bottom), with no text in the right-hand 140 px where the platform buttons sit.\n- Burn in the VO as captions of two lines or fewer in the lower-middle for sound-off feeds.\n- 'Look closer.' is large on frame 1.\n4) End card:\n- The wordmark sits in the top third. 'A free 3D cat garden to explore.', catcoinsanctuary.com and 'New cats every hour on X \u00b7 @catcosanctuary' sit in the middle.\n- The legal line sits just above the bottom UI zone, at a legible size, for the full 4.2 s.\n- The real-site dissolve uses a portrait (mobile-viewport) capture of the live site, cleared the same way as the 16:9 capture.\n5) Loop: the end-card plate has the cottage's round window centred on the same circle guide as frame 1's eye, so a replay reads window to eye without a jolt.\n\nDISTRIBUTION (both cuts): the landing page shows coin cards and buy links, so treat any paid placement as a crypto ad.\n- Paid placement needs crypto-advertiser authorization on Meta, Google and X, 18+ targeting and per-market risk warnings (UK: an FCA-approved promotion with the prescribed risk warning; EU: MiCA marketing rules).\n- No paid TikTok. Organic posting is fine.\n- Get compliance sign-off before any paid use."
+}

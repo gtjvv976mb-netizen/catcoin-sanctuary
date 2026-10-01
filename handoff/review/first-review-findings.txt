@@ -1,0 +1,221 @@
+CONFIRMED 12
+--- money high A cat a visitor has just adopted can still get a second coin: the release post invites adoption, the launcher starts minutes later, and it checks adoptions against an old copy of the file
+FILE scripts/lib/launcher.mjs 1470
+SCEN 1. At t0 Announce releases cat X. The post says "🔓 No coin yet: be the first to adopt it 👇" (scripts/announce.mjs:238), because X has no `launch` yet.
+2. The new launcher job (announce.yml:115) starts Launch right away. Prepare commits X's row at about t0+3 min. The launch job checks out main at about t0+4 min, so its data/adoptions.json is whatever was there then.
+3. A follower adopts X on pump.fun at about t0+5 min (copies the kit's name and ticker). Adoptions do happen: data/adoptions.json already records NEKOBUS.
+4. That adoption only reaches data/adoptions.json after the next trending.yml run (cron */20) sees it on pump.fun's API and commits it.
+5. send() reads ctx once, at its start, from the checkout. ownProblemNow runs at 1470, BEFORE waitForMetadata (1486, up to 15 min) and the earmark read (up to 5 min). The Collection check does not help: it lists only the owner's own coins.
+6. So ownProblemNow returns null and the launch wallet signs and sends a second coin with the same name and ticker.
+7. record() then puts the sanctuary's coin on the card. kitsOf drops cats that have a `launch`, and post-updates skips adoptions of sanctuary cats. The follower's coin, which our own post asked for, is orphaned as a copycat.
+FIX Do not rely on data/adoptions.json from the checkout. Right before signing (after waitForMetadata and the earmark read), look for a coin carrying the cat's kit name and ticker launched since KITS_LIVE or the release: use the same pump.fun listing build-trending/adoptions.mjs (sameKit/matchAdoption) uses, and refuse to send (fail with retry:false) on a hit or if the lookup fails. Also either give visitors a real window (only launch a released cat N hours after releasedAt) or change the release draft for cats the launcher will take, so the post no longer says "be the first to adopt it" while the sanctuary is about to launch the coin.
+BETTER 1. Check pump.fun live, right before signing. In `send()`, for `policy === "sanctuary"`, put the check after the earmark read (after line ~1510, before `attempt(row)`), so nothing slow runs between it and signing. Page through https://frontend-api-v3.pump.fun/coins?sort=created_timestamp&order=DESC, as build-trending.mjs does, back to the cat's `releasedAt` from data/release-queue.json, or to KITS_LIVE if that is later. Build the cat's kit with `kitsOf({ planned, adoptables })` and test each coin with `sameKit`, which matches name and ticker only, so the check stays conservative. Skip the owner's mints and wallets. On a hit, call `fail("a coin with its kit's name and ticker is on pump.fun (<mint>)", false)` and return "taken". If the lookup fails or does not reach `releasedAt`, send nothing and leave the row prepared (return an outcome like "adoption_unchecked") so the next run tries again.
+
+2. Close the window the change opens. Pick either:
+   - In `sanctuaryRow`, refuse a cat whose `releasedAt` is less than a grace period old (for example 2 hours), or whose post the adoptions scan has not yet covered (data/trending.json `updatedAt` must be after `releasedAt` + grace). Also drop the immediate dispatch from announce.yml, or keep it only for older cats.
+   - Or, while LAUNCH_ENABLED is on, have announce.mjs `draft()` use the "🚀 Its coin is on the way" status for a cat the launcher will take, and have the site hide the Adopt kit for a cat with a prepared or sending ledger row. 
+--- money medium The check just before sending only asks whether the cat has a coin; memorial, sensitivity and name changes are not re-checked, and a prepared sanctuary row never expires
+FILE scripts/lib/launcher.mjs 838
+SCEN sanctuaryRow refuses a cat that is in memoriam, has a sensitivity note, has a launchTicker different from its ticker, or has an older coin under its ticker. It also fixes coinName and ticker when the row is prepared. ownProblemNow only re-checks: the row is still there (same ticker and id), `launch`, adoptions and the Collection.
+
+Sanctuary rows are exempt from the 48-hour rule (tooOld). A prepared row can therefore wait for days: wallet under LAUNCH_MIN_BALANCE_SOL ('waits until it is funded'), earmark problems, a transient simulation, metadata not served. During that wait, research may edit the cat in data/adoptables.json.
+
+Checked with a local script against the shipped data (picked SGTTIBBS, then patched its adoptable row):
+- memorial:true or sensitivity "Died in 2020": ownProblemNow returns null, and record's validateAdoptables accepts the new launch. A coin is launched for a cat the header says is never launched.
+- coinName changed ("Sergeant Tibbs Cat") or launchTicker added: ownProblemNow returns null. The coin launches under the old name. record (1669) writes `launch` onto the edited row without comparing names, so provedLaunch never matches. The card never shows the coin, post-updates never posts it, and kitsOf removes the Adopt kit. The coin is orphaned for good.
+FIX Make ownProblemNow re-run sanctuaryRow's eligibility on the current adoptable row: memorial, sensitivity, the existingCoin ticker, launchTicker, and that the current name, coinName and ticker still equal row.name, row.coinName and row.ticker (or compare against row.cat). Fail with retry:false if any differ. In record's own branch, also refuse (problem, not recorded) when existing.coinName/launchTicker no longer match row.coinName/row.ticker. Optionally bound a prepared sanctuary row's age (for example days since preparedAt) so it cannot wait forever and block trending launches.
+BETTER In ownProblemNow (scripts/lib/launcher.mjs:838), after the checks that are already there, re-check the current adoptable row `c` against what the prepared row fixed:
+
+```js
+if (c.memorial === true || String(c.sensitivity ?? "").trim()) return "it is in memoriam or has a sensitivity note now";
+if (c.confidence === "low") return "its confidence is low now";
+if (String(c.existingCoin?.symbol ?? "").toUpperCase() === row.ticker) return "an older coin has its ticker now";
+if ((c.launchTicker ?? c.ticker) !== row.ticker || nameKey(c.coinName || c.name) !== nameKey(row.coinName)) return "its card names it otherwise now";
+```
+
+send() already calls fail(taken, false) when ownProblemNow returns a reason, so the row fails for good and nothing is sent. I ran this against the shipped data: it flags none of the 159 cats that are currently eligible, and it catches all six cases I reproduced.
+
+As a second guard, in record's own branch (around line 1671), also require `nameKey(existing.coinName || existing.name) === nameKey(row.coinName) && (existing.launchTicker || existing.ticker) === T`. If that fails, report the problem for a person instead of writing a `launch` that provedLaunch can never match.
+
+Optional: give prepared sanctuary rows an age limit counted from preparedAt (for example 7 days), failing with retry:false, so a row prepared from old data cannot wait forever.
+--- money low If data/adoptions.json cannot be read, every cat is treated as not adopted
+FILE scripts/lib/launcher.mjs 1161
+SCEN selectionContext reads data/adoptions.json with readOwned. If the file is not JSON (for example a truncated write or a bad hand edit), readOwned only warns and returns { adoptions: [] }. readOwned was meant for hand-edited routing files where a typo must not stop settling.
+
+Here the file is a safety gate. With it read as empty, both sanctuaryRow and ownProblemNow treat every cat as not adopted. The launcher would then prepare and send coins for cats strangers already adopted (NEKOBUS today, and any later ones), as long as the Collection does not list them, and it never does for a stranger's coin.
+FIX Read data/adoptions.json with readJson plus a shape check (checkAdoptions) for the sanctuary path. If it is unreadable or malformed, skip sanctuary selection in prepare, and have the send-phase recheck fail closed (the row waits or fails) instead of reading it as empty.
+BETTER Make the adoptions read strict and make both phases fail closed without failing the row for good.
+
+1) In selectionContext (launcher.mjs:1161), replace the readOwned call:
+```js
+adoptions: (() => {
+  try {
+    const a = readJson(io, FILES.adoptions, { adoptions: [] });
+    if (Array.isArray(a?.adoptions)) return a;            // or: checkAdoptions(a).length === 0 (scripts/lib/adoptions.mjs)
+    log(`::warning title=Launcher::${FILES.adoptions} has no adoptions list; no sanctuary cat is launched until it is fixed.`);
+  } catch (e) { log(`::warning title=Launcher::${e.message}; no sanctuary cat is launched until it is fixed.`); }
+  return null;                                             // unreadable: unknown, never "none adopted"
+})(),
+```
+
+2) At the top of selectSanctuary (around line 848), stop early so each cat is not skipped one by one:
+```js
+if (!Array.isArray(ctx.adoptions?.adoptions)) return { row: null, skipped: [{ id: "*", why: "data/adoptions.json cannot be read" }] };
+```
+Also add the same guard in sanctuaryRow before line 797, since it is exported and called directly.
+
+3) In send, before the ownProblemNow call at line 1470, leave the row prepared so it is tried again once the file is fixed. Do not call fail(..., false):
+```js
+if (row.policy === "sanctuary" && !Array.isArray(ctx.adoptions?.adoptions)) {
+  log(`::warning title=Launcher::${row.ticker} waits: ${FILES.adoptions} cannot be read; nothing was sent.`);
+  return { ...out, outcome: "waiting" };
+}
+```
+Also mak
+--- data high The first sanctuary prepare breaks the shipped coins/ test, which stops the launcher and every Pages deploy
+FILE tests/launcher.test.mjs 2249
+SCEN sanctuaryRow (scripts/lib/launcher.mjs:232) sets the coin image to https://catcoinsanctuary.com/assets/portraits/<T>.jpg. The prepare job commits coins/<postId>.json with that image. The shipped-data test at tests/launcher.test.mjs:2249 is unchanged and only accepts a pbs.twimg.com image or SITE_IMAGE. I reproduced this on a copy of the repo: I prepared SGTTIBBS (the newest released cat, which is what selectSanctuary picks with today's data) and wrote its coins file. `not ok - shipped: the ledger and every coin's metadata are valid ... error: "2105133469525274735.json: the post's photo, or the site's own for a hidden one"`. A full `npm test` after record() on that copy failed only on this test (plus one failure caused by my copy leaving out .claude/). Both Launch jobs run tests/launcher.test.mjs before doing anything (launch.yml:100 in prepare, :157 in launch). So the launch job fails before the send, and every later prepare job also fails its test step. The prepared row stays in flight forever: no sanctuary or trending cat is settled, prepared or sent again. Pages runs `npm test` (pages.yml:78), so the metadata deploy and every other site deploy stop too (no new releases, Collection proofs or launch cards reach the live site). The new tests do not catch this because they only run on temporary copies, never on the shipped coins/ directory.
+FIX Make the shipped check accept a sanctuary coin's picture. For a coins/<id>.json whose ledger row has policy "sanctuary", allow an image matching ^https://catcoinsanctuary\.com/assets/(portraits|lore)/[A-Za-z0-9_-]{1,40}\.(jpg|webp|png)$ (reuse or export SITE_PICTURE), and keep the pbs/SITE_IMAGE rule for every other row. Add a regression test that runs the shipped-data checks on a copy of ROOT after prepare() and record() of a sanctuary row.
+BETTER In tests/launcher.test.mjs, change the shipped coins loop (line 2249) to check the image according to the ledger row's policy. Look up the row with `const own = ledger.launches.find((r) => r.metadataPath === `coins/${f}`)?.policy === "sanctuary";`. Then assert `own ? /^https:\/\/catcoinsanctuary\.com\/assets\/(?:portraits|lore)\/[A-Za-z0-9_-]{1,40}\.(?:jpg|webp|png)$/.test(m.image) : (/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE)`. It is simpler to export SITE_PICTURE from scripts/lib/launcher.mjs and reuse it than to duplicate the regex. For sanctuary files, also assert that the twitter link's handle is OWN_HANDLE.
+
+Add a regression test that copies the shipped coins/ and ledger into a temp root, runs prepare() so it picks a sanctuary cat, and then runs the same shipped-coins assertions on that root. The easiest way is to move the loop into a helper that takes a root. Land this test change in the same commit as the launcher change, before the first sanctuary prepare can reach main.
+--- data medium The X post invites visitors to adopt the cat, then the launcher launches it minutes later using stale adoption data
+FILE scripts/lib/launcher.mjs 1470
+SCEN For a released adoptable, the Announce post says "🔓 No coin yet: be the first to adopt it 👇" (scripts/announce.mjs:238), and the site still shows the Adopt button. announce.yml now starts launch.yml right after that post. The adoption checks read data/adoptions.json from the job's checkout: sanctuaryRow at prepare time and ownProblemNow at send time (launcher.mjs:1470). ownProblemNow runs before the metadata wait of up to 15 minutes. build-trending only records adoptions every 20 minutes. So a visitor who follows the post and launches from the kit can be missed, and the sanctuary sends a second coin with the same name and ticker. Case A: the Trending run records the visitor's adoption after the launch job's checkout, and record() then commits the cat's launch. kitsOf drops cats that have a launch (scripts/lib/adoptions.mjs:61), so tests/adoptions.test.mjs:150 fails. I reproduced this on a copy after record(): I added an SGTTIBBS adoption and got `not ok - the shipped data/adoptions.json passes its check`. With the same adoption and no launch, the test passes. That test gates both trending.yml:43 (the Trending tab and adoption tracking stop) and pages.yml (deploys stop). Case B: the visitor's coin is found only after record(). The cat no longer has a kit, so the visitor's coin, which came first and was made from the site's own kit, is labelled "Copycat — Not the real <cat>". In both cases the site hides the adoption (residents.js adoptionsFor skips sanctuaryLaunch) and post-up
+FIX Stop inviting adoption for a cat the launcher is about to launch. For example, have announce.mjs draft "🚀 Its coin is on the way" for adoptables that sanctuaryRow would accept, and hide the Adopt button once the cat is queued for a sanctuary launch. Also move the adoption re-check to right before signing, after the metadata wait, using a fresh read. For example, query pump.fun for the kit's ticker and name created since the release post, using the same matchAdoption as build-trending, and fail the row if one exists. Make kitsOf/checkAdoptions keep the kit of a cat whose adoption's createdAt is earlier than launch.at, so an honest earlier adoption does not break the test gates.
+BETTER Fix both the message and the check:
+
+1. **Stop inviting adoption for a cat the launcher will take.**
+   - In announce.mjs `draft`, when the Launch workflow is on (LAUNCH_ENABLED is on or dry) and `sanctuaryRow` would accept the cat, use the status "🚀 Its coin is on the way" instead of "be the first to adopt it".
+   - Hide the Adopt kit for that cat, for example with `kitsOf` and `adopt.js canAdopt` treating a live ledger row (prepared or sending) as not adoptable. The simpler alternative is to have the launcher skip a released cat until at least one Trending run has scanned past its `releasedAt`, and to keep the "adopt" wording only for cats the launcher never takes.
+
+2. **Re-check just before signing.** In `send()`, after `waitForMetadata` and before build/sign, run a fresh check for sanctuary rows: page pump.fun launches since the post's `releasedAt` and run them through `matchAdoption` against the cat's kit, the same way build-trending does. Fail the row with `retry: false` if any match. This matters because the checkout's `data/adoptions.json` can be up to about 20 minutes plus the metadata wait out of date.
+
+3. **Make the test gate tolerate an honest earlier adoption.** In `kitsOf`, and in the shipped-file test at tests/adoptions.test.mjs:150, keep the kit of a launched adoptable whose recorded adoption's `createdAt` is earlier than `launch.at`. Otherwise one such race stops Trending and Pages.
+--- data low The Trending tab flags the sanctuary's own new coin as a Copycat until record() is committed, and for a week if record() fails
+FILE scripts/build-trending.mjs 92
+SCEN A sanctuary cat is already in data/adoptables.json under its ticker before it launches. copycatOf only treats a coin as the sanctuary's own if it is in data/collection.json or named by an adoptable's launch (ownMints). It ignores the launcher ledger and the launcher wallets. The window runs from the pump.fun create landing to the record commit reaching main: confirm polling of up to 2 minutes, then two commits, or a whole extra Launch run when the send is left "sending". A Trending run (every 20 minutes) that reads pump.fun in that window marks the sanctuary's own coin as copycatOf the cat. trending.js:108 then shows "Copycat — Not the real Sergeant Tibbs" on the real coin. I checked copycatOf for the SGTTIBBS coin: it returns "SGTTIBBS" before record() and null after. If record() takes its new own-path problem branch ("a person must add it", launcher.mjs:1677-1679), the flag stays for COPYCAT_DAYS. Trending cats never hit this because their ticker is not in adoptables before record().
+FIX In catIndex (or when calling copycatOf), count as the sanctuary's own every mintPublic or tx in data/sanctuary-launches.json and every coin whose creator is a wallets.json launcher. pump.fun's list includes `creator`, and the same wallet list is already passed to matchAdoption.
+BETTER Fix this in `scripts/build-trending.mjs`, covering both first sighting and later runs:
+
+1. **Creator check on first sighting.** In `fresh()`, build `const owners = new Set(adopt.ownerWallets)`. Treat a launch whose `c.creator` is in `owners` as the sanctuary's own. Either pass `own: owners.has(c.creator)` into `mark()` and skip `copycatOf` when it is true, or add `c.mint` to `idx.ours` before marking.
+2. **Carry that across runs.** Rows in `prev.all` are re-marked without `creator`, so the creator check alone would re-flag them next run. Also read `data/sanctuary-launches.json` in `main()`. Have `catIndex` add every ledger row's `mintPublic` (and optionally `tx`) to `ours`. The ledger's `mintPublic` is pushed by the "Commit the launch" step before `record()`, including when the row is left "sending".
+
+With both, `copycatOf` and the `own|mint` grouping key (line 236) treat the coin as the sanctuary's from its first sighting. No change is needed in `launcher.mjs`.
+--- data low Rebuilding adoptables keeps a sanctuary cat's pump.fun launch but switches its pair back to STONK
+FILE scripts/build-adoptables.mjs 124
+SCEN record() moves the launched cat's row to pair SOL. keepLaunches copies only `launch` onto the fresh research row when id, ticker, name and coinName match, so the pair comes from pairOf(r) (STONK for all 81 research rows). Before this change only trending cats had a launch, and those are never in the research file, so their rows were kept whole. Sanctuary cats come from the research file, so this path is new. I reproduced it: I released GATEKITTY, recorded a fake pump.fun launch (pair SOL), then ran buildAdoptables on data/research/adoptables-source.json. The result was pair STONK with launch.launchpad "pump.fun". Until the Collection proves the coin, the card says "· priced in STONK" for a coin priced in SOL (card.js:465), and announce listCats reports symbol STONK.
+FIX In keepLaunches, also carry over the current row's `pair` when copying `launch` (out[i] = { ...out[i], pair: c.pair, launch: c.launch }), or keep the current row whole whenever it has a launch.
+BETTER In `keepLaunches` (`scripts/build-adoptables.mjs`), carry the current row's pair over with its launch, because the coin exists on chain in the pair it launched in:
+
+`if (i >= 0 && LAUNCH_IDENTITY.every((k) => out[i][k] === c[k])) { out[i] = { ...out[i], ...(c.pair && { pair: { ...c.pair } }), launch: c.launch }; continue; }`
+
+Add a case to the rebuild test in `tests/adoptables.test.mjs`: give a research cat a SOL pair and a pump.fun launch in the current file, rebuild, and assert the pair is still SOL.
+--- content high Cats whose own card story says they died pass the 'never in memoriam' gate and get a coin
+FILE scripts/lib/launcher.mjs 792
+SCEN I ran sanctuaryRow over all 65 released entries in data/release-queue.json with the shipped data and files on disk. All 65 can launch. The only death check is `c.memorial === true || sensitivity`, but data/adoptables.json sets memorial:false for many cats whose own `story` reports their death. Released and launchable now: VENUS2F ("(2009–2026)… she died on 16 August 2026", six weeks ago), NITAMACAT ("died in November 2025 and was honoured with a funeral"), EMPTANG (Martha Stewart's cat, died April 2024), FELIXHUD (death announced December 2023), OSCARRI (the nursing-home cat known for sitting with dying patients, died 2022), COLEMARM (Cole died October 2021), COPYCC (died 2020), MAYORSTUB (died 2017), COLMEOW2 (died 2014), and FELICETCAT (her story mentions her memorial). Queued cats are approved and ready, so the announcer releases them hourly and each release now dispatches launch.yml. CZELDA is 2nd in the queue; PEEPEECAT, SOCKAMILL, JJINGJJING, PROFMEOW and HENRINOIR also have stories saying they died. selectSanctuary goes newest first and drains every released cat within the daily cap: EMPTANG is 6th newest today. Each coin gets a present-tense lore line (for example "Venus showing off her two-faced look and her two different eyes."), an X post headed "🚀 NEW SANCTUARY COIN 🚀", and a tribute naming "the cat's owners". The trending path refuses any post that mentions died, death, funeral or memorial (read-cat-post SENSITIVE, then candidateRow line 645 `r.sensitive !== fals
+FIX In sanctuaryRow, also refuse when c.story or the caption matches a death or tragedy pattern, for example /\b(died|death|passed away|funeral|memorial|rainbow bridge|euthan\w*|wounded)\b|\(\d{4}[–-]\d{4}\)/i. Alternatively, launch only cats on an explicit owner allow-list. Also make adoptableProblem require memorial:true (with a sensitivity note) when the story reports a death, and correct the data for the cats listed above.
+BETTER Change sanctuaryRow (scripts/lib/launcher.mjs, right after line 792) to refuse a cat whose own text reports a death:
+
+```js
+const DIED = /\b(?:died|dies|death|passed away|funeral|obituary|memorial|in loving memory|rainbow bridge|euthan\w*|r\.?i\.?p)\b|\(\d{4}\s*[–-]\s*\d{4}\)/i;
+if ([c.story, c.lore?.caption, ctx.captions?.[c.ticker]].some((t) => DIED.test(String(t ?? "")))) return no("its story says it died: in memoriam, never launched by the launcher");
+```
+
+Repeat the same test in ownProblemNow, so a row prepared before the data changed is not sent.
+
+Belt and braces: inside the loreLinesOf loop, if a story or caption line fails the content rules for the `tragedy` rule, refuse the cat instead of `continue`-ing to the neutral fallback line.
+
+Also fix the source data. Set memorial:true, with sensitivity "In loving memory of <name>.", for the cats that really died: VENUS2F, NITAMACAT, EMPTANG, FELIXHUD, OSCARRI, COLEMARM, COPYCC, MAYORSTUB, COLMEOW2, FELICETCAT, SOCKSCACAT, CZELDA, PEEPEECAT, JJINGJJING, PROFMEOW, SOCKAMILL, HENRINOIR, CLIVECAT and KENCHAN (check KENCHAN against its sources first). Leave out CHOUPETCAT and AIZUSAKURA. Stop build-adoptables.mjs line 94 from discarding the research row's `sensitivity`. Add a test that runs sanctuaryRow over the shipped data and asserts that no launchable cat's story matches DIED.
+--- content medium The first-sentence cut stops at abbreviations like "Mr.", so a broken fragment goes into the metadata and the X post
+FILE scripts/lib/launcher.mjs 762
+SCEN The regex /^.{10,}?[.!?…](?=\s|$)/u ends the 'sentence' at the first period after 10 characters, including abbreviations. MRBCHONK (queued, approved, ready, no caption) has the story "BeeJay, \"Mr. B\" for short, was a 26-pound…". It gets the lore line `BeeJay, "Mr.`, which passes every rule. The coin's metadata description becomes `BeeJay, "Mr. Unofficial fan tribute from the Catcoin Sanctuary. Not affiliated with or endorsed by the cat's owners.`. The launch post draftLaunch produces contains the line `📜 BeeJay, "Mr.` (I reproduced both with sanctuaryRow and coinMetadata). Other abbreviations (Dr., St., Mt., initials such as "F. D. C.") hit the same cut.
+FIX Do not end a sentence after common abbreviations (Mr|Mrs|Ms|Dr|St|Mt|Jr|Sr|No|vs) or after single-letter initials. Also reject any candidate with unbalanced quotes or parentheses, or one shorter than a few words. Dropping the story fallback (previous finding) also removes this case.
+BETTER In loreLinesOf (scripts/lib/launcher.mjs:762), stop taking the first period as the end of the sentence. Walk the sentence-ending punctuation marks and skip any that end a common abbreviation. Then drop any candidate whose quotes or parentheses are unbalanced, so the loop falls through to the next line (at worst the plain "<name>, one of the Catcoin Sanctuary's cats."):
+
+```js
+const ABBR = /(?:^|[^\p{L}])(?:Mr|Mrs|Ms|Dr|St|Mt|Jr|Sr|Sgt|Lt|Capt|Col|Gen|Prof|Rev|No|vs|etc|Inc|Co|Ltd)\.$/iu;
+const firstSentence = (t) => { const re = /[.!?…](?=\s|$)/gu; let m; while ((m = re.exec(t))) { const s = t.slice(0, m.index + m[0].length); if (s.length >= 11 && !ABBR.test(s)) return s; } return t; };
+const balanced = (s) => (s.match(/"/g) ?? []).length % 2 === 0 && (s.match(/\(/g) ?? []).length === (s.match(/\)/g) ?? []).length;
+...
+const first = firstSentence(t).trim();
+// after the 200-char cut:
+if (!balanced(line)) continue; out.push(line);
+```
+
+I ran this against the shipped data. It changes exactly three cuts, all into full sentences with balanced quotes: MRBCHONK becomes `BeeJay, "Mr. B" for short, was a 26-pound, 2-year-old cat at the Morris Animal Refuge in Philadelphia.`, and the BIGGLESCAT and OSCARRI "Dr." story cuts become full sentences too. No other lore line changes. I left single-letter initials out on purpose, because "an artist on X." is a real sentence end in SAYHIBOB's story. A unit test with story `BeeJay, "Mr. B" for short, was a cat.` should expect the full sentence.
+--- content medium kindOfAdoptable gets real vs character wrong, so coins carry the wrong fan-tribute disclaimer
+FILE scripts/lib/launcher.mjs 747
+SCEN DRAWN_LOOK matches 'plush' (a fur texture) and incidental words such as 'cartoon' and 'drawn' anywhere in the look. It has no words for logos or 3D renders. Released and launchable now: COLEMARM's look says "two real cats… Cole is a solid jet-black semi-longhair with a plush, fluffy coat", so it is classed cartoon and its metadata and X post say "Not affiliated with or endorsed by the character's owners" for two real rescue cats. KURONEKCAT's look is "A black flat graphic logo cat, Yamato Transport's 2021 Kuroneko mark", so it is classed real and gets "…the cat's owners" for a listed company's logo. Queued: PROFMEOW (deadmau5's real cat; the look mentions his avatar drawn "as a cartoon") becomes cartoon. DEWEYCAT, MIETTE, HOICHAN, BLEHMILLY, SINSMILE, DREAMPATCH and MARUOCAT (real cats with a "plush coat") become cartoon. BROWANTSIN ("3D-rendered, not a real cat") becomes real. The kind is saved on the ledger row, and post-updates.mjs line 340 uses it again for the launch post's tribute (fanTribute(item.launch.kind)).
+FIX Remove 'plush' from DRAWN_LOOK. First check explicit phrases (/\bnot (?:a )?real cats?\b/ means a character, /\breal cats?\b/ means real). Add logo|graphic|mark|vector|3D-rendered|render|digital painting as character signals, and only look at the look's leading description. Better still, store an explicit kind on each adoptable, validated by adoptables.js, and use it.
+BETTER In scripts/lib/launcher.mjs, replace DRAWN_LOOK and kindOfAdoptable (lines 747-749). The new version reads only the look's lead clause and checks explicit "real cat" / "not a real cat" wording first. It drops 'plush' (a fur texture) from the drawn words and adds logo, graphic, vector, CGI, 3D and render words:
+
+const NOT_REAL_LOOK = /\bnot (?:a )?real cats?\b/i;
+const REAL_LOOK = /\breal cats?\b/i;
+const DRAWN_LOOK = /\b(?:cartoon|anime|manga|animated|illustrat\w*|drawn|character|mascot|sticker|pixel(?:-art)?|emoji|chibi|kawaii|logo|graphic|vector|CGI|3D|render(?:ed)?|doodles?)\b/i;
+export const kindOfAdoptable = (c) => {
+  if (c?.category === "tv-movie") return "fiction";
+  const lead = String(c?.look ?? "").split(/(?<=[.:;])\s/)[0];
+  if (NOT_REAL_LOOK.test(lead)) return "cartoon";
+  if (REAL_LOOK.test(lead)) return "real";
+  return DRAWN_LOOK.test(lead) ? "cartoon" : "real";
+};
+
+I checked this on every row of data/adoptables.json. It fixes COLEMARM, PROFMEOW and all the plush-coat real cats (they become real), and KURONEKCAT and BROWANTSIN (they become cartoon). No other row changes.
+
+Add regression assertions to tests/launcher.test.mjs for the COLEMARM, KURONEKCAT, PROFMEOW, DEWEYCAT and BROWANTSIN looks.
+
+The more robust long-term fix is an explicit kind on each adoptable ("real" or "character"). assets/ui/adoptables.js would validate it (add it to FIELDS), and kindOfAdoptable would read it instead of guessing from free text.
+--- workflow high The first real sanctuary prepare commit fails a check on shipped data, which blocks the Launch send and every Pages deploy
+FILE tests/launcher.test.mjs 2249
+SCEN The test 'shipped: the ledger and every coin's metadata are valid' checks every coins/*.json in the repo. It requires m.image to be a pbs.twimg.com URL or SITE_IMAGE. A sanctuary row's metadata uses the cat's portrait on the site instead.
+
+Reproduced on a scratch copy of the repo: prepare() with LAUNCH_ENABLED=on, a fake rpc and a fetch that returns 404 prepared 2105133469525274735 (SGTTIBBS, image https://catcoinsanctuary.com/assets/portraits/SGTTIBBS.jpg). Running `node --test tests/launcher.test.mjs` then fails with "2105133469525274735.json: the post's photo, or the site's own for a hidden one". Nothing else in the full suite fails, before or after record() and after adding a Collection proof.
+
+What happens in Actions once that commit is on main:
+1. In the same Launch run, the launch job's test step (launch.yml:157) fails, so the send never runs.
+2. The metadata job starts Pages, whose `npm test` (pages.yml:78) fails, so coins/<id>.json is never served. Every later Pages trigger (the Collection workflow_run, the dispatches) fails the same way, so the site stops deploying: new releases stay hidden and Collection proofs are not published.
+3. Every later Launch run fails its prepare test step (launch.yml:100). The whole launcher stops, including trending launches and settling or recording earlier sends, until someone fixes it by hand.
+
+Dry mode writes no coin file, so this happens only once LAUNCH_ENABLED is "on".
+FIX In the same change, update the shipped check so it also accepts the site-picture form (the SITE_PICTURE pattern) when the ledger row for that postId has policy "sanctuary"; you can also check that its twitter link is @catcosanctuary's. Then add a test that runs the shipped-data checks after a simulated sanctuary prepare, so that tests reading the real repo data are covered.
+BETTER In tests/launcher.test.mjs, in the shipped-coins loop (line 2249), accept a sanctuary cat's site picture when the ledger row for that postId has policy "sanctuary" and the coin's X link is the sanctuary's own post:
+
+    const own = ledger.launches.find((r) => r.postId === f.slice(0, -5))?.policy === "sanctuary";
+    const sitePicture = /^https:\/\/catcoinsanctuary\.com\/assets\/(?:portraits|lore)\/[A-Za-z0-9_-]{1,40}\.(?:jpg|webp|png)$/.test(m.image);
+    assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE || (own && sitePicture && m.twitter.startsWith(`https://x.com/${OWN_HANDLE}/status/`)), `${f}: the post's photo, the site's own for a hidden one, or a sanctuary cat's picture on the site`);
+
+The `ledger` variable is already in scope there, and OWN_HANDLE is already imported by the change. Optionally, export SITE_PICTURE from launcher.mjs and reuse it here instead of repeating the regex.
+
+Also add a regression test: run prepare() on a throwaway copy with a released sanctuary cat, then run the same shipped-coin checks (factor them into a helper that takes a root) against that copy. That way, tests that read the real repo data are exercised against a sanctuary coin file before one is ever committed.
+--- workflow medium Sanctuary cats use up the shared daily cap within about an hour, so trending launches (and the just-posted cat) rarely get a slot
+FILE scripts/lib/launcher.mjs 1232
+SCEN Sanctuary rows count toward the same cap as trending cats: dayStats counts every sending or launched row. The pool of sanctuary cats does not run out: 65 cats are released with a tweet id and no coin today, and 24 more are released a day.
+
+Example with the default LAUNCH_MAX_PER_DAY=3 (the clamp allows at most 10): after LAUNCH_ENABLED=on, the */20 scheduled Launch runs at :00, :20 and :40 find no trending cat. They launch SGTTIBBS and then the next-newest released cats, which were posted hours or days ago. The cap is full within about an hour.
+
+For the next 24 hours, every Launch run that Trend watch dispatches (where "being first matters") logs "3 launch(es) in the last 24 hours ... no new cat now", so a figure or approved trending cat waits up to a day. When a slot frees, the next */20 run usually takes it for another sanctuary cat before any trending candidate shows up.
+
+The new Announce `launcher` dispatch has the same problem: it almost always meets a full cap, so the cat just posted is not launched "right after its post". With 24 releases a day and at most 10 launches, most posted cats can never launch at post time.
+FIX Give sanctuary launches their own budget, for example a LAUNCH_MAX_OWN_PER_DAY counted only over policy "sanctuary" rows, and always keep at least one slot of maxPerDay for trending cats. Also limit selectSanctuary to recent releases (for example releasedAt within the last hour, or only the newest released entry), so the fallback follows the post instead of working through the backlog on the */20 schedule.
+BETTER Keep at least one slot of the shared budget for trending cats, and make the fallback follow the post instead of working through the backlog. In scripts/lib/launcher.mjs prepare step 4 (line 1238), only fall back when a slot would still be left for a trending cat:
+
+  if (!pick.row && stats.count + 1 < caps.maxPerDay) {   // a sanctuary cat never takes the last slot
+    log("Launcher: no trending cat to launch now; looking at the sanctuary's cats posted on X.");
+    pick = selectSanctuary(ctx);
+    ...
+  } else if (!pick.row) log("Launcher: no trending cat; the last slot of LAUNCH_MAX_PER_DAY is kept for one.");
+
+Apply the same gate on the dry-run path in send() (line 1427):
+`row = selectCandidate(ctx).row ?? (dayStats(...).count + 1 < caps.maxPerDay ? selectSanctuary(ctx).row : null)`.
+
+In selectSanctuary (line 269), consider only fresh posts:
+`.filter((q) => q?.status === "released" && q.tweet && ctx.nowMs - (Date.parse(q.releasedAt) || 0) <= 2 * HOUR_MS)`.
+This launches the cat just posted, not ones posted days ago. Also add a test showing that a trending cat still finds a slot once the sanctuary launches have used the rest of the day's budget.
+
+Alternatively, give sanctuary launches their own LAUNCH_MAX_OWN_PER_DAY cap, counted only over policy "sanctuary" rows and clamped below LAUNCH_MAX_PER_DAY.
+
+REFUTED 3
+x money The first run will start launching all 65 cats already posted on X, not only cats posted from now on
+x content Lore fallback puts raw story sentences on chain, including strangers' X handles with the @ removed, private owners' names and a child's age
+x content Unlike the trending path, the sanctuary path does not check planned cats' names: Didga would get a second sanctuary coin

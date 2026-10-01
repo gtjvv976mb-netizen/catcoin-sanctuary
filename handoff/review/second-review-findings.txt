@@ -1,0 +1,279 @@
+['confirmed', 'refuted']
+CONFIRMED 12
+==== high Finding 1 only half fixed: the live pump.fun check reads back only to trending.json fresh.updatedAt minus 15 min, and build-trending advances that time over scans that left gaps, so a visitor's adoption in a gap is found by neither check and a second coin is sent
+FILE scripts/lib/launcher.mjs 1614
+SCEN send() sets sinceMs = max(KITS_LIVE, fresh.updatedAt - 15 min), which assumes every coin older than that is already in data/adoptions.json. build-trending does not guarantee that:
+(a) Its window is capped at 30 minutes (build-trending.mjs:212). After one run in which pump.fun did not answer (updatedAt kept) or a late run, coins between the previous scan and now-31min are never scanned.
+(b) If page 1 answers and a later page fails, pumpLaunches stops (build-trending.mjs:146), but answered=true, so fresh.updatedAt still moves to now (build-trending.mjs:297).
+
+Reproduced with the real buildTrending, the shipped data and a fake fetch (scratchpad/vfix/trend.mjs), cat MEREDITCAT:
+- (a) previous scan at T-50min, a visitor's kit coin at T-40min.
+- (c) previous scan at T-20min, page 2 returns 503, a visitor's kit coin at T-17min.
+- In both, fresh.updatedAt becomes T, the adoption is NOT recorded, and kitLaunchedSince(sinceMs = T-15min) returns {taken: []}.
+
+End to end (scratchpad/vfix/v.test.mjs, test "VERIFY f1"): with scan at NOW-1h, a kit coin at NOW-80min and an empty adoptions.json, send
+FIX Choose one or both:
+- Stop trusting fresh.updatedAt as a coverage mark. In build-trending, keep a separate watermark (for example fresh.coveredUntil) that moves forward only when pumpLaunches reached `since` and `since` was at or before the previous watermark. Drop the 30-minute cap, or keep the old watermark when the cap cut the scan short.
+- In send(), read back to min(watermark, the cat's releasedAt from data/release-queue.json) - margin, and return "adoption_unchecked" when 40 pages do not reach it.
+
+Also stop only on an empty page, as build-trending does (at 1614's helper, line ~924), not on any page under 50.
+BETTER Stop using fresh.updatedAt as a coverage mark. Keep an honest watermark and make the launcher refuse when it cannot reach it.
+
+1. build-trending.mjs pumpLaunches (:141-155): report whether the list reached `since`. Set `reached = true` only on `!r.length || oldest < sinceMs` (line 150). A failed page (:146) or running out of MAX_PAGES leaves it false. Return, for example, `Object.assign([...seen.values()], { reached })`.
+
+2. build-trending.mjs fresh() (:212) and buildTrending (:297): add `fresh.coveredUntil`.
+   - `const covered = Date.parse(prev?.coveredUntil ?? prev?.updatedAt ?? "") || 0;`
+   - Read back to `covered - 60_000`, bounded by pages, not by the 30-minute cap. Alternatively keep the cap for the tab, but then never move the watermark when the cap cut the read.
+   - `coveredUntil: launched?.reached && since <= covered ? iso(nowMs) : prev?.coveredUntil ?? null`.
+   - Keep updatedAt as it is for the Trending tab.
+
+3. launcher.mjs:1611: read `?.fresh?.coveredUntil` instead of `?.fresh?.updatedAt`, so the live check at 1614 reads back to the true watermark less the margin. Whe
+
+==== medium Finding 5 Case A not fixed: an adoption recorded for a cat whose launch record() then commits still fails tests/adoptions.test.mjs:150, which stops trending.yml and every Pages deploy
+FILE scripts/lib/adoptions.mjs 61
+SCEN kitsOf still drops any adoptable that has a `launch`, and nothing tolerates or reconciles an adoption recorded for a cat the launcher then records. The fix's option 3 was not done. The live check only covers a visitor who adopted before the send.
+
+The race that remains:
+1. The sanctuary's coin lands.
+2. A follower launches from the Adopt kit, which stays open until record() and a Pages redeploy, and which the X post invited.
+3. A trend-watch run checked out before the record commit. The ledger commit is only seconds earlier, after a confirm wait of up to 120 s, or a whole Launch run later when the row is left "sending". That run records the follower's coin as the cat's adoption: kitsOf ignores the ledger.
+4. trending.yml rebases onto main and pushes without re-testing.
+
+Reproduced (scratchpad/vfix/caseA.mjs on a repo copy):
+- Real buildTrending, with a ledger row "launched" carrying mintPublic, the sanctuary's coin (creator = the launcher wallet) at T-3min and a visitor's kit coin at T-2min: the MEREDITCAT adoption is recorded.
+- Then the record() write (launch plus SOL pair on its a
+FIX Make the gate and the tracker agree:
+- For validation, build kits that include launched sanctuary cats, for example kitsOf(..., { includeLaunched: true }) in tests/adoptions.test.mjs:150 and wherever else recorded adoptions are checked. Then a recorded adoption of a cat launched later stays valid.
+- In build-trending, which now reads the ledger, drop the kit of any cat with a sanctuary ledger row "sending" or "launched".
+- On each run, turn a recorded adoption whose createdAt is after the cat's launch.at into a copycat, so it is not left as the cat's adoption.
+BETTER Two parts. Part 1 alone stops the workflows from breaking; part 2 keeps the labels right.
+
+1. tests/adoptions.test.mjs:145, the gate. Compare each recorded adoption with the kit the cat was offered under, whether the cat has been launched since or not:
+```js
+// Each cat's kit as it was offered, launched since or not: a visitor may adopt a cat before (or while) the sanctuary launches it.
+const kits = kitsOf({ planned, adoptables: { cats: adoptables.cats.map(({ launch, ...c }) => c) }, kits: read("assets/kits/kits.json") });
+```
+Alternatively, add an `includeLaunched` option to `kitsOf`.
+
+2. scripts/build-trending.mjs, the tracker. A kit coin created at or after the sanctuary's own coin is a copycat, never the cat's adoption, whether or not it is already recorded.
+
+In `buildTrending`:
+```js
+const ownAt = new Map();
+for (const r of data.launches?.launches || []) if (r?.policy === "sanctuary" && (r.status === "sending" || r.status === "launched")) ownAt.set(r.ticker, Date.parse(r.launchedAt ?? r.sentAt));
+for (const c of data.adoptables.cats || []) if (c?.launch?.at) ownAt.set(c.ticker, 
+
+==== medium Finding 8 override introduces false death tributes: DIED matches any death in the story (an owner's, another cat's), so living cats launch as "In loving memory of <name>."
+FILE scripts/lib/launcher.mjs 767
+SCEN diedText tests the whole story, caption and lore caption against DIED, and inMemoriam then puts "In loving memory of <name>." first (line 817). The review's own verdict flagged two false matches, AIZUSAKURA and CHOUPETCAT, as "only a skipped launch". Under the tribute override they now get a death tribute instead.
+
+Reproduced (scratchpad/vfix/v.test.mjs "VERIFY f8", and died.mjs over data/adoptables.json):
+- sanctuaryRow(released AIZUSAKURA) gives lore "In loving memory of Sakura." and the coin description "In loving memory of Sakura. Unofficial fan tribute…". Her story says she was born in 2019 and became honorary stationmaster in 2023. The match is "Love, who died in 2022", about another cat.
+- sanctuaryRow(released CHOUPETCAT) gives "In loving memory of Choupette." The match is "after his 2019 death", Karl Lagerfeld's death.
+
+AIZUSAKURA is in data/release-queue.json (approved, shown, pending position 77 of 82; one release an hour). Once released, the Announce dispatch prepares it, and the false death notice goes into the coin's metadata, which cannot be changed after the send, and
+FIX Do not infer death from free text:
+- Launch a tribute only when the data says so: memorial === true with the "In loving memory of …" note.
+- When DIED matches the text but memorial is not true, refuse the cat in ownEligibility ("its story mentions a death: set memorial") instead of making a tribute.
+- Set memorial:true, with the note, on the cats that really died (the verdict's list).
+- Add tests for AIZUSAKURA and CHOUPETCAT.
+BETTER Only launch a tribute when the data says the cat died. When the text mentions a death but the flag is not set, skip the cat instead of guessing.
+
+1. scripts/lib/launcher.mjs:769
+   ```js
+   export const inMemoriam = (c) => c?.memorial === true;
+   const PAIR_NAME = /&|\band\b|\+/i;
+   ```
+
+2. ownEligibility (launcher.mjs:776), right after the sensitivity-note check. ownProblemNow re-runs ownEligibility, so this also covers the check just before the send.
+   ```js
+   // A death in its own words without the memorial flag may be another's ("Love, who died in 2022"; "after his 2019 death"): never guessed. A pair keeps its own line.
+   if (c.memorial !== true && diedText(c, captions) && !PAIR_NAME.test(String(c.name ?? ""))) return "its story mentions a death but it is not marked memorial: set memorial (and its \"In loving memory of …\" note) if the cat died";
+   ```
+
+3. launcher.mjs:817
+   ```js
+   if (name && inMemoriam(c)) out.unshift(`In loving memory of ${name}.`);
+   ```
+
+4. Data change in the same commit, so the cats that died still launch as tributes. In scripts/build-adoptables.m
+
+==== low Finding 2 half fixed: a cat marked in memoriam (or whose story now says it died) after prepare is sent with its living lore line, not the tribute
+FILE scripts/lib/launcher.mjs 889
+SCEN ownProblemNow now re-runs ownEligibility and the name check. Under the owner's rule, a cat that died is launched as a tribute, so ownEligibility lets it through. But the prepared row's lore and metadata were fixed at prepare time and are never compared with the cat's current state.
+
+Reproduced (scratchpad/vfix/v.test.mjs "VERIFY f2"): MEREDITCAT is prepared. Its adoptables row is then patched to memorial:true with "In loving memory of Meredith Grey.", or its story gains "… died in September 2026.". In both cases:
+- send() gives outcome "launched", with 1 sendTransaction.
+- The metadata description is "Meredith Grey at home in New York, holding the aloof, upright pose her fans call 'sass'. Unofficial fan tribute…".
+- loreLinesOf for the current row gives "In loving memory of Meredith Grey."
+
+The reverse also goes through: a row prepared as a tribute whose death wording is later removed from the data.
+
+Sanctuary rows have no age limit, so a row can wait days (funding, metadata, earmark, and now adoption_unchecked) while research edits the cat.
+FIX In ownProblemNow, compare `inMemoriam(c, ctx.captions)` with `/^In loving memory of /.test(row.lore)`. If they differ, return a reason ("it is in memoriam now; its lore line is not its tribute", or the reverse), so the row fails and is prepared again with the right line. Add the case to the new ownProblemNow test.
+BETTER Compare the row with the lore line sanctuaryRow would pick now, not with inMemoriam directly. Then rewrite the prepared row instead of failing it.
+
+In scripts/lib/launcher.mjs, add a helper next to ownProblemNow:
+```js
+/** The lore line a prepared sanctuary cat would be prepared with now (null when it could not be prepared: ownProblemNow says why). */
+const ownLoreNow = (row, ctx) => sanctuaryRow({ key: row.ticker, status: "released", tweet: row.postId }, { ...ctx, ledger: { launches: [] } }).row?.lore ?? null;
+```
+
+1. Prepare, step 3, just before the loop that rewrites metadata (around line 1314). That loop then rewrites coins/<postId>.json, and the unserved check at line 1369 flags a deploy.
+```js
+for (const row of ledger.launches.filter((r) => r.status === "prepared" && r.policy === "sanctuary")) {
+  const lore = ownLoreNow(row, ctx);
+  if (mode === "on" && lore && lore !== row.lore) { replaceRow(ledger, { ...row, lore }); out.changed = true; log(`Launcher: ${row.ticker}'s lore line is now "${lore}" (its card changed since it was prepared).`); }
+}
+```
+
+2. Send, right after the own
+
+==== low Finding 6 half fixed: the sanctuary's own coin is still flagged Copycat on first sighting, because only the ledger mint was added and the creator check was not
+FILE scripts/build-trending.mjs 218
+SCEN catIndex now adds the ledger's mintPublic to `ours`. But launch.yml pushes the ledger ("Commit the launch") only after the send step's confirm wait of up to 120 s, and the record commit follows seconds later. So the main window, from the coin appearing on pump.fun to the push, is the same as before the fix.
+
+A trend-watch run that checks out in that window marks the coin with mark() → copycatOf, even though pump.fun's row carries creator = a data/wallets.json launcher.
+
+Reproduced (scratchpad/vfix/trend.mjs case 6): real buildTrending, a ledger row still "prepared", and pump.fun listing MEREDITCAT's coin with creator = 3J57tqAJ… (the listed launcher) at T-1min. The coin gets copycatOf = "MEREDITCAT", so the Trending tab shows "Copycat — Not the real Meredith Grey" until the next run. The same happens for a send left "sending" with no clear RPC answer, where mintPublic is never written until it is settled.
+FIX Add the verdict's first part as well:
+- In fresh(), treat a pump.fun row whose `creator` is in adopt.ownerWallets as the sanctuary's own: skip copycatOf for it and add its mint to idx.ours before marking.
+- Keep the ledger mintPublic so later runs, whose rows have no creator, stay unflagged.
+- Add a trending test with a ledger row "prepared" and a coin whose creator is a launcher wallet.
+BETTER In scripts/build-trending.mjs, gate the creator check on the ledger. Treat a coin as the sanctuary's own on first sighting only when its creator is a data/wallets.json launcher AND the checkout's ledger has a "prepared" or "sending" row with no mintPublic under that ticker. Keep the ledger mintPublic check, which covers later runs.
+
+catIndex (line 81):
+```js
+const pending = new Set(); // tickers the launcher is sending now, its mint not in the ledger yet
+for (const r of launches?.launches || []) {
+  if (typeof r?.mintPublic === "string") ours.add(r.mintPublic);
+  else if ((r?.status === "prepared" || r?.status === "sending") && typeof r.ticker === "string") pending.add(r.ticker.toUpperCase());
+}
+...
+return { tickers, names, ours, pending };
+```
+
+fresh(), just before `const mark = ...` (line 218):
+```js
+const owners = new Set(adopt.ownerWallets || []);
+for (const c of launched || []) if (owners.has(c.creator) && idx.pending?.has(String(c.symbol || "").toUpperCase())) idx.ours.add(c.mint);
+```
+
+Add a trending test with the ledger row "prepared" for the cat and a pump.fun row whose crea
+
+==== high The death-text regex puts "In loving memory of <name>." on a living cat (AIZUSAKURA, which is queued and approved)
+FILE scripts/lib/launcher.mjs 767
+SCEN diedText runs DIED over the whole story and caption, whoever the sentence is about. AIZUSAKURA's story says Sakura "is the cat stationmaster ... born on 24 December 2019" and ends "... the third after Bus ... and Love, who died in 2022." The "died" refers to Love, but inMemoriam(c) is true, so loreLinesOf (line 817) unshifts "In loving memory of Sakura.". AIZUSAKURA is in data/release-queue.json (approved, shown, added 2026-09-30). Once Announce releases it, sanctuaryRow returns lore "In loving memory of Sakura." and the coin description reads "In loving memory of Sakura. Unofficial fan tribute from the Catcoin Sanctuary. ...". Reproduced with a local script: the old code (a1f9918) gave "Sakura (さくら) is the cat stationmaster of Ashinomaki-Onsen Station on Japan's Aizu Railway." That metadata is fixed once the coin is sent, and the launch post carries the same lore line. The same pattern hits CHOUPETCAT ("covered her life after his 2019 death", about Lagerfeld) if it is ever queued. Phrases like "saved from euthanasia", "Memorial Day", "a rip-off of" or a tenure range like "(1993–2001
+FIX Do not guess death from free text. Put the memorial line only on c.memorial === true, and set memorial plus sensitivity "In loving memory of <name>." in the data for the cats that died (build-adoptables MEMORIAL, or read the research's "DIED"/"Died" sensitivity notes). If a text rule is kept, only accept a match in a sentence whose subject is the cat (its name or a leading pronoun) and never in a relative or "after his ... death" clause. Add a regression test that AIZUSAKURA's and CHOUPETCAT's first lore line is not the memorial line.
+BETTER Stop guessing death from free text; decide it from data only.
+
+1. scripts/lib/launcher.mjs:767-769: remove `diedText` and change the rule to
+   `export const inMemoriam = (c) => c?.memorial === true;`
+   The `captions` argument is no longer needed at line 817. The guard that keeps a pair ("Cole & Marmalade") from getting the memorial line stays as it is.
+
+2. Flag the cats that died in the data so they still launch as tributes, following the owner's decision. In data/adoptables.json, set `memorial: true` and `sensitivity: "In loving memory of <name>."` for FELICETCAT, MAYORSTUB, SOCKSCACAT, COLMEOW2, VENUS2F, COPYCC, FELIXHUD, NITAMACAT, OSCARRI, EMPTANG, CZELDA, LEFTFANG, PEEPEECAT, JJINGJJING, PROFMEOW, SOCKAMILL, HENRINOIR, CLIVECAT, DEWEYCAT and KENCHAN. Do not flag AIZUSAKURA or CHOUPETCAT (both alive), or COLEMARM (only Cole died).
+   So a rebuild keeps these flags, add the matching ids to `MEMORIAL` in scripts/build-adoptables.mjs:38: felicette, stubbs, socks, colonelmeow, venus, cc, felixhudds, nitama, oscar, empresstang, curious-zelda, ollie-gervais, peepee-the-cat, jjing-jji
+
+==== medium The live adoption check treats an empty or short pump.fun page, or a null created_timestamp, as "checked, nobody adopted" and the coin is signed
+FILE scripts/lib/launcher.mjs 924
+SCEN kitLaunchedSince returns { taken: [] } when `list.length < 50 || oldest < sinceMs` ("a short page is the list's end"). pump.fun's global list never ends within 40 pages, so a short page only means a missing or filtered row or an API change. oldest is Math.min over Number(created_timestamp) filtered by Number.isFinite, and Number(null) is 0, so one row with created_timestamp null sets oldest to 0 and ends the walk. Reproduced (scratchpad/hunt/paging.mjs): a visitor's coin from the kit 12 minutes ago on page 2 is found with full pages, but the check returns { taken: [] } when page 2 comes back [] (HTTP 200), when page 1 has 49 rows, or when one row's timestamp is null. In the send-phase harness, pump.fun answering [] gives outcome "launched" with 1 sendTransaction. The existing sanctuary tests depend on this: pumpSite with no coins answers [] and they expect "launched". So the fail-closed promise ("unchecked when the list could not be read back to sinceMs") does not hold.
+FIX Return { taken } only when the walk actually reached back: a page whose oldest valid timestamp (a finite number > 0; null, missing or 0 do not count) is < sinceMs. An empty page, a page shorter than the limit that has not reached sinceMs, or a row without a numeric created_timestamp gives { unchecked }. Update pumpSite in the tests to serve a list that reaches back past sinceMs, and add cases for [], a 49-row page and a null timestamp.
+BETTER scripts/lib/launcher.mjs:923-925. Replace the oldest/short-page lines with:
+
+    // Only a real time proves the walk reached `sinceMs` (Number(null) is 0). pump.fun's list never ends within these pages,
+    // so an empty page is not the end and leaves the check unchecked; a short page (a filtered row) is read past.
+    const times = list.map((c) => Number(c?.created_timestamp)).filter((t) => Number.isFinite(t) && t > 0);
+    if (times.length && Math.min(...times) < sinceMs) return { taken: [...taken] };
+    if (!list.length) break;          // falls through to: taken.size ? { taken } : { unchecked }
+    offset += list.length;
+
+Keep the final `return taken.size ? { taken: [...taken] } : { unchecked: ... }`. Optionally give the empty-page case its own message.
+
+tests/launcher.test.mjs pumpSite (about line 2481): make the fake list reach back past sinceMs, for example
+  let list = [...coins, pumpCoin(9999, { name: "Old Coin", symbol: "OLD", at: NOW - 48 * HOUR })].sort(...)
+Then add cases where pump.fun answers [] (expect adoption_unchecked, 0 sends), where page 1 has 49 rows with the 
+
+==== medium fresh.updatedAt is not a coverage watermark: after a trend-watch outage or a truncated scan, adoptions in the hole are checked by neither side
+FILE scripts/lib/launcher.mjs 1614
+SCEN The live check reads back only to fresh.updatedAt − 15 min and trusts data/adoptions.json for everything older. build-trending does not cover everything before updatedAt. Its window is max(prev.updatedAt, now − 30 min) − 1 min (build-trending.mjs:212). It stops at MAX_PAGES=15 or at the first page that fails after retries, yet still sets fresh.updatedAt = now whenever the first page answered (build-trending.mjs:297). Reproduced (scratchpad/hunt/gap.mjs, real data, fake pump.fun at one coin every 3 s; a saved real page shows 50 coins in 164 s): the trend watch last ran at T−90 min (an outage, e.g. its test step failing as in review finding 4, or an Actions incident). A visitor adopts SGTTIBBS from its kit at T−60 min with name, ticker, card link and proof link. The trend watch runs at T: fresh.updatedAt becomes T, and adoptions stay [NEKOBUS] only. The launcher's kitLaunchedSince reads back to T−15 min and returns { taken: [] }, so the sanctuary sends a second coin. The same hole appears for the older part of a normal window when a middle page fails, or when there are more than 750 co
+FIX Have build-trending keep a real watermark, for example fresh.coveredThrough. Advance it only when the page walk reached the previous watermark, and scan from that watermark rather than capping at 30 min (up to a page budget; if the budget runs out, leave the watermark where coverage stopped). Have the launcher read back to that watermark (less the margin). When it is older than the launcher's own page budget can reach, return unchecked.
+BETTER Keep a real coverage watermark, separate from the display time fresh.updatedAt, and have the launcher read it.
+
+1. scripts/build-trending.mjs pumpLaunches: return { coins, reached }. reached is true only when the walk ended because a page's oldest coin was older than sinceMs, or on a short or empty page. It is false when a page failed after retries or MAX_PAGES ran out.
+
+2. scripts/build-trending.mjs fresh() (line 212): set const mark = Date.parse(prev?.scannedThrough ?? prev?.updatedAt ?? "") || nowMs - 30 * 60_000, then walk from since = mark - 60_000. For this walk, drop the 30-minute cap and let the page budget bound it, raised when behind (for example 60 pages). Return scannedThrough: reached ? iso(nowMs) : prev?.scannedThrough ?? null, and write it at line 297 as fresh.scannedThrough. Keep updatedAt as it is.
+
+3. scripts/lib/launcher.mjs:1611: read fresh.scannedThrough instead of fresh.updatedAt, i.e. const scan = Date.parse(readOwned(io, FILES.pumpScan, null, log)?.fresh?.scannedThrough ?? ""). When the field is missing, the existing { unchecked } path already makes the row wa
+
+==== medium adoption_unchecked has no bound: a sanctuary row waiting on pump.fun keeps the launcher's single in-flight slot, so no trending cat is ever prepared
+FILE scripts/lib/launcher.mjs 1621
+SCEN When pump.fun's list cannot be read, the row stays "prepared" and send exits 0 with only a ::warning. That happens with a single non-2xx or timeout on any of up to 40 pages: no retry, no 429 backoff and no user-agent, unlike build-trending's getJson. It also happens when the list does not reach back far enough. Sanctuary rows never age out (tooOld line 1185), and prepare only picks a new cat when nothing is in flight (line 1320). Reproduced in a copy of tests/launcher.test.mjs: after a sanctuary cat is prepared with pump.fun down, three sends each return adoption_unchecked. A watch-list trending post is then added, and prepare 47 hours later prepares nothing ("prepared":null) while the sanctuary row is still "prepared". The trending post expires at MAX_POST_AGE_HOURS. The Launch workflow stays green, so nobody is alerted while all launches are stopped for as long as the pump.fun reads fail.
+FIX Bound the wait. Count unchecked runs or the time since preparedAt, and after a limit (e.g. 6 h) fail the sanctuary row (retry:false, reason given) or release it so a trending cat can be prepared. Use build-trending's getJson behaviour in kitLaunchedSince (3 tries, 429 backoff, the same user-agent). Make a long wait exit non-zero, or log ::error, so a person sees it.
+BETTER In `prepare` (scripts/lib/launcher.mjs), insert a step between step 2 and step 3. A sanctuary row that is only "prepared", never "sending", gives way to a trending cat the rules let launch now. It uses no attempt, so step 2 prepares it again once the slot is free:
+
+```js
+  // 2b. A sanctuary cat prepared but not sent (waiting on pump.fun's list, the deploy, the earmark...) gives way to a
+  //     trending cat the rules let launch now: failed, retry, no attempt used; step 2 prepares it again once the slot is free.
+  {
+    const held = inFlight(ledger);
+    if (mode === "on" && held.length === 1 && held[0].policy === "sanctuary" && held[0].status === "prepared"
+      && dayStats(ledger, nowMs, caps).count < caps.maxPerDay && (collectionRoom(ctx) ?? 0) >= 1 && selectCandidate(ctx).row) {
+      replaceRow(ledger, { ...held[0], status: "failed", retry: true, reason: "gave way to a trending cat; prepared again once the slot is free", settledAt: ISO_SECONDS(nowMs) });
+      out.changed = true;
+      log(`Launcher: ${held[0].ticker} (a sanctuary cat, not sent) gives way to a trending cat; it
+
+==== medium The shipped coins/ test ties a sanctuary coin's picture to a ledger row that ledgerText later prunes; about 200 rows later the Launcher and Pages stop
+FILE tests/launcher.test.mjs 2249
+SCEN The fixed shipped check accepts a SITE_PICTURE image only when `ledger.launches.find(r => r.postId === <file id>)?.policy === "sanctuary"`. ledgerText keeps at most LEDGER_MAX=200 rows and drops the oldest finished ones first. coins/<postId>.json is never deleted, because a launched coin's uri serves it for good. Reproduced (scratchpad/hunt/prune.mjs): a launched and recorded sanctuary row followed by 200 later rows is pruned from the ledger. The same predicate on its coins file then fails, because the image is the portrait on the site and there is no row. Both Launch jobs run tests/launcher.test.mjs first, and pages.yml runs npm test, so all launches and site deploys stop at that point, which is weeks to months after the first sanctuary launch.
+FIX Decide from the file itself, not the prunable ledger: accept SITE_PICTURE when m.twitter is https://x.com/catcosanctuary/status/<file id> (and optionally when a data/adoptables.json row's launch or data/launches.json names it). Alternatively, never prune sanctuary rows from the ledger. Add a test that prunes a sanctuary row and still passes the shipped check.
+BETTER In tests/launcher.test.mjs (lines 2250-2251), decide from the coin file itself instead of from the ledger, which gets pruned. The X link must be the sanctuary's own post with this file's id:
+
+    const own = m.twitter === `https://x.com/${OWN_HANDLE}/status/${f.slice(0, -5)}`;
+    assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE || (own && SITE_PICTURE.test(m.image)),
+      `${f}: the post's photo, the site's own for a hidden one, or a sanctuary cat's picture on the site`);
+
+This check is stricter than the old `startsWith` on the handle, because it also ties the link to this file's post id. Also add a regression test: write a launched and recorded sanctuary row plus 200 later finished rows through ledgerText, then check that the row is pruned and that the shipped coins predicate still accepts its coins/<id>.json.
+
+==== medium The live check covers pump.fun only, but the Adopt kit sends visitors to StonkFun first (and to GetStonked), so a visitor who adopts there first does not win
+FILE scripts/lib/launcher.mjs 1608
+SCEN The release post says "be the first to adopt it". The Adopt kit (assets/ui/adopt.js:254-272) lists "Launch on StonkFun" first, priced in the cat's pair (STONK), then pump.fun and GetStonked (data/launchpads.json). kitLaunchedSince reads only https://frontend-api-v3.pump.fun/coins. build-trending also scans only pump.fun, so data/adoptions.json never records a StonkFun or GetStonked adoption. A visitor who adopts a just-posted cat on StonkFun with the kit's name, ticker and card link is seen by neither check, and the launcher sends the sanctuary's pump.fun coin with the same name and ticker. This contradicts "a visitor who adopts first wins" and the header's "never a cat with a coin already".
+FIX Also check the other launchpads the kit offers (StonkFun/LaunchLab's list of new tokens, GetStonked), with the same fail-closed unchecked rule. Otherwise, while LAUNCH_ENABLED is on, stop offering StonkFun and GetStonked for cats the launcher will take, or wait a grace period after releasedAt that the trend watch and a StonkFun scan have covered.
+BETTER Add a second fail-closed live check next to kitLaunchedSince at scripts/lib/launcher.mjs:1608-1625, run only when row.policy === "sanctuary".
+- **What it looks for:** LaunchLab launches on StonkFun's platform config (STONKFUN_PLATFORM in scripts/lib/chain.mjs) and on GetStonked's LaunchLab platform config (add it as a constant).
+- **How:**
+  1. Page `rpc.getSignaturesForAddress(platform)` back to sinceMs.
+  2. getTransaction each signature and decode the LaunchLab initialize name and symbol (chain.mjs already parses the initialize instruction).
+  3. Apply sameKit against the kit.
+  4. Skip creators that are launcher wallets.
+- **How far back:** to the cat's release (its release-queue releasedAt, or KITS_LIVE if later), not to the pump.fun scan time. No trend-watch scan has ever covered these launchpads.
+- **On a match:** `fail(why, false)` with outcome "taken", the same as the pump.fun branch.
+- **If the history cannot be read back to sinceMs:** outcome "adoption_unchecked", with nothing sent and no attempt used.
+
+It would also help to have scripts/build-trending.mjs record such laun
+
+==== low kindOfAdoptable still reads a crypto artwork (QCGENESIS) as a real cat, so its coin says it is not endorsed by "the cat's owners"
+FILE scripts/lib/launcher.mjs 756
+SCEN QCGENESIS (Genesis Cat, a Quantum Cats 1/1 Ordinals inscription; queued, launchable once released) has the look "A glowing, airbrushed cosmic digital painting. ... Not a real animal ...". Its lead clause contains no DRAWN_LOOK word ("painting" and "digital" are not listed, although the review's fix named "digital painting"). NOT_REAL_LOOK only matches "not (a) real cat(s)", and "Not a real animal" is outside the lead clause anyway. So kind is "real", and the description ends "Not affiliated with or endorsed by the cat's owners." instead of the character's owners. Verified with sanctuaryRow on the shipped data.
+FIX Add painting, digital, artwork, inscription, NFT and AI-generated to the character signals, and let NOT_REAL_LOOK match "not a real (cat|animal)" anywhere in the look. Better, store an explicit kind (real or character) on each adoptable, validated by assets/ui/adoptables.js, and read that. Add QCGENESIS to the kind regression assertions.
+BETTER In scripts/lib/launcher.mjs:754-764, widen NOT_REAL_LOOK and read it over the whole look, and add artwork words to DRAWN_LOOK:
+
+const NOT_REAL_LOOK = /\bnot (?:a )?real (?:cats?|animals?)\b/i;
+const DRAWN_LOOK = /\b(?:cartoon|anime|manga|animated|illustrat\w*|drawn|character|mascot|sticker|pixel(?:-art)?|emoji|chibi|kawaii|logo|graphic|vector|CGI|3D|render(?:ed)?|doodles?|painting|digital|artwork|inscription|NFT|AI-generated)\b/i;
+export function kindOfAdoptable(c) {
+  if (c?.category === "tv-movie") return "fiction";
+  const look = String(c?.look ?? "");
+  if (NOT_REAL_LOOK.test(look)) return "cartoon";
+  const lead = look.split(/(?<=[.:;])\s/)[0];
+  if (REAL_LOOK.test(lead)) return "real";
+  return DRAWN_LOOK.test(lead) ? "cartoon" : "real";
+}
+
+Add a regression assertion in tests/launcher.test.mjs near line 2603:
+assert.equal(kind("A glowing, airbrushed cosmic digital painting. A cat built from bubbles. Not a real animal, no fur pattern.", "crypto"), "cartoon");
+
+With this change QCGENESIS becomes "cartoon" and no other shipped adoptable changes kind. The more robust long-term fix 
+
+REFUTED
+x The owner's sensitivity exclusion never fires: build-adoptables drops the research's sensitivity notes, so ill, political, controversial and :: The facts check out, but calling them a defect misreads the design and goes against the owner's decisions.
+
+What reproduces: HEAD c324b78 has a clean tree. scripts/build-adoptables.mjs:94 writes `sens
