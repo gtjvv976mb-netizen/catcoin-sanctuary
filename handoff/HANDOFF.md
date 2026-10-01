@@ -72,7 +72,7 @@ Reviews: first review (12 confirmed) and second review (12 confirmed) are ALL fi
 **Done after the merge of PR #28 (third session, this branch):**
 - First sanctuary launch worked end to end: Ponta (PONTAKUN) on pump.fun at 06:24 UTC 2026-10-01, mint
   8MPC8bNZwD8a7wNJk6KbmJ2dvk3g9FS4hM4WS8wxJg8Y, 0.0055 SOL, recorded on its card, no warnings.
-- **Mint addresses end in "pump"** (owner's ask): `LAUNCH_MINT_SUFFIX` ("pump" by default, "" for none) and
+- **Mint addresses end in "pump"** (owner's ask): `LAUNCH_MINT_SUFFIX` ("pump" by default, blank included, since an unset repository variable reaches the workflow as ""; "none" for none. Blehmilly, 2026-10-01, launched without it before this was fixed) and
   `LAUNCH_MINT_GRIND_MINUTES` (12). The send scans derivation nonces (solana-tx.mjs grindMintNonce, every core,
   about 10k derivations a second a core, 11.3 million on average for four characters: roughly 5 minutes on a
   4-core runner, resumable across runs: the row keeps `mintGrind.next`, then `mintNonce`). Deterministic (the
