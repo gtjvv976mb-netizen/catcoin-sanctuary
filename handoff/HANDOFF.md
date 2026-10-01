@@ -1,8 +1,9 @@
-# Handoff: where the last session stopped (2026-10-01 ~02:00 UTC)
+# Handoff: where the last session stopped (2026-10-01, second session)
 
-Branch: `claude/practical-cray-ln7m3z`. Open draft PR: **gtjvv976mb-netizen/catcoin-sanctuary#27**
-("Launcher: launch the sanctuary's own cats on pump.fun after their X post"). Not merged.
-Start the next session on this branch and read this file first.
+Branch: `claude/vigilant-davinci-utlztf` (this branch carries everything from `claude/practical-cray-ln7m3z`,
+the branch of draft PR gtjvv976mb-netizen/catcoin-sanctuary#27, plus main and the garden fix below).
+PR #27 ("Launcher: launch the sanctuary's own cats on pump.fun after their X post") still points at the old
+branch and is NOT merged. Start the next session on this branch and read this file first.
 
 ## 1. Done and live on main
 - **X bot fixed** (PR #26, merged): queued cats with no lore picture post with their portrait.
@@ -30,15 +31,32 @@ launch.yml after a release, build-trending ledger-aware.
 Reviews: first review (12 confirmed) and second review (12 confirmed) are ALL fixed in commit ae585d6
 (findings: `handoff/review/`). Known limit, documented: StonkFun/GetStonked adoptions are tracked by nothing.
 
+**Done in the second session (this branch):**
+1. The one failing test is fixed in the garden code (`assets/world/cats.js`), not the test:
+   - `tests/cats.test.mjs` "garden cats with characters move like cats" failed on "creeping CAT56: walk shown at
+     under 0.15 units/s for 0.33 s". CAT56 is a synthetic lively cat, not a memorial; the traits rebuild only
+     reshuffled the garden so that it brushed the corner of vegetable bed veg-3 while wandering. Root cause: the
+     keep-out pushed it straight back along its own step (corner catch), the stall check replanned, and the planner
+     ignored the bed it stood beside and handed it the same straight route, so it shoved at the bed every 0.1 s with
+     its walk shown on the spot. Fix: a route replanned after a prop held the cat fast (`route.stale === "prop"`)
+     first steps out to the planner's clearance (the existing "out" step for a cat standing in a prop's clearance),
+     so it is routed round.
+   - That fix reshuffled the chaotic garden and exposed a second, pre-existing wedge: a visitor chose its cheek-rub
+     spot right beside a sleeping third cat, could neither turn nor step off afterwards, and stood 0.12 into its
+     friend for 31 s (CAT69/CAT237). Fix: the nuzzle spot must be clear of every other cat's body whichever way the
+     visitor faces there (`crowdingBut`, as `besideSpot` already requires); otherwise no visit.
+   - `node --test tests/cats.test.mjs`: 25 of 25 pass. Full `npm test` (after `npm ci`): 1242 tests, 1241 pass, 0 fail, 1 skipped.
+2. Dependencies: this container had no node_modules; `npm ci` is needed before `npm test` or two files
+   (trendwatch, venues-routing) fail on a missing `@anthropic-ai/sdk`. That is an environment matter, not code.
+
 **Remaining before merge:**
-1. `npm test` on the branch (after merging main, commit 20ecfda): 1241/1242. One failure, deterministic,
-   passes on main: `tests/cats.test.mjs` "garden cats with characters move like cats" ->
-   "creeping CAT56: walk shown at under 0.15 units/s for 0.33 s". Cause: the traits rebuild (20 cats now
-   memorial -> "gentle") changes the garden simulation. Find which cat CAT56 is, fix the gait/creep
-   threshold or the gentle-cat movement (do NOT weaken or skip the test). Then rerun `npm test`.
-2. Optionally run one more short review of commit ae585d6 (money path).
-3. Mark PR #27 ready, merge. Then watch the first Launch run (logs: prepare picks the newest posted cat;
-   send waits until build-trending has written `fresh.coveredUntil`, i.e. one Trending run after merge).
+1. PR #27's head branch is `claude/practical-cray-ln7m3z`, which this session could not push to. Either push this
+   branch's commits onto it (same history plus the fix), or merge this branch instead (a PR from
+   `claude/vigilant-davinci-utlztf` to main, closing #27). Then watch the first Launch run (logs: prepare picks the
+   newest posted cat; send waits until build-trending has written `fresh.coveredUntil`, i.e. one Trending run after merge).
+2. Known, pre-existing, not fixed: cats "Waiting its turn" for 5-80 s happen 50-80 times per 2-minute garden run
+   (hemmed in by resting cats); they only fail the test when the waiter is more than 0.12 into another's body.
+   A general fix to the hemmed-in logic (`stepOut`/`turnBlocked`, cats.js) is a separate job.
 
 Owner actions (repo Settings -> Actions variables; Claude cannot set them):
 - `LAUNCH_ENABLED` is `on`. Raise `LAUNCH_MAX_PER_DAY` (default 3, max 10) and `LAUNCH_MAX_SOL_PER_DAY`
