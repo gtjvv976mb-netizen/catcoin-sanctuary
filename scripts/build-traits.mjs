@@ -68,7 +68,7 @@ export function formatTraits({ note, cats }) {
 }
 
 /** A few cats of every kind, for the owner: their character in words and how they move. */
-export const TABLE_CATS = ["JOCKCAT", "INGOTLOAF", "SKEINKIT", "MEREDITCAT", "CROOKSHNK", "CZELDA", "maneki", "michi", "CHOCOCACAT", "GRREAT", "NYANKOSEN", "tsuki", "MISTO", "PATCHPAW", "GENKITTY", "NERMALCAT", "AMRCAT", "HUBBUB", "TUBBSCAT", "TALLYSPOT"];
+export const TABLE_CATS = ["JOCKCAT", "WARMSPOT", "UPDATECAT", "MEREDITCAT", "CROOKSHNK", "CZELDA", "maneki", "michi", "CHOCOCACAT", "GRREAT", "NYANKOSEN", "tsuki", "MISTO", "ROSETTE", "GENKITTY", "NERMALCAT", "AMRCAT", "HUBBUB", "TUBBSCAT", "TALLYSPOT"];
 
 /** The traits in a few words ("sleepy, proud; chunky kitten"). */
 export function describe(t) {

@@ -12,7 +12,7 @@ import path from "node:path";
 import { ROOT, DATA_NOW } from "./helpers.mjs";
 import { loadResidents } from "../assets/residents.js";
 import { NEUTRAL_TRAITS, SIGNATURES } from "../assets/world/catmotion.js";
-import { parseTraits, traitsOf, deriveTraits, normalizeTraits, styleOf, STYLE_DEFAULTS, TRAIT_OVERRIDES, TRAIT_KEYS, MAX_SCALE, SPECIES, SIZE_POWER, HOUSE_CAT_SHOULDER, speciesScale, speciesRatio, speciesIn } from "../assets/world/traits.js";
+import { parseTraits, traitsOf, deriveTraits, normalizeTraits, styleOf, STYLE_DEFAULTS, TRAIT_OVERRIDES, TRAIT_KEYS, MAX_SCALE, BIG_CAT_SCALE, SPECIES, SIZE_POWER, HOUSE_CAT_SHOULDER, speciesScale, speciesRatio, speciesIn } from "../assets/world/traits.js";
 import { lookOf, parseLook } from "../assets/world/looks.js";
 import { buildTraits, formatTraits, table, TABLE_CATS } from "../scripts/build-traits.mjs";
 
@@ -32,7 +32,7 @@ const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
 
 test("every resident has a character in data/traits.json, in range, with the words behind each value", async () => {
   const list = await residents();
-  assert.equal(list.length, 284);
+  assert.equal(list.length, 251);
   assert.equal(Object.keys(TABLE).length, list.length, "one row per resident, no strays");
   for (const r of list) {
     const t = TABLE[r.id];
@@ -56,7 +56,7 @@ test("every resident has a character in data/traits.json, in range, with the wor
     if (t.signature) assert.ok(t.why.signature, `${r.id}.signature says why`);
     assert.deepEqual(traitsOf(r), normalizeTraits(t), `${r.id}: traitsOf reads its row`);
   }
-  // 2026-09-30: 150 -> 170 KB for the 284 residents (about 545 bytes a row).
+  // 2026-09-30: 150 -> 170 KB for the 284 residents (251 since 2026-10-01) (about 545 bytes a row).
   assert.ok(read("data/traits.json").length < 170 * 1024, "data/traits.json stays small");
   assert.ok(!/https?:/.test(read("data/traits.json")), "no links in the file");
 });
@@ -82,7 +82,7 @@ test("the hand overrides name real residents and win over the rules", async () =
     assert.equal(t.why.hand, o.note);
   }
   // The cats whose words carry no temperament all have one.
-  for (const id of ["SNOWCURL", "TRINKETCAT", "COOPERCAT", "NOTEPAW", "RUBYCAT", "MARUBOX", "GLICAT", "NEKOBUS", "OCTOMONA", "COPYCC", "KURONEKCAT", "NERMALCAT", "SCRATCHC", "KITTENPLZ", "MARUOCAT", "QCGENESIS", "MOONRESCUE", "CATE", "MANEKI"])
+  for (const id of ["SNOWCURL", "COOPERCAT", "RUBYCAT", "MARUBOX", "GLICAT", "NEKOBUS", "OCTOMONA", "COPYCC", "KURONEKCAT", "NERMALCAT", "SCRATCHC", "KITTENPLZ", "MARUOCAT", "QCGENESIS", "MOONRESCUE", "CATE", "MANEKI"])
     assert.ok(TRAIT_OVERRIDES[id] || TRAIT_OVERRIDES[byKey.get(id)?.id], `${id} has a hand-read character`);
   // An overridden age still brings what age brings: Kuroneko is drawn with a kitten but is the mother.
   assert.equal(TABLE.KURONEKCAT.age, "adult");
@@ -93,8 +93,8 @@ test("cats whose ways are well known come out as themselves", () => {
   const T = TABLE;
   const hi = (id, k, v = 0.7) => assert.ok(T[id][k] >= v, `${id}.${k} = ${T[id][k]} (want >= ${v})`);
   const lo = (id, k, v = 0.3) => assert.ok(T[id][k] <= v, `${id}.${k} = ${T[id][k]} (want <= ${v})`);
-  hi("INGOTLOAF", "sleepy"); lo("INGOTLOAF", "energy", 0.4); assert.equal(T.INGOTLOAF.signature, "loaf");
-  assert.equal(T.SKEINKIT.age, "kitten"); hi("SKEINKIT", "playful", 0.85); assert.equal(T.SKEINKIT.size, "small");
+  hi("WARMSPOT", "sleepy"); lo("WARMSPOT", "energy", 0.4); assert.equal(T.WARMSPOT.signature, "loaf");
+  assert.equal(T.UPDATECAT.age, "kitten"); hi("UPDATECAT", "playful", 0.85); assert.equal(T.UPDATECAT.size, "small");
   hi("MEREDITCAT", "proud", 0.8); lo("MEREDITCAT", "social");
   hi("CROOKSHNK", "grumpy"); hi("CROOKSHNK", "hunter");
   lo("CZELDA", "bold", 0.25); hi("CZELDA", "curious", 0.85);
@@ -105,11 +105,10 @@ test("cats whose ways are well known come out as themselves", () => {
   assert.equal(T.LILBUBCAT.signature, "blep"); assert.equal(T.LILBUBCAT.legs, "short");
   assert.equal(T.GANYHOUSE.age, "senior"); assert.ok(T.GANYHOUSE.flags.includes("blind"));
   assert.equal(T.LARRY10.age, "senior");
-  assert.equal(T.EVERLOOP.signature, "ringCurl"); hi("EVERLOOP", "sleepy");
+  assert.equal(T.DREAMPATCH.signature, "ringCurl"); hi("DREAMPATCH", "sleepy");
   assert.equal(T.TOMBILICAT.signature, "drapeLean");
   assert.equal(T["gta6cat"].signature, "wash");
   assert.equal(T.popcat.signature, "popMouth"); hi("popcat", "vocal", 0.8);
-  hi("TRILLBY", "vocal", 0.85); hi("TRILLBY", "social", 0.85);
   hi("TUBBSCAT", "foodie", 0.9); assert.equal(T.TUBBSCAT.build, "chunky"); lo("TUBBSCAT", "energy", 0.2);
   hi("COLMEOW2", "grumpy", 0.85); hi("JELLIECAT", "grumpy", 0.8);
   lo("COWARDLION", "bold", 0.2); lo("COWARDLION", "grumpy", 0.2);
@@ -124,28 +123,28 @@ test("cats whose ways are well known come out as themselves", () => {
   for (const id of ["PAYAKE", "IDPHOTO", "UNIUNI"]) assert.equal(T[id].legs, "short", `${id} has short legs`);
 });
 
-test("big cats are drawn by species: the real shoulder-height ratio to the 0.6th power, in the real order and proportion", () => {
+test("big cats are drawn at most BIG_CAT_SCALE (1.2x an ordinary cat: the owner, 2026-10-01); the table keeps each species' real shoulder-height ratio, in the real order", () => {
   // The table: each species' adult shoulder height against a house cat's 0.25 m (a lion 1.2 m: 4.8x).
   assert.equal(HOUSE_CAT_SHOULDER, 0.25);
   assert.equal(SIZE_POWER, 0.6, "set C, the judges' pick");
   const real = { lion: 4.8, lioness: 4, tiger: 4, liger: 5, cheetah: 3.2, jaguar: 2.8, cougar: 2.8, leopard: 2.6, "eurasian lynx": 2.6, "snow leopard": 2.4, serval: 2.2, "canada lynx": 2.2, "clouded leopard": 2, bobcat: 1.8, caracal: 1.8, ocelot: 1.8 };
   for (const [sp, ratio] of Object.entries(real)) {
     assert.ok(Math.abs(speciesRatio(sp) - ratio) < 1e-9, `${sp}: ${ratio}x a house cat at the shoulder`);
-    assert.ok(Math.abs(speciesScale(sp) - ratio ** 0.6) <= 0.005 + 1e-9, `${sp} drawn at ${ratio}^0.6 (${speciesScale(sp)})`);
+    assert.equal(speciesScale(sp), Math.min(BIG_CAT_SCALE, Math.round(ratio ** 0.6 * 100) / 100), `${sp} drawn at ${ratio}^0.6, at most ${BIG_CAT_SCALE} (${speciesScale(sp)})`);
     assert.ok(speciesScale(sp) > 1 && speciesScale(sp) <= MAX_SCALE, `${sp}: bigger than a house cat, within MAX_SCALE`);
   }
-  // Lion >= tiger > cheetah > jaguar = cougar > leopard >= Eurasian lynx > Canada lynx > bobcat > a house cat.
-  const s = speciesScale, order = ["lion", "tiger", "cheetah", "jaguar", "leopard", "canada lynx", "bobcat"];
-  for (let i = 1; i < order.length; i++) assert.ok(s(order[i - 1]) > s(order[i]), `${order[i - 1]} (${s(order[i - 1])}) is bigger than ${order[i]} (${s(order[i])})`);
-  assert.ok(s("liger") > s("lion") && s("lion") > s("lioness") && s("tiger") === s("lioness") && s("jaguar") === s("cougar") && s("leopard") === s("eurasian lynx") && s("bobcat") > 1.3);
-  // In proportion to one another: any two species' drawn sizes are their real ratio to the same power.
-  for (const [a, b] of [["lion", "bobcat"], ["tiger", "cheetah"], ["cheetah", "leopard"]]) assert.ok(Math.abs(s(a) / s(b) - (real[a] / real[b]) ** 0.6) < 0.02, `${a}:${b}`);
+  // Lion >= tiger > cheetah > jaguar = cougar > leopard >= Eurasian lynx > Canada lynx > bobcat > a house cat, in the table;
+  // the garden draws every one of them at BIG_CAT_SCALE (the owner, 2026-10-01: "only 120% bigger than the normal cats").
+  const r = speciesRatio, order = ["lion", "tiger", "cheetah", "jaguar", "leopard", "canada lynx", "bobcat"];
+  for (let i = 1; i < order.length; i++) assert.ok(r(order[i - 1]) > r(order[i]), `${order[i - 1]} is bigger than ${order[i]} in life`);
+  assert.equal(BIG_CAT_SCALE, 1.2);
+  for (const sp of Object.keys(SPECIES)) assert.equal(speciesScale(sp), BIG_CAT_SCALE, `${sp}: drawn ${BIG_CAT_SCALE}x`);
   // The residents: every big cat at its species' size, the cartoon and fantasy ones too.
   const want = {
-    LEOTHELION: ["lion", 2.56], COWARDLION: ["lion", 2.56], DROWSEPAW: ["lion", 2.56], SORRELPAW: ["lioness", 2.3],
-    SAFFWHISK: ["tiger", 2.3], SUNSTRETCH: ["tiger", 2.3], RIMESTRIPE: ["tiger", 2.3], GRREAT: ["tiger", 2.3],
-    TALLYSPOT: ["cheetah", 2.01], CHEETLE: ["cheetah", 2.01], ROSETTE: ["jaguar", 1.85], SANDSTEP: ["cougar", 1.85],
-    VELVETPAW: ["leopard", 1.77], STUBTAIL: ["bobcat", 1.42], BUBSYCAT: ["bobcat", 1.42],
+    LEOTHELION: ["lion", 1.2], COWARDLION: ["lion", 1.2], DROWSEPAW: ["lion", 1.2], SORRELPAW: ["lioness", 1.2],
+    SAFFWHISK: ["tiger", 1.2], SUNSTRETCH: ["tiger", 1.2], RIMESTRIPE: ["tiger", 1.2], GRREAT: ["tiger", 1.2],
+    TALLYSPOT: ["cheetah", 1.2], CHEETLE: ["cheetah", 1.2], ROSETTE: ["jaguar", 1.2], SANDSTEP: ["cougar", 1.2],
+    VELVETPAW: ["leopard", 1.2], STUBTAIL: ["bobcat", 1.2], BUBSYCAT: ["bobcat", 1.2],
   };
   for (const [id, [sp, k]] of Object.entries(want)) {
     const t = TABLE[id];
@@ -154,10 +153,11 @@ test("big cats are drawn by species: the real shoulder-height ratio to the 0.6th
     assert.match(t.why.scale, new RegExp(`${sp}: .* m at the shoulder`), `${id}: why.scale says why`);
   }
   assert.deepEqual(Object.keys(TABLE).filter((id) => TABLE[id].size === "bigcat").sort(), Object.keys(want).sort(), "no other big cats");
-  // The Savannah pair (a serval hybrid bred as a house cat): bigger than a house cat, not a big cat.
-  assert.equal(TABLE.SUSHITUNA.species, "savannah"); assert.equal(TABLE.SUSHITUNA.size, "large"); assert.equal(styleOf(TABLE.SUSHITUNA).scale, 1.31);
+  // The Savannah pair (a serval hybrid bred as a house cat): bigger than a house cat, not a big cat (and, capped, no bigger than one).
+  assert.equal(TABLE.SUSHITUNA.species, "savannah"); assert.equal(TABLE.SUSHITUNA.size, "large"); assert.equal(styleOf(TABLE.SUSHITUNA).scale, 1.2, "no bigger than a lion");
   // A big cat's scale comes from the table, whatever a row says.
-  assert.equal(normalizeTraits({ size: "bigcat", species: "lion", scale: 1.55 }).scale, 2.56);
+  assert.equal(normalizeTraits({ size: "bigcat", species: "lion", scale: 1.55 }).scale, BIG_CAT_SCALE);
+  assert.equal(normalizeTraits({ size: "bigcat", scale: 2.5 }).scale, BIG_CAT_SCALE, "a big cat of no known species: at most the cap too");
 });
 
 test("a house cat described by a big cat's words is a house cat (the species audit's false positives)", async () => {
@@ -176,7 +176,7 @@ test("a house cat described by a big cat's words is a house cat (the species aud
     assert.equal(L.scale, 1, `${id}: drawn a house cat's size from the shared models too`);
     assert.notEqual(L.tail, "bob", `${id}: keeps its tail`);
   }
-  assert.equal(lookOf(byId.get("LEOTHELION")).scale, 2.56, "a lion's shared-model coat is a lion's size");
+  assert.equal(lookOf(byId.get("LEOTHELION")).scale, BIG_CAT_SCALE, "a lion's shared-model coat is a lion's size");
 });
 
 test("memorial and disabled cats, and cats with serious real lore, are gentle (no slapstick)", () => {
@@ -226,15 +226,15 @@ test("traitsOf: its table row, else what residents.js attached, else read from i
   const junk = normalizeTraits({ energy: 7, sleepy: -3, playful: "a lot", age: "ancient", build: 3, flags: ["blind", "wings"], signature: "moonwalk", size: "bigcat", scale: 9 });
   assert.equal(junk.energy, 1); assert.equal(junk.sleepy, 0); assert.equal(junk.playful, 0.5);
   assert.equal(junk.age, "adult"); assert.equal(junk.build, "normal"); assert.deepEqual(junk.flags, ["blind"]);
-  assert.equal(junk.signature, null); assert.equal(junk.scale, MAX_SCALE);
+  assert.equal(junk.signature, null); assert.equal(junk.scale, BIG_CAT_SCALE);
   const plain = traitsOf({ id: "EMPTY" });
   for (const k of TRAIT_KEYS) assert.equal(plain[k], 0.5, `a cat with no words is ordinary: ${k}`);
   assert.deepEqual(deriveTraits({ id: "MARUBOX", ticker: "MARUBOX" }).signature, "boxSit", "overrides apply at run time too");
   // Without data/traits.json the page still loads every cat, with no rows attached.
   const bare = await residents(["data/traits.json"]);
-  assert.equal(bare.length, 284);
+  assert.equal(bare.length, 251);
   assert.ok(bare.every((x) => x.traits === undefined));
-  assert.equal(traitsOf(bare.find((x) => x.id === "INGOTLOAF")).signature, "loaf", "and each is read from its words instead");
+  assert.equal(traitsOf(bare.find((x) => x.id === "WARMSPOT")).signature, "loaf", "and each is read from its words instead");
 });
 
 test("styleOf: an ordinary cat moves as today; every cat's style keeps to its ranges and to its character", (t) => {
@@ -258,9 +258,9 @@ test("styleOf: an ordinary cat moves as today; every cat's style keeps to its ra
   }
   // A kitten, a senior, a heavy cat and a big cat, side by side with an ordinary cat.
   const S = (id) => styleOf(TABLE[id]);
-  assert.ok(S("SKEINKIT").tempo < S("JOCKCAT").tempo && S("JOCKCAT").tempo < S("GANYHOUSE").tempo);
+  assert.ok(S("UPDATECAT").tempo < S("JOCKCAT").tempo && S("JOCKCAT").tempo < S("GANYHOUSE").tempo);
   assert.ok(S("TUBBSCAT").sway > S("JOCKCAT").sway && S("TUBBSCAT").lift < S("JOCKCAT").lift);
-  assert.ok(S("LEOTHELION").scale > 1.4 && S("SKEINKIT").scale < 0.8);
+  assert.ok(S("LEOTHELION").scale === BIG_CAT_SCALE && S("UPDATECAT").scale < 0.8);
   assert.ok(S("CZELDA").tail < 0 && S("GRREAT").tail > 0.5);
   // The owner's table: some cats of every kind, their character in words and how they move.
   const lines = table(FILE).split("\n");

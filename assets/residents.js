@@ -8,7 +8,7 @@
    planned cats in the sheets' order:
 
    {
-     id,  the planned cat's ticker ("PATCHPAW"), or the mint of a launched token
+     id,  the planned cat's ticker ("JELLIECAT"), or the mint of a launched token
        that has no planned cat
      name, ticker,  the cat's name and ticker (a launched token's own, as read on chain)
      plannedName,  the planned name when the launched token's name differs, else null

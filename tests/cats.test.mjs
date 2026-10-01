@@ -202,7 +202,7 @@ async function bigRun({ seconds }) {
   const residents = Object.entries(rows).map(([id, t]) => ({ id, name: id, traits: t, style: styleOf(t) }));
   const sim = createSanctuary({ residents, reduced: false, critters: null });
   sim.setViewer(0, 18);
-  const obs = L.obstacles(), dt = 1 / 30, big = sim.cats.filter((c) => c.size >= BIG_SIZE);
+  const obs = L.obstacles(), dt = 1 / 30, big = sim.cats.filter((c) => c.big);
   const S = new Map(big.map((c) => [c, { props: 0, propWhat: "", holds: new Set(), company: new Set(), waiting: 0, kinds: new Set(), walkV: [], gaits: new Set() }]));
   for (let f = 1; f <= seconds / dt; f++) {
     const at = new Map(big.map((c) => [c, [c.x, c.z]]));

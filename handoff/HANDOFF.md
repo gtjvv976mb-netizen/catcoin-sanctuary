@@ -6,6 +6,18 @@ PR #27 ("Launcher: launch the sanctuary's own cats on pump.fun after their X pos
 branch and is NOT merged. Start the next session on this branch and read this file first.
 
 ## 1. Done and live on main
+- **2026-10-01, the owner: "remove all cats with no lore and just speculation; big cats only 120% bigger; the real
+  picture on each card as well as our version".**
+  - The 33 invented planned cats are held back in `data/held.json`, each with its reason, so a rebuild leaves them
+    out. Their research found no real cat ("No cat link was found…", "an original sanctuary cat", "no usable cat").
+    Their portraits, lore pictures, models, kits and data rows are removed. Their 33 stock pairs are free again;
+    the launcher may give one to a new real cat. Their `data/announced.json` records are kept as history.
+  - Big cats are drawn at `BIG_CAT_SCALE` (1.2×) whatever the species (`assets/world/traits.js`). They keep their
+    big-cat ways: `bigOf` in `assets/world/cats.js` goes by the species too, not only by drawn size.
+  - Real photos: every card without one was looked up again (five research agents; each image was viewed, and
+    photos showing real people's faces were left out). `data/real-photos.json` now holds 193 photos, up from 70,
+    and 57 cats with a reason for having none. Kit photos are synced to it. A card shows the real photo and
+    "🎨 Our version" side by side at the same size (`card-pics`).
 - **X bot fixed** (PR #26, merged): queued cats with no lore picture post with their portrait.
   Announce releases one cat an hour again (Gatekeeper 18:09, Zelda 19:21, ...). 80 left in the queue.
 - **Ad finished** ("Look Closer: The Newcomer", 38 s, all Higgsfield, ~673 credits):

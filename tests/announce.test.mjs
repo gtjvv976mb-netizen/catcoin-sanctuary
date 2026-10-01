@@ -78,7 +78,9 @@ test("backlog: the seeded record marks every existing cat backlog, and a run tak
   const ADOPTABLE = read("data/adoptables.json").cats;
   // A cat the launcher launched has no record until the announcer's next run holds it by rule (holdSanctuaryCats).
   const unrecorded = ADOPTABLE.filter((c) => c.launch && !seeded.cats[c.ticker]);
-  assert.equal(Object.keys(seeded.cats).length, PLANNED.cats.length + ADOPTABLE.length - unrecorded.length);
+  // A planned cat held back since (data/held.json: 2026-10-01, the cats with no lore) keeps its record: what was posted stays known.
+  const heldBack = read("data/held.json").held.map((h) => h.ticker).filter((t) => seeded.cats[t]);
+  assert.equal(Object.keys(seeded.cats).length, PLANNED.cats.length + ADOPTABLE.length - unrecorded.length + heldBack.length);
   for (const c of ADOPTABLE) assert.ok(["held", "backlog", "posted", "queued", "failed"].includes(seeded.cats[c.ticker]?.status) || unrecorded.includes(c), `${c.ticker} has a record`);
   for (const c of PLANNED.cats) assert.ok(["backlog", "posted", "queued", "failed", "held"].includes(seeded.cats[c.ticker]?.status), c.ticker);
   const cfg = read("data/announce-config.json");

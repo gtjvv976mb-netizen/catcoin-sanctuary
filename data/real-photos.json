@@ -1,7 +1,25 @@
 {
-  "note": "The real photo for each cat card, looked up through api.fxtwitter.com: the first fitting photo (or video still) in the cat's X proof post, or, where the proof has none, a post of the same cat by its owner or official account (source: \"search\"). Only the pbs.twimg.com address and the credit are kept; the image is hotlinked, never copied into this repo. Photos showing real people's faces are left out. Keys: planned tickers, adoptable tickers, Hall of Fame symbols. `none` records why a cat has no real photo.",
-  "checked": "2026-09-26",
+  "note": "The real photo for each cat card, looked up through api.fxtwitter.com: the first fitting photo (or video still) in the cat's X proof post, or, where the proof has none, a post of the same cat by its owner or official account (source: \"search\"). Only the pbs.twimg.com address and the credit are kept; the image is hotlinked, never copied into this repo. Photos showing real people's faces are left out. Keys: planned tickers, adoptable tickers, Hall of Fame symbols. `none` records why a cat has no real photo. 2026-10-01: every card without one was looked up again (the owner: \"put the real picture there as well as our version of the cat\").",
+  "checked": "2026-10-01",
   "cats": {
+    "AIZUSAKURA": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GLAgBbfbQAA3uux.jpg?name=orig",
+        "handle": "ashinomakionsen",
+        "post": "https://x.com/ashinomakionsen/status/1778957067078037540",
+        "alt": "Sakura: the photo from @ashinomakionsen's post"
+      },
+      "source": "proof"
+    },
+    "AMRCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FhLzupRaYAES-7h.jpg?name=orig",
+        "handle": "pfizer_japan",
+        "post": "https://x.com/pfizer_japan/status/1590601793666703360",
+        "alt": "AMR Cat: the photo from @pfizer_japan's post"
+      },
+      "source": "search"
+    },
     "ATCHOUMCAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/amplify_video_thumb/1932421894164344832/img/Gf7qNuJpNc2VZuzi.jpg",
@@ -19,6 +37,15 @@
         "alt": "Azrael: the photo from @SmurfsMovie's post"
       },
       "source": "proof"
+    },
+    "BENBUTTON": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HGzdBP5XwAARoSg.jpg?name=orig",
+        "handle": "TSUpdating",
+        "post": "https://x.com/TSUpdating/status/2048260696786219325",
+        "alt": "Benjamin Button: the photo from @TSUpdating's post"
+      },
+      "source": "search"
     },
     "BIGFROGGY": {
       "realPhoto": {
@@ -38,12 +65,129 @@
       },
       "source": "proof"
     },
+    "BLEHMILLY": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/F0uVAL7WcAAA4zH.jpg?name=orig",
+        "handle": "fatfatmillycat",
+        "post": "https://x.com/fatfatmillycat/status/1678599121475624960",
+        "alt": "Milly: the photo from @fatfatmillycat's post"
+      },
+      "source": "proof"
+    },
+    "BLOFELDCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/amplify_video_thumb/1056910335129608193/img/B9FCnmQn-KdFChOa.jpg",
+        "handle": "007",
+        "post": "https://x.com/007/status/1056910879751659520",
+        "alt": "Blofeld's Cat: the video still from @007's post"
+      },
+      "source": "proof"
+    },
+    "BROWANTSIN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HRsdQOwWQAAmi6M.jpg?name=orig",
+        "handle": "smashdirt",
+        "post": "https://x.com/smashdirt/status/2097302292772859926",
+        "alt": "Bro: the photo from @smashdirt's post"
+      },
+      "source": "search"
+    },
+    "BROWSERCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/Gz_udKTWAAAZO0k.jpg?name=orig",
+        "handle": "wfaa",
+        "post": "https://x.com/wfaa/status/1963550152053940374",
+        "alt": "Browser: the photo from @wfaa's post"
+      },
+      "source": "proof"
+    },
+    "BUBSYCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/G_RiCzCWsAA2WL4.jpg?name=orig",
+        "handle": "Fabrazz",
+        "post": "https://x.com/Fabrazz/status/2014343483507589292",
+        "alt": "Bubsy: the photo from @Fabrazz's post"
+      },
+      "source": "proof"
+    },
+    "BUTTERED": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FaJM57iVUAE5AmF.jpg?name=orig",
+        "handle": "JortsTheCat",
+        "post": "https://x.com/JortsTheCat/status/1558892983314833408",
+        "alt": "Jorts: the photo from @JortsTheCat's post"
+      },
+      "source": "search"
+    },
     "CAITSITH": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/F6Fc9X0bwAAimlD.jpg",
         "handle": "finalfantasyvii",
         "post": "https://x.com/finalfantasyvii/status/1702744348604113244",
         "alt": "Cait Sith: the photo from @finalfantasyvii's post"
+      },
+      "source": "proof"
+    },
+    "CAMTHECAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/F3BVgdVbQAAyxbP.jpg?name=orig",
+        "handle": "squishmallows",
+        "post": "https://x.com/squishmallows/status/1688943939074793473",
+        "alt": "Cam the Cat: the photo from @squishmallows's post"
+      },
+      "source": "search"
+    },
+    "CAPOOBUG": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HIp4caGbkAAcPgb.jpg",
+        "handle": "bugcat_capoo_tw",
+        "post": "https://x.com/bugcat_capoo_tw/status/2056588615908757804",
+        "alt": "Bugcat Capoo: the photo from @bugcat_capoo_tw's post"
+      },
+      "source": "proof"
+    },
+    "CATCOIN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HTZpS53aEAEPTMG.jpg?name=orig",
+        "handle": "catcoin",
+        "post": "https://x.com/catcoin/status/2104986228722717152",
+        "alt": "The Catcoin kitten: the photo from @catcoin's post"
+      },
+      "source": "search"
+    },
+    "CATFLAP": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GHrqs2mW0AA9vc2.jpg",
+        "handle": "PepitoTheCat",
+        "post": "https://x.com/PepitoTheCat/status/1763980265569894461",
+        "alt": "Pépito: the photo from @PepitoTheCat's post"
+      },
+      "source": "proof"
+    },
+    "CHEETLE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/DJJKe3CXoAE8Lk9.jpg?name=orig",
+        "handle": "ChesterCheetah",
+        "post": "https://x.com/ChesterCheetah/status/905868371606024194",
+        "alt": "Chester Cheetah: the photo from @ChesterCheetah's post"
+      },
+      "source": "search"
+    },
+    "CHESHIRCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/DqJBaHCUUAAEsJq.jpg?name=orig",
+        "handle": "ronniedelcarmen",
+        "post": "https://x.com/ronniedelcarmen/status/1054477220800937984",
+        "alt": "Cheshire Cat: the photo from @ronniedelcarmen's post"
+      },
+      "source": "search"
+    },
+    "CHIKUWACAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HDDT-PYb0AADsz4.jpg?name=orig",
+        "handle": "sktfd0310",
+        "post": "https://x.com/sktfd0310/status/2031356504000041266",
+        "alt": "Chikuwa: the photo from @sktfd0310's post"
       },
       "source": "proof"
     },
@@ -65,6 +209,15 @@
       },
       "source": "proof"
     },
+    "CHOUPETCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FJS-RYQWUAYCKx1.jpg?name=orig",
+        "handle": "KarlLagerfeld",
+        "post": "https://x.com/KarlLagerfeld/status/1483019412751933444",
+        "alt": "Choupette: the photo from @KarlLagerfeld's post"
+      },
+      "source": "search"
+    },
     "CHURCHCCAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/D3F236qVAAAXo-z.jpg",
@@ -73,6 +226,15 @@
         "alt": "Church: the video still from @IGN's post"
       },
       "source": "proof"
+    },
+    "COLEMARM": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/ERs1B-dWkAAS-ep.jpg?name=orig",
+        "handle": "ColeTheBlackCat",
+        "post": "https://x.com/ColeTheBlackCat/status/1232637235931045888",
+        "alt": "Cole & Marmalade: the photo from @ColeTheBlackCat's post"
+      },
+      "source": "search"
     },
     "COLMEOW2": {
       "realPhoto": {
@@ -83,6 +245,15 @@
       },
       "source": "proof"
     },
+    "COOLBLUE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GfC8jIGaAAAubMX.png?name=orig",
+        "handle": "coolcats",
+        "post": "https://x.com/coolcats/status/1869202041438183587",
+        "alt": "Blue Cat: the photo from @coolcats's post"
+      },
+      "source": "search"
+    },
     "COPYCC": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/ESYyajcXQAEFFLS.jpg",
@@ -92,12 +263,66 @@
       },
       "source": "proof"
     },
+    "CORSAGE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/C_Uiw_vXgAAODbP.jpg?name=orig",
+        "handle": "1800flowers",
+        "post": "https://x.com/1800flowers/status/861633148672716803",
+        "alt": "Fabulous Feline: the photo from @1800flowers's post"
+      },
+      "source": "search"
+    },
+    "COSMICGREG": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GYwG_rFWQAA340A.jpg?name=orig",
+        "handle": "AJamesMcCarthy",
+        "post": "https://x.com/AJamesMcCarthy/status/1840854045847953524",
+        "alt": "Gregory: the photo from @AJamesMcCarthy's post"
+      },
+      "source": "proof"
+    },
+    "COTTAPAW": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HIaMq5AaUAAaMge.jpg?name=orig",
+        "handle": "cnxsoft",
+        "post": "https://x.com/cnxsoft/status/2055495052131205559",
+        "alt": "Buddy: the photo from @cnxsoft's post"
+      },
+      "source": "search"
+    },
+    "CUCUWIG": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HNi7CCNW0AAAaKc.jpg?name=orig",
+        "handle": "cucurellacat",
+        "post": "https://x.com/cucurellacat/status/2078616875836039232",
+        "alt": "Cucurella Cat: the photo from @cucurellacat's post"
+      },
+      "source": "search"
+    },
     "CWIF": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/GBjX6J_WQAA7bD-.jpg",
         "handle": "catwifhatsolana",
         "post": "https://x.com/catwifhatsolana/status/1736375127837683893",
         "alt": "catwifhat: the photo from @catwifhatsolana's post"
+      },
+      "source": "proof"
+    },
+    "CZELDA": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GbPGitHa0AAcN7A.jpg?name=orig",
+        "handle": "CuriousZelda",
+        "post": "https://x.com/CuriousZelda/status/1852047232515870823",
+        "alt": "Zelda: the photo from @CuriousZelda's post"
+      },
+      "source": "proof"
+    },
+    "DEWEYCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/F92azonX0AM8ALu.jpg",
+        "handle": "tothemax2050",
+        "post": "https://x.com/tothemax2050/status/1719700847804760423",
+        "alt": "Dewey Readmore Books: the photo from @tothemax2050's post"
       },
       "source": "proof"
     },
@@ -116,6 +341,15 @@
         "handle": "SkyNews",
         "post": "https://x.com/SkyNews/status/720262975987269632",
         "alt": "Palmerston: the photo from @SkyNews's post"
+      },
+      "source": "proof"
+    },
+    "DREAMPATCH": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GjwCVWKWEAAtEJU.jpg?name=orig",
+        "handle": "dreamwastaken",
+        "post": "https://x.com/dreamwastaken/status/1890388512593117335",
+        "alt": "Patches: the photo from @dreamwastaken's post"
       },
       "source": "proof"
     },
@@ -191,6 +425,42 @@
       },
       "source": "proof"
     },
+    "FISHTOPH": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/Gh2JCEXWEAAcsfn.jpg?name=orig",
+        "handle": "mrfishtopher",
+        "post": "https://x.com/mrfishtopher/status/1881810898035315026",
+        "alt": "Fishtopher: the photo from @mrfishtopher's post"
+      },
+      "source": "search"
+    },
+    "FLERKENCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/F_FsQDOWIAASBQM.jpg?name=orig",
+        "handle": "MarvelPuzzle",
+        "post": "https://x.com/MarvelPuzzle/status/1725279176138043613",
+        "alt": "Goose: the photo from @MarvelPuzzle's post"
+      },
+      "source": "search"
+    },
+    "GANYHOUSE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HDkxwGMX0AA67Zg.jpg?name=orig",
+        "handle": "ganymedeshouse",
+        "post": "https://x.com/ganymedeshouse/status/2033711415002075490",
+        "alt": "Ganymede: the photo from @ganymedeshouse's post"
+      },
+      "source": "proof"
+    },
+    "GATOMON": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/tweet_video_thumb/HIQt0OCaEAAyyN5.jpg",
+        "handle": "Digimon_up_jp",
+        "post": "https://x.com/Digimon_up_jp/status/2056208155772903879",
+        "alt": "Gatomon (Tailmon): the video still from @Digimon_up_jp's post"
+      },
+      "source": "proof"
+    },
     "GENKITTY": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/DQEZ1GuVQAAI7eE.jpg",
@@ -199,6 +469,24 @@
         "alt": "Genesis: the photo from @CryptoKitties's post"
       },
       "source": "proof"
+    },
+    "GIKKINGEN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FKybfOQWUAEw7IB.jpg",
+        "handle": "GhibliUSA",
+        "post": "https://x.com/GhibliUSA/status/1490339504820948995",
+        "alt": "Baron Humbert von Gikkingen: the photo from @GhibliUSA's post"
+      },
+      "source": "proof"
+    },
+    "GIMBALPAW": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GIEqG8rbUAAnhof.jpg?name=orig",
+        "handle": "nyanheroes",
+        "post": "https://x.com/nyanheroes/status/1765738895776563541",
+        "alt": "Nyan Heroes Cat: the photo from @nyanheroes's post"
+      },
+      "source": "search"
     },
     "GLICAT": {
       "realPhoto": {
@@ -209,6 +497,24 @@
       },
       "source": "proof"
     },
+    "GOCCHAN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HSsZ5zAaQAARTm0.jpg?name=orig",
+        "handle": "bijutsu1",
+        "post": "https://x.com/bijutsu1/status/2101802139106640089",
+        "alt": "Go-chan: the photo from @bijutsu1's post"
+      },
+      "source": "proof"
+    },
+    "GRIDDLE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/G0S0r9XWEAAb1Ol.jpg?name=orig",
+        "handle": "markie_devo",
+        "post": "https://x.com/markie_devo/status/1964894010067353728",
+        "alt": "Purrrma Frost: the photo from @markie_devo's post"
+      },
+      "source": "search"
+    },
     "GROOVYPETE": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/ETUCAhhXYAEcYX1.png",
@@ -218,12 +524,84 @@
       },
       "source": "proof"
     },
+    "GRREAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/BiDXy_JIgAAWghx.jpg",
+        "handle": "frosted_flakes",
+        "post": "https://x.com/frosted_flakes/status/441590034580647936",
+        "alt": "Tony the Tiger: the photo from @frosted_flakes's post"
+      },
+      "source": "search"
+    },
     "GUMBALLW": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/amplify_video_thumb/1165368191058620416/img/Ir70F0CXkpSqfJgn.jpg",
         "handle": "cartoonnetwork",
         "post": "https://x.com/cartoonnetwork/status/1165368246519963649",
         "alt": "Gumball Watterson: the video still from @cartoonnetwork's post"
+      },
+      "source": "proof"
+    },
+    "HACHIWA": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HR7F3_0bcAAUAGj.jpg?name=orig",
+        "handle": "anime_chiikawa",
+        "post": "https://x.com/anime_chiikawa/status/2098335750416896007",
+        "alt": "Hachiware: the photo from @anime_chiikawa's post"
+      },
+      "source": "proof"
+    },
+    "HAMLETCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GYwiTH6XAAAznXK.jpg?name=orig",
+        "handle": "Nurelah",
+        "post": "https://x.com/Nurelah/status/1840884065492259292",
+        "alt": "Hamlet: the photo from @Nurelah's post"
+      },
+      "source": "proof"
+    },
+    "HANK4SEN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/CwwbKU0WEAAJWNg.jpg?name=orig",
+        "handle": "Ripleys",
+        "post": "https://x.com/Ripleys/status/796041100624560128",
+        "alt": "Hank: the photo from @Ripleys's post"
+      },
+      "source": "proof"
+    },
+    "HEIZOU": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/DTAQ9MHUMAAaexL.jpg?name=orig",
+        "handle": "fukaya91",
+        "post": "https://x.com/fukaya91/status/950278177112248321",
+        "alt": "Endou Heizou: the photo from @fukaya91's post"
+      },
+      "source": "proof"
+    },
+    "HENRINOIR": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FlVIXrDaYAIe1cf.jpg?name=orig",
+        "handle": "HenriLeChatNoir",
+        "post": "https://x.com/HenriLeChatNoir/status/1609272018683428864",
+        "alt": "Henri: the photo from @HenriLeChatNoir's post"
+      },
+      "source": "proof"
+    },
+    "HODGECAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HKCdmWUXwAAFWKE.jpg?name=orig",
+        "handle": "drjohnsonshouse",
+        "post": "https://x.com/drjohnsonshouse/status/2062821917539647900",
+        "alt": "Hodge: the photo from @drjohnsonshouse's post"
+      },
+      "source": "proof"
+    },
+    "HOICHAN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/Gwawbz9bEAINNSJ.jpg?name=orig",
+        "handle": "HOIPPU_0722",
+        "post": "https://x.com/HOIPPU_0722/status/1947437886758129798",
+        "alt": "Hoi-chan: the photo from @HOIPPU_0722's post"
       },
       "source": "proof"
     },
@@ -236,12 +614,57 @@
       },
       "source": "search"
     },
+    "HUBBUB": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/ext_tw_video_thumb/1899840625044004864/pu/img/8_oX1MLHf4EsfdEa.jpg",
+        "handle": "hifurrend",
+        "post": "https://x.com/hifurrend/status/1902018878278144086",
+        "alt": "Ethel: the video still from @hifurrend's post"
+      },
+      "source": "search"
+    },
+    "IDPHOTO": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FEJVVULacAE3Bp3.jpg?name=orig",
+        "handle": "takeru0321neko",
+        "post": "https://x.com/takeru0321neko/status/1459823058751922179",
+        "alt": "Takeru: the photo from @takeru0321neko's post"
+      },
+      "source": "proof"
+    },
+    "INDYBONES": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FF4Ml3pWQA0AVku.jpg?name=orig",
+        "handle": "SirIndianaBones",
+        "post": "https://x.com/SirIndianaBones/status/1467624840966426627",
+        "alt": "Sir Indiana Bones: the photo from @SirIndianaBones's post"
+      },
+      "source": "search"
+    },
     "JELLIECAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/DsIa4loWoAEu_ZE.jpg",
         "handle": "Minecraft",
         "post": "https://x.com/Minecraft/status/1063522092057067521",
         "alt": "Jellie: the photo from @Minecraft's post"
+      },
+      "source": "proof"
+    },
+    "JESSCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HSWBjA-bEAARbuO.jpg?name=orig",
+        "handle": "cartoonvibes26",
+        "post": "https://x.com/cartoonvibes26/status/2100227248766996860",
+        "alt": "Jess: the photo from @cartoonvibes26's post"
+      },
+      "source": "proof"
+    },
+    "JETPACKCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HBFCfVlakAMLYDh.jpg?name=orig",
+        "handle": "PlayOverwatch",
+        "post": "https://x.com/PlayOverwatch/status/2022471091453858112",
+        "alt": "Jetpack Cat: the photo from @PlayOverwatch's post"
       },
       "source": "proof"
     },
@@ -254,6 +677,60 @@
       },
       "source": "proof"
     },
+    "KENCHAN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HTVug3XbsAEmaW2.jpg?name=orig",
+        "handle": "bijutsu1",
+        "post": "https://x.com/bijutsu1/status/2104709918939066741",
+        "alt": "Ken-chan: the photo from @bijutsu1's post"
+      },
+      "source": "proof"
+    },
+    "KERNELPAW": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HRejVYbWsAARi3U.jpg?name=orig",
+        "handle": "AMCTheatres",
+        "post": "https://x.com/AMCTheatres/status/2096323802523177340",
+        "alt": "Hello Kitty: the photo from @AMCTheatres's post"
+      },
+      "source": "search"
+    },
+    "KET": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HN2zVG9WwAAIyqz.jpg?name=orig",
+        "handle": "moonshot",
+        "post": "https://x.com/moonshot/status/2080015851235778793",
+        "alt": "KET: the photo from @moonshot's post"
+      },
+      "source": "search"
+    },
+    "KITTENPLZ": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/Cg1uZahUYAAipkc.jpg?name=orig",
+        "handle": "KeanuMovie",
+        "post": "https://x.com/KeanuMovie/status/724372512935530496",
+        "alt": "Keanu: the photo from @KeanuMovie's post"
+      },
+      "source": "search"
+    },
+    "KITTY": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/CwNRBdnUEAIbF_M.jpg?name=orig",
+        "handle": "hellokitty",
+        "post": "https://x.com/hellokitty/status/793567047808536576",
+        "alt": "Hello Kitty: the photo from @hellokitty's post"
+      },
+      "source": "search"
+    },
+    "KOTECHAN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HAnel21bAAA2rLS.jpg?name=orig",
+        "handle": "TBS_LenOfficial",
+        "post": "https://x.com/TBS_LenOfficial/status/2020390663536451954",
+        "alt": "Kotetsu: the photo from @TBS_LenOfficial's post"
+      },
+      "source": "proof"
+    },
     "KURONEKCAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/GP1f3oFbMAASvPH.jpg",
@@ -263,12 +740,39 @@
       },
       "source": "proof"
     },
+    "KYURUGACAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HE8vP2BakAECYGK.jpg?name=orig",
+        "handle": "kyuryuZ",
+        "post": "https://x.com/kyuryuZ/status/2039901110987812912",
+        "alt": "Kyuruga: the photo from @kyuryuZ's post"
+      },
+      "source": "search"
+    },
     "LARRY10": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/HBMXfUFWcAALaeK.jpg",
         "handle": "Number10cat",
         "post": "https://x.com/Number10cat/status/2022986489122972146",
         "alt": "Larry: the photo from @Number10cat's post"
+      },
+      "source": "proof"
+    },
+    "LASERTATER": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GBq2HDUWgAIaRMF.jpg",
+        "handle": "NASA",
+        "post": "https://x.com/NASA/status/1736900843813605759",
+        "alt": "Taters: the video still from @NASA's post"
+      },
+      "source": "proof"
+    },
+    "LEFTFANG": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/ESvwj9mXkAAIyqf.jpg",
+        "handle": "rickygervais",
+        "post": "https://x.com/rickygervais/status/1237347029296254977",
+        "alt": "Ollie: the photo from @rickygervais's post"
       },
       "source": "proof"
     },
@@ -281,6 +785,33 @@
       },
       "source": "proof"
     },
+    "LIDNAP": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/Et2FiC0WYAIvMVT.jpg?name=orig",
+        "handle": "ThePoke",
+        "post": "https://x.com/ThePoke/status/1359399275336241154",
+        "alt": "I'm not a Cat: the photo from @ThePoke's post"
+      },
+      "source": "search"
+    },
+    "LILBUBCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/CdNgJDjUUAA6EG0.jpg?name=orig",
+        "handle": "IAMLILBUB",
+        "post": "https://x.com/IAMLILBUB/status/708015276776787968",
+        "alt": "Lil BUB: the photo from @IAMLILBUB's post"
+      },
+      "source": "search"
+    },
+    "LITTENCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/tweet_video_thumb/DOtIWfsVAAE5Dec.jpg",
+        "handle": "Pokemon",
+        "post": "https://x.com/Pokemon/status/930917940702019584",
+        "alt": "Litten: the video still from @Pokemon's post"
+      },
+      "source": "proof"
+    },
     "LUNAMOOCAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/Ee62_ubXoAAYfpr.jpg",
@@ -290,12 +821,57 @@
       },
       "source": "proof"
     },
+    "MANEKI": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/ext_tw_video_thumb/1782416798521937920/pu/img/-wnXp7RRXdUSbvWk.jpg",
+        "handle": "UnrevealedXYZ",
+        "post": "https://x.com/UnrevealedXYZ/status/1782423525434769602",
+        "alt": "MANEKI: the video still from @UnrevealedXYZ's post"
+      },
+      "source": "search"
+    },
     "MARIEAC": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/D8bH75fXoAAnzeq.jpg",
         "handle": "360DegreesofDis",
         "post": "https://x.com/360DegreesofDis/status/1136815814064168960",
         "alt": "Marie: the photo from @360DegreesofDis's post"
+      },
+      "source": "proof"
+    },
+    "MARUBOX": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GWNJwmBaMAAkE-2.jpg?name=orig",
+        "handle": "Maru_0524",
+        "post": "https://x.com/Maru_0524/status/1829387066171338787",
+        "alt": "Maru: the photo from @Maru_0524's post"
+      },
+      "source": "search"
+    },
+    "MARUOCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/F8sYcHXagAAilxW.jpg?name=orig",
+        "handle": "hikakin",
+        "post": "https://x.com/hikakin/status/1714490962016378930",
+        "alt": "Maruo: the photo from @hikakin's post"
+      },
+      "source": "proof"
+    },
+    "MAXWELLCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FpKspyeWIAAxxue.jpg",
+        "handle": "Executor250624",
+        "post": "https://x.com/Executor250624/status/1626552255888429056",
+        "alt": "Maxwell (Jess): the photo from @Executor250624's post"
+      },
+      "source": "proof"
+    },
+    "MAYORJINX": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FQLEBPRUcAAegNY.jpg?name=orig",
+        "handle": "bigfootjinx",
+        "post": "https://x.com/bigfootjinx/status/1513987961632612358",
+        "alt": "Jinx: the photo from @bigfootjinx's post"
       },
       "source": "proof"
     },
@@ -317,12 +893,30 @@
       },
       "source": "proof"
     },
+    "MEW": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GKMkwcMa4AA74y8.jpg",
+        "handle": "mew",
+        "post": "https://x.com/mew/status/1775303102847234088",
+        "alt": "MEW: the photo from @mew's post"
+      },
+      "source": "search"
+    },
     "MICHI": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/GiPDgsRXEAAFWKW.jpg",
         "handle": "michionsolana",
         "post": "https://x.com/michionsolana/status/1883564134505333230",
         "alt": "michi: the photo from @michionsolana's post"
+      },
+      "source": "search"
+    },
+    "MIETTE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/D-l9alkXUAAwisa.jpg?name=orig",
+        "handle": "TriciaLockwood",
+        "post": "https://x.com/TriciaLockwood/status/1146585493305528326",
+        "alt": "Miette: the photo from @TriciaLockwood's post"
       },
       "source": "search"
     },
@@ -335,6 +929,24 @@
       },
       "source": "proof"
     },
+    "MIKANCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/Fov9GRFagAA7Mh6.jpg?name=orig",
+        "handle": "weichen_kh",
+        "post": "https://x.com/weichen_kh/status/1624670499673604099",
+        "alt": "Mikan: the photo from @weichen_kh's post"
+      },
+      "source": "proof"
+    },
+    "MILKWEED": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HPhueICWgAAqS92.jpg?name=orig",
+        "handle": "McDonalds",
+        "post": "https://x.com/McDonalds/status/2087539894377664959",
+        "alt": "Hello Kitty: the photo from @McDonalds's post"
+      },
+      "source": "proof"
+    },
     "MOMOTHECAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/CwHms69XgAItuDM.jpg",
@@ -343,6 +955,24 @@
         "alt": "Momo the Cat: the photo from @Google's post"
       },
       "source": "proof"
+    },
+    "MOONRESCUE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FNF1Q1TXsAgPVr9.png?name=orig",
+        "handle": "mooncatrescue",
+        "post": "https://x.com/mooncatrescue/status/1500109084556771328",
+        "alt": "MoonCats: the photo from @mooncatrescue's post"
+      },
+      "source": "search"
+    },
+    "MRBCHONK": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/EDdtHTJXkAEw1jC.jpg?name=orig",
+        "handle": "MorrisAnimal",
+        "post": "https://x.com/MorrisAnimal/status/1168522605718114304",
+        "alt": "Mr. B: the photo from @MorrisAnimal's post"
+      },
+      "source": "search"
     },
     "MRSNORRCAT": {
       "realPhoto": {
@@ -362,6 +992,15 @@
       },
       "source": "proof"
     },
+    "NAKANOSAN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HHnujvabkAAXiTc.jpg",
+        "handle": "choden_inubou",
+        "post": "https://x.com/choden_inubou/status/2051933909211119726",
+        "alt": "Nakano-san (kari): the photo from @choden_inubou's post"
+      },
+      "source": "proof"
+    },
     "NALACATCAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/E_ABtQdXsAQJaij.jpg",
@@ -370,6 +1009,24 @@
         "alt": "Nala: the photo from @thetimes's post"
       },
       "source": "proof"
+    },
+    "NEKOBUS": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/G40GFk9boAAzSzQ.jpg?name=orig",
+        "handle": "GhibliML",
+        "post": "https://x.com/GhibliML/status/1985249710014358007",
+        "alt": "Catbus: the photo from @GhibliML's post"
+      },
+      "source": "search"
+    },
+    "NEKOSAMA": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/DMz331mVAAAmUsS.jpg?name=orig",
+        "handle": "hidekiccan",
+        "post": "https://x.com/hidekiccan/status/922384650885988352",
+        "alt": "Neko-sama: the photo from @hidekiccan's post"
+      },
+      "source": "search"
     },
     "NERMALCAT": {
       "realPhoto": {
@@ -389,6 +1046,15 @@
       },
       "source": "proof"
     },
+    "NORAKEYS": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HGjhSjpW0AAehnC.png?name=orig",
+        "handle": "MalthusianThan1",
+        "post": "https://x.com/MalthusianThan1/status/2047135127143108633",
+        "alt": "Nora: the photo from @MalthusianThan1's post"
+      },
+      "source": "proof"
+    },
     "NOSTROMCAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/EPpDHwRXUAEvWRj.jpg",
@@ -398,12 +1064,30 @@
       },
       "source": "proof"
     },
+    "NUB": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/Gq9S4Y4aAAArMj2.png",
+        "handle": "verio_network",
+        "post": "https://x.com/verio_network/status/1922852235454661030",
+        "alt": "Nub: the photo from @verio_network's post"
+      },
+      "source": "search"
+    },
     "NYANKOSEN": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/GTg6cXVXEAE-0Ff.jpg",
         "handle": "AitaiKuji",
         "post": "https://x.com/AitaiKuji/status/1817266711646683590",
         "alt": "Nyanko-sensei: the photo from @AitaiKuji's post"
+      },
+      "source": "proof"
+    },
+    "NYAZCATS": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HPkDR3LXUAAXDG5.jpg?name=orig",
+        "handle": "Nyazsche",
+        "post": "https://x.com/Nyazsche/status/2087703510666084646",
+        "alt": "Nyazsche's Cats: the photo from @Nyazsche's post"
       },
       "source": "proof"
     },
@@ -415,6 +1099,42 @@
         "alt": "Sketch of origin story - cat looking over the side of a wooden barrier."
       },
       "source": "proof"
+    },
+    "OJINEKO": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/DCHn6j3UwAA1Zfn.jpg",
+        "handle": "sakurai_umi_",
+        "post": "https://x.com/sakurai_umi_/status/874235144307068928",
+        "alt": "Fukumaru: the photo from @sakurai_umi_'s post"
+      },
+      "source": "proof"
+    },
+    "OLDFLOSSIE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FiSV-XTVQAM00m_.jpg?name=orig",
+        "handle": "GWR",
+        "post": "https://x.com/GWR/status/1595565081021992960",
+        "alt": "Flossie: the photo from @GWR's post"
+      },
+      "source": "proof"
+    },
+    "OLIVIACAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/EWP9FSSX0AUCYcE.jpg?name=orig",
+        "handle": "taylorswift13",
+        "post": "https://x.com/taylorswift13/status/1253123395010658306",
+        "alt": "Olivia Benson: the photo from @taylorswift13's post"
+      },
+      "source": "search"
+    },
+    "ORANGEY": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HQ59_XfXkAAIwl2.jpg?name=orig",
+        "handle": "sistercelluloid",
+        "post": "https://x.com/sistercelluloid/status/2093749414787514817",
+        "alt": "Orangey: the photo from @sistercelluloid's post"
+      },
+      "source": "search"
     },
     "OSCARRI": {
       "realPhoto": {
@@ -431,6 +1151,78 @@
         "handle": "monsterhunter",
         "post": "https://x.com/monsterhunter/status/1796549861124272431",
         "alt": "Palico: the photo from @monsterhunter's post"
+      },
+      "source": "proof"
+    },
+    "PAPRIKA": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/EqbiQeVXMAE56Mp.png?name=orig",
+        "handle": "SouthwestAir",
+        "post": "https://x.com/SouthwestAir/status/1344010313755217920",
+        "alt": "Walter: the photo from @SouthwestAir's post"
+      },
+      "source": "search"
+    },
+    "PAYAKE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HHcIKFDaMAAMiSu.jpg?name=orig",
+        "handle": "donguri_manchi",
+        "post": "https://x.com/donguri_manchi/status/2051120885462171727",
+        "alt": "Donguri: the photo from @donguri_manchi's post"
+      },
+      "source": "proof"
+    },
+    "PEEPEECAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/DzU-WN_VYAAdtoJ.jpg?name=orig",
+        "handle": "peepeeplayhouse",
+        "post": "https://x.com/peepeeplayhouse/status/1095850640117444608",
+        "alt": "Peepee: the photo from @peepeeplayhouse's post"
+      },
+      "source": "search"
+    },
+    "PEPECAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GtJ6cNEXMAAApAR.jpg?name=orig",
+        "handle": "pepecattoken",
+        "post": "https://x.com/pepecattoken/status/1932744490743124330",
+        "alt": "PEPECAT: the photo from @pepecattoken's post"
+      },
+      "source": "search"
+    },
+    "PEWTER": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/amplify_video_thumb/2094871192977248256/img/O2dMDCGlD68e3Qsk.jpg",
+        "handle": "RyDawg42",
+        "post": "https://x.com/RyDawg42/status/2094871272622801131",
+        "alt": "Robinhood Pixel Cat: the video still from @RyDawg42's post"
+      },
+      "source": "proof"
+    },
+    "PICKLECCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/ext_tw_video_thumb/1314254811513139203/pu/img/57NNsld3Rkfr1T15.jpg",
+        "handle": "rickygervais",
+        "post": "https://x.com/rickygervais/status/1314254888205942784",
+        "alt": "Pickle: the video still from @rickygervais's post"
+      },
+      "source": "search"
+    },
+    "PONTAKUN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/E_5V46EUUAQ8-Gm.jpg?name=orig",
+        "handle": "TsuyoshiWood",
+        "post": "https://x.com/TsuyoshiWood/status/1440683370099339278",
+        "alt": "Ponta: the photo from @TsuyoshiWood's post"
+      },
+      "source": "search"
+    },
+    "PROFMEOW": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/DOiAnGpV4AI7SFu.jpg?name=orig",
+        "handle": "meowingtons",
+        "post": "https://x.com/meowingtons/status/930134744645455872",
+        "alt": "Professor Meowingtons PhD: the photo from @meowingtons's post"
       },
       "source": "proof"
     },
@@ -452,6 +1244,51 @@
       },
       "source": "proof"
     },
+    "QCGENESIS": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GEeBpCTXUAA6g4t.png?name=orig",
+        "handle": "Sothebysverse",
+        "post": "https://x.com/Sothebysverse/status/1749509636372205958",
+        "alt": "Genesis Cat: the photo from @Sothebysverse's post"
+      },
+      "source": "search"
+    },
+    "RAYCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HRH9jfXW8AADSP1.jpg?name=orig",
+        "handle": "RayCat_Solana",
+        "post": "https://x.com/RayCat_Solana/status/2094734092335993094",
+        "alt": "RayCat: the photo from @RayCat_Solana's post"
+      },
+      "source": "search"
+    },
+    "RAYMONDCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/EjQEOUeXkAAT0cQ.png?name=orig",
+        "handle": "ACWorldBlog",
+        "post": "https://x.com/ACWorldBlog/status/1311678037507952640",
+        "alt": "Raymond: the photo from @ACWorldBlog's post"
+      },
+      "source": "proof"
+    },
+    "ROLFCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HO8HVyAWsAAEsMx.jpg?name=orig",
+        "handle": "RolfatWarwick",
+        "post": "https://x.com/RolfatWarwick/status/2084893226348015685",
+        "alt": "Rolf: the photo from @RolfatWarwick's post"
+      },
+      "source": "proof"
+    },
+    "RURUNEKO": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/Ey6RWhuUcAAq7DO.jpg?name=orig",
+        "handle": "turi2018",
+        "post": "https://x.com/turi2018/status/1382201954357563396",
+        "alt": "Ruru: the photo from @turi2018's post"
+      },
+      "source": "proof"
+    },
     "SABERHACAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/FP6-yYcWYAEXfiY.jpg",
@@ -461,12 +1298,66 @@
       },
       "source": "proof"
     },
+    "SAGGYCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HA8dB6TXwAAUCKh.jpg?name=orig",
+        "handle": "MarkFow74007631",
+        "post": "https://x.com/MarkFow74007631/status/2021866688006824383",
+        "alt": "Bagpuss: the photo from @MarkFow74007631's post"
+      },
+      "source": "proof"
+    },
+    "SALADCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GXNN88BXMAE90bJ.jpg?name=orig",
+        "handle": "SmudgeLord",
+        "post": "https://x.com/SmudgeLord/status/1833895189372338546",
+        "alt": "Smudge: the photo from @SmudgeLord's post"
+      },
+      "source": "proof"
+    },
+    "SAMBROWS": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/CkisEbPUgAA6PS-.jpg?name=orig",
+        "handle": "Samhaseyebrows",
+        "post": "https://x.com/Samhaseyebrows/status/741031337776156672",
+        "alt": "Sam: the photo from @Samhaseyebrows's post"
+      },
+      "source": "proof"
+    },
+    "SAMENYAN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HRtOzUvbcAABzQU.jpg?name=orig",
+        "handle": "mofu_sand",
+        "post": "https://x.com/mofu_sand/status/2097459970849816950",
+        "alt": "Same-nyan: the photo from @mofu_sand's post"
+      },
+      "source": "proof"
+    },
+    "SANDSTEP": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FkM36xSVQAMy04f.jpg",
+        "handle": "SantaMonicaMtns",
+        "post": "https://x.com/SantaMonicaMtns/status/1604187893924102145",
+        "alt": "P-22: the photo from @SantaMonicaMtns's post"
+      },
+      "source": "search"
+    },
     "SASSYHB": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/tweet_video_thumb/D1ZfdszWkAEokce.jpg",
         "handle": "PasteMagazine",
         "post": "https://x.com/PasteMagazine/status/1105175789279031296",
         "alt": "Sassy: the video still from @PasteMagazine's post"
+      },
+      "source": "proof"
+    },
+    "SAYHIBOB": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FOJVRGCWYAMtWW_.jpg?name=orig",
+        "handle": "rambites",
+        "post": "https://x.com/rambites/status/1504858984116805632",
+        "alt": "Bob: the photo from @rambites's post"
       },
       "source": "proof"
     },
@@ -497,6 +1388,60 @@
       },
       "source": "proof"
     },
+    "SGTTIBBS": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/ELuXMbBWsAAOQB1.jpg?name=orig",
+        "handle": "opossumcat",
+        "post": "https://x.com/opossumcat/status/1205723587405078528",
+        "alt": "Sergeant Tibbs: the photo from @opossumcat's post"
+      },
+      "source": "search"
+    },
+    "SINSMILE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GiujJNyXkAALEGe.jpg",
+        "handle": "oreoeocat",
+        "post": "https://x.com/oreoeocat/status/1885780297016287575",
+        "alt": "Monkey: the photo from @oreoeocat's post"
+      },
+      "source": "proof"
+    },
+    "SNOWBALCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FZpomurXkAAdjFb.png",
+        "handle": "TheSimpsons",
+        "post": "https://x.com/TheSimpsons/status/1556671639865139200",
+        "alt": "Snowball II: the video still from @TheSimpsons's post"
+      },
+      "source": "proof"
+    },
+    "SNOWBELCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FvHmi1EXoAU5JwT.jpg?name=orig",
+        "handle": "PinkNews",
+        "post": "https://x.com/PinkNews/status/1653357876209934336",
+        "alt": "Snowbell: the photo from @PinkNews's post"
+      },
+      "source": "search"
+    },
+    "SNOWCURL": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HIHutIdb0AAi9NW.jpg?name=orig",
+        "handle": "NotATeslaApp",
+        "post": "https://x.com/NotATeslaApp/status/2054185377917984963",
+        "alt": "Balloon Cat: the photo from @NotATeslaApp's post"
+      },
+      "source": "proof"
+    },
+    "SOCKAMILL": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FX_GIqjWIAAHdkp.jpg?name=orig",
+        "handle": "textfiles",
+        "post": "https://x.com/textfiles/status/1549175841082511361",
+        "alt": "Sockington: the photo from @textfiles's post"
+      },
+      "source": "proof"
+    },
     "SOCKSCACAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/DNKCR04XUAA_555.jpg",
@@ -515,6 +1460,15 @@
       },
       "source": "proof"
     },
+    "SQUINTPAW": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HALFz8JWAAEvBmr.jpg?name=orig",
+        "handle": "Kalshi",
+        "post": "https://x.com/Kalshi/status/2018393155373072538",
+        "alt": "Free Groceries Cat: the photo from @Kalshi's post"
+      },
+      "source": "search"
+    },
     "STEPANCAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/FGRIbv9WUAE6RGX.jpg",
@@ -523,6 +1477,33 @@
         "alt": "Stepan: the photo from @Ukraine's post"
       },
       "source": "proof"
+    },
+    "STONKCATS": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HTg_DE3X0AA12f9.jpg?name=orig",
+        "handle": "stonkcatsnft",
+        "post": "https://x.com/stonkcatsnft/status/2105502161106858079",
+        "alt": "Stonk Cats #0055: the photo from @stonkcatsnft's post"
+      },
+      "source": "search"
+    },
+    "STOURCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HTZVS0gWQAEeawr.jpg?name=orig",
+        "handle": "TheStourbridge",
+        "post": "https://x.com/TheStourbridge/status/2104963663115452578",
+        "alt": "George: the photo from @TheStourbridge's post"
+      },
+      "source": "proof"
+    },
+    "STRAYB12": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/F3Lo0S6bAAASply.jpg",
+        "handle": "A_i",
+        "post": "https://x.com/A_i/status/1689668810335551488",
+        "alt": "The Cat: the video still from @A_i's post"
+      },
+      "source": "search"
     },
     "STREETBOB": {
       "realPhoto": {
@@ -542,6 +1523,15 @@
       },
       "source": "proof"
     },
+    "SUSHITUNA": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/ext_tw_video_thumb/1179677965896040448/pu/img/kWAi2CEPhGrco4Bq.jpg",
+        "handle": "JBCrewdotcom",
+        "post": "https://x.com/JBCrewdotcom/status/1179678022280065024",
+        "alt": "Sushi & Tuna: the video still from @JBCrewdotcom's post"
+      },
+      "source": "search"
+    },
     "TALKTOM": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/EhAd-B8XgAgYz2N.jpg",
@@ -559,6 +1549,15 @@
         "alt": "Cat with station masters hat and medal"
       },
       "source": "proof"
+    },
+    "TARTANPAW": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FXkfpuzX0AAIl62.jpg",
+        "handle": "RBLXTradingNews",
+        "post": "https://x.com/RBLXTradingNews/status/1547302826036154370",
+        "alt": "Business Cat: the photo from @RBLXTradingNews's post"
+      },
+      "source": "search"
     },
     "THACKERY": {
       "realPhoto": {
@@ -605,6 +1604,60 @@
       },
       "source": "proof"
     },
+    "TSUKI": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HRdhpBdbMAAVPzH.jpg?name=orig",
+        "handle": "tsukionsolana",
+        "post": "https://x.com/tsukionsolana/status/2096422633801740647",
+        "alt": "Diana: the photo from @tsukionsolana's post"
+      },
+      "source": "search"
+    },
+    "TSUSAN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/G9iFUeuaMAIAWjS.jpg?name=orig",
+        "handle": "tsushimacat",
+        "post": "https://x.com/tsushimacat/status/2006500235741446601",
+        "alt": "Tsushima: the photo from @tsushimacat's post"
+      },
+      "source": "proof"
+    },
+    "TUPPENCE": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HSU0cOIX0AA1l9D.png?name=orig",
+        "handle": "fatcatbatratwif",
+        "post": "https://x.com/fatcatbatratwif/status/2100142472466706858",
+        "alt": "Fat Cat Bat Rat: the photo from @fatcatbatratwif's post"
+      },
+      "source": "search"
+    },
+    "TUXSTAN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/D2XL9mCXgAEgpeA.jpg?name=orig",
+        "handle": "uoftcanpol",
+        "post": "https://x.com/uoftcanpol/status/1109517485630464006",
+        "alt": "Tuxedo Stan: the photo from @uoftcanpol's post"
+      },
+      "source": "proof"
+    },
+    "ULYSSESCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/GXHgxrYaYAAGmFS.jpg?name=orig",
+        "handle": "N7yx_0",
+        "post": "https://x.com/N7yx_0/status/1833493673721680175",
+        "alt": "Ulysses: the photo from @N7yx_0's post"
+      },
+      "source": "proof"
+    },
+    "UNIUNI": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HRkF-ccaEAAhE8X.jpg",
+        "handle": "unicouniuni3",
+        "post": "https://x.com/unicouniuni3/status/2096713681530970406",
+        "alt": "Uni: the photo from @unicouniuni3's post"
+      },
+      "source": "proof"
+    },
     "UNSINKSAM": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/tweet_video_thumb/D36PjTEWwAA_Vja.jpg",
@@ -623,6 +1676,33 @@
       },
       "source": "proof"
     },
+    "VIBECOIN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HCAR4tlWkAEJt-x.jpg?name=orig",
+        "handle": "VibeCoinOnAnon",
+        "post": "https://x.com/VibeCoinOnAnon/status/2026639540614504747",
+        "alt": "Vibing Cat: the photo from @VibeCoinOnAnon's post"
+      },
+      "source": "search"
+    },
+    "WARMSPOT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FH9OzmyVcAMqTBK.jpg?name=orig",
+        "handle": "Tippen22",
+        "post": "https://x.com/Tippen22/status/1476985855981993984",
+        "alt": "Cat 5: the photo from @Tippen22's post"
+      },
+      "source": "search"
+    },
+    "WEN": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HS-75fdW4AAjfxy.jpg?name=orig",
+        "handle": "wenwencoin",
+        "post": "https://x.com/wenwencoin/status/2103106150682038383",
+        "alt": "Wen: the photo from @wenwencoin's post"
+      },
+      "source": "search"
+    },
     "WILLOWCAT": {
       "realPhoto": {
         "url": "https://pbs.twimg.com/media/FKMDZgVWUAIiL55.jpg",
@@ -631,141 +1711,93 @@
         "alt": "Willow: the photo from @Reuters's post"
       },
       "source": "proof"
+    },
+    "YONTAMACAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HK6ip3UbsAEX2jq.jpg?name=orig",
+        "handle": "ekichoTAMA",
+        "post": "https://x.com/ekichoTAMA/status/2066768127787258001",
+        "alt": "Yontama: the photo from @ekichoTAMA's post"
+      },
+      "source": "proof"
+    },
+    "YOSHINEKO": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/FJnR0WVUUAA_six.jpg",
+        "handle": "MAFF_JAPAN",
+        "post": "https://x.com/MAFF_JAPAN/status/1484449247500013570",
+        "alt": "Shigoto Neko: the photo from @MAFF_JAPAN's post"
+      },
+      "source": "search"
+    },
+    "ZCAT": {
+      "realPhoto": {
+        "url": "https://pbs.twimg.com/media/HRgUdidawAAhF5N.jpg?name=orig",
+        "handle": "LaunchOnSF",
+        "post": "https://x.com/LaunchOnSF/status/2096448127024890034",
+        "alt": "Anonymous Cat: the photo from @LaunchOnSF's post"
+      },
+      "source": "search"
     }
   },
   "none": {
-    "AMBERDROP": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "AMRCAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "APOTHECAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "ARTEMISCAT": "the pictures show a person and a poster without Artemis",
-    "BENBUTTON": "the only photo shows a real person's face",
-    "BIGGLESCAT": "the X proof post has no photo; none found on X",
-    "BOXWOOD": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "BURLYPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "BUTTERED": "the X proof post has no photo; none found on X",
-    "CABLETAIL": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "CAMTHECAT": "the X proof post has no photo; none found on X",
-    "CANDLEWICK": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "CASENAP": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "CATCOIN": "the X proof post has no photo; none found on X",
-    "CATE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "CHEETLE": "the X proof post has no photo; none found on X",
-    "CHESHIRCAT": "the X proof post has no photo; none found on X",
-    "CHIK": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "CHOUPETCAT": "the X proof post has no photo; none found on X",
-    "COBBLEPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "COLEMARM": "the X proof post has no photo; none found on X",
-    "COOPERCAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "CORSAGE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "COTTAPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "COUCHCAP": "the proof picture shows Pusheen stickers, not the cat this one follows",
-    "COWARDLION": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "CROOKSHNK": "the only photo shows a real person's face",
-    "CURFEWPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "DELILAHCAT": "the only photo shows a real person's face",
-    "DROWSEPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "EVERLOOP": "the X proof post has no photo; none found on X",
-    "FLERKENCAT": "the X proof post has no photo; none found on X",
-    "GATO": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "GIMBALPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "GLINTPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "GRIDDLE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "GRREAT": "the X proof post has no photo; none found on X",
-    "HOVERPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "HUBBUB": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "HUNCHPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "ICICLEPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "INGOTLOAF": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "JITTERPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "KEEPSAKE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "KERNELPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "KET": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "KIOSKPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "KITTENPLZ": "the only photo shows a real person's face",
-    "KITTY": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "KNITPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "KPURRY": "the X proof post has no photo; none found on X",
-    "LACQUER": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "LALEO": "the only photo shows a real person's face",
-    "LATCHKEY": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "LEVERCAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "LICHENPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "LIDNAP": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "LILBUBCAT": "the only photo shows a real person's face",
-    "MANEKI": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "MARUBOX": "the X proof post has no photo; none found on X",
-    "MEMOPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "MEREDITCAT": "the X proof post has no photo; none found on X",
-    "MEW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "MILKWEED": "the proof picture shows a different (cartoon) cat by design",
-    "MILLRACE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "MISTO": "the only photo shows a real person's face",
-    "MITTENSCAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "NEKOBUS": "the video frame shows a hand and a toy, not the Catbus",
-    "NOTEPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "NUB": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "OLIVIACAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "PAPRIKA": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "PARLORPUFF": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "PATCHPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "PAWPOST": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "PEPECAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "PEPPERCAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "PEWTER": "the quoted video frame shows an app screen, no cat",
-    "PICKLECCAT": "the X proof post has no photo; none found on X",
-    "PINROW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "POPCAT": "the X proof post has no photo; none found on X",
-    "PRISMPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "PUMICE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "RAFTERPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "RAYCAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "RIMESTRIPE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "RKC": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "ROOKIEPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "ROSETTE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "RUBYCAT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "RUSTLEPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SAFFWHISK": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SANDSTEP": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SAVEPAWS": "the proof picture is a sketch of a person",
-    "SCUFFPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SGTTIBBS": "the only photo shows a real person's face",
-    "SILKSTRIPE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SKEINKIT": "the proof photo shows a drone, no cat",
-    "SNOWBALCAT": "the video frame is a cartoon scene where the cat is barely visible",
-    "SNOWBELCAT": "the poster shows Stuart the mouse, not Snowbell",
-    "SNOWCURL": "the proof picture is a text graphic of a balloon avatar",
-    "SNUGPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SOCKFOOT": "the proof video shows a dog",
-    "SORRELPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SQUINTPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "STONKCATS": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "STRAYB12": "the X proof post has no photo; none found on X",
-    "STUBTAIL": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SUGARSOOT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SUNSTRETCH": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "SUSHITUNA": "the only photo shows a real person's face",
-    "TALLYSPOT": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "TARTANPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "TOMRUTGERS": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "TREADPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "TRILLBY": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "TRINKETCAT": "the proof photo shows a dog",
-    "TSUKI": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "TUBBSCAT": "the pictures are game screens without Tubbs",
-    "TUPPENCE": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "UMBERPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "UPDATECAT": "the only frame is a blurred GIF still",
-    "VELVETPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "VIBECOIN": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "VIGNETPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "WARMSPOT": "the quoted photo shows a sticker in a box, not the cat",
-    "WAYBILL": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "WEN": "the proof picture is a poem (text)",
-    "WHIRRPAW": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "WHISK100": "the proof photo shows other cats, not this one (no cat link)",
-    "WINDSOCK": "no X post with a photo (text-only, web proof or no proof); none found on X",
-    "ZCAT": "no X post with a photo (text-only, web proof or no proof); none found on X"
+    "ARTEMISCAT": "no official Artemis image found on X; Artemis II plush photos (ToonHive, Dexerto, @AlbieroMarcoArt) all show mission-control staff faces",
+    "BIGGLESCAT": "no official or reputable X post with a still of Mr. Bigglesworth; only random/crypto-promo accounts (e.g. @BoNeS_2133) post him",
+    "BURLYPAW": "the Hims & Hers flexing text-art cat post could not be found on X",
+    "CATE": "the kitten video by Atsuko Sato (@kabosumama) could not be found on X; only coin-promo accounts repost it",
+    "CHIK": "no X post from @SKhynix (or anyone reputable) showing Chik found",
+    "CLIVECAT": "proof photo shows Kate Beckinsale's face; Clive mostly posted on Instagram, nothing face-free found on X",
+    "COOPERCAT": "the only fitting picture is an ad image (pbs.twimg.com/ad_img), not a post photo",
+    "COUCHCAP": "proof is a Pusheen post; no X post with the Make-A-Video TV-watching cat found",
+    "COWARDLION": "every X image found shows Bert Lahr's face (or a lifelike cast of it on the museum costume); no Sphere post found",
+    "CROOKSHNK": "MuggleNet photo shows a real actor face; no official X image of Crookshanks found",
+    "DATASPOT": "@StarTrek proof has no image; other X posts show Brent Spiner's face or a different cat",
+    "DELILAHCAT": "every X photo of Delilah found (Sotheby's proof, fan posts) also shows Freddie Mercury's face; no face-free shot found",
+    "DROWSEPAW": "no @cypherpunk post with the armoured lion found (only text and logo graphics)",
+    "GATEKITTY": "no X post from @konekone2026 shows the orange gatekeeper cat as the subject (launch video still is a screen without the cat; later posts show other cats)",
+    "GATO": "no Rockstar or coin X post with a still of the ATM cat found",
+    "HUNCHPAW": "no X post with the golden-kitten CatCoin logo found (@catcoin posts show other cats or blank video stills)",
+    "JITTERPAW": "no Dutch Bros X post of the October 2023 cat sticker found",
+    "JJINGJJING": "all @moonriver365 photos of Jjing-jjing also show Moon Jae-in's face; no other X photo found",
+    "KEEPSAKE": "no X post from Sandisk (or a reputable account) showing the CATS! ad Persian; Sandisk's own cat-video post shows people's faces",
+    "KNITPAW": "Brett Adcock's Laser Cat post (adcock_brett/1604895240225116160) shows the logo only as a tiny thumbnail beside a real person's face; nothing cleaner found",
+    "KPURRY": "Katy Perry posts about Kitty Purry have no photos (photos were on Instagram); nothing else found on X",
+    "LACQUER": "no Alibaba/Tmall official post showing the black Tmall cat; only memecoin promo accounts post the mascot (e.g. @genyrational 2099184172292010059)",
+    "LALEO": "every X photo of Leo found (CloutNewsMedia post) shows Lisa's face; no face-free post found",
+    "LEVERCAT": "@LeverCatSol status with the mascot image not found via search",
+    "MEMOPAW": "no Micron X post with the cat found",
+    "MEREDITCAT": "People proof post has no photo; Taylor Swift and fan posts found all show a real face (or another cat)",
+    "MISTO": "official @CatsMusical images of Mistoffelees are stage photos of the actor (a real person's face in makeup)",
+    "MITTENSCAT": "the Rumble clip of Mittens was not found on @rumblevideo or elsewhere on X",
+    "MRJINX": "proof post has no photo; no X post showing Mr. Jinx without a person found",
+    "PARLORPUFF": "the Feb 2024 OpenAI DALL-E cat post could not be found on X",
+    "PAWPOST": "the MAGA cat image was posted on Truth Social; no X copy from an official or reputable account found",
+    "PEPPERCAT": "Rivian's National Pet Day story with Pepper not found on X",
+    "POPCAT": "@XavierBFB's account is protected; only coin/price graphics found, no photo of Oatmeal from the owner or an official account",
+    "PRINCEKIT": "the only public photo of Prince on X (Downing Street desk shot) also shows Keir Starmer's face",
+    "RAFTERPAW": "Classy Cats rescue photo is not on X; no owner/official account",
+    "RIMESTRIPE": "no Arm X post of the Ice Cave tiger found (@ArmMobile/@ArmMali inactive)",
+    "RKC": "Roaring Kitty's account only shows the kitten as a profile picture; the May 2026 posts were deleted and no X post with the photo was found",
+    "ROSETTE": "no X post with the Jaguar logo/jaguar found",
+    "RUBYCAT": "no X post with a photo of Ruby (Brighton Grindr/Tinder cat) found",
+    "SAFFWHISK": "no Nebius X post with the tiger found",
+    "SAVEPAWS": "proof picture is a sketch of a person; no X post of the kitten avatar found",
+    "SCUFFPAW": "only Didga post with media found (@CatmantooDidga) shows people's faces; no GoPro X post with a photo found",
+    "SILKSTRIPE": "Elon Musk has never posted a photo of Schrodinger; his tweet is text only",
+    "SOCKFOOT": "proof video shows a dog; NVIDIA's AI Cat Chaser cat photo is only on its developer blog, no X post with it found",
+    "SORRELPAW": "no MGM Resorts X post of the Leona logo found",
+    "STUBTAIL": "no AMD X post with a bobcat image for the Bobcat core found",
+    "SUGARSOOT": "no Krispy Kreme X post showing the 2021 Abra Cat Dabra doughnut found",
+    "SUNSTRETCH": "no X post from @lululemon or a reputable account showing the Tiger Tide print found",
+    "SYBILCAT": "the only photo found carries a Getty/AFP watermark",
+    "TALLYSPOT": "named after IBM's Informix 'Cheetah' codename; there is no real cat to photograph",
+    "THINKTHINK": "all @iingwen photos found show a real face (best one has Tsai blurred in the background)",
+    "TOMRUTGERS": "the J&J archive photo appears on X only in posts by small unofficial accounts; nothing from @JNJNews or a reputable outlet",
+    "TREADPAW": "named after the Air Jordan 4 'Black Cat' sneaker; there is no real cat to photograph",
+    "TUBBSCAT": "no official X image of Tubbs found (official @nekoatsume_tw posts checked show other cats; only an arcade photo of Tubbs plush toys)",
+    "UPDATECAT": "only Intel's blurred GIF still; other #UpdateMeow posts show a person's face or a different cat",
+    "VELVETPAW": "no X post shows a panther for Lockheed Martin's PANTERA pod",
+    "WINDSOCK": "no @BoeingAirplanes post with the RDU kitten found"
   },
   "hidden": {
     "MEDIACAT": {

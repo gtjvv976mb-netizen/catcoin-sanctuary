@@ -38,7 +38,11 @@ export const MAX_SCALE = 3, MIN_SCALE = 0.5;
    from renders of the true ratio (A), its 0.75th power (B) and this. It keeps the species' order and
    their ratios to one another in proportion. A cartoon or fantasy big cat (a cereal-box tiger, an
    armoured lion, an ice tiger) is drawn at its species' size. `domestic`: a wild-cat hybrid bred as a
-   house cat (an F1 Savannah), bigger than a house cat but not a big cat (no big-cat ways). */
+   house cat (an F1 Savannah), bigger than a house cat but not a big cat (no big-cat ways).
+   Since 2026-10-01 the owner: "make the big cats only 120% bigger than the normal cats": every species is
+   drawn at most BIG_CAT_SCALE (1.2) × an ordinary cat, a lion and a bobcat alike (and a Savannah no bigger
+   than a lion). The table still says how big each really is; the garden caps it. */
+export const BIG_CAT_SCALE = 1.2;
 export const HOUSE_CAT_SHOULDER = 0.25;
 export const SIZE_POWER = 0.6;
 export const SPECIES = {
@@ -51,8 +55,8 @@ export const SPECIES = {
 /** How many times a house cat's size a species really is (shoulder height over 0.25 m). */
 export const speciesRatio = (sp) => (SPECIES[sp] ? SPECIES[sp].shoulder / HOUSE_CAT_SHOULDER : 1);
 /** How much bigger than an ordinary adult a cat of this species is drawn (and simulated): its real
-    ratio to the SIZE_POWER, to two places. 1 for a species not in the table. */
-export const speciesScale = (sp) => (SPECIES[sp] ? Math.round(Math.min(MAX_SCALE, speciesRatio(sp) ** SIZE_POWER) * 100) / 100 : 1);
+    ratio to the SIZE_POWER, to two places, at most BIG_CAT_SCALE. 1 for a species not in the table. */
+export const speciesScale = (sp) => (SPECIES[sp] ? Math.round(Math.min(BIG_CAT_SCALE, speciesRatio(sp) ** SIZE_POWER) * 100) / 100 : 1);
 /** Which species a look's big-cat word names (the words just round it, so "mountain lion" is a cougar
     and "snow leopard" not a leopard): the first rule that matches, or null. A black panther is a
     melanistic leopard unless the look says jaguar; "Lynx rufus" beside "bobcat" is a bobcat. */
@@ -221,7 +225,7 @@ export function parseTraits({ story = "", caption = "", look = "", lore = "", wh
   else if (size !== "medium") { const src = find(L, size === "large" ? LARGE : SMALL) ? L : tale, m = find(src, size === "large" ? LARGE : SMALL); why.size = m ? `"${quote(src, m)}"` : age; }
   if (species) {
     why.species = fixed.species ? "hand" : `"${quote(lead, big)}"`;
-    why.scale = `a ${species}: ${SPECIES[species].shoulder} m at the shoulder, ${r2(speciesRatio(species))}x a house cat's ${HOUSE_CAT_SHOULDER} m; drawn at ${r2(speciesRatio(species))}^${SIZE_POWER} = ${speciesScale(species)}x`;
+    why.scale = `a ${species}: ${SPECIES[species].shoulder} m at the shoulder, ${r2(speciesRatio(species))}x a house cat's ${HOUSE_CAT_SHOULDER} m; ${r2(speciesRatio(species))}^${SIZE_POWER} = ${r2(speciesRatio(species) ** SIZE_POWER)}x, drawn at ${speciesScale(species)}x (at most ${BIG_CAT_SCALE}x)`;
   }
   // Build: from the look first (its first mention), then the story. Big cats are never "chunky".
   let build = "normal";
@@ -261,7 +265,7 @@ export function parseTraits({ story = "", caption = "", look = "", lore = "", wh
   for (const key of TRAIT_KEYS) t[key] = r2(clamp(t[key], 0.05, 0.95));
   const out = { ...t, age, build, legs, size, flags: FLAGS.filter((f) => flags.includes(f)), signature };
   if (species) { out.species = species; out.scale = speciesScale(species); }
-  else if (size === "bigcat") out.scale = 1.45;
+  else if (size === "bigcat") out.scale = BIG_CAT_SCALE;
   for (const key of Object.keys(why)) if (Array.isArray(why[key])) { if (t[key] === 0.5) delete why[key]; else why[key] = why[key].slice(0, 3).join("; "); }
   out.why = why;
   return out;
@@ -273,9 +277,7 @@ export function parseTraits({ story = "", caption = "", look = "", lore = "", wh
 export const TRAIT_OVERRIDES = {
   // Cats whose words carry no temperament.
   SNOWCURL: { energy: .4, social: .6, proud: .55, grace: .6, signature: "wash", note: "Tesla's Balloon Cat: a calm poser, one paw lifted to her face" },
-  TRINKETCAT: { curious: .75, playful: .6, hunter: .6, social: .35, note: "a secretive magpie who hoards pebbles" },
   COOPERCAT: { curious: .65, proud: .6, grace: .6, note: "a tidy worker sorting petals" },
-  NOTEPAW: { energy: .6, grace: .7, social: .6, bold: .55, note: "a careful courier who never drops a note" },
   RUBYCAT: { energy: .45, social: .6, curious: .55, note: "a relaxed stroller" },
   MARUBOX: { playful: .8, curious: .8, bold: .65, energy: .6, signature: "boxSit", note: "Maru: dives into every box, however small" },
   GLICAT: { social: .75, bold: .7, sleepy: .6, energy: .4, proud: .6, signature: "loaf", note: "Gli of Hagia Sophia: calm with every visitor, loafing on her ledge" },
@@ -381,16 +383,12 @@ export const TRAIT_OVERRIDES = {
   MOMOTHECAT: { curious: .65, playful: .6, grace: .65, grumpy: .45, signature: "beckon", note: "Momo, waving her wand" },
   COUCHCAP: { curious: .6, sleepy: .6, energy: .35, note: "the Make-A-Video Cat, watching TV from the sofa" },
   TUPPENCE: { social: .7, proud: .55, note: "Fat Cat Bat Rat, waiting politely for four o'clock tea" },
-  SKEINKIT: { playful: .95, grace: .25, note: "Skein, forever tangled in the yarn" },
   CAMTHECAT: { bold: .75, note: "Cam, guarding the pond like a moat" },
-  TRILLBY: { vocal: .9, social: .9, note: "Trillby chirps back and follows every chat" },
   PAWPOST: { social: .35, note: "a stern guard" },
   COWARDLION: { grumpy: .1, bold: .15, social: .6, vocal: .55, proud: .45, note: "the Cowardly Lion: timid and tearful, not cross" },
   SAFFWHISK: { bold: .85, note: "the tiger that stares down the sprinkler" },
   TARTANPAW: { proud: .8, grumpy: .6, bold: .7, note: "Business Cat: needs that TPS report" },
-  KIOSKPAW: { social: .8, playful: .65, signature: "beckon", note: "Kiosk bats the bell for each visitor" },
   TOMRUTGERS: { energy: .15, grumpy: .5, note: "Tom Rutgers: jowly and still" },
-  ICICLEPAW: { energy: .15, grace: .75, grumpy: .3, vocal: .45, note: "sits so still that moths land by him" },
   PARLORPUFF: { proud: .75, energy: .2, note: "so still visitors take her for a painting" },
   SQUINTPAW: { grumpy: .8, foodie: .8, note: "the Free Groceries Cat, frowning over his milk and baguette" },
   JITTERPAW: { grumpy: .65, energy: .7, bold: .6, note: "a scruffy, fanged coffee cat" },
@@ -467,7 +465,6 @@ export const MODEL_LIMITS = {
   JITTERPAW: { avoid: STANDING_ONLY, why: "fur modelled as loose spiky shards, which come apart in any fold" },
   PUSHEENX: { avoid: ["groom", "legLick", "earScratch", "beckon", "hindStand", "scratch", "stretch", "dab", "flop", "roll", "hop", "pounce", "sleep", "curlUp", "wake", "crouch", "wiggle"], why: "Pusheen: stub legs on a loaf of a body; no paw reaches the face, and it neither rolls over nor curls up (it dozes in its loaf)" },
   // (the final survey round: its tail root, lying along the ground from the hip, twists into a sheet even at 0.3)
-  MILLRACE: { avoid: ["earScratch", "legLick"], why: "its tail lies along the ground from the hip: a hind leg raised to the ear or to lick twists the tail's root" },
   // (fixer round 3, from renders of every wash, leg lick and ear scratch against what the skin allows (fit.json):
   // a move that can't read on the model is left out, not shown as a half gesture)
   GUMBALLW: { avoid: ["groom", "legLick", "earScratch"], why: "a cartoon cat with a head as big as its body: no paw or leg comes near its mouth or ear" },
@@ -479,7 +476,6 @@ export const MODEL_LIMITS = {
   NYANKOSEN: { avoid: ["groom", "legLick", "earScratch"], why: "a round ball of a cat on stub legs: no paw or leg comes near its mouth or ear" },
   BIGFROGGY: { avoid: ["groom", "legLick", "earScratch"], why: "a round cartoon body: no paw or leg comes near its mouth or ear" },
   MEDIACAT: { avoid: ["earScratch"], why: "its hand-made model's hind leg lifted as far as it goes stays down by its shoulder, well short of the ear" },
-  WAYBILL: { avoid: ["legLick"], why: "its skin lets a hind leg come up only a third of the way: the lick would be a nod at its knee" },
   OCTOMONA: { avoid: ["legLick"], why: "tentacles for hind legs, which sink into the lawn when one is lifted" },
   TOMBILICAT: { avoid: ["earScratch"], why: "round and short-legged: its hind paw can't get near its ear" },
   NERMALCAT: { avoid: ["earScratch"], why: "a cartoon head as big as its body: its hind paw can't get near its ear" },
@@ -554,7 +550,7 @@ export function normalizeTraits(x) {
   out.signature = has(SIGNATURES, src.signature) ? src.signature : null;
   // (a species drawn at its species' size, from the table: SPECIES; any other big cat as given)
   if (has(SPECIES, src.species)) { out.species = src.species; out.scale = speciesScale(src.species); }
-  else if (out.size === "bigcat") out.scale = Number.isFinite(src.scale) ? clamp(src.scale, 1, MAX_SCALE) : 1.45;
+  else if (out.size === "bigcat") out.scale = Number.isFinite(src.scale) ? clamp(src.scale, 1, BIG_CAT_SCALE) : BIG_CAT_SCALE;
   // (what its model can't show, catmotion ACTIONS names, kept only when there is any: see MODEL_LIMITS)
   if (Array.isArray(src.avoid) && src.avoid.length) out.avoid = src.avoid.filter((a, i) => typeof a === "string" && has(ACTIONS, a) && src.avoid.indexOf(a) === i);
   return out;

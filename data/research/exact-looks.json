@@ -6,29 +6,6 @@
   "Every resident is a four-legged cat (2026-09-26): characters who walk upright in their source keep their exact colours, markings, outfit and art style but stand and walk on four legs. Held props are dropped or set beside the cat; ridden or piloted things are dropped."
  ],
  "cats": {
-  "AMBERDROP": {
-   "kind": "planned-linked",
-   "realName": "Amberdrop the Tortie Cat",
-   "realSource": "Original sanctuary cat for the United States Oil Fund (USO). No real cat exists, so our own look text is the ground truth.",
-   "exactLook": "A normal four-legged, sleek, photo-real domestic shorthair tortoiseshell with no white. The coat is mostly glossy jet-black (neutral black, not brown), with scattered, soft-edged honey-gold/amber tortie patches and brindling covering a minority of the coat, roughly 15-25%: a gold blaze on the forehead, gold on the cheeks, chest and legs, and flecks on the tail. The gold should not form regular tabby-like bands or hard-edged geometric blocks. The eyes are green-gold (yellow-green) and the nose is dark. It wears nothing.",
-   "sources": [
-    "fields.look in data/planned.json cats[75] (AMBERDROP)",
-    "assets/portraits/AMBERDROP.jpg (the reference image for the look: coat about (25,16,11), patches about (186,111,65), eyes about (72,67,49), yellow-green)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "The cat is a black tortoiseshell with honey-gold patches and green-gold eyes, dozing in herbs, and the face matches. On the flank, though, the gold forms regular parallel curved bands, so the body reads as torbie/tabby-striped rather than scattered tortie patches, and the gold share there is higher than in the portrait. That is small pattern drift."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The base is dark chocolate-brown (about (26,10,1) rendered; about (27,9,1) in the GLB texture), not jet-black. The same renderer draws the solid-black TREADPAW as about (6,3,1), so the brown is in the texture, not in the lighting. The patches are saturated pumpkin orange (about (171,97,11)) rather than honey-gold, and they cover about 33% of the visible body, or about 35-40% counting the mid-orange tones. They are hard-edged triangular mosaic/camouflage blocks spread evenly over the face, body, legs and tail, not soft tortie patches on a mostly black coat. The eyes are yellow-amber (about (68,51,12)), not green-gold. Side by side with the portrait it does not read as the same cat."
-    }
-   ]
-  },
   "AMRCAT": {
    "kind": "planned-linked",
    "realName": "AMR猫 (read 'AMR neko'; furigana えーえむあーる ねこ). The cat introduces itself: 'ボクはAMR猫であ～る' ('I am AMR Cat'). 'AMR Cat' is its direct English rendering.",
@@ -66,40 +43,6 @@
      "asset": "kitToken",
      "severity": "mismatch",
      "why": "The same image as the portrait. The colours are close, but it is a realistic slim cat with no 'AMR' back letters, not the drawn round character."
-    }
-   ]
-  },
-  "APOTHECAT": {
-   "kind": "planned-linked",
-   "realName": "Thyme the Apothecary Cat",
-   "realSource": "No real cat. This is an original cat for Eli Lilly (LLY), designed around a drugstore's apothecary jars and herbs.",
-   "exactLook": "This is an original cat, so our look text is the ground truth. A normal four-legged domestic shorthair, grey mackerel tabby. The coat is a soft smoky grey with a faint greenish-grey (sage) cast. The stripes are darker grey and lower-contrast: an M on the forehead, banded legs and a ringed tail. Olive-green eyes and a pinkish-brown nose. It wears nothing. Scene: it dozes, eyes closed or half-closed, in the garden herb bed among old glass apothecary jars and pots of rosemary.",
-   "sources": [
-    "data/planned.json cats[APOTHECAT].look (ground truth for an original)",
-    "data/planned.json stocks[LLY].realCat (linkType none)",
-    "Pixel samples of assets/ingame/APOTHECAT.jpg body: #675c4a, #685e4b, #837b69 (hue 37-48, saturation 0.2-0.3, i.e. taupe/khaki, not sage)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "Grey mackerel tabby with olive/yellow-green eyes and a pink-brown nose, which is right. The coat has a warm beige-taupe cast (it picks up the orange backdrop) with no sage cast, and the stripes are a little higher-contrast than 'lower-contrast'."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "The closest asset: a mid-grey mackerel tabby with olive-green eyes among rosemary pots and glass jars. The coat reads neutral to warm grey under golden light with no sage cast, and the cat is awake with eyes half-open rather than dozing."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "Low-poly mackerel tabby in warm taupe/khaki-grey (body pixels about #675c4a to #837b69) with brown-grey stripes, dark olive eyes and brownish inner ears. It reads as a greige/taupe tabby, not a smoky sage-grey one."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "Same image as the portrait, upscaled. Same drift: warm beige-grey with no sage cast."
     }
    ]
   },
@@ -380,41 +323,6 @@
     }
    ]
   },
-  "BOXWOOD": {
-   "kind": "planned-linked",
-   "realName": "Boxwood the Big Calico",
-   "realSource": "An original sanctuary cat paired with COST (Costco). Costco has no cat of its own. The COST own-terms list (Hello Kitty, Sanrio, Cinnamoroll, Kuromi, Squishmallow, Snoopy) points to licensed third-party characters sold in its stores. They are not Costco lore.",
-   "exactLook": "Our own look text is the ground truth. A big, sturdy, broad-chested, normal four-legged calico house cat with a short-to-medium coat. Mostly white (about #F4EFE6): white blaze, muzzle, chin, chest, belly, legs and paws. Large, muted cardboard-tan patches (about #C39A6B: brown-tan, not bright ginger-orange) and solid black patches on the back, flanks, hips and tail. On the head (as in the portrait and lore picture), tan covers the cat's right eye and ear and black covers its left ear, with a white blaze between them. Honey-gold eyes (about #D9A03A), pink nose. It wears nothing. It naps on a tall stack of cardboard boxes.",
-   "sources": [
-    "data/planned.json BOXWOOD look and whyLook",
-    "git 86223bd handoff/scratch/launch-sheet-2/SHEET/cats-b.json BOXWOOD coat: base #F4EFE6, second #C39A6B, calico, eyes #D9A03A",
-    "git 86223bd handoff/scratch/launch-sheet-2/COST-check.mjs own terms (licensed store characters)",
-    "Pixel samples: portrait tan patches #CE9366 and #C48651; lore tan #BF8A5C and #A67244; 3D back #A36004 and #8B5B19"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "A sturdy white calico with black patches, honey-gold eyes and a pink nose, as the look says. The coloured patches are a warmer ginger-orange (sampled #CE9366 and #C48651) than muted cardboard-tan #C39A6B."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "The right cat and scene: a big white calico asleep on stacked cardboard boxes, with patches placed as in the portrait. The patches lean ginger-orange rather than cardboard-tan. The stack is only two boxes high."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "It reads as a torbie/caliby kitten. The back, flanks and tail are mostly saturated orange (sampled #A36004 and #8B5B19), crossed by black stripe-like bars. White shows only on the face, chest, belly and legs, so it is not 'mostly white'. The patches are bright orange, not cardboard-tan. It has a slim kitten build, not a big, broad-chested cat. The amber eyes and head patch placement are fine."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "Same image as the portrait: the patches are ginger-orange instead of cardboard-tan."
-    }
-   ]
-  },
   "BURLYPAW": {
    "kind": "planned-linked",
    "realName": "Muscle Cat (unverified)",
@@ -495,40 +403,6 @@
     }
    ]
   },
-  "CABLETAIL": {
-   "kind": "planned-linked",
-   "realName": "Cabletail",
-   "realSource": "No real cat. Our own original cat for the CRWV (CoreWeave) pair, inspired by data-centre fibre cabling.",
-   "exactLook": "An ordinary four-legged, lean, short-haired house cat. The base is a cool, neutral charcoal-grey tabby with no brown or warm tint. Bold black mackerel (narrow vertical) stripes run down the flanks like bundled cables. The face is striped, with an M on the brow. The tail has black rings and a dark tip. There are no white markings anywhere, and the eyes are warm gold. He wears nothing. (Ground truth is our own look text.)",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (CABLETAIL look)",
-    "/home/user/catcoin-sanctuary/data/cats-info.json (CRWV: no real cat link)",
-    "Pixel samples: portrait body median RGB(91,76,69) hue 19 deg; lore RGB(90,76,67); in-game RGB(83,58,36) saturation 0.57"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "The pattern is right: bold black mackerel stripes, striped face, ringed tail, gold eyes and no white. The base is a warm brownish grey-taupe (about #5B4C45) rather than cool charcoal grey."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "A lean mackerel tabby walks through the flower beds with gold eyes and a black-ringed tail. The base again reads warm grey-brown (about #5A4C43) rather than charcoal, and the chin and muzzle are slightly pale."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The model is a warm cocoa-brown tabby (about #533A24, clearly saturated brown) with dark brown stripes and tan paws and inner ears. It is a brown tabby, not charcoal grey with black stripes. The amber eyes and ringed tail are fine."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "It is the same image as the portrait: the pattern is right, but the base is too warm and brown for charcoal."
-    }
-   ]
-  },
   "CAITSITH": {
    "kind": "adoptable",
    "realName": "Cait Sith",
@@ -605,44 +479,6 @@
      "asset": "kitToken",
      "severity": "mismatch",
      "why": "The same image as the portrait: a realistic slim ginger-and-black calico with a black foreleg, not the plush Cam."
-    }
-   ]
-  },
-  "CANDLEWICK": {
-   "kind": "planned-linked",
-   "realName": "Candlewick (original, no real cat)",
-   "realSource": "Original cat for the WEBULL (Webull Corporation) pair. No cat link exists, so our own look text is the ground truth.",
-   "exactLook": "Original cat, from our look text. A normal four-legged female brown tabby shorthair. The ground colour is warm tawny brown with a cream-white muzzle and chest. Bold dark-brown to black vertical bars run down her sides like chart candles (mackerel stripes). She has barred legs, a ringed tail with a dark tip, and a tabby 'M' and pencilled lines on the forehead. Green eyes, pink-brick nose. Wears nothing. Realistic style.",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (CANDLEWICK look/whyLook)",
-    "/home/user/catcoin-sanctuary/assets/models/cats/CANDLEWICK.glb texture: dominant rgb(164,107,55) and rgb(141,89,42), orange-ginger"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The model is bright orange-ginger (texture about rgb(164,107,55)), not brown tabby. It has scattered, irregular dark triangular blotches instead of vertical side bars, so it reads as blotched or spotted, not barred. It also has solid dark-brown feet and a red-pink nose. The green eyes and cream chest are right."
-    }
-   ]
-  },
-  "CASENAP": {
-   "kind": "planned-linked",
-   "realName": "Satchel the Ginger-Point Cat",
-   "realSource": "An original sanctuary cat for FWDI (Forward Industries), inspired by its long-running soft-sided carrying-case business. No real cat exists.",
-   "exactLook": "An original cat; the look text is the ground truth. A small, normal, four-legged shorthair house cat with a pale cream body (launch sheet #F3E7D3) and ginger/orange points (#D97E3A), i.e. a flame point. The points are a ginger face mask over the forehead, eyes and muzzle, ginger ears, ginger lower legs and paws, and a fully ginger tail. The eyes are blue (#79B4E3). It wears nothing. It naps inside an open, soft-sided carrying case by the greenhouse door.",
-   "sources": [
-    "data/planned.json CASENAP look",
-    "git 86223bd:handoff/scratch/launch-sheet-2/SHEET/cats-c.json CASENAP coat base #F3E7D3, second #D97E3A, pattern point, eyes #79B4E3",
-    "assets/models/cats/CASENAP.glb texture (extracted): median #C49C70 tan",
-    "Colours I measured: in-game chest rgb 173,136,86, tail mid 199,158,107, paw 151,89,10; portrait chest 234,209,184, tail 168,105,63"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The body is tan/sand (texture median #C49C70, chest rendering about rgb 173,136,86), not pale cream (#F3E7D3). The tail is body-coloured with only a small ginger tip, where the look calls for a fully ginger tail. There is no face mask, only a small ginger muzzle patch. The points are a darker rust-brown (paw about rgb 151,89,10) than ginger, so it reads more like a Siamese-type point than a flame point. The ginger ears, ginger paws and blue eyes are right."
     }
    ]
   },
@@ -989,25 +825,6 @@
     }
    ]
   },
-  "COBBLEPAW": {
-   "kind": "planned-linked",
-   "realName": "Alleycat",
-   "realSource": "'Alleycat' is Marvell Technology's own codename for a family of Prestera Ethernet switch chips (Alleycat3X, Alleycat5/5X). It is a product codename, not a real or drawn cat.",
-   "exactLook": "The source is a chip codename with no picture, so the look is the literal alley cat from our look text. A lean, ordinary four-legged street cat with a short coat. Brown-grey mackerel tabby: a grey-brown agouti ground with dark grey-brown stripes, an M on the forehead, banded legs and a ringed tail with a dark tip. One ear has a clear notch in its edge; our portrait puts it on the cat's right ear (viewer's left). Green-gold eyes and a brick-pink nose. No collar or clothing.",
-   "sources": [
-    "Marvell 2017 press release: 'Prestera 98DX325x (Alleycat3X)' (fetched)",
-    "Linux kernel binding marvell,ac5.yaml: 'Marvell Alleycat5/5X Platforms' (fetched)",
-    "data/planned.json cats[COBBLEPAW].look"
-   ],
-   "confidence": "medium",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "Brown mackerel tabby model with olive-green eyes. The nick only reads as a folded or flattened tip on the viewer's-left ear. The ground and stripes are warm caramel-brown (#5d4429 to #806949), not brown-grey. The paws are pale cream, lighter than the body."
-    }
-   ]
-  },
   "COLEMARM": {
    "kind": "adoptable",
    "realName": "Cole & Marmalade",
@@ -1342,24 +1159,6 @@
     }
    ]
   },
-  "CURFEWPAW": {
-   "kind": "planned-linked",
-   "realName": "Curfew the Seal-Brown Cat",
-   "realSource": "Original sanctuary cat for BlackBerry (BB). BlackBerry has no real or mascot cat of its own, so our own look text is the ground truth.",
-   "exactLook": "A big, sturdy, adult, normal four-legged, photo-real domestic shorthair tuxedo. The coat is dark seal-brown: deep, low-lightness chocolate, nearly black-brown, about (53,27,15) as in the portrait, not chestnut, rust, cinnamon or red. He has a crisp white bib and chest running down the belly, a white muzzle and chin (an inverted-V tuxedo blaze up to the nose bridge), and four white socks, all pure white. His eyes are brass-gold/amber, his nose is pink-brown, and he wears nothing.",
-   "sources": [
-    "fields.look in data/planned.json cats[77] (CURFEWPAW)",
-    "assets/portraits/CURFEWPAW.jpg (reference image for the look: flank about (53,27,15), bib about (240,217,195)); the lore picture's flank is about (49,28,17) and the kit token's about (53,27,15), both consistent"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The coat is a medium chestnut/cinnamon red-brown. The GLB texture albedo is about (111,60,32), roughly twice as light as the portrait's seal-brown (53,27,15), and it renders as about (94,47,11) to (113,54,15) on the lit flank and (136,66,30) on the head. It reads as a reddish-brown cat, not a dark seal-brown one, and the colour the cat is named for is wrong. The pattern placement (white muzzle, bib and four socks) and the amber eyes are correct. Smaller drift: the whites render beige (about (164,130,105)), and the body is a small, big-headed kitten rather than big and sturdy. Both of these also show on other low-poly models (the RUBYCAT bib renders about (149,121,99)), so they are secondary to the coat colour."
-    }
-   ]
-  },
   "CWIF": {
    "kind": "hall-of-fame",
    "realName": "catwifhat",
@@ -1573,30 +1372,6 @@
      "asset": "kitToken",
      "severity": "minor",
      "why": "Same as the portrait: an accurate hood, blaze and eyes, with the orange on the flanks rather than along the rump."
-    }
-   ]
-  },
-  "EVERLOOP": {
-   "kind": "planned-original",
-   "realName": "Everloop the Sleepy Cat",
-   "realSource": "Original Catcoin Sanctuary character paired with STRCx (Strategy's STRC perpetual preferred). There is no real cat link: the proof post (x.com/Strategy/status/2010110120504525020) is about Maxi, the honey badger mascot; the other mascot is Hank, a dog.",
-   "exactLook": "A soft, round-faced, plush medium-haired house cat with a BLUE-CREAM (dilute tortoiseshell) coat: dove-grey (dilute blue) fur with broad, soft patches of pale cream/buff. The patches are a cream blaze from the forehead down the nose bridge, cream cheeks, a cream-white muzzle and chin, broad cream patches on the flank, and a tail in irregular broad grey and cream sections. Only faint darker grey lines on the forehead; no tabby stripes on the body, no white bib, no orange. Pink nose, pink-cream inner ears. Signature pose: curled into a perfect closed ring on the grass, nose tucked into her tail, eyes shut, asleep in the sun. Eye colour is never shown (eyes shut); if an awake model is needed, keep the face dove-grey and cream and choose one eye colour (e.g. soft copper) and write it into the look. No collar, no props. Realistic style.",
-   "sources": [
-    "fields.look (ground truth)",
-    "assets/portraits/EVERLOOP.jpg, assets/lore/EVERLOOP.webp (zoomed) and the token all show a dove-grey and cream blue-cream cat with a cream nose blaze, curled in a ring asleep on grass",
-    "Texture atlas from assets/models/cats/EVERLOOP.glb: brown-grey and orange striped pieces (a brown tabby), confirming the render"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lookText",
-     "severity": "minor",
-     "why": "Accurate for the sleeping pose, but it gives no eye colour or awake appearance, which a standing garden model needs. Add an eye colour and 'no stripes, no white bib, no orange'."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "A different cat: a warm brown/orange MACKEREL TABBY with bold dark stripes on the body, legs and tail, an orange face, a white muzzle, chin and chest bib, orange paws, a red nose and open amber-yellow eyes. There is no dove-grey or blue-cream colouring at all. It stands awake instead of curling asleep (the rig pose)."
     }
    ]
   },
@@ -2055,43 +1830,6 @@
     }
    ]
   },
-  "GLINTPAW": {
-   "kind": "planned-linked",
-   "realName": "Glint the Silver-Sedan Cat",
-   "realSource": "No real cat. This is an original sanctuary cat for Hertz (HTZ), designed around a freshly washed silver rental car.",
-   "exactLook": "Original cat, so our look text is the ground truth. A normal four-legged domestic shorthair with an ordinary build. Its solid, even silver-grey coat is a cool, neutral mid-to-light metallic grey, not pinkish lilac, lavender or beige-greige, and it has no markings, stripes or white. The coat is short, smooth and close-lying, glossy as if just washed, with a visible sheen; it is not a plush, dense, cobby British-Shorthair teddy coat. Copper eyes. Grey nose leather, and grey-pink inner ears (not dark brown). It wears nothing. Scene: it sunbathes on warm stones in the garden.",
-   "sources": [
-    "data/planned.json cats[GLINTPAW].look (ground truth for an original)",
-    "data/planned.json stocks[HTZ].realCat (linkType none, linked false)",
-    "assets/models/cats/GLINTPAW.glb (and -lo.glb) base-colour texture, main tones: #b4a8a6 / #b9aeac / #9d8e8c (hue 4-11 deg, saturation 0.07-0.11, value 0.62-0.73); material roughness 0.85, metallic 0",
-    "assets/ingame/GLINTPAW.jpg lit body pixels: #a2948b, #a5978e, #93847b (hue about 23, saturation 0.14)",
-    "Colour difference (CIE76 dE) between the model texture and a neutral silver-grey: about 6-8, both raw and under the same scene light. For scale, orange vs grey is about 57.",
-    "refs/GLINTPAW-compare.png: model render crop next to neutral-silver, model-texture and lore-body swatches"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "Solid grey coat and copper eyes are right. But it is a plush, round-faced, cobby British-Shorthair type in a pinkish lilac/lavender-grey (sampled hue 7-18 deg) with a matte, dense coat, not a sleek, glossy, cool silver-grey shorthair."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "Solid grey cat with copper eyes lying on warm stones, which fits the scene. The coat is a plush, matte blue-lilac/pinkish grey on a cobby British-Shorthair body, not sleek, glossy silver."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "Solid coat and copper eyes are right. The texture is a light grey with a pinkish tint (#b4a8a6, saturation 0.08) that renders as a light warm grey-greige (#a2948b) instead of cool silver-grey, about dE 7 off. That is a shade drift, not a different colour, and the render shows a grey cat with grey shading, not a cream or off-white one. It is matte (roughness 0.85) with no just-washed sheen, and the inner ears are dark brown instead of grey-pink. Fix by cooling and slightly darkening the base colour to neutral silver, lowering roughness for a sheen, and recolouring the inner ears."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "Same image as the portrait: plush lilac-grey British-Shorthair type rather than sleek, glossy, cool silver-grey. Copper eyes are right."
-    }
-   ]
-  },
   "GRIDDLE": {
    "kind": "planned-linked",
    "realName": "Purrrma Frost",
@@ -2278,40 +2016,6 @@
     }
    ]
   },
-  "HOVERPAW": {
-   "kind": "planned-linked",
-   "realName": "Hover",
-   "realSource": "No real cat. Our own original cat for the ANDURIL pair, inspired by autonomous flying machines.",
-   "exactLook": "An ordinary four-legged, lean, long-legged short-haired house cat in a solid warm cinnamon: a light reddish-brown like an Abyssinian sorrel (about #A35A25 to #C07A45), not bright tangerine or golden-apricot ginger. There is no visible tabby pattern, cream only on the chin (not a chest bib), and bright gold eyes. He wears nothing and leaps after dragonflies around the garden birdbath. (Ground truth is our own look text.)",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (HOVERPAW look)",
-    "/home/user/catcoin-sanctuary/data/cats-info.json (ANDURIL: no cat mascot; Team Lynx vehicle; 'tactical cat ears' quip)",
-    "Pixel samples: portrait flank RGB(163,90,37), hue 25 deg; lore RGB(163,100,39); in-game RGB(165,93,8), saturation 0.95"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "A lean, long-legged cat with gold eyes, as specified. The coat reads golden apricot-ginger in the light rather than light reddish-brown cinnamon, and the cream runs from the chin down onto the throat."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "He leaps after dragonflies by the birdbath with gold eyes, which is right. The coat reads apricot/ginger rather than cinnamon brown, and there is a white throat and chest patch below the chin."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The coat is a fully saturated tangerine orange (about #A55D08, saturation 0.95), ginger rather than cinnamon reddish-brown. A large cream bib runs down the whole chest instead of just the chin. The gold eyes are fine."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "It is the same image as the portrait: apricot-ginger rather than cinnamon, with cream extending onto the throat."
-    }
-   ]
-  },
   "HUBBUB": {
    "kind": "planned-linked",
    "realName": "Ethel",
@@ -2395,62 +2099,6 @@
      "asset": "kitToken",
      "severity": "minor",
      "why": "Same art as the portrait, with the same small drift: a paler cream coat, a wider copper iris ring and no head tilt. The source logo's gold coin and white ₵ framing are also missing."
-    }
-   ]
-  },
-  "ICICLEPAW": {
-   "kind": "planned-linked",
-   "realName": "Icicle",
-   "realSource": "No real or drawn cat. Our own original cat for the IONQ pair. IonQ's 'Walking Cat Architecture' (April 2026) is named after quantum 'cat states' and shows no cat.",
-   "exactLook": "An ordinary four-legged shorthair with a blue-point (Siamese-type) colour pattern. Body: cool icy white, slightly bluish-white, not cream, ivory or tan. Points: soft slate blue-grey (dilute blue, not navy, not seal-brown) on the ears, on a face mask over the nose and muzzle and around the eyes that fades into the cheeks, on the lower legs and paws, and along the whole tail. Bright sapphire-blue eyes. Slate grey-blue nose leather. No white spotting, no stripes, no collar or accessories. He sits very still on a stone by a cold spring in the garden while moths land near him. (Ground truth is our own look text, because there is no real source cat.)",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (ICICLEPAW look/whyLook/coat: white/blue/point/blue eyes)",
-    "https://ionq.com/walking-cat (no cat image) -> refs/V-ionq.html",
-    "https://cdn.prod.website-files.com/68836d4838193cb461ebc7d2/693ad1cc5bb2d028b5616a6b_OG%20Image%20(5).jpg (blog og:image: IonQ logo only) -> refs/V-ionq-og.jpg",
-    "Pixel samples: portrait body median RGB(228,201,180), lore body RGB(222,200,185), in-game body RGB(141,110,79)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "The slate blue-grey ears, mask, lower legs, paws and tail and the bright blue eyes are right. The body, however, is a warm cream/ivory (median about #E4C9B4, hue 26 deg, saturation 0.21), the usual Siamese cream, not the icy white the look asks for."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "It shows the right scene: a blue-point cat with blue eyes sitting still on a stone by the spring, with moths landing. As in the portrait, the body is warm cream/ivory (about #DEC8B9) rather than ice-white."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The body is tan/fawn beige (median about #8D6E4F), not ice-white. The points are dark navy/indigo, not soft slate blue-grey, so it reads as a seal-point or chocolate Siamese. The blue eyes and the point placement (ears, mask, paws, tail) are right."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "It is the same image as the portrait: the points and eyes are right, but the body is cream/ivory rather than ice-white."
-    }
-   ]
-  },
-  "INGOTLOAF": {
-   "kind": "planned-original",
-   "realName": "Ingot the Loaf Cat",
-   "realSource": "Original Catcoin Sanctuary character paired with GLDx (SPDR Gold Shares). There is no real cat link: the proof is the issuer's page (https://www.spdrgoldshares.com/), which has no cat.",
-   "exactLook": "An ordinary four-legged short-haired house cat with a sleek, PALE honey-gold/apricot coat: light and warm, not deep orange, ginger or tangerine. In the 2D art the mid-tone fur averages about RGB (185-195,123-133,73-82) (lightness about 0.51-0.53) and the sunlit fur reaches about (230-240,175-187,115-130). The coat has a soft golden glow/sheen. The muzzle, chin and chest are slightly paler cream. There is only faint darker apricot ghost ticking on the forehead; otherwise the coat is solid with no tabby stripes. Bright amber-orange eyes with round black pupils, a pink nose and pink inner ears. Signature pose: a neat 'cat loaf' with the front paws tucked under, so the body reads as a small rounded ingot or bar. Wears nothing: no collar, logos or text. Realistic style.",
-   "sources": [
-    "fields.look (ground truth): 'sleek, short, honey-golden coat, a soft metallic sheen and warm orange eyes ... neat cat loaf pose ... no logos or text'",
-    "assets/portraits/INGOTLOAF.jpg, assets/lore/INGOTLOAF.webp and assets/kits/INGOTLOAF/token.png all show the same pale honey-gold, amber-eyed cat in a loaf pose, with a paler cream chest and muzzle",
-    "My own masked colour measurement of the cat pixels: portrait avg RGB (186,123,73), L 0.51; lore (189,132,80), L 0.53; token (185,123,73), L 0.51; garden render avg (151,92,34), L 0.36 with blue nearly gone, so it is a darker and redder orange",
-    "The GLB base-colour texture (assets/models/cats/INGOTLOAF.glb) averages about RGB (178,117,70), close to the 2D art. The material is metallic 0, roughness 0.85, so it has no sheen. The garden's ACES filmic tone mapping (assets/world/world.js lines 117-118) and warm post grade (assets/world/post.js) darken and saturate it into ginger/tangerine.",
-    "Side-by-side crop: scratchpad/audit/refs/INGOTLOAF-compare-mine.png"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The cat's single defining trait, its pale honey-gold coat, is wrong in the garden. The model renders as a deep, saturated ginger/tangerine: about RGB (151,92,34), lightness 0.36, against about (186,123,73), lightness 0.51-0.53, in the 2D art. Side by side it reads as a different coat colour (red/ginger rather than honey/apricot), not a slight shade. The surface is matte and plasticky with no sheen (metallic 0, roughness 0.85), the paler cream muzzle and chest barely show, and the eyes are a duller brownish amber. It also stands on all fours with a raised tail instead of the signature loaf; this is a garden rig limit and the look only says she 'likes to' loaf. No logos: correct."
     }
    ]
   },
@@ -2657,39 +2305,6 @@
      "asset": "inGame3D",
      "severity": "mismatch",
      "why": "The model is a plain all-white realistic cat with no ear patch, so KET's signature black (or brown) patch over his left ear is missing. It has amber eyes under a frowning brow instead of heavy half-closed lids, and realistic proportions instead of the round-headed cartoon head."
-    }
-   ]
-  },
-  "KIOSKPAW": {
-   "kind": "planned-linked",
-   "realName": "Kiosk (original; no real cat)",
-   "realSource": "Original cat for SHOP (Shopify). No real or official Shopify cat exists, and the look comes from in-person counter checkout.",
-   "exactLook": "(From our own look text.) A normal four-legged, plump, short-haired house cat. Warm ginger coat (handoff #DB8A45) with round, darker rust-red spots (handoff #9C4A1E) on the body and legs. Paler cream belly. Green-gold eyes (handoff #A9B84A). Wears nothing. Sits on a garden stall counter beside a small brass bell.",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (KIOSKPAW look)",
-    "git 86223bd handoff/scratch/launch-sheet-2/SHEET/cats-b.json (coat #DB8A45, spots #9C4A1E, eyes #A9B84A)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "Plump ginger shorthair with round rust-red spots, cream chest and belly, green-gold eyes: matches. The only drift is white front paws, which the look text does not mention."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "Plump spotted ginger with green-gold eyes on a wooden stall counter, pawing a brass bell: matches the look and story. It also has white paws, which are not in the text."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "Bright orange with round rust spots, a tan-cream chest and green eyes. But it is a slim, leggy kitten, not 'plump'. The paws are cream-tan, the orange is more saturated than warm ginger, and there are extra spots on the head and tail."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "Same as the portrait: correct spotted ginger with cream chest and green-gold eyes, plus white paws that are not in the text."
     }
    ]
   },
@@ -2977,30 +2592,6 @@
     }
    ]
   },
-  "LATCHKEY": {
-   "kind": "planned-original",
-   "realName": "Latchkey the Vault Cat",
-   "realSource": "Original Catcoin Sanctuary character paired with DFDVx (DeFi Development Corp., a Solana treasury company). There is no real cat link; the defidevcorp.com home page has no cat or mascot.",
-   "exactLook": "A sturdy, stocky, short-haired ginger-and-white bicolour house cat. Soft medium ginger (warm orange, not deep traffic-cone orange) with faint darker ginger tabby striping on the forehead, flanks, legs and tail. Ginger back, head, ears and tail. White muzzle and chin, with a narrow white blaze up the nose bridge between the eyes; white throat, chest and belly. White front paws/socks up to the lower foreleg. The tail has a white BAND partway along it, with a ginger tip (confirmed in the zoomed lore image and token: the tapered tip hanging over the box edge is ginger). Sleepy half-closed grey-green/hazel eyes, pink nose. Signature scene: dozing upright on top of a small wooden strongbox with dark iron bands, corner plates, rivets and a keyhole, with one front paw resting on an old brass key with a quatrefoil bow. Wears nothing: no collar, logo, lettering or symbols. Realistic style.",
-   "sources": [
-    "fields.look (ground truth)",
-    "assets/portraits/LATCHKEY.jpg, assets/lore/LATCHKEY.webp and the token all show the ginger-and-white cat with half-closed grey-green eyes, a white tail band with a ginger tip and white front paws on an iron-banded strongbox with a brass key",
-    "Colour samples: 2D ginger head about RGB (188-198,114-123,60-65), saturation about 0.52; garden render head about (148,83,24), saturation about 0.72"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lookText",
-     "severity": "minor",
-     "why": "Accurate, but it omits details every 2D asset shows: white front paws, a white band on the tail (ginger tip), the white nose blaze and the eye colour (grey-green/hazel; coat.eyes is empty). Add them to lock the look."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "Ginger back, head and tail with a white muzzle, chin, chest and belly and sleepy half-closed eyes: all correct. Drift: a darker, more saturated orange than the soft ginger of the 2D art; white socks on all four legs to mid-leg, and a white tail TIP rather than a band with a ginger tip; torn-texture artifacts on the chin and chest bib; amber-olive eyes. No strongbox or key (prop), and it stands rather than dozing upright."
-    }
-   ]
-  },
   "LEOTHELION": {
    "kind": "planned-linked",
    "realName": "Leo the Lion",
@@ -3064,38 +2655,6 @@
      "asset": "inGame3D",
      "severity": "mismatch",
      "why": "The head is rendered ginger/orange with no black stripes and only a white muzzle, not the broad white blaze and mostly white face, so the model reads as a red tabby and white. The body saddle is saturated chestnut-ginger. The real cat is a brown tabby (medium brown agouti with black mackerel stripes). The white chest, legs and paws are correct and the ringed tail is roughly right. The expression is calm instead of wide-eyed with the mouth open."
-    }
-   ]
-  },
-  "LICHENPAW": {
-   "kind": "planned-linked",
-   "realName": "Lichen the Sage-Grey Cat",
-   "realSource": "Original sanctuary cat for the Global X Uranium ETF (URA). No real cat exists; the ground truth is our own look text.",
-   "exactLook": "A normal four-legged, photo-real domestic shorthair with a solid pale green-grey coat: soft grey with a distinct cool sage-green cast (not beige, taupe or khaki), a shade darker along the back, and no markings or white. Its eyes are bright lime-green, and it wears nothing.",
-   "sources": [
-    "fields.look in data/planned.json (LICHENPAW)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "A solid pale grey shorthair with lime-green eyes, but the grey has a warm taupe/greige cast (hue about 35) rather than a sage-green one. The darker back is barely visible."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "A solid pale grey shorthair with lime-green eyes, curled on mossy rocks. The coat is warm fawn-greige (hue about 34) with no sage-green cast."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "A pale khaki/olive-greige solid coat with lime-green eyes. It is slightly yellower than the other assets but reads beige-khaki rather than cool sage-grey, and the inner ears are reddish-brown."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "The same image as the portrait: warm taupe-grey without the sage-green cast; the lime-green eyes are right."
     }
    ]
   },
@@ -3605,40 +3164,6 @@
     }
    ]
   },
-  "MILLRACE": {
-   "kind": "planned-linked",
-   "realName": "Millrace",
-   "realSource": "No real cat. Our own original cat for the IREN pair, inspired by a hydro-powered former pulp-mill data centre.",
-   "exactLook": "An ordinary four-legged, plush, dense-coated cat. The base is a soft, desaturated blue-grey (dilute grey) tabby. Darker slate-blue stripes ripple like water across the flanks, legs and ringed tail, and the brow is striped. The eyes are pale green. The look asks for no white bib or white paws. He wears nothing and sits by a mill stream with a wooden water wheel. (Ground truth is our own look text.)",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (MILLRACE look)",
-    "/home/user/catcoin-sanctuary/data/cats-info.json (IREN: no real cat link)",
-    "Pixel samples on the in-game render: blue bands RGB(56,64,111) saturation 0.5; pale bands RGB(140,138,152)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "A blue-grey plush tabby with slate-blue stripes and pale green eyes, as the look asks. It adds a pale whitish chest, muzzle and toes, which the look does not mention."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "The blue-grey tabby with pale green eyes sits by the mill wheel and stream, which is right. The base reads more neutral silver-grey than blue-grey, and it has a pale chest and whitish paws that the look does not ask for."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The coat is broad bands of saturated indigo/periwinkle blue (about #38406F) alternating with pale lilac-grey bands. It reads as a vivid blue-violet cat, not a soft blue-grey tabby with darker slate stripes. It also has a large white bib and chest and four white socks, which the look does not have."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "It is the same image as the portrait: the colours are right, with slight added white on the chest and toes."
-    }
-   ]
-  },
   "MISTO": {
    "kind": "adoptable",
    "realName": "Mr. Mistoffelees",
@@ -4036,24 +3561,6 @@
     }
    ]
   },
-  "NOTEPAW": {
-   "kind": "planned-linked",
-   "realName": "(none) - original cat 'Courier'",
-   "realSource": "No real cat. An original cat inspired by Moderna's messenger-RNA business (a messenger carrying instructions).",
-   "exactLook": "Original (from our look text): a normal four-legged SILVER classic tabby (cool pale silver-grey base) with bold DARK CHARCOAL markings: a ribbon-like spiral swirl on each flank, ringed tail and legs, and forehead M. Green eyes, pink nose. Wears nothing; carries folded notes in its mouth.",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (NOTEPAW.look)",
-    "/home/user/catcoin-sanctuary/data/cats-info.json (MRNA)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "A low-poly tabby with a flank swirl and green eyes, but the base coat is warm beige/taupe and the stripes a mid brown-grey (about RGB 97,89,70), not dark charcoal, so it reads as a low-contrast brown-grey tabby rather than silver with charcoal. It carries no note (prop only)."
-    }
-   ]
-  },
   "NUB": {
    "kind": "hall-of-fame",
    "realName": "Nub",
@@ -4360,31 +3867,6 @@
     }
    ]
   },
-  "PATCHPAW": {
-   "kind": "planned-original",
-   "realName": "Patchpaw the Calico",
-   "realSource": "Original Catcoin Sanctuary character paired with SPYx (SPDR S&P 500 ETF, State Street). There is no real cat link; the proof is the fund's own web page.",
-   "exactLook": "A small, ordinary four-legged short-haired calico house cat. White base covered with a quilt of many irregular small-to-medium patches in orange/ginger, charcoal-black and soft blue-grey (dilute), with some pale buff/cream. The patches cover the back, flanks, hind legs and tail. The tail is in irregular patchy sections (grey, charcoal, orange, grey), not narrow regular tabby rings. White chest, throat, chin, muzzle and a white blaze up the nose. The face is split: orange on the cat's right side with a thin dark stripe, charcoal/grey on the crown and around the cat's left eye, with orange mixed in. The cat's LEFT front leg (viewer's right when she faces the camera) is pure white from the elbow to the toes; the right front leg is patched orange/charcoal. Bright green eyes, pink nose, pink inner ears. Closed mouth. Wears nothing: no collar, logo or emblem. Realistic style.",
-   "sources": [
-    "fields.look (ground truth for a planned-original)",
-    "assets/portraits/PATCHPAW.jpg (zoomed: white left front leg, patched right front leg, patchy grey/charcoal/orange tail)",
-    "assets/lore/PATCHPAW.webp (zoomed: near front leg banded orange/charcoal with a white paw, far front leg white)",
-    "Texture atlas extracted from assets/models/cats/PATCHPAW.glb: mostly white with orange, black and some grey pieces, and orange/black ringed tail pieces"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "Same calico with green eyes and a pink nose, sniffing a pink coneflower. Two small drifts from the look: (1) BOTH front paws are white here (the near front leg is banded orange/charcoal and ends in a white paw, and the far front leg is white), where the look says only one front paw is all white; (2) the dark patches on the back and flank are drawn as stripe-like bands (caliby), so it reads less like a quilt of small patches than the portrait."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The model is a mostly WHITE high-white calico. Only about 3 large bold patches show on the flank and shoulder (orange, one black stripe-shaped band, orange), plus an orange/black face mask. It is not a quilt of many small patches. No grey or cream is visible in this view; the texture atlas does contain some grey pieces, so they may sit on the unseen side. The tail has regular narrow orange/black tabby-style rings with a black tip, not patchy sections. All four legs are white up to the body, so the single white front paw is lost. The mouth hangs open showing small fangs. Eyes are green (correct). There are texture seams and specks on the shoulder and legs."
-    }
-   ]
-  },
   "PAWPOST": {
    "kind": "planned-linked",
    "realName": "(no official name; the only label in the source is the 'MAGA' cap text)",
@@ -4575,39 +4057,6 @@
     }
    ]
   },
-  "PINROW": {
-   "kind": "planned-linked",
-   "realName": "(none) - original cat 'Pinrow'",
-   "realSource": "No real cat. An original cat inspired by the Roundhill Memory ETF's holdings (glossy black memory chips with silver pins and copper wiring).",
-   "exactLook": "Original (from our look text): a glossy JET-BLACK shorthair (neutral black with a sheen, no brown cast) with silver-white whiskers and copper eyes. A normal four-legged adult house cat, wearing nothing, shown lying long and flat like a chip.",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (PINROW.look)",
-    "/home/user/catcoin-sanctuary/data/cats-info.json (DRAM)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "A black cat with copper-orange eyes and silver-white whiskers, sitting. The coat is soft and fluffy with a slight brown cast rather than a sleek, glossy jet-black shorthair."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "A black cat lying long and flat along the top of a garden wall, with copper eyes and silver whiskers, as the story says. But the coat is plush and fluffy with a brown-black cast (samples around RGB 26,19,16) rather than a sleek, glossy jet-black shorthair."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "A low-poly black kitten with copper eyes and silver whiskers. The coat is matte with a brown-black tint (about RGB 22,16,5) rather than glossy jet-black, and it stands rather than lying flat (pose only)."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "Same image as the portrait: black with copper eyes and silver whiskers, but fluffy and brownish-black rather than glossy jet-black."
-    }
-   ]
-  },
   "POPCAT": {
    "kind": "hall-of-fame",
    "realName": "Oatmeal",
@@ -4634,59 +4083,6 @@
      "asset": "inGame3D",
      "severity": "mismatch",
      "why": "The model has a flat maroon/reddish-brown cap and also a solid maroon back, flanks and tail. Oatmeal's colour is limited to a tan/grey-brown tabby cap on the head and ears plus dark cheek patches, with a white body. The mouth is a snarling open mouth with fangs, not the perfect round 'O'. The black eyes and white face, chest and legs are correct."
-    }
-   ]
-  },
-  "PRISMPAW": {
-   "kind": "planned-linked",
-   "realName": "Prism the Silver Beam Cat",
-   "realSource": "An original sanctuary cat paired with QUBT (Quantum Computing Inc.). The only 'cat' link is Schrödinger-style quantum 'cat states' in the CEO's physics papers, which gives no look and no name.",
-   "exactLook": "Our own look text is the ground truth. A sleek, normal four-legged shorthair house cat. Cool silver-grey base coat (about #CDD2D9: blue-leaning grey, not beige) evenly dappled with small, round, dark slate-grey spots (about #474E59) on the body, legs, head and tail. Ice-blue eyes (about #9FD3EA), pink nose. It wears nothing. It chases rainbow dots cast by a glass prism.",
-   "sources": [
-    "data/planned.json PRISMPAW look",
-    "git 86223bd SHEET/cats-b.json PRISMPAW coat: base #CDD2D9, spots #474E59, eyes #9FD3EA",
-    "Pixel samples: portrait chest #D5BFB1, spots #7E655D; lore body #C4B1AC (warm sunlight), spots #816D6A; 3D body #A08572 and #B49D8F, spots #3C2C18"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "A pale spotted cat with ice-blue eyes, but the base is warm beige-greige (sampled #D5BFB1, red well above blue) rather than cool silver #CDD2D9. The spots are warm taupe-grey (#7E655D) rather than dark slate (#474E59)."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The base coat is warm pinkish-beige/taupe (sampled #A08572 to #B49D8F) with dark-brown spots (#3C2C18). It should be cool silver-grey with dark slate-grey spots. The blue eyes are right."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "Same image as the portrait: a warm beige-grey cast and taupe spots instead of cool silver with slate spots."
-    }
-   ]
-  },
-  "PUMICE": {
-   "kind": "planned-linked",
-   "realName": "Pumice the Moon-Dust Cat",
-   "realSource": "Original sanctuary cat for FLY (Firefly Aerospace), inspired by moon landers. The company mascot is a duck, not a cat.",
-   "exactLook": "Original cat (the look text is the ground truth). A normal four-legged shorthair house cat. The coat is pale ash-grey (moon-dust grey, about #BDB8AF, a neutral, very slightly warm grey), flecked all over with small, soft darker-grey speckles (about #8C867D) like pumice stone. There are no stripes and no tail rings. Honey-gold eyes (about #D6A13F). It wears nothing. It leaves soft grey paw prints on garden stones.",
-   "sources": [
-    "data/planned.json PUMICE look",
-    "git 86223bd:handoff/scratch/launch-sheet-2/SHEET/cats-c.json FLY coat base #BDB8AF, second #8C867D, pattern spotted, eyes #D6A13F",
-    "assets/models/cats/PUMICE.glb texture (extracted): dominant #B2A09B / #95817C (pinkish grey)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "A speckled pale-grey cat with gold eyes rolling on stone paw-print pavers. The raised tail shows a few dark tabby-like rings near the tip, which the look does not have."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "A pale grey model with a pinkish/mauve-taupe cast: the texture is about #B2A09B, where #BDB8AF is intended, so green is too low. In the garden it renders almost the same as the CORSAGE model. The speckles are tiny, faint and brownish, and the eyes are orange-amber rather than honey-gold."
     }
    ]
   },
@@ -4905,30 +4301,6 @@
     }
    ]
   },
-  "ROOKIEPAW": {
-   "kind": "planned-linked",
-   "realName": "Rookie the Chestnut Cat",
-   "realSource": "Original sanctuary cat for DKNG (DraftKings). No DraftKings cat exists, so our own look text is the ground truth.",
-   "exactLook": "Original cat (the look text is the ground truth). A normal four-legged male shorthair house cat. The coat is solid chestnut (reddish) brown all over, about #7B4A2B in the launch sheet, with no visible tabby striping. A thin, narrow white stripe runs down the centre of the chest (like a football's laces; sheet white #F4EFE6), and all four paws have white toes. Gold eyes (about #C8902E) and a brownish-pink nose. He wears nothing. Realistic house cat.",
-   "sources": [
-    "data/planned.json ROOKIEPAW look",
-    "git 86223bd:handoff/scratch/launch-sheet-2/SHEET/cats-c.json DKNG coat base #7B4A2B, second #F4EFE6, eyes #C8902E",
-    "assets/models/cats/ROOKIEPAW.glb texture (extracted): dominant orange #A75F25/#9C551B, white areas pinkish-beige #B59480"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "Chestnut cat with a short white chest stripe, white paws and gold eyes chasing acorns. In the golden backlight the coat reads a lighter copper-ginger (median about rgb 149,89,49 against white paws of 233,216,200), not the portrait's deep chestnut. Faint ghost tabby bars show on the forehead and tail."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The model is a bright orange/ginger cartoon kitten, not chestnut brown: the texture is about #A75F25 against the intended #7B4A2B, and it renders about rgb 130-185,67-100,4-19. It has a broad white (pinkish-beige) bib running down the chest and belly instead of a thin chest stripe. The white paws are right. The eyes are amber, which is close to gold."
-    }
-   ]
-  },
   "ROSETTE": {
    "kind": "planned-linked",
    "realName": "Jaguar",
@@ -5004,23 +4376,6 @@
      "asset": "kitToken",
      "severity": "minor",
      "why": "The same image as the portrait: a correct tuxedo with a thin nose stripe, but a symmetric white muzzle, a white chin and an all-pink nose."
-    }
-   ]
-  },
-  "RUSTLEPAW": {
-   "kind": "planned-linked",
-   "realName": "Rustle the Burnished Tabby",
-   "realSource": "Original sanctuary cat for the Global X Copper Miners ETF (COPX). No real cat exists; the ground truth is our own look text.",
-   "exactLook": "A normal four-legged, photo-real domestic shorthair: a burnished coppery red-orange mackerel tabby (deeper and redder than a plain bright ginger) with dark rust-brown stripes. The stripes are narrow and parallel on the body, the tail is ringed, and the face is striped with an 'M' on the forehead. The chin and chest are paler cream. Its eyes are green, and it wears nothing.",
-   "sources": [
-    "fields.look in data/planned.json (RUSTLEPAW)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "An orange low-poly tabby with dark rust stripes, a striped tail, a cream chest and green eyes. The orange is a bright pumpkin ginger (hue about 28, the same as the PAPRIKA ginger model) rather than burnished coppery red-orange (the portrait's hue is about 20). The body stripes are broken, blocky dashes rather than neat, narrow parallel mackerel lines, and the forehead 'M' is not clear."
     }
    ]
   },
@@ -5435,30 +4790,6 @@
     }
    ]
   },
-  "SKEINKIT": {
-   "kind": "planned-original",
-   "realName": "Skein the Yarn Kitten",
-   "realSource": "Original Catcoin Sanctuary character paired with PLTRx (Palantir). There is no real cat link: the proof post (x.com/PalantirTech/status/1868713995064021371) shows a Red Cat drone; Red Cat is a drone maker, not a cat.",
-   "exactLook": "A small, very fluffy kitten with a solid PALE CREAM coat (light warm cream with a soft apricot tint, about RGB 200,165,135 in the portrait; not ginger or orange). Faint pale-apricot tabby ghost markings on the forehead and a paler streak down the nose bridge. Big round, curious grey-green / blue-grey kitten eyes. Small soft-pink nose, pink inner ears, long fine white whiskers. Signature prop: a loose ball of RED yarn, with strands running like a web between wooden garden posts and terracotta flower pots. Wears nothing. Realistic style.",
-   "sources": [
-    "fields.look (ground truth)",
-    "assets/portraits/SKEINKIT.jpg, assets/lore/SKEINKIT.webp and the token all show a fluffy pale-cream kitten with a pink nose, grey-green/blue-grey eyes and red yarn (the zoomed token eyes are grey-green; the lore eyes are darker blue-grey)",
-    "Colour samples: portrait chest about RGB (198,167,141), lightness 0.67; garden render chest/side about (142-153,98-117,58-85), lightness 0.39-0.47"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lookText",
-     "severity": "minor",
-     "why": "Eye colour is unspecified ('big curious eyes'; coat.eyes is empty). All 2D assets show grey-green/blue-grey kitten eyes; specify this (and 'pale cream, not ginger') so the 3D model does not drift."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The coat is a saturated ginger/peach-orange with orange smudges on the face, not pale cream. The fur is smooth and short, not fluffy. A dark brown/black blotchy band under the chin and muzzle (a texture artifact) reads like a collar or beard. The nose is bright red rather than soft pink, and the eyes are very dark brown/black instead of grey-green. There is no red yarn."
-    }
-   ]
-  },
   "SNOWBALCAT": {
    "kind": "adoptable",
    "realName": "Snowball II",
@@ -5578,28 +4909,6 @@
      "asset": "kitToken",
      "severity": "mismatch",
      "why": "The token is the same image as the portrait: a photoreal furry white cat instead of the glossy white balloon-animal cat."
-    }
-   ]
-  },
-  "SNUGPAW": {
-   "kind": "planned-linked",
-   "realName": "Snug the Graphite Cat",
-   "realSource": "Original sanctuary cat for TeraWulf (WULF). No real cat exists; the ground truth is our own look text.",
-   "exactLook": "A normal four-legged, sleek, photo-real domestic shorthair in solid graphite grey (a neutral dark slate grey, not brown or mauve). It has no markings and no white, with a slightly lighter grey sheen where the sun catches the coat. Its eyes are pale gold (soft light yellow-gold, not amber or orange), and it wears nothing.",
-   "sources": [
-    "fields.look in data/planned.json (SNUGPAW)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "A solid blue-grey shorthair stretched on a metal grate, which is right. The eyes are a vivid saturated golden-yellow with an amber-orange centre, not pale gold."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "A solid dark cat, but the coat renders mauve/taupe-charcoal rather than neutral graphite grey, and the eyes are deep amber-orange rather than pale gold. Part of the mauve is the garden renderer's warm tint: GIMBALPAW's gunmetal grey renders almost the same (54,44,41 vs Snug's 61,49,45). The eyes are the clearer drift."
     }
    ]
   },
@@ -6463,30 +5772,6 @@
     }
    ]
   },
-  "TRILLBY": {
-   "kind": "planned-original",
-   "realName": "Trillby the Chirping Cat",
-   "realSource": "Original Catcoin Sanctuary character paired with VIDAx (Vida, an AI-agent company). There is no real cat link; the vida.io home page has no cat or mascot.",
-   "exactLook": "A slim, elegant, short-haired colourpoint (Siamese-type) house cat. Pale ivory/cream body, slightly warmer on the back. Cool, dark SEAL-brown (near-black brown, about RGB 60-70,40-45,30-35) points: a full face mask around the eyes and muzzle, ears, the forelegs dark along the front from the chest down to the paws, hind legs and paws, and the whole tail. Bright sapphire-blue eyes, dark nose leather. Head tilted, mouth open in a friendly chirp showing a pink tongue. Ordinary four-legged cat wearing nothing. Realistic style.",
-   "sources": [
-    "fields.look (ground truth)",
-    "assets/portraits/TRILLBY.jpg, assets/lore/TRILLBY.webp and the token show a seal-point with blue eyes, head tilted and mouth open",
-    "Colour samples: 2D points about RGB (61-74,39-48,31-37), saturation about 0.3 (cool seal); garden render legs/tail about (65-69,31-35,4-10), saturation 0.74-0.86 (warm reddish chocolate)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lookText",
-     "severity": "minor",
-     "why": "Mostly clear, but it says seal-brown 'paws' where every 2D asset shows the whole forelegs dark from the chest down (and the whole tail). The 3D model followed the weaker wording (cream upper legs). Change 'paws' to 'legs and paws'."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "Correct colourpoint with blue eyes and an open chirping mouth. Drift: the points are a warm reddish chocolate-brown (strongly saturated) rather than the cool near-black seal of the 2D art; the body is a slightly peachy beige instead of ivory cream; the legs are cream at the top and turn brown only from mid-leg, where the 2D forelegs are dark along their whole front; and the head is not tilted."
-    }
-   ]
-  },
   "TRIMCAT": {
    "kind": "adoptable",
    "realName": "Trim",
@@ -6523,25 +5808,6 @@
      "asset": "kitToken",
      "severity": "minor",
      "why": "Same as the portrait: the colour is right, but the white bib is too large (it should be a small star) and the tail is not bushy."
-    }
-   ]
-  },
-  "TRINKETCAT": {
-   "kind": "planned-original",
-   "realName": "Trinket the Tortie Cat",
-   "realSource": "Original Catcoin Sanctuary character paired with MSTRx (Strategy / MicroStrategy). There is no real cat link: the company's mascots are Hank, a yellow Labrador puppy (proof post x.com/MicroStrategy/status/1506258161753366537; the proof image shows the puppy on a red MicroStrategy tablet case), and Maxi, a honey badger.",
-   "exactLook": "A round, fluffy, medium-long-haired tortoiseshell house cat. The base is BLACK, finely mottled and brindled all over with warm amber/copper and a little light buff/cream (mostly on the chest and cheeks). Brindled, with no tabby stripes and no ringed tail. Amber brindling on the face, a dark mask down the nose, black nose leather, dark brindled toes. Pale yellow-green eyes. Round, full, plush body. Her signature scene: sitting proudly on a small heap/bed of plain, smooth, wet-shiny pebbles (grey, tan, charcoal, white; blank, with no markings, symbols or letters) beside a wooden, iron-banded rain barrel. Wears nothing. Realistic style.",
-   "sources": [
-    "fields.look (ground truth)",
-    "assets/portraits/TRINKETCAT.jpg, the token and assets/lore/TRINKETCAT.webp show a black-based brindled tortie with pale green eyes and a black nose; the lore picture shows blank pebbles by an iron-banded rain barrel",
-    "Texture atlas from assets/models/cats/TRINKETCAT.glb: dark brown with copper stripe pieces (tabby-like), confirming the render"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The model reads as a copper/brown TABBY, not a black-dominant tortoiseshell. It is mostly copper-orange and brown with dark tabby-style stripes on the flanks and a clearly ringed, striped tail, and the colour is much more saturated (render saturation about 0.8 against about 0.35 in the portrait). There is no cream. The face is mostly copper with a pale muzzle. The body is slim and short-coated, not round and fluffy. Green eyes are correct. No pebbles (a scene prop)."
     }
    ]
   },
@@ -6654,32 +5920,6 @@
      "asset": "kitToken",
      "severity": "mismatch",
      "why": "The same image as the portrait: a blue-grey cat in a tweed cap."
-    }
-   ]
-  },
-  "UMBERPAW": {
-   "kind": "planned-linked",
-   "realName": "Umber the Deep-Brown Cat",
-   "realSource": "An original sanctuary cat for PTN (Palatin Technologies). The look comes from MC1R, the receptor behind dark pigment. No Palatin cat exists.",
-   "exactLook": "An original cat; the look text is the ground truth. A sleek, four-legged, realistic shorthair house cat. The coat is a solid deep umber-brown (launch sheet base #3A2519), shading to near-black (#24170F) in shadow. It has no white and no tabby or ghost markings. The eyes are warm copper (about #C07A3E). It wears nothing.",
-   "sources": [
-    "data/planned.json UMBERPAW look",
-    "git 86223bd:handoff/scratch/launch-sheet-2/SHEET/cats-c.json UMBERPAW coat base #3a2519, second #24170f, pattern solid, eyes #c07a3e",
-    "assets/models/cats/UMBERPAW.glb texture (extracted): median #5C341E",
-    "Colours I measured: portrait chest rgb 50,23,13 and head 57,29,19; in-game render chest 71,34,4, side 82,39,6, head 91,45,10",
-    "refs/V-UMBER-compare.jpg (the in-game model beside the portrait and the JITTERPAW model); refs/V-UMBER-lore-face.jpg (lore face crop)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "A solid deep-brown cat asleep under the bay tree, with a hint of copper in the half-closed eyes. The coat colour is right, but faint darker ghost-tabby stripes show on the forehead, and the look has no pattern."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The model is a medium, reddish chocolate/cinnamon brown: texture median #5C341E against the intended #3A2519 base and #24170F shade, rendering about rgb 71-91,34-45,4-10 against the portrait's 50-57,23-29,13-19. Nowhere does it read as the deep umber that looks near-black in shade. Beside the portrait and the near-black JITTERPAW model it is plainly a lighter brown cat. The inner ears are bright copper-orange. The copper eyes and solid coat are right."
     }
    ]
   },
@@ -6833,26 +6073,6 @@
     }
    ]
   },
-  "VIGNETPAW": {
-   "kind": "planned-linked",
-   "realName": "Vignette the Seal-Point Cat (original; no real cat)",
-   "realSource": "Original cat for the AMBA (Ambarella) pair. No real cat is linked, so our own look text is the ground truth.",
-   "exactLook": "Original cat, taken from our look text. A normal four-legged pale-cream shorthair with seal-point (Siamese) colouring. The points are a dark, cool seal brown, close to black-brown, about rgb(60-75,38-40,25-27) as in the portrait. They are not reddish, sienna or milk-chocolate. A full, soft-edged seal mask surrounds both eyes and covers the nose bridge and muzzle, fading into cream on the forehead and outer cheeks. The ears, lower legs and paws, and the whole tail are seal brown. The body is pale cream. Wide sky-blue eyes and a dark seal nose. Wears nothing. Realistic style.",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (cats[56] look/whyLook; stocks[56].realCat linked:false)",
-    "/home/user/catcoin-sanctuary/assets/portraits/VIGNETPAW.jpg sampled: mask about rgb(64,38,27), tail about rgb(74,40,25)",
-    "/home/user/catcoin-sanctuary/assets/ingame/VIGNETPAW.jpg sampled: rendered points about rgb(77-96,40-52,7-17); GLB texture points about rgb(80-96,48,32) (refs/tex07b/VIGNETPAW-tex0.jpg)",
-    "refs/VIGNETPAW-3dcrop.png (3D face: diamond mask, cream rings around both eyes)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The cream body, blue eyes, pointed ears, socks and tail are right, but two defining features are wrong. (1) The point colour is a saturated reddish sienna or milk-chocolate brown in the garden render (about rgb(77-96,40-52,7-17)), which reads as a chocolate or cinnamon point, not the dark cool seal of the portrait and look text. (2) The mask is a hard-edged diamond on the nose bridge and muzzle that leaves both eyes ringed in cream, where the look text and portrait have a full dark mask around the eyes."
-    }
-   ]
-  },
   "WARMSPOT": {
    "kind": "planned-linked",
    "realName": "Cat 5",
@@ -6892,40 +6112,6 @@
     }
    ]
   },
-  "WAYBILL": {
-   "kind": "planned-linked",
-   "realName": "Waybill (original; no real cat)",
-   "realSource": "Original cat for UPS. No UPS cat exists. The stock record gives a weak partner link to Yamato Transport's 'Kuroneko' logo, a black mother cat carrying a kitten (data/cats-info.json UPS). This cat deliberately does not use it.",
-   "exactLook": "(From our own look text.) A normal four-legged shorthair house cat. Slate-grey, meaning a cool blue-grey (handoff #5D6873), and white (#F4F1EA) bicolour. A square white chest patch like a shipping label. Four white socks. Honey-gold eyes (handoff #D9A441). Wears nothing.",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (WAYBILL look)",
-    "git 86223bd handoff/scratch/launch-sheet-2/SHEET/cats-b.json (coat #5D6873 / #F4F1EA, eyes #D9A441)",
-    "Colour samples: in-game body about #453B2B to #5B4945 (a warm taupe-brown). Portrait grey about #513F3A, neutral once the warm cast of its white bib (#EAD9C9) is allowed for. Neither is blue-grey."
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "Grey and white with honey-gold eyes and white paws/front stockings: close. Drift: the grey is a neutral-to-warm charcoal grey, not the cool slate blue-grey. The chest patch is a long rounded vertical bib from chin to belly, not a square label shape. It adds a white muzzle blaze, and the front 'socks' run up the legs like stockings."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "A grey and white cat by the garden gate with honey-gold eyes. The same drift: neutral-warm grey rather than blue-grey, a rounded tapering bib instead of a square label patch, white muzzle, tall white front stockings."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The coat renders as a warm brown-taupe/mauve-brown (flank about #45332B), not slate blue-grey. The look explicitly avoids the brand's brown, so this reads as a brown cat. It also has a white tail tip that is not in the look, orange-lined ears, a dark red nose, and a rounded, not square, white chest patch. The white paws and amber eyes are fine."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "Same as the portrait: neutral-warm grey rather than blue-grey, honey eyes, a rounded bib rather than a square one, a white muzzle and tall white front stockings."
-    }
-   ]
-  },
   "WEN": {
    "kind": "hall-of-fame",
    "realName": "Wen",
@@ -6953,64 +6139,6 @@
      "asset": "inGame3D",
      "severity": "mismatch",
      "why": "The model's head is covered by a grey fabric hood/beanie with a black 'V' on it; the forehead tabby mark was misread as a hat logo, and Wen wears no hood. The body is neutral grey (about rgb 70,71,74) instead of light blue-grey. The legs and paws are white, while official art shows blue-grey arms and paws. There is no ':3' mouth, and a striped tabby tail with a white tip was added. The turquoise eyes, coral inner ears and white chest/face are right."
-    }
-   ]
-  },
-  "WHIRRPAW": {
-   "kind": "planned-linked",
-   "realName": "Whirr (original; no real cat)",
-   "realSource": "Original cat for PENG (Penguin Solutions). The company mascot is a penguin, not a cat, and the look comes from AI server racks.",
-   "exactLook": "(From our own look text.) A normal four-legged, sleek, medium-build shorthair house cat. Solid smoky blue-grey coat with no markings: a cool grey with a blue cast (handoff #6E7B8B, second #56626F). Bright green 'status-light' eyes (handoff #3FD16A, a vivid true green, not yellow-green). Wears nothing.",
-   "sources": [
-    "/home/user/catcoin-sanctuary/data/planned.json (WHIRRPAW look)",
-    "git 86223bd handoff/scratch/launch-sheet-2/SHEET/cats-b.json (coat #6E7B8B / #56626F, eyes #3FD16A)",
-    "Colour samples: portrait head about #726060 and flank about #4D3C3C (red above blue, a warm mauve-taupe grey); token the same; in-game head about #897F7D (near-neutral grey with a slight warm tint)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "portrait",
-     "severity": "minor",
-     "why": "Sleek solid grey shorthair with no markings, which is right. But the coat is a warm mauve/lilac-taupe grey (sampled about #726060, red above blue) instead of the cool smoky blue-grey of the look (#6E7B8B). The eyes are yellow-green/chartreuse rather than the bright status-light green."
-    },
-    {
-     "asset": "lorePicture",
-     "severity": "minor",
-     "why": "A solid grey cat at night with one eye open and one closed, matching 'keeps one eye open over the garden all night'. Drift: warm taupe-grey coat, not blue-grey, and the open eye is yellow-green rather than vivid green."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "minor",
-     "why": "Solid grey with vivid green eyes and no markings. But the grey is near-neutral with a slight warm/lavender tint (about #897F7D) rather than smoky blue-grey, and it has kitten proportions instead of a sleek medium build."
-    },
-    {
-     "asset": "kitToken",
-     "severity": "minor",
-     "why": "Same as the portrait: warm mauve-taupe grey rather than blue-grey, and yellow-green eyes rather than bright green."
-    }
-   ]
-  },
-  "WHISK100": {
-   "kind": "planned-original",
-   "realName": "Hundred Whisker Cat",
-   "realSource": "Original Catcoin Sanctuary character paired with QQQx (Invesco QQQ / Nasdaq-100). There is no real cat link: the Invesco proof post (x.com/InvescoUS/status/1562157992170201088) shows unrelated stock-photo kittens (a grey tabby leaping and a cream-and-white cat) for a 'soft landing' pun.",
-   "exactLook": "A fluffy, semi-long-haired house cat with a rich, solid, dark chocolate-brown coat: a cool, fairly desaturated brown, not red, russet or chestnut. Long fur on the body, a ruff at the neck and a plumed, bushy tail. A neat white chest bib starts just below the brown chin and runs down the chest; the chin itself is brown. Four small white paws/mittens. Light yellow-green eyes, dusky brown-pink nose. The signature feature is very long, bright WHITE whiskers that fan out wide on both sides of the face, past the shoulders, and stand out against the dark fur. Ordinary four-legged cat wearing nothing. Realistic style.",
-   "sources": [
-    "fields.look (ground truth)",
-    "assets/portraits/WHISK100.jpg, assets/lore/WHISK100.webp and the kit token all show dark chocolate semi-long hair, a white bib, four white paws, light yellow-green eyes and long white fanning whiskers",
-    "Colour samples: portrait flank RGB about (79,50,31), saturation 0.43; garden render flank about (89,46,17), saturation 0.67 (much redder)"
-   ],
-   "confidence": "high",
-   "redo": [
-    {
-     "asset": "lookText",
-     "severity": "minor",
-     "why": "Accurate, but it omits the four white paws/mittens that every 2D asset shows. Add 'four white paws' (and 'cool, not reddish, brown') so the 3D model and future renders keep them."
-    },
-    {
-     "asset": "inGame3D",
-     "severity": "mismatch",
-     "why": "The coat renders as a reddish chestnut/russet brown (much more saturated than the cool chocolate of the 2D art). The body is smooth and short-coated; only the tail is plumed, so it does not read as long-haired. The signature feature is missing: the whiskers are thin, dark brownish and of ordinary length, not very long bright-white fanning whiskers. The white chest bib has jagged torn-texture artifacts, with dark tufted artifacts on the upper forelegs, and there are grey artifacts inside the ears. It also has a small white chin spot, where the 2D chin is brown. Yellow-green eyes and four white paws are correct."
     }
    ]
   },

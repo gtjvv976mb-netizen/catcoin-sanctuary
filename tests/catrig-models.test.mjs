@@ -82,7 +82,7 @@ function rigged(key) {
   return { rig, sk, clips, at, bone, tear, skinned, pos, w };
 }
 
-const SAMPLE = ["JOCKCAT", "WINDSOCK", "RUBYCAT", "MISTO", "GENKITTY", "CHOCOCACAT", "maneki", "NYANKOSEN", "CASENAP", "HOVERPAW", "NERMALCAT", "SANDSTEP", "SGTTIBBS", "LIDNAP", "MEOWTHR", "GRREAT", "LEOTHELION", "tsuki", "PATCHPAW", "SKEINKIT", "MAYORSTUB", "BLAZECAT", "TAMAEKI"];
+const SAMPLE = ["JOCKCAT", "WINDSOCK", "RUBYCAT", "MISTO", "GENKITTY", "CHOCOCACAT", "maneki", "NYANKOSEN", "EMPTANG", "DIPLOMOG", "NERMALCAT", "SANDSTEP", "SGTTIBBS", "LIDNAP", "MEOWTHR", "GRREAT", "LEOTHELION", "tsuki", "UPDATECAT", "MAYORSTUB", "BLAZECAT", "TAMAEKI"];
 const CATS = new Map(SAMPLE.map((k) => [k, rigged(k)]));
 
 test("sitting, lying and sleeping bring the body down, whatever the model's shape", () => {
@@ -188,8 +188,9 @@ test("no pose stretches the skin into a sheet: washing, scratching, beckoning, l
 });
 
 test("a forepaw comes up only as far as that cat's legs go: one with its forelegs modelled as one piece washes its chest", () => {
-  // CASENAP's and HOVERPAW's forelegs are joined right down to the paws (AMRCAT's and SNOWBELCAT's were, until their 2026-09-30 models): washing, neither paw leaves the ground.
-  for (const key of ["CASENAP", "HOVERPAW"]) {
+  // EMPTANG's and DIPLOMOG's forelegs are joined right down to the paws (CASENAP's and HOVERPAW's were, until those cats were
+  // held back on 2026-10-01; AMRCAT's and SNOWBELCAT's, until their 2026-09-30 models): washing, neither paw leaves the ground.
+  for (const key of ["EMPTANG", "DIPLOMOG"]) {
     const c = CATS.get(key);
     assert.ok(c.rig.legJoin.f < 0.3, `${key}: forelegs found joined (${c.rig.legJoin.f.toFixed(2)})`);
     c.at("sit", 0);

@@ -503,10 +503,13 @@ body.no-webgl .hint { display: none; }
 @media (max-width: 640px) { .nextcat-tab { top: auto; bottom: calc(118px + var(--safe-b, 0px)); } .nextcat-label { display: none; } }
 
 /* The real photo from the cat's X post, hotlinked with credit at the top of the card body,
-   and our own picture under it as the in-game look. */
+   and our own picture (our version, the in-game look) beside it. */
 .card-real-photo { margin: 0 0 10px; }
 .card-real-photo-img { display: block; width: 100%; max-height: 320px; object-fit: cover; border-radius: 14px; background: #f3e6d6; }
 .card-real-photo-caption, .card-ingame-caption { margin-top: 4px; font-size: .85rem; opacity: .85; }
 .card-real-photo-link { font-weight: 700; }
-.card-ingame { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; }
-.card-ingame-img { width: 72px; height: 72px; flex: none; border-radius: 14px; object-fit: cover; background: #f3e6d6; }
+/* The real photo and our version, side by side and the same size; our version alone fills half the width. */
+.card-pics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 12px; align-items: start; }
+.card-pics > figure { margin: 0; min-width: 0; }
+.card-pics .card-real-photo-img, .card-ingame-img { display: block; width: 100%; height: auto; aspect-ratio: 1; max-height: none; object-fit: cover; border-radius: 14px; background: #f3e6d6; }
+.card-ingame-caption, .card-real-photo-caption { overflow-wrap: anywhere; }
