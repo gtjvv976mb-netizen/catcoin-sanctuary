@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/FISHTOPH.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105768725148230028.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-01T21:34:45Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "fishtopher",
         "ticker": "FISHTOPH",
@@ -71,9 +71,14 @@
         "confidence": "high",
         "lore": null
       },
-      "mintGrind": {
-        "next": 18580001
-      }
+      "mintNonce": 18732339,
+      "tx": "5ZzuTxGDJ7FXWDZnBjuiF1N1VFysa8MqLe3JqHJZF38NnuRZgkkisDGur11CtX7FZWmEw9ZVkxM7pTJMp8CGwytK",
+      "sentAt": "2026-10-01T22:33:08Z",
+      "lastValidBlockHeight": 430461769,
+      "mintPublic": "5ZwSmHcCTi5e835MvHVhNmSmcQTTPhFdR4vaF28fpump",
+      "spentLamports": 5485920,
+      "settledAt": "2026-10-01T22:33:17Z",
+      "launchedAt": "2026-10-01T22:33:08Z"
     },
     {
       "postId": "2105753628418187702",
