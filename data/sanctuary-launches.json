@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/HOICHAN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105803551884890433.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-01T23:36:53Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "hoi-chan-hoippu",
         "ticker": "HOICHAN",
@@ -66,7 +66,15 @@
         "portraitStatus": "ready",
         "confidence": "high",
         "lore": null
-      }
+      },
+      "mintNonce": 6338747,
+      "tx": "3t6xbVSgXWsaQztrinqjmfDXSBkPHL5yQwV1PJUnqSwY9bXZKJocZXaXQLshDXN2QMXeJex1h3G4xb6MeWP8wtC2",
+      "sentAt": "2026-10-01T23:47:02Z",
+      "lastValidBlockHeight": 430478325,
+      "mintPublic": "45MvMkfvemyqkmurJC6bzxHimfs5H6XvFR1TwzkCpump",
+      "spentLamports": 5470680,
+      "settledAt": "2026-10-01T23:47:11Z",
+      "launchedAt": "2026-10-01T23:47:02Z"
     },
     {
       "postId": "2105768725148230028",
