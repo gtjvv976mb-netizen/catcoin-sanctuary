@@ -27,7 +27,7 @@ import {
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
-  sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, DIED,
+  sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, DIED, OWN_WAIT_ALERT_HOURS,
 } from "../scripts/lib/launcher.mjs";
 import * as R from "../scripts/lib/rewards.mjs";
 import { creatorVault, EVENT_IX_TAG, EVENT_DISC } from "../scripts/lib/pump-fees.mjs";
@@ -2247,8 +2247,9 @@ test("shipped: the ledger and every coin's metadata are valid (the ledger and th
     assert.ok(/^https:\/\/x\.com\/[A-Za-z0-9_]{1,15}\/status\/\d{5,25}$/.test(m.twitter) && postIdOf(m.twitter) === f.slice(0, -5), `${f}: its X link is the cat's own post`);
     assert.equal(m.website, `${SITE_ORIGIN}/#cat=${m.symbol}`);
     // A sanctuary cat's coin (launched from the sanctuary's own post) shows its picture on the site.
-    const own = ledger.launches.find((r) => r.postId === f.slice(0, -5))?.policy === "sanctuary";
-    assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE || (own && SITE_PICTURE.test(m.image) && m.twitter.startsWith(`https://x.com/${OWN_HANDLE}/status/`)),
+    // Decided from the file itself (the ledger drops old finished rows; a coin's file stays for good): its X link is the sanctuary's own post of this id.
+    const own = m.twitter === `https://x.com/${OWN_HANDLE}/status/${f.slice(0, -5)}`;
+    assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE || (own && SITE_PICTURE.test(m.image)),
       `${f}: the post's photo, the site's own for a hidden one, or a sanctuary cat's picture on the site`);
     assert.ok(Buffer.byteLength(metadataUri(f.slice(0, -5))) <= 200);
   }
@@ -2421,7 +2422,7 @@ test("sanctuary cats: a failed launch is tried again with the same post (the sam
 /** A throwaway site where `c` is posted on X (released, with the sanctuary's tweet), its portrait on disk, and the trend watch's last pump.fun scan an hour ago. */
 function ownSite(c, opts = {}) {
   const t = site(opts);
-  fs.writeFileSync(path.join(t.root, "data/trending.json"), JSON.stringify({ ...t.json("data/trending.json"), fresh: { updatedAt: iso(NOW - HOUR), items: [] } }));
+  fs.writeFileSync(path.join(t.root, "data/trending.json"), JSON.stringify({ ...t.json("data/trending.json"), fresh: { updatedAt: iso(NOW - HOUR), coveredUntil: iso(NOW - HOUR), items: [] } }));
   const queue = t.json("data/release-queue.json");
   queue.cats = [...queue.cats.filter((q) => q.key !== c.ticker), released(c.ticker)];
   fs.writeFileSync(path.join(t.root, "data/release-queue.json"), `${JSON.stringify(queue, null, 2)}\n`);
@@ -2467,9 +2468,11 @@ test("sanctuary cats: adopted by a visitor (or given a coin) between prepare and
 
 /**
  * The fake site, and pump.fun's public list of new coins (newest first, 50 a page): `coins` ({ mint, name, symbol,
- * creator, created_timestamp }), or `down` (it does not answer). Every page asked is recorded.
+ * creator, created_timestamp }) and, unless `tail` is false, a day-old coin past them (the list goes on), or `down`
+ * (it does not answer). Every page asked is recorded.
  */
-function pumpSite(root, { coins = [], down = false } = {}) {
+function pumpSite(root, { coins = [], down = false, tail = true } = {}) {
+  coins = tail ? [...coins, pumpCoin(9999, { name: "Old Coin", symbol: "OLD", at: NOW - 24 * HOUR })] : coins;
   const web = fakeSite(root);
   const site0 = web.fetchImpl;
   web.pumpAsked = [];
@@ -2534,7 +2537,11 @@ test("sanctuary cats: pump.fun not answering, or no time for the last scan: noth
   assert.equal(noScan.s.outcome, "adoption_unchecked");
   assert.equal(noScan.row.status, "prepared");
   const pages = await kitLaunchedSince({ fetchImpl: pumpSite(os.tmpdir(), { coins: Array.from({ length: 200 }, (_, i) => pumpCoin(i, { at: NOW - i })) }).fetchImpl, kit: { key: "ZZ", name: "Zed", ticker: "ZED" }, sinceMs: NOW - 10 * HOUR, pages: 2 });
-  assert.match(pages.unchecked, /do not reach back/);
+  assert.match(pages.unchecked, /did not reach back/);
+  // An empty page (HTTP 200, []) is not the list's end: unchecked, never "nobody adopted it".
+  const empty = await ownSend({ tail: false });
+  assert.equal(empty.s.outcome, "adoption_unchecked");
+  assert.equal(empty.sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
 });
 
 test("sanctuary cats: data/adoptions.json unreadable is never \"nobody adopted anything\": no cat is prepared, and a prepared one waits", async () => {
@@ -2554,19 +2561,22 @@ test("sanctuary cats: data/adoptions.json unreadable is never \"nobody adopted a
   assert.equal(r.row.status, "prepared");
 });
 
-test("sanctuary cats: a cat that died is launched as a tribute (the owner's choice): its lore line is \"In loving memory of <name>.\" (one cat; a pair keeps its own); a sensitivity note, a new coin name or ticker since it was prepared stops the send", async () => {
+test("sanctuary cats: a cat that died (memorial: true) is launched as a tribute (the owner's choice), its lore line \"In loving memory of <name>.\"; a death in its words without the flag is never guessed (it may be another's): not launched; a pair keeps its own line; a sensitivity note, a new coin name or ticker since it was prepared stops the send", async () => {
   const c = ownCat();
   const e = released(c.ticker);
   const cats = shipped(FILES.adoptables).cats;
   const withCat = (patch) => ({ ...shipped(FILES.adoptables), cats: cats.map((x) => (x.ticker === c.ticker ? { ...x, ...patch } : x)) });
-  for (const story of ["She died on 16 August 2026, aged 17.", "Venus (2009–2026) had two faces.", "He passed away in his sleep.", "Crossed the rainbow bridge in 2021.", "A funeral was held at the station."]) {
-    const r = sanctuaryRow(e, ownCtx({ entries: [e], adoptables: withCat({ memorial: false, story: `${c.name} was famous. ${story}` }) }));
-    assert.equal(r.row?.lore, `In loving memory of ${c.name}.`, story);
-  }
+  for (const story of ["She died on 16 August 2026, aged 17.", "Venus (2009–2026) had two faces.", "He passed away in his sleep.", "Crossed the rainbow bridge in 2021.", "A funeral was held at the station."])
+    assert.match(sanctuaryRow(e, ownCtx({ entries: [e], adoptables: withCat({ memorial: false, story: `${c.name} was famous. ${story}` }) })).problem, /mentions a death but it is not marked memorial/, story);
   const flagged = sanctuaryRow(e, ownCtx({ entries: [e], adoptables: withCat({ memorial: true, sensitivity: `In loving memory of ${c.name}.` }) }));
   assert.equal(flagged.row.lore, `In loving memory of ${c.name}.`);
   assert.ok(coinMetadata(flagged.row).description.startsWith(`In loving memory of ${c.name}.`));
-  assert.equal(loreLinesOf({ ticker: "ZZ", name: "Cole & Marmalade", story: "Cole died in 2021. Marmalade lives on." }).includes("In loving memory of Cole & Marmalade."), false, "a pair may have lost only one");
+  assert.equal(loreLinesOf({ ticker: "ZZ", name: "Cole & Marmalade", memorial: false, story: "Cole died in 2021. Marmalade lives on." }).includes("In loving memory of Cole & Marmalade."), false, "a pair may have lost only one");
+  // The shipped cats: those that died are marked memorial and launch as tributes; the living whose stories name another's death are not tributes.
+  const shippedRow = (t) => sanctuaryRow(released(t), ownCtx({ entries: [released(t)] }));
+  for (const t of ["VENUS2F", "OSCARRI", "EMPTANG", "KENCHAN"]) assert.equal(shippedRow(t).row?.lore, `In loving memory of ${cats.find((x) => x.ticker === t).name}.`, t);
+  for (const t of ["AIZUSAKURA", "CHOUPETCAT"]) { const r = shippedRow(t); assert.ok(!r.row?.lore?.startsWith("In loving memory"), t); assert.match(r.problem ?? "", /not marked memorial/, t); }
+  assert.ok(!shippedRow("COLEMARM").row?.lore?.startsWith("In loving memory"), "Cole & Marmalade: only Cole died");
   for (const text of ["He died.", "death", "In loving memory", "(1998-2014)"]) assert.ok(DIED.test(text), text);
   assert.equal(DIED.test("She dyed her hair"), false);
   // Changed after it was prepared: the send-time check refuses it.
@@ -2575,6 +2585,7 @@ test("sanctuary cats: a cat that died is launched as a tribute (the owner's choi
   assert.equal(now({}), null);
   assert.equal(now({ memorial: true, sensitivity: `In loving memory of ${c.name}.` }), null);
   assert.match(now({ sensitivity: "Ill since 2024; the owners asked for privacy." }), /sensitivity/);
+  assert.match(now({ story: `${c.name} was famous. ${c.name} died in 2025.` }), /not marked memorial/);
   assert.match(now({ coinName: "Something Else Entirely" }), /names its coin otherwise/);
   assert.match(now({ launchTicker: "OTHERT" }), /launches as OTHERT/);
 });
@@ -2602,6 +2613,7 @@ test("sanctuary cats: lore lines never stop at a title (\"Mr.\", \"Dr.\") and ne
   assert.equal(kind("A 3D-rendered cat, not a real cat"), "cartoon");
   assert.equal(kind("A real black cat. His avatar is drawn as a cartoon"), "real");
   assert.equal(kind("Anything at all", "tv-movie"), "fiction");
+  assert.equal(kind("A glowing, airbrushed cosmic digital painting. A cat built from bubbles. Not a real animal, no fur pattern.", "crypto"), "cartoon");
 });
 
 test("sanctuary cats: record refuses a cat whose card names its coin otherwise now (a person must look), never writing a launch the page could not match", async () => {
@@ -2635,4 +2647,79 @@ test("shipped data after a sanctuary prepare: its coin file passes the shipped c
   assert.ok(SITE_PICTURE.test(m.image) && m.twitter === `https://x.com/${OWN_HANDLE}/status/${OWN_TWEET}` && postIdOf(m.twitter) === OWN_TWEET);
   assert.equal(m.website, `${SITE_ORIGIN}/#cat=${m.symbol}`);
   assert.ok(Buffer.byteLength(metadataUri(OWN_TWEET)) <= 200);
+});
+
+test("sanctuary cats: the live check reads past a short page (a filtered row), and a kit coin with no real time is never let through", async () => {
+  // Page 1 has 49 rows (one filtered out), the kit's coin is on page 2: found.
+  const short = await kitLaunchedSince({
+    fetchImpl: async (url) => {
+      const offset = Number(new URL(url).searchParams.get("offset"));
+      const list = offset === 0 ? Array.from({ length: 49 }, (_, i) => pumpCoin(i, { at: NOW - i * 1000 }))
+        : offset === 49 ? [pumpCoin(100, { name: "Zed", symbol: "ZED", at: NOW - 60_000 }), pumpCoin(101, { at: NOW - 24 * HOUR })] : [];
+      return new Response(JSON.stringify(list), { status: 200 });
+    }, kit: { key: "ZZ", name: "Zed", ticker: "ZED" }, sinceMs: NOW - HOUR,
+  });
+  assert.deepEqual(short.taken, [pumpCoin(100).mint]);
+  // A row whose time is null (Number(null) is 0) neither ends the walk nor hides a kit coin.
+  const nul = await kitLaunchedSince({ fetchImpl: pumpSite(os.tmpdir(), { coins: [{ ...pumpCoin(5, { name: "Zed", symbol: "ZED" }), created_timestamp: null }, pumpCoin(6)] }).fetchImpl,
+    kit: { key: "ZZ", name: "Zed", ticker: "ZED" }, sinceMs: NOW - HOUR });
+  assert.deepEqual(nul.taken, [pumpCoin(5).mint]);
+});
+
+test("sanctuary cats: a prepared cat that waits (pump.fun's list down) gives way to a trending cat that may launch, and is prepared again once the slot is free; one waiting for hours is an error a person sees", async () => {
+  const c = ownCat();
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root, { down: true }), logs = [];
+  assert.equal((await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW, log: () => {} })).prepared, OWN_TWEET);
+  web.deployed = true;
+  assert.equal((await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW, sleep: async () => {}, log: () => {}, ...quick })).outcome, "adoption_unchecked");
+  // Hours later, still waiting: an error in the log.
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW + (OWN_WAIT_ALERT_HOURS + 1) * HOUR, log: (l) => logs.push(l) });
+  assert.ok(logs.some((l) => /^::error title=Launcher::.* has waited \d+ hours/.test(l)), logs.join("\n"));
+  // A watch-list cat starts trending: the sanctuary cat gives way (failed, a retry, no attempt used) and the trending cat is prepared.
+  fs.writeFileSync(path.join(t.root, "data/trending-cats.json"), `${JSON.stringify(trendingOf([post("2100000000000000001", { h: 1 })]), null, 2)}\n`);
+  const later = NOW + 8 * HOUR;
+  const p = await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => later, log: () => {} });
+  assert.equal(p.prepared, "2100000000000000001");
+  const own = t.json(FILES.ledger).launches.find((r) => r.postId === OWN_TWEET);
+  assert.deepEqual([own.status, own.retry, own.attempts], ["failed", true, 0]);
+  assert.match(own.reason, /gave way to a trending cat/);
+});
+
+test("sanctuary cats: a prepared cat follows its card until it is sent (marked memorial since: its lore line and metadata become the tribute before the send; the send waits for that)", async () => {
+  const c = ownCat();
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root), c0 = clock();
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: () => {} });
+  const before = t.json(FILES.ledger).launches[0];
+  assert.ok(!before.lore.startsWith("In loving memory"));
+  const a = t.json(FILES.adoptables);
+  a.cats = a.cats.map((x) => (x.ticker === c.ticker ? { ...x, memorial: true, sensitivity: `In loving memory of ${x.name}.` } : x));
+  fs.writeFileSync(path.join(t.root, FILES.adoptables), `${JSON.stringify(a, null, 2)}\n`);
+  web.deployed = true;
+  // The send sees the change first: it waits, sending nothing.
+  const s1 = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: () => {}, ...quick });
+  assert.equal(s1.outcome, "card_changed");
+  assert.equal(sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
+  // The prepare rewrites the row and its metadata; the send then launches the tribute.
+  const logs = [];
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: (l) => logs.push(l) });
+  const row = t.json(FILES.ledger).launches[0];
+  assert.equal(row.lore, `In loving memory of ${c.name}.`);
+  assert.ok(JSON.parse(t.read(row.metadataPath)).description.startsWith(`In loving memory of ${c.name}.`));
+  assert.ok(logs.some((l) => /lore line is now/.test(l)));
+  const s2 = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: () => {}, ...quick });
+  assert.equal(s2.outcome, "launched");
+});
+
+test("shipped coins check: a sanctuary coin's file passes on its own (its X link the sanctuary's own post of its id), even once the ledger has dropped its row", () => {
+  const id = "2105999999999999777";
+  const m = { image: `${SITE_ORIGIN}/assets/portraits/SGTTIBBS.jpg`, twitter: `https://x.com/${OWN_HANDLE}/status/${id}` };
+  const ok = (meta, f) => /^https:\/\/pbs\.twimg\.com\//.test(meta.image) || meta.image === SITE_IMAGE || (meta.twitter === `https://x.com/${OWN_HANDLE}/status/${f.slice(0, -5)}` && SITE_PICTURE.test(meta.image));
+  assert.ok(ok(m, `${id}.json`));
+  assert.ok(!ok(m, "2105999999999999778.json"), "another post's id");
+  assert.ok(!ok({ ...m, twitter: `https://x.com/someone/status/${id}` }, `${id}.json`), "a stranger's post");
+  assert.ok(!ok({ ...m, image: `${SITE_ORIGIN}/assets/og-image.jpg` }, `${id}.json`) || SITE_IMAGE === `${SITE_ORIGIN}/assets/og-image.jpg`);
 });

@@ -35,7 +35,9 @@ const serialize = (v) => `${JSON.stringify(v, null, 2)}\n`;
 
 const CATEGORY = { celebrity: "celebrity", tvmovie: "tv-movie", "tv-movie": "tv-movie", company: "company", viral: "viral", crypto: "crypto" };
 /* Cats that have died (checked against their sources). Their cards say "In loving memory". */
-export const MEMORIAL = new Set(["maru", "bob", "lilbub", "kittypurry", "delilah", "gli", "tombili", "tama"]);
+export const MEMORIAL = new Set(["maru", "bob", "lilbub", "kittypurry", "delilah", "gli", "tombili", "tama",
+  // Cats whose own stories and sources say they died (checked 2026-10-01): their cards and coins are tributes.
+  "felicette", "stubbs", "socks", "colonelmeow", "venus", "cc", "felixhudds", "nitama", "oscar", "empresstang", "curious-zelda", "ollie-gervais", "peepee-the-cat", "jjing-jjing-moon-jae-in", "professor-meowingtons-deadmau5", "sockington", "henri-le-chat-noir", "clive-beckinsale", "dewey-readmore-books", "ken-chan-onomichi-museum"]);
 /* A ticker the research suggested that clashes with the cat's own existing coin gets another (re-checked free on Jupiter and StonkFun). */
 /* A coat the look's words read wrongly (a colourpoint read as a tortie, a pink cartoon cat). */
 export const COAT_OVERRIDES = { choupette: { base: "white", second: "cream", pattern: "point", eyes: "blue" }, cheshire: { base: "lilac", second: "", pattern: "tabby", eyes: "yellow" } };

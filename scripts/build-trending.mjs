@@ -75,10 +75,14 @@ export const crude = (name, symbol) => CRUDE.test(`${name} ${symbol}`) || checkF
 const norm = (s) => String(s || "").normalize("NFKD").toLowerCase().replace(/[^a-z0-9]/g, "");
 
 /** What a copycat is matched against: every sanctuary cat's tickers and coin name; `ours`, the sanctuary's own coins (ownMints,
- *  and every mint the launcher's ledger has sent: a sanctuary cat's own coin is never its copycat, recorded on its card yet or not). */
+ *  and every mint the launcher's ledger has sent: a sanctuary cat's own coin is never its copycat, recorded on its card yet or not);
+ *  `pending`, the tickers the launcher is launching now (its mint not in the ledger yet). */
 export function catIndex({ planned = { cats: [] }, adoptables = { cats: [] }, collection = { cats: [] }, launches = { launches: [] } }) {
-  const tickers = new Map(), names = new Map(), ours = new Set(ownMints({ collection, adoptables }));
-  for (const r of launches?.launches || []) if (typeof r?.mintPublic === "string") ours.add(r.mintPublic);
+  const tickers = new Map(), names = new Map(), ours = new Set(ownMints({ collection, adoptables })), pending = new Set();
+  for (const r of launches?.launches || []) {
+    if (typeof r?.mintPublic === "string") ours.add(r.mintPublic);
+    else if ((r?.status === "prepared" || r?.status === "sending") && typeof r.ticker === "string") pending.add(r.ticker.toUpperCase());
+  }
   for (const c of planned.cats || []) if (c.ticker) tickers.set(c.ticker.toUpperCase(), c.ticker);
   for (const c of adoptables.cats || []) {
     tickers.set(c.ticker.toUpperCase(), c.ticker);
@@ -86,7 +90,7 @@ export function catIndex({ planned = { cats: [] }, adoptables = { cats: [] }, co
     // A cat's coin name only when it is distinctive enough not to catch every "Luna" or "Felix".
     if (norm(c.coinName).length >= 6 && norm(c.coinName) !== norm(c.name)) names.set(norm(c.coinName), c.ticker);
   }
-  return { tickers, names, ours };
+  return { tickers, names, ours, pending };
 }
 
 /** The sanctuary cat this coin copies (its key), or null. */
@@ -137,22 +141,30 @@ export async function activity({ famous, collection, fetchImpl, pause }) {
       marketCapUsd: marketCapUsd == null ? null : Math.round(marketCapUsd), volume24hUsd: Math.round(volume24hUsd || 0), change24hPct: change24hPct == null ? null : Math.round(change24hPct * 10) / 10 }));
 }
 
-/** pump.fun's launches since `sinceMs`, newest first (its public list), or null if it did not answer. */
-export async function pumpLaunches(fetchImpl, sinceMs, { pause = 400 } = {}) {
+/**
+ * pump.fun's launches since `sinceMs`, newest first (its public list), or null if it did not answer. The list
+ * carries `reached`: true only when the walk read back past `sinceMs` (a page whose oldest real time is older);
+ * a page that failed, or running out of `pages`, leaves it false (coins in between may be unread).
+ */
+export async function pumpLaunches(fetchImpl, sinceMs, { pause = 400, pages = MAX_PAGES } = {}) {
   const seen = new Map();
-  let answered = false;
-  for (let page = 0, offset = 0; page < MAX_PAGES; page++) {
+  let answered = false, reached = false;
+  for (let page = 0, offset = 0; page < pages; page++) {
     const r = await getJson(fetchImpl, `https://frontend-api-v3.pump.fun/coins?offset=${offset}&limit=${PAGE}&sort=created_timestamp&order=DESC&includeNsfw=false`);
     if (!Array.isArray(r)) break;
     answered = true;
     for (const c of r) if (c?.mint && num(c.created_timestamp) >= sinceMs) seen.set(c.mint, c);
-    const oldest = Math.min(...r.map((c) => num(c?.created_timestamp) ?? Infinity));
-    if (!r.length || oldest < sinceMs) break;
+    const times = r.map((c) => num(c?.created_timestamp)).filter((t) => t > 0);
+    if (times.length && Math.min(...times) < sinceMs) { reached = true; break; }
+    if (!r.length) break;
     offset += r.length;
     if (pause) await sleep(pause);
   }
-  return answered ? [...seen.values()] : null;
+  return answered ? Object.assign([...seen.values()], { reached }) : null;
 }
+
+/** Pages the scan may read to catch up to its coverage mark after a gap (a late or failed run): about 2 hours of pump.fun. */
+export const CATCH_UP_PAGES = 40;
 
 /* ── Adoptions: launches from a cat's own Adopt kit ──────────────────────────────────────── */
 
@@ -209,8 +221,23 @@ export async function adoptionsIn(launched, { kits, collectionMints, ownerWallet
  * returns the records with any new adoption too.
  */
 export async function fresh({ prev, idx, adopt, fetchImpl, nowMs, pause, log }) {
-  const since = Math.max(Date.parse(prev?.updatedAt ?? 0) || 0, nowMs - 30 * 60_000) - 60_000;
-  const launched = await pumpLaunches(fetchImpl, since, { pause });
+  // Read back to the coverage mark (every launch older than it was read by some run), catching up after a gap.
+  const covered = Date.parse(prev?.coveredUntil ?? "") || 0;
+  const since = (covered && covered > nowMs - 24 * 3600_000 ? covered : Math.max(Date.parse(prev?.updatedAt ?? 0) || 0, nowMs - 30 * 60_000)) - 60_000;
+  const behind = nowMs - since > 31 * 60_000;
+  const launched = await pumpLaunches(fetchImpl, since, { pause, pages: behind ? CATCH_UP_PAGES : MAX_PAGES });
+  // The mark moves to now only when this read reached it; a page that failed keeps it (the next run reads the gap again).
+  // A gap past even the catch-up read is let go, with a warning (no run can read it any more), and noted in `gaps`.
+  let coveredUntil = prev?.coveredUntil ?? null, gap = null;
+  if (launched?.reached) coveredUntil = iso(nowMs);
+  else if (launched && launched.length >= (behind ? CATCH_UP_PAGES : MAX_PAGES) * PAGE) {
+    gap = { from: iso(since), to: iso(Math.min(...launched.map((c) => num(c.created_timestamp)).filter((t) => t > 0))) };
+    coveredUntil = iso(nowMs);
+    log(`::warning::pump.fun's launches from ${gap.from} to ${gap.to} were not read (too many to catch up): adoptions in that window are not tracked.`);
+  }
+  // A coin the launcher is launching now (its ticker pending in the ledger) from a launcher wallet is the sanctuary's own from its first sighting.
+  const owners = new Set(adopt.ownerWallets || []);
+  for (const c of launched || []) if (owners.has(c.creator) && idx.pending?.has(String(c.symbol || "").toUpperCase())) idx.ours.add(c.mint);
   // Every launch against the kits, cat-themed or not: a cat's first launch from its own kit is its adoption.
   const found = await adoptionsIn(launched || [], { ...adopt, adopted: new Set(adopt.adoptions.map((a) => a.key)), fetchImpl, foundAt: iso(nowMs), log });
   const adoptions = mergeAdoptions(adopt.adoptions, found);
@@ -247,7 +274,7 @@ export async function fresh({ prev, idx, adopt, fetchImpl, nowMs, pause, log }) 
   const f = await dexFigures(fetchImpl, "solana", rows, { pause });
   const byKeep = new Map(keep.map((r) => [r.mint, r]));
   for (const r of rows) { const d = f.get(r.mint); if (d?.marketCapUsd != null) { r.marketCapUsd = Math.round(d.marketCapUsd); byKeep.get(r.mint).marketCapUsd = r.marketCapUsd; } }
-  return { items: rows, all: keep, answered: launched !== null, adoptions };
+  return { items: rows, all: keep, answered: launched !== null, adoptions, coveredUntil, gap };
 }
 
 /** Hot on X: the sanctuary's posts of the last X_DAYS by engagement, or { status } when X was not asked or refused. */
@@ -281,8 +308,10 @@ export async function buildTrending({ data, env = {}, fetchImpl = (...a) => glob
   const at = iso(nowMs);
   const idx = catIndex(data);
   const names = new Map([...(data.planned.cats || []).map((c) => [c.ticker, c.name]), ...(data.adoptables.cats || []).map((c) => [c.ticker, c.name])]);
+  // A cat the launcher is sending or has launched has no kit any more: a coin under its name after that is a copycat, never its adoption.
+  const launching = new Set((data.launches?.launches || []).filter((r) => r?.policy === "sanctuary" && (r.status === "sending" || r.status === "launched")).map((r) => r.ticker));
   const adopt = {
-    kits: kitsOf({ planned: data.planned, adoptables: data.adoptables, kits: data.kits }), collectionMints: ownMints(data),
+    kits: kitsOf({ planned: data.planned, adoptables: data.adoptables, kits: data.kits }).filter((k) => !launching.has(k.key)), collectionMints: ownMints(data),
     ownerWallets: (data.wallets?.launchers || []).map((w) => w.address), adoptions: data.adoptions?.adoptions || [],
   };
   const act = await activity({ famous: data.famous, collection: data.collection, fetchImpl, pause });
@@ -294,7 +323,10 @@ export async function buildTrending({ data, env = {}, fetchImpl = (...a) => glob
       note: "Written by scripts/build-trending.mjs every 20 minutes; read by the Trending tab (assets/ui/trending.js). Names and tickers under fresh were typed by strangers.",
       updatedAt: at,
       activity: act ? { updatedAt: at, items: act } : prev.activity ?? { updatedAt: null, items: [] },
-      fresh: fr.answered || fr.items.length ? { updatedAt: fr.answered ? at : prev.fresh?.updatedAt ?? null, items: fr.items, all: fr.all.map(row) } : prev.fresh ?? { updatedAt: null, items: [] },
+      // coveredUntil: every pump.fun launch before it was read by some run (the launcher's live adoption check reads from there).
+      fresh: fr.answered || fr.items.length
+        ? { updatedAt: fr.answered ? at : prev.fresh?.updatedAt ?? null, coveredUntil: fr.coveredUntil, ...(fr.gap || prev.fresh?.gaps ? { gaps: [...(prev.fresh?.gaps ?? []), ...(fr.gap ? [fr.gap] : [])].slice(-10) } : {}), items: fr.items, all: fr.all.map(row) }
+        : prev.fresh ?? { updatedAt: null, items: [] },
       x: x === null ? prev.x : x.items ? { updatedAt: at, status: x.status, items: x.items } : { updatedAt: prev.x?.updatedAt ?? null, status: x.status, items: prev.x?.items ?? [] },
     },
     adoptions: { note: typeof data.adoptions?.note === "string" && data.adoptions.note.trim() ? data.adoptions.note : ADOPTIONS_NOTE, adoptions: fr.adoptions },

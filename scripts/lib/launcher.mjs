@@ -22,11 +22,15 @@
  * launches from that post (its mint derived from the post id, like any other), on pump.fun in SOL,
  * named as its card names it, its coin's picture its portrait on the site; its row in
  * data/adoptables.json takes the launch (and the SOL pair) once launched. Never a cat with a coin
- * already (its own launch, a visitor's adoption, a Collection entry under its name or ticker, a coin on
- * pump.fun under its kit's name and ticker, checked live right before the signature), one with a
- * sensitivity note other than "In loving memory of …", or one of low confidence (a cat that died is a
- * tribute: its lore line "In loving memory of <name>."); never the day's last launch, kept for a
- * trending cat; and
+ * already (its own launch, a visitor's adoption in data/adoptions.json, a Collection entry under its name
+ * or ticker, or a coin on pump.fun under its kit's name and ticker since the trend watch's coverage mark,
+ * data/trending.json fresh.coveredUntil, read live right before the signature: a visitor who adopts
+ * first wins; StonkFun and GetStonked adoptions are tracked by nothing yet, so they are not seen), one
+ * with a sensitivity note other than "In loving memory of …", one whose story mentions a death while
+ * its data does not mark it memorial (never guessed: the death may be another's), or one of low
+ * confidence. A cat that died (memorial: true) is a tribute: its lore line "In loving memory of <name>."
+ * A prepared cat follows its card until it is sent, and gives way to a trending cat that may launch;
+ * it never takes the day's last launch (kept for a trending cat); and
  * the caps, the content rules and every check before and after the send are the same as a trending cat's.
  *
  * WHERE (scripts/lib/venues.mjs chooseVenue, the owner's rule in scripts/lib/venues-routing.mjs): by
@@ -751,23 +755,25 @@ export function selectCandidate(ctx) {
 const PICTURE_PATH = /^assets\/(?:portraits|lore)\/[A-Za-z0-9_-]{1,40}\.(?:jpg|webp|png)$/;
 /* A drawn cat's look (a cartoon, an anime or a game character, a mascot, a logo, a render): its tribute names the
    character's owners. Read in the look's lead clause only ("a real cat with a plush coat" is a real cat). */
-const NOT_REAL_LOOK = /\bnot (?:a )?real cats?\b/i;
+const NOT_REAL_LOOK = /\bnot (?:a )?real (?:cats?|animals?)\b/i;
 const REAL_LOOK = /\breal cats?\b/i;
-const DRAWN_LOOK = /\b(?:cartoon|anime|manga|animated|illustrat\w*|drawn|character|mascot|sticker|pixel(?:-art)?|emoji|chibi|kawaii|logo|graphic|vector|CGI|3D|render(?:ed)?|doodles?)\b/i;
+const DRAWN_LOOK = /\b(?:cartoon|anime|manga|animated|illustrat\w*|drawn|character|mascot|sticker|pixel(?:-art)?|emoji|chibi|kawaii|logo|graphic|vector|CGI|3D|render(?:ed)?|doodles?|painting|digital|artwork|inscription|NFT|AI-generated)\b/i;
 /** A sanctuary cat's kind, as the fan-tribute line reads it: a show's cat or a drawn one is a character, the rest real cats. */
 export function kindOfAdoptable(c) {
   if (c?.category === "tv-movie") return "fiction";
-  const lead = String(c?.look ?? "").split(/(?<=[.:;])\s/)[0];
-  if (NOT_REAL_LOOK.test(lead)) return "cartoon";
+  const look = String(c?.look ?? "");
+  if (NOT_REAL_LOOK.test(look)) return "cartoon";
+  const lead = look.split(/(?<=[.:;])\s/)[0];
   if (REAL_LOOK.test(lead)) return "real";
   return DRAWN_LOOK.test(lead) ? "cartoon" : "real";
 }
-/** A cat whose own words say it died (its story or lore caption): in memoriam, whatever its memorial flag says. */
+/** A death in a cat's own words (its story or lore caption): its own, or another's ("Love, who died in 2022"). */
 export const DIED = /\b(?:died|dies|death|passed away|funeral|obituary|memorial|in loving memory|rainbow bridge|euthan\w*|r\.?i\.?p)\b|\(\d{4}\s*[–-]\s*\d{4}\)/i;
 const diedText = (c, captions = {}) => [c?.story, c?.lore?.caption, captions?.[c?.ticker]].some((t) => DIED.test(String(t ?? "")));
-/** A cat that died (its memorial flag, or its own words): its coin is a tribute, its lore line "In loving memory of <name>." */
-export const inMemoriam = (c, captions = {}) => c?.memorial === true || diedText(c, captions);
+/** A cat that died, as its data says (its memorial flag, never guessed from its words): its coin is a tribute, its lore line "In loving memory of <name>." */
+export const inMemoriam = (c) => c?.memorial === true;
 const MEMORY_NOTE = /^In loving memory of /i;
+const PAIR_NAME = /&|\band\b|\+/i;
 /**
  * Why a sanctuary cat (its adoptable row) may not get a coin from the launcher at all, or null. A cat that
  * died is launched as a tribute (the owner's choice, 2026-09-30); a sensitivity note other than its
@@ -777,6 +783,9 @@ function ownEligibility(c, captions) {
   if (c.launch) return "it has a coin already";
   const note = String(c.sensitivity ?? "").trim();
   if (note && !MEMORY_NOTE.test(note)) return "a sensitivity note: never launched by the launcher";
+  // A death in its words without the memorial flag may be another's ("Love, who died in 2022"; "after his 2019 death"): never guessed.
+  // A pair ("Cole & Marmalade") keeps its own line: one of them may live on.
+  if (c.memorial !== true && diedText(c, captions) && !PAIR_NAME.test(String(c.name ?? ""))) return "its story mentions a death but it is not marked memorial (set memorial, and its \"In loving memory of …\" note, if the cat died)";
   if (c.confidence === "low") return "low confidence";
   if (c.launchTicker !== undefined && c.launchTicker !== c.ticker) return `its kit launches as ${c.launchTicker}`;
   // An older, unrelated small coin the research found (the card says so, and still offers the cat) does not stop it; its ticker would.
@@ -814,7 +823,7 @@ export function loreLinesOf(c, captions = {}) {
   if (name) out.push(`${name}, one of the Catcoin Sanctuary's cats.`);
   // A cat that died: a tribute, never its story told in the present tense. Only for one cat: a pair ("Cole & Marmalade")
   // may have lost only one of them, so it keeps its own lore line.
-  if (name && inMemoriam(c, captions) && (c.memorial === true || !/&|\band\b|\+/i.test(name))) out.unshift(`In loving memory of ${name}.`);
+  if (name && inMemoriam(c)) out.unshift(`In loving memory of ${name}.`);
   return [...new Set(out)];
 }
 
@@ -825,8 +834,8 @@ export function loreLinesOf(c, captions = {}) {
  * (coinName, ticker), its picture the cat's portrait on the site. Never a cat with a coin already (its
  * `launch`, an adoption by a visitor, an entry of the Collection's under its name or ticker; an older,
  * unrelated coin the research found only under the same ticker), one with a sensitivity note other than
- * "In loving memory of …" (a cat that died is a tribute), one of low confidence, or one whose kit launches
- * under another ticker; and every rule a trending cat's coin keeps (its text on
+ * "In loving memory of …", one whose story mentions a death while it is not marked memorial (a cat that
+ * died, memorial: true, is a tribute), one of low confidence, or one whose kit launches under another ticker; and every rule a trending cat's coin keeps (its text on
  * pump.fun, its metadata's description and its launch post by the site's content rules, the whole
  * adoptables file still valid with the cat priced in SOL).
  */
@@ -894,10 +903,26 @@ export function ownProblemNow(row, ctx) {
   return null;
 }
 
+/** The row a prepared sanctuary cat would be prepared as now (its lore line and kind follow its card), or null when it could not be. */
+export const ownRowNow = (row, ctx) => sanctuaryRow({ key: row.ticker, status: "released", tweet: row.postId }, { ...ctx, ledger: { launches: [] } }).row ?? null;
+/** Hours a prepared sanctuary cat may wait to be sent before a person is told (::error). */
+export const OWN_WAIT_ALERT_HOURS = 6;
+
 /** Pages of pump.fun's newest launches the live adoption check reads at most (50 a page). */
 export const PUMP_CHECK_PAGES = 40;
-/** How far before the trend watch's last pump.fun scan the live check reads back (its scan covers the rest). */
+/** How far before the trend watch's coverage mark (data/trending.json fresh.coveredUntil) the live check reads back. */
 export const PUMP_CHECK_MARGIN_MS = 15 * 60_000;
+/** One page of pump.fun's list, as the trend watch reads it (3 tries, a longer wait after a 429), or null. */
+async function pumpPage(fetchImpl, sleep, offset) {
+  for (let t = 0; t < 3; t++) {
+    try {
+      const res = await fetchImpl(PUMP_LIST(offset), { headers: { accept: "application/json", "user-agent": "catcoinsanctuary.com launcher" }, signal: AbortSignal.timeout(20_000) });
+      if (res.ok) { const j = await res.json(); if (Array.isArray(j)) return j; }
+      await sleep(res.status === 429 ? 3000 * (t + 2) * 2 : 1500);
+    } catch { await sleep(1500); }
+  }
+  return null;
+}
 const PUMP_LIST = (offset) => `https://frontend-api-v3.pump.fun/coins?offset=${offset}&limit=50&sort=created_timestamp&order=DESC&includeNsfw=false`;
 
 /**
@@ -910,22 +935,21 @@ const PUMP_LIST = (offset) => `https://frontend-api-v3.pump.fun/coins?offset=${o
 export async function kitLaunchedSince({ fetchImpl, sleep = async () => {}, kit, sinceMs, owners = new Set(), pages = PUMP_CHECK_PAGES }) {
   const taken = new Set();
   for (let page = 0, offset = 0; page < pages; page++) {
-    let list;
-    try {
-      const res = await fetchImpl(PUMP_LIST(offset), { headers: { accept: "application/json" }, signal: AbortSignal.timeout(20_000) });
-      list = res.ok ? await res.json() : null;
-    } catch { list = null; }
-    if (!Array.isArray(list)) return { unchecked: "pump.fun's list of new coins did not answer" };
+    const list = await pumpPage(fetchImpl, sleep, offset);
+    if (!list) return taken.size ? { taken: [...taken] } : { unchecked: "pump.fun's list of new coins did not answer" };
     for (const coin of list) {
       const t = Number(coin?.created_timestamp);
-      if (Number.isFinite(t) && t >= sinceMs && !owners.has(coin?.creator) && sameKit(coin, [kit]).length) taken.add(String(coin.mint));
+      // A coin with no real time is matched too (its time unknown): a kit's name and ticker there is never let through.
+      if (!owners.has(coin?.creator) && sameKit(coin, [kit]).length && (!(t > 0) || t >= sinceMs)) taken.add(String(coin.mint));
     }
-    const oldest = Math.min(...list.map((c) => Number(c?.created_timestamp)).filter(Number.isFinite));
-    if (list.length < 50 || oldest < sinceMs) return { taken: [...taken] };   // a short page is the list's end
+    // Only a real time proves the walk reached `sinceMs` (Number(null) is 0); pump.fun's list never ends within these pages.
+    const times = list.map((c) => Number(c?.created_timestamp)).filter((t) => Number.isFinite(t) && t > 0);
+    if (times.length && Math.min(...times) < sinceMs) return { taken: [...taken] };
+    if (!list.length) break;
     offset += list.length;
     await sleep(400);
   }
-  return taken.size ? { taken: [...taken] } : { unchecked: `pump.fun's newest ${pages * 50} coins do not reach back to the trend watch's last scan` };
+  return taken.size ? { taken: [...taken] } : { unchecked: `pump.fun's list did not reach back to the trend watch's coverage mark within ${pages} pages` };
 }
 
 /** The sanctuary cat to launch next: the one the announcer posted last that may launch. { row, route, skipped } or { row: null, skipped }. */
@@ -1311,9 +1335,34 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
       log(`Launcher: ${row.ticker}'s coin picture is now ${coinImage === SITE_IMAGE ? "the site's own (its post's photo is hidden in data/photo-hide.json)" : "its post's photo"}.`);
     }
   }
+  // A sanctuary cat not sent yet follows its card: its lore line and kind as it would be prepared now (its metadata is
+  // rewritten below and deployed before the send). One that may not launch any more is left to the send's check.
+  for (const row of ledger.launches.filter((r) => r.status === "prepared" && r.policy === "sanctuary")) {
+    const fresh = mode === "on" ? ownRowNow(row, ctx) : null;
+    if (fresh && (fresh.lore !== row.lore || fresh.kind !== row.kind)) {
+      replaceRow(ledger, { ...row, lore: fresh.lore, kind: fresh.kind });
+      out.changed = true;
+      log(`Launcher: ${row.ticker}'s lore line is now "${fresh.lore}" (its card changed since it was prepared).`);
+    }
+  }
   for (const row of ledger.launches.filter((r) => r.status === "prepared")) {
     const text = metadataText(coinMetadata(row));
     if (io.readText(row.metadataPath) !== text) { io.writeText(row.metadataPath, text); out.changed = true; }
+  }
+
+  // 3b. A sanctuary cat prepared but not sent (waiting on pump.fun's list, the deploy, the funds) gives way to a trending
+  //     cat the rules let launch now: failed with a retry and no attempt used, it is prepared again once the slot is free.
+  const held = inFlight(ledger);
+  if (mode === "on" && held.length === 1 && held[0].policy === "sanctuary" && held[0].status === "prepared") {
+    const waited = (nowMs - Date.parse(held[0].preparedAt)) / HOUR_MS;
+    const room = collectionRoom(ctx);
+    if (dayStats(ledger, nowMs, caps).count < caps.maxPerDay && room !== null && room >= 1 && selectCandidate(ctx).row) {
+      replaceRow(ledger, { ...held[0], status: "failed", retry: true, reason: "gave way to a trending cat; prepared again once the slot is free", settledAt: ISO_SECONDS(nowMs) });
+      out.changed = true;
+      log(`Launcher: ${held[0].ticker} (a sanctuary cat, not sent yet) gives way to a trending cat; it is prepared again once the slot is free.`);
+    } else if (waited > OWN_WAIT_ALERT_HOURS) {
+      log(`::error title=Launcher::${held[0].ticker} has waited ${Math.round(waited)} hours to be sent (see the send step's warnings: pump.fun's list, the deploy, the funds).`);
+    }
   }
 
   // 4. Nothing in flight: at most one new cat, while the day's count and the Collection's room allow it.
@@ -1570,6 +1619,12 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     fail(taken, false);
     return { ...out, outcome: "taken" };
   }
+  // Its card changed since it was prepared (a new lore line, a death marked): the prepare phase rewrites its metadata first.
+  const fresh = row.policy === "sanctuary" && !virtual ? ownRowNow(row, ctx) : null;
+  if (fresh && (fresh.lore !== row.lore || fresh.kind !== row.kind)) {
+    log(`Launcher: ${row.ticker} waits: its card changed since it was prepared; the prepare phase rewrites its metadata, then it is sent.`);
+    return { ...out, outcome: "card_changed" };
+  }
 
   // 5. The metadata: the committed file, served by the site at the coin's uri.
   const uri = metadataUri(row.postId);
@@ -1608,9 +1663,9 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   // A sanctuary cat: adopted on pump.fun since the trend watch's last scan? Read live, the last thing before the build and the signature.
   if (row.policy === "sanctuary") {
     const kit = kitsOf({ planned: ctx.planned ?? { cats: [] }, adoptables: ctx.adoptables ?? { cats: [] } }).find((k) => k.key === row.ticker);
-    const scan = Date.parse(readOwned(io, FILES.pumpScan, null, log)?.fresh?.updatedAt ?? "");
+    const scan = Date.parse(readOwned(io, FILES.pumpScan, null, log)?.fresh?.coveredUntil ?? "");
     const owners = new Set((walletsFile.launchers ?? []).map((w) => w?.address).filter(Boolean));
-    const live = !kit ? { unchecked: "the cat has no kit to compare" } : !Number.isFinite(scan) ? { unchecked: `${FILES.pumpScan} gives no time of the last pump.fun scan` }
+    const live = !kit ? { unchecked: "the cat has no kit to compare" } : !Number.isFinite(scan) ? { unchecked: `${FILES.pumpScan} gives no pump.fun coverage mark (fresh.coveredUntil) yet` }
       : await kitLaunchedSince({ fetchImpl, sleep, kit, sinceMs: Math.max(Date.parse(KITS_LIVE), scan - PUMP_CHECK_MARGIN_MS), owners });
     if (live.taken?.length) {
       const why = `a coin with its kit's name and ticker was launched on pump.fun (${live.taken[0]}): a visitor's adoption`;
