@@ -13,7 +13,11 @@
  *   · deriveMintKeypair: the new coin's mint, derived from the wallet's seed and the trending
  *     post's id (HMAC-SHA256). The same post always gives the same mint, so a retry can only ever
  *     fail on "account already in use", never make a second coin; a post id is plain ASCII, so no
- *     two spellings of one id can give two mints.
+ *     two spellings of one id can give two mints. With a derivation nonce (grindMintNonce: the
+ *     smallest one whose address ends in a wanted suffix, "pump" as pump.fun's own coins do) the
+ *     seed is HMAC-SHA256 of "v2:<postId>#<nonce>" instead: still one mint per (wallet, post, nonce),
+ *     and the scan for the nonce is deterministic (the smallest from where it starts), so a lost
+ *     commit after a send still recovers the very mint that went out.
  *   · the legacy wire format: compact-u16, message compile (keys deduplicated, payer first, then
  *     writable signers, readonly signers, writable non-signers, readonly non-signers, each group in
  *     first-seen order, as @solana/web3.js's Message.compile orders them), message decode,
@@ -21,6 +25,8 @@
  *   · the associated token account and ComputeBudget instructions.
  */
 import { createHmac, createPrivateKey, createPublicKey, sign as ed25519Sign, verify as ed25519Verify, timingSafeEqual } from "node:crypto";
+import { Worker } from "node:worker_threads";
+import { availableParallelism } from "node:os";
 import { base58Decode, base58Encode, isAddress } from "../../assets/collection.js";
 import { pda, isOnCurve } from "./chain.mjs";
 import { COMPUTE_BUDGET_PROGRAM, TOKEN_PROGRAM, TOKEN_2022_PROGRAM, ATA_PROGRAM } from "./programs.mjs";
@@ -147,18 +153,118 @@ export const POST_ID = /^[A-Za-z0-9_:-]{1,128}$/;
  * both. `wallet` is the seed bytes (never modified) or a keypair from keypairFromSecret (no other
  * object is read). An all-zero seed and a post id that is not POST_ID are refused.
  */
-export function deriveMintKeypair(wallet, postId) {
+export function deriveMintKeypair(wallet, postId, nonce = undefined) {
   const issued = ISSUED.has(wallet);
   if (!issued && !(wallet instanceof Uint8Array)) throw new TypeError("deriveMintKeypair needs the wallet's 32-byte seed (bytes) or a keypair from keypairFromSecret");
   const key = issued ? wallet.seed : wallet; // an issued keypair's getter hands out a fresh copy, wiped below; the caller's bytes are left alone
   try {
-    if (key.length !== 32) throw new TypeError("deriveMintKeypair needs the wallet's 32-byte seed (or its keypair)");
-    if (allZero(key)) throw new RangeError("the wallet's seed is all zeros: anyone could compute every mint's secret");
-    if (typeof postId !== "string" || !POST_ID.test(postId)) throw new TypeError('a post id is 1-128 ASCII letters, digits, "_", "-" or ":"');
-    const seed = createHmac("sha256", key).update(MINT_DERIVATION_PREFIX + postId, "utf8").digest();
+    checkMintInputs(key, postId, nonce);
+    const seed = createHmac("sha256", key).update(mintMessage(postId, nonce), "utf8").digest();
     try { return keypairFromSeed(seed); } finally { seed.fill(0); }
   } finally {
     if (issued) key.fill(0);
+  }
+}
+/** The HMAC message of a mint's seed: the first form (no nonce), or the "v2" form with a nonce ("#" is never in a post id, so the two never meet). */
+const mintMessage = (postId, nonce) => (nonce === undefined ? MINT_DERIVATION_PREFIX + postId : `${MINT_DERIVATION_PREFIX}v2:${postId}#${nonce}`);
+/** A derivation nonce: a positive whole number (undefined: the first form). */
+export const isMintNonce = (n) => Number.isSafeInteger(n) && n >= 1;
+function checkMintInputs(key, postId, nonce) {
+  if (key.length !== 32) throw new TypeError("deriveMintKeypair needs the wallet's 32-byte seed (or its keypair)");
+  if (allZero(key)) throw new RangeError("the wallet's seed is all zeros: anyone could compute every mint's secret");
+  if (typeof postId !== "string" || !POST_ID.test(postId)) throw new TypeError('a post id is 1-128 ASCII letters, digits, "_", "-" or ":"');
+  if (nonce !== undefined && !isMintNonce(nonce)) throw new TypeError("a mint derivation nonce is a positive whole number");
+}
+/** A mint address suffix to scan for: base58 characters, at most 6 (each one multiplies the scan by 58). */
+export const MINT_SUFFIX = /^[1-9A-HJ-NP-Za-km-z]{0,6}$/;
+/** The mint address (base58) for (seed bytes, postId, nonce): the scan's fast path, no keypair object made. */
+function mintAddressOf(key, postId, nonce) {
+  const seed = createHmac("sha256", key).update(mintMessage(postId, nonce), "utf8").digest();
+  const der = Buffer.concat([PKCS8_ED25519, seed]);
+  try { return base58Encode(createPublicKey(createPrivateKey({ key: der, format: "der", type: "pkcs8" })).export({ format: "der", type: "spki" }).subarray(-32)); }
+  finally { seed.fill(0); der.fill(0); }
+}
+/** The smallest nonce in [from, to) whose mint address ends in `suffix`, or null. `key`: the wallet's 32-byte seed. */
+export function scanMintNonces(key, postId, from, to, suffix) {
+  if (!(key instanceof Uint8Array)) throw new TypeError("scanMintNonces takes the wallet's seed bytes");
+  checkMintInputs(key, postId, from);
+  if (!Number.isSafeInteger(to) || to < from) throw new TypeError("a scan runs over [from, to)");
+  if (typeof suffix !== "string" || !MINT_SUFFIX.test(suffix)) throw new TypeError("a mint suffix is up to 6 base58 characters");
+  for (let n = from; n < to; n++) if (mintAddressOf(key, postId, n).endsWith(suffix)) return n;
+  return null;
+}
+/** Nonces a scan block covers (grindMintNonce): block k is [1 + k·BLOCK, 1 + (k+1)·BLOCK). Fixed, so a resumed scan is the same scan. */
+export const MINT_SCAN_BLOCK = 4000;
+const WORKER_CODE = `
+const { parentPort, workerData } = require("node:worker_threads");
+import(workerData.module).then((m) => {
+  parentPort.on("message", (job) => {
+    if (job === null) { workerData.key.fill(0); parentPort.close(); return; }
+    let hit = null, error = null;
+    try { hit = m.scanMintNonces(workerData.key, workerData.postId, job.lo, job.hi, workerData.suffix); } catch (e) { error = String(e && e.message || e); }
+    parentPort.postMessage({ k: job.k, hit, error });
+  });
+  parentPort.postMessage({ ready: true });
+}).catch((e) => parentPort.postMessage({ error: String(e && e.message || e) }));
+`;
+/**
+ * The smallest derivation nonce ≥ `from` whose mint address ends in `suffix`, scanned in fixed blocks (MINT_SCAN_BLOCK)
+ * on `workers` threads: { nonce, tries } once found, or { next, tries } when `budgetMs` ran out first (`next`: the first
+ * nonce not yet scanned to its block's end; a later call from there goes on with the same answer in the end). The answer
+ * never depends on the thread count or the budget: a hit counts only once every block below it is done. The seed bytes
+ * each thread gets are wiped when it is let go. `wallet`: the seed bytes or a keypair from keypairFromSecret.
+ */
+export async function grindMintNonce(wallet, postId, { suffix, from = 1, budgetMs = 10 * 60_000, workers = availableParallelism(), block = MINT_SCAN_BLOCK, now = Date.now } = {}) {
+  const issued = ISSUED.has(wallet);
+  if (!issued && !(wallet instanceof Uint8Array)) throw new TypeError("grindMintNonce needs the wallet's 32-byte seed (bytes) or a keypair from keypairFromSecret");
+  const key = issued ? wallet.seed : Uint8Array.from(wallet);
+  try {
+    checkMintInputs(key, postId, from);
+    if (typeof suffix !== "string" || !MINT_SUFFIX.test(suffix) || !suffix) throw new TypeError("a mint suffix is 1 to 6 base58 characters");
+    if (!Number.isSafeInteger(block) || block < 1 || !Number.isSafeInteger(workers) || workers < 1) throw new TypeError("block and workers are positive whole numbers");
+    const k0 = Math.floor((from - 1) / block);
+    let t0 = null; // (the budget runs from the first thread's first job: every thread scans at least one block)
+    const done = new Set(), hits = new Map();
+    let next = k0, tries = 0, finished = false;
+    const lowestNotDone = () => { let k = k0; while (done.has(k)) k++; return k; };
+    const answer = () => {
+      const hit = [...hits.keys()].sort((a, b) => a - b)[0];
+      if (hit === undefined) return null;
+      for (let k = k0; k < hit; k++) if (!done.has(k)) return null;
+      return hits.get(hit);
+    };
+    const pool = Array.from({ length: Math.min(workers, 64) }, () => new Worker(WORKER_CODE, { eval: true, workerData: { module: import.meta.url, key: Uint8Array.from(key), postId, suffix } }));
+    try {
+      return await new Promise((resolve, reject) => {
+        let idle = 0;
+        const settle = (value) => { if (!finished) { finished = true; resolve(value); } };
+        const dispatch = (w, first = false) => {
+          const hit = [...hits.keys()].sort((a, b) => a - b)[0];
+          if (t0 === null) t0 = now();
+          const over = !first && now() - t0 >= budgetMs;
+          if ((hit !== undefined && next >= hit) || over || finished) { idle++; if (idle === pool.length) settle(answer() !== null ? { nonce: answer(), tries } : { next: 1 + lowestNotDone() * block, tries }); return; }
+          const k = next++;
+          w.postMessage({ k, lo: Math.max(from, 1 + k * block), hi: 1 + (k + 1) * block });
+        };
+        for (const w of pool) {
+          w.on("error", reject);
+          w.on("message", (m) => {
+            if (m.error) { reject(new Error(m.error)); return; }
+            if (m.ready) { dispatch(w, true); return; }
+            done.add(m.k); tries += Math.max(0, 1 + (m.k + 1) * block - Math.max(from, 1 + m.k * block));
+            if (m.hit !== null) hits.set(m.k, m.hit);
+            const a = answer();
+            if (a !== null) settle({ nonce: a, tries });
+            dispatch(w);
+          });
+        }
+      });
+    } finally {
+      for (const w of pool) { try { w.postMessage(null); } catch { /* gone */ } }
+      await Promise.all(pool.map((w) => w.terminate().catch(() => {})));
+    }
+  } finally {
+    key.fill(0);
   }
 }
 

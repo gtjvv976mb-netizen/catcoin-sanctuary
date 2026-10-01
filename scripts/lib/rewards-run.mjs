@@ -71,6 +71,7 @@ import {
   readClaimState, claimPlan, buildClaimTransaction, signClaimTransaction, unsignedClaimTransaction, measureClaim, MIN_CLAIM_LAMPORTS,
 } from "./pump-fees.mjs";
 import { walletFromEnv, walletProblem, launchCaps, isRefusal, signatureOf, CONFIRM_WAIT_MS, CONFIRM_POLL_MS } from "./launcher.mjs";
+import { dexScreenerPriceUsd, WRAPPED_SOL_MINT } from "./launchlab.mjs";
 
 /** How long one send phase may keep starting new payouts, from the moment the payouts start (the workflow's job has 30 minutes). */
 export const RUN_MS = 12 * 60_000;
@@ -227,7 +228,7 @@ export async function readSample({ rpc, contract, state, now = Date.now, sleep =
  * SNAPSHOT (no key). Returns { mode, outcome, code, written, closed (the audit record or null) }.
  * outcome: off, no_mint, mint_changed, skipped, invalid_mint, genesis, sampled.
  */
-export async function snapshot({ io, env = {}, rpc, now = Date.now, sleep = (ms) => new Promise((r) => setTimeout(r, ms)),
+export async function snapshot({ io, env = {}, rpc, fetchImpl = globalThis.fetch, now = Date.now, sleep = (ms) => new Promise((r) => setTimeout(r, ms)),
   random = (n) => Math.floor(Math.random() * n), log = () => {}, scrub = (t) => t }) {
   const mode = R.rewardsMode(env);
   const out = { mode, outcome: "nothing", code: 0, written: false, closed: null };
@@ -277,15 +278,29 @@ export async function snapshot({ io, env = {}, rpc, now = Date.now, sleep = (ms)
   }
   const excluded = exclusionsOf(io); // fail closed: an exclusion file that does not parse throws, and no sample is used
   const { sample } = read;
+  // The pot's worth: the unallocated holders' SOL (E − A) at SOL's price on DexScreener (wrapped SOL's pairs). Worth
+  // REWARDS_CLOSE_USD or more, the period closes at this sample. No price: no such close this hour (the period's end still closes it).
+  let potClose = null;
+  const U = ledger.E - ledger.A;
+  if (state.epoch !== null && sample.T > state.tPrev && sample.T < state.periodEnd && cfg.closeUsd > 0 && U > 0n) {
+    try {
+      const solUsd = await dexScreenerPriceUsd(WRAPPED_SOL_MINT, fetchImpl);
+      const usd = (Number(U) / 1e9) * solUsd;
+      if (usd >= cfg.closeUsd) potClose = { usd, solUsd };
+      else log(`Rewards: the unallocated holder pot (${S(U)}) is worth about $${usd.toFixed(2)} at $${solUsd.toFixed(2)} a SOL; the period closes early once it is worth $${cfg.closeUsd}.`);
+    } catch (e) {
+      log(`::notice title=Rewards::SOL's price could not be read (${scrub(String(e?.message ?? e)).slice(0, 120)}): whether the pot is worth $${cfg.closeUsd} is checked again next hour.`);
+    }
+  }
   // A close is due at this sample: the accounts of the wallets with points are read (after the window: they say nothing about its moment).
   let unpayable = null;
-  if (state.epoch !== null && sample.T >= state.periodEnd && sample.T > state.tPrev) {
+  if (state.epoch !== null && (sample.T >= state.periodEnd || potClose) && sample.T > state.tPrev) {
     try { unpayable = await unpayableOf(rpc, state); } catch (e) {
       log(`::warning title=Rewards::no sample this hour: the period closes at this sample and the accounts of the wallets with points could not be read (${scrub(String(e?.message ?? e)).slice(0, 160)}); the close waits for the next hour.`);
       return { ...out, outcome: "skipped" };
     }
   }
-  const res = R.applySample(state, ledger, sample, cfg, { excluded, unpayable });
+  const res = R.applySample(state, ledger, sample, cfg, { excluded, unpayable, closeNow: potClose !== null });
   if (res.status === "skipped") {
     log(`::warning title=Rewards::no sample this hour: ${res.reason}.`);
     return { ...out, outcome: "skipped" };
@@ -303,7 +318,8 @@ export async function snapshot({ io, env = {}, rpc, now = Date.now, sleep = (ms)
   if (res.closed) {
     const c = res.closed;
     const total = c.rows.reduce((s, r) => s + r[2], 0n);
-    log(`Rewards: period ${c.k} closed: ${S(c.pot)} released (${c.releasePct}% of the unallocated ${S(c.E - c.A_before)}), ${S(total)} of it split by points over ${c.rows.length} wallet(s), at most ${S(c.capAmt)} each (the rest stays in the pot); published in ${R.periodPath(c.k)}.`);
+    const why = c.trigger === "pot" && potClose ? ` early (the pot is worth about $${potClose.usd.toFixed(2)} at $${potClose.solUsd.toFixed(2)} a SOL, $${cfg.closeUsd} or more)` : "";
+    log(`Rewards: period ${c.k} closed${why}: ${S(c.pot)} released (${c.releasePct}% of the unallocated ${S(c.E - c.A_before)}), ${S(total)} of it split by points over ${c.rows.length} wallet(s), at most ${S(c.capAmt)} each (the rest stays in the pot); published in ${R.periodPath(c.k)}.`);
     if (c.refused.length) log(`::notice title=Rewards::${c.refused.length} owner(s) with points can never be paid (${[...new Set(c.refused.map((r) => r[2]))].join("; ")}): no share for them, listed in ${R.periodPath(c.k)}.`);
   }
   return { ...out, outcome: res.status };

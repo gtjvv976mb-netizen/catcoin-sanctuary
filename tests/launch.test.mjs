@@ -59,7 +59,7 @@ test("launch workflow: the wallet key is in the send step only; the RPC URL in p
   // Secrets go in a step's env, never the job's or the workflow's.
   assert.ok(!/^ {0,4}env:/m.test(W));
   // The send step: the mode and the caps as repository variables, beside the key.
-  for (const v of ["LAUNCH_ENABLED", "LAUNCH_MAX_PER_DAY", "LAUNCH_MAX_SOL_PER_LAUNCH", "LAUNCH_MAX_SOL_PER_DAY", "LAUNCH_MIN_BALANCE_SOL"]) assert.match(snd, new RegExp(`${v}: \\$\\{\\{ vars\\.${v} \\}\\}`), v);
+  for (const v of ["LAUNCH_ENABLED", "LAUNCH_MAX_PER_DAY", "LAUNCH_MAX_SOL_PER_LAUNCH", "LAUNCH_MAX_SOL_PER_DAY", "LAUNCH_MIN_BALANCE_SOL", "LAUNCH_MINT_SUFFIX", "LAUNCH_MINT_GRIND_MINUTES"]) assert.match(snd, new RegExp(`${v}: \\$\\{\\{ vars\\.${v} \\}\\}`), v);
   // The owner's opt-in to coin-priced pump.fun launches: a repository variable where the venue is chosen (prepare) and
   // checked again before the send, never a secret.
   for (const step of [prep, snd]) assert.match(step, /LAUNCH_PUMP_QUOTE: \$\{\{ vars\.LAUNCH_PUMP_QUOTE \}\}/);

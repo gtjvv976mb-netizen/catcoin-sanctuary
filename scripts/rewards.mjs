@@ -17,9 +17,11 @@
  * Environment (repository variables and secrets, set by .github/workflows/rewards.yml):
  *   REWARDS_ENABLED           "on" claims and pays, "dry" samples and simulates claims and payouts
  *                             (nothing signed or sent), anything else does nothing
- *   REWARDS_HOLDER_SHARE_PCT, REWARDS_EVERY_DAYS, REWARDS_RELEASE_PCT, REWARDS_WALLET_CAP_PCT,
- *   REWARDS_MIN_BALANCE_PPM, REWARDS_MIN_PAYOUT_SOL, REWARDS_MIN_CLAIM_SOL, REWARDS_MAX_TX_PER_RUN,
- *   REWARDS_MAX_SOL_PER_RUN   the rules and caps (defaults 100, 7, 50, 10, 100, 0.001, 0.01, 10, 2), clamped
+ *   REWARDS_HOLDER_SHARE_PCT, REWARDS_EVERY_DAYS, REWARDS_RELEASE_PCT, REWARDS_CLOSE_USD (the pot's
+ *   worth in dollars at which a period closes early, releasing all of it; SOL's price from DexScreener),
+ *   REWARDS_WALLET_CAP_PCT, REWARDS_MIN_BALANCE_PPM, REWARDS_MIN_PAYOUT_SOL, REWARDS_MIN_CLAIM_SOL,
+ *   REWARDS_MAX_TX_PER_RUN, REWARDS_MAX_SOL_PER_RUN
+ *                             the rules and caps (defaults 100, 7, 50, 100, 10, 100, 0.001, 0.01, 10, 2), clamped
  *   LAUNCH_PRIORITY_MICROLAMPORTS  (send) the payouts' priority price, as the launcher's (100000), clamped
  *   LAUNCH_MIN_BALANCE_SOL    (send) the launcher's reserve, which I2 keeps whole (0.02), clamped
  *   REWARDS_NEW_EPOCH         (snapshot) the owner's workflow_dispatch input new_epoch
@@ -57,7 +59,7 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
     const url = String(env.SOLANA_RPC_URL ?? "").trim() || PUBLIC_RPC;
     const rpc = rpcIn ?? createRpc({ url, fetchImpl, delayMs: url === PUBLIC_RPC ? 400 : 100 });
     log(`Rewards: ${phase}; Solana through ${url === PUBLIC_RPC ? "the public mainnet RPC" : "the RPC in SOLANA_RPC_URL"}.`);
-    if (phase === "snapshot") return (await snapshot({ io, env, rpc, now, sleep, random, log, scrub })).code;
+    if (phase === "snapshot") return (await snapshot({ io, env, rpc, fetchImpl, now, sleep, random, log, scrub })).code;
     const confirmOpts = { ...(confirmWaitMs !== undefined ? { confirmWaitMs } : {}), ...(confirmPollMs !== undefined ? { confirmPollMs } : {}) };
     return (await send({ io, env, rpc, now, sleep, log, scrub, claim: phase !== "pay", pay: phase !== "claim", ...confirmOpts })).code;
   } catch (e) {

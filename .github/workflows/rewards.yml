@@ -7,8 +7,9 @@
 # The jobs, in order:
 #   sample  (no key) at a random moment of the hour, hidden until the window closes (about 56
 #           minutes), reads every $CATSANC token account and updates each wallet's lots and points;
-#           every REWARDS_EVERY_DAYS days it closes a period and allocates part of the unpaid pot
-#           (data/rewards/periods/<k>.json, public). It records the rules in force (the variables the
+#           every REWARDS_EVERY_DAYS days it closes a period and allocates part of the unpaid pot, and as
+#           soon as the unpaid pot is worth REWARDS_CLOSE_USD (SOL's price read on DexScreener) it closes
+#           one early and allocates all of it (data/rewards/periods/<k>.json, public). It records the rules in force (the variables the
 #           site quotes) in data/rewards/state.json. Without a valid mint in data/socials.json it does
 #           nothing. Commits data/rewards.
 #   pay     (the wallet key, in its one send step) settles what was sent before, counts the wallet's
@@ -41,6 +42,7 @@
 # anything else (or unset) stops every job here. The rules and caps, each clamped:
 # REWARDS_HOLDER_SHARE_PCT (100: the share of each claim for the holders, fixed when the claim is sent),
 # REWARDS_EVERY_DAYS (7), REWARDS_RELEASE_PCT (50: the share of the unallocated pot each close releases),
+# REWARDS_CLOSE_USD (100: the pot's worth in dollars at which a period closes early, releasing all of it; 0 for never),
 # REWARDS_WALLET_CAP_PCT (10: what the cap holds back stays in the pot), REWARDS_MIN_BALANCE_PPM (100:
 # 0.01% of the supply), REWARDS_MIN_PAYOUT_SOL (0.001), REWARDS_MIN_CLAIM_SOL (0.01),
 # REWARDS_MAX_TX_PER_RUN (10), REWARDS_MAX_SOL_PER_RUN (2), and the launcher's
@@ -100,6 +102,7 @@ jobs:
           REWARDS_ENABLED: ${{ vars.REWARDS_ENABLED }}
           REWARDS_EVERY_DAYS: ${{ vars.REWARDS_EVERY_DAYS }}
           REWARDS_RELEASE_PCT: ${{ vars.REWARDS_RELEASE_PCT }}
+          REWARDS_CLOSE_USD: ${{ vars.REWARDS_CLOSE_USD }}
           REWARDS_WALLET_CAP_PCT: ${{ vars.REWARDS_WALLET_CAP_PCT }}
           REWARDS_MIN_BALANCE_PPM: ${{ vars.REWARDS_MIN_BALANCE_PPM }}
           REWARDS_MIN_PAYOUT_SOL: ${{ vars.REWARDS_MIN_PAYOUT_SOL }}

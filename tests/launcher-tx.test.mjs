@@ -11,6 +11,7 @@ import {
   keypairFromSecret, deriveMintKeypair, verifyEd25519, encodeCompactU16, decodeCompactU16, compileLegacyMessage, encodeLegacyMessage,
   decodeLegacyMessage, decompileInstructions, signTransaction, serializeTransaction, decodeTransaction, transactionToJson, ata, pda,
   setComputeUnitLimit, setComputeUnitPrice, priorityFeeLamports, MINT_DERIVATION_PREFIX, PACKET_DATA_SIZE,
+  scanMintNonces, grindMintNonce, isMintNonce, MINT_SUFFIX, MINT_SCAN_BLOCK,
 } from "../scripts/lib/solana-tx.mjs";
 import {
   PUMP, CREATE_V2_DISC, createV2Instruction, createV2Accounts, decodeCreateV2, buildLaunchTransaction, signLaunchTransaction, checkLaunchMessage,
@@ -531,4 +532,36 @@ test("ata() re-derives a token account under an explicitly named token program",
   assert.throws(() => ata(owner, mint), TypeError);
   assert.throws(() => ata(owner, mint, mint), TypeError);
   assert.throws(() => ata("nope", mint, TOKEN_PROGRAM), /owner/);
+});
+
+test("a mint with a derivation nonce: deterministic per (wallet, post, nonce), apart from the first form and from other nonces, and only a positive whole number is a nonce", () => {
+  const w = fresh(), id = "1971234567890123456";
+  const a = deriveMintKeypair(w.seed, id, 5);
+  assert.equal(deriveMintKeypair(w, id, 5).publicKey, a.publicKey);
+  const all = new Set([a, deriveMintKeypair(w.seed, id), deriveMintKeypair(w.seed, id, 1), deriveMintKeypair(w.seed, id, 6), deriveMintKeypair(w.seed, `${id}:5`), deriveMintKeypair(fresh().seed, id, 5)].map((k) => k.publicKey));
+  assert.equal(all.size, 6);
+  for (const bad of [0, -1, 1.5, "5", 2 ** 53, null]) assert.throws(() => deriveMintKeypair(w.seed, id, bad), TypeError, JSON.stringify(bad));
+  assert.deepEqual([1, 5, 2 ** 53 - 1, 0, -3, 1.5, "1", undefined].map(isMintNonce), [true, true, true, false, false, false, false, false]);
+  assert.ok(MINT_SUFFIX.test("pump") && MINT_SUFFIX.test("") && !MINT_SUFFIX.test("pump0") && !MINT_SUFFIX.test("abcdefg") && !MINT_SUFFIX.test("l"));
+});
+
+test("the scan for a mint address ending in a suffix finds the smallest nonce, the same on one thread or three, and goes on from where its budget stopped it", async () => {
+  const w = fresh(), id = "1971234567890123456", key = w.seed;
+  const one = await grindMintNonce(key, id, { suffix: "pu", block: 300, workers: 1 });
+  assert.ok(isMintNonce(one.nonce), JSON.stringify(one));
+  assert.ok(deriveMintKeypair(key, id, one.nonce).publicKey.endsWith("pu"));
+  assert.equal(scanMintNonces(key, id, 1, one.nonce + 1, "pu"), one.nonce, "the smallest");
+  assert.equal(scanMintNonces(key, id, 1, one.nonce, "pu"), null);
+  const three = await grindMintNonce(w, id, { suffix: "pu", block: 70, workers: 3 });
+  assert.equal(three.nonce, one.nonce, "the same answer on three threads with another block size");
+  // A budget of nothing: every thread still scans one block (two threads' first round stops short of the answer here),
+  // and the next call goes on from the first block not done.
+  const block = Math.max(1, Math.floor((one.nonce - 1) / 4));
+  let r = await grindMintNonce(key, id, { suffix: "pu", block, budgetMs: 0, workers: 2 }), steps = 1;
+  assert.deepEqual([r.nonce, r.next], [undefined, 1 + 2 * block], JSON.stringify(r));
+  while (r.nonce === undefined && steps < 400) { r = await grindMintNonce(key, id, { suffix: "pu", block, budgetMs: 0, from: r.next, workers: 2 }); steps++; }
+  assert.equal(r.nonce, one.nonce, `resumed over ${steps} calls`);
+  assert.equal(MINT_SCAN_BLOCK, 4000);
+  for (const bad of [{ suffix: "" }, { suffix: "0" }, { suffix: "pu", from: 0 }, { suffix: "pu", block: 0 }]) await assert.rejects(() => grindMintNonce(key, id, bad), TypeError, JSON.stringify(bad));
+  assert.throws(() => scanMintNonces(key, id, 5, 4, "p"), TypeError);
 });

@@ -53,7 +53,12 @@
  * HOW. The venue builds and signs the launch; the launcher never buys or sells anything (no dev buy,
  * no trading, on every venue). The coin's mint is derived from the wallet's seed and the
  * post id (scripts/lib/solana-tx.mjs deriveMintKeypair), so one post can only ever make one coin: a
- * retry sends the same mint again, and the chain refuses a second create. The mint address is never
+ * retry sends the same mint again, and the chain refuses a second create. The address ends in
+ * LAUNCH_MINT_SUFFIX ("pump" by default, as pump.fun's own coins do; "" for none): the send scans
+ * derivation nonces for the smallest whose address ends so (grindMintNonce, on every core, up to
+ * LAUNCH_MINT_GRIND_MINUTES a run, 12 by default; about 11 million derivations on average for four
+ * characters), and the row keeps the nonce (mintNonce; mintGrind.next while the scan goes on across
+ * runs). The scan is deterministic, so the recovery below still finds the mint. The mint address is never
  * written or printed before its transaction is sent (a known, unused address can be pre-funded by
  * anyone to block the create): the coin's metadata file is named by the post id
  * (coins/<postId>.json, served by the site), and the ledger row gets mintPublic only once it is sent.
@@ -120,7 +125,7 @@
  */
 import { validateWallets, activeLauncher, isAddress, isSignature, textProblem, httpsProblem, coatProblem, parseTime, base58Encode, TICKER, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes, MAX_CATS } from "../../assets/collection.js";
 import { adoptableProblem, validateAdoptables, tributeLine, ADOPTABLE_CATEGORIES, realPhotoOf, nameKey } from "../../assets/ui/adoptables.js";
-import { keypairFromSecret, deriveMintKeypair, decodeCompactU16, decodeLegacyMessage, decompileInstructions, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT } from "./solana-tx.mjs";
+import { keypairFromSecret, deriveMintKeypair, grindMintNonce, isMintNonce, MINT_SUFFIX, decodeCompactU16, decodeLegacyMessage, decompileInstructions, priorityFeeLamports, MAX_COMPUTE_UNIT_LIMIT, DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT } from "./solana-tx.mjs";
 import { TOKEN_PROGRAM, TOKEN_2022_PROGRAM, COMPUTE_BUDGET_PROGRAM } from "./programs.mjs";
 import { LAUNCH_DEFAULTS } from "./pump.mjs";
 import { venueById, venueIds, chooseVenue, takenPairs, PUMP_SOL, PUMP_QUOTE } from "./venues.mjs";
@@ -232,9 +237,15 @@ export function launchCaps(env = {}) {
     maxLamportsPerDay: sol("maxSolPerDay"),
     minBalanceLamports: sol("minBalanceSol"),
     priorityMicroLamports: read("LAUNCH_PRIORITY_MICROLAMPORTS", LAUNCH_DEFAULTS.computeUnitPriceMicroLamports, PRIORITY_RANGE, true),
+    // The mint address's ending (LAUNCH_MINT_SUFFIX: "pump" unless set; "" for none) and how long a run may scan for it.
+    mintSuffix: (() => { const raw = env.LAUNCH_MINT_SUFFIX; if (raw === undefined || raw === null) return DEFAULT_MINT_SUFFIX; const s = String(raw).trim(); if (MINT_SUFFIX.test(s)) return s; notes.push(`LAUNCH_MINT_SUFFIX ${JSON.stringify(s).slice(0, 20)} is not up to 6 base58 characters; "${DEFAULT_MINT_SUFFIX}" is used`); return DEFAULT_MINT_SUFFIX; })(),
+    mintGrindMs: read("LAUNCH_MINT_GRIND_MINUTES", DEFAULT_MINT_GRIND_MINUTES, [1, 30]) * 60_000,
     notes,
   };
 }
+/** The mint address's ending unless LAUNCH_MINT_SUFFIX says otherwise, and the minutes a run scans for it at most. */
+export const DEFAULT_MINT_SUFFIX = "pump";
+export const DEFAULT_MINT_GRIND_MINUTES = 12;
 
 export const sol = (lamports) => `${(lamports / LAMPORTS_PER_SOL).toFixed(6).replace(/0+$/, "").replace(/\.$/, "")} SOL`;
 
@@ -357,7 +368,7 @@ export async function waitForMetadata({ fetchImpl, uri, text, now, sleep, waitMs
 export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per post it prepared (a trending post, or the sanctuary's own X post of one of its cats), newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
 const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "kind", "lore", "image", "coinImage", "photoCredit", "metadataPath", "status", "preparedAt", "attempts", "cat",
-  "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback"];
+  "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback", "mintNonce", "mintGrind"];
 /** Why a cat launched: a trending post by the owner's rules (policyOf), or "sanctuary": one of the sanctuary's own cats, after its X post (sanctuaryRow). */
 export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved", "viral", "sanctuary"]);
 /** The trend watch's reading kinds a launched cat may have (a row's `kind`: "real" is a pet, the others characters). */
@@ -397,6 +408,8 @@ export function rowProblem(r) {
   if (r.reason !== undefined && (typeof r.reason !== "string" || r.reason.length > 300)) return "reason must be short text";
   if (r.tx !== undefined && !isSignature(r.tx)) return "tx must be a signature";
   if (r.mintPublic !== undefined && !isAddress(r.mintPublic)) return "mintPublic must be an address";
+  if (r.mintNonce !== undefined && !isMintNonce(r.mintNonce)) return "mintNonce must be a positive whole number";
+  if (r.mintGrind !== undefined && !(isObj(r.mintGrind) && Object.keys(r.mintGrind).length === 1 && isMintNonce(r.mintGrind.next))) return "mintGrind is where the mint scan got to ({ next })";
   if (r.lastValidBlockHeight !== undefined && !Number.isSafeInteger(r.lastValidBlockHeight)) return "lastValidBlockHeight must be a whole number";
   if (r.status === "prepared" && (r.tx !== undefined || r.mintPublic !== undefined || r.lastValidBlockHeight !== undefined)) return "a prepared row has no tx and no mint";
   if (r.status === "sending" && (r.tx === undefined || r.sentAt === undefined || r.lastValidBlockHeight === undefined)) return "a sending row has tx, sentAt and lastValidBlockHeight";
@@ -1553,7 +1566,7 @@ const laterTime = (a, b) => [a, b].filter(isTime).sort((x, y) => Date.parse(y) -
  * through sendTransaction, in "on" mode.
  */
 export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep = (ms) => new Promise((r) => setTimeout(r, ms)), log = () => {},
-  metadataWaitMs = METADATA_WAIT_MS, metadataPollMs = METADATA_POLL_MS, confirmWaitMs = CONFIRM_WAIT_MS, confirmPollMs = CONFIRM_POLL_MS, scrub = (t) => t }) {
+  metadataWaitMs = METADATA_WAIT_MS, metadataPollMs = METADATA_POLL_MS, confirmWaitMs = CONFIRM_WAIT_MS, confirmPollMs = CONFIRM_POLL_MS, scrub = (t) => t, mintGrindMs = null, mintGrindWorkers = undefined }) {
   const mode = launchMode(env);
   const out = { mode, outcome: "nothing", launched: false, code: 0 };
   if (mode === "off") { log("Launcher: off (LAUNCH_ENABLED is neither on nor dry); nothing done."); out.outcome = "off"; return out; }
@@ -1604,9 +1617,30 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     row = next;
   };
 
-  // 3. Is the post launched on chain already (a launch never recorded, by this wallet or by one of the
-  //    launcher's earlier wallets, or an address someone else took)?
-  const mint = deriveMintKeypair(wallet, row.postId);
+  // 3. The mint: derived from the post, with the derivation nonce whose address ends in LAUNCH_MINT_SUFFIX (the smallest; the
+  //    row keeps it, and where a scan that ran out of its minutes got to). A dry run, or a row in memory only, scans nothing.
+  let mint;
+  if (row.mintNonce !== undefined) mint = deriveMintKeypair(wallet, row.postId, row.mintNonce);
+  else if (!caps.mintSuffix || mode !== "on" || virtual) {
+    mint = deriveMintKeypair(wallet, row.postId);
+    if (caps.mintSuffix && mode !== "on") log(`Launcher: ${dry}${row.ticker}'s mint address will end in "${caps.mintSuffix}" when it is sent for real (no scan in a dry run).`);
+  } else {
+    const from = row.mintGrind?.next ?? 1, budget = mintGrindMs ?? caps.mintGrindMs, t0 = now();
+    log(`Launcher: ${row.ticker}: looking for a mint address ending in "${caps.mintSuffix}" (derivation nonces from ${from}, up to ${Math.round(budget / 60_000)} minutes this run).`);
+    const g = await grindMintNonce(wallet, row.postId, { suffix: caps.mintSuffix, from, budgetMs: budget, workers: mintGrindWorkers });
+    if (g.nonce === undefined) {
+      row = { ...row, mintGrind: { next: g.next } };
+      replaceRow(ledger, row); saveLedger(io, ledger);
+      log(`Launcher: ${row.ticker} waits: no mint address ending in "${caps.mintSuffix}" among ${g.tries} derivations this run (nonces up to ${g.next - 1}); the next run goes on from there. Nothing was sent.`);
+      return { ...out, outcome: "mint_grinding" };
+    }
+    row = { ...row, mintNonce: g.nonce }; delete row.mintGrind;
+    replaceRow(ledger, row); saveLedger(io, ledger);
+    mint = deriveMintKeypair(wallet, row.postId, g.nonce);
+    log(`Launcher: ${row.ticker}: a mint address ending in "${caps.mintSuffix}" found (nonce ${g.nonce}, ${g.tries} derivations, ${Math.round((now() - t0) / 1000)} s).`);
+  }
+  // Is the post launched on chain already (a launch never recorded, by this wallet or by one of the
+  // launcher's earlier wallets, or an address someone else took)?
   const prepared = Date.parse(row.preparedAt);
   const others = otherLauncherWallets(walletsFile, wallet.publicKey, { sinceMs: (Number.isFinite(prepared) ? prepared : nowMs) - HOUR_MS, nowMs });
   const found = await mintOnChain({ rpc, venue, wallet: wallet.publicKey, mint: mint.publicKey, row, others, quotes: quotes.listed });

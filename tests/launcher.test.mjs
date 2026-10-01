@@ -15,7 +15,7 @@ import { ROOT, DATA_NOW, recordedAccounts } from "./helpers.mjs";
 import { base58Encode, base58Decode, validateCollection, validateWallets, isAddress, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes, MAX_CATS } from "../assets/collection.js";
 import { adoptableProblem, validateAdoptables, realPhotoOf, ADOPTABLE_CATEGORIES } from "../assets/ui/adoptables.js";
 import { coatProblem } from "../assets/collection.js";
-import { keypairFromSecret, deriveMintKeypair, transactionToJson, decodeTransaction, decompileInstructions } from "../scripts/lib/solana-tx.mjs";
+import { keypairFromSecret, deriveMintKeypair, isMintNonce, transactionToJson, decodeTransaction, decompileInstructions } from "../scripts/lib/solana-tx.mjs";
 import { decodeCreateV2, PUMP } from "../scripts/lib/pump.mjs";
 import { proveLaunchPump, proveLaunch, TOKEN_2022_PROGRAM, SYSTEM_PROGRAM, LAUNCHLAB_PROGRAM } from "../scripts/lib/chain.mjs";
 import { PRICING_URL, DEXSCREENER_TOKENS_URL, WRAPPED_SOL_MINT } from "../scripts/lib/launchlab.mjs";
@@ -229,7 +229,8 @@ function clock(start = NOW) {
   return c;
 }
 
-const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, ...extra });
+// (no mint suffix in these tests: a scan for "pump" takes minutes; the scan has its own tests below)
+const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, LAUNCH_MINT_SUFFIX: "", ...extra });
 /** Whether a serialized transaction (base64) carries only zero-filled signature slots. */
 const unsignedTx = (b64) => decodeTransaction(new Uint8Array(Buffer.from(b64, "base64"))).signatures.every((x) => x.every((b) => b === 0));
 const quick = { metadataWaitMs: 60_000, metadataPollMs: 20_000, confirmWaitMs: 30_000, confirmPollMs: 3_000 };
@@ -2110,7 +2111,7 @@ test("the key and the RPC URL never appear in the output, whatever happens", asy
       const sol = tweak(fakeSolana({ wallet: w.address })), web = fakeSite(t.root), c = clock();
       const out = [];
       const fetchImpl = async (url, init) => (url.startsWith("https://rpc.example.test") ? sol.fetchImpl(url, init) : web.fetchImpl(url, init));
-      const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: key, SOLANA_RPC_URL: RPC_URL, GITHUB_OUTPUT: path.join(t.root, "out.txt") };
+      const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: key, SOLANA_RPC_URL: RPC_URL, GITHUB_OUTPUT: path.join(t.root, "out.txt"), LAUNCH_MINT_SUFFIX: "" };
       // Once through the real client built from SOLANA_RPC_URL; otherwise the same fake Solana without its pacing and back-off waits.
       const real = what === "listed, a full launch" && key === w.base58;
       const io = { env, root: t.root, fetchImpl, now: c.now, sleep: c.sleep, stdout: (l) => out.push(String(l)), stderr: (l) => out.push(String(l)), ...(real ? {} : { rpc: sol.rpc }) };
@@ -2141,7 +2142,7 @@ test("the CLI's outputs for the workflow: pending, deploy, launched, recorded", 
   const t = site({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
   const out = path.join(t.root, "gh-output");
-  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, GITHUB_OUTPUT: out };
+  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, GITHUB_OUTPUT: out, LAUNCH_MINT_SUFFIX: "" };
   const io = { env, root: t.root, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, stdout: () => {}, stderr: () => {}, rpc: sol.rpc };
   assert.equal(await main(["prepare"], io), 0);
   assert.equal(fs.readFileSync(out, "utf8"), "pending=true\ndeploy=true\n");
@@ -2777,4 +2778,45 @@ test("shipped coins check: a sanctuary coin's file passes on its own (its X link
   assert.ok(!ok(m, "2105999999999999778.json"), "another post's id");
   assert.ok(!ok({ ...m, twitter: `https://x.com/someone/status/${id}` }, `${id}.json`), "a stranger's post");
   assert.ok(!ok({ ...m, image: `${SITE_ORIGIN}/assets/og-image.jpg` }, `${id}.json`) || SITE_IMAGE === `${SITE_ORIGIN}/assets/og-image.jpg`);
+});
+
+test("the mint address ends in LAUNCH_MINT_SUFFIX (\"pump\" unless set): the send scans for the smallest nonce, keeps it on the row, and sends that mint; a scan out of its minutes goes on next run; a dry run scans nothing", async () => {
+  const d = launchCaps({});
+  assert.deepEqual([d.mintSuffix, d.mintGrindMs], ["pump", 12 * 60_000]);
+  assert.deepEqual([launchCaps({ LAUNCH_MINT_SUFFIX: "" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: " cat " }).mintSuffix, launchCaps({ LAUNCH_MINT_GRIND_MINUTES: "99" }).mintGrindMs], ["", "cat", 30 * 60_000]);
+  const odd = launchCaps({ LAUNCH_MINT_SUFFIX: "pump!" });
+  assert.equal(odd.mintSuffix, "pump");
+  assert.ok(odd.notes.some((n) => /LAUNCH_MINT_SUFFIX/.test(n)), odd.notes.join("; "));
+
+  const c = ownCat();
+  const w = throwaway();
+  const t = ownSite(c, { wallet: w.address, posts: [] });
+  const sol = fakeSolana({ wallet: w.address }), web = pumpSite(t.root), c0 = clock(), logs = [];
+  const p = await prepare({ io: t.io, env: ON(w, { LAUNCH_MINT_SUFFIX: "p" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, log: () => {} });
+  assert.equal(p.prepared, OWN_TWEET);
+  web.deployed = true;
+  // A dry run: no scan, the row untouched.
+  const dryRun = await send({ io: t.io, env: { ...ON(w, { LAUNCH_MINT_SUFFIX: "p" }), LAUNCH_ENABLED: "dry" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: (l) => logs.push(l), ...quick });
+  assert.equal(dryRun.outcome, "dry", logs.join("\n"));
+  assert.ok(logs.some((l) => /will end in "p" when it is sent for real/.test(l)), logs.join("\n"));
+  assert.equal(t.json(FILES.ledger).launches[0].mintNonce, undefined);
+  // Out of its minutes (a budget of nothing, one thread, "pump"): the row remembers where the scan got to, nothing is sent.
+  const grinding = await send({ io: t.io, env: ON(w, { LAUNCH_MINT_SUFFIX: "pump" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: (l) => logs.push(l), ...quick, mintGrindMs: 0, mintGrindWorkers: 1 });
+  assert.equal(grinding.outcome, "mint_grinding", logs.join("\n"));
+  const waiting = t.json(FILES.ledger).launches[0];
+  assert.deepEqual([waiting.status, waiting.mintNonce, waiting.mintGrind, waiting.attempts], ["prepared", undefined, { next: 4001 }, 0]);
+  assert.equal(sol.calls.filter((x) => x.method === "sendTransaction").length, 0);
+  assert.equal(rowProblem(waiting), null);
+  // The next run goes on from there (with a suffix it finds at once) and sends the mint it found.
+  const s = await send({ io: t.io, env: ON(w, { LAUNCH_MINT_SUFFIX: "p" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: (l) => logs.push(l), ...quick, mintGrindWorkers: 2 });
+  assert.equal(s.outcome, "launched", logs.join("\n"));
+  const row = t.json(FILES.ledger).launches[0];
+  assert.ok(isMintNonce(row.mintNonce) && row.mintNonce >= 4001, JSON.stringify(row.mintNonce));
+  assert.equal(row.mintGrind, undefined);
+  assert.ok(row.mintPublic.endsWith("p"), row.mintPublic);
+  assert.equal(row.mintPublic, deriveMintKeypair(w.kp, row.postId, row.mintNonce).publicKey);
+  assert.equal(rowProblem(row), null);
+  assert.ok(logs.some((l) => /a mint address ending in "p" found \(nonce \d+, \d+ derivations/.test(l)), logs.join("\n"));
+  assert.equal(rowProblem({ ...row, mintNonce: 0 }), "mintNonce must be a positive whole number");
+  assert.equal(rowProblem({ ...row, mintGrind: { next: 0 } }), "mintGrind is where the mint scan got to ({ next })");
 });

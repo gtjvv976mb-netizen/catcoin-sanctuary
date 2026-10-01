@@ -24,7 +24,7 @@ const whole = (n, lo = 0) => Number.isSafeInteger(n) && n >= lo;
 const PAYOUT_STATUS = ["sending", "paid", "failed", "expired"];
 
 /** The rules the page quotes until state.json records the ones in force: the Rewards workflow's defaults. */
-export const DEFAULT_RULES = Object.freeze({ everyDays: 7, releasePct: 50, walletCapPct: 10, minBalancePpm: 100, minPayoutLamports: 1_000_000n });
+export const DEFAULT_RULES = Object.freeze({ everyDays: 7, releasePct: 50, closeUsd: 100, walletCapPct: 10, minBalancePpm: 100, minPayoutLamports: 1_000_000n });
 /** Lamports as an exact SOL decimal ("0.001"). */
 const solExact = (l) => { const f = String(l % 1_000_000_000n).padStart(9, "0").replace(/0+$/, ""); return `${l / 1_000_000_000n}${f ? `.${f}` : ""}`; };
 /** The smallest holding that counts, in tokens of the 1 billion supply ("100,000"). */
@@ -38,7 +38,7 @@ export function rewardsText(rules = null) {
   return Object.freeze([
     Object.freeze({ title: "Hold $CATSANC, earn SOL.", text: `Once an hour, at a random moment, we check every wallet. You earn points for tokens you held at both this check and the one before: balance × hours × age bonus. You need at least ${minTokens(r)} $CATSANC (${r.minBalancePpm / 10_000}% of the 1 billion supply). Pools, bonding curves and team wallets don't count.` }),
     Object.freeze({ title: "Older tokens earn more.", text: "Each token's bonus grows from 1× toward 2×: 1.33× after 1 week, 1.5× after 2 weeks, 1.68× after a month. A brand-new holder always earns at least half the top rate. When you sell, your newest tokens go first, so your oldest keep their age. Tokens you buy or receive start at 1×, and age counts from the first rewards check, so tokens held before the rewards started also begin at 1×." }),
-    Object.freeze({ title: r.everyDays === 1 ? "Every day," : `Every ${r.everyDays} days,`, text: `${share} of the unpaid holder pot (the creator fees our launcher bot has claimed) is split by points${cap} and sent to you automatically. Amounts under ${solExact(r.minPayoutLamports)} SOL are saved for your next payout and never lost. Every payout's points and amounts are published.` }),
+    Object.freeze({ title: r.everyDays === 1 ? "Every day," : `Every ${r.everyDays} days,`, text: `${share} of the unpaid holder pot (the creator fees our launcher bot has claimed) is split by points${cap} and sent to you automatically.${r.closeUsd > 0 ? ` As soon as the pot is worth $${r.closeUsd.toLocaleString("en-US")}, all of it is split and sent, without waiting for the day.` : ""} Amounts under ${solExact(r.minPayoutLamports)} SOL are saved for your next payout and never lost. Every payout's points and amounts are published.` }),
   ]);
 }
 /** The three lines with the defaults. */
@@ -89,7 +89,7 @@ function checkRules(r) {
   const within = (k, lo, hi) => { if (!whole(r[k], lo) || r[k] > hi) throw new Error("rules"); return r[k]; };
   const minPayoutLamports = big(r.minPayoutLamports);
   if (minPayoutLamports < 100_000n || minPayoutLamports > 100_000_000n) throw new Error("rules");
-  return { everyDays: within("everyDays", 1, 30), releasePct: within("releasePct", 10, 100), walletCapPct: within("walletCapPct", 1, 100), minBalancePpm: within("minBalancePpm", 10, 10_000), minPayoutLamports };
+  return { everyDays: within("everyDays", 1, 30), releasePct: within("releasePct", 10, 100), closeUsd: r.closeUsd === undefined ? 0 : within("closeUsd", 0, 100_000), walletCapPct: within("walletCapPct", 1, 100), minBalancePpm: within("minBalancePpm", 10, 10_000), minPayoutLamports };
 }
 
 /**
