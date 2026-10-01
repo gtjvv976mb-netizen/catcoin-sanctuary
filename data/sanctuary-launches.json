@@ -2,6 +2,85 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105541404730572998",
+      "url": "https://x.com/catcosanctuary/status/2105541404730572998",
+      "name": "Ponta",
+      "coinName": "Ponta",
+      "ticker": "PONTAKUN",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "cartoon",
+      "lore": "Ponta, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/PONTAKUN.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/PONTAKUN.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105541404730572998.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-01T06:15:04Z",
+      "attempts": 0,
+      "cat": {
+        "id": "ponta-konoike",
+        "ticker": "PONTAKUN",
+        "name": "Ponta",
+        "coinName": "Ponta",
+        "owner": "Tsuyoshi Konoike (鴻池剛), manga diarist (@TsuyoshiWood)",
+        "category": "viral",
+        "story": "Ponta (ぽんた) is the real male mixed-breed cat of manga diarist Tsuyoshi Konoike (@TsuyoshiWood). He stars in the one-page diary comics that made Konoike's following explode on Twitter. A friend found him as an abandoned kitten and pushed Konoike to take him, and his old name 'Nonta' became Ponta. He won't warm to strangers at all and scratches his owner often. His housemate Alfred, found hurt in the bushes behind the house, is gentle. The comics became the book series 鴻池剛と猫のぽんた ニャアアアン! (Kadokawa/Enterbrain, vol. 1 Oct 2015, vol. 4 Feb 2026) and two LINE sticker sets. Konoike's site marked Ponta's 14th birthday on 15 Sep 2025. In a 26 Aug 2026 comic his vet marvels that he gained 100 g and still runs and jumps despite long-term kidney disease, and then, held by the nurses for an ear cleaning, Ponta lands a swat on a hand.",
+        "look": "As drawn in Konoike's bold, clean manga style with flat colour: a big, round, heavy-set, thick-furred cat. His back, head and tail are a warm caramel-brown. A white blaze runs down the middle of the face and widens into a white muzzle, and his chest, belly and paws are white. Small rounded ears and narrow, half-lidded glaring eyes give him a permanently grumpy, unimpressed face. In the 2023 surgery comics he wears a pink cone collar. Konoike says the real cat (a brown tabby-and-white) looks quite different from the simplified drawing, so follow the comic design.",
+        "coat": {
+          "base": "brown",
+          "second": "white",
+          "pattern": "tabby",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/TsuyoshiWood/status/2092598937169653987",
+          "author": "TsuyoshiWood",
+          "handle": "TsuyoshiWood",
+          "date": "2026-08-26",
+          "dateType": "posted",
+          "text": "【漫画日記】凄いにも色んな意味があるからさ",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "鴻池剛 - Wikipedia",
+            "url": "https://ja.wikipedia.org/wiki/%E9%B4%BB%E6%B1%A0%E5%89%9B"
+          },
+          {
+            "label": "「猫のぽんたを飼い始めたら人生が好転した」 75万フォロワーの漫画家・鴻池剛が明かす半生 - e-aidem ジモコロ (26 Dec 2016)",
+            "url": "https://www.e-aidem.com/ch/jimocoro/entry/makino08/"
+          },
+          {
+            "label": "凄いにもいろんな意味があるからさ - ウッドブック (Konoike's official site, tag ぽんた)",
+            "url": "https://tsuyoshiwood.com/archives/10567/"
+          },
+          {
+            "label": "ぽんた tag - ウッドブック (Konoike's official site; 'ぽんた14歳の誕生日' 2025/9/15)",
+            "url": "https://tsuyoshiwood.com/archives/tag/%e3%81%bd%e3%82%93%e3%81%9f"
+          },
+          {
+            "label": "鴻池剛と猫のぽんた - LINE スタンプ | LINE STORE",
+            "url": "https://store.line.me/stickershop/product/1103203/ja"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Tsuyoshi Konoike (鴻池剛), manga diarist (@TsuyoshiWood).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/PONTAKUN.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      }
+    },
+    {
       "postId": "2104643043726926283",
       "url": "https://x.com/NBA/status/2104643043726926283",
       "name": "Media Day Cat",
