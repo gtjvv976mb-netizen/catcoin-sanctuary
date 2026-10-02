@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { readBudget, postCount, mergeAnswers, qualify, heat, cleanReading, isCandidate, scan, MIN_LIKES, MAX_AGE_HOURS, QUERY,
   stageOf, mentionsCat, watchList, figureIn, bigQueries, figureQueries, nameFromTrend, nameReading, trackNames, pruneNames, emergingNames, loadState,
   ROTATION, PER_SEARCH, MAX_QUERY, MAX_SIGNALS, MAX_NAMES, RISING_MAX_AGE_HOURS, RISING_MIN_LIKES, RISING_LIKES_PER_HOUR, RISING_VIEWS_PER_HOUR, RISING_MIN_HOURS,
-  isFigureName, BIG_FOLLOWERS, BIG_TERMS } from "../scripts/scan-trending-cats.mjs";
+  isFigureName, BIG_FOLLOWERS, BIG_TERMS, approvedRows, withApproved } from "../scripts/scan-trending-cats.mjs";
 import { readPostByRules, tickerFor, namesIn } from "../scripts/lib/read-cat-post.mjs";
 
 const NOW = Date.parse("2026-09-27T12:00:00Z");
@@ -754,4 +754,41 @@ test("the watch list (the curated copy tests/fixtures/cat-watch.json): every que
   const named = [["Grumpy Cat is back", "Grumpy Cat"], ["Tom and Jerry marathon", "Tom"], ["Floppa stares", "Big Floppa"], ["Garfield the cat hates Mondays", "Garfield"],
     ["OIIAI Cat on repeat", "OIIA Cat"], ["Happy Happy Happy Cat", "Happy Cat"]].filter(([, name]) => raw.figures.some((f) => f.name === name));
   assert.deepEqual(named.map(([text]) => figureIn(text, w.figures)?.name), named.map(([, name]) => name));
+});
+
+test("an approved post the search never found is looked up by id (one read each), read, and listed as a candidate; one too old, sensitive or without a picture is not", async () => {
+  // A rescue's kitten post with few likes (no search lens would list it): fresh, a video still on pbs.twimg.com.
+  const lookup = { data: [
+    { id: "2001", text: "Meet Cupsey, the kitten who kept climbing into the coffee cup", created_at: hoursAgo(3), author_id: "u2", attachments: { media_keys: ["m2"] }, public_metrics: { like_count: 400, impression_count: 120_000 } },
+    { id: "2002", text: "old cat", created_at: hoursAgo(MAX_AGE_HOURS + 1), author_id: "u2", attachments: { media_keys: ["m2"] }, public_metrics: {} },
+    { id: "2003", text: "cat", created_at: hoursAgo(1), author_id: "u2", possibly_sensitive: true, attachments: { media_keys: ["m2"] }, public_metrics: {} },
+    { id: "2004", text: "cat, no picture", created_at: hoursAgo(1), author_id: "u2", public_metrics: {} },
+  ], includes: answer.includes };
+  assert.deepEqual(approvedRows(lookup, NOW).map((p) => [p.id, p.stage, p.media[0].url]), [["2001", "approved", "https://pbs.twimg.com/ext/b.jpg"]]);
+  const asked = [];
+  const fetchImpl = async (url) => {
+    asked.push(url);
+    if (url.startsWith("https://api.x.com/2/tweets?")) return new Response(JSON.stringify(lookup));
+    if (url.startsWith("https://api.dexscreener.com/")) return new Response(JSON.stringify({ pairs: [] }));
+    throw new Error(`unexpected ${url}`);
+  };
+  const before = { posts: [{ id: "1001", postedAt: hoursAgo(5), status: "candidate" }], candidates: ["1001"], reads: { day: "2026-09-27", dayUsed: 10, month: "2026-09", monthUsed: 100 } };
+  const cupsey = { aboutOneCat: true, catName: "Cupsey", kind: "real", coinName: "Cupsey", ticker: "CUPSEY", lore: "Cupsey kept climbing into the coffee cup.", sensitive: false, why: "one named cat" };
+  const r = await withApproved(before, { approvals: new Set(["1001", "2001", "2002", "2003", "2004"]), creds: CREDS, client: claudeSays(cupsey), fetchImpl, nowMs: NOW });
+  assert.deepEqual(r.added, ["2001"]);
+  const ids = new URL(asked[0]).searchParams.get("ids").split(",");
+  assert.deepEqual(ids, ["2001", "2002", "2003", "2004"], "only the approvals not already read");
+  assert.deepEqual(r.trending.candidates, ["2001", "1001"]);
+  const row = r.trending.posts.find((p) => p.id === "2001");
+  assert.deepEqual([row.status, row.stage, row.reading.catName, row.url], ["candidate", "approved", "Cupsey", "https://x.com/mochi/status/2001"]);
+  assert.equal(r.trending.reads.dayUsed, 14, "one read per post X returned");
+  // Nothing to look up, no X secrets, or no reads left: nothing asked, nothing changed.
+  for (const opts of [{ approvals: new Set(["1001"]), creds: CREDS }, { approvals: new Set(["2001"]), creds: null }, { approvals: new Set(["2001"]), creds: CREDS, monthlyReads: 100 }]) {
+    asked.length = 0;
+    const same = await withApproved(before, { ...opts, client: null, fetchImpl, nowMs: NOW });
+    assert.deepEqual([same.added, asked.length, same.trending.posts.length], [[], 0, 1], JSON.stringify([...opts.approvals]));
+  }
+  // X refusing the lookup: nothing listed, tried again next run.
+  const refused = await withApproved(before, { approvals: new Set(["2001"]), creds: CREDS, client: null, fetchImpl: async () => new Response("{}", { status: 503 }), nowMs: NOW });
+  assert.deepEqual(refused.added, []);
 });
