@@ -8,7 +8,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { ROOT } from "./helpers.mjs";
 import { SITE, HASHTAGS, LIMIT, cardLink, weightedLength, listCats, checkPost } from "../scripts/announce.mjs";
-import { checkUpdate, draftAdoption, candidates, waitReason, lastAnnouncerPost, validAdoption, run, IMAGE_PATH, MAX_ATTEMPTS, LAUNCHPADS } from "../scripts/post-updates.mjs";
+import { checkUpdate, draftAdoption, candidates, waitReason, lastAnnouncerPost, validAdoption, run, IMAGE_PATH, MAX_ATTEMPTS, LAUNCHPADS, draftLaunch, launchItems, fanTribute, USEPAID_LAUNCH_LINE } from "../scripts/post-updates.mjs";
 import { kitsOf } from "../scripts/lib/adoptions.mjs";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
@@ -389,4 +389,28 @@ test("the last line before X: an update or adoption draft naming a Solana addres
   const d = await run({ root: sandbox({ updates: { ...UPDATES, posts }, adoptions: { adoptions: [] }, config: { dryRun: true } }).dir, env: CREDS, fetchImpl: fakeX(), now: at(T0), log: (m) => logs.push(m) });
   assert.deepEqual(d.held, ["ca"]);
   assert.ok(!logs.some((m) => m.includes(mint) && /would post/.test(m)));
+});
+
+
+test("a UsePaid coin's launch post says its fees go to the creator, beside the fan-tribute line, for every cat waiting to launch; it waits for its fee route", () => {
+  assert.equal(checkUpdate(USEPAID_LAUNCH_LINE).violations.length, 0);
+  for (const c of ADOPTABLES.cats.filter((x) => !x.launch)) {
+    const kind = c.category === "tv-movie" ? "fiction" : "real";
+    const args = { coinName: c.coinName || c.name, ticker: c.ticker, lore: null, tribute: fanTribute(kind) };
+    if (!draftLaunch({ id: c.ticker, name: c.name }, args).ok) continue;      // a name no launch post may carry (the launcher never launches it)
+    const d = draftLaunch({ id: c.ticker, name: c.name }, { ...args, usePaid: true });
+    assert.ok(d.ok, `${c.ticker}: ${JSON.stringify(d.violations)}`);
+    assert.ok(d.text.includes(USEPAID_LAUNCH_LINE) && d.text.includes(fanTribute(kind)) && weightedLength(d.text) <= LIMIT, `${c.ticker}: ${d.text}`);
+  }
+  // Without UsePaid, the post is what it always was.
+  assert.ok(!draftLaunch({ id: "MOCHI", name: "Mochi" }, { coinName: "Mochi", ticker: "MOCHI", tribute: fanTribute("real") }).text.includes("UsePaid"));
+  // The post of a coin whose fees are not routed yet waits; once routed (or given up on), it may go.
+  const row = (extra) => ({ status: "launched", recordedAt: "2026-10-02T18:25:00Z", ticker: "MRBCHONK", mintPublic: "CjTWPrACsMAnV6Ahm5Epx9XyUEGFtB69A1jqXibkcats", tx: "x", ...extra });
+  const cats = [{ key: "MRBCHONK", sanctuary: true, launched: true }];
+  const adoptables = [{ ticker: "MRBCHONK", launch: { mint: "CjTWPrACsMAnV6Ahm5Epx9XyUEGFtB69A1jqXibkcats", tx: "x" } }];
+  const items = (r) => launchItems({}, [r], { cats, adoptables, proved: new Set([r.mintPublic]) }).length;
+  assert.equal(items(row({})), 1, "a holder rewards coin: no wait");
+  assert.equal(items(row({ feesTo: "MorrisAnimal" })), 0, "not routed yet: it waits");
+  assert.equal(items(row({ feesTo: "MorrisAnimal", feeRoute: { at: "2026-10-02T19:00:00Z" } })), 1);
+  assert.equal(items(row({ feesTo: "MorrisAnimal", feeRouteTries: 5, feeRouteError: "x" })), 1, "given up on: it goes, without the line");
 });

@@ -48,6 +48,7 @@ import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost
 import { kitsOf, adoptionProblem, ownMints } from "./lib/adoptions.mjs";
 import { nameKey } from "../assets/ui/adoptables.js";
 import { isAddress } from "../assets/collection.js";
+import { FEE_ROUTE_MAX_TRIES } from "./lib/fee-route.mjs";
 
 export const DEFAULT_GAP_MINUTES = 180;
 /** Minutes to leave after the announcer's last post. */
@@ -170,7 +171,9 @@ export const fanTribute = (kind) => (kind === "real" ? FAN_TRIBUTE.real : FAN_TR
  * { ok, text, violations }. The launcher drafts it BEFORE launching (scripts/lib/launcher.mjs) and does
  * not launch a cat whose post would be held.
  */
-export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "pump.fun", cited: also = [], tribute = null } = {}) {
+/** A UsePaid coin's line in its launch post (its creator fees routed for good: scripts/lib/fee-route.mjs; the owner, 2026-10-02). */
+export const USEPAID_LAUNCH_LINE = "💸 Fees go to the creator via UsePaid";
+export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "pump.fun", cited: also = [], tribute = null, usePaid = false } = {}) {
   const pad = LAUNCHPADS[launchpad];
   const bad = [];
   if (!KIT_NAME.test(cat?.name ?? "")) bad.push({ rule: "kit_name", term: String(cat?.name ?? "").slice(0, 40), field: "name" });
@@ -196,22 +199,31 @@ export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "p
     if (text.includes("@")) r.violations.push({ rule: "mention", term: "@", field: "post" });
     return { text, violations: r.violations };
   };
-  // Longest first: both names, the lore, the mint line and both hashtags, then fewer (the card link always).
-  const first = (line, citing) => {
+  // Longest first: both names, the lore, the mint line and both hashtags, then fewer (the card link always). A UsePaid
+  // coin's line (`fees`) stays: the header goes before it does.
+  const first = (line, citing, fees = null) => {
     let violations = [];
-    for (const coin of coins) {
-      for (const loreLine of lores) {
-        for (const [tags, where] of [[HASHTAGS, mintLine], [HASHTAGS.slice(0, 1), mintLine], [HASHTAGS, null], [HASHTAGS.slice(0, 1), null]]) {
-          const r = check([hook, coin, loreLine, line, where, link, tags.join(" ")], citing);
-          if (!r.violations.length) return { ok: true, text: r.text, violations: [] };
-          violations = r.violations;
+    for (const head of fees ? [hook, null] : [hook]) {
+      for (const coin of coins) {
+        for (const loreLine of lores) {
+          for (const [tags, where] of [[HASHTAGS, mintLine], [HASHTAGS.slice(0, 1), mintLine], [HASHTAGS, null], [HASHTAGS.slice(0, 1), null]]) {
+            const r = check([head, coin, fees, loreLine, line, where, link, tags.join(" ")], citing);
+            if (!r.violations.length) return { ok: true, text: r.text, violations: [] };
+            violations = r.violations;
+          }
         }
       }
     }
     return { ok: false, text: null, violations };
   };
-  // With the fan-tribute line when some version of the post fits every rule with it; else the post as it would be without.
-  if (tribute) { const t = first(tribute, [...cited, tribute]); if (t.ok) return t; }
+  // With the fan-tribute line (and a UsePaid coin's line) when some version of the post fits every rule with it; the
+  // tribute is kept before the UsePaid line; else the post as it would be without.
+  const fees = usePaid ? USEPAID_LAUNCH_LINE : null;
+  for (const [t, f] of [[tribute, fees], [tribute, null], [null, fees]]) {
+    if (!t && !f) continue;
+    const d = first(t, t ? [...cited, t] : cited, f);
+    if (d.ok) return d;
+  }
   return first(null, cited);
 }
 
@@ -232,6 +244,8 @@ export function launchItems(updates, launches, { cats, adoptables = [], proved =
     .filter((r) => r?.status === "launched" && typeof r.recordedAt === "string" && typeof r.ticker === "string" && isAddress(r.mintPublic) && proved.has(r.mintPublic))
     .filter((r) => { const a = adoptables.find((c) => c?.ticker === r.ticker); return a?.launch?.mint === r.mintPublic && a.launch.tx === r.tx && byKey.get(r.ticker)?.sanctuary && byKey.get(r.ticker)?.launched; })
     .filter((r) => !heldKeys.has(r.ticker) && retryable(done[r.ticker]))
+    // A UsePaid coin's post says its fees go to the creator: it waits until its fee route is on chain (or has failed for good).
+    .filter((r) => !r.feesTo || !!r.feeRoute || (r.feeRouteTries ?? 0) >= FEE_ROUTE_MAX_TRIES)
     .sort((a, b) => Date.parse(a.launchedAt ?? a.recordedAt) - Date.parse(b.launchedAt ?? b.recordedAt))
     .map((r) => ({ kind: "launch", id: r.ticker, launch: r, cat: byKey.get(r.ticker) }));
 }
@@ -337,7 +351,7 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
     const d = guardDraft(item.kind === "update"
       ? { ...checkUpdate(item.post.text), text: item.post.text }
       : item.kind === "launch"
-        ? draftLaunch(item.cat, { coinName: item.launch.coinName, ticker: item.launch.ticker, lore: item.launch.lore ?? null, launchpad: launchpadOf(item.id), tribute: fanTribute(item.launch.kind) })
+        ? draftLaunch(item.cat, { coinName: item.launch.coinName, ticker: item.launch.ticker, lore: item.launch.lore ?? null, launchpad: launchpadOf(item.id), tribute: fanTribute(item.launch.kind), usePaid: !!item.launch.feeRoute })
         : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first }));
     summary.drafts.push({ kind: item.kind, id: item.id, ok: d.ok, text: d.text, length: d.text ? weightedLength(d.text) : null, violations: d.violations });
     if (!d.ok) {
