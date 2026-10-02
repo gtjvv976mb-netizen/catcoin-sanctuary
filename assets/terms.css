@@ -1,0 +1,18 @@
+/* terms.html: the terms, takedowns and privacy page, in the site's colours and type (assets/site.css). */
+@font-face { font-family: "Gluten"; src: url("fonts/gluten-latin.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Figtree"; src: url("fonts/figtree-latin.woff2") format("woff2"); font-weight: 300 900; font-style: normal; font-display: swap; }
+:root { --ink: #3d1834; --ink-soft: #6e4f63; --paper: #fff8ec; --sky: #8fc6ef; --link: #9a3f1d; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.6 "Figtree", system-ui, sans-serif; }
+.terms { max-width: 760px; margin: 24px auto; padding: 28px 24px 32px; background: var(--paper); border-radius: 20px; box-shadow: 0 6px 0 rgba(61, 24, 52, .25); }
+h1, h2 { font-family: "Gluten", "Figtree", sans-serif; line-height: 1.2; }
+h1 { font-size: 2rem; margin: .2em 0 .1em; }
+h2 { font-size: 1.3rem; margin: 1.6em 0 .4em; }
+.updated { color: var(--ink-soft); margin-top: 0; }
+a { color: var(--link); font-weight: 700; }
+a:hover { color: var(--ink); }
+ul { padding-left: 1.2em; }
+li + li { margin-top: .35em; }
+.back { margin: 0 0 8px; }
+.back:last-child { margin: 24px 0 0; }
+@media (max-width: 600px) { .terms { margin: 0; border-radius: 0; padding: 20px 16px 28px; } }

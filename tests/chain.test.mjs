@@ -530,10 +530,13 @@ test("pump.fun REFUSED: anything else in the transaction: a SOL transfer, a memo
 test("pump.fun REFUSED: mayhem mode on, other options on, a creator that is not the wallet, a mint that did not sign", () => {
   const mayhem = editCreate(createOnly(), (d, at) => { d[at + 32] = 1; });
   assert.equal(proveLaunchPump(mayhem, { wallet: PUMP_PAYER }).clause, "pump_mayhem");
-  for (const [off, what] of [[33, "cashback"], [34, "creator fee"], [42, "holder reward"]]) {
+  for (const [off, what] of [[33, "cashback"], [34, "creator fee"]]) {
     const t = editCreate(createOnly(), (d, at) => { d[at + off] = 1; });
     assert.equal(proveLaunchPump(t, { wallet: PUMP_PAYER }).clause, "pump_options", what);
   }
+  // A holder rewards coin is the launcher's own since 2026-10-02 (its creator fees go to its holders): proved as the same launch.
+  const holders = proveLaunchPump(editCreate(createOnly(), (d, at) => { d[at + 42] = 1; }), { wallet: PUMP_PAYER });
+  assert.deepEqual([holders.ok, holders.launch?.mint], [true, proveLaunchPump(createOnly(), { wallet: PUMP_PAYER }).launch.mint]);
   const creator = editCreate(createOnly(), (d, at) => { Buffer.from(base58Decode(GME_LAUNCHER)).copy(d, at); });
   assert.equal(proveLaunchPump(creator, { wallet: PUMP_PAYER }).clause, "pump_not_creator");
   // absent trailing options read as off (the program reads them so): the same coin

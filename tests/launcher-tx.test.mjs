@@ -213,6 +213,15 @@ test("a launch builds, signs and decodes back, and every signature verifies with
   assert.deepEqual(ixs[2].keys, createV2Accounts(mint.publicKey, wallet.publicKey));
   assert.deepEqual(decodeCreateV2(ixs[2].data), { ...COIN, creator: wallet.publicKey, isMayhemMode: false, isCashbackEnabled: false, creatorFeeBps: 0n, isHolderReward: false, trailingArgs: 3 });
   assert.deepEqual(checkLaunchMessage(msg, { wallet: wallet.publicKey, mint: mint.publicKey }).name, COIN.name);
+  // A holder rewards coin (the owner, 2026-10-02): the same accounts, create_v2's last byte 1; checked as that, and only that.
+  const hr = buildLaunchTransaction({ wallet: wallet.publicKey, mint: mint.publicKey, ...COIN, recentBlockhash: built.message.recentBlockhash, holderReward: true });
+  const hrCreate = decompileInstructions(hr.message)[2];
+  assert.deepEqual(hrCreate.keys, createV2Accounts(mint.publicKey, wallet.publicKey));
+  assert.deepEqual(decodeCreateV2(hrCreate.data), { ...COIN, creator: wallet.publicKey, isMayhemMode: false, isCashbackEnabled: false, creatorFeeBps: 0n, isHolderReward: true, trailingArgs: 3 });
+  assert.equal(checkLaunchMessage(hr.messageBytes, { wallet: wallet.publicKey, mint: mint.publicKey, holderReward: true }).isHolderReward, true);
+  assert.throws(() => checkLaunchMessage(hr.messageBytes, { wallet: wallet.publicKey, mint: mint.publicKey }), /makes a holder rewards coin, which this launch is not/);
+  assert.throws(() => checkLaunchMessage(msg, { wallet: wallet.publicKey, mint: mint.publicKey, holderReward: true }), /does not make a holder rewards coin, which this launch is/);
+  assert.equal(typeof signLaunchTransaction(hr, wallet, mint), "string", "signed as the holder rewards coin it was built as");
   assert.equal(message.accountKeys[0], wallet.publicKey, "the wallet pays");
 });
 
@@ -257,7 +266,7 @@ test("a launch holds only ComputeBudget and create_v2; bytes with anything else 
     "a dev buy": [[...cb, create, buy], /instruction for 6EF8.* does not carry/],
     "another creator": [[...cb, otherCreator], /creator is not the wallet/],
     "mayhem mode": [[...cb, mayhem], /option/],
-    "a holder-rewards coin": [[...cb, holderReward], /option/],
+    "a holder-rewards coin where the launch asked for a regular one": [[...cb, holderReward], /makes a holder rewards coin, which this launch is not/],
     "another mayhem token vault": [[...cb, swappedVault], /accounts are not the ones/],
     "a writable mint authority": [[...cb, writableAuthority], /accounts are not the ones/],
     "two creates": [[...cb, create, create], /more than one create_v2/],

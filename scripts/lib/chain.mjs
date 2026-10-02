@@ -372,7 +372,8 @@ export function proveLaunchPump(tx, { wallet, quotes = [] } = {}) {
   if (!t.isSigner(mint)) return no("pump_mint_unsigned", "the new mint did not sign");
   if (args.creator !== wallet) return no("pump_not_creator", "the coin's creator is not the listed wallet");
   if (args.isMayhemMode) return no("pump_mayhem", "a mayhem-mode coin");
-  if (args.isCashbackEnabled || args.creatorFeeBps !== 0n || args.isHolderReward) return no("pump_options", "cashback, a creator fee or holder rewards turned on");
+  // (a holder rewards coin, 2026-10-02 on: its creator fees go to its holders, paid by pump.fun; the launcher makes them)
+  if (args.isCashbackEnabled || args.creatorFeeBps !== 0n) return no("pump_options", "cashback or a creator fee turned on");
 
   if (t.instructions.some((ix) => ix.program === PUMPFUN_PROGRAM && PUMP_BUYS.includes(disc(ix)))) return no("pump_dev_buy", "a buy beside the create; the sanctuary's launcher never buys its own coin");
   for (const ix of t.instructions) {

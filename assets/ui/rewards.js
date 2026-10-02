@@ -45,6 +45,8 @@ export function rewardsText(rules = null) {
 export const REWARDS_TEXT = rewardsText();
 /** What goes in the pot, and what never does (scripts/lib/rewards.mjs REWARDS_SITE_EXCLUDED). */
 export const REWARDS_EXCLUDED = "Only SOL goes in the pot: pump.fun and PumpSwap creator fees our launcher claims. StonkFun (Raydium LaunchLab) coins pay their creator no fee on chain, and coins priced in another coin pay in that coin; neither is claimed, because turning it into SOL would need a swap, and the launcher never trades.";
+/** What the section says while rewards are off (the Rewards workflow has never run: REWARDS_ENABLED is not on or dry). */
+export const REWARDS_OFF = "Holder rewards are switched off. No creator fees are shared with $CATSANC holders, and none are promised.";
 export const NOT_ADVICE = "Not financial advice. Rewards come only from the fees our launcher's coins happen to earn, so they can be small or nothing. Holding $CATSANC is not an investment, and nothing here promises income.";
 
 /** A token's age bonus, fixed point (1,000,000 = 1×): 1 + a / (a + 14 days), rounded down (scripts/lib/rewards.mjs mFp). */
@@ -284,9 +286,19 @@ export function createRewards(root, { contract = null, now = () => Date.now() } 
   ledgerLink.target = "_blank";
   ledgerLink.rel = "noopener noreferrer";
   foot.append(ledgerLink, ".");
-  root.append(title, el("p", "panel-note rw-nfa", NOT_ADVICE), rules, el("p", "panel-small", REWARDS_EXCLUDED), numbers, form, result, foot);
+  // (until the Rewards workflow has run, state.json records no rules: rewards are off, and nothing about payouts is shown)
+  const off = el("p", "panel-note rw-off", REWARDS_OFF);
+  const payout = [el("p", "panel-note rw-nfa", NOT_ADVICE), rules, el("p", "panel-small", REWARDS_EXCLUDED), numbers, form, result, foot];
+  root.append(title, off, ...payout);
 
   let data = null, asked = null;
+  /** Rewards are running once state.json records the rules in force; before then, only the "off" line shows. */
+  function drawMode() {
+    const on = !!data?.state?.rules;
+    off.hidden = on;
+    for (const n of payout) n.hidden = !on;
+  }
+  drawMode();
   /* The three lines, with the rules in force once state.json has loaded. */
   function drawRules() {
     rules.replaceChildren();
@@ -349,6 +361,7 @@ export function createRewards(root, { contract = null, now = () => Date.now() } 
     /** The four files (fetchRewards' answer), checked here; the box answers again for the address last asked. */
     setData(raw) {
       data = raw ? { ledger: checkLedger(raw.ledger), state: checkState(raw.state), excluded: excludedWallets(raw.wallets, raw.exclude) } : null;
+      drawMode();
       drawRules();
       drawNumbers();
       if (asked !== null) check();
