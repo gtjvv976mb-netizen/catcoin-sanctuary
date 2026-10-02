@@ -29,6 +29,8 @@
 # pays to its holders (never to the launcher's wallet); "off" makes regular coins again.
 # LAUNCH_CHARACTERS (off unless "on"): a drawn or fictional cat (a cartoon, game, film or mascot character,
 # someone's trademark or copyright) launches only while it is "on"; off, only real cats launch.
+# LAUNCH_PAIRS (off unless "on"): pairing a coin with a company's stock (StonkFun) or another coin (pump.fun)
+# means buying that first; off, every coin launches on pump.fun in SOL.
 # LAUNCH_PUMP_QUOTE "on" opts in to pump.fun launches priced in a listed coin (unverified: no such launch
 # has been recorded); anything else keeps them off. A variable, never a secret.
 # The send step never spends the $CATSANC holders' SOL (the creator fees the Rewards workflow claimed for
@@ -110,6 +112,7 @@ jobs:
           LAUNCH_ENABLED: ${{ vars.LAUNCH_ENABLED }}
           LAUNCH_MAX_PER_DAY: ${{ vars.LAUNCH_MAX_PER_DAY }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
+          LAUNCH_PAIRS: ${{ vars.LAUNCH_PAIRS }}
           LAUNCH_OPEN: ${{ vars.LAUNCH_OPEN }}
           LAUNCH_CHARACTERS: ${{ vars.LAUNCH_CHARACTERS }}
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
@@ -172,6 +175,7 @@ jobs:
           LAUNCH_MIN_BALANCE_SOL: ${{ vars.LAUNCH_MIN_BALANCE_SOL }}
           LAUNCH_PRIORITY_MICROLAMPORTS: ${{ vars.LAUNCH_PRIORITY_MICROLAMPORTS }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
+          LAUNCH_PAIRS: ${{ vars.LAUNCH_PAIRS }}
           LAUNCH_MINT_SUFFIX: ${{ vars.LAUNCH_MINT_SUFFIX }}
           LAUNCH_HOLDER_REWARDS: ${{ vars.LAUNCH_HOLDER_REWARDS }}
           LAUNCH_MINT_GRIND_MINUTES: ${{ vars.LAUNCH_MINT_GRIND_MINUTES }}

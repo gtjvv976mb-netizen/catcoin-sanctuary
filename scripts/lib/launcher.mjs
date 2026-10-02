@@ -211,6 +211,12 @@ export function launchMode(env = {}) {
 
 /** LAUNCH_PUMP_QUOTE: "on" (letter case aside, as LAUNCH_ENABLED) opts in to the unverified coin-priced pump.fun venue; anything else does not. */
 export const pumpQuoteOptIn = (env = {}) => String(env.LAUNCH_PUMP_QUOTE ?? "").trim().toLowerCase() === "on";
+/**
+ * The owner's pairing rule (LAUNCH_PAIRS, off unless "on"; 2026-10-02: "remove the token pairing with stocks, only the
+ * holder-reward feature"): while off, every coin launches on pump.fun in SOL, never on StonkFun in a company's stock or on
+ * pump.fun in another coin (pricing a coin in a stock or a coin means buying that first).
+ */
+export const pairedLaunches = (env = {}) => String(env.LAUNCH_PAIRS ?? "").trim().toLowerCase() === "on";
 /** The owner's open launch rule (LAUNCH_OPEN, on unless "off"): real pets in viral or rising posts, and any cat a big account names, launch without approval. */
 export const openLaunches = (env = {}) => String(env.LAUNCH_OPEN ?? "").trim().toLowerCase() !== "off";
 /** The owner's character rule (LAUNCH_CHARACTERS, off unless "on"; 2026-10-02, after the legal review): a drawn or fictional
@@ -758,6 +764,7 @@ export function pendingPairs(ledger, { except = null } = {}) {
  * data/pump-quotes.json lists, and the owner's opt-in. Returns chooseVenue's { venue, pair, reason, from? }.
  */
 export function routeOf(post, ctx) {
+  if (ctx.pairs === false) return { venue: PUMP_SOL, pair: { ...SOL_PAIR }, reason: "pump.fun in SOL: pairing with a stock or a coin is off (LAUNCH_PAIRS)" };
   return chooseVenue(post, ctx.watch, { planned: ctx.planned, collection: ctx.collection, adoptables: ctx.adoptables, extraPairs: pendingPairs(ctx.ledger),
     pumpQuotes: ctx.pumpQuotes ?? [], pumpQuoteOptIn: ctx.pumpQuoteOptIn === true });
 }
@@ -1389,6 +1396,7 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
     collection: readJson(io, FILES.collection, null),
     pumpQuotes: quotes.usable,
     pumpQuoteOptIn: pumpQuoteOptIn(env),
+    pairs: pairedLaunches(env),
     open: openLaunches(env),
     characters: characterLaunches(env),
     // The sanctuary's own cats (sanctuaryRow): the ones the announcer released, adoptions, lore captions, files on disk.
