@@ -120,7 +120,8 @@ jobs:
 
   next:
     needs: scan
-    if: ${{ !cancelled() && vars.TRENDWATCH_CHAIN != 'off' && github.event_name != 'push' }}
+    # (a run an approval's push started keeps the chain going too: a chained run that ends while it runs leaves the next to it)
+    if: ${{ !cancelled() && vars.TRENDWATCH_CHAIN != 'off' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
