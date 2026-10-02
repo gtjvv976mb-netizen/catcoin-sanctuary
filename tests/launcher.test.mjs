@@ -23,7 +23,7 @@ import { VENUE_IDS } from "../scripts/lib/venues-routing.mjs";
 import { createRpc } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
-  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
+  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletCoinsOf, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
@@ -211,8 +211,10 @@ function fakeSite(root) {
   const asked = [];
   const f = { deployed: false, asked };
   f.fetchImpl = async (url) => {
-    asked.push(url);
     const u = new URL(url);
+    // pump.fun's list of the launcher wallets' own coins (walletCoinsOf): `f.walletCoins`, none by default.
+    if (url.startsWith("https://frontend-api-v3.pump.fun/coins?creator=")) return new Response(JSON.stringify((f.walletCoins ?? []).filter((c) => c.creator === u.searchParams.get("creator") && u.searchParams.get("offset") === "0")));
+    asked.push(url);
     if (u.origin !== SITE_ORIGIN) throw new Error(`unexpected ${url}`);
     const file = path.join(root, u.pathname);
     if (!f.deployed || !fs.existsSync(file)) return new Response("not found", { status: 404 });
@@ -505,6 +507,33 @@ test("the fan-tribute line: every coin's description ends with it, whole; a real
   // Only the owner's fixed line is let through: the lore still meets the endorsement rule.
   assert.equal(candidateRow(post("2100000000000000302", { lore: "The official cat of the fridge." }), ctx).row, undefined);
   assert.equal(rowProblem({ ...row, kind: "dog" }), "kind must be one of real, cartoon, fiction");
+});
+
+test("a trending cat whose picture shows a person's face is never launched (the picture is the coin's image); a meme-named real cat in a viral post is", () => {
+  const ctx = { nowMs: NOW, approvals: new Set(), open: true, watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")) };
+  const meme = (id, extra = {}) => { const p = post(id, { name: "Puddleboot Cat", ticker: "PUDDLEBT", kind: "real", nameFrom: null, figure: null, lore: "A cat sits inside a giant rubber boot." }); return { ...p, reading: { ...p.reading, nameFrom: "meme", memeName: "Puddleboot Cat", personFace: false, ...extra } }; };
+  const ok = candidateRow(meme("2100000000000000401"), ctx);
+  assert.ok(ok.row, ok.problem);
+  assert.equal(ok.row.policy, "viral");
+  assert.match(candidateRow(meme("2100000000000000402", { personFace: true }), ctx).problem, /a person's face/);
+});
+
+test("the launcher wallets' own pump.fun coins (the owner's by hand too): never a second coin from one post or under one name; unread, no trending cat", async () => {
+  const ctx = { nowMs: NOW, approvals: new Set(), open: true, watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")) };
+  const p = { ...post("2100000000000000501", { name: "Puddleboot Cat", ticker: "PUDDLEBT", kind: "real", nameFrom: null, figure: null, lore: "A cat sits inside a giant rubber boot." }) };
+  assert.ok(candidateRow(p, { ...ctx, walletCoins: { posts: new Map(), names: new Map() } }).row);
+  assert.match(candidateRow(p, { ...ctx, walletCoins: { posts: new Map([["2100000000000000501", "MintA"]]), names: new Map() } }).problem, /already made a coin from this post or under this name \(MintA\)/);
+  assert.match(candidateRow(p, { ...ctx, walletCoins: { posts: new Map(), names: new Map([["puddlebt", "MintB"]]) } }).problem, /\(MintB\)/);
+  assert.match(candidateRow(p, { ...ctx, walletCoins: null }).problem, /could not be read/);
+  // walletCoinsOf: only the listed wallet's coins, the post id from the coin's X link; a list that fails is null.
+  const W = "HxhisqFBeZRJcBWkjnumk6HwWxFLGVVD6jfX23tXHzQh";
+  const list = [{ mint: "M1", creator: W, name: "Foot Cat", symbol: "FOOTCAT", twitter: "https://x.com/elyradream/status/2105539457143456083" },
+    { mint: "M2", creator: "someoneelse", name: "Other Cat", symbol: "OTHER", twitter: "https://x.com/a/status/2100000000000000999" }];
+  const got = await walletCoinsOf({ wallets: [W], fetchImpl: async () => new Response(JSON.stringify(list)) });
+  assert.deepEqual([...got.posts], [["2105539457143456083", "M1"]]);
+  assert.deepEqual([...got.names], [["foot cat", "M1"], ["footcat", "M1"]]);
+  assert.equal(await walletCoinsOf({ wallets: [W], fetchImpl: async () => new Response("busy", { status: 503 }) }), null);
+  assert.equal(await walletCoinsOf({ wallets: [W], fetchImpl: async () => { throw new Error("down"); } }), null);
 });
 
 test("the X post carries the fan-tribute line when a version of it fits every rule with the card link (else the post is left as it is)", () => {
@@ -2496,6 +2525,8 @@ function pumpSite(root, { coins = [], down = false, tail = true, search = false 
       const hits = coins.filter((c) => [c.name, c.symbol].some((x) => String(x).toUpperCase().includes(term))).sort((a, b) => b.created_timestamp - a.created_timestamp);
       return new Response(JSON.stringify(hits.slice(offset, offset + 50)), { status: 200 });
     }
+    // (the launcher wallets' own coins, walletCoinsOf: the site fake answers them; not the list of new coins this fake serves)
+    if (String(url).startsWith("https://frontend-api-v3.pump.fun/coins?creator=")) return site0(url, init);
     if (String(url).startsWith("https://frontend-api-v3.pump.fun/coins?")) {
       web.pumpAsked.push(url);
       if (down) return new Response("busy", { status: 503 });

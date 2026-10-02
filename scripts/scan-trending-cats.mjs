@@ -273,7 +273,7 @@ export async function withApproved(trending, { approvals, creds, client, fetchIm
   const n = answer?.data?.length || 0; reads.dayUsed += n; reads.monthUsed += n;
   const rows = [];
   for (const p of approvedRows(answer, nowMs)) {
-    const reading = client ? await readPost(p, client) : cleanReading(readPostByRules(p));
+    const reading = memeNamed(client ? await readPost(p, client) : cleanReading(readPostByRules(p)));
     rows.push({ ...p, readAt: reading ? new Date(nowMs).toISOString() : null, reading, known: false, taken: reading?.ticker ? await tickerTaken(reading.ticker, fetchImpl) : null, status: "candidate" });
     log(`  approved: ${p.url} (${p.likes} likes, ${p.views} views)${reading ? ` -> ${reading.catName ?? "no name"} ${reading.ticker ?? ""}` : ""}`);
   }
@@ -305,6 +305,9 @@ export function watchList(raw, known = new Set()) {
   for (const h of listed("topAccounts")) if (!handles.has(h.toLowerCase())) { handles.set(h.toLowerCase(), h); topAccounts.push(h); }
   for (const h of listed("bigAccounts")) if (!handles.has(h.toLowerCase())) handles.set(h.toLowerCase(), h);
   const bigAccounts = [...handles.values()];  // every watched handle, top ones first
+  // Cat-meme accounts (the owner's kind of coin, 2026-10-02: "Foot Cat", "Wiwiwi Cat"): searched for any post with a picture, no
+  // cat word needed (their posts often have no words at all); Claude reads the picture. Never big accounts by being listed here.
+  const memeAccounts = listed("memeAccounts").filter((h, i, all) => all.findIndex((x) => x.toLowerCase() === h.toLowerCase()) === i);  // once each, as first written
   const homes = [...known].filter((k) => /\p{L}/u.test(k)).flatMap((k) => [k, `${k} cat`]);
   const atHome = (term) => homes.some((k) => k.match(termRe(term).re));
   const figures = [];
@@ -322,7 +325,7 @@ export function watchList(raw, known = new Set()) {
     taken.add(name.toLowerCase());
     figures.push({ name, aliases, kind: FIGURE_KINDS.includes(f.kind) ? f.kind : "real", ticker: TICKER.test(ticker) ? ticker : null, matchOnlyAliases, needsCatWord: f.needsCatWord === true, terms });
   }
-  return { topAccounts, bigAccounts, figures };
+  return { topAccounts, bigAccounts, memeAccounts, figures };
 }
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -387,6 +390,18 @@ export function chunked(items, build, max = MAX_QUERY) {
 }
 
 const bigQuery = (hs) => `(${hs.map((h) => `from:${h}`).join(" OR ")}) ${BIG_TERMS} -is:retweet`;
+const memeQuery = (hs) => `(${hs.map((h) => `from:${h}`).join(" OR ")}) has:media ${NO_COIN_TALK}`;
+/** The cat-meme accounts' queries: every post of theirs with a picture, no cat word needed (data/cat-watch.json memeAccounts). */
+export const memeQueries = (handles = []) => (handles.length ? chunked(handles, memeQuery) : []);
+/** The big lens's turns with the cat-meme accounts' queries woven in, one after every second big-account query. */
+export function bigTurns(big = [], meme = []) {
+  if (!meme.length) return big;
+  if (!big.length) return meme;
+  const out = [];
+  big.forEach((q, i) => { out.push(q); if (i % 2 === 1) out.push(meme[Math.floor(i / 2) % meme.length]); });
+  if (big.length % 2 === 1) out.push(meme[Math.floor(big.length / 2) % meme.length]);
+  return out;
+}
 /**
  * The big-account lens's queries, one a turn: their cat posts (replies allowed, no media needed, no coin-talk filter).
  * With top accounts, their queries take every other turn and the other watched accounts share the rest, a chunk
@@ -589,7 +604,7 @@ export function chooseLens({ trends = [], state, watch, known = new Set(), nowMs
       if (!within(state.followedUp, e.key, FOLLOW_UP_HOURS)) return { lens: "emerging", name: e.name, key: e.key, query: emergingQuery(e.name), sort: "relevancy" };
     }
   }
-  const lists = { big: bigQueries(watch.bigAccounts, watch.topAccounts || []), figures: figureQueries(watch.figures) };
+  const lists = { big: bigTurns(bigQueries(watch.bigAccounts, watch.topAccounts || []), memeQueries(watch.memeAccounts || [])), figures: figureQueries(watch.figures) };
   for (let i = 0; i < ROTATION.length; i++) {
     const at = (state.nextLens + i) % ROTATION.length, lens = ROTATION[at];
     if (lens === "viral") return { lens, rotation: at, query: QUERY, sort: "relevancy" };
@@ -618,10 +633,12 @@ function advance(pick, state, nowMs) {
 export const READING = {
   type: "object",
   additionalProperties: false,
-  required: ["aboutOneCat", "catName", "kind", "coinName", "ticker", "lore", "sensitive", "why"],
+  required: ["aboutOneCat", "catName", "memeName", "personFace", "kind", "coinName", "ticker", "lore", "sensitive", "why"],
   properties: {
     aboutOneCat: { type: "boolean", description: "The post is about one particular cat (a real pet, a cartoon cat or a cat from fiction), not cats in general, a product, or a joke with no cat at its centre." },
     catName: { type: ["string", "null"], description: "The cat's own name as the post or its author gives it; null if it has none." },
+    memeName: { type: ["string", "null"], description: "Only when the cat has no name of its own and the post is a fun cat moment: a short meme name for it from what the post shows or says, two or three words ending in Cat (\"Foot Cat\", \"Ice Cream Cat\", \"Wiwiwi Cat\"); null otherwise." },
+    personFace: { type: "boolean", description: "True if a person's face can be seen in the picture." },
     kind: { type: "string", enum: ["real", "cartoon", "fiction", "none"] },
     coinName: { type: ["string", "null"], description: "A short, catchy coin name for the cat (at most 32 characters, letters, digits and spaces), usually its name." },
     ticker: { type: ["string", "null"], description: "A memeable ticker: 2 to 10 capital letters or digits, no $." },
@@ -633,7 +650,7 @@ export const READING = {
 
 const PROMPT = `You are the research team of Catcoin Sanctuary, a site that gives famous cats a memecoin and a home in a 3D garden.
 Read this X post that is trending right now and say whether it is about one particular cat that could become a fun, harmless cat coin.
-Only use what the post and its picture show. Never invent a name. Mark anything sad, cruel, medical, political or involving children as sensitive.`;
+Only use what the post and its picture show. Never invent the cat's own name: when it has none, a fun cat moment may get a meme name (memeName) from what the post shows or says, and the coin is named after that. Mark anything sad, cruel, medical, political or involving children as sensitive.`;
 
 /** Claude's reading of one post, checked; null when it could not be read. `client` is an Anthropic client. */
 export async function readPost(post, client) {
@@ -652,11 +669,22 @@ export async function readPost(post, client) {
     if (e instanceof Anthropic.RateLimitError || e instanceof Anthropic.APIConnectionError) return null;
     throw e;
   }
-  if (res.stop_reason === "refusal") return { aboutOneCat: false, catName: null, kind: "none", coinName: null, ticker: null, lore: null, sensitive: true, why: "declined to read it" };
+  if (res.stop_reason === "refusal") return { aboutOneCat: false, catName: null, memeName: null, personFace: false, kind: "none", coinName: null, ticker: null, lore: null, sensitive: true, why: "declined to read it" };
   const text = res.content.find((b) => b.type === "text")?.text;
   let r;
   try { r = JSON.parse(text); } catch { return null; }
   return cleanReading(r);
+}
+
+/** A meme name's shape: two or three words of letters or digits, the last "Cat" ("Foot Cat", "Ice Cream Cat"). */
+const MEME_NAME = /^(?:[\p{L}\p{N}]+ ){1,2}Cat$/u;
+/**
+ * A real cat with no name of its own, in a fun moment Claude gave a meme name ("Foot Cat"): named after it, the coin too
+ * (nameFrom "meme"), its ticker Claude's or one made from the name. Any other reading is returned as it is.
+ */
+export function memeNamed(r) {
+  if (!r || r.catName || !r.memeName || r.kind !== "real" || !r.aboutOneCat || r.sensitive) return r;
+  return { ...r, catName: r.memeName, coinName: r.memeName, ticker: r.ticker || tickerFor(r.memeName), nameFrom: "meme" };
 }
 
 /** A reading made safe to store and show: lengths, the ticker's shape, no price talk or links in the lore. */
@@ -666,7 +694,8 @@ export function cleanReading(r) {
   const lore = s(r?.lore, 200);
   const loreOk = lore && checkFields({ lore }).violations.every((v) => !["link", "price", "sexual", "hate", "slur"].includes(v.rule)) && !/\$|https?:|www\./i.test(lore);
   return {
-    aboutOneCat: r?.aboutOneCat === true, catName: s(r?.catName, 40) || null, kind: ["real", "cartoon", "fiction"].includes(r?.kind) ? r.kind : "none",
+    aboutOneCat: r?.aboutOneCat === true, catName: s(r?.catName, 40) || null, memeName: MEME_NAME.test(s(r?.memeName, 32) ?? "") ? s(r.memeName, 32) : null,
+    personFace: r?.personFace === true, kind: ["real", "cartoon", "fiction"].includes(r?.kind) ? r.kind : "none",
     coinName: s(r?.coinName, 32) || null, ticker: ticker && TICKER.test(ticker) ? ticker : null, lore: loreOk ? lore : null,
     sensitive: r?.sensitive !== false, why: s(r?.why, 200) || "", readBy: r?.readBy === "rules" ? "rules" : "claude",
   };
@@ -684,7 +713,7 @@ export async function tickerTaken(ticker, fetchImpl = fetch) {
 }
 
 /** Is this reading a launch candidate? */
-export const isCandidate = (p) => p.reading && p.reading.aboutOneCat && !p.reading.sensitive && p.reading.kind !== "none" && p.reading.catName && p.reading.coinName && p.reading.ticker && p.reading.lore && !p.known;
+export const isCandidate = (p) => p.reading && p.reading.aboutOneCat && !p.reading.sensitive && !p.reading.personFace && p.reading.kind !== "none" && p.reading.catName && p.reading.coinName && p.reading.ticker && p.reading.lore && !p.known;
 
 /**
  * One run. `data` is { trending (data/trending-cats.json), names (the sanctuary's cat names and tickers, lower-case),
@@ -746,14 +775,17 @@ export async function scan({ data, creds, client, fetchImpl = fetch, nowMs = Dat
   const atHome = (r) => !!r?.catName && (known.has(r.catName.toLowerCase()) || (!!r.ticker && known.has(r.ticker.toLowerCase())));
   // A post found through a cat trend, a name followed up with a cat word, a watched figure or a big account's cat post
   // is a cat post already; the rest must say cat.
+  // A cat-meme account's post needs no cat word when Claude reads its picture (memeAccounts).
+  const memes = new Set((watch.memeAccounts || []).map((h) => h.toLowerCase()));
   const fresh = qualify(answer, nowMs, { lens: pick.lens, bigAccounts: watch.bigAccounts }).map(decorate)
-    .filter((p) => !seen.has(p.id) && (p.trend || p.emerging || p.figure || p.stage === "big-account" || detectCat({ name: p.text }).isCat || /猫|ねこ|gato/.test(p.text)))
+    .filter((p) => !seen.has(p.id) && (p.trend || p.emerging || p.figure || p.stage === "big-account" || detectCat({ name: p.text }).isCat || /猫|ねこ|gato/.test(p.text)
+      || (!!client && memes.has(String(p.author?.handle).toLowerCase()))))
     .sort((a, b) => (b.trend ? 1 : 0) - (a.trend ? 1 : 0) || b.heat - a.heat);
   const what = pick.lens === "trend" ? `cat trend "${pick.trend}"` : pick.lens === "emerging" ? `emerging name "${pick.name}"` : pick.chunks ? `${pick.lens} (chunk ${pick.chunk + 1} of ${pick.chunks})` : pick.lens;
   log(`Trend watch: lens ${what}; ${trends.length ? `cat trends on X: ${trends.map((t) => t.name).join(", ")}; ` : "no cat trend on X's lists; "}${answer?.data?.length ?? 0} posts searched, ${fresh.length} new ones qualify (X reads: ${reads.dayUsed}/${reads.dayCap} today, ${reads.monthUsed}/${reads.monthCap} this month).`);
   const read = [];
   for (const p of fresh.slice(0, PER_RUN)) {
-    const own = client ? await readPost(p, client) : cleanReading(readPostByRules(p));
+    const own = memeNamed(client ? await readPost(p, client) : cleanReading(readPostByRules(p)));
     const reading = nameReading(own, p.text, own ? borrowFor(p, own) : null);
     const home = atHome(reading) || (reading !== own && atHome(own));  // either the cat the post names or the one lent is at home
     const taken = reading?.ticker ? await tickerTaken(reading.ticker, fetchImpl) : null;
@@ -793,7 +825,7 @@ async function main() {
   if (!client) console.log("Trend watch: X-only mode (no ANTHROPIC_API_KEY): posts are read by rules.");
   const names = new Set([...read("data/planned.json", { cats: [] }).cats, ...read("data/adoptables.json", { cats: [] }).cats]
     .flatMap((c) => [c.name, c.coinName, c.ticker, c.launchTicker]).filter(Boolean).map((s) => String(s).toLowerCase()));
-  const watch = read("data/cat-watch.json", { topAccounts: [], bigAccounts: [], figures: [] });  // missing: no big or figures lens
+  const watch = read("data/cat-watch.json", { topAccounts: [], bigAccounts: [], memeAccounts: [], figures: [] });  // missing: no big or figures lens
   const next = await scan({ data: { trending: read("data/trending-cats.json", { posts: [] }), names, watch }, creds, client, log: console.log,
     monthlyReads: num(process.env.TRENDWATCH_MONTHLY_READS, READ_BUDGET), perSearch: num(process.env.TRENDWATCH_PER_SEARCH, PER_SEARCH) });
   if (process.argv.includes("--dry-run")) { console.log(JSON.stringify(next.candidates)); return; }
