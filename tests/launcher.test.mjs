@@ -23,7 +23,7 @@ import { VENUE_IDS } from "../scripts/lib/venues-routing.mjs";
 import { createRpc } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
-  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
+  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
@@ -230,7 +230,7 @@ function clock(start = NOW) {
 }
 
 // (no mint suffix in these tests: a scan for "pump" takes minutes; the scan has its own tests below)
-const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", ...extra });
+const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", ...extra });
 /** Whether a serialized transaction (base64) carries only zero-filled signature slots. */
 const unsignedTx = (b64) => decodeTransaction(new Uint8Array(Buffer.from(b64, "base64"))).signatures.every((x) => x.every((b) => b === 0));
 const quick = { metadataWaitMs: 60_000, metadataPollMs: 20_000, confirmWaitMs: 30_000, confirmPollMs: 3_000 };
@@ -538,7 +538,7 @@ test("prepare: one cat, its metadata file and a prepared ledger row with no mint
   const t = site({ wallet: w.address, approve: ["2100000000000000555"] });
   const approvals = t.read(FILES.approvals);
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root);
-  const r = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW });
+  const r = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW });
   assert.deepEqual([r.changed, r.pending, r.deploy, r.prepared], [true, true, true, "2100000000000000001"]);
   assert.equal(t.read(FILES.approvals), approvals, "data/launch-approvals.json is only read");
   const ledger = t.json(FILES.ledger);
@@ -554,15 +554,15 @@ test("prepare: one cat, its metadata file and a prepared ledger row with no mint
   assert.ok(web.asked.every((u) => u.includes("?check=")), "the coin's own uri is never asked before it is deployed");
   // Again: nothing new (one cat in flight at a time).
   const before = t.read(FILES.ledger);
-  const r2 = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW + 60_000 });
+  const r2 = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW + 60_000 });
   assert.deepEqual([r2.changed, r2.pending], [false, true]);
   assert.equal(t.read(FILES.ledger), before);
   // Deployed: nothing to deploy.
   web.deployed = true;
-  assert.equal((await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).deploy, false);
+  assert.equal((await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).deploy, false);
   // A crash between the two writes: the metadata file is written again.
   fs.rmSync(path.join(t.root, "coins/2100000000000000001.json"));
-  assert.equal((await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).changed, true);
+  assert.equal((await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).changed, true);
   assert.equal(t.read("coins/2100000000000000001.json"), metadataText(coinMetadata(row)));
   // Off: nothing at all.
   const off = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "no" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW });
@@ -807,7 +807,7 @@ test("dry mode: builds and simulates the cat prepare would pick, and never sends
   const t = site({ wallet: w.address });
   const before = { ledger: t.read(FILES.ledger), adopt: t.read(FILES.adoptables) };
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
-  const env = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on" };
+  const env = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" };
   const logs = [];
   const p = await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, log: (l) => logs.push(l) });
   assert.deepEqual([p.changed, p.pending, p.deploy, p.prepared], [false, true, false, null]);
@@ -898,7 +898,7 @@ test("crash points: a launch that landed but was never recorded (the commit lost
   assert.deepEqual([lost.outcome, lost.code], ["sending", 1]);
   const sending = t2.json(FILES.ledger).launches[0];
   assert.deepEqual([sending.status, sending.mintPublic], ["sending", undefined], "committed as sending, the mint not yet written");
-  const p = await prepare({ io: t2.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on" }, rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c.now });
+  const p = await prepare({ io: t2.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c.now });
   assert.equal(p.changed, true);
   const settled = t2.json(FILES.ledger).launches[0];
   assert.deepEqual([settled.status, settled.mintPublic], ["launched", deriveMintKeypair(w.kp, "2100000000000000401").publicKey]);
@@ -1340,6 +1340,16 @@ test("venues: pump.fun in SOL, StonkFun in a stock pair and pump.fun in a listed
   for (const v of [undefined, "", "off", "yes", "true", "1"]) assert.equal(pumpQuoteOptIn({ LAUNCH_PUMP_QUOTE: v }), false, String(v));
 });
 
+test("LAUNCH_PAIRS off (the default): every coin launches on pump.fun in SOL, never paired with a stock or a coin", () => {
+  assert.equal(pairedLaunches({ LAUNCH_PAIRS: "on" }), true);
+  assert.equal(pairedLaunches({ LAUNCH_PAIRS: " On " }), true);
+  for (const v of [undefined, "", "off", "yes", "true", "1"]) assert.equal(pairedLaunches({ LAUNCH_PAIRS: v }), false, String(v));
+  const r = routeOf({ id: "1" }, { pairs: false });
+  assert.equal(r.venue.id, "pump-sol");
+  assert.equal(r.pair.symbol, "SOL");
+  assert.match(r.reason, /LAUNCH_PAIRS/);
+});
+
 /* ── routing: StonkFun, a coin-priced pump.fun launch, and the fallback to pump.fun in SOL ─────────── */
 
 test("routing a candidate: a figure tied to a free stock pair is prepared on StonkFun, priced in it; a pair any cat or any launch of the launcher's own holds, or unknown pairs, give pump.fun in SOL", () => {
@@ -1583,7 +1593,7 @@ test("dry mode on StonkFun: the pricing, the config and the simulation, nothing 
   const t = stonkSite({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
   const api = stonkfunApi(web, sol, c);
-  const dry = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on" };
+  const dry = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" };
   const logs = [];
   const d = await send({ io: t.io, env: dry, rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
   assert.deepEqual([d.outcome, d.venue], ["dry", "stonkfun"]);
@@ -1712,7 +1722,7 @@ test("nothing signed leaves the runner before the send: every simulation is of t
   // A dry run: simulated, never signed.
   const t = site({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root);
-  const dry = await send({ io: t.io, env: { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
+  const dry = await send({ io: t.io, env: { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
   assert.equal(dry.outcome, "dry");
   assert.equal(sol.simulated.length, 1);
   assert.ok(sol.simulated.every(unsignedTx), "a dry run hands the RPC no signature (a signed copy could be replayed by its operator)");
@@ -2111,7 +2121,7 @@ test("the key and the RPC URL never appear in the output, whatever happens", asy
       const sol = tweak(fakeSolana({ wallet: w.address })), web = fakeSite(t.root), c = clock();
       const out = [];
       const fetchImpl = async (url, init) => (url.startsWith("https://rpc.example.test") ? sol.fetchImpl(url, init) : web.fetchImpl(url, init));
-      const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: key, SOLANA_RPC_URL: RPC_URL, GITHUB_OUTPUT: path.join(t.root, "out.txt"), LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on" };
+      const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: key, SOLANA_RPC_URL: RPC_URL, GITHUB_OUTPUT: path.join(t.root, "out.txt"), LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" };
       // Once through the real client built from SOLANA_RPC_URL; otherwise the same fake Solana without its pacing and back-off waits.
       const real = what === "listed, a full launch" && key === w.base58;
       const io = { env, root: t.root, fetchImpl, now: c.now, sleep: c.sleep, stdout: (l) => out.push(String(l)), stderr: (l) => out.push(String(l)), ...(real ? {} : { rpc: sol.rpc }) };
@@ -2142,7 +2152,7 @@ test("the CLI's outputs for the workflow: pending, deploy, launched, recorded", 
   const t = site({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
   const out = path.join(t.root, "gh-output");
-  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, GITHUB_OUTPUT: out, LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on" };
+  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, GITHUB_OUTPUT: out, LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" };
   const io = { env, root: t.root, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, stdout: () => {}, stderr: () => {}, rpc: sol.rpc };
   assert.equal(await main(["prepare"], io), 0);
   assert.equal(fs.readFileSync(out, "utf8"), "pending=true\ndeploy=true\n");
