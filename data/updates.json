@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-10-02T03:20:07.823Z",
+  "lastPostedAt": "2026-10-02T09:42:59.271Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -147,6 +147,20 @@
       "attempts": 1,
       "postedAt": "2026-10-02T03:20:07.823Z",
       "tweet": "2105860351803670660"
+    },
+    "HOICHAN": {
+      "postId": "2105803551884890433",
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-02T06:20:27.261Z",
+      "tweet": "2105905731899633842"
+    },
+    "MAYORJINX": {
+      "postId": "2105822158043980147",
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-02T09:42:59.271Z",
+      "tweet": "2105956700817690976"
     }
   }
 }

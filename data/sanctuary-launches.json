@@ -2,6 +2,170 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105934117154308177",
+      "url": "https://x.com/catcosanctuary/status/2105934117154308177",
+      "name": "Professor Meowingtons PhD",
+      "coinName": "Professor Meowingtons PhD",
+      "ticker": "PROFMEOW",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of Professor Meowingtons PhD.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/PROFMEOW.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/PROFMEOW.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105934117154308177.json",
+      "status": "launched",
+      "preparedAt": "2026-10-02T08:16:23Z",
+      "attempts": 1,
+      "cat": {
+        "id": "professor-meowingtons-deadmau5",
+        "ticker": "PROFMEOW",
+        "name": "Professor Meowingtons PhD",
+        "coinName": "Professor Meowingtons PhD",
+        "owner": "deadmau5 (Joel Zimmerman)",
+        "category": "celebrity",
+        "story": "Professor Meowingtons PhD was the tuxedo cat of Canadian producer deadmau5 (Joel Zimmerman), named because he meowed a lot: 'meowing tons' (SPIN). Zimmerman adopted him from the Toronto Humane Society in 2009 or 2010. He had his own X account, @meowingtons ('@deadmau5 is my human and this is my official page'), plus Instagram. He appeared on deadmau5 merch, gave his name to the 2011 Meowingtons Hax Tour compilation, and his portrait is on the cover of the 2012 album '>album title goes here<' (We Rave You). Deadmau5 fought a trademark dispute over the Meowingtons name with a cat-goods store, which was resolved in 2018 (Wikipedia). He died in 2023, aged 16 (Wikipedia). In August 2023 deadmau5 posted that he had to help him 'cross the rainbow bridge' (We Rave You). In 2025 deadmau5 released the game 'Meowingtons Simulator', in which players control him (Wikipedia).",
+        "look": "Short-haired black-and-white tuxedo with a sturdy medium build. Solid black head, ears, back and tail. A narrow white blaze runs from the pink nose up between the eyes onto the forehead and widens into a white muzzle and chin; a white bib runs down the throat, chest and belly, and his paws are white. Yellow-gold/amber eyes and long white whiskers. In SPIN's 2016 photo he sleeps inside a red deadmau5 'mau5head' dome bed with white X-eyes. The @meowingtons avatar and banner draw him as a cartoon: a black cat with a white blaze and bib, pale green eyes and a grumpy brow.",
+        "coat": {
+          "base": "black",
+          "second": "white",
+          "pattern": "tuxedo",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/meowingtons/status/930134744645455872",
+          "author": "meowingtons",
+          "handle": "meowingtons",
+          "date": "2017-11-13",
+          "dateType": "posted",
+          "text": "Got my assistant to print some photos of me and the human....",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Deadmau5 - Wikipedia (Meowingtons trademark dispute; 'Professor Meowingtons died in 2023, aged 16'; Meowingtons Simulator)",
+            "url": "https://en.wikipedia.org/wiki/Deadmau5"
+          },
+          {
+            "label": "Deadmau5 Wants to Trademark His Cat's Name - SPIN (30 Dec 2016)",
+            "url": "https://www.spinmagazine.com/2016/12/deadmau5-meowingtons-trademark/"
+          },
+          {
+            "label": "deadmau5 shares heartfelt announcement of cat Meowingtons' final days - We Rave You (9 Aug 2023)",
+            "url": "https://weraveyou.com/2023/08/deadmau5-shares-heartfelt-announcement-of-cat-meowingtons-final-days/"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Meowington",
+          "contract": "4DkkRndDunJbGbDUuG4BowmESB7GvAEonsVrkMEkdeFk",
+          "mcapUsd": 0
+        },
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by deadmau5 (Joel Zimmerman).",
+        "sensitivity": "In loving memory of Professor Meowingtons PhD.",
+        "portrait": "assets/portraits/PROFMEOW.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "mintNonce": 14150156,
+      "tx": "A6VbqAz3ydHP1aSnDfhZ7x6U7KAUsPPVk6ZvGTJTKMAsmyJSha6T8n8kaib8bhiTgCXV1hmNRLfwZP5BvgGRKYi",
+      "sentAt": "2026-10-02T08:28:28Z",
+      "lastValidBlockHeight": 430595113,
+      "mintPublic": "9RXtZHUfqNNZMuGR4SeDCaoSAd9YF7DqKa8CoHPHpump",
+      "spentLamports": 5562120,
+      "settledAt": "2026-10-02T08:28:37Z",
+      "launchedAt": "2026-10-02T08:28:27Z",
+      "recordedAt": "2026-10-02T08:28:38Z"
+    },
+    {
+      "postId": "2105915826817876260",
+      "url": "https://x.com/catcosanctuary/status/2105915826817876260",
+      "name": "Pépito",
+      "coinName": "Pépito",
+      "ticker": "CATFLAP",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Pépito is a black cat born in 2007, owned by French software engineer Clément Storck, who built PushingBox, which sends notifications triggered by real-life events.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/CATFLAP.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/CATFLAP.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105915826817876260.json",
+      "status": "launched",
+      "preparedAt": "2026-10-02T07:03:01Z",
+      "attempts": 1,
+      "cat": {
+        "id": "pepito-the-cat",
+        "ticker": "CATFLAP",
+        "name": "Pépito",
+        "coinName": "Pépito",
+        "owner": "Clément Storck (French software engineer, creator of PushingBox) via @PepitoTheCat",
+        "category": "viral",
+        "story": "Pépito is a black cat born in 2007, owned by French software engineer Clément Storck, who built PushingBox, which sends notifications triggered by real-life events. In July 2011 Storck used it to create @PepitoTheCat: a device and a camera watch Pépito's cat flap, and the account auto-posts \"Pépito is out\" or \"Pépito is back home\" with a photo and timestamp. When Storck moved to Paris in 2015, Pépito stayed at his parents' house. In June 2017 Storck reassured worried fans that Pépito was asleep at home and 'sometimes uses the human's door'. In February 2023 Elon Musk announced the end of free Twitter API access; Storck protested it would kill the account, and Musk then announced a free, light API for bots that post good content. In March 2024 Storck put a screen on the wall so Pépito can read replies. By September 2026 the account had over 1.1 million followers.",
+        "look": "A solid jet-black shorthaired cat with no white markings. He is slim and long-bodied, with a long thin black tail, upright pointed ears and pale yellow-green eyes. He is usually seen from a high corner camera as he steps through a white cat flap labelled 'PEPITO' in black letters with small star stickers, onto a wooden-topped shelf and a grey box step below. Night shots are greyscale infrared.",
+        "coat": {
+          "base": "black",
+          "second": "white",
+          "pattern": "solid",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/PepitoTheCat/status/1763980265569894461",
+          "author": "PepitoTheCat",
+          "handle": "PepitoTheCat",
+          "date": "2024-03-02",
+          "dateType": "posted",
+          "text": "Just added a screen on the wall so Pépito can read your replies 😹",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "PepitoTheCat - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/PepitoTheCat"
+          },
+          {
+            "label": "Gizmodo (2023-02-06): Elon Musk Says Actually 'Good' Bots Can Stay on Twitter for Free",
+            "url": "https://gizmodo.com/twitter-bots-api-elon-musk-pepito-the-cat-1850077791"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "PEPITO",
+          "contract": "D1ySHVWnaWQsf8WiskayoF7oHuvXLp4CXvYw3PaS8N7B",
+          "mcapUsd": 18343
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Clément Storck (French software engineer, creator of PushingBox) via @PepitoTheCat.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/CATFLAP.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "mintNonce": 2899226,
+      "tx": "4iC1rGwUfygv1rrxMkPUVkAB8J1kie724LpN7LYxHny5LdLrYDg9WPkndnxKwtfCLfh9hcG3YdSNmu9t6W41TrLb",
+      "sentAt": "2026-10-02T07:11:27Z",
+      "lastValidBlockHeight": 430577800,
+      "mintPublic": "9npAFEfKQhYTw3JVZrrgNFzgwWQmJodiztKcaKQxpump",
+      "spentLamports": 5465600,
+      "settledAt": "2026-10-02T07:11:37Z",
+      "launchedAt": "2026-10-02T07:11:27Z",
+      "recordedAt": "2026-10-02T07:11:39Z"
+    },
+    {
       "postId": "2105789767132615061",
       "url": "https://x.com/ATXsiameseRescu/status/2105789767132615061",
       "name": "Cupsey",
