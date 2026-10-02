@@ -23,7 +23,7 @@ import { VENUE_IDS } from "../scripts/lib/venues-routing.mjs";
 import { createRpc } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
-  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletCoinsOf, feesToMode, feeHandle, routeFees, FEE_ROUTE_MAX_TRIES, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
+  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletCoinsOf, feesToMode, feeHandle, feeExclusionsOf, routeFees, FEE_ROUTE_MAX_TRIES, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
@@ -3059,4 +3059,35 @@ test("routeFees: after the launch, the creator's fee route is simulated, sent on
   // Not one to route: not launched, or no feesTo.
   assert.equal(await routeFees({ ...launched, status: "prepared" }, opts(fakeRpc())), null);
   assert.equal(await routeFees({ ...launched, feesTo: undefined }, opts(fakeRpc())), null);
+});
+
+
+test("UsePaid's exclusions (data/fee-exclusions.json): government, brands and media are never paid; a prepared coin of one launches as a holder rewards coin", async () => {
+  const shipped = feeExclusionsOf({ readText: (rel) => readRoot(rel) });
+  for (const h of ["NASA", "nasa", "github", "Reuters"]) assert.equal(feeHandle(h, shipped), null, h);
+  assert.equal(feeHandle("FCDOGovUK", new Set()), null, "a gov handle, listed or not");
+  assert.equal(feeHandle("KittiesVids", shipped), "KittiesVids");
+  assert.equal(feeHandle("KittiesVids", null), null, "an unreadable list: no account at all");
+  const logs = [];
+  assert.equal(feeExclusionsOf({ readText: () => "{ nope" }, (l) => logs.push(l)), null);
+  assert.ok(logs.some((l) => /fee-exclusions/.test(l)));
+  assert.equal(feeExclusionsOf({ readText: () => null }).size, 0, "no file: nothing excluded");
+  // A coin prepared for @NASA before the list said so: the next prepare drops its UsePaid line and rewrites its metadata.
+  const w = throwaway();
+  const id = "2100000000000000777";
+  const t = site({ wallet: w.address, approve: [id], posts: [post(id, { name: "Orbitpaw", ticker: "ORBITPAW", kind: "real", nameFrom: null, figure: null, author: "NASA", lore: "Orbitpaw naps on the mission control desk." })] });
+  fs.writeFileSync(path.join(t.root, "data/fee-exclusions.json"), JSON.stringify({ note: "test", accounts: [] }));
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root);
+  const env = { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on" };
+  assert.equal((await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).prepared, id);
+  let row = t.json(FILES.ledger).launches[0];
+  assert.equal(row.feesTo, "NASA");
+  assert.match(t.read(row.metadataPath), /Fees to @NASA via UsePaid/);
+  fs.writeFileSync(path.join(t.root, "data/fee-exclusions.json"), JSON.stringify({ note: "test", accounts: ["nasa"] }));
+  const again = await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW + 60_000 });
+  assert.equal(again.changed, true);
+  row = t.json(FILES.ledger).launches[0];
+  assert.equal(row.feesTo, undefined);
+  assert.equal(row.status, "prepared");
+  assert.doesNotMatch(t.read(row.metadataPath), /UsePaid/);
 });
