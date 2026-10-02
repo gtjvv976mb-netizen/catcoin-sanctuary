@@ -14,9 +14,9 @@
       "image": "https://pbs.twimg.com/amplify_video_thumb/2105781134009266176/img/LCE4_dUkjvPiBCoC.jpg",
       "coinImage": "https://pbs.twimg.com/amplify_video_thumb/2105781134009266176/img/LCE4_dUkjvPiBCoC.jpg",
       "metadataPath": "coins/2105789767132615061.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-02T01:32:00Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "cupsey",
         "ticker": "CUPSEYCAT",
@@ -57,7 +57,15 @@
         "confidence": "medium",
         "lore": null
       },
-      "photoCredit": true
+      "photoCredit": true,
+      "mintNonce": 24660333,
+      "tx": "2geFmPiv4byx6EXjwUEeGPVyUHUfEyjJbHZGkbQyohfmpPUV18NfB5PJucRsyoydkwcVfZCjf7wNvP1bUriYA2ms",
+      "sentAt": "2026-10-02T01:43:43Z",
+      "lastValidBlockHeight": 430504490,
+      "mintPublic": "5ZQoP7QN2ejpksPX4TBsyrgsrWDA6FprpytCNFQRpump",
+      "spentLamports": 5470680,
+      "settledAt": "2026-10-02T01:43:52Z",
+      "launchedAt": "2026-10-02T01:43:43Z"
     },
     {
       "postId": "2105786810961973509",
