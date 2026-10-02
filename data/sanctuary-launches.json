@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/LASERTATER.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106042476545142958.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-02T17:15:32Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "taters",
         "ticker": "LASERTATER",
@@ -70,7 +70,15 @@
         "portraitStatus": "ready",
         "confidence": "medium",
         "lore": null
-      }
+      },
+      "mintNonce": 570526,
+      "tx": "2gAd87Rk4Qk6xLXuhxvxL4gy4wJXV52PDYFC64hZEhoLyiboW3JfBsUfjemCyHWfkkWV4BjvGf8NTA67FamySZdq",
+      "sentAt": "2026-10-02T17:51:26Z",
+      "lastValidBlockHeight": 430721539,
+      "mintPublic": "5mHj7NpPKZTBsxeen2uQx6W5R5W8Y6Vx6a5kwKLJcats",
+      "spentLamports": 5557040,
+      "settledAt": "2026-10-02T17:51:35Z",
+      "launchedAt": "2026-10-02T17:51:26Z"
     },
     {
       "postId": "2105934117154308177",
