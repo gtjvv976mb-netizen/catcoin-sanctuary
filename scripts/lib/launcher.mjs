@@ -687,6 +687,8 @@ export function candidateRow(post, ctx) {
   if (post.known === true) return no("already in the sanctuary (the trend watch says so)");
   if (r.aboutOneCat !== true || !["real", "cartoon", "fiction"].includes(r.kind)) return no("not about one cat");
   // (ctx.characters is the owner's switch, characterLaunches: false in every run while LAUNCH_CHARACTERS is off)
+  // The post's picture is the coin's image: never one that shows a person's face (Claude's reading says so).
+  if (r.personFace === true) return no("its picture shows a person's face, and the picture would be the coin's image");
   if (r.kind !== "real" && ctx.characters === false) return no(`a ${r.kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
   for (const k of ["catName", "coinName", "ticker", "lore"]) if (typeof r[k] !== "string" || !r[k].trim()) return no(`the reading has no ${k}`);
   const policy = policyOf(post, ctx);
@@ -707,6 +709,12 @@ export function candidateRow(post, ctx) {
   if ((ctx.ledger?.launches ?? []).some((x) => x.postId === String(post.id))) return no("already in the ledger");
   const taken = takenNames(ctx);
   for (const k of [name, coinName, ticker]) if (taken.has(k.toLowerCase())) return no(`${k} is already a sanctuary cat, or launched`);
+  // The launcher wallets' own pump.fun coins, the owner's by hand too (walletCoinsOf): never a second coin from one post or under one name.
+  if (ctx.walletCoins === null) return no("pump.fun's list of the launcher wallets' own coins could not be read");
+  if (ctx.walletCoins) {
+    const mint = ctx.walletCoins.posts.get(String(post.id)) ?? [name, coinName, ticker].map((k) => ctx.walletCoins.names.get(k.toLowerCase())).find(Boolean);
+    if (mint) return no(`the launcher wallets already made a coin from this post or under this name (${mint})`);
+  }
   const figure = typeof post.figure === "string" ? figuresOf(ctx.watch).get(post.figure) ?? null : null;
   const uri = metadataUri(String(post.id));
   // pump.fun in SOL is every route's fallback: the coin must launch there as named, wherever it is routed.
@@ -767,6 +775,34 @@ export function routeOf(post, ctx) {
   if (ctx.pairs === false) return { venue: PUMP_SOL, pair: { ...SOL_PAIR }, reason: "pump.fun in SOL: pairing with a stock or a coin is off (LAUNCH_PAIRS)" };
   return chooseVenue(post, ctx.watch, { planned: ctx.planned, collection: ctx.collection, adoptables: ctx.adoptables, extraPairs: pendingPairs(ctx.ledger),
     pumpQuotes: ctx.pumpQuotes ?? [], pumpQuoteOptIn: ctx.pumpQuoteOptIn === true });
+}
+
+/**
+ * The coins the launcher wallets made on pump.fun, the owner's own launches by hand among them, as pump.fun lists them:
+ * { posts: Map(X post id -> mint), names: Map(name or ticker, lower case -> mint) }, or null when pump.fun could not be
+ * read (then no trending cat is prepared that run). A coin's X link (its "twitter") names the post it was made from.
+ */
+export async function walletCoinsOf({ fetchImpl, wallets = [] }) {
+  const posts = new Map(), names = new Map();
+  for (const w of wallets) {
+    for (let offset = 0; offset < 500; offset += 100) {
+      let list;
+      try {
+        const res = await fetchImpl(`https://frontend-api-v3.pump.fun/coins?creator=${w}&offset=${offset}&limit=100&includeNsfw=true`, { headers: { accept: "application/json", "user-agent": "catcoinsanctuary.com launcher" }, signal: AbortSignal.timeout(20_000) });
+        if (!res.ok) return null;
+        list = await res.json();
+      } catch { return null; }
+      if (!Array.isArray(list)) return null;
+      for (const c of list) {
+        if (c?.creator !== w || typeof c.mint !== "string") continue;
+        const id = /\/status\/(\d{5,25})/.exec(String(c.twitter ?? ""))?.[1];
+        if (id && !posts.has(id)) posts.set(id, c.mint);
+        for (const k of [c.name, c.symbol]) if (typeof k === "string" && k.trim() && !names.has(k.trim().toLowerCase())) names.set(k.trim().toLowerCase(), c.mint);
+      }
+      if (list.length < 100) break;
+    }
+  }
+  return { posts, names };
 }
 
 /** The newest post that may launch: { row, post, skipped } or { row: null, skipped: [{ id, why }] }. Candidates and approved posts only. */
@@ -1487,6 +1523,11 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     if (io.readText(row.metadataPath) !== text) { io.writeText(row.metadataPath, text); out.changed = true; }
   }
 
+  // The launcher wallets' own coins on pump.fun (the owner's by hand too), read once before any trending cat is picked.
+  if (!inFlight(ledger).length || inFlight(ledger).every((r) => r.policy === "sanctuary" && r.status === "prepared")) {
+    ctx.walletCoins = await walletCoinsOf({ fetchImpl, wallets: validateWallets(readJson(io, FILES.wallets, { launchers: [] })).launchers.map((w) => w.address) });
+  }
+
   // 3b. A sanctuary cat prepared but not sent (waiting on pump.fun's list, the deploy, the funds) gives way to a trending
   //     cat the rules let launch now: failed with a retry and no attempt used, it is prepared again once the slot is free.
   const held = inFlight(ledger);
@@ -1510,6 +1551,7 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     else if (room === null || room < 1) {
       log(`::warning title=Launcher::${room === null ? `${FILES.collection} or ${FILES.planned} cannot be read` : `${FILES.collection} is near its ${MAX_CATS} cats (the Collection's hard cap, past which it proves nothing new), with room kept for the planned cats and ${COLLECTION_MARGIN} more`}; no new cat is prepared.`);
     } else {
+      if (ctx.walletCoins === null) log("::warning title=Launcher::pump.fun's list of the launcher wallets' own coins could not be read; no trending cat is prepared this run.");
       let pick = selectCandidate(ctx);
       for (const s of pick.skipped) log(`Launcher: post ${s.id} skipped: ${s.why}.`);
       if (!pick.row && stats.count + 1 >= caps.maxPerDay) log(`Launcher: no trending cat to launch now; the day's last launch (LAUNCH_MAX_PER_DAY ${caps.maxPerDay}) is kept for one.`);

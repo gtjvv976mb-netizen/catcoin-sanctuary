@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { readBudget, postCount, mergeAnswers, qualify, heat, cleanReading, isCandidate, scan, MIN_LIKES, MAX_AGE_HOURS, QUERY,
   stageOf, mentionsCat, watchList, figureIn, bigQueries, figureQueries, nameFromTrend, nameReading, trackNames, pruneNames, emergingNames, loadState,
   ROTATION, PER_SEARCH, MAX_QUERY, MAX_SIGNALS, MAX_NAMES, RISING_MAX_AGE_HOURS, RISING_MIN_LIKES, RISING_LIKES_PER_HOUR, RISING_VIEWS_PER_HOUR, RISING_MIN_HOURS,
-  isFigureName, BIG_FOLLOWERS, BIG_TERMS, approvedRows, withApproved } from "../scripts/scan-trending-cats.mjs";
+  isFigureName, BIG_FOLLOWERS, BIG_TERMS, approvedRows, withApproved, memeNamed, memeQueries, bigTurns } from "../scripts/scan-trending-cats.mjs";
 import { readPostByRules, tickerFor, namesIn } from "../scripts/lib/read-cat-post.mjs";
 
 const NOW = Date.parse("2026-09-27T12:00:00Z");
@@ -476,7 +476,7 @@ test("figures: a post naming a watched figure is read as that cat (matchOnlyAlia
     [true, true, true, false, false]);
   assert.deepEqual(watchList({ figures: [{ name: "Hello Kitty" }, { name: "Duchess", matchOnlyAliases: true }, { name: 'Bad "quote"', aliases: ["x"] }] }, new Set(["hello kitty"])).figures.map((x) => x.name),
     ['Bad quote'], "a sanctuary cat and a figure with only an unusable name are left out; quotes cannot reach a query");
-  assert.deepEqual(watchList(undefined), { topAccounts: [], bigAccounts: [], figures: [] });
+  assert.deepEqual(watchList(undefined), { topAccounts: [], bigAccounts: [], memeAccounts: [], figures: [] });
 
   const x = fakeX({ search: () => reply(
     post("7001", "Floppa is judging you again", { likes: 30_000 }),
@@ -791,4 +791,47 @@ test("an approved post the search never found is looked up by id (one read each)
   // X refusing the lookup: nothing listed, tried again next run.
   const refused = await withApproved(before, { approvals: new Set(["2001"]), creds: CREDS, client: null, fetchImpl: async () => new Response("{}", { status: 503 }), nowMs: NOW });
   assert.deepEqual(refused.added, []);
+});
+
+/* ---------- meme cats: the owner's kind of coin (Foot Cat, Wiwiwi Cat) ---------- */
+
+test("meme cats: a cat-meme account's post needs no cat word; Claude's meme name names a real cat with no name of its own; never a face", async () => {
+  // The queries: every post with a picture, no cat word; woven into the big lens after every second big query.
+  const [mq] = memeQueries(["catfan3", "@bad handle"].filter((h) => /^\w+$/.test(h)));
+  assert.match(mq, /^\(from:catfan3\) has:media /);
+  assert.ok(!/\bcat OR\b/.test(mq), "no cat word needed");
+  assert.deepEqual(bigTurns(["b1", "b2", "b3"], ["m1"]), ["b1", "b2", "m1", "b3", "m1"]);
+  assert.deepEqual(bigTurns(["b1"], []), ["b1"]);
+  assert.deepEqual(bigTurns([], ["m1"]), ["m1"]);
+  assert.deepEqual(watchList({ memeAccounts: ["KittiesVids", "@kittiesvids", "no way!"] }).memeAccounts, ["KittiesVids"]);
+  assert.deepEqual(watchList({ memeAccounts: ["KittiesVids"] }).bigAccounts, [], "a meme account is not a big account by being listed");
+
+  // The reading: a meme name only in its shape; a face is kept; memeNamed names only a real, unnamed, harmless cat.
+  const FOOT = { aboutOneCat: true, catName: null, memeName: "Foot Cat", personFace: false, kind: "real", coinName: null, ticker: "FOOTCAT", lore: "A cat sits inside a giant cat's foot.", sensitive: false, why: "a cat meme" };
+  assert.equal(cleanReading({ ...FOOT, memeName: "the cat" }).memeName, null);
+  assert.equal(cleanReading({ ...FOOT, memeName: "Foot Cat $FOOT" }).memeName, null);
+  assert.equal(cleanReading(FOOT).memeName, "Foot Cat");
+  const named = memeNamed(cleanReading(FOOT));
+  assert.deepEqual([named.catName, named.coinName, named.ticker, named.nameFrom], ["Foot Cat", "Foot Cat", "FOOTCAT", "meme"]);
+  assert.equal(memeNamed(cleanReading({ ...FOOT, ticker: null })).ticker, tickerFor("Foot Cat"));
+  assert.equal(memeNamed(cleanReading({ ...FOOT, catName: "Mochi" })).catName, "Mochi", "its own name wins");
+  assert.equal(memeNamed(cleanReading({ ...FOOT, kind: "cartoon" })).catName, null, "a drawn cat is never named by a meme");
+  assert.equal(memeNamed(cleanReading({ ...FOOT, sensitive: true })).catName, null);
+  assert.equal(isCandidate({ reading: named, known: false }), true);
+  assert.equal(isCandidate({ reading: { ...named, personFace: true }, known: false }), false, "a face in the picture: never a candidate");
+  assert.equal(cleanReading({ ...FOOT, personFace: undefined }).personFace, false, "the rules' reading has no face check");
+
+  // A whole run: the big lens's meme turn finds a viral post with no words; Claude reads its picture and names it.
+  const watch = { bigAccounts: ["elonmusk"], memeAccounts: ["catfan3"], figures: [] };
+  const x = fakeX({ search: () => reply(post("901", "", { author: "u3", likes: 20_000, h: 3 }), post("902", "wiwiwi", { author: "u3", likes: 9_000, h: 2 })) });
+  const t = await run({ posts: [], state: { nextLens: 0, bigChunk: 1 } }, x, { watch, client: claudeSays((text) => (text.endsWith("wiwiwi") ? { ...FOOT, memeName: "Wiwiwi Cat", ticker: "WIWIWI", personFace: true } : FOOT)) });
+  assert.match(x.searches[0].query, /^\(from:catfan3\) has:media /);
+  const byId = Object.fromEntries(t.posts.map((p) => [p.id, p]));
+  assert.equal(byId["901"].status, "candidate");
+  assert.deepEqual([byId["901"].reading.catName, byId["901"].reading.ticker, byId["901"].reading.nameFrom], ["Foot Cat", "FOOTCAT", "meme"]);
+  assert.equal(byId["902"].status, "passed", "a face in the picture");
+  assert.deepEqual(t.candidates, ["901"]);
+  // Without Claude, a post with no cat word cannot be judged: it is not read.
+  const t2 = await run({ posts: [], state: { nextLens: 0, bigChunk: 1 } }, fakeX({ search: () => reply(post("903", "", { author: "u3", likes: 20_000 })) }), { watch });
+  assert.equal(t2.posts.length, 0);
 });
