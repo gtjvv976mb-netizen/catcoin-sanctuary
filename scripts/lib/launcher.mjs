@@ -54,7 +54,7 @@
  * no trading, on every venue). The coin's mint is derived from the wallet's seed and the
  * post id (scripts/lib/solana-tx.mjs deriveMintKeypair), so one post can only ever make one coin: a
  * retry sends the same mint again, and the chain refuses a second create. The address ends in
- * LAUNCH_MINT_SUFFIX ("pump" by default, as pump.fun's own coins do; "none" for none): the send scans
+ * LAUNCH_MINT_SUFFIX ("cats" by default, the sanctuary's own ending; "none" for none): the send scans
  * derivation nonces for the smallest whose address ends so (grindMintNonce, on every core, up to
  * LAUNCH_MINT_GRIND_MINUTES a run, 12 by default; about 11 million derivations on average for four
  * characters), and the row keeps the nonce (mintNonce; mintGrind.next while the scan goes on across
@@ -246,7 +246,7 @@ export function launchCaps(env = {}) {
     maxLamportsPerDay: sol("maxSolPerDay"),
     minBalanceLamports: sol("minBalanceSol"),
     priorityMicroLamports: read("LAUNCH_PRIORITY_MICROLAMPORTS", LAUNCH_DEFAULTS.computeUnitPriceMicroLamports, PRIORITY_RANGE, true),
-    // The mint address's ending (LAUNCH_MINT_SUFFIX: "pump" unless set; "none" for none) and how long a run may scan for it.
+    // The mint address's ending (LAUNCH_MINT_SUFFIX: "cats" unless set; "none" for none) and how long a run may scan for it.
     // (blank is unset: a workflow passes a repository variable nobody set as "", and Blehmilly, 2026-10-01, went out
     // without its "pump" so)
     mintSuffix: (() => { const s = String(env.LAUNCH_MINT_SUFFIX ?? "").trim(); if (!s) return DEFAULT_MINT_SUFFIX; if (/^(none|off)$/i.test(s)) return ""; if (MINT_SUFFIX.test(s)) return s; notes.push(`LAUNCH_MINT_SUFFIX ${JSON.stringify(s).slice(0, 20)} is not up to 6 base58 characters; "${DEFAULT_MINT_SUFFIX}" is used`); return DEFAULT_MINT_SUFFIX; })(),
@@ -258,7 +258,7 @@ export function launchCaps(env = {}) {
   };
 }
 /** The mint address's ending unless LAUNCH_MINT_SUFFIX says otherwise, and the minutes a run scans for it at most. */
-export const DEFAULT_MINT_SUFFIX = "pump";
+export const DEFAULT_MINT_SUFFIX = "cats";  // the owner, 2026-10-02: "make the new catcoins addresses end with cats"
 export const DEFAULT_MINT_GRIND_MINUTES = 12;
 
 export const sol = (lamports) => `${(lamports / LAMPORTS_PER_SOL).toFixed(6).replace(/0+$/, "").replace(/\.$/, "")} SOL`;

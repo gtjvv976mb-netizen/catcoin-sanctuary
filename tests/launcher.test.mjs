@@ -2927,14 +2927,14 @@ test("shipped coins check: a sanctuary coin's file passes on its own (its X link
   assert.ok(!ok({ ...m, image: `${SITE_ORIGIN}/assets/og-image.jpg` }, `${id}.json`) || SITE_IMAGE === `${SITE_ORIGIN}/assets/og-image.jpg`);
 });
 
-test("the mint address ends in LAUNCH_MINT_SUFFIX (\"pump\" unless set): the send scans for the smallest nonce, keeps it on the row, and sends that mint; a scan out of its minutes goes on next run; a dry run scans nothing", async () => {
+test("the mint address ends in LAUNCH_MINT_SUFFIX (\"cats\" unless set): the send scans for the smallest nonce, keeps it on the row, and sends that mint; a scan out of its minutes goes on next run; a dry run scans nothing", async () => {
   const d = launchCaps({});
-  assert.deepEqual([d.mintSuffix, d.mintGrindMs], ["pump", 12 * 60_000]);
+  assert.deepEqual([d.mintSuffix, d.mintGrindMs], ["cats", 12 * 60_000]);
   assert.deepEqual([launchCaps({ LAUNCH_MINT_SUFFIX: "none" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: "OFF" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: " cat " }).mintSuffix, launchCaps({ LAUNCH_MINT_GRIND_MINUTES: "99" }).mintGrindMs], ["", "", "cat", 30 * 60_000]);
-  // A repository variable nobody set reaches the workflow as "": that is "pump", never "none" (Blehmilly, 2026-10-01).
-  assert.deepEqual([launchCaps({}).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: "" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: "  " }).mintSuffix], ["pump", "pump", "pump"]);
+  // A repository variable nobody set reaches the workflow as "": that is the default ("cats" since 2026-10-02), never "none" (Blehmilly, 2026-10-01).
+  assert.deepEqual([launchCaps({}).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: "" }).mintSuffix, launchCaps({ LAUNCH_MINT_SUFFIX: "  " }).mintSuffix], ["cats", "cats", "cats"]);
   const odd = launchCaps({ LAUNCH_MINT_SUFFIX: "pump!" });
-  assert.equal(odd.mintSuffix, "pump");
+  assert.equal(odd.mintSuffix, "cats");
   assert.ok(odd.notes.some((n) => /LAUNCH_MINT_SUFFIX/.test(n)), odd.notes.join("; "));
 
   const c = ownCat();
