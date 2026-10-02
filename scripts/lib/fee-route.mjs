@@ -46,6 +46,8 @@ export const X_HANDLE = /^\w{1,15}$/;
 const disc = (name) => createHash("sha256").update(`global:${name}`).digest().subarray(0, 8);
 export const CREATE_FEE_SHARING_CONFIG_DISC = disc("create_fee_sharing_config").toString("hex");  // c34e564c6f34fbd5
 export const UPDATE_FEE_SHARES_DISC = disc("update_fee_shares").toString("hex");                    // bd0d8863bba4ed23
+/** How many runs try a launched coin's fee route before it stops and a person is told (scripts/lib/launcher.mjs routeFees). */
+export const FEE_ROUTE_MAX_TRIES = 5;
 /** What the pair uses at most in compute units: 146,883 in the recorded transaction. */
 export const FEE_ROUTE_COMPUTE_UNIT_LIMIT = 250_000;
 /** The most the fee route may bid in priority fees, in lamports (as a launch: 0.005 SOL). */
