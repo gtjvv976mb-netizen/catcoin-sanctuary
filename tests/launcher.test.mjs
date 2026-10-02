@@ -23,13 +23,14 @@ import { VENUE_IDS } from "../scripts/lib/venues-routing.mjs";
 import { createRpc } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
-  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletCoinsOf, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
+  prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletCoinsOf, feesToMode, feeHandle, routeFees, FEE_ROUTE_MAX_TRIES, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
   sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, pumpSearchSince, SEARCH_LEADERS, unreadWindows, DIED, OWN_WAIT_ALERT_HOURS,
 } from "../scripts/lib/launcher.mjs";
 import * as R from "../scripts/lib/rewards.mjs";
+import { USEPAID_RECIPIENT as USEPAID_RECIPIENT_T } from "../scripts/lib/fee-route.mjs";
 import { creatorVault, EVENT_IX_TAG, EVENT_DISC } from "../scripts/lib/pump-fees.mjs";
 import { main, fsStore, scrubber } from "../scripts/launch.mjs";
 import { draftLaunch, checkUpdate, ADDRESS_LIKE, FAN_TRIBUTE, fanTribute, run as postUpdates } from "../scripts/post-updates.mjs";
@@ -232,7 +233,7 @@ function clock(start = NOW) {
 }
 
 // (no mint suffix in these tests: a scan for "pump" takes minutes; the scan has its own tests below)
-const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", ...extra });
+const ON = (w, extra = {}) => ({ LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders", ...extra });
 /** Whether a serialized transaction (base64) carries only zero-filled signature slots. */
 const unsignedTx = (b64) => decodeTransaction(new Uint8Array(Buffer.from(b64, "base64"))).signatures.every((x) => x.every((b) => b === 0));
 const quick = { metadataWaitMs: 60_000, metadataPollMs: 20_000, confirmWaitMs: 30_000, confirmPollMs: 3_000 };
@@ -567,7 +568,7 @@ test("prepare: one cat, its metadata file and a prepared ledger row with no mint
   const t = site({ wallet: w.address, approve: ["2100000000000000555"] });
   const approvals = t.read(FILES.approvals);
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root);
-  const r = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW });
+  const r = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW });
   assert.deepEqual([r.changed, r.pending, r.deploy, r.prepared], [true, true, true, "2100000000000000001"]);
   assert.equal(t.read(FILES.approvals), approvals, "data/launch-approvals.json is only read");
   const ledger = t.json(FILES.ledger);
@@ -583,15 +584,15 @@ test("prepare: one cat, its metadata file and a prepared ledger row with no mint
   assert.ok(web.asked.every((u) => u.includes("?check=")), "the coin's own uri is never asked before it is deployed");
   // Again: nothing new (one cat in flight at a time).
   const before = t.read(FILES.ledger);
-  const r2 = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW + 60_000 });
+  const r2 = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW + 60_000 });
   assert.deepEqual([r2.changed, r2.pending], [false, true]);
   assert.equal(t.read(FILES.ledger), before);
   // Deployed: nothing to deploy.
   web.deployed = true;
-  assert.equal((await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).deploy, false);
+  assert.equal((await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).deploy, false);
   // A crash between the two writes: the metadata file is written again.
   fs.rmSync(path.join(t.root, "coins/2100000000000000001.json"));
-  assert.equal((await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).changed, true);
+  assert.equal((await prepare({ io: t.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW })).changed, true);
   assert.equal(t.read("coins/2100000000000000001.json"), metadataText(coinMetadata(row)));
   // Off: nothing at all.
   const off = await prepare({ io: t.io, env: { LAUNCH_ENABLED: "no" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: () => NOW });
@@ -836,7 +837,7 @@ test("dry mode: builds and simulates the cat prepare would pick, and never sends
   const t = site({ wallet: w.address });
   const before = { ledger: t.read(FILES.ledger), adopt: t.read(FILES.adoptables) };
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
-  const env = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" };
+  const env = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" };
   const logs = [];
   const p = await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, log: (l) => logs.push(l) });
   assert.deepEqual([p.changed, p.pending, p.deploy, p.prepared], [false, true, false, null]);
@@ -927,7 +928,7 @@ test("crash points: a launch that landed but was never recorded (the commit lost
   assert.deepEqual([lost.outcome, lost.code], ["sending", 1]);
   const sending = t2.json(FILES.ledger).launches[0];
   assert.deepEqual([sending.status, sending.mintPublic], ["sending", undefined], "committed as sending, the mint not yet written");
-  const p = await prepare({ io: t2.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c.now });
+  const p = await prepare({ io: t2.io, env: { LAUNCH_ENABLED: "on", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" }, rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c.now });
   assert.equal(p.changed, true);
   const settled = t2.json(FILES.ledger).launches[0];
   assert.deepEqual([settled.status, settled.mintPublic], ["launched", deriveMintKeypair(w.kp, "2100000000000000401").publicKey]);
@@ -1622,7 +1623,7 @@ test("dry mode on StonkFun: the pricing, the config and the simulation, nothing 
   const t = stonkSite({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
   const api = stonkfunApi(web, sol, c);
-  const dry = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" };
+  const dry = { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" };
   const logs = [];
   const d = await send({ io: t.io, env: dry, rpc: sol.rpc, fetchImpl: api.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
   assert.deepEqual([d.outcome, d.venue], ["dry", "stonkfun"]);
@@ -1751,7 +1752,7 @@ test("nothing signed leaves the runner before the send: every simulation is of t
   // A dry run: simulated, never signed.
   const t = site({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root);
-  const dry = await send({ io: t.io, env: { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
+  const dry = await send({ io: t.io, env: { LAUNCH_ENABLED: "dry", LAUNCH_WALLET_KEY: w.base58, LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, ...quick });
   assert.equal(dry.outcome, "dry");
   assert.equal(sol.simulated.length, 1);
   assert.ok(sol.simulated.every(unsignedTx), "a dry run hands the RPC no signature (a signed copy could be replayed by its operator)");
@@ -2150,7 +2151,7 @@ test("the key and the RPC URL never appear in the output, whatever happens", asy
       const sol = tweak(fakeSolana({ wallet: w.address })), web = fakeSite(t.root), c = clock();
       const out = [];
       const fetchImpl = async (url, init) => (url.startsWith("https://rpc.example.test") ? sol.fetchImpl(url, init) : web.fetchImpl(url, init));
-      const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: key, SOLANA_RPC_URL: RPC_URL, GITHUB_OUTPUT: path.join(t.root, "out.txt"), LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" };
+      const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: key, SOLANA_RPC_URL: RPC_URL, GITHUB_OUTPUT: path.join(t.root, "out.txt"), LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" };
       // Once through the real client built from SOLANA_RPC_URL; otherwise the same fake Solana without its pacing and back-off waits.
       const real = what === "listed, a full launch" && key === w.base58;
       const io = { env, root: t.root, fetchImpl, now: c.now, sleep: c.sleep, stdout: (l) => out.push(String(l)), stderr: (l) => out.push(String(l)), ...(real ? {} : { rpc: sol.rpc }) };
@@ -2181,7 +2182,7 @@ test("the CLI's outputs for the workflow: pending, deploy, launched, recorded", 
   const t = site({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
   const out = path.join(t.root, "gh-output");
-  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, GITHUB_OUTPUT: out, LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on" };
+  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, GITHUB_OUTPUT: out, LAUNCH_MINT_SUFFIX: "none", LAUNCH_CHARACTERS: "on", LAUNCH_PAIRS: "on", LAUNCH_FEES_TO: "holders" };
   const io = { env, root: t.root, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, stdout: () => {}, stderr: () => {}, rpc: sol.rpc };
   assert.equal(await main(["prepare"], io), 0);
   assert.equal(fs.readFileSync(out, "utf8"), "pending=true\ndeploy=true\n");
@@ -2968,4 +2969,92 @@ test("the mint address ends in LAUNCH_MINT_SUFFIX (\"cats\" unless set): the sen
   assert.ok(logs.some((l) => /a mint address ending in "p" found \(nonce \d+, \d+ derivations/.test(l)), logs.join("\n"));
   assert.equal(rowProblem({ ...row, mintNonce: 0 }), "mintNonce must be a positive whole number");
   assert.equal(rowProblem({ ...row, mintGrind: { next: 0 } }), "mintGrind is where the mint scan got to ({ next })");
+});
+
+
+/* ── UsePaid: a new coin's creator fees, for good, to the X account its lore came from ──────────────────────────────── */
+
+test("UsePaid (LAUNCH_FEES_TO, the default): the coin is named for its post's account, which UsePaid reads from the description's first line", () => {
+  assert.equal(feesToMode({}), "usepaid");
+  assert.equal(feesToMode({ LAUNCH_FEES_TO: " Holders " }), "holders");
+  for (const h of ["catcosanctuary", "CatCoSanctuary", "two words", "", null, "x".repeat(16)]) assert.equal(feeHandle(h), null, String(h));
+  assert.equal(feeHandle("floppafan"), "floppafan");
+  const ctx = { nowMs: NOW, approvals: new Set(["2100000000000000601"]), open: true, watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")), feesTo: "usepaid" };
+  const p = post("2100000000000000601", { name: "Puddleboot Cat", ticker: "PUDDLEBT", kind: "real", nameFrom: null, figure: null, lore: "A cat sits inside a giant rubber boot." });
+  const { row, problem } = candidateRow(p, ctx);
+  assert.ok(row, problem);
+  assert.equal(row.feesTo, "floppafan");
+  assert.match(coinMetadata(row).description, /^Fees to @floppafan via UsePaid\. A cat sits inside a giant rubber boot\./);
+  assert.ok(coinMetadata(row).description.length <= DESCRIPTION_MAX);
+  assert.equal(rowProblem(row), null);
+  assert.equal(candidateRow(p, { ...ctx, feesTo: "holders" }).row.feesTo, undefined, "holders: no UsePaid line");
+  assert.doesNotMatch(coinMetadata(candidateRow(p, { ...ctx, feesTo: "holders" }).row).description, /UsePaid/);
+  // A long lore line is cut, never UsePaid's line.
+  assert.match(descriptionOf("x ".repeat(400), "real", { feesTo: "floppafan" }), /^Fees to @floppafan via UsePaid\. /);
+  assert.ok(descriptionOf("x ".repeat(400), "real", { feesTo: "floppafan" }).length <= DESCRIPTION_MAX);
+  // The ledger keeps it only on a pump.fun coin, and a route only on a launched one.
+  assert.match(rowProblem({ ...row, feesTo: "catcosanctuary" }), /feesTo/);
+  assert.match(rowProblem({ ...row, feeRoute: { at: "2026-10-02T12:00:00Z" } }), /only a launched coin/);
+});
+
+test("routeFees: after the launch, the creator's fee route is simulated, sent once and read back from the chain; found already done, nothing is sent; a failure uses a try", async () => {
+  const w = throwaway();
+  const mint = throwaway().address;
+  const launched = { postId: "2100000000000000602", ticker: "PUDDLEBT", coinName: "Puddleboot Cat", status: "launched", feesTo: "floppafan", mintPublic: mint };
+  const caps = { priorityMicroLamports: 100_000, minBalanceLamports: 20_000_000 };
+  const io = { readText: () => null };
+  const routedData = (recipient = USEPAID_RECIPIENT_T, revoked = 1) => {
+    const b = Buffer.alloc(1024);
+    Buffer.from(base58Decode(mint)).copy(b, 11); Buffer.from(base58Decode(w.address)).copy(b, 43); b[75] = revoked; b.writeUInt32LE(1, 76);
+    Buffer.from(base58Decode(recipient)).copy(b, 80); b.writeUInt16LE(10_000, 112);
+    return b.toString("base64");
+  };
+  const fakeRpc = ({ config = null, balance = 1_000_000_000, sim = { err: null, accounts: [{ lamports: balance - 9_000_000 }] }, onSend = null, status = { confirmationStatus: "confirmed", err: null } } = {}) => {
+    const r = { sent: [], state: { config } };
+    Object.assign(r, {
+      getMultipleAccounts: async () => [r.state.config ? { data: [r.state.config, "base64"] } : null],
+      getBalance: async () => balance,
+      getLatestBlockhash: async () => ({ blockhash: "11111111111111111111111111111111", lastValidBlockHeight: 100 }),
+      simulateTransaction: async () => sim,
+      sendTransaction: async (tx) => { r.sent.push(tx); if (onSend) onSend(r); return "x"; },
+      getSignatureStatuses: async () => [status],
+      getSignaturesForAddress: async () => [],
+    });
+    return r;
+  };
+  const opts = (rpc, logs = []) => ({ io, rpc, wallet: w.kp, caps, now: () => NOW, sleep: async () => {}, log: (l) => logs.push(l), confirmWaitMs: 10, confirmPollMs: 1 });
+  // Sent, confirmed, read back routed: done, with its signature.
+  const rpc = fakeRpc({ onSend: (r) => { r.state.config = routedData(); } });
+  const done = await routeFees(launched, opts(rpc));
+  assert.equal(rpc.sent.length, 1);
+  assert.ok(done.feeRoute.tx && done.feeRoute.at);
+  assert.equal(rowProblem({ ...done }) === null || /cat must be|url must/.test(rowProblem(done)), true);
+  // Already routed (a lost commit): done without a send; and a routed row is never routed again.
+  const again = fakeRpc({ config: routedData() });
+  const found = await routeFees(launched, opts(again));
+  assert.equal(again.sent.length, 0);
+  assert.deepEqual(Object.keys(found.feeRoute), ["at"]);
+  assert.equal(await routeFees(done, opts(fakeRpc())), null);
+  // A simulation that fails uses a try; the last try is an error a person sees.
+  const logs = [];
+  const bad = await routeFees(launched, opts(fakeRpc({ sim: { err: { InstructionError: [2, { Custom: 6016 }] }, accounts: [] } }), logs));
+  assert.equal(bad.feeRouteTries, 1);
+  assert.match(bad.feeRouteError, /simulation did not pass/);
+  const last = await routeFees({ ...launched, feeRouteTries: FEE_ROUTE_MAX_TRIES - 1 }, opts(fakeRpc({ sim: { err: "InsufficientFundsForRent", accounts: [] } }), logs));
+  assert.equal(last.feeRouteTries, FEE_ROUTE_MAX_TRIES);
+  assert.ok(logs.some((l) => l.startsWith("::error")));
+  assert.equal(await routeFees(last, opts(fakeRpc())), null, "no more tries");
+  // A sharing config that pays someone else: final, nothing sent.
+  const other = fakeRpc({ config: routedData(w.address) });
+  const no = await routeFees(launched, opts(other));
+  assert.equal(other.sent.length, 0);
+  assert.equal(no.feeRouteTries, FEE_ROUTE_MAX_TRIES);
+  // Low funds or a transient simulation: a wait, no try used.
+  assert.equal(await routeFees(launched, opts(fakeRpc({ balance: 25_000_000 }))), null, "it would leave less than LAUNCH_MIN_BALANCE_SOL");
+  const dear = await routeFees(launched, opts(fakeRpc({ sim: { err: null, accounts: [{ lamports: 900_000_000 }] } })));
+  assert.match(dear.feeRouteError, /more than the 15000000/);
+  assert.equal(await routeFees(launched, opts(fakeRpc({ sim: { err: "BlockhashNotFound", accounts: [] } }))), null);
+  // Not one to route: not launched, or no feesTo.
+  assert.equal(await routeFees({ ...launched, status: "prepared" }, opts(fakeRpc())), null);
+  assert.equal(await routeFees({ ...launched, feesTo: undefined }, opts(fakeRpc())), null);
 });
