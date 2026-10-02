@@ -2,6 +2,78 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106042476545142958",
+      "url": "https://x.com/catcosanctuary/status/2106042476545142958",
+      "name": "Taters",
+      "coinName": "Taters",
+      "ticker": "LASERTATER",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Taters, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/LASERTATER.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/LASERTATER.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106042476545142958.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-02T17:15:32Z",
+      "attempts": 0,
+      "cat": {
+        "id": "taters",
+        "ticker": "LASERTATER",
+        "name": "Taters",
+        "coinName": "Taters",
+        "owner": "A NASA JPL employee (unnamed); made public by NASA / NASA JPL",
+        "category": "company",
+        "story": "Taters is an orange tabby, the pet of a NASA Jet Propulsion Laboratory employee, and the star of the first ultra-high-definition video streamed by laser from deep space. The 15-second clip of him chasing a red laser-pointer dot across a sofa was loaded onto the Psyche spacecraft before its October 2023 launch. On 11 December 2023 Psyche's flight laser transceiver beamed it from nearly 19 million miles away, about 80 times the Earth-lunar distance, at 267 Mbps, and it reached Earth in 101 seconds via the Hale Telescope at Palomar. On-screen graphics show his heart rate, colour and breed (\"TATERS THE CAT\", \"ORANGE TABBY\"). NASA's X post of the video has 1.97M views, and in April 2025 NASA JPL said Taters and the video were nominated for a Webby Award.",
+        "look": "A real cat: a ginger tabby-and-white shorthair, solid and slightly chunky. Warm orange coat, soft darker-orange tabby stripes on head, back and flanks, faint forehead 'M' stripes and a long striped, plume-like tail. White muzzle, chin, throat, chest and front legs/paws, running up the face sides. Pink nose, upright pink-lined ears, long white whiskers. Pale amber-green eyes with blue-teal video reflections. Filmed on a dark navy-grey sofa under a sci-fi HUD: mirrored 'THIS IS A TEST' banner, target rings, BPM readout, 'SUBJECT:: TATERS THE CAT / SPECIES:: ORANGE TABBY / LIFE:: 5/9'.",
+        "coat": {
+          "base": "ginger",
+          "second": "white",
+          "pattern": "tabby",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/NASA/status/1736900843813605759",
+          "author": "NASA",
+          "handle": "NASA",
+          "date": "2023-12-19",
+          "dateType": "posted",
+          "text": "We just streamed the first ultra-HD video brought to you via laser from deep space. And it’s a video of Taters, a tabby cat. This test will pave the way for high-data-rate communications in support of the next giant leap: sending humans to Mars.",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "NASA's Tech Demo Streams First Video From Deep Space via Laser - NASA JPL (18 Dec 2023)",
+            "url": "https://www.jpl.nasa.gov/news/nasas-tech-demo-streams-first-video-from-deep-space-via-laser/"
+          },
+          {
+            "label": "Cat video streamed from deep space - CBS News (18 Dec 2023)",
+            "url": "https://www.cbsnews.com/news/cat-video-space-taters-nasa-laser/"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "LAZERCAT",
+          "contract": "FgJRgP5hHZ2nJz8praP2kDdzhCNSNycUP63VjmnD7F7h",
+          "mcapUsd": 12478
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by A NASA JPL employee (unnamed); made public by NASA / NASA JPL.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/LASERTATER.jpg",
+        "portraitStatus": "ready",
+        "confidence": "medium",
+        "lore": null
+      },
+      "feesTo": "NASA"
+    },
+    {
       "postId": "2105934117154308177",
       "url": "https://x.com/catcosanctuary/status/2105934117154308177",
       "name": "Professor Meowingtons PhD",

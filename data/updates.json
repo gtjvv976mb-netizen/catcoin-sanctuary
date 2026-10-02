@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-10-02T12:43:26.081Z",
+  "lastPostedAt": "2026-10-02T15:43:49.567Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -88,7 +88,11 @@
       "id": "new-coin-terms",
       "text": "🐾 Catcoin Sanctuary now launches its coins through @UsePaid 🎁\n\nEvery new coin's creator fees go to the X account the cat's story came from, not to us 🐈\n\nhttps://catcoinsanctuary.com/\n#catcoin",
       "approved": true,
-      "first": true
+      "first": true,
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-02T15:43:49.567Z",
+      "tweet": "2106047509495971919"
     }
   ],
   "adoptionsPosted": {
