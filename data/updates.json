@@ -1,7 +1,7 @@
 {
   "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
   "minGapMinutes": 180,
-  "lastPostedAt": "2026-10-01T23:56:47.185Z",
+  "lastPostedAt": "2026-10-02T03:20:07.823Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -140,6 +140,13 @@
       "attempts": 1,
       "postedAt": "2026-10-01T23:56:47.185Z",
       "tweet": "2105809178589532588"
+    },
+    "FISHTOPH": {
+      "postId": "2105768725148230028",
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-02T03:20:07.823Z",
+      "tweet": "2105860351803670660"
     }
   }
 }
