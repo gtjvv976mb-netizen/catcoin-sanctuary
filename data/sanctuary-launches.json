@@ -2,6 +2,156 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105997058960142621",
+      "url": "https://x.com/catcosanctuary/status/2105997058960142621",
+      "name": "Uni",
+      "coinName": "Uni",
+      "ticker": "UNIUNI",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Uni, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/UNIUNI.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/UNIUNI.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105997058960142621.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-02T18:58:39Z",
+      "attempts": 0,
+      "cat": {
+        "id": "uni-minuet-unicouniuni3",
+        "ticker": "UNIUNI",
+        "name": "Uni",
+        "coinName": "Uni",
+        "owner": "Uni's anonymous Japanese owner, who runs @unicouniuni3 (Instagram unico_uniuni) and family account @soraaobauniyoru",
+        "category": "viral",
+        "story": "Uni (うに) is a male Minuet cat born on 27 March 2020 in Japan, with a black-and-white tuxedo coat, short legs and a black muzzle whose lower edge makes an 'ω' over his white chin. His owner, who already had two rescue cats, spotted him in a pet corner while shopping and went back for him a week later. Fans said he looks like the ':3' emoticon. A photo of him bright-eyed inside a bag, captioned 'You can tell how much fun he's having from his face. :3', passed 190,000 likes. When the owner casually posted that ':3' looks just like Uni, the post went viral and fans abroad cried 'It's Maxwell the cat!', comparing him to the famous meme cat. @unicouniuni3 now has over 575,000 followers, and his housemates Sora, Aoba and Yoru share the family account @soraaobauniyoru.",
+        "look": "A small, short-legged black-and-white tuxedo Minuet with a round head and a low, stocky body. Solid black face from the ears down over the eyes and whole muzzle; the black muzzle's lower edge curves in two bumps over a white chin, a permanent 'ω'/':3' mouth. White runs from the chin down the throat, chest and belly. All four paws have white tips, the front 'gloves' showing pink toe beans. Black back, upper legs and tail. Big round yellow-amber eyes with large dark pupils, upright black ears with pink insides, long white whiskers. Often a pink polka-dot bow tie or ruffled collar.",
+        "coat": {
+          "base": "black",
+          "second": "white",
+          "pattern": "tuxedo",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/unicouniuni3/status/2096713681530970406",
+          "author": "unicouniuni3",
+          "handle": "unicouniuni3",
+          "date": "2026-09-06",
+          "dateType": "posted",
+          "text": "Uni with Chiikawa",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Walkerplus: まんまるな目にωな口元の猫が「顔文字」「キャラクターみたい」と話題！うに君 (29 June 2021)",
+            "url": "https://www.walkerplus.com/article/1038946/"
+          },
+          {
+            "label": "Hanako Web: 「ミームの猫だ！」と世界で大バズりした、うにと仲間たち (Hanako No.1251, Jan 2026 issue)",
+            "url": "https://hanako.tokyo/culture/492765/"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "UNICAT",
+          "contract": "0xf20F56DA441Fa826E4444a055Ec51f4eDb0Baef3",
+          "mcapUsd": 6822
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Uni's anonymous Japanese owner, who runs @unicouniuni3 (Instagram unico_uniuni) and family account @soraaobauniyoru.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/UNIUNI.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "unicouniuni3",
+      "mintNonce": 15191429
+    },
+    {
+      "postId": "2106012193531498603",
+      "url": "https://x.com/catcosanctuary/status/2106012193531498603",
+      "name": "Mr. B",
+      "coinName": "Mr. B",
+      "ticker": "MRBCHONK",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "BeeJay, \"Mr. B\" for short, was a 26-pound, 2-year-old cat at the Morris Animal Refuge in Philadelphia.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/MRBCHONK.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/MRBCHONK.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106012193531498603.json",
+      "status": "launched",
+      "preparedAt": "2026-10-02T18:15:08Z",
+      "attempts": 1,
+      "cat": {
+        "id": "mr-b-beejay",
+        "ticker": "MRBCHONK",
+        "name": "Mr. B",
+        "coinName": "Mr. B",
+        "owner": "Morris Animal Refuge (Philadelphia shelter, @MorrisAnimal)",
+        "category": "viral",
+        "story": "BeeJay, \"Mr. B\" for short, was a 26-pound, 2-year-old cat at the Morris Animal Refuge in Philadelphia. On 22 August 2019 the shelter posted two photos of a staff member holding him up: \"OMG, big boi Mr. B is a CHONK. He's a chonk of a chonk. He redefines the term. Can you guess how much he weighs?\" The post now has 35,634 likes and 9,567 reposts; Know Your Meme says it drew more than 40,000 likes and 12,000 retweets in its first 24 hours. CBS Philadelphia reported that the flood of interest crashed the refuge's website that night. The next day, Know Your Meme says, Fox 29 brought him into its studio, where he escaped and hid behind a couch. CBS reported he was described as \"a big cat with a big heart\", and the shelter called him a \"jumbo-sized package of fluff & love\".",
+        "look": "A real cat: a very large, heavy-bodied brown mackerel tabby with a dense, slightly shaggy medium-short coat. Warm sandy-brown/fawn ground colour with dense black-brown stripes and spots over the back, flanks and legs. Bold dark 'M' lines on the forehead, a rust-tan bridge down the nose, brick-pink nose leather, dark-spotted whisker pads, a creamy-white chin and throat and a pale buff belly. Pale blue-grey-green eyes, slightly droopy and 'sad'. Medium upright ears, long white whiskers, thick ringed legs, big paws, and a long, heavy belly that sags when he is held up.",
+        "coat": {
+          "base": "brown",
+          "second": "",
+          "pattern": "spotted",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/MorrisAnimal/status/1164554974057107456",
+          "author": "MorrisAnimal",
+          "handle": "MorrisAnimal",
+          "date": "2019-08-22",
+          "dateType": "posted",
+          "text": "OMG, big boi Mr. B is a CHONK. He’s a chonk of a chonk. He redefines the term. Can you guess how much he weighs? More importantly, can you give him a home? Adopt this jumbo-sized package of fluff & love: Please RT to help this sad-eyed guy find happiness!",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Morris Animal Refuge page crashes after outpouring of interest in adopting giant 26-pound cat Mr. B - CBS Philadelphia (23 Aug 2019)",
+            "url": "https://www.cbsnews.com/philadelphia/news/morris-animal-refuge-page-crashes-after-outpouring-interest-in-adopting-giant-26-pound-cat-mr-b/"
+          },
+          {
+            "label": "Mr. B - Know Your Meme",
+            "url": "https://knowyourmeme.com/memes/mr-b--2"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Morris Animal Refuge (Philadelphia shelter, @MorrisAnimal).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/MRBCHONK.jpg",
+        "portraitStatus": "ready",
+        "confidence": "medium",
+        "lore": null
+      },
+      "feesTo": "MorrisAnimal",
+      "mintNonce": 10135437,
+      "tx": "2Au7AC8Rs518DvfVrJRi9vhfCP6onFuCSSkF9sgk8b2z51xoALqS5a93CRHfYNMy1zMWxFVTYQurZ86fww7E4keE",
+      "sentAt": "2026-10-02T18:24:47Z",
+      "lastValidBlockHeight": 430728952,
+      "mintPublic": "CjTWPrACsMAnV6Ahm5Epx9XyUEGFtB69A1jqXibkcats",
+      "spentLamports": 5541800,
+      "settledAt": "2026-10-02T18:24:56Z",
+      "launchedAt": "2026-10-02T18:24:47Z",
+      "recordedAt": "2026-10-02T18:24:58Z"
+    },
+    {
       "postId": "2106042476545142958",
       "url": "https://x.com/catcosanctuary/status/2106042476545142958",
       "name": "Taters",
