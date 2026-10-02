@@ -152,6 +152,9 @@ test("candidates: adoptions first (not the owner's own mint, not an unknown cat)
   const updates = { posts: [{ id: "u1", approved: true, status: "queued" }, { id: "u2", approved: false, status: "queued" }, { id: "u3", approved: true, status: "posted" }, { id: "u4", approved: true, status: "failed", attempts: MAX_ATTEMPTS - 1 }, { id: "u5", approved: true, status: "failed", attempts: MAX_ATTEMPTS }, { id: "u6", approved: true, status: "held" }] };
   assert.deepEqual(candidates(updates, ADOPTIONS, { cats }).map((c) => c.id), ["NEKOBUS", "u1", "u4"]);
   assert.deepEqual(candidates(updates, ADOPTIONS, { cats, ownMints: new Set([a.mint]) }).map((c) => c.id), ["u1", "u4"]);
+  // An announcement the owner marks first goes ahead of everything, an adoption included; a held or posted one never.
+  const first = { posts: [...updates.posts, { id: "u7", approved: true, status: "queued", first: true }, { id: "u8", approved: true, status: "posted", first: true }] };
+  assert.deepEqual(candidates(first, ADOPTIONS, { cats }).map((c) => c.id), ["u7", "NEKOBUS", "u1", "u4"]);
   assert.deepEqual(candidates(updates, { adoptions: [{ ...a, key: "NOSUCHCAT" }] }, { cats }).map((c) => c.id), ["u1", "u4"]);
   for (const status of ["posting", "posted", "held"]) assert.deepEqual(candidates({ ...updates, adoptionsPosted: { NEKOBUS: { status } } }, ADOPTIONS, { cats }).map((c) => c.id), ["u1", "u4"], status);
 });

@@ -245,11 +245,13 @@ async function pageOf(t) {
   try { return (await loadResidents({ base: new URL(`file://${t.root}/`), nowMs: DATA_NOW, fetchImpl: localFetch })).map(normalize).filter(Boolean); } finally { console.warn = warn; }
 }
 
+/** The shipped data/updates.json with its gap cleared and no announcement marked first (these tests are about the launch posts). */
+const calmUpdates = (u) => ({ ...u, lastPostedAt: null, posts: (u.posts ?? []).map(({ first, ...p }) => p) });
 /** The launch post scripts/post-updates.mjs sends for a throwaway site a day on (its gaps cleared, a fake X), or null. */
 async function launchPostOf(t) {
   const X = { X_API_KEY: "k", X_API_SECRET: "s", X_ACCESS_TOKEN: "t", X_ACCESS_SECRET: "a" };
   fs.writeFileSync(path.join(t.root, "data/announce-config.json"), JSON.stringify({ dryRun: false }));
-  fs.writeFileSync(path.join(t.root, "data/updates.json"), JSON.stringify({ ...t.json("data/updates.json"), lastPostedAt: null }));
+  fs.writeFileSync(path.join(t.root, "data/updates.json"), JSON.stringify(calmUpdates(t.json("data/updates.json"))));
   fs.writeFileSync(path.join(t.root, "data/announced.json"), JSON.stringify({ cats: Object.fromEntries(Object.entries(t.json("data/announced.json").cats).map(([k, v]) => [k, { ...v, at: undefined }])) }));
   fs.writeFileSync(path.join(t.root, "data/release-queue.json"), JSON.stringify({ ...t.json("data/release-queue.json"), lastReleaseAt: null }));
   const tweets = [];
@@ -1250,7 +1252,7 @@ test("the page and the X post after a launch: \"Launching…\" until the Collect
   // The X post waits: the mint is not proved.
   const X = { X_API_KEY: "k", X_API_SECRET: "s", X_ACCESS_TOKEN: "t", X_ACCESS_SECRET: "a" };
   fs.writeFileSync(path.join(t.root, "data/announce-config.json"), JSON.stringify({ dryRun: false }));
-  const updates = { ...t.json("data/updates.json"), lastPostedAt: null };
+  const updates = calmUpdates(t.json("data/updates.json"));
   fs.writeFileSync(path.join(t.root, "data/updates.json"), JSON.stringify(updates));
   fs.writeFileSync(path.join(t.root, "data/announced.json"), JSON.stringify({ cats: Object.fromEntries(Object.entries(t.json("data/announced.json").cats).map(([k, v]) => [k, { ...v, at: undefined }])) }));
   const tweets = [];
@@ -1274,7 +1276,7 @@ test("the page and the X post after a launch: \"Launching…\" until the Collect
   assert.equal((await quiet(residents)).filter((x) => x.token?.mint === row.mintPublic).length, 1, "one card for the cat, not a bare token card too");
   // Now the launch post goes out, once, first in the queue.
   const t2 = later + 200 * 60_000;
-  fs.writeFileSync(path.join(t.root, "data/updates.json"), JSON.stringify({ ...t.json("data/updates.json"), lastPostedAt: null }));
+  fs.writeFileSync(path.join(t.root, "data/updates.json"), JSON.stringify(calmUpdates(t.json("data/updates.json"))));
   const posted = await postUpdates({ root: t.root, env: X, fetchImpl: xFetch, now: () => new Date(t2), log: () => {} });
   assert.deepEqual([posted.posted?.kind, posted.posted?.id], ["launch", "GLOOP"]);
   const text = tweets.at(-1);
@@ -1283,7 +1285,7 @@ test("the page and the X post after a launch: \"Launching…\" until the Collect
   assert.ok(!text.includes(row.mintPublic) && !text.includes(row.tx) && !/[1-9A-HJ-NP-Za-km-z]{32,44}/.test(text), "no address");
   assert.ok(!text.includes("@"), "never the post author's handle");
   assert.equal(t.json("data/updates.json").launchesPosted.GLOOP.status, "posted");
-  fs.writeFileSync(path.join(t.root, "data/updates.json"), JSON.stringify({ ...t.json("data/updates.json"), lastPostedAt: null }));
+  fs.writeFileSync(path.join(t.root, "data/updates.json"), JSON.stringify(calmUpdates(t.json("data/updates.json"))));
   const again = await postUpdates({ root: t.root, env: X, fetchImpl: xFetch, now: () => new Date(t2 + 400 * 60_000), log: () => {} });
   assert.notEqual(again.posted?.kind, "launch", "posted once");
   // The announcer never lists the coin as a cat of its own.
