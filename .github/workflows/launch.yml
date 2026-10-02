@@ -29,6 +29,9 @@
 # pays to its holders (never to the launcher's wallet); "off" makes regular coins again.
 # LAUNCH_CHARACTERS (off unless "on"): a drawn or fictional cat (a cartoon, game, film or mascot character,
 # someone's trademark or copyright) launches only while it is "on"; off, only real cats launch.
+# LAUNCH_FEES_TO ("usepaid" unless "holders"): a new coin's creator fees go, for good, to the X account its lore came
+# from, through UsePaid (its description says "Fees to @handle via UsePaid"; a second transaction right after the launch
+# points them at UsePaid's recipient); "holders" keeps pump.fun's holder rewards (LAUNCH_HOLDER_REWARDS) instead.
 # LAUNCH_PAIRS (off unless "on"): pairing a coin with a company's stock (StonkFun) or another coin (pump.fun)
 # means buying that first; off, every coin launches on pump.fun in SOL.
 # LAUNCH_PUMP_QUOTE "on" opts in to pump.fun launches priced in a listed coin (unverified: no such launch
@@ -113,6 +116,7 @@ jobs:
           LAUNCH_MAX_PER_DAY: ${{ vars.LAUNCH_MAX_PER_DAY }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
           LAUNCH_PAIRS: ${{ vars.LAUNCH_PAIRS }}
+          LAUNCH_FEES_TO: ${{ vars.LAUNCH_FEES_TO }}
           LAUNCH_OPEN: ${{ vars.LAUNCH_OPEN }}
           LAUNCH_CHARACTERS: ${{ vars.LAUNCH_CHARACTERS }}
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
@@ -176,6 +180,7 @@ jobs:
           LAUNCH_PRIORITY_MICROLAMPORTS: ${{ vars.LAUNCH_PRIORITY_MICROLAMPORTS }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
           LAUNCH_PAIRS: ${{ vars.LAUNCH_PAIRS }}
+          LAUNCH_FEES_TO: ${{ vars.LAUNCH_FEES_TO }}
           LAUNCH_MINT_SUFFIX: ${{ vars.LAUNCH_MINT_SUFFIX }}
           LAUNCH_HOLDER_REWARDS: ${{ vars.LAUNCH_HOLDER_REWARDS }}
           LAUNCH_MINT_GRIND_MINUTES: ${{ vars.LAUNCH_MINT_GRIND_MINUTES }}

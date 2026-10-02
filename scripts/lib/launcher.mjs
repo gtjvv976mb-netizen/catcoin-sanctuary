@@ -135,6 +135,7 @@ import { RpcError } from "./rpc.mjs";
 import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
 import { validateRewardsLedger, earmarkSignatures, earmarkLamports, rewardsMode, REWARDS_FILES } from "./rewards.mjs";
 import { measureClaim } from "./pump-fees.mjs";
+import { buildFeeRouteTransaction, signFeeRouteTransaction, unsignedFeeRouteTransaction, sharingConfig, decodeSharingConfig, routedTo, usePaidLine, X_HANDLE, USEPAID_RECIPIENT } from "./fee-route.mjs";
 import { kitsOf, sameKit, KITS_LIVE } from "./adoptions.mjs";
 
 /* ── constants ─────────────────────────────────────────────────────────────────────────── */
@@ -217,6 +218,15 @@ export const pumpQuoteOptIn = (env = {}) => String(env.LAUNCH_PUMP_QUOTE ?? "").
  * pump.fun in another coin (pricing a coin in a stock or a coin means buying that first).
  */
 export const pairedLaunches = (env = {}) => String(env.LAUNCH_PAIRS ?? "").trim().toLowerCase() === "on";
+/**
+ * Where a new coin's creator fees go (LAUNCH_FEES_TO; the owner, 2026-10-02: "launch each token via PAID and link their X
+ * accounts so they get all the fees"): "usepaid" (the default) gives them, for good, to the X account the cat's lore came
+ * from, through UsePaid (scripts/lib/fee-route.mjs; its description names the account: "Fees to @handle via UsePaid"),
+ * when that account is known and is not the sanctuary's own; "holders" keeps pump.fun's holder rewards (LAUNCH_HOLDER_REWARDS).
+ */
+export const feesToMode = (env = {}) => (String(env.LAUNCH_FEES_TO ?? "").trim().toLowerCase() === "holders" ? "holders" : "usepaid");
+/** The X account a coin's fees go to through UsePaid, or null: a well-formed handle, never the sanctuary's own. */
+export const feeHandle = (handle) => (typeof handle === "string" && X_HANDLE.test(handle) && handle.toLowerCase() !== OWN_HANDLE.toLowerCase() ? handle : null);
 /** The owner's open launch rule (LAUNCH_OPEN, on unless "off"): real pets in viral or rising posts, and any cat a big account names, launch without approval. */
 export const openLaunches = (env = {}) => String(env.LAUNCH_OPEN ?? "").trim().toLowerCase() !== "off";
 /** The owner's character rule (LAUNCH_CHARACTERS, off unless "on"; 2026-10-02, after the legal review): a drawn or fictional
@@ -320,7 +330,9 @@ export const DESCRIPTION_MAX = 500;
  * owners." or, for a real pet (reading kind "real"), "…the cat's owners."), which always closes it whole.
  * Over `max`, the credit goes first, then the lore is shortened (at a word, with "…"), never the tribute.
  */
-export function descriptionOf(lore, kind = null, { credit = null, max = DESCRIPTION_MAX } = {}) {
+export function descriptionOf(lore, kind = null, { credit = null, max = DESCRIPTION_MAX, feesTo = null } = {}) {
+  // UsePaid's line comes first, whole (UsePaid reads the X account it pays from it): the rest fits after it.
+  if (feesTo) { const head = `${usePaidLine(feesTo)}.`; return `${head} ${descriptionOf(lore, kind, { credit, max: max - head.length - 1 })}`; }
   const tribute = fanTribute(kind);
   const line = String(lore ?? "").trim();
   const ended = /[.!?…]$/.test(line) ? line : `${line}.`;
@@ -350,7 +362,7 @@ const creditOf = (row) => (row.photoCredit === true && coinImageOf(row) === row.
 export function coinMetadata(row) {
   const venue = venueById(row.venue);
   if (!venue) throw new LaunchError(`unknown venue ${row.venue}`);
-  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row) }), image: coinImageOf(row), website: cardUrl(row.ticker), twitter: row.url, createdOn: SITE_ORIGIN });
+  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row), feesTo: row.feesTo ?? null }), image: coinImageOf(row), website: cardUrl(row.ticker), twitter: row.url, createdOn: SITE_ORIGIN });
 }
 /** The metadata file's exact text. */
 export const metadataText = (meta) => `${JSON.stringify(meta, null, 2)}\n`;
@@ -382,7 +394,8 @@ export async function waitForMetadata({ fetchImpl, uri, text, now, sleep, waitMs
 export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per post it prepared (a trending post, or the sanctuary's own X post of one of its cats), newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.";
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
 const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "kind", "lore", "image", "coinImage", "photoCredit", "metadataPath", "status", "preparedAt", "attempts", "cat",
-  "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback", "mintNonce", "mintGrind"];
+  "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback", "mintNonce", "mintGrind",
+  "feesTo", "feeRoute", "feeRouteTries", "feeRouteError"];
 /** Why a cat launched: a trending post by the owner's rules (policyOf), or "sanctuary": one of the sanctuary's own cats, after its X post (sanctuaryRow). */
 export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved", "viral", "sanctuary"]);
 /** The trend watch's reading kinds a launched cat may have (a row's `kind`: "real" is a pet, the others characters). */
@@ -430,6 +443,11 @@ export function rowProblem(r) {
   if (r.status === "launched" && (r.tx === undefined || r.mintPublic === undefined || r.launchedAt === undefined || r.spentLamports === undefined)) return "a launched row has tx, mintPublic, launchedAt and spentLamports";
   if (r.status === "failed" && (typeof r.reason !== "string" || typeof r.retry !== "boolean")) return "a failed row has a reason and retry";
   if (r.recordedAt !== undefined && r.status !== "launched") return "only a launched row is recorded";
+  if (r.feesTo !== undefined && (!feeHandle(r.feesTo) || r.venue !== PUMP_SOL.id)) return "feesTo is the X account a pump.fun coin's fees go to through UsePaid";
+  if (r.feeRoute !== undefined && !(isObj(r.feeRoute) && isTime(r.feeRoute.at) && (r.feeRoute.tx === undefined || isSignature(r.feeRoute.tx)) && Object.keys(r.feeRoute).every((k) => k === "at" || k === "tx"))) return "feeRoute is { tx, at }";
+  if ((r.feeRoute !== undefined || r.feeRouteTries !== undefined || r.feeRouteError !== undefined) && (r.feesTo === undefined || r.status !== "launched")) return "only a launched coin with feesTo has its fees routed";
+  if (r.feeRouteTries !== undefined && !(Number.isInteger(r.feeRouteTries) && r.feeRouteTries >= 1 && r.feeRouteTries <= FEE_ROUTE_MAX_TRIES)) return `feeRouteTries must be 1..${FEE_ROUTE_MAX_TRIES}`;
+  if (r.feeRouteError !== undefined && (typeof r.feeRouteError !== "string" || r.feeRouteError.length > 300)) return "feeRouteError must be short text";
   return null;
 }
 
@@ -735,10 +753,13 @@ export function candidateRow(post, ctx) {
     coinImage: coinImageFor({ image, postId: post.id }, ctx.photoHide),
     metadataPath: metadataPath(String(post.id)), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat: built.cat, ...(fallback ? { fallback } : {}),
   };
+  // The fees, through UsePaid, to the account that posted the cat (a pump.fun coin only).
+  const feesTo = ctx.feesTo === "usepaid" && venue === PUMP_SOL ? feeHandle(X_POST_URL.exec(post.url ?? "")?.[1]) : null;
+  if (feesTo) row.feesTo = feesTo;
   // The site's content rules: the metadata's description, and the X post, drafted now (a held post means no launch).
   const cited = [name, coinName, ticker, ...(figure ? [figure.name, ...(Array.isArray(figure.aliases) ? figure.aliases : [])] : [])];
   // The fan-tribute line is the owner's fixed text (it says the coin is NOT official): a citation; the lore meets every rule.
-  const tributeCited = [...cited, fanTribute(row.kind)];
+  const tributeCited = [...cited, fanTribute(row.kind), ...(row.feesTo ? [usePaidLine(row.feesTo)] : [])];
   // The photo's credit goes in the description when it fits and meets every rule (a handle is the stranger's own text).
   row.photoCredit = true;
   const credit = creditOf(row);
@@ -941,13 +962,16 @@ export function sanctuaryRow(entry, ctx) {
   // (the owner's character rule, as for a trending cat: a drawn or fictional cat waits while LAUNCH_CHARACTERS is off)
   if (kind !== "real" && ctx.characters === false) return no(`a ${kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
   const cited = [name, coinName, ticker];
-  const tributeCited = [...cited, fanTribute(kind)];
+  // The fees, through UsePaid, to the account whose post the cat's lore comes from (its card's proof).
+  const feesTo = ctx.feesTo === "usepaid" ? feeHandle(c.proof?.handle) : null;
+  const tributeCited = [...cited, fanTribute(kind), ...(feesTo ? [usePaidLine(feesTo)] : [])];
   // The first lore line its coin's description and its launch post (drafted now: a held post means no launch) pass the content rules with.
   let problem = "no lore line";
   for (const lore of loreLinesOf(c, ctx.captions)) {
     const row = {
       postId, url: `https://x.com/${OWN_HANDLE}/status/${postId}`, name, coinName, ticker, venue: PUMP_SOL.id, policy: "sanctuary", kind, lore, image,
       coinImage: image, photoCredit: false, metadataPath: metadataPath(postId), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat,
+      ...(feesTo ? { feesTo } : {}),
     };
     const d = checkUpdate(coinMetadata(row).description, tributeCited);
     if (!d.ok) { problem = `the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`; continue; }
@@ -1433,6 +1457,7 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
     pumpQuotes: quotes.usable,
     pumpQuoteOptIn: pumpQuoteOptIn(env),
     pairs: pairedLaunches(env),
+    feesTo: feesToMode(env),
     open: openLaunches(env),
     characters: characterLaunches(env),
     // The sanctuary's own cats (sanctuaryRow): the ones the announcer released, adoptions, lore captions, files on disk.
@@ -1674,6 +1699,84 @@ export async function rewardsEarmark({ io, rpc, wallet, env = {}, now = Date.now
   }
 }
 
+/** How many runs try a launched coin's fee route before it stops and a person is told. */
+export const FEE_ROUTE_MAX_TRIES = 5;
+/** The most a fee route may cost: the sharing config's rent (a 1,024-byte account, about 0.008 SOL) and its fees. */
+export const FEE_ROUTE_MAX_LAMPORTS = 15_000_000;
+/**
+ * A launched coin's creator fees, for good, to UsePaid (its row's feesTo names the X account UsePaid pays: scripts/lib/
+ * fee-route.mjs), sent by the coin's creator, the launcher's wallet, right after the launch and on every later run until
+ * it is done. Returns the row as it now is, or null when nothing changed (not one to route, or a wait: the RPC, the
+ * funds, the holders' SOL). Done when the coin's sharing config gives UsePaid's recipient every basis point for good
+ * (found so, or after the route lands: feeRoute { tx, at }); a simulation that fails, a refusal, or a transaction that
+ * fails on chain use a try (feeRouteTries, feeRouteError), and the last try's failure is an error a person sees.
+ */
+export async function routeFees(row, { io, rpc, wallet, env = {}, caps, now = Date.now, sleep = async () => {}, log = () => {}, scrub = (t) => t, confirmWaitMs = 60_000, confirmPollMs = 3_000 }) {
+  if (row?.status !== "launched" || !row.feesTo || row.feeRoute || (row.feeRouteTries ?? 0) >= FEE_ROUTE_MAX_TRIES || !isAddress(row.mintPublic)) return null;
+  const done = (tx) => {
+    const next = { ...row, feeRoute: { ...(tx ? { tx } : {}), at: ISO_SECONDS(now()) } };
+    delete next.feeRouteTries; delete next.feeRouteError;
+    log(`Launcher: ${row.coinName} (${row.ticker})'s creator fees go to @${row.feesTo} through UsePaid, for good${tx ? `: https://solscan.io/tx/${tx}` : ""}.`);
+    return next;
+  };
+  const failed = (why, { final = false } = {}) => {
+    const tries = final ? FEE_ROUTE_MAX_TRIES : (row.feeRouteTries ?? 0) + 1;
+    const text = scrub(String(why)).slice(0, 300);
+    log(`${tries >= FEE_ROUTE_MAX_TRIES ? "::error" : "::warning"} title=Launcher::${row.ticker}'s fees could not be routed to @${row.feesTo} through UsePaid (${text})${tries >= FEE_ROUTE_MAX_TRIES ? "; no more tries: a person must look" : `; try ${tries} of ${FEE_ROUTE_MAX_TRIES}, the next run tries again`}.`);
+    return { ...row, feeRouteTries: tries, feeRouteError: text };
+  };
+  const config = sharingConfig(row.mintPublic);
+  const readConfig = async () => {
+    const [a] = (await rpc.getMultipleAccounts([config])) ?? [];
+    return a?.data?.[0] ? decodeSharingConfig(Buffer.from(a.data[0], "base64")) : null;
+  };
+  let existing;
+  try { existing = await readConfig(); } catch (e) { log(`::warning title=Launcher::${row.ticker}'s sharing config could not be read (${scrub(String(e?.message ?? e)).slice(0, 120)}); the next run tries again.`); return null; }
+  if (routedTo(existing, USEPAID_RECIPIENT)) return done();
+  if (existing) return failed(`the coin already has a sharing config that does not give UsePaid every basis point (${existing.shareholders.map((h) => `${h.address.slice(0, 6)}… ${h.bps}`).join(", ")})`, { final: true });
+  // The funds: never the $CATSANC holders' SOL, never under LAUNCH_MIN_BALANCE_SOL.
+  const balance = await rpc.getBalance(wallet.publicKey);
+  if (!Number.isSafeInteger(balance)) { log(`::warning title=Launcher::no balance for the wallet; ${row.ticker}'s fee route waits.`); return null; }
+  const held = await rewardsEarmark({ io, rpc, wallet: wallet.publicKey, env, now });
+  if (held.problem) { log(`::warning title=Launcher::${scrub(held.problem)}; ${row.ticker}'s fee route waits.`); return null; }
+  const free = balance - Number(held.lamports);
+  const bh = await rpc.getLatestBlockhash();
+  if (!bh?.blockhash) { log(`::warning title=Launcher::the RPC gave no blockhash; ${row.ticker}'s fee route waits.`); return null; }
+  let built;
+  try { built = buildFeeRouteTransaction({ wallet: wallet.publicKey, mint: row.mintPublic, recentBlockhash: bh.blockhash, computeUnitPriceMicroLamports: caps.priorityMicroLamports }); }
+  catch (e) { return failed(`it could not be built: ${e?.message ?? e}`); }
+  const unsigned = unsignedFeeRouteTransaction(built);
+  const sim = await rpc.simulateTransaction(unsigned, { addresses: [wallet.publicKey] });
+  const after = sim?.accounts?.[0]?.lamports;
+  if (!sim || (typeof sim.err === "string" && TRANSIENT_SIMULATION.includes(sim.err))) { log(`::warning title=Launcher::${row.ticker}'s fee route could not be simulated (${sim ? sim.err : "no answer"}); the next run tries again.`); return null; }
+  if (sim.err !== null) return failed(`the simulation did not pass (${errText(sim.err)})`);
+  if (!Number.isSafeInteger(after)) return failed("the simulation gave no balance after it");
+  const loss = balance - after + feeUpperBound(unsigned);
+  if (loss > FEE_ROUTE_MAX_LAMPORTS) return failed(`it would cost ${loss} lamports, more than the ${FEE_ROUTE_MAX_LAMPORTS} a fee route may`);
+  if (free - loss < caps.minBalanceLamports) { log(`::warning title=Launcher::the wallet's free SOL would fall under LAUNCH_MIN_BALANCE_SOL; ${row.ticker}'s fee route waits until it is funded.`); return null; }
+  const signed = signFeeRouteTransaction(built, wallet);
+  if (messageOf(signed) !== messageOf(unsigned)) throw new LaunchError("the signed fee route is not the transaction that was simulated; nothing was sent");
+  const signature = signatureOf(signed);
+  try { await rpc.sendTransaction(signed); }
+  catch (e) {
+    if (isRefusal(e)) return failed(`the RPC refused it: ${e?.message ?? e}`);
+    log(`::warning title=Launcher::no clear answer from the RPC for ${row.ticker}'s fee route (${scrub(String(e?.message ?? e)).slice(0, 120)}); the next run checks the coin's sharing config.`);
+    return null;
+  }
+  // Confirm (bounded), then read the config back: only what the chain shows counts.
+  const deadline = now() + confirmWaitMs;
+  while (now() < deadline) {
+    await sleep(confirmPollMs);
+    const [st] = (await rpc.getSignatureStatuses([signature])) ?? [];
+    if (st?.err) return failed(`the transaction failed on chain (${errText(st.err)}): https://solscan.io/tx/${signature}`);
+    if (st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) break;
+  }
+  try { existing = await readConfig(); } catch { existing = null; }
+  if (routedTo(existing, USEPAID_RECIPIENT)) return done(signature);
+  log(`Launcher: ${row.ticker}'s fee route was sent (https://solscan.io/tx/${signature}) but is not on chain yet; the next run reads the coin's sharing config.`);
+  return null;
+}
+
 /** Simulation errors that say nothing about the launch (the RPC node's view of the chain lagged): the row stays prepared and uses no attempt; the next run simulates again (within the post's 48 hours). */
 export const TRANSIENT_SIMULATION = Object.freeze(["BlockhashNotFound", "AccountInUse"]);
 /** A send refused as a copy of a transaction the chain already has: it went out. */
@@ -1733,6 +1836,13 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     if (s.changed) { replaceRow(ledger, s.row); settledAny = true; if (s.row.status === "launched") out.launched = true; }
   }
   if (settledAny) saveLedger(io, ledger);
+  // 1b. Launched coins whose fees still go to the launcher's wallet: routed to their X account through UsePaid.
+  if (mode === "on") {
+    for (const r of ledger.launches.filter((x) => x.status === "launched" && x.feesTo && !x.feeRoute && (x.feeRouteTries ?? 0) < FEE_ROUTE_MAX_TRIES)) {
+      const routed = await routeFees(r, { io, rpc, wallet, env, caps, now, sleep, log, scrub });
+      if (routed) { replaceRow(ledger, routed); saveLedger(io, ledger); }
+    }
+  }
   if (ledger.launches.some((r) => r.status === "sending")) {
     out.outcome = unproved ? "unproved" : "sending";
     if (unproved) out.code = 1;
@@ -1910,7 +2020,7 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   const attempt = async (r) => {
     const v = venueById(r.venue);
     const built = await v.build({ wallet: wallet.publicKey, mint: mint.publicKey, name: r.coinName, symbol: r.ticker, uri, pair: r.cat.pair, recentBlockhash: bh.blockhash,
-      computeUnitPriceMicroLamports: caps.priorityMicroLamports, holderReward: caps.holderRewards }, { fetchImpl, rpc, nowMs: now(), quotes: ctx.pumpQuotes, pumpQuoteOptIn: ctx.pumpQuoteOptIn });
+      computeUnitPriceMicroLamports: caps.priorityMicroLamports, holderReward: caps.holderRewards && !r.feesTo }, { fetchImpl, rpc, nowMs: now(), quotes: ctx.pumpQuotes, pumpQuoteOptIn: ctx.pumpQuoteOptIn });
     const unsigned = v.unsigned(built);
     const sim = await rpc.simulateTransaction(unsigned, { addresses: [wallet.publicKey] });
     const after = sim?.accounts?.[0]?.lamports;
@@ -2012,7 +2122,12 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
     if (s.changed) {
       replaceRow(ledger, s.row); saveLedger(io, ledger);
       log(`Launcher: ${s.note}.`);
-      if (s.row.status === "launched") { out.launched = true; log(`Launcher: ${s.row.coinName} (${s.row.ticker}) is launched: its mint is ${s.row.mintPublic}.`); }
+      if (s.row.status === "launched") {
+        out.launched = true; log(`Launcher: ${s.row.coinName} (${s.row.ticker}) is launched: its mint is ${s.row.mintPublic}.`);
+        // Its fees, at once, to its X account through UsePaid (a later run tries again if this one cannot).
+        const routed = await routeFees(s.row, { io, rpc, wallet, env, caps, now, sleep, log, scrub });
+        if (routed) { replaceRow(ledger, routed); saveLedger(io, ledger); }
+      }
       return { ...out, outcome: s.row.status };
     }
     if (tries <= 1 || now() + confirmPollMs > deadline) {
