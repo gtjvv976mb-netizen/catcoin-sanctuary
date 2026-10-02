@@ -2,6 +2,78 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105997058960142621",
+      "url": "https://x.com/catcosanctuary/status/2105997058960142621",
+      "name": "Uni",
+      "coinName": "Uni",
+      "ticker": "UNIUNI",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Uni, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/UNIUNI.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/UNIUNI.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105997058960142621.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-02T18:58:39Z",
+      "attempts": 0,
+      "cat": {
+        "id": "uni-minuet-unicouniuni3",
+        "ticker": "UNIUNI",
+        "name": "Uni",
+        "coinName": "Uni",
+        "owner": "Uni's anonymous Japanese owner, who runs @unicouniuni3 (Instagram unico_uniuni) and family account @soraaobauniyoru",
+        "category": "viral",
+        "story": "Uni (うに) is a male Minuet cat born on 27 March 2020 in Japan, with a black-and-white tuxedo coat, short legs and a black muzzle whose lower edge makes an 'ω' over his white chin. His owner, who already had two rescue cats, spotted him in a pet corner while shopping and went back for him a week later. Fans said he looks like the ':3' emoticon. A photo of him bright-eyed inside a bag, captioned 'You can tell how much fun he's having from his face. :3', passed 190,000 likes. When the owner casually posted that ':3' looks just like Uni, the post went viral and fans abroad cried 'It's Maxwell the cat!', comparing him to the famous meme cat. @unicouniuni3 now has over 575,000 followers, and his housemates Sora, Aoba and Yoru share the family account @soraaobauniyoru.",
+        "look": "A small, short-legged black-and-white tuxedo Minuet with a round head and a low, stocky body. Solid black face from the ears down over the eyes and whole muzzle; the black muzzle's lower edge curves in two bumps over a white chin, a permanent 'ω'/':3' mouth. White runs from the chin down the throat, chest and belly. All four paws have white tips, the front 'gloves' showing pink toe beans. Black back, upper legs and tail. Big round yellow-amber eyes with large dark pupils, upright black ears with pink insides, long white whiskers. Often a pink polka-dot bow tie or ruffled collar.",
+        "coat": {
+          "base": "black",
+          "second": "white",
+          "pattern": "tuxedo",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/unicouniuni3/status/2096713681530970406",
+          "author": "unicouniuni3",
+          "handle": "unicouniuni3",
+          "date": "2026-09-06",
+          "dateType": "posted",
+          "text": "Uni with Chiikawa",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Walkerplus: まんまるな目にωな口元の猫が「顔文字」「キャラクターみたい」と話題！うに君 (29 June 2021)",
+            "url": "https://www.walkerplus.com/article/1038946/"
+          },
+          {
+            "label": "Hanako Web: 「ミームの猫だ！」と世界で大バズりした、うにと仲間たち (Hanako No.1251, Jan 2026 issue)",
+            "url": "https://hanako.tokyo/culture/492765/"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "UNICAT",
+          "contract": "0xf20F56DA441Fa826E4444a055Ec51f4eDb0Baef3",
+          "mcapUsd": 6822
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Uni's anonymous Japanese owner, who runs @unicouniuni3 (Instagram unico_uniuni) and family account @soraaobauniyoru.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/UNIUNI.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "unicouniuni3"
+    },
+    {
       "postId": "2106012193531498603",
       "url": "https://x.com/catcosanctuary/status/2106012193531498603",
       "name": "Mr. B",
