@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/CATFLAP.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105915826817876260.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-02T07:03:01Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "pepito-the-cat",
         "ticker": "CATFLAP",
@@ -70,7 +70,15 @@
         "portraitStatus": "ready",
         "confidence": "high",
         "lore": null
-      }
+      },
+      "mintNonce": 2899226,
+      "tx": "4iC1rGwUfygv1rrxMkPUVkAB8J1kie724LpN7LYxHny5LdLrYDg9WPkndnxKwtfCLfh9hcG3YdSNmu9t6W41TrLb",
+      "sentAt": "2026-10-02T07:11:27Z",
+      "lastValidBlockHeight": 430577800,
+      "mintPublic": "9npAFEfKQhYTw3JVZrrgNFzgwWQmJodiztKcaKQxpump",
+      "spentLamports": 5465600,
+      "settledAt": "2026-10-02T07:11:37Z",
+      "launchedAt": "2026-10-02T07:11:27Z"
     },
     {
       "postId": "2105789767132615061",
