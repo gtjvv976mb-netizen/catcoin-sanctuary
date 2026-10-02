@@ -43,6 +43,10 @@ on:
   schedule:
     - cron: "*/20 * * * *"
   workflow_dispatch:
+  # An approval in data/launch-approvals.json is looked up at once (scan-trending-cats.mjs withApproved).
+  push:
+    branches: [main]
+    paths: [data/launch-approvals.json]
 
 permissions: {}
 
@@ -116,7 +120,7 @@ jobs:
 
   next:
     needs: scan
-    if: ${{ !cancelled() && vars.TRENDWATCH_CHAIN != 'off' }}
+    if: ${{ !cancelled() && vars.TRENDWATCH_CHAIN != 'off' && github.event_name != 'push' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:

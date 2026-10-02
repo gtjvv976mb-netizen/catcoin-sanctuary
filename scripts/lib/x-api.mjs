@@ -91,6 +91,18 @@ export async function getPosts(ids, creds, fetchImpl = fetch) {
   return call(fetchImpl, "GET", `https://api.x.com/2/tweets?ids=${ids.slice(0, 100).map(encodeURIComponent).join(",")}&tweet.fields=public_metrics`, creds);
 }
 
+/** Up to 100 posts by id with their figures, media and authors, as searchRecent gives them (GET /2/tweets?ids=…): one read each. */
+export async function lookupPosts(ids, creds, fetchImpl = fetch) {
+  const q = new URLSearchParams({
+    ids: ids.slice(0, 100).join(","),
+    "tweet.fields": "public_metrics,created_at,author_id,attachments,lang,possibly_sensitive,note_tweet",
+    expansions: "attachments.media_keys,author_id",
+    "media.fields": "type,url,preview_image_url,width,height",
+    "user.fields": "username,name,public_metrics",
+  });
+  return call(fetchImpl, "GET", `https://api.x.com/2/tweets?${q}`, creds);
+}
+
 /** Recent posts (last 7 days) matching a search query, with their figures, media and authors
  *  (GET /2/tweets/search/recent; needs an X plan whose keys may search, Basic or above). */
 /** What is trending on X in one place (WOEID: 1 worldwide, 23424977 the US, 23424856 Japan): { data: [{ trend_name, tweet_count }] }. */
