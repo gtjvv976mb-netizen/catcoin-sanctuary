@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/PROFMEOW.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105934117154308177.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-02T08:16:23Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "professor-meowingtons-deadmau5",
         "ticker": "PROFMEOW",
@@ -74,7 +74,15 @@
         "portraitStatus": "ready",
         "confidence": "high",
         "lore": null
-      }
+      },
+      "mintNonce": 14150156,
+      "tx": "A6VbqAz3ydHP1aSnDfhZ7x6U7KAUsPPVk6ZvGTJTKMAsmyJSha6T8n8kaib8bhiTgCXV1hmNRLfwZP5BvgGRKYi",
+      "sentAt": "2026-10-02T08:28:28Z",
+      "lastValidBlockHeight": 430595113,
+      "mintPublic": "9RXtZHUfqNNZMuGR4SeDCaoSAd9YF7DqKa8CoHPHpump",
+      "spentLamports": 5562120,
+      "settledAt": "2026-10-02T08:28:37Z",
+      "launchedAt": "2026-10-02T08:28:27Z"
     },
     {
       "postId": "2105915826817876260",
