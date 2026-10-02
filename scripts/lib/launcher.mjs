@@ -157,6 +157,7 @@ export const FILES = Object.freeze({
   photoHide: "data/photo-hide.json",
   trending: "data/trending-cats.json",
   watch: "data/cat-watch.json",
+  feeExclusions: "data/fee-exclusions.json",
   adoptables: "data/adoptables.json",
   planned: "data/planned.json",
   wallets: "data/wallets.json",
@@ -195,7 +196,7 @@ const ISO_SECONDS = (ms) => new Date(ms).toISOString().replace(/\.\d{3}Z$/, "Z")
 
 /** The caps' defaults, and the range each is clamped to (SOL, except the count). */
 export const DEFAULT_CAPS = Object.freeze({ maxPerDay: 3, maxSolPerLaunch: 0.03, maxSolPerDay: 0.1, minBalanceSol: 0.02 });
-export const CAP_RANGES = Object.freeze({ maxPerDay: [0, 10], maxSolPerLaunch: [0, 0.1], maxSolPerDay: [0, 0.5], minBalanceSol: [0.01, 1000] });
+export const CAP_RANGES = Object.freeze({ maxPerDay: [0, 40], maxSolPerLaunch: [0, 0.1], maxSolPerDay: [0, 0.5], minBalanceSol: [0.01, 1000] });
 export const CAP_VARS = Object.freeze({ maxPerDay: "LAUNCH_MAX_PER_DAY", maxSolPerLaunch: "LAUNCH_MAX_SOL_PER_LAUNCH", maxSolPerDay: "LAUNCH_MAX_SOL_PER_DAY", minBalanceSol: "LAUNCH_MIN_BALANCE_SOL" });
 /** The priority fee's price (micro-lamports per compute unit): LAUNCH_PRIORITY_MICROLAMPORTS, clamped. */
 export const PRIORITY_RANGE = Object.freeze([0, 1_000_000]);
@@ -225,8 +226,26 @@ export const pairedLaunches = (env = {}) => String(env.LAUNCH_PAIRS ?? "").trim(
  * when that account is known and is not the sanctuary's own; "holders" keeps pump.fun's holder rewards (LAUNCH_HOLDER_REWARDS).
  */
 export const feesToMode = (env = {}) => (String(env.LAUNCH_FEES_TO ?? "").trim().toLowerCase() === "holders" ? "holders" : "usepaid");
-/** The X account a coin's fees go to through UsePaid, or null: a well-formed handle, never the sanctuary's own. */
-export const feeHandle = (handle) => (typeof handle === "string" && X_HANDLE.test(handle) && handle.toLowerCase() !== OWN_HANDLE.toLowerCase() ? handle : null);
+/**
+ * The X account a coin's fees go to through UsePaid, or null: a well-formed handle, never the sanctuary's own, never one
+ * data/fee-exclusions.json lists (`excluded`, lower case: government and public bodies, companies and brands, news and
+ * media; the owner, 2026-10-02) and never one with "gov" in it. `excluded` null (the list unreadable): no account at all.
+ */
+export const feeHandle = (handle, excluded = new Set()) => (typeof handle === "string" && X_HANDLE.test(handle) && handle.toLowerCase() !== OWN_HANDLE.toLowerCase()
+  && excluded !== null && !excluded.has(handle.toLowerCase()) && !/gov/i.test(handle) ? handle : null);
+/** data/fee-exclusions.json's accounts, lower case, or null when it is there but unreadable (then no coin's fees are routed). */
+export function feeExclusionsOf(io, log = () => {}) {
+  const text = io.readText(FILES.feeExclusions);
+  if (text === null || text === undefined) return new Set();
+  try {
+    const d = JSON.parse(text.replace(/^\uFEFF/, ""));
+    if (!isObj(d) || !Array.isArray(d.accounts) || d.accounts.some((h) => typeof h !== "string" || !X_HANDLE.test(h.replace(/^@/, "")))) throw new Error("must be { note, accounts: [X handles] }");
+    return new Set(d.accounts.map((h) => h.replace(/^@/, "").toLowerCase()));
+  } catch (e) {
+    log(`::warning title=Launcher::${FILES.feeExclusions} does not read (${String(e?.message ?? e).slice(0, 120)}); no coin's fees are routed through UsePaid until it does.`);
+    return null;
+  }
+}
 /** The owner's open launch rule (LAUNCH_OPEN, on unless "off"): real pets in viral or rising posts, and any cat a big account names, launch without approval. */
 export const openLaunches = (env = {}) => String(env.LAUNCH_OPEN ?? "").trim().toLowerCase() !== "off";
 /** The owner's character rule (LAUNCH_CHARACTERS, off unless "on"; 2026-10-02, after the legal review): a drawn or fictional
@@ -754,7 +773,7 @@ export function candidateRow(post, ctx) {
     metadataPath: metadataPath(String(post.id)), status: "prepared", preparedAt: ISO_SECONDS(ctx.nowMs), attempts: 0, cat: built.cat, ...(fallback ? { fallback } : {}),
   };
   // The fees, through UsePaid, to the account that posted the cat (a pump.fun coin only).
-  const feesTo = ctx.feesTo === "usepaid" && venue === PUMP_SOL ? feeHandle(X_POST_URL.exec(post.url ?? "")?.[1]) : null;
+  const feesTo = ctx.feesTo === "usepaid" && venue === PUMP_SOL ? feeHandle(X_POST_URL.exec(post.url ?? "")?.[1], ctx.noFeesTo ?? new Set()) : null;
   if (feesTo) row.feesTo = feesTo;
   // The site's content rules: the metadata's description, and the X post, drafted now (a held post means no launch).
   const cited = [name, coinName, ticker, ...(figure ? [figure.name, ...(Array.isArray(figure.aliases) ? figure.aliases : [])] : [])];
@@ -963,7 +982,7 @@ export function sanctuaryRow(entry, ctx) {
   if (kind !== "real" && ctx.characters === false) return no(`a ${kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
   const cited = [name, coinName, ticker];
   // The fees, through UsePaid, to the account whose post the cat's lore comes from (its card's proof).
-  const feesTo = ctx.feesTo === "usepaid" ? feeHandle(c.proof?.handle) : null;
+  const feesTo = ctx.feesTo === "usepaid" ? feeHandle(c.proof?.handle, ctx.noFeesTo ?? new Set()) : null;
   const tributeCited = [...cited, fanTribute(kind), ...(feesTo ? [usePaidLine(feesTo)] : [])];
   // The first lore line its coin's description and its launch post (drafted now: a held post means no launch) pass the content rules with.
   let problem = "no lore line";
@@ -1458,6 +1477,7 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
     pumpQuoteOptIn: pumpQuoteOptIn(env),
     pairs: pairedLaunches(env),
     feesTo: feesToMode(env),
+    noFeesTo: feeExclusionsOf(io, log),
     open: openLaunches(env),
     characters: characterLaunches(env),
     // The sanctuary's own cats (sanctuaryRow): the ones the announcer released, adoptions, lore captions, files on disk.
@@ -1532,6 +1552,15 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
       out.changed = true;
       log(`Launcher: ${row.ticker}'s coin picture is now ${coinImage === SITE_IMAGE ? "the site's own (its post's photo is hidden in data/photo-hide.json)" : "its post's photo"}.`);
     }
+  }
+  // A coin not sent yet whose fee account is now excluded (data/fee-exclusions.json) loses its UsePaid line: a holder rewards
+  // coin instead (its metadata is rewritten below and deployed before the send).
+  for (const row of ledger.launches.filter((r) => r.status === "prepared" && r.feesTo && !feeHandle(r.feesTo, ctx.noFeesTo))) {
+    if (mode !== "on") continue;
+    const next = { ...row }; delete next.feesTo;
+    replaceRow(ledger, next);
+    out.changed = true;
+    log(`Launcher: ${row.ticker}'s fees no longer go to @${row.feesTo} (data/fee-exclusions.json): it launches as a holder rewards coin.`);
   }
   // A sanctuary cat not sent yet follows its card: its lore line and kind as it would be prepared now (its metadata is
   // rewritten below and deployed before the send). One that may not launch any more is left to the send's check.
