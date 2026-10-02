@@ -2,6 +2,81 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105822158043980147",
+      "url": "https://x.com/catcosanctuary/status/2105822158043980147",
+      "name": "Jinx",
+      "coinName": "Jinx",
+      "ticker": "MAYORJINX",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Jinx is a black cat found in mid-October 2018, three or four weeks old, in a field behind her owner Mia's California home.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/MAYORJINX.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/MAYORJINX.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105822158043980147.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-02T00:50:41Z",
+      "attempts": 0,
+      "cat": {
+        "id": "jinx-bigfootjinx",
+        "ticker": "MAYORJINX",
+        "name": "Jinx",
+        "coinName": "Jinx",
+        "owner": "Mia Ibanez ('mii', @mibajinx), who runs @bigfootjinx on X, Instagram and TikTok",
+        "category": "viral",
+        "story": "Jinx is a black cat found in mid-October 2018, three or four weeks old, in a field behind her owner Mia's California home. Her name comes from the strange coincidences that led to finding her near Halloween. The vet said she is 'special', with some birth defects: an underbite from a very small jaw, big eyes and very big feet. Mia says she is completely healthy. Posts on Instagram, TikTok and X (@bigfootjinx) won her a cult following as a meme reaction image. In April 2022 Mia bought two square feet of Scottish land to make her a 'lady of Scotland', then paid for her to be mayor of Hell, Michigan for one day, 24 April 2022: Hell's first pet mayor (USA Today). Her proclamations included National Jinx Day, one Jinx mural per mile, a statue in her honour and a ban on all eggs. She was impeached that day after telling the town to steal catfish from the next town over.",
+        "look": "Small, solid jet-black short-haired female with a round little face and huge, bulging eyes. Her pupils are very large and dilated, ringed by a thin gold-yellow iris that shows as amber-gold when the pupils narrow. Big upright ears. Tiny muzzle with a slight underbite, often with a pink tongue tip showing. Oversized paws and big feet. Compact body with a small white patch on the lower belly by one hind leg.",
+        "coat": {
+          "base": "white",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/bigfootjinx/status/1513987961632612358",
+          "author": "bigfootjinx",
+          "handle": "bigfootjinx",
+          "date": "2022-04-12",
+          "dateType": "posted",
+          "text": "little missy took a trip to the vet! she’s a bit loopy but completely healthy <3 she also got a lil manicure",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "USA Today (2022-04-22): Meet Jinx, the cat who on Sunday will be the new mayor of Hell (the one in Michigan)",
+            "url": "https://www.usatoday.com/story/news/nation/2022/04/22/cat-mayor-hell-michigan-jinx/7411675001/"
+          },
+          {
+            "label": "Newsweek (2022-04-26): 'My Rescue Cat Became The Mayor of Hell' (first-person piece by owner Mia Ibanez)",
+            "url": "https://www.newsweek.com/my-rescue-cat-became-mayor-hell-1700886"
+          },
+          {
+            "label": "Know Your Meme: Jinx the Cat",
+            "url": "https://knowyourmeme.com/memes/jinx-the-cat"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Jinx",
+          "contract": "GpawVnhrkAiwS2SJAj2R9eTWCHftFYEp1oSJMenwpump",
+          "mcapUsd": 2097
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Mia Ibanez ('mii', @mibajinx), who runs @bigfootjinx on X, Instagram and TikTok.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/MAYORJINX.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      }
+    },
+    {
       "postId": "2105803551884890433",
       "url": "https://x.com/catcosanctuary/status/2105803551884890433",
       "name": "Hoi-chan",
