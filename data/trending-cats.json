@@ -1,19 +1,24 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-02T00:44:22.383Z",
- "lens": "figures",
- "query": "(\"Oliver and Company\" OR \"Dinah the cat\" OR \"Itchy and Scratchy\" OR \"Mr. Jinks\" OR \"Mr Jinks\" OR \"Big Floppa\" OR \"Floppa\" OR \"Bingus\" OR \"Huh Cat\" OR \"Banana Cat\" OR \"Polite Cat\" OR \"Chipi Chipi Cat\" OR \"Chipi Chipi Chapa Chapa\" OR \"OIIA Cat\" OR \"OIIAI Cat\" OR \"Happy Happy Happy Cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-02T01:20:27.774Z",
+ "lens": "big",
+ "query": "(from:elonmusk OR from:cz_binance OR from:VitalikButerin OR from:saylor OR from:aeyakovenko OR from:rajgokal OR from:solana OR from:pumpdotfun OR from:a1lon9 OR from:blknoiz06 OR from:MustStopMurad OR from:frankdegods OR from:cb_doge OR from:DogeDesigner OR from:WatcherGuru) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-10-02",
-  "dayUsed": 20,
+  "dayUsed": 26,
   "month": "2026-10",
-  "monthUsed": 341,
+  "monthUsed": 347,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
- "candidates": [],
+ "candidates": [
+  "2105789767132615061",
+  "2105654129674633645",
+  "2105638994625040596",
+  "2105623888126173495"
+ ],
  "signals": [
   "2104961576428269856",
   "2104926549480796539",
@@ -28,6 +33,305 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2105789767132615061",
+   "url": "https://x.com/ATXsiameseRescu/status/2105789767132615061",
+   "text": "Well… the first baby from Sasha’s litter officially has a name 😂🤍\n\nThis little guy has been obsessed with Sarah, our co-owner, since day one. If he wasn’t trying to climb into her lap, he was finding his way onto her desk while she worked.\n\nAnd somehow, every single time, he kept ending up inside her coffee cup. ☕🐱\n\nAfter catching him in there more than once, we decided the name was basically choosing itself.\n\nMeet Cupsey. 🥹🤍\n\nWe thought it was cute, a little silly, and honestly perfect for him.\n\n1 kitten named… 4 more to go. 😂",
+   "author": {
+    "handle": "ATXsiameseRescu",
+    "name": "Austin Siamese Rescue",
+    "followers": 33968
+   },
+   "postedAt": "2026-10-01T22:39:38Z",
+   "likes": 464,
+   "views": 129147,
+   "reposts": 178,
+   "heat": 789,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2105781134009266176/img/LCE4_dUkjvPiBCoC.jpg"
+    }
+   ],
+   "stage": "approved",
+   "lens": "approved",
+   "readAt": "2026-10-02T01:20:10.228Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Cupsey",
+    "kind": "real",
+    "coinName": "Cupsey",
+    "ticker": "CUPSEY",
+    "lore": "A tiny Siamese kitten who keeps climbing into his favorite human's coffee cup at the rescue, earning himself the name Cupsey.",
+    "sensitive": false,
+    "why": "A single named rescue kitten in a wholesome, harmless scene.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "3kessLyJJsQ6kgFkgJPW5mYedvimTistjcW723Hepump",
+     "name": "Cupsey the cat",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/gtxqie98llrazzdntzzrdky23rd2ziavtlglnmybrcp1"
+    },
+    {
+     "mint": "6NwarBvDkXhByqVp2Qkq5i9XbtA2B3Bwe8SWGu9vpump",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/cji5ptartshqwinvuup31nqiysutua3glje38qxmqevs"
+    },
+    {
+     "mint": "7cUQH8j2VUDYUGjAwSiEvmaTnNEqPm4PLQt4Sts1pump",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/5hjrzatpyjckh7dmqowjxxi3xuzjaghqpk52vhg75vwr"
+    },
+    {
+     "mint": "5PsnNwPmMtsGZgG6ZqMoDJJi28BR5xpAotXHHiQhpump",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/9u6jgay5ysvtqjdzc3t7xti7sznrggn1wlfkvqnzqutu"
+    },
+    {
+     "mint": "GJnF3R7QXZdquYEeCFUE5YJuSkR9wdL9B3ojE5bNpump",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/cvqwfcaeqcyaaqf6y4rdjkz8d9qgug1asazsqqrfdgxq"
+    },
+    {
+     "mint": "5kiuFhDMN73ZhUQ1UGDMdKPGNRdsqB4dd8ZSR2s51Myn",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/ajdvy5f1lrheq8o6ucouapvdtsndypp51pfh6c5yaurb"
+    },
+    {
+     "mint": "BwAU6gsimrFhJrRcZqKxQJayfnkyyan63WNCJRWYpump",
+     "name": "The First Trencher",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/5xkxyzu4udrkq7q1lfyivcdgrwdghzc5urdza8weddkx"
+    },
+    {
+     "mint": "G4Y5Q7EhCfGxCCj3Zu7FkH3q5M7erkQHkixqsczGpump",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/5mf8wx8xkf3fowffsuiljpycv41bygdcbmke91awbqzv"
+    },
+    {
+     "mint": "DpJ7wnXHMAQ1nK7CpXnwgt15F5GXCLqDZbrBQCt1pump",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/9kk1nrszjbxeyfkfdh9ucxrh1idivpz5hdrvygxgw6x4"
+    },
+    {
+     "mint": "H8CAMhqco1XvjCGxkAiayS69sPxwqTrrVuYo5mEZpump",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/9c4kif7omfgokckcjv3wsgg56tpaiotkhpsg5xngbpmh"
+    },
+    {
+     "mint": "2z9dP5rJvzxrXWPNf8qfsyw1GDCYZmZWFKjhADfgqCkj",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/cyfr7xuqylxmtdkzki13jvsg1qg5zfasgwtwadzwtwyl"
+    },
+    {
+     "mint": "5xXvSsF91Q845mJw1Mt5atEdRa9xMUe4o7DccWPjMght",
+     "name": "The TikTok Guy",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/epyps21swqs8zrztyxt4kzdnpjxk97u3wtdfmrioy8n4"
+    },
+    {
+     "mint": "JALuXPBgaFpZBrwczGzvhz67uhv1LFeE4kYiXWymbaby",
+     "name": "Cupsey",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/39ewbrnsj1bghjh67pjz99dicztijkwwianat6zmyxxn"
+    },
+    {
+     "mint": "EbwrGeVAF8GCFdD3A3WCqVSqExoYc3EFdULKW9AZpump",
+     "name": "CUPSEY",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/cjsp2txhsubkhpnetcfdfp6dqfkep6kofx5duyqg9gbq"
+    },
+    {
+     "mint": "8dhp5fpwpXaX7ftyeLKpauhNoY6TRDVzjVvVZUtVpump",
+     "name": "The Greatest Trencher",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/4gbhvkm5sb176uthgansrt8znjyzrzaxyedstqrgoxzd"
+    },
+    {
+     "mint": "azrspRoAQ4RpwdDvcKRkV1dYsmY4yYsBjEwZxASpump",
+     "name": "The Rescue Dog",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/an1ghuh5yxcpqgnwprazbj7gfztxfxrscm2xefmzaxxa"
+    },
+    {
+     "mint": "CE7XhSnSvqwEDAzi7Htaafs3xX2PzBQjWcKG7WpVpump",
+     "name": "CUPSEY COIN",
+     "symbol": "CUPSEY",
+     "url": "https://dexscreener.com/solana/coegye83dp1nnsxhamawc6ydc8dpy6ofwbasfnnpilof"
+    }
+   ],
+   "status": "candidate"
+  },
+  {
+   "id": "2105654129674633645",
+   "url": "https://x.com/catcosanctuary/status/2105654129674633645",
+   "text": "🐱✨ Say hi to Milly!\n👑 The famous cat of fatfatmillycat\n📜 Milly is the original 'BLEHHHHH…\n👀 As seen in @fatfatmillycat's post\n🎮 + its in-game look in the garden 🌿\n🔓 No coin yet: be the first to adopt it 👇\nhttps://t.co/c6n4h4Gpay\n#catcoin #CatsOfX https://t.co/r273KJmi48",
+   "author": {
+    "handle": "catcosanctuary",
+    "name": "Catcoin Sanctuary",
+    "followers": 106
+   },
+   "postedAt": "2026-10-01T13:40:40Z",
+   "likes": 0,
+   "views": 142,
+   "reposts": 0,
+   "heat": 0,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTjJRZrWAAAtVCD.jpg"
+    },
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTjJRflXsAAqDFk.jpg"
+    }
+   ],
+   "stage": "approved",
+   "lens": "approved",
+   "readAt": "2026-10-02T01:20:10.228Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Milly",
+    "kind": "real",
+    "coinName": "Milly",
+    "ticker": "BLEH",
+    "lore": "Milly is the original 'BLEHHHHH' cat, sitting on a ping pong table with her tongue out and eyes squeezed shut.",
+    "sensitive": false,
+    "why": "A single real, named cat known for her tongue-out meme face, nothing upsetting.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "869ViF3yfjA2wbAYJrtYuShtPo41V73cGyYSAD4Fpump",
+     "name": "Bleh",
+     "symbol": "BLEH",
+     "url": "https://dexscreener.com/solana/7xqwrzursnzvtprlzrmhuc5ndtcgscrijafxwctmaug4"
+    },
+    {
+     "mint": "5Vy8teRLt3JgmWr4A7TaezEYQgEBcFCsnAHrd7KMpump",
+     "name": "Bleh! ",
+     "symbol": "BLEH",
+     "url": "https://dexscreener.com/solana/dmhsukych6kaeymlsf3ixfmqr9d3knkerjs7sakjgefr"
+    },
+    {
+     "mint": "2nMYMZ7pxTy9RokSUs32KhTjhkikbxGAUWfFNq2Upump",
+     "name": "BLEH",
+     "symbol": "BLEH",
+     "url": "https://dexscreener.com/solana/3yrpe78byktexkm4tkmn9ptnmvulewklouywbwpjczxc"
+    }
+   ],
+   "status": "candidate"
+  },
+  {
+   "id": "2105638994625040596",
+   "url": "https://x.com/catcosanctuary/status/2105638994625040596",
+   "text": "🐱✨ Say hi to Chikuwa!\n👑 The famous cat of The owner of @sktfd0310 in Japan, not named publicly\n👀 As seen in @sktfd0310's post\n🎮 + its in-game look in the garden 🌿\n🔓 No coin yet: be the first to adopt it 👇\nhttps://t.co/5bFo1BaVox\n#catcoin #CatsOfX https://t.co/06sMkBPrmF",
+   "author": {
+    "handle": "catcosanctuary",
+    "name": "Catcoin Sanctuary",
+    "followers": 106
+   },
+   "postedAt": "2026-10-01T12:40:31Z",
+   "likes": 0,
+   "views": 84,
+   "reposts": 0,
+   "heat": 0,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTi7gctWEAAU0z4.jpg"
+    },
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTi7ghQWgAAYr6W.jpg"
+    }
+   ],
+   "stage": "approved",
+   "lens": "approved",
+   "readAt": "2026-10-02T01:20:10.228Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Chikuwa",
+    "kind": "real",
+    "coinName": "Chikuwa",
+    "ticker": "CHIKUWA",
+    "lore": "Chikuwa is a fluffy orange cat from Japan, famous online and now settling into the sanctuary garden.",
+    "sensitive": false,
+    "why": "Post introduces one named real cat with a photo, nothing upsetting.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [],
+   "status": "candidate"
+  },
+  {
+   "id": "2105623888126173495",
+   "url": "https://x.com/catcosanctuary/status/2105623888126173495",
+   "text": "🚨 NEW CAT ALERT 🚨\n😻 Bob just moved into the Sanctuary!\n👑 The cat of RAM (@rambites), an artist on X\n📜…\n👀 As seen in @rambites's post\n🎮 + its in-game look in the garden 🌿\n🔓 No coin yet: be the first to adopt it 👇\nhttps://t.co/49aInsVkU3\n#catcoin https://t.co/k9LGPlhyBY",
+   "author": {
+    "handle": "catcosanctuary",
+    "name": "Catcoin Sanctuary",
+    "followers": 106
+   },
+   "postedAt": "2026-10-01T11:40:30Z",
+   "likes": 2,
+   "views": 104,
+   "reposts": 1,
+   "heat": 0,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTitxF_W0AIJG5m.jpg"
+    },
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTitxMiWIAAhCmN.jpg"
+    }
+   ],
+   "stage": "approved",
+   "lens": "approved",
+   "readAt": "2026-10-02T01:20:10.228Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Bob",
+    "kind": "real",
+    "coinName": "Bob",
+    "ticker": "BOB",
+    "lore": "Bob, the ginger cat of artist RAM, just moved into the Sanctuary garden and is waiting to be adopted.",
+    "sensitive": false,
+    "why": "Post introduces one named real cat, Bob, with no upsetting content.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "E4vwseNWpkBxzNxyv3msVLCzYHU5SXrj1QWXEycypump",
+     "name": "bob",
+     "symbol": "BOB",
+     "url": "https://dexscreener.com/solana/fa8wzxzhujkmspcnafcnjvuzgbcslxmunbg4dyspmwbn"
+    },
+    {
+     "mint": "4p3u8qouMCMUm9goE4xh4mL5hnvZxDviTiRMCDdFBAGS",
+     "name": "bob",
+     "symbol": "BOB",
+     "url": "https://dexscreener.com/solana/bxpqlptdvprnxvjr2eyc74crv1l5xkrf32au4tcyahx1"
+    }
+   ],
+   "status": "candidate"
+  },
   {
    "id": "2104961576428269856",
    "url": "https://x.com/solana/status/2104961576428269856",
@@ -419,10 +723,10 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 2,
+  "nextLens": 1,
+  "bigChunk": 3,
   "figureChunk": 0,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
