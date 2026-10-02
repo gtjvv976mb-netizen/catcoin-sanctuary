@@ -252,12 +252,12 @@ export function candidates(updates, adoptions, { cats, kits = null, ownMints = n
   const ofKit = (a) => { const k = kits?.get(a.key); return !kits || (!!k && nameKey(a.name) === nameKey(k.name) && a.symbol.trim().toUpperCase() === k.ticker); };
   const real = (adoptions?.adoptions || []).filter((a) => validAdoption(a) && !ownMints.has(a.mint) && !ownWallets.has(a.creator) && byKey.has(a.key) && !byKey.get(a.key).sanctuary && !heldKeys.has(a.key) && ofKit(a))
     .sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
-  const out = [...ours, ...real.filter((a) => retryable(done[a.key]))
-    .map((a) => ({ kind: "adoption", id: a.key, adoption: a, cat: byKey.get(a.key), first: a === real[0] }))];
-  for (const p of updates.posts || []) {
-    if (p?.approved === true && typeof p.id === "string" && retryable({ ...p, status: p.status ?? "queued" })) out.push({ kind: "update", id: p.id, post: p });
-  }
-  return out;
+  const updatesDue = (updates.posts || []).filter((p) => p?.approved === true && typeof p.id === "string" && retryable({ ...p, status: p.status ?? "queued" }))
+    .map((p) => ({ kind: "update", id: p.id, post: p }));
+  // An update the owner marks `first: true` (an announcement) goes ahead of everything else.
+  const firsts = updatesDue.filter((u) => u.post.first === true);
+  return [...firsts, ...ours, ...real.filter((a) => retryable(done[a.key]))
+    .map((a) => ({ kind: "adoption", id: a.key, adoption: a, cat: byKey.get(a.key), first: a === real[0] })), ...updatesDue.filter((u) => u.post.first !== true)];
 }
 
 /** When the announcer last posted (ms), or null: the newest posted cat, or the last release. */
