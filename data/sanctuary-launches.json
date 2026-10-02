@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/MAYORJINX.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105822158043980147.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-02T00:50:41Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "jinx-bigfootjinx",
         "ticker": "MAYORJINX",
@@ -75,7 +75,14 @@
         "confidence": "high",
         "lore": null
       },
-      "mintNonce": 18905424
+      "mintNonce": 18905424,
+      "tx": "5ej4ksGPBrrC5ce5wf52L88QWCq7oiCMUeRVZKddjoE1ycgZMiifxnA78jkd5BWBKGrdu2y4mpqK5V9bpwsikurR",
+      "sentAt": "2026-10-02T01:19:04Z",
+      "lastValidBlockHeight": 430498951,
+      "mintPublic": "G4LCDEKbsjdfHF3eL4HBxoXLWcdGDz4PB8xApzbrpump",
+      "spentLamports": 5460520,
+      "settledAt": "2026-10-02T01:19:13Z",
+      "launchedAt": "2026-10-02T01:19:04Z"
     },
     {
       "postId": "2105803551884890433",
