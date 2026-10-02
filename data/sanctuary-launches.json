@@ -15,7 +15,7 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/QCGENESIS.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105786810961973509.json",
-      "status": "prepared",
+      "status": "failed",
       "preparedAt": "2026-10-02T01:22:11Z",
       "attempts": 0,
       "cat": {
@@ -74,7 +74,10 @@
         "portraitStatus": "ready",
         "confidence": "high",
         "lore": null
-      }
+      },
+      "reason": "held back by the owner before it was sent: Genesis Cat is Taproot Wizards' Quantum Cats character (someone's trademark or copyright); nothing was signed or sent",
+      "retry": false,
+      "settledAt": "2026-10-02T01:35:00Z"
     },
     {
       "postId": "2105822158043980147",
