@@ -895,6 +895,8 @@ export function sanctuaryRow(entry, ctx) {
   if (v.refused.some((x) => x.index === i)) return no(`the adoptable row would be refused: ${v.refused.find((x) => x.index === i).detail}`);
   const image = `${SITE_ORIGIN}/${picture}`;
   const kind = kindOfAdoptable(c);
+  // (the owner's character rule, as for a trending cat: a drawn or fictional cat waits while LAUNCH_CHARACTERS is off)
+  if (kind !== "real" && ctx.characters === false) return no(`a ${kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
   const cited = [name, coinName, ticker];
   const tributeCited = [...cited, fanTribute(kind)];
   // The first lore line its coin's description and its launch post (drafted now: a held post means no launch) pass the content rules with.
