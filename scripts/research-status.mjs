@@ -101,6 +101,8 @@ export async function approve(root, id, { checked = new Date().toISOString().sli
   const row = { ...c };
   delete row.status; delete row.foundAt; delete row.reviewedAt;
   const cat = adoptableFrom(row, { root });
+  const { readHeld } = await import("./build-planned.mjs");
+  if (readHeld(root).has(cat.ticker)) throw new ResearchError(`${id}: ${cat.ticker} is held back in data/held.json (${readHeld(root).get(cat.ticker)}); nothing was written`);
   const adopt = readJson(P.adoptables, { cats: [] });
   if (adopt.cats.some((x) => x.id === cat.id || x.ticker === cat.ticker)) throw new ResearchError(`${id}: already an adoptable cat (or its ticker is taken)`);
   const planned = readJson(P.planned, { cats: [] });

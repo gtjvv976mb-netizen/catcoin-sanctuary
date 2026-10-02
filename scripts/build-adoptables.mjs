@@ -12,7 +12,8 @@
  * the run. A ticker already used by a planned cat stops the run too. A cat's portrait is
  * assets/portraits/<TICKER>.jpg when that file exists; otherwise it is "pending" and the card draws
  * a silhouette in the cat's coat colours. Its lore picture is assets/lore/<TICKER>.webp with the caption
- * from data/lore.json, when both exist; otherwise lore is null. New cats are recorded in data/announced.json as "held"
+ * from data/lore.json, when both exist; otherwise lore is null. A cat whose ticker is held in data/held.json (someone's
+ * character, 2026-10-02) is left out. New cats are recorded in data/announced.json as "held"
  * (no auto-posting yet); an existing record is never changed.
  *
  * The sanctuary's own launches survive a rebuild: a cat in the current data/adoptables.json with a
@@ -29,6 +30,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { validateAdoptables, tributeLine, STONK_PAIR, lorePath } from "../assets/ui/adoptables.js";
 import { STOCK_PAIRS } from "../assets/collection.js";
 import { coatFromLook } from "./lib/coat.mjs";
+import { readHeld } from "./build-planned.mjs";
 
 export class AdoptablesError extends Error { constructor(m) { super(m); this.name = "AdoptablesError"; } }
 const serialize = (v) => `${JSON.stringify(v, null, 2)}\n`;
@@ -138,10 +140,14 @@ export function buildAdoptables({ root, source, top = 25, checked = new Date().t
   if (!Array.isArray(rows)) throw new AdoptablesError(`${source} is not a list`);
   const fresh = [];
   const captions = loreCaptions(root);
+  // (a cat held in data/held.json stays out: since 2026-10-02 a company's or creator's character, as an invented planned cat)
+  const held = readHeld(root);
   for (const r of rows) {
     if (fresh.length >= top) break;
     if (!usable(r)) { log(`${r?.id}: skipped (${r?.confidence === "low" ? "low confidence" : "look not settled"}).`); continue; }
-    fresh.push(adoptableFrom(r, { root, captions }));
+    const cat = adoptableFrom(r, { root, captions });
+    if (held.has(cat.ticker)) { log(`${cat.ticker}: held back (data/held.json): ${held.get(cat.ticker)}`); continue; }
+    fresh.push(cat);
   }
   const picked = keepLaunches(fresh, currentCats(root), log);
   const planned = JSON.parse(fs.readFileSync(path.join(root, "data/planned.json"), "utf8"));

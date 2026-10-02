@@ -25,6 +25,10 @@
 # LAUNCH_MINT_GRIND_MINUTES (12, 1..30): how long one run scans for such an address before it goes on next run.
 # LAUNCH_OPEN (on unless "off"): real pets in viral or rising posts, and any cat a big account names,
 # launch without approval; "off" sends them to data/launch-approvals.json again.
+# LAUNCH_HOLDER_REWARDS (on unless "off"): a pump.fun coin is a holder rewards coin, whose creator fees pump.fun
+# pays to its holders (never to the launcher's wallet); "off" makes regular coins again.
+# LAUNCH_CHARACTERS (off unless "on"): a drawn or fictional cat (a cartoon, game, film or mascot character,
+# someone's trademark or copyright) launches only while it is "on"; off, only real cats launch.
 # LAUNCH_PUMP_QUOTE "on" opts in to pump.fun launches priced in a listed coin (unverified: no such launch
 # has been recorded); anything else keeps them off. A variable, never a secret.
 # The send step never spends the $CATSANC holders' SOL (the creator fees the Rewards workflow claimed for
@@ -107,6 +111,7 @@ jobs:
           LAUNCH_MAX_PER_DAY: ${{ vars.LAUNCH_MAX_PER_DAY }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
           LAUNCH_OPEN: ${{ vars.LAUNCH_OPEN }}
+          LAUNCH_CHARACTERS: ${{ vars.LAUNCH_CHARACTERS }}
           SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
         run: node scripts/launch.mjs prepare
       - name: Commit the prepared cat
@@ -168,6 +173,7 @@ jobs:
           LAUNCH_PRIORITY_MICROLAMPORTS: ${{ vars.LAUNCH_PRIORITY_MICROLAMPORTS }}
           LAUNCH_PUMP_QUOTE: ${{ vars.LAUNCH_PUMP_QUOTE }}
           LAUNCH_MINT_SUFFIX: ${{ vars.LAUNCH_MINT_SUFFIX }}
+          LAUNCH_HOLDER_REWARDS: ${{ vars.LAUNCH_HOLDER_REWARDS }}
           LAUNCH_MINT_GRIND_MINUTES: ${{ vars.LAUNCH_MINT_GRIND_MINUTES }}
           REWARDS_ENABLED: ${{ vars.REWARDS_ENABLED }}
           LAUNCH_WALLET_KEY: ${{ secrets.LAUNCH_WALLET_KEY }}

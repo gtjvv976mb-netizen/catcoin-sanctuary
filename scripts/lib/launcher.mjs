@@ -213,6 +213,9 @@ export function launchMode(env = {}) {
 export const pumpQuoteOptIn = (env = {}) => String(env.LAUNCH_PUMP_QUOTE ?? "").trim().toLowerCase() === "on";
 /** The owner's open launch rule (LAUNCH_OPEN, on unless "off"): real pets in viral or rising posts, and any cat a big account names, launch without approval. */
 export const openLaunches = (env = {}) => String(env.LAUNCH_OPEN ?? "").trim().toLowerCase() !== "off";
+/** The owner's character rule (LAUNCH_CHARACTERS, off unless "on"; 2026-10-02, after the legal review): a drawn or fictional
+    cat (a cartoon, game, film or mascot character: someone's trademark or copyright) launches only while it is on. */
+export const characterLaunches = (env = {}) => String(env.LAUNCH_CHARACTERS ?? "").trim().toLowerCase() === "on";
 
 /**
  * The caps, from the repository variables, each with its default when unset or not a number and
@@ -242,6 +245,9 @@ export function launchCaps(env = {}) {
     // without its "pump" so)
     mintSuffix: (() => { const s = String(env.LAUNCH_MINT_SUFFIX ?? "").trim(); if (!s) return DEFAULT_MINT_SUFFIX; if (/^(none|off)$/i.test(s)) return ""; if (MINT_SUFFIX.test(s)) return s; notes.push(`LAUNCH_MINT_SUFFIX ${JSON.stringify(s).slice(0, 20)} is not up to 6 base58 characters; "${DEFAULT_MINT_SUFFIX}" is used`); return DEFAULT_MINT_SUFFIX; })(),
     mintGrindMs: read("LAUNCH_MINT_GRIND_MINUTES", DEFAULT_MINT_GRIND_MINUTES, [1, 30]) * 60_000,
+    // A pump.fun coin is made a holder rewards coin (LAUNCH_HOLDER_REWARDS: on unless "off"; the owner, 2026-10-02: "make the
+    // coin distribute all rewards to holders"): pump.fun pays its creator fees to its holders, never to the launcher's wallet.
+    holderRewards: String(env.LAUNCH_HOLDER_REWARDS ?? "").trim().toLowerCase() !== "off",
     notes,
   };
 }
@@ -674,6 +680,8 @@ export function candidateRow(post, ctx) {
   if (r.sensitive !== false) return no("sensitive");
   if (post.known === true) return no("already in the sanctuary (the trend watch says so)");
   if (r.aboutOneCat !== true || !["real", "cartoon", "fiction"].includes(r.kind)) return no("not about one cat");
+  // (ctx.characters is the owner's switch, characterLaunches: false in every run while LAUNCH_CHARACTERS is off)
+  if (r.kind !== "real" && ctx.characters === false) return no(`a ${r.kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
   for (const k of ["catName", "coinName", "ticker", "lore"]) if (typeof r[k] !== "string" || !r[k].trim()) return no(`the reading has no ${k}`);
   const policy = policyOf(post, ctx);
   if (!policy) return no("not a watch-list cat: waits for the owner (data/launch-approvals.json)");
@@ -1380,6 +1388,7 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
     pumpQuotes: quotes.usable,
     pumpQuoteOptIn: pumpQuoteOptIn(env),
     open: openLaunches(env),
+    characters: characterLaunches(env),
     // The sanctuary's own cats (sanctuaryRow): the ones the announcer released, adoptions, lore captions, files on disk.
     queue: readOwned(io, FILES.queue, { cats: [] }, log),
     // Strict: unreadable or malformed is null (unknown), never "nobody adopted anything".
@@ -1849,7 +1858,7 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
   const attempt = async (r) => {
     const v = venueById(r.venue);
     const built = await v.build({ wallet: wallet.publicKey, mint: mint.publicKey, name: r.coinName, symbol: r.ticker, uri, pair: r.cat.pair, recentBlockhash: bh.blockhash,
-      computeUnitPriceMicroLamports: caps.priorityMicroLamports }, { fetchImpl, rpc, nowMs: now(), quotes: ctx.pumpQuotes, pumpQuoteOptIn: ctx.pumpQuoteOptIn });
+      computeUnitPriceMicroLamports: caps.priorityMicroLamports, holderReward: caps.holderRewards }, { fetchImpl, rpc, nowMs: now(), quotes: ctx.pumpQuotes, pumpQuoteOptIn: ctx.pumpQuoteOptIn });
     const unsigned = v.unsigned(built);
     const sim = await rpc.simulateTransaction(unsigned, { addresses: [wallet.publicKey] });
     const after = sim?.accounts?.[0]?.lamports;

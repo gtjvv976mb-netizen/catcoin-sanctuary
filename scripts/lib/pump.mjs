@@ -9,7 +9,11 @@
  * bytes), creator (a pubkey), is_mayhem_mode (bool), then three trailing arguments the program
  * reads as false / 0 when absent: is_cashback_enabled (OptionBool: one bool byte; deprecated, true
  * is rejected), creator_fee_bps (OptionU64: eight bytes) and is_holder_reward (OptionBool). This
- * module always writes all three, as false / 0 / false, exactly as the recorded launch does.
+ * module always writes all three: false / 0, and is_holder_reward as the launch asks (`holderReward`).
+ * A holder rewards coin (pump.fun's docs, HOLDER_REWARDS_README.md, read 2026-10-02): the creator fee
+ * of every trade is set aside for the coin's holders and paid out to them by pump.fun, never to a
+ * creator wallet; the same accounts, permanent. The `creator` argument is still the wallet (pump.fun
+ * records its own address on the curve instead).
  *
  * The sixteen accounts, every one reproduced from the recorded real launch
  * (tests/fixtures/pumpfun-create.json, tx 33Z62j…mwsmi, "Gull Gadot", 2026-09-24):
@@ -189,7 +193,7 @@ const borshString = (s) => {
  * name, symbol or uri that launchTextProblem refuses, a non-boolean mayhemMode, a quote that
  * quoteProblem refuses, and mayhem mode with a quote (the program refuses it: 6071).
  */
-export function createV2Instruction({ mint, user, creator, name, symbol, uri, mayhemMode = false, quote = null } = {}) {
+export function createV2Instruction({ mint, user, creator, name, symbol, uri, mayhemMode = false, quote = null, holderReward = false } = {}) {
   mint = address(mint, "the mint");
   user = address(user, "the user");
   creator = address(creator, "the creator");
@@ -198,6 +202,7 @@ export function createV2Instruction({ mint, user, creator, name, symbol, uri, ma
   const bad = launchTextProblem({ name, symbol, uri });
   if (bad) throw new RangeError(bad);
   if (typeof mayhemMode !== "boolean") throw new TypeError("mayhemMode is true or false");
+  if (typeof holderReward !== "boolean") throw new TypeError("holderReward is true or false");
   if (quote !== null && quoteProblem(quote)) throw new TypeError(quoteProblem(quote));
   if (quote !== null && mayhemMode) throw new Error("a coin-priced launch cannot be a mayhem-mode coin (6071)");
   if (quote !== null && [mint, user].includes(quote.mint)) throw new Error("the quote must be another coin");
@@ -208,7 +213,7 @@ export function createV2Instruction({ mint, user, creator, name, symbol, uri, ma
     Buffer.from([mayhemMode ? 1 : 0]),
     Buffer.from([0]),        // is_cashback_enabled: OptionBool(false) (deprecated; true is rejected)
     Buffer.alloc(8),         // creator_fee_bps: OptionU64(0), the standard fee schedule
-    Buffer.from([0]),        // is_holder_reward: OptionBool(false), a regular coin
+    Buffer.from([holderReward ? 1 : 0]),  // is_holder_reward: OptionBool: true, its creator fees go to its holders
   ]);
   return { programId: PUMP.program, keys: createV2Accounts(mint, user, quote), data: new Uint8Array(data) };
 }
@@ -281,7 +286,7 @@ function listedQuote(quote, quotes) {
  * Throws on anything create_v2 or the fee guard refuses.
  */
 export function buildLaunchTransaction({
-  wallet, mint, name, symbol, uri, recentBlockhash, quote = null, quotes = [],
+  wallet, mint, name, symbol, uri, recentBlockhash, quote = null, quotes = [], holderReward = false,
   computeUnitLimit = quote === null ? LAUNCH_DEFAULTS.computeUnitLimit : QUOTE_LAUNCH_COMPUTE_UNIT_LIMIT,
   computeUnitPriceMicroLamports = LAUNCH_DEFAULTS.computeUnitPriceMicroLamports,
 } = {}) {
@@ -301,14 +306,14 @@ export function buildLaunchTransaction({
   const instructions = [
     setComputeUnitLimit(computeUnitLimit),
     setComputeUnitPrice(price),
-    createV2Instruction({ mint, user: wallet, creator: wallet, name, symbol, uri, quote: q }),
+    createV2Instruction({ mint, user: wallet, creator: wallet, name, symbol, uri, quote: q, holderReward }),
   ];
   const message = compileLegacyMessage({ payer: wallet, recentBlockhash, instructions });
   const signers = message.accountKeys.slice(0, message.header.numRequiredSignatures);
   const size = 1 + 64 * signers.length + message.bytes.length;
   if (size > PACKET_DATA_SIZE) throw new RangeError(`the launch would be ${size} bytes; Solana takes at most ${PACKET_DATA_SIZE}`);
-  checkLaunchMessage(message.bytes, { wallet, mint, quote: q });
-  return Object.freeze({ messageBytes: message.bytes, signers, instructions, wallet, mint, quote: q, message });
+  checkLaunchMessage(message.bytes, { wallet, mint, quote: q, holderReward });
+  return Object.freeze({ messageBytes: message.bytes, signers, instructions, wallet, mint, quote: q, holderReward, message });
 }
 
 /**
@@ -322,7 +327,7 @@ export function buildLaunchTransaction({
  * 1,400,000) are assumed, never less than the runtime's default. Returns the decoded create_v2
  * arguments; throws with the reason otherwise.
  */
-export function checkLaunchMessage(messageBytes, { wallet, mint, quote = null } = {}) {
+export function checkLaunchMessage(messageBytes, { wallet, mint, quote = null, holderReward = false } = {}) {
   const msg = decodeLegacyMessage(messageBytes);
   const signers = msg.accountKeys.slice(0, msg.header.numRequiredSignatures);
   if (signers.length !== 2 || signers[0] !== wallet || signers[1] !== mint) throw new Error("the signers are not [wallet, mint]");
@@ -356,7 +361,8 @@ export function checkLaunchMessage(messageBytes, { wallet, mint, quote = null } 
   }
   const args = decodeCreateV2(create.data);
   if (args.creator !== wallet) throw new Error("create_v2's creator is not the wallet");
-  if (args.isMayhemMode || args.isCashbackEnabled || args.creatorFeeBps !== 0n || args.isHolderReward) throw new Error("create_v2 turns on an option a launch leaves off");
+  if (args.isMayhemMode || args.isCashbackEnabled || args.creatorFeeBps !== 0n) throw new Error("create_v2 turns on an option a launch leaves off");
+  if (args.isHolderReward !== (holderReward === true)) throw new Error(`create_v2 ${args.isHolderReward ? "makes" : "does not make"} a holder rewards coin, which this launch ${holderReward ? "is" : "is not"}`);
   const bad = launchTextProblem(args);
   if (bad) throw new Error(bad);
   return args;
@@ -374,7 +380,7 @@ export function signLaunchTransaction(built, walletKeypair, mintKeypair) {
   if (walletKeypair?.publicKey !== built.wallet) throw new Error("the wallet keypair is not the launch's wallet");
   if (mintKeypair?.publicKey !== built.mint) throw new Error("the mint keypair is not the launch's mint");
   const messageBytes = Uint8Array.from(built.messageBytes); // what is checked is what is signed and sent
-  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint, quote: built.quote ?? null });
+  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint, quote: built.quote ?? null, holderReward: built.holderReward === true });
   const signatures = signTransaction(messageBytes, [walletKeypair, mintKeypair]);
   return Buffer.from(serializeTransaction(messageBytes, signatures)).toString("base64");
 }
@@ -388,7 +394,7 @@ export function signLaunchTransaction(built, walletKeypair, mintKeypair) {
 export function unsignedLaunchTransaction(built) {
   if (!built || !(built.messageBytes instanceof Uint8Array)) throw new TypeError("unsignedLaunchTransaction takes what buildLaunchTransaction returned");
   const messageBytes = Uint8Array.from(built.messageBytes);
-  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint, quote: built.quote ?? null });
+  checkLaunchMessage(messageBytes, { wallet: built.wallet, mint: built.mint, quote: built.quote ?? null, holderReward: built.holderReward === true });
   return Buffer.from(serializeTransaction(messageBytes, [0, 1].map(() => new Uint8Array(64)))).toString("base64");
 }
 

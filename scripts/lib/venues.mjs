@@ -88,8 +88,8 @@ export const PUMP_SOL = registerVenue({
   pairProblem: (pair) => (pair?.mint === SOL_PAIR.mint && pair?.symbol === SOL_PAIR.symbol && Object.keys(pair).length === 2 ? null : "a pump.fun launch in SOL is priced in SOL"),
   textProblem: ({ name, symbol, uri }) => launchTextProblem({ name, symbol, uri }),
   metadata,
-  build: async ({ wallet, mint, name, symbol, uri, recentBlockhash, computeUnitPriceMicroLamports }) =>
-    buildPump({ wallet, mint, name, symbol, uri, recentBlockhash, ...priceText(computeUnitPriceMicroLamports) }),
+  build: async ({ wallet, mint, name, symbol, uri, recentBlockhash, computeUnitPriceMicroLamports, holderReward = false }) =>
+    buildPump({ wallet, mint, name, symbol, uri, recentBlockhash, holderReward, ...priceText(computeUnitPriceMicroLamports) }),
   unsigned: (built) => unsignedPump(built),
   sign: (built, walletKeypair, mintKeypair) => signPump(built, walletKeypair, mintKeypair),
   prove: (tx, { wallet }) => proveLaunchPump(tx, { wallet }),
@@ -133,11 +133,11 @@ export const PUMP_QUOTE = registerVenue({
     : pair.mint === SOL_PAIR.mint || STOCK_PAIRS.some((s) => s.mint === pair.mint) ? "a coin-priced pump.fun launch is priced in neither SOL nor a stock pair" : null),
   textProblem: ({ name, symbol, uri }) => launchTextProblem({ name, symbol, uri }),
   metadata,
-  build: async ({ wallet, mint, name, symbol, uri, pair, recentBlockhash, computeUnitPriceMicroLamports }, { quotes = [], pumpQuoteOptIn = false } = {}) => {
+  build: async ({ wallet, mint, name, symbol, uri, pair, recentBlockhash, computeUnitPriceMicroLamports, holderReward = false }, { quotes = [], pumpQuoteOptIn = false } = {}) => {
     if (pumpQuoteOptIn !== true) throw new Error("the owner has not opted in to coin-priced pump.fun launches (LAUNCH_PUMP_QUOTE)");
     const listed = (Array.isArray(quotes) ? quotes : []).find((q) => q?.mint === pair.mint);
     if (!listed || listed.symbol !== pair.symbol) throw new Error(`${pair.symbol} is not a coin data/pump-quotes.json lists under that symbol`);
-    return buildPump({ wallet, mint, name, symbol, uri, recentBlockhash, quote: { mint: pair.mint }, quotes, ...priceText(computeUnitPriceMicroLamports) });
+    return buildPump({ wallet, mint, name, symbol, uri, recentBlockhash, quote: { mint: pair.mint }, quotes, holderReward, ...priceText(computeUnitPriceMicroLamports) });
   },
   unsigned: (built) => unsignedPump(built),
   sign: (built, walletKeypair, mintKeypair) => signPump(built, walletKeypair, mintKeypair),

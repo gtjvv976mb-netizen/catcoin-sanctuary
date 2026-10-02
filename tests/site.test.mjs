@@ -16,7 +16,7 @@ import { loadResidents } from "../assets/residents.js";
 import { normalize, isLaunched } from "../assets/ui/data.js";
 import { createCard, badgeFor } from "../assets/ui/card.js";
 import { createFinder } from "../assets/ui/finder.js";
-import { fetchRewards, checkLedger, checkState, createRewards } from "../assets/ui/rewards.js";
+import { fetchRewards, checkLedger, checkState, createRewards, REWARDS_OFF } from "../assets/ui/rewards.js";
 import { jpegInfo } from "../scripts/build-planned.mjs";
 
 const SITE = "https://catcoinsanctuary.com/";
@@ -302,7 +302,9 @@ test("page weight: the first view stays within budget", () => {
   // is) and the hooks it uses: the terrain's swappable textures, bark and the tree models in flora.js, the
   // swappable props kept apart in garden.js and scenery.js, research.js following a new cottage. Its textures
   // and models are fetched by path afterwards, so they are not in this budget at all.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1160 * 1024, "the page's own scripts over 1160 KB");
+  // (Then, 2026-10-02, to 1165 KB (1161 KB measured): the real photo beside our version on a card, the big cats' bigOf at
+  // 1.2x, and the Holder rewards section's "switched off" line while the rewards are not running.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1165 * 1024, "the page's own scripts over 1165 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
@@ -546,8 +548,18 @@ test("the Holder rewards section reads the shipped rewards files from this site 
   assert.ok(checkState(data.state), "data/rewards/state.json reads on the page");
   const root = new Element("section");
   const contract = JSON.parse(read("data/socials.json")).contract || null;
-  createRewards(root, { contract, now: () => NOW }).setData(data);
-  assert.match(root.textContent, /^Holder rewardsNot financial advice\./);
+  const section = createRewards(root, { contract, now: () => NOW });
+  section.setData(data);
+  // While the Rewards workflow has never run (state.json records no rules), only the "switched off" line shows: nothing
+  // about payouts is offered (the owner, 2026-10-02, after the legal review: keep rewards off).
+  const shown = (n) => [...n.children].filter((c) => !c.hidden).map((c) => c.textContent).join("");
+  if (!data.state.rules) {
+    assert.equal(shown(root), `Holder rewards${REWARDS_OFF}`);
+    assert.match(REWARDS_OFF, /switched off.*none are promised/);
+  }
+  // Running (the rules recorded), the whole section shows.
+  section.setData({ ...data, state: { ...data.state, rules: { holderSharePct: 100, everyDays: 7, releasePct: 50, closeUsd: 100, walletCapPct: 10, minBalancePpm: 100, minPayoutLamports: "1000000", minClaimLamports: "10000000" } } });
+  assert.match(shown(root), /^Holder rewardsNot financial advice\./);
   assert.match(root.textContent, /Hold \$CATSANC, earn SOL\..*Older tokens earn more\..*Every 7 days,/);
   assert.match(root.textContent, /Creator fees claimed[\d.,]+ SOLPaid to holders[\d.,]+ SOLWaiting for holders[\d.,]+ SOLNext payout/);
   assert.ok(!/could not be read/.test(root.textContent));
