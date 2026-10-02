@@ -2,6 +2,151 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2105789767132615061",
+      "url": "https://x.com/ATXsiameseRescu/status/2105789767132615061",
+      "name": "Cupsey",
+      "coinName": "Cupsey",
+      "ticker": "CUPSEYCAT",
+      "venue": "pump-sol",
+      "policy": "approved",
+      "kind": "real",
+      "lore": "Cupsey is a rescue Siamese kitten who kept climbing into his human's coffee cup, so they named him Cupsey",
+      "image": "https://pbs.twimg.com/amplify_video_thumb/2105781134009266176/img/LCE4_dUkjvPiBCoC.jpg",
+      "coinImage": "https://pbs.twimg.com/amplify_video_thumb/2105781134009266176/img/LCE4_dUkjvPiBCoC.jpg",
+      "metadataPath": "coins/2105789767132615061.json",
+      "status": "launched",
+      "preparedAt": "2026-10-02T01:32:00Z",
+      "attempts": 1,
+      "cat": {
+        "id": "cupsey",
+        "ticker": "CUPSEYCAT",
+        "name": "Cupsey",
+        "coinName": "Cupsey",
+        "owner": "Austin Siamese Rescue",
+        "category": "viral",
+        "story": "Cupsey is a rescue Siamese kitten who kept climbing into his human's coffee cup, so they named him Cupsey. Cupsey was trending on X on October 1, 2026, and the sanctuary gave it a coin.",
+        "look": "Cupsey, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/ATXsiameseRescu/status/2105789767132615061",
+          "author": "ATXsiameseRescu",
+          "handle": "ATXsiameseRescu",
+          "date": "2026-10-01",
+          "dateType": "posted",
+          "text": "Well… the first baby from Sasha’s litter officially has a name 😂🤍 This little guy has been obsessed with Sarah, our co-owner, since day one. If he wasn’t trying to climb into her lap, he was finding his way onto her desk while she worked. And somehow, every single time, he kept ending up inside her coffee cup. ☕🐱 After catching him in there more than once, we decided the name was basically choosing itself. Meet Cupsey. 🥹🤍 We thought it was cute, a little silly, and honestly perfect for him. 1 kitten named… 4 more to go. 😂",
+          "note": "Found by the sanctuary's trend watch on 2026-10-02.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Austin Siamese Rescue.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "medium",
+        "lore": null
+      },
+      "photoCredit": true,
+      "mintNonce": 24660333,
+      "tx": "2geFmPiv4byx6EXjwUEeGPVyUHUfEyjJbHZGkbQyohfmpPUV18NfB5PJucRsyoydkwcVfZCjf7wNvP1bUriYA2ms",
+      "sentAt": "2026-10-02T01:43:43Z",
+      "lastValidBlockHeight": 430504490,
+      "mintPublic": "5ZQoP7QN2ejpksPX4TBsyrgsrWDA6FprpytCNFQRpump",
+      "spentLamports": 5470680,
+      "settledAt": "2026-10-02T01:43:52Z",
+      "launchedAt": "2026-10-02T01:43:43Z",
+      "recordedAt": "2026-10-02T01:43:55Z"
+    },
+    {
+      "postId": "2105786810961973509",
+      "url": "https://x.com/catcosanctuary/status/2105786810961973509",
+      "name": "Genesis Cat",
+      "coinName": "Genesis Cat",
+      "ticker": "QCGENESIS",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "cartoon",
+      "lore": "Genesis Cat, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/QCGENESIS.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/QCGENESIS.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2105786810961973509.json",
+      "status": "failed",
+      "preparedAt": "2026-10-02T01:22:11Z",
+      "attempts": 0,
+      "cat": {
+        "id": "genesis-cat-quantum-cats",
+        "ticker": "QCGENESIS",
+        "name": "Genesis Cat",
+        "coinName": "Genesis Cat",
+        "owner": "Taproot Wizards / Quantum Cats (Udi Wertheimer, Eric Wall); art by co-founder Francisco 'FAR' Alarcon (@0xfar)",
+        "category": "crypto",
+        "story": "Genesis Cat is the only 1-of-1 artwork in Quantum Cats, a collection of 3,333 cats that Taproot Wizards inscribed on Bitcoin as Ordinals in January 2024. The collection honours OP_CAT, an opcode Satoshi shipped in Bitcoin's first release that was later disabled. The cats were inscribed ahead of time with future versions meant to evolve alongside the OP_CAT proposal, and the collection's X account says they are 'on a mission to save satoshi's pet, OP_CAT'. Genesis Cat was hand-crafted by Taproot Wizards artist and co-founder Francisco 'FAR' Alarcon. On X it is called 'the origin of all cats', the one that 'freed the 3,333 Quantum Cats from the quantum realm'. Sotheby's chose it for its first Ordinals curated sale, 'Natively Digital', where it sold on 22 January 2024.",
+        "look": "A glowing, airbrushed cosmic digital painting. A large sitting cat silhouette with two pointed ears, built entirely from iridescent pearly soap bubbles. Each bubble holds a tiny neon Quantum Cat face; a few hold a Bitcoin logo, an atom, a lightning bolt or a banana. Black star field, a bright four-point sparkle at upper right. Eyes: two hot-pink/red neon X marks (the 'dead' side of dead-or-alive) over a pink-red nebula glow. A soft glowing pink nose and three or four long orange-gold neon whiskers fanning out on each side. Not a real animal, no fur pattern: a bubble-and-galaxy cat.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/QuantumCats/status/1745824349293092904",
+          "author": "QuantumCats",
+          "handle": "QuantumCats",
+          "date": "2024-01-12",
+          "dateType": "posted",
+          "text": "gmeow. meet the Quantum Cats by @TaprootWizards! 🫧 3,333 cats on bitcoin. dead or alive 🫧 on a mission to save satoshi’s pet, OP_CAT 🫧 the artwork evolves over time! 🫧 1-of-1 “Genesis Cat” featured on @Sothebys details on getting a quantum cat at the end of this thread 👇",
+          "note": "Verified on 2026-09-26",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "FAR for Taproot Wizards | Genesis Cat | Natively Digital: An Ordinals Curated Sale, Lot 4 (Sotheby's)",
+            "url": "https://www.sothebys.com/en/buy/auction/2024/natively-digital-an-ordinals-curated-sale/genesis-cat"
+          },
+          {
+            "label": "Bitcoin-Based Digital Art Image 'Genesis Cat' Sells for $254K in Sotheby's Auction (CoinDesk)",
+            "url": "https://www.coindesk.com/tech/2024/01/22/bitcoin-based-digital-art-image-genesis-cat-sells-for-254k-in-sothebys-auction"
+          },
+          {
+            "label": "Taproot Wizards Launch Quantum Cats Collection As Bitcoin Inscriptions (Decrypt)",
+            "url": "https://decrypt.co/212594/taproot-wizards-launch-quantum-cats-bitcoin-ordinals-collection"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "GENESIS",
+          "contract": "HwJUwwWcZKRwCgj4mJc5kyxykcW9uTuieKuZmSFeB1QB",
+          "mcapUsd": 3136
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Taproot Wizards / Quantum Cats (Udi Wertheimer, Eric Wall); art by co-founder Francisco 'FAR' Alarcon (@0xfar).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/QCGENESIS.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "reason": "held back by the owner before it was sent: Genesis Cat is Taproot Wizards' Quantum Cats character (someone's trademark or copyright); nothing was signed or sent",
+      "retry": false,
+      "settledAt": "2026-10-02T01:35:00Z"
+    },
+    {
       "postId": "2105822158043980147",
       "url": "https://x.com/catcosanctuary/status/2105822158043980147",
       "name": "Jinx",
@@ -15,9 +160,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/MAYORJINX.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105822158043980147.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-02T00:50:41Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "jinx-bigfootjinx",
         "ticker": "MAYORJINX",
@@ -75,7 +220,15 @@
         "confidence": "high",
         "lore": null
       },
-      "mintNonce": 18905424
+      "mintNonce": 18905424,
+      "tx": "5ej4ksGPBrrC5ce5wf52L88QWCq7oiCMUeRVZKddjoE1ycgZMiifxnA78jkd5BWBKGrdu2y4mpqK5V9bpwsikurR",
+      "sentAt": "2026-10-02T01:19:04Z",
+      "lastValidBlockHeight": 430498951,
+      "mintPublic": "G4LCDEKbsjdfHF3eL4HBxoXLWcdGDz4PB8xApzbrpump",
+      "spentLamports": 5460520,
+      "settledAt": "2026-10-02T01:19:13Z",
+      "launchedAt": "2026-10-02T01:19:04Z",
+      "recordedAt": "2026-10-02T01:19:14Z"
     },
     {
       "postId": "2105803551884890433",
