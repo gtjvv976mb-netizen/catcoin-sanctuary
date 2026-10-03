@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-03T08:04:32.783Z",
- "lens": "big",
- "query": "(from:TheEllenShow OR from:jimmyfallon OR from:ConanOBrien OR from:KevinHart4real OR from:Cristiano OR from:neymarjr OR from:KingJames OR from:BillGates OR from:MrBeast OR from:KSI OR from:NASA OR from:SpaceX OR from:Tesla OR from:netflix OR from:Disney OR from:Pixar OR from:Marvel OR from:YouTube OR from:instagram OR from:Google OR from:OpenAI) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
+ "checkedAt": "2026-10-03T08:44:38.873Z",
+ "lens": "figures",
+ "query": "((\"Garfield\" (cat OR cats OR kitten OR kitty)) OR \"Grumpy Cat\" OR \"Tardar Sauce\" OR \"Nyan Cat\" OR \"Keyboard Cat\" OR \"Doraemon\" OR \"Tom and Jerry\" OR \"Top Cat\" OR \"Heathcliff the Cat\" OR (\"Jiji\" (cat OR cats OR kitten OR kitty)) OR \"Duchess the cat\" OR \"Toulouse the cat\" OR \"Berlioz the cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-03",
-  "dayUsed": 173,
+  "dayUsed": 193,
   "month": "2026-10",
-  "monthUsed": 801,
+  "monthUsed": 821,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -806,10 +806,10 @@
   }
  ],
  "state": {
-  "nextLens": 3,
+  "nextLens": 0,
   "bigChunk": 5,
-  "figureChunk": 0,
-  "lastLens": "big",
+  "figureChunk": 1,
+  "lastLens": "figures",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
