@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106429411725811936",
+      "url": "https://x.com/catcosanctuary/status/2106429411725811936",
+      "name": "Sir Indiana Bones",
+      "coinName": "Sir Indiana Bones",
+      "ticker": "INDYBONES",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Sir Indiana Bones ('Indy') is the black cat of the Museum of Osteology in Oklahoma City.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/INDYBONES.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/INDYBONES.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106429411725811936.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-03T17:08:07Z",
+      "attempts": 0,
+      "cat": {
+        "id": "sir-indiana-bones",
+        "ticker": "INDYBONES",
+        "name": "Sir Indiana Bones",
+        "coinName": "Sir Indiana Bones",
+        "owner": "Skeletons: Museum of Osteology / Skulls Unlimited, Oklahoma City (@SirIndianaBones)",
+        "category": "company",
+        "story": "Sir Indiana Bones ('Indy') is the black cat of the Museum of Osteology in Oklahoma City. Staff adopted him from the Moore animal shelter in 2019 after he kept grabbing a staff member's shirt. He earned the 'Sir' because staff kept saying 'sir no, get down' when he climbed on skulls and displays. Photos of him patrolling the skeleton halls after hours went viral; his Instagram jumped from 19,000 to over 30,000 followers in a week, he passed 100,000 on TikTok, and in May 2023 he was named the museum's Employee of the Month.",
+        "look": "Sleek all-black short-haired cat with large yellow-green eyes, upright ears and a slim build; wears a collar with a round silver tag; often seen strolling beneath whale and animal skeletons.",
+        "coat": {
+          "base": "black",
+          "second": "",
+          "pattern": "solid",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/SirIndianaBones/status/1654870919012130816",
+          "author": "SirIndianaBones",
+          "handle": "SirIndianaBones",
+          "date": "2023-05-06",
+          "dateType": "posted",
+          "text": "I was pawsitivly shocked to find out I received employee of the month. Mostly I was just glad there was tuna. 🐟 🐾 #MVP #Boneheads #SirIndianaBones #IndianaBones #IndyB #blackcatsoftwitter #catsofinstwitter #blackcat #black_cat_crew #cat #void #adoptdontshop #catswithjobs",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Museum Cat, Sir Indiana Bones, Becomes Internet Famous - News 9",
+            "url": "https://www.news9.com/story/6477de1367979e0e2df2f732/museum-cat-sir-indiana-bones-becomes-internet-famous"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Indy",
+          "contract": "GdWoeXapPkBLJXWHyS5EMUNhW1awM76zeCKds3Tgpump",
+          "mcapUsd": 0
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Skeletons: Museum of Osteology / Skulls Unlimited, Oklahoma City (@SirIndianaBones).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/INDYBONES.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "SirIndianaBones"
+    },
+    {
       "postId": "2106410534169985264",
       "url": "https://x.com/catcosanctuary/status/2106410534169985264",
       "name": "Sybil",
