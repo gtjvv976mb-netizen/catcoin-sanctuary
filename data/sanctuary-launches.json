@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/KENCHAN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106443761014452685.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-03T18:00:43Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "ken-chan-onomichi-museum",
         "ticker": "KENCHAN",
@@ -63,7 +63,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "bijutsu1"
+      "feesTo": "bijutsu1",
+      "mintNonce": 5796462,
+      "tx": "66cDDEfe3xV9CoEYuBAyMj2Vz9P8DGUQuuJmabJ5GSLTHjBebaMXLtfZ7gsmrgbox1nuskngjsMhgw8YkHhjkzUG",
+      "sentAt": "2026-10-03T18:09:43Z",
+      "lastValidBlockHeight": 431048677,
+      "mintPublic": "53UeD1iKqEqXAcRqhfgoCaFXwToPAGTtVsn817rLcats",
+      "spentLamports": 5633240,
+      "settledAt": "2026-10-03T18:09:52Z",
+      "launchedAt": "2026-10-03T18:09:43Z"
     },
     {
       "postId": "2106429411725811936",
@@ -140,7 +148,10 @@
       "spentLamports": 5607840,
       "settledAt": "2026-10-03T17:17:27Z",
       "launchedAt": "2026-10-03T17:17:18Z",
-      "recordedAt": "2026-10-03T17:17:34Z"
+      "recordedAt": "2026-10-03T17:17:34Z",
+      "feeRoute": {
+        "at": "2026-10-03T18:02:52Z"
+      }
     },
     {
       "postId": "2106410534169985264",
