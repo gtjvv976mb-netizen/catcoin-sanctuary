@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/HANK4SEN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106378719254245523.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-03T13:42:20Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "hank-the-cat-senate",
         "ticker": "HANK4SEN",
@@ -67,9 +67,14 @@
         "confidence": "high",
         "lore": null
       },
-      "mintGrind": {
-        "next": 35720001
-      }
+      "mintNonce": 50359235,
+      "tx": "2HTKWq9SYK6eKr8ArTMiJMsBLsi399sCVweYZqDxg1PCDRQe9PDCtDcEzvFCLgwoBu5ZKGSxC4WEU5odguC3TvY6",
+      "sentAt": "2026-10-03T15:59:41Z",
+      "lastValidBlockHeight": 431019685,
+      "mintPublic": "7q6g3H1Azf6GKGsBS1PbXDMXb8rWnH8JB4g7R4yQcats",
+      "spentLamports": 5592600,
+      "settledAt": "2026-10-03T15:59:51Z",
+      "launchedAt": "2026-10-03T15:59:41Z"
     },
     {
       "postId": "2106364666020548920",
