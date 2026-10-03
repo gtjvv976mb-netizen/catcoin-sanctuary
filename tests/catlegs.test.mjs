@@ -22,8 +22,8 @@ test("squared-stance (and checked) cat models stand on exactly four legs", () =>
   for (const key of square) {
     const file = path.join(ROOT, "assets/models/cats", `${key}.glb`);
     if (!fs.existsSync(file)) { bad.push(`${key}: no model`); continue; }
-    const { legs, columns } = legColumns(readGlbMesh(file, THREE, fs).pos);
-    if (legs !== 4) bad.push(`${key}: ${legs} legs (${columns.map((c) => `${c.x.toFixed(2)},${c.z.toFixed(2)}`).join(" ")})`);
+    const { legs, sides } = legColumns(readGlbMesh(file, THREE, fs).pos);
+    if (legs !== 4 || sides[0] !== 2) bad.push(`${key}: ${legs} legs (${sides.join(" + ")} a side)`);
   }
   assert.deepEqual(bad, []);
 });

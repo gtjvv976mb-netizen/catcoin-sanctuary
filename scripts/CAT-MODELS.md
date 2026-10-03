@@ -229,7 +229,7 @@ failed, have had models since the third run.
 - Most multi-view models made since 2026-09-30 had a fifth leg: the standing reference and the side views showed
   the cat mid-stride (a near hind leg stepped forward), the left and right views disagreed about where the hind
   legs stand, and Tripo built both. The herd test did not catch it (a fifth leg is skinned to the body and does
-  not tear). `scripts/lib/legcount.mjs` counts the leg columns a model stands on (a slice at 8-14% of its height);
+  not tear). `scripts/lib/legcount.mjs` counts the legs a model stands on (leg columns along each side, in a slice at 5-15% of its height);
   tests/catlegs.test.mjs holds every model whose job entry says `stance: "square"` to exactly four.
 - The standing reference now asks for the cat "standing square and still like a show cat being judged: exactly
   four legs, all four legs straight and vertical like table legs, the two front legs side by side and the two
