@@ -1222,61 +1222,41 @@
   }
  },
  "PUSHEENX": {
-  "image_job": "036a3ef0-9a08-47ce-8e95-bc76f0bb2f3a",
-  "clean_job": "e344c945-eb82-45df-a998-ca6255179478",
-  "pose": "standing on all fours",
-  "hd": true,
-  "q": 78,
-  "model_job": "01a0df35-8324-7255-8d6d-332952ea2a9a",
-  "model": "meshy retexture (hunyuan3d_v3_image_to_3d (multiview front,left,back,right))",
-  "url": "https://assets.meshy.ai/b3b11175-d5b1-4fd9-b9f1-9aa8e2af7783/tasks/01a0df35-8324-7255-8d6d-332952ea2a9a/output/model.glb?Expires=1790710570&Signature=ITw6AjHCguk6mJqm2E2qHfMQhLJR-Pmx76IDraYLf3dco2MfAO9XWEXMyhgBgl0nc4nakqaoHzsV2fMmRkxzsw6Ml6itxzZRU0uYgvn3kqMu8HazJUTaTV0pRuVn~LLYiCNc-zFOL8EdK~Z4CccMI2Qfl6hzhLPwXZubEHQ9bosPnZRdpZF-yOrgsTySAHzvFLK2A4nzhCFoLUaky2W~CgJp7RqtBZ7o98qP42KNTsB54-UYyZWNs7-OvZkWVY7mnJZ5QjCXLbW1Q5j~5YHIFChtrwZmGI3fVqtWfjY-EUf1OKWCidD7LhFd9ewkE36dCCRj0JEf1lLLQmQEUyq9Bw__&Key-Pair-Id=K1VGYTHIYLM9UM",
-  "status": "done",
-  "previous": {
-   "image_job": "036a3ef0-9a08-47ce-8e95-bc76f0bb2f3a",
-   "clean_job": "e344c945-eb82-45df-a998-ca6255179478",
-   "view_jobs": {
-    "front": "16b92fc4-bedd-4be7-9461-52aee3ea1e12",
-    "left": "7b56c312-6404-41fd-a01c-cf60a820efdf",
-    "back": "f1dd627e-a51b-4c46-9e0f-6b357fb710ad",
-    "right": "2121c241-6844-47d4-8986-bb38b4e25561"
-   },
-   "model_job": "092b9719-c33c-4571-8de4-7b55b58b7971",
-   "model": "hunyuan3d_v3_image_to_3d (multiview front,left,back,right)",
-   "faces": "~500k raw, packed ~20k",
-   "pose": "standing on all fours",
-   "source": "adoptable (realistic portrait from the real cat's proof photo)",
-   "status": "done",
-   "hd": true,
-   "si": 0.04,
-   "si_lo": 0.01,
-   "tex": 2048,
-   "tex_lo": 256,
-   "q": 78,
-   "credits": 16.25,
-   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260926_073619_092b9719-c33c-4571-8de4-7b55b58b7971.glb",
-   "sizes": {
-    "hi": 565360,
-    "lo": 123400
-   },
-   "dims": {
-    "len": 1.4053,
-    "height": 1,
-    "width": 0.8259
-   }
+  "si_lo": 0.006,
+  "image_job": "fe1554e2-8e65-48ab-8c83-573e4a44045f",
+  "clean_job": "0e4739fb-c5e6-41fe-86fc-8dced5418186",
+  "view_jobs": {
+   "front": "db747255-ccd3-4f7c-9637-4f0c880e3162",
+   "left": "0649f079-f372-4ce5-a76d-5fc7c2084229",
+   "back": "ec590485-b2dd-40bd-95a4-7bf19ca2cd59",
+   "right": "80c7a2da-f034-4f2f-a7e8-5555ef1c8488"
   },
-  "si": 0.05,
+  "model_job": "7e4d1b35-8707-4503-801f-cc07cdea6bdc",
+  "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
+  "faces": "adaptive raw, packed ~20k",
+  "pose": "standing square on all four legs",
+  "stance": "square",
+  "status": "done",
+  "hd": true,
+  "si": 0.02,
   "tex": 1024,
-  "si_lo": 0.02,
   "tex_lo": 256,
+  "q": 88,
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150308_7e4d1b35-8707-4503-801f-cc07cdea6bdc.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "01a0df35-8324-7255-8d6d-332952ea2a9a",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 585032,
-   "lo": 216904
+   "hi": 1022244,
+   "lo": 223384
   },
   "dims": {
-   "len": 1.4053,
-   "height": 1,
-   "width": 0.8259
-  }
+   "len": 1.0495,
+   "height": 1.0,
+   "width": 0.4731
+  },
+  "sa_lo": true
  },
  "KPURRY": {
   "image_job": "01a0df1e-3166-750e-a5cb-df263a8a99c3",
@@ -5351,39 +5331,41 @@
   "sa_lo": true
  },
  "MARUOCAT": {
-  "image_job": "58690b84-7d1e-4d37-a045-288ccea6c9a1",
-  "clean_job": "bdccdd19-1abe-4f72-9acb-a87fb31180a4",
+  "sa_lo": true,
+  "si_lo": 0.006,
+  "image_job": "0b20898e-6b45-4cfe-b93b-8f38217cbcd8",
+  "clean_job": "93cc1f7b-f7e1-47aa-a090-adddabba0a28",
   "view_jobs": {
-   "front": "fe96651f-8ec7-4201-baa2-7739768a67ad",
-   "left": "e9454885-a7ec-47a2-97e8-d23791cd5be1",
-   "back": "3d6a373a-5369-43f1-a1ab-8d7e6c7c2057",
-   "right": "3aa42b87-547b-4579-9cb2-ddb5095ec0d4"
+   "front": "0a689f00-5a69-4b03-95c1-76128dbcfbcc",
+   "left": "06596002-255d-4fcd-bc92-3d3c1b2aaba9",
+   "back": "bded118f-a495-4a62-9f89-52db5ab29530",
+   "right": "9c19d4ca-55db-49ec-bc17-b53b918405a5"
   },
-  "model_job": "c937f33a-d220-40fb-b874-2db9016ecdda",
+  "model_job": "7d9653a7-e176-4a9a-8034-fbbf37588588",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.006,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_130259_c937f33a-d220-40fb-b874-2db9016ecdda.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150249_7d9653a7-e176-4a9a-8034-fbbf37588588.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "c937f33a-d220-40fb-b874-2db9016ecdda",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 855752,
-   "lo": 180228
+   "hi": 834456,
+   "lo": 207648
   },
   "dims": {
-   "len": 1.4602,
+   "len": 0.9755,
    "height": 1.0,
-   "width": 0.4507
-  },
-  "prev_model_job": "319ab2f3-3f97-4064-ad17-ed826c63d34d",
-  "sa_lo": true
+   "width": 0.3225
+  }
  },
  "NEKOSAMA": {
   "image_job": "48bca0df-e829-4289-9afa-e18d5eba40c4",
@@ -5692,38 +5674,40 @@
   "prev_model_job": "0f44a830-beeb-49b9-b217-19889e0b14cb"
  },
  "CHIKUWACAT": {
-  "image_job": "cb471436-38a6-48e3-8c81-45fc4d74cfac",
-  "clean_job": "47d9b6dd-d075-4855-b1b7-97a46d25a5bb",
+  "si_lo": 0.003,
+  "image_job": "1d8221e7-6f1f-4b3a-8f25-23344aa80b87",
+  "clean_job": "c143eda4-cdbd-41fb-a825-ed640728099c",
   "view_jobs": {
-   "front": "5dc5c045-5d9c-4b7a-96c0-dd1a7c72eb4f",
-   "left": "e1ffb6a2-1915-4936-9455-7a98bf355c78",
-   "back": "a5149c75-5cd8-49d1-94df-d9a6e42f6574",
-   "right": "d767474a-dfce-4d6b-a5e5-6c4068af7753"
+   "front": "a8b53b31-3c33-4aa8-adc3-00cd99cade7e",
+   "left": "9f862a77-7234-4f3f-9d96-84f9a03ed007",
+   "back": "262b1b8b-0d8b-4360-806b-8c71432a6634",
+   "right": "00e439a2-f057-45cc-a64a-0ab621ce1705"
   },
-  "model_job": "6caa7651-1e2b-4642-b4d4-4d911fca219b",
+  "model_job": "cf5df91e-a8e6-446a-9ac4-262b22bc75d4",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.003,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_130458_6caa7651-1e2b-4642-b4d4-4d911fca219b.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150255_cf5df91e-a8e6-446a-9ac4-262b22bc75d4.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "6caa7651-1e2b-4642-b4d4-4d911fca219b",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 944556,
-   "lo": 266324
+   "hi": 886528,
+   "lo": 135180
   },
   "dims": {
-   "len": 1.3743,
+   "len": 1.0178,
    "height": 1.0,
-   "width": 0.4692
-  },
-  "prev_model_job": "241954bc-dc6a-40de-97d4-e0420505a80e"
+   "width": 0.3236
+  }
  },
  "BLEHMILLY": {
   "image_job": "86eae0db-84ad-4d42-a27d-748af811c7eb",
@@ -6130,36 +6114,39 @@
   }
  },
  "KOTECHAN": {
-  "image_job": "8013cbf8-45aa-4c8c-9fa6-255972e86abd",
-  "clean_job": "1812dcd7-d268-4de7-a252-4f4118b28241",
+  "si_lo": 0.003,
+  "image_job": "146a416c-cd7c-4483-bb86-d47a99b7bd7c",
+  "clean_job": "88fe47c8-0478-454f-a4ac-07b707800786",
   "view_jobs": {
-   "front": "842371df-f667-4789-b0a5-a6d09280aa63",
-   "left": "d0e9ec98-8db4-4b2a-a787-9bd394ea82c4",
-   "back": "e16ced4d-e540-4992-a13b-94254c6adb62",
-   "right": "34b22b83-5897-48bf-9e47-b9642162c5c8"
+   "front": "b3d64dd0-f178-4866-a9fd-87067d692b9c",
+   "left": "11bee81b-d16f-4912-a383-9d86ecba9136",
+   "back": "5232f061-b1b9-4245-82cc-51759783d856",
+   "right": "2b46fd11-c93f-4862-857a-34bdbefb7ab7"
   },
-  "model_job": "3e7ee880-f8b6-46af-904b-9d50f10e7ead",
+  "model_job": "28375367-a978-41c9-84ec-4229f62daff2",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.003,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_130553_3e7ee880-f8b6-46af-904b-9d50f10e7ead.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150257_28375367-a978-41c9-84ec-4229f62daff2.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "3e7ee880-f8b6-46af-904b-9d50f10e7ead",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 875756,
-   "lo": 143592
+   "hi": 838068,
+   "lo": 120936
   },
   "dims": {
-   "len": 1.3684,
+   "len": 0.9981,
    "height": 1.0,
-   "width": 0.3808
+   "width": 0.2809
   }
  },
  "KYURUGACAT": {
@@ -6296,36 +6283,39 @@
   }
  },
  "PROFMEOW": {
-  "image_job": "74c7e6fc-c80e-42f3-9fc0-9b6dd828fe3d",
-  "clean_job": "4dac3d96-c2a4-468c-98ee-e219e5e9ece3",
+  "si_lo": 0.003,
+  "image_job": "0fe145f8-a9a6-4e07-8e10-2bbd5951bbb9",
+  "clean_job": "5a1eb6c7-aa00-4ea0-b5a4-ac1acd64e047",
   "view_jobs": {
-   "front": "384480c6-ad47-4036-bfc6-33f98c099e39",
-   "left": "5824b4ad-9a83-479d-b54c-867d43f1d65a",
-   "back": "9eff92c6-e877-4f7a-b376-7d07d003ee2e",
-   "right": "cffc64bb-0c80-41e6-b337-0249f59379ab"
+   "front": "5aa2330b-75e4-47d5-bd46-98d7ac10c14c",
+   "left": "45ba6494-dd71-4869-9060-356c651b10b7",
+   "back": "bb714731-dd7a-4310-8b40-d5e8c88a8ce2",
+   "right": "8875338f-25cf-4331-8fcd-e736cbd16bd4"
   },
-  "model_job": "6464b05b-a294-4656-8a66-ecaf99944033",
+  "model_job": "cec1e5f7-2093-40d2-ba08-f0ced09fc3b0",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.003,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_123257_6464b05b-a294-4656-8a66-ecaf99944033.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150353_cec1e5f7-2093-40d2-ba08-f0ced09fc3b0.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "6464b05b-a294-4656-8a66-ecaf99944033",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 866836,
-   "lo": 293732
+   "hi": 830308,
+   "lo": 130228
   },
   "dims": {
-   "len": 1.2264,
+   "len": 0.9864,
    "height": 1.0,
-   "width": 0.362
+   "width": 0.2644
   }
  },
  "RURUNEKO": {
@@ -6700,38 +6690,41 @@
   "sa_lo": true
  },
  "HENRINOIR": {
-  "image_job": "6bc7a6d4-e91c-4230-9929-aa322dd2a178",
-  "clean_job": "49bf8184-3f8a-4697-abea-1e53a663f98a",
+  "sa_lo": true,
+  "si_lo": 0.004,
+  "image_job": "8883e217-4c31-415b-8ad5-35dd6e3f8b74",
+  "clean_job": "858484d0-3d71-4ceb-9a23-6116388de6c4",
   "view_jobs": {
-   "front": "aa30c6b4-4086-4984-9fdb-4995dc1976fe",
-   "left": "569f9ce6-f519-495e-9834-83b1de15569b",
-   "back": "e26366c7-4349-452f-98de-7d8e3a70b19a",
-   "right": "d8387ae0-b4a0-4a4d-84aa-fe89cf10a6bb"
+   "front": "cf28d3db-0e0b-439f-9277-fed8bb8816dd",
+   "left": "8d93d420-4713-46e9-99ef-51a07d695055",
+   "back": "0455c96c-25ff-4189-83cc-89b40aee10bd",
+   "right": "c3d6855c-cf7d-4a9e-bd09-28336553654b"
   },
-  "model_job": "1d71634b-a879-4d2c-a4ed-30ddd62c5706",
+  "model_job": "8387977d-41d3-4aef-aa1c-69a28c372e96",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.004,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_123434_1d71634b-a879-4d2c-a4ed-30ddd62c5706.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150356_8387977d-41d3-4aef-aa1c-69a28c372e96.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "1d71634b-a879-4d2c-a4ed-30ddd62c5706",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 820100,
-   "lo": 115308
+   "hi": 871404,
+   "lo": 186452
   },
   "dims": {
-   "len": 1.2521,
+   "len": 0.9912,
    "height": 1.0,
-   "width": 0.4016
-  },
-  "sa_lo": true
+   "width": 0.3226
+  }
  },
  "SALADCAT": {
   "image_job": "2634f568-5466-4847-b8ff-22f3a6b713c2",
@@ -6800,38 +6793,41 @@
   }
  },
  "MRJINX": {
-  "image_job": "03e431de-ea21-4ea1-88a5-3c254048c6b7",
-  "clean_job": "90cb9345-0533-4cb2-b9b4-da0dfdf4b6c1",
+  "sa_lo": true,
+  "si_lo": 0.006,
+  "image_job": "2f54d9bd-7150-45c3-bc64-d31838c70dc6",
+  "clean_job": "e44cdb17-071d-4cfd-af7a-198c543ca632",
   "view_jobs": {
-   "front": "ee36498b-311b-4609-8b72-99df90e08e4e",
-   "left": "b012c4c4-75d0-488d-8159-df2900247d3c",
-   "back": "d7aaed85-9562-4833-b880-7bab15bb537c",
-   "right": "7a28685f-caa6-439c-983c-5a94ceb0097a"
+   "front": "1bff8ced-73bf-4d0b-bdcb-0be47f9773b8",
+   "left": "4a2aa159-c5f1-41bb-8acf-abddd1d6473b",
+   "back": "f86d3cb8-8f22-4e2f-b8da-612bffce64e1",
+   "right": "ccbf6638-d9c4-4f98-8cf8-d07c682f8709"
   },
-  "model_job": "3d8daae0-57c9-463a-99b4-161c2c1cb24d",
+  "model_job": "ea2959ba-0430-4c21-81ba-e9b83fd301fd",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.006,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_123543_3d8daae0-57c9-463a-99b4-161c2c1cb24d.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150358_ea2959ba-0430-4c21-81ba-e9b83fd301fd.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "3d8daae0-57c9-463a-99b4-161c2c1cb24d",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 920420,
-   "lo": 187744
+   "hi": 880688,
+   "lo": 213876
   },
   "dims": {
-   "len": 1.2941,
+   "len": 0.9904,
    "height": 1.0,
-   "width": 0.5084
-  },
-  "sa_lo": true
+   "width": 0.3495
+  }
  },
  "SAGGYCAT": {
   "image_job": "923194b1-2722-4e73-9bef-460a07b48ce6",
@@ -6999,38 +6995,41 @@
   }
  },
  "HODGECAT": {
-  "image_job": "a2b9792d-edab-4c58-95a4-20d89f5bea33",
-  "clean_job": "cd570840-afa3-45ae-80c1-0db5867620c7",
+  "sa_lo": true,
+  "si_lo": 0.006,
+  "image_job": "b9d689b4-8594-4794-a568-b496ea7c1c89",
+  "clean_job": "da1cad2e-349b-43f3-ae43-aefbdb5f190c",
   "view_jobs": {
-   "front": "ccd32fcb-4e1d-4107-93c0-7df8f49db4cf",
-   "left": "7f9a8202-ed27-40f0-a802-222ec8c0cdf5",
-   "back": "85f4fd72-1a2b-4a09-a8c2-e4e87a756865",
-   "right": "d2cd2b23-7add-4819-a191-08e705377cf5"
+   "front": "af22a4cf-0ac6-4cec-9066-61fbadd899cd",
+   "left": "5749f506-2aa5-4a50-83c3-79071eccff44",
+   "back": "00bdbd34-edc2-4ca1-a8fa-9958f68afc10",
+   "right": "f942ffc4-6b66-4ba0-8044-3c7ecb4c8824"
   },
-  "model_job": "d8fd2cb7-cb14-44a5-9e76-bd975b7546b7",
+  "model_job": "474ec719-5ffa-4a9c-8438-7417d5edc79a",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.006,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132605_d8fd2cb7-cb14-44a5-9e76-bd975b7546b7.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150259_474ec719-5ffa-4a9c-8438-7417d5edc79a.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "d8fd2cb7-cb14-44a5-9e76-bd975b7546b7",
+  "notes": "portrait shows a living black cat (not bronze), so drawn photoreal per portrait; bronze statue photo not used as reference. standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 886264,
-   "lo": 177008
+   "hi": 868644,
+   "lo": 213212
   },
   "dims": {
-   "len": 1.2549,
+   "len": 0.954,
    "height": 1.0,
-   "width": 0.2916
-  },
-  "sa_lo": true
+   "width": 0.2358
+  }
  },
  "ORANGEY": {
   "image_job": "e3ddd78b-cc40-4e04-837c-e3ee80242691",
@@ -7099,38 +7098,41 @@
   }
  },
  "DEWEYCAT": {
-  "image_job": "33a3e8ab-4399-4de1-adb7-d5059dfa9e1d",
-  "clean_job": "fef5c7f9-1a67-422f-b6bc-92697954b74c",
+  "sa_lo": true,
+  "si_lo": 0.006,
+  "image_job": "a22a2825-18ed-4bc4-9cd1-330676e7b623",
+  "clean_job": "f86ed11e-8287-4462-9776-2f026ef0269d",
   "view_jobs": {
-   "front": "26440c80-389a-405a-bc84-d71a1aa09c1f",
-   "left": "f90a6cf4-14f8-4c01-8577-2dbc068470a4",
-   "back": "87749169-b2f0-4d2f-9cd0-210893ed381d",
-   "right": "5ddde323-b198-4bfb-a211-d4352227be94"
+   "front": "64904864-e31d-482a-a5a1-d1c3e1ee5838",
+   "left": "a42390e3-2e3b-436b-9a01-7942eaed5d74",
+   "back": "c197022b-a252-47df-ba3d-ce5918864440",
+   "right": "1bdfadc6-c096-469d-a7d9-7247bf25648c"
   },
-  "model_job": "3e5467d3-d201-46d5-b2f5-09be1c438d53",
+  "model_job": "16d7c1d1-2063-45eb-9d0f-60d39adb4939",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.006,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132702_3e5467d3-d201-46d5-b2f5-09be1c438d53.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150302_16d7c1d1-2063-45eb-9d0f-60d39adb4939.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "3e5467d3-d201-46d5-b2f5-09be1c438d53",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 956772,
-   "lo": 186104
+   "hi": 896708,
+   "lo": 212012
   },
   "dims": {
-   "len": 1.3218,
+   "len": 0.9622,
    "height": 1.0,
-   "width": 0.4033
-  },
-  "sa_lo": true
+   "width": 0.3243
+  }
  },
  "NORAKEYS": {
   "image_job": "58f2c346-4c57-4b74-973b-80e9f6b5c6ee",
@@ -7232,38 +7234,41 @@
   }
  },
  "HANK4SEN": {
-  "image_job": "ef0af250-201f-4263-8ec2-efd737d65ae5",
-  "clean_job": "a199860b-a036-4af4-a464-1903d30f8ff2",
+  "sa_lo": true,
+  "si_lo": 0.006,
+  "image_job": "9672ae12-ec0f-4753-8671-6781e7c9669b",
+  "clean_job": "6048650b-17e4-4bca-9e85-7e4663cd7a53",
   "view_jobs": {
-   "front": "64630c6b-e6b7-41a4-b9d3-52dd09eb739f",
-   "left": "ec8c527d-19da-4486-80e4-ce300cf67722",
-   "back": "8663ea86-bdc2-4006-8ff9-d9873e46419e",
-   "right": "86b35d59-4154-4cf1-9062-a538742bdeae"
+   "front": "c210fbbc-014d-472a-b8fd-67214267e0d7",
+   "left": "c6aabd1b-9864-4d1f-9ed5-1ed5d9a7bdc7",
+   "back": "a024eb91-2b4c-421f-b933-eeb0460ae487",
+   "right": "dcc628d1-381d-41fe-a65e-22b06ee7efae"
   },
-  "model_job": "14e55f4f-bbce-4ca0-b9c1-9d4d76557fd9",
+  "model_job": "195a959b-44ad-45d0-866d-0257f0c34d09",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.006,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132714_14e55f4f-bbce-4ca0-b9c1-9d4d76557fd9.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150304_195a959b-44ad-45d0-866d-0257f0c34d09.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "14e55f4f-bbce-4ca0-b9c1-9d4d76557fd9",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 1052048,
-   "lo": 186920
+   "hi": 1008972,
+   "lo": 257924
   },
   "dims": {
-   "len": 1.3502,
+   "len": 0.9981,
    "height": 1.0,
-   "width": 0.418
-  },
-  "sa_lo": true
+   "width": 0.3055
+  }
  },
  "MAXWELLCAT": {
   "image_job": "25a2a6ad-0152-4477-a8bc-503b59fda93f",
@@ -7333,36 +7338,39 @@
   "sa_lo": true
  },
  "INDYBONES": {
-  "image_job": "c1b75256-8ca1-4597-9737-f5ade3ea66f8",
-  "clean_job": "10a3a86c-592a-418e-b5dd-b86a05640b9c",
+  "si_lo": 0.003,
+  "image_job": "178ea58f-1eff-48d6-86da-48e1f25ba976",
+  "clean_job": "e4ff7cc8-f065-418a-8bae-426210fef85b",
   "view_jobs": {
-   "front": "90a2a7d0-2ebd-4c7b-9ae7-5a3f753be761",
-   "left": "c34497be-0ffd-42c2-a125-c6f5200297ef",
-   "back": "ef38fc3c-449e-45ee-bcb3-56981b262a06",
-   "right": "dc2ee9e0-2d5b-42ff-8507-5f846c67766e"
+   "front": "b485414e-d417-4f1a-aa06-1a17bb356f0d",
+   "left": "f072b940-b447-486a-9037-a13ca0490987",
+   "back": "f4d80ace-1dcb-4d17-9913-ed7fbdd3c66c",
+   "right": "4dfe5817-f094-4227-80ae-c475e9b5eff1"
   },
-  "model_job": "7e402300-98f3-413e-9c45-8029a09febc0",
+  "model_job": "29ae8131-e09d-4c7d-ace2-b8600dded54e",
   "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
   "faces": "adaptive raw, packed ~20k",
-  "pose": "standing on all fours",
-  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high)",
+  "pose": "standing square on all four legs",
+  "stance": "square",
   "status": "done",
   "hd": true,
   "si": 0.02,
-  "si_lo": 0.003,
   "tex": 1024,
   "tex_lo": 256,
   "q": 88,
-  "credits": 21,
-  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3FyGGgvr86P2yKo8RswRabCMo0c/hf_20260930_132725_7e402300-98f3-413e-9c45-8029a09febc0.glb",
+  "credits": 25.5,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261003_150306_29ae8131-e09d-4c7d-ace2-b8600dded54e.glb",
+  "source": "remade 2026-10-03 (the old model had a fifth leg): squared stance from the site portrait",
+  "prev_model_job": "7e402300-98f3-413e-9c45-8029a09febc0",
+  "notes": "standing ref passed; all 4 views passed first try; 3D completed",
   "sizes": {
-   "hi": 879416,
-   "lo": 257092
+   "hi": 826840,
+   "lo": 127864
   },
   "dims": {
-   "len": 1.2578,
+   "len": 0.9913,
    "height": 1.0,
-   "width": 0.3097
+   "width": 0.253
   }
  },
  "KENCHAN": {
