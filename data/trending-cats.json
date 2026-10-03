@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-03T04:44:36.074Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-03T05:24:38.877Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-03",
-  "dayUsed": 110,
+  "dayUsed": 130,
   "month": "2026-10",
-  "monthUsed": 738,
+  "monthUsed": 758,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -34,6 +34,47 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2106204221695779247",
+   "url": "https://x.com/ShitpostGate/status/2106204221695779247",
+   "text": "https://t.co/Ffk9mgftrd https://t.co/6mbXacub49",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1613044
+   },
+   "postedAt": "2026-10-03T02:06:32Z",
+   "likes": 4005,
+   "views": 33711,
+   "reposts": 200,
+   "heat": 1436,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HTq9k04XAAEeheQ.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-03T05:24:38.877Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": null,
+    "memeName": "Nugget Cat",
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Nugget Cat",
+    "ticker": "NUGCAT",
+    "lore": "A cat in a McDonald's uniform and cap flinging a storm of chicken nuggets.",
+    "sensitive": true,
+    "why": "Fun cat-in-uniform meme, but the image overlays a racial slur, making a coin in poor taste.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [],
+   "status": "passed"
+  },
   {
    "id": "2105857557348888818",
    "url": "https://x.com/ShitpostGate/status/2105857557348888818",
@@ -765,10 +806,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 2,
+  "nextLens": 3,
+  "bigChunk": 3,
   "figureChunk": 1,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
