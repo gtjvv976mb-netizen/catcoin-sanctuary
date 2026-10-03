@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/INDYBONES.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106429411725811936.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-03T17:08:07Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "sir-indiana-bones",
         "ticker": "INDYBONES",
@@ -67,7 +67,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "SirIndianaBones"
+      "feesTo": "SirIndianaBones",
+      "mintNonce": 2856683,
+      "tx": "hzf46gwR5pz4oCQhnEigMkkfx9VGcNTRAs8YWvrF3TwWZMdAUhUx1NnpPghrhNhc5ofWg3eXgcpnrP3R9ae5gzR",
+      "sentAt": "2026-10-03T17:17:18Z",
+      "lastValidBlockHeight": 431037039,
+      "mintPublic": "8QxYuexSRXNv7s5EAuRmfgcuBMawdsuf5a9nt84mcats",
+      "spentLamports": 5607840,
+      "settledAt": "2026-10-03T17:17:27Z",
+      "launchedAt": "2026-10-03T17:17:18Z"
     },
     {
       "postId": "2106410534169985264",
@@ -140,7 +148,10 @@
       "spentLamports": 5643400,
       "settledAt": "2026-10-03T17:05:36Z",
       "launchedAt": "2026-10-03T17:05:27Z",
-      "recordedAt": "2026-10-03T17:05:42Z"
+      "recordedAt": "2026-10-03T17:05:42Z",
+      "feeRoute": {
+        "at": "2026-10-03T17:10:07Z"
+      }
     },
     {
       "postId": "2106378719254245523",
