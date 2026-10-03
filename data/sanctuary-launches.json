@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/SYBILCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106410534169985264.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-03T16:57:47Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "sybil-downing-street",
         "ticker": "SYBILCAT",
@@ -63,7 +63,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "shitbritishpics"
+      "feesTo": "shitbritishpics",
+      "mintNonce": 2068455,
+      "tx": "53uv7XYpyXdAm27TuZwnmZErGsg4yCVTXARKBptojp7dGEHgcpa7bLdpgTngThSNgVyM2MuQYpCvvzuq2NFmq8B2",
+      "sentAt": "2026-10-03T17:05:27Z",
+      "lastValidBlockHeight": 431034396,
+      "mintPublic": "6CHVu9NDsxte3N1Z6in9jfRarREbZ55zBNs3M3tdcats",
+      "spentLamports": 5643400,
+      "settledAt": "2026-10-03T17:05:36Z",
+      "launchedAt": "2026-10-03T17:05:27Z"
     },
     {
       "postId": "2106378719254245523",
