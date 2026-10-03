@@ -1815,7 +1815,9 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         // cat within a house cat's (tooNearBig): one step off for that, not a dance.)
         if (cat.posture === "stand" && step.type === "hold" && !cat.perch) {
           const body = crowding(cat, cat.x, cat.z, cat.yaw, POSTURE_POSE[want], -0.04) || crowding(cat, cat.x, cat.z, cat.yaw, "walk", -0.04);
-          const o = body || (step.bigRoomed ? null : tooNearBig(cat));
+          // (A big cat hemmed in, its step away stuck already, settles where it is beside the house cat rather than try
+          // the same blocked step again, errand after errand.)
+          const o = body || (step.bigRoomed || (cat.big && cat.hemmedUntil > time) ? null : tooNearBig(cat));
           if (o) {
             if (!body) step.bigRoomed = true;
             const n = (step.roomTries = (step.roomTries || 0) + 1), s = n <= 3 && clearSpot(cat, o, POSTURE_POSE[want], n > 1 ? 2 : 1);
