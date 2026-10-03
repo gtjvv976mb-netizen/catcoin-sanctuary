@@ -223,3 +223,21 @@ failed, have had models since the third run.
   (`CATRIG_HERD=KEY`): Hamlet 1.45, George 1.45, Henri 1.3, Brambleton 1.6. Re-run fit-clips after.
 - Litten failed multi-view twice; its model is tripo_h3_1_image_to_3d from the standing reference.
 - A model repacked from a new mesh loses its old leg labels (their vertex counts no longer match).
+
+### 2026-10-03: the squared stance (no fifth leg)
+
+- Most multi-view models made since 2026-09-30 had a fifth leg: the standing reference and the side views showed
+  the cat mid-stride (a near hind leg stepped forward), the left and right views disagreed about where the hind
+  legs stand, and Tripo built both. The herd test did not catch it (a fifth leg is skinned to the body and does
+  not tear). `scripts/lib/legcount.mjs` counts the leg columns a model stands on (a slice at 8-14% of its height);
+  tests/catlegs.test.mjs holds every model whose job entry says `stance: "square"` to exactly four.
+- The standing reference now asks for the cat "standing square and still like a show cat being judged: exactly
+  four legs, all four legs straight and vertical like table legs, the two front legs side by side and the two
+  hind legs side by side, no walking stride, no leg stepped forward or back", and every view repeats it; the side
+  views add "the far legs straight behind the near legs, almost hidden by them". Same tail-up and legs-apart
+  wording as before, same 3D settings. A remade cat's references are its site portrait (the approved likeness of
+  the real cat) and, where it shows the cat clearly, its real photo, so the model matches the cat's own pictures.
+- Made this way: seven of the eleven new cats of 2026-10-03 (Cupsey, Betty, Konpei & Miso, Rido, Kiku-chan,
+  Ton-chan, Edgar; Rokutama, Gotama, Horatio and Mii-ko came out on four legs from the earlier wording) and the
+  live cats that had a fifth leg (their job entries keep the old model as `prev_model_job`). A remade model's old
+  leg labels (`.legs.json`) are dropped.
