@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/STOURCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106364666020548920.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-03T12:49:51Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "george-stourbridge-station-cat",
         "ticker": "STOURCAT",
@@ -67,7 +67,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "TheStourbridge"
+      "feesTo": "TheStourbridge",
+      "mintNonce": 4094293,
+      "tx": "4Yp4hQDicEs9ijbtQZWqXRvf1WieXQQ82qcxSa5hPnzuWrQHUScgnivQrxFbUW9tc2XbfYUy5CfWxAc7wYq8ftpH",
+      "sentAt": "2026-10-03T12:58:36Z",
+      "lastValidBlockHeight": 430978989,
+      "mintPublic": "GyGYSuH1hZTq9eszWDS6MseKTmajaXxQ5RhR3GKecats",
+      "spentLamports": 5628160,
+      "settledAt": "2026-10-03T12:58:45Z",
+      "launchedAt": "2026-10-03T12:58:36Z"
     },
     {
       "postId": "2105997058960142621",
@@ -148,7 +156,10 @@
       "spentLamports": 5521480,
       "settledAt": "2026-10-03T12:47:16Z",
       "launchedAt": "2026-10-03T12:47:07Z",
-      "recordedAt": "2026-10-03T12:47:22Z"
+      "recordedAt": "2026-10-03T12:47:22Z",
+      "feeRoute": {
+        "at": "2026-10-03T12:52:37Z"
+      }
     },
     {
       "postId": "2106012193531498603",
@@ -225,7 +236,10 @@
       "spentLamports": 5541800,
       "settledAt": "2026-10-02T18:24:56Z",
       "launchedAt": "2026-10-02T18:24:47Z",
-      "recordedAt": "2026-10-02T18:24:58Z"
+      "recordedAt": "2026-10-02T18:24:58Z",
+      "feeRoute": {
+        "at": "2026-10-03T12:52:38Z"
+      }
     },
     {
       "postId": "2106042476545142958",
