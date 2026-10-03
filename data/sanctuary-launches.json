@@ -2,6 +2,73 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106378719254245523",
+      "url": "https://x.com/catcosanctuary/status/2106378719254245523",
+      "name": "Hank",
+      "coinName": "Hank for Senate",
+      "ticker": "HANK4SEN",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Hank, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/HANK4SEN.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/HANK4SEN.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106378719254245523.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-03T13:42:20Z",
+      "attempts": 0,
+      "cat": {
+        "id": "hank-the-cat-senate",
+        "ticker": "HANK4SEN",
+        "name": "Hank",
+        "coinName": "Hank for Senate",
+        "owner": "Matthew O'Leary and Anthony Roberts ('Hank for Senate', Virginia)",
+        "category": "viral",
+        "story": "Hank was a male Maine Coon put up as a joke candidate for the U.S. Senate in Virginia in 2012 by his owners Matthew O'Leary and Anthony Roberts. His campaign, on a platform of 'Animal Rescue, Spay & Neuter programs, and Positive Campaign Reform', drew 7,319 write-in votes, third behind the two major candidates, and raised $60,000, which his owners gave to animal charities.",
+        "look": "Long-haired brown tabby Maine Coon with a thick ruff, lynx-like tufted ears, bold dark tabby markings, pale green-gold eyes and a big, fluffy build; campaign photos show him in a red, white and blue bow tie.",
+        "coat": {
+          "base": "brown",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "gold"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/Ripleys/status/796041100624560128",
+          "author": "Ripleys",
+          "handle": "Ripleys",
+          "date": "2016-11-08",
+          "dateType": "posted",
+          "text": "Hank, a Maine Coon cat, received more than 6,000 votes in the 2012 United States Senate election in Virginia. #ElectionDay",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Hank the Cat - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Hank_the_Cat"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "HANK",
+          "contract": "6RQNMrA6V22o3sw6HXvtQpbfQdBDHMpR6NFwGahvHZju",
+          "mcapUsd": 935
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Matthew O'Leary and Anthony Roberts ('Hank for Senate', Virginia).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/HANK4SEN.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      }
+    },
+    {
       "postId": "2106364666020548920",
       "url": "https://x.com/catcosanctuary/status/2106364666020548920",
       "name": "George",
