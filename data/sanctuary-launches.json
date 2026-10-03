@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/UNIUNI.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2105997058960142621.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-02T18:58:39Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "uni-minuet-unicouniuni3",
         "ticker": "UNIUNI",
@@ -72,7 +72,14 @@
         "lore": null
       },
       "feesTo": "unicouniuni3",
-      "mintNonce": 15191429
+      "mintNonce": 15191429,
+      "tx": "4cJhvhkHA6yTHNongjGHyZRVwKEtYWxsjTENt8iKLf5CMfCe6SaGtfS91VCnCZLN9abF7QNmeNYaA6TNa4gS8pPn",
+      "sentAt": "2026-10-03T12:47:07Z",
+      "lastValidBlockHeight": 430976413,
+      "mintPublic": "2MCjBqrzJbrBz14NGLCkguhYZyWwR9UkBWpkRPCgcats",
+      "spentLamports": 5521480,
+      "settledAt": "2026-10-03T12:47:16Z",
+      "launchedAt": "2026-10-03T12:47:07Z"
     },
     {
       "postId": "2106012193531498603",
