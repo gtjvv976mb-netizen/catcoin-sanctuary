@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106443761014452685",
+      "url": "https://x.com/catcosanctuary/status/2106443761014452685",
+      "name": "Ken-chan",
+      "coinName": "Ken-chan, the Museum Cat",
+      "ticker": "KENCHAN",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of Ken-chan.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/KENCHAN.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/KENCHAN.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106443761014452685.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-03T18:00:43Z",
+      "attempts": 0,
+      "cat": {
+        "id": "ken-chan-onomichi-museum",
+        "ticker": "KENCHAN",
+        "name": "Ken-chan",
+        "coinName": "Ken-chan, the Museum Cat",
+        "owner": "Onomichi City Museum of Art, Hiroshima (official @bijutsu1); he lived at a nearby restaurant",
+        "category": "company",
+        "story": "Ken-chan was a black cat from a restaurant near the Onomichi City Museum of Art who, from 2017, kept trying to get into the museum, only to be politely blocked by security guard Sadao Umayahara. Staff noticed he mostly tried on the few days Umayahara was on duty and concluded he 'simply wanted to play with his favorite guard'. Tokyo Weekender says he was joined in 2018 by his orange-tabby friend Go-chan. The museum's official account still posts daily 'Cats Who Leapt Through Time' photos of him, a black-cat sticker now sits on the museum doors, and his 2026 memorial calendar sold out.",
+        "look": "Sleek all-black short-haired cat with large round yellow-green eyes, tall pointed ears, a slim build and a long thin tail; usually photographed lounging on the stone walls outside the museum.",
+        "coat": {
+          "base": "black",
+          "second": "",
+          "pattern": "solid",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/bijutsu1/status/2104709918939066741",
+          "author": "bijutsu1",
+          "handle": "bijutsu1",
+          "date": "2026-09-28",
+          "dateType": "posted",
+          "text": "時をかける猫ねこ184 \"Cats Who Leapt Through Time\" (20210929) 『ケンちゃん🐈‍⬛Ken-chan』ちょうど 5年前🎨夕方、美術館前でパトロールしてました ニャ。#尾道市立美術館 #尾道 #猫",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Ken-chan, the Beloved Cat Always Trying to Break Into a Museum, Passes Away - Tokyo Weekender",
+            "url": "https://www.tokyoweekender.com/japan-life/news-and-opinion/onomichi-city-museum-cat-ken-chan-passes-away/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Onomichi City Museum of Art, Hiroshima (official @bijutsu1); he lived at a nearby restaurant.",
+        "sensitivity": "In loving memory of Ken-chan.",
+        "portrait": "assets/portraits/KENCHAN.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "bijutsu1"
+    },
+    {
       "postId": "2106429411725811936",
       "url": "https://x.com/catcosanctuary/status/2106429411725811936",
       "name": "Sir Indiana Bones",
