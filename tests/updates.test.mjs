@@ -8,7 +8,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { ROOT } from "./helpers.mjs";
 import { SITE, HASHTAGS, LIMIT, cardLink, weightedLength, listCats, checkPost } from "../scripts/announce.mjs";
-import { checkUpdate, draftAdoption, candidates, waitReason, lastAnnouncerPost, validAdoption, run, IMAGE_PATH, MAX_ATTEMPTS, LAUNCHPADS, draftLaunch, launchItems, fanTribute, USEPAID_LAUNCH_LINE } from "../scripts/post-updates.mjs";
+import { checkUpdate, draftAdoption, candidates, waitReason, lastAnnouncerPost, validAdoption, run, IMAGE_PATH, MAX_ATTEMPTS, LAUNCHPADS, draftLaunch, launchItems, fanTribute, usePaidLaunchLine } from "../scripts/post-updates.mjs";
 import { kitsOf } from "../scripts/lib/adoptions.mjs";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
@@ -392,16 +392,22 @@ test("the last line before X: an update or adoption draft naming a Solana addres
 });
 
 
-test("a UsePaid coin's launch post says its fees go to the creator, beside the fan-tribute line, for every cat waiting to launch; it waits for its fee route", () => {
-  assert.equal(checkUpdate(USEPAID_LAUNCH_LINE).violations.length, 0);
+test("a UsePaid coin's launch post says its fees go to the creator and tags that account, beside the fan-tribute line, for every cat waiting to launch; it waits for its fee route", () => {
+  assert.equal(usePaidLaunchLine("MorrisAnimal"), "💸 Fees go to the creator, @MorrisAnimal via UsePaid");
   for (const c of ADOPTABLES.cats.filter((x) => !x.launch)) {
     const kind = c.category === "tv-movie" ? "fiction" : "real";
     const args = { coinName: c.coinName || c.name, ticker: c.ticker, lore: null, tribute: fanTribute(kind) };
     if (!draftLaunch({ id: c.ticker, name: c.name }, args).ok) continue;      // a name no launch post may carry (the launcher never launches it)
-    const d = draftLaunch({ id: c.ticker, name: c.name }, { ...args, usePaid: true });
+    const d = draftLaunch({ id: c.ticker, name: c.name }, { ...args, usePaid: "Abcdefghijkl" });   // 12 characters
     assert.ok(d.ok, `${c.ticker}: ${JSON.stringify(d.violations)}`);
-    assert.ok(d.text.includes(USEPAID_LAUNCH_LINE) && d.text.includes(fanTribute(kind)) && weightedLength(d.text) <= LIMIT, `${c.ticker}: ${d.text}`);
+    assert.ok(d.text.includes(usePaidLaunchLine("Abcdefghijkl")) && d.text.includes(fanTribute(kind)) && weightedLength(d.text) <= LIMIT, `${c.ticker}: ${d.text}`);
+    assert.equal(d.text.match(/@/g).length, 1, `${c.ticker}: the creator is the post's one mention`);
+    // The longest handle X allows: the tag, or (a long fiction name) the fan-tribute line kept without it.
+    const l = draftLaunch({ id: c.ticker, name: c.name }, { ...args, usePaid: "Abcdefghijklmno" });
+    assert.ok(l.ok && l.text.includes(fanTribute(kind)) && weightedLength(l.text) <= LIMIT, `${c.ticker}: ${l.text}`);
   }
+  // Only a well-formed handle is tagged, and no other mention gets in beside it.
+  assert.deepEqual(draftLaunch({ id: "MOCHI", name: "Mochi" }, { coinName: "Mochi", ticker: "MOCHI", usePaid: "bad handle!" }).violations.map((v) => v.rule), ["fees_to"]);
   // Without UsePaid, the post is what it always was.
   assert.ok(!draftLaunch({ id: "MOCHI", name: "Mochi" }, { coinName: "Mochi", ticker: "MOCHI", tribute: fanTribute("real") }).text.includes("UsePaid"));
   // The post of a coin whose fees are not routed yet waits; once routed (or given up on), it may go.
