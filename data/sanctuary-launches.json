@@ -2,6 +2,77 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106621674464448816",
+      "url": "https://x.com/catcosanctuary/status/2106621674464448816",
+      "name": "Cucurella Cat",
+      "coinName": "Cucurella Cat",
+      "ticker": "CUCUWIG",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Cucurella Cat, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/CUCUWIG.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/CUCUWIG.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106621674464448816.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-04T05:46:51Z",
+      "attempts": 0,
+      "cat": {
+        "id": "cucurella-cat",
+        "ticker": "CUCUWIG",
+        "name": "Cucurella Cat",
+        "coinName": "Cucurella Cat",
+        "owner": "TikTok user welcometolevusch (anonymous), who runs @cucurellacat",
+        "category": "viral",
+        "story": "The Cucurella Cat is a classic tabby filmed on 5 July 2025 by TikTok user welcometolevusch wearing a big curly black wig, captioned 'POV: Your cat is a Cucurella Fan', after Spanish footballer Marc Cucurella's hair. The clip passed 17.7 million views and 1.9 million likes in a year, and the meme exploded during the 2026 FIFA World Cup as Spain won the trophy. On 18 July 2026 Google added a search Easter egg of the cat waving a Spanish flag, and one edit of the cat in a Real Madrid kit reached hundreds of millions of views. In August 2026 fan account Madrid Universal reported that Cucurella liked the cat with his hair best among memes shown to him.",
+        "look": "Brown-and-ginger classic tabby with a pale muzzle and chin, amber-yellow eyes and a stern straight-faced stare, wearing a huge, voluminous black curly wig; often edited into football kits.",
+        "coat": {
+          "base": "brown",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "yellow"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/MadridUniversal/status/2088421055371026883",
+          "author": "MadridUniversal",
+          "handle": "MadridUniversal",
+          "date": "2026-08-15",
+          "dateType": "posted",
+          "text": "🚨 Marc Cucurella was presented with 3 memes to be posted on the day he plays his first La Liga match. He said he liked the cat with his hair and the home kit better than the others.",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Marc Cucurella Cat | Know Your Meme",
+            "url": "https://knowyourmeme.com/memes/marc-cucurella-cat"
+          },
+          {
+            "label": "What Is The 'Cucurella Cat' Meme? - Yahoo",
+            "url": "https://www.yahoo.com/entertainment/celebrity/articles/cucurella-cat-meme-viral-video-192314724.html"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "CUCUGATO",
+          "contract": "BLhpThNxj6ujutg8ybbR89reZTmQ8Td8m4tCjy8vpump",
+          "mcapUsd": 2640
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by TikTok user welcometolevusch (anonymous), who runs @cucurellacat.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/CUCUWIG.jpg",
+        "portraitStatus": "ready",
+        "confidence": "medium",
+        "lore": null
+      }
+    },
+    {
       "postId": "2106443761014452685",
       "url": "https://x.com/catcosanctuary/status/2106443761014452685",
       "name": "Ken-chan",
