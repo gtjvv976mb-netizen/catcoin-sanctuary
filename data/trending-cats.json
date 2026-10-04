@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-04T06:38:37.379Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-04T07:18:52.497Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-04",
-  "dayUsed": 142,
+  "dayUsed": 162,
   "month": "2026-10",
-  "monthUsed": 1073,
+  "monthUsed": 1093,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -20,6 +20,8 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2106564368871690606",
+  "2106559153431023766",
   "2105857557348888818",
   "2104961576428269856",
   "2104926549480796539",
@@ -34,6 +36,88 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2106564368871690606",
+   "url": "https://x.com/ShitpostGate/status/2106564368871690606",
+   "text": "Community Notes: https://t.co/6IpoT0tU34 https://t.co/gaahO4TQEg",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1612837
+   },
+   "postedAt": "2026-10-04T01:57:38Z",
+   "likes": 3101,
+   "views": 42501,
+   "reposts": 98,
+   "heat": 695,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2106564361284141056/img/FU6lGqj5aVlniRgz.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-04T07:18:52.497Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "Image is the SpongeBob surprised fish meme, not a cat.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2106559153431023766",
+   "url": "https://x.com/ShitpostGate/status/2106559153431023766",
+   "text": "&gt;:( https://t.co/9LILpezlEA https://t.co/pU7oLdeSjH",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1612837
+   },
+   "postedAt": "2026-10-04T01:36:54Z",
+   "likes": 4516,
+   "views": 42402,
+   "reposts": 523,
+   "heat": 1050,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2106559144333307906/img/oPVuCmt6wKjN-CSG.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-04T07:18:52.497Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "The image shows a husky puppy, not a cat.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
   {
    "id": "2106204221695779247",
    "url": "https://x.com/ShitpostGate/status/2106204221695779247",
@@ -806,10 +890,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 5,
+  "nextLens": 3,
+  "bigChunk": 6,
   "figureChunk": 1,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {}
