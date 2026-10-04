@@ -3,13 +3,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { buildPlanned, proofOf, isWebp, PlannedError, jpegInfo, serialize, stockRow, copiesACat, readHeld, tributeOf } from "../scripts/build-planned.mjs";
 import { coatFromLook, coatFromSheet } from "../scripts/lib/coat.mjs";
 import { validatePlanned, proofProblem, STOCK_PAIRS, coatProblem, pairByMint, tradeLinkProblem, TRIBUTE, tributeLine } from "../assets/collection.js";
-import { ROOT, DATA_NOW } from "./helpers.mjs";
+import { ROOT, DATA_NOW, tempDir } from "./helpers.mjs";
 
 /* These tests read the shipped data: the real clock (tests/helpers.mjs DATA_NOW), not a frozen one. */
 const NOW = DATA_NOW;
@@ -32,7 +31,7 @@ function sheetEntry(ticker, extra = {}) {
 }
 
 function tempRoot(sheets) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "planned-"));
+  const root = tempDir("planned-");
   fs.mkdirSync(path.join(root, "data"));
   fs.copyFileSync(path.join(ROOT, "data/cats-info.json"), path.join(root, "data/cats-info.json"));
   const paths = sheets.map((list, i) => {

@@ -3,10 +3,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { ROOT } from "./helpers.mjs";
+import { ROOT, tempDir } from "./helpers.mjs";
 import { SITE, HASHTAGS, LIMIT, cardLink, weightedLength, listCats, checkPost } from "../scripts/announce.mjs";
 import { checkUpdate, draftAdoption, candidates, waitReason, lastAnnouncerPost, validAdoption, run, IMAGE_PATH, MAX_ATTEMPTS, LAUNCHPADS, draftLaunch, launchItems, fanTribute, usePaidLaunchLine } from "../scripts/post-updates.mjs";
 import { kitsOf } from "../scripts/lib/adoptions.mjs";
@@ -32,7 +31,7 @@ const JPEG = Buffer.from([0xff, 0xd8, 0xff, 0xe0]);
 
 /** A throwaway root: the shipped updates and adoptions, Catbus as the only cat, its pictures and the updates' images. */
 function sandbox({ updates = UPDATES, adoptions = ADOPTIONS, announced = { cats: {} }, queue = { cats: [] }, config = { dryRun: false }, adoptables = { cats: ADOPTABLES.cats.filter((c) => c.ticker === "NEKOBUS") } } = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "updates-"));
+  const dir = tempDir("updates-");
   const w = (f, v) => { fs.mkdirSync(path.dirname(path.join(dir, f)), { recursive: true }); fs.writeFileSync(path.join(dir, f), Buffer.isBuffer(v) ? v : JSON.stringify(v, null, 2) + "\n"); };
   w("data/updates.json", updates); w("data/adoptions.json", adoptions); w("data/announced.json", announced); w("data/release-queue.json", queue);
   w("data/announce-config.json", config); w("data/planned.json", { stocks: [], cats: [] }); w("data/collection.json", { cats: [] });
@@ -317,7 +316,7 @@ test("announce workflow: post-updates.mjs runs in the one step with the X secret
   assert.match(W, /git add -- [^\n]*data\/updates\.json/);
   const script = steps[0].slice(steps[0].indexOf("run: |") + "run: |".length).replace(/^ {10}/gm, "").trim();
   // A stand-in node that records what ran and fails as told.
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "announce-step-"));
+  const dir = tempDir("announce-step-");
   const ran = path.join(dir, "ran");
   fs.writeFileSync(path.join(dir, "node"), '#!/bin/sh\necho "$1" >> "$RAN"\ncase "$1" in\n  scripts/post-thread.mjs) exit "${FAIL_THREAD:-0}" ;;\n  scripts/announce.mjs) exit "${FAIL_ANNOUNCE:-0}" ;;\n  scripts/post-updates.mjs) exit "${FAIL_UPDATES:-0}" ;;\nesac\nexit 99\n', { mode: 0o755 });
   const step = (fail) => {

@@ -1,8 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
+import { tempDir } from "./helpers.mjs";
 import { researchStatus, timeAgo, ACTIVE_MS } from "../assets/world/research-status.js";
 import { approve, reject, candidateProblems, summary, review } from "../scripts/research-status.mjs";
 
@@ -42,7 +42,7 @@ const cand = {
 };
 
 function tempRoot() {
-  const r = fs.mkdtempSync(path.join(os.tmpdir(), "research-"));
+  const r = tempDir("research-");
   fs.mkdirSync(path.join(r, "data/research"), { recursive: true });
   const w = (f, v) => fs.writeFileSync(path.join(r, f), JSON.stringify(v));
   w("data/research/inbox.json", { candidates: [cand, { ...cand, id: "other", suggestedTicker: "OTHERZ" }] });

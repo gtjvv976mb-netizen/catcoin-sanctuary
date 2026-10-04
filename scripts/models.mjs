@@ -330,7 +330,8 @@ export async function loadRig(root = ROOT) {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "models-rig-"));
   fs.writeFileSync(path.join(tmp, "catrig.mjs"), fs.readFileSync(path.join(root, "assets/world/catrig.js"), "utf8").replace(/from "three"/, `from "${threeUrl}"`));
   fs.copyFileSync(path.join(root, "assets/world/catmotion.js"), path.join(tmp, "catmotion.js")); // the action vocabulary catrig.js imports
-  return import(pathToFileURL(path.join(tmp, "catrig.mjs")).href);
+  // Loaded, the copies are not read again: removed, so a run leaves nothing in the OS temp dir.
+  try { return await import(pathToFileURL(path.join(tmp, "catrig.mjs")).href); } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 }
 
 const OK_EXT = new Set(["KHR_mesh_quantization", "KHR_texture_transform"]);
