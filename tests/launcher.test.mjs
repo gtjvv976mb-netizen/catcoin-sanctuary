@@ -2714,7 +2714,9 @@ test("sanctuary cats: a cat that died (memorial: true) is launched as a tribute 
   assert.equal(loreLinesOf({ ticker: "ZZ", name: "Cole & Marmalade", memorial: false, story: "Cole died in 2021. Marmalade lives on." }).includes("In loving memory of Cole & Marmalade."), false, "a pair may have lost only one");
   // The shipped cats: those that died are marked memorial and launch as tributes; the living whose stories name another's death are not tributes.
   const shippedRow = (t) => sanctuaryRow(released(t), ownCtx({ entries: [released(t)] }));
-  for (const t of ["VENUS2F", "OSCARRI", "EMPTANG", "KENCHAN"]) assert.equal(shippedRow(t).row?.lore, `In loving memory of ${cats.find((x) => x.ticker === t).name}.`, t);
+  // (One already launched carries its tribute line in the shipped ledger instead.)
+  const launchedLore = (t) => shipped(FILES.ledger).launches.find((r) => r.ticker === t && r.status === "launched")?.lore;
+  for (const t of ["VENUS2F", "OSCARRI", "EMPTANG", "KENCHAN"]) assert.equal(cats.find((x) => x.ticker === t).launch ? launchedLore(t) : shippedRow(t).row?.lore, `In loving memory of ${cats.find((x) => x.ticker === t).name}.`, t);
   for (const t of ["AIZUSAKURA", "CHOUPETCAT"]) { const r = shippedRow(t); assert.ok(!r.row?.lore?.startsWith("In loving memory"), t); assert.match(r.problem ?? "", /not marked memorial/, t); }
   assert.ok(!shippedRow("COLEMARM").row?.lore?.startsWith("In loving memory"), "Cole & Marmalade: only Cole died");
   for (const text of ["He died.", "death", "In loving memory", "(1998-2014)"]) assert.ok(DIED.test(text), text);
