@@ -2,6 +2,65 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106947484836909437",
+      "url": "https://x.com/KittiesVids/status/2106947484836909437",
+      "name": "Ancient Scroll Cat",
+      "coinName": "Ancient Scroll Cat",
+      "ticker": "SCROLL",
+      "venue": "pump-sol",
+      "policy": "viral",
+      "kind": "real",
+      "lore": "A grumpy black cat prowls the pavement looking exactly like a fierce beast painted in an ancient ink scroll.",
+      "image": "https://pbs.twimg.com/media/HTynsvaawAAtdGo.jpg",
+      "coinImage": "https://pbs.twimg.com/media/HTynsvaawAAtdGo.jpg",
+      "metadataPath": "coins/2106947484836909437.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-05T12:32:32Z",
+      "attempts": 0,
+      "cat": {
+        "id": "ancient-scroll-cat",
+        "ticker": "SCROLL",
+        "name": "Ancient Scroll Cat",
+        "coinName": "Ancient Scroll Cat",
+        "owner": "Kitties Videos",
+        "category": "viral",
+        "story": "A grumpy black cat prowls the pavement looking exactly like a fierce beast painted in an ancient ink scroll. Ancient Scroll Cat was trending on X on October 5, 2026, and the sanctuary gave it a coin.",
+        "look": "Ancient Scroll Cat, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/KittiesVids/status/2106947484836909437",
+          "author": "KittiesVids",
+          "handle": "KittiesVids",
+          "date": "2026-10-05",
+          "dateType": "posted",
+          "text": "https://t.co/7T9eOthCzf",
+          "note": "Found by the sanctuary's trend watch on 2026-10-05.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Kitties Videos.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "KittiesVids",
+      "photoCredit": true
+    },
+    {
       "postId": "2106621674464448816",
       "url": "https://x.com/catcosanctuary/status/2106621674464448816",
       "name": "Cucurella Cat",
@@ -15,7 +74,7 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/CUCUWIG.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106621674464448816.json",
-      "status": "prepared",
+      "status": "failed",
       "preparedAt": "2026-10-04T05:46:51Z",
       "attempts": 0,
       "cat": {
@@ -71,7 +130,10 @@
         "confidence": "medium",
         "lore": null
       },
-      "mintNonce": 1943530
+      "mintNonce": 1943530,
+      "retry": true,
+      "reason": "gave way to a trending cat; prepared again once the slot is free",
+      "settledAt": "2026-10-05T12:32:32Z"
     },
     {
       "postId": "2106443761014452685",
