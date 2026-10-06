@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/PIENMINT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107414914172408206.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T10:21:03Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "mint-piennekomint",
         "ticker": "PIENMINT",
@@ -71,7 +71,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "piennekomint"
+      "feesTo": "piennekomint",
+      "mintNonce": 7576767,
+      "tx": "2nqn8qJntEcVaWK34FDVuWaw3xKtTZwBpNuAXeNFoW9BoxYw75bmGDBKVsSRJVug6Aa3Zpc5E82dm2sUyvk5L6m4",
+      "sentAt": "2026-10-06T10:29:05Z",
+      "lastValidBlockHeight": 431912801,
+      "mintPublic": "3B3Gjbj4pY8zsLHFebAPpUq1HVLf3xbbn2B13GFVcats",
+      "spentLamports": 5582440,
+      "settledAt": "2026-10-06T10:29:15Z",
+      "launchedAt": "2026-10-06T10:29:05Z"
     },
     {
       "postId": "2107324972062429312",
@@ -139,7 +147,10 @@
       "spentLamports": 5592600,
       "settledAt": "2026-10-06T10:18:27Z",
       "launchedAt": "2026-10-06T10:18:17Z",
-      "recordedAt": "2026-10-06T10:18:33Z"
+      "recordedAt": "2026-10-06T10:18:33Z",
+      "feeRoute": {
+        "at": "2026-10-06T10:22:42Z"
+      }
     },
     {
       "postId": "2107396451005350235",
