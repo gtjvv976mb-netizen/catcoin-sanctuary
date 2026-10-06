@@ -494,6 +494,7 @@ export const MODEL_LIMITS = {
   // (fixer round 4: with the head's own skin on it, a tipped, bowed or rolled head shows; these models' skin can't take it)
   CHOUPETCAT: { avoid: ["earScratch"], why: "a deep ruff under a head tipped to the paw: its skin lets the hind paw come only part way up, a paw short of the ear" },
   // (the Higgsfield models of 2026-09-30: what fit-clips.mjs and the herd test found each one can't take, or falls short of)
+  PUFFCHEF: { avoid: ["sleep", "curlUp", "wake"], why: "That Little Puff: a big ragdoll with a thick plumed tail that folds through its flank when it curls up (it dozes in its loaf)" },
   AMRCAT: { avoid: ["legLick", "earScratch", "sleep", "curlUp", "wake"], why: "a huge round mound on short legs: a hind leg raised to lick or to the ear stays by its belly, and curled up the mound hides its head (it dozes in its loaf)" },
   CAMTHECAT: { avoid: ["legLick", "earScratch", "pounce"], why: "a round Squishmallow plush with no separate legs: no hind leg lifts to lick or reach the ear, and a pounce sinks it into the lawn" },
   MILKWEED: { avoid: ["legLick", "earScratch", "scratch", "hop", "pounce"], why: "a Godzilla-suit toy on stub legs: a raised hind leg or a rear up a trunk tears the suit, and a leap sinks it in the lawn" },

@@ -241,3 +241,11 @@ failed, have had models since the third run.
   Ton-chan, Edgar; Rokutama, Gotama, Horatio and Mii-ko came out on four legs from the earlier wording) and the
   live cats that had a fifth leg (their job entries keep the old model as `prev_model_job`). A remade model's old
   leg labels (`.legs.json`) are dropped.
+
+### 2026-10-06: nine researched cats
+
+- Hodge, Doorkins Magnificat, Simpkin IV, Sweetcorn, Attlee, Snacks, Mint, Puff and Minira, made the 2026-10-03 way: a
+  realistic portrait from the proof photo cropped to the cat (no people), the squared standing reference from the
+  portrait and photo, four squared views, Tripo H3.1 multi-view. All nine stand on four legs.
+- `--yaw 180` for ATTLEECAT, SNACKSCAT and PUFFCHEF (plumed tails outweigh the head).
+- PUFFCHEF's thick plumed tail folds through its flank when it curls up: a new MODEL_LIMITS entry (it dozes in its loaf).
