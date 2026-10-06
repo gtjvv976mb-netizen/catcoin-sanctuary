@@ -279,6 +279,7 @@ export const TRAIT_OVERRIDES = {
   SNOWCURL: { energy: .4, social: .6, proud: .55, grace: .6, signature: "wash", note: "Tesla's Balloon Cat: a calm poser, one paw lifted to her face" },
   COOPERCAT: { curious: .65, proud: .6, grace: .6, note: "a tidy worker sorting petals" },
   RUBYCAT: { energy: .45, social: .6, curious: .55, note: "a relaxed stroller" },
+  SNACKSCAT: { proud: .5, playful: .5, note: "'merch king' and his plush toy are his owner's words about his merchandise, not pride or play" },
   KONPEIMISO: { bold: .5, proud: .5, legs: "normal", note: "the model is Miso, the long-legged American Shorthair; 'hiding' and the photo book are their owner's words about the pair, not shyness or pride" },
   MARUBOX: { playful: .8, curious: .8, bold: .65, energy: .6, signature: "boxSit", note: "Maru: dives into every box, however small" },
   GLICAT: { social: .75, bold: .7, sleepy: .6, energy: .4, proud: .6, signature: "loaf", note: "Gli of Hagia Sophia: calm with every visitor, loafing on her ledge" },
@@ -494,6 +495,7 @@ export const MODEL_LIMITS = {
   // (fixer round 4: with the head's own skin on it, a tipped, bowed or rolled head shows; these models' skin can't take it)
   CHOUPETCAT: { avoid: ["earScratch"], why: "a deep ruff under a head tipped to the paw: its skin lets the hind paw come only part way up, a paw short of the ear" },
   // (the Higgsfield models of 2026-09-30: what fit-clips.mjs and the herd test found each one can't take, or falls short of)
+  PUFFCHEF: { avoid: ["sleep", "curlUp", "wake"], why: "That Little Puff: a big ragdoll with a thick plumed tail that folds through its flank when it curls up (it dozes in its loaf)" },
   AMRCAT: { avoid: ["legLick", "earScratch", "sleep", "curlUp", "wake"], why: "a huge round mound on short legs: a hind leg raised to lick or to the ear stays by its belly, and curled up the mound hides its head (it dozes in its loaf)" },
   CAMTHECAT: { avoid: ["legLick", "earScratch", "pounce"], why: "a round Squishmallow plush with no separate legs: no hind leg lifts to lick or reach the ear, and a pounce sinks it into the lawn" },
   MILKWEED: { avoid: ["legLick", "earScratch", "scratch", "hop", "pounce"], why: "a Godzilla-suit toy on stub legs: a raised hind leg or a rear up a trunk tears the suit, and a leap sinks it in the lawn" },

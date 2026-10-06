@@ -210,7 +210,11 @@ jobs:
         if: ${{ !cancelled() && steps.commit-send.outcome == 'success' }}
         env:
           LAUNCH_ENABLED: ${{ vars.LAUNCH_ENABLED }}
-        run: node scripts/launch.mjs record
+        # A launched cat new to the sanctuary is a new resident: its traits row is built here, or the Pages tests
+        # (tests/traits.test.mjs: one row per resident) fail and the site stops deploying.
+        run: |
+          node scripts/launch.mjs record
+          node scripts/build-traits.mjs
       - name: Commit the sanctuary's new cat
         id: commit-record
         if: ${{ !cancelled() && steps.commit-send.outcome == 'success' }}
@@ -218,7 +222,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RECORDED: ${{ steps.record.outputs.recorded }}
         run: |
-          git add -- data/sanctuary-launches.json data/adoptables.json data/launches.json data/real-photos.json data/cat-watch.json scripts/meshy.queue.json
+          git add -- data/sanctuary-launches.json data/adoptables.json data/launches.json data/real-photos.json data/cat-watch.json scripts/meshy.queue.json data/traits.json
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Launch: a launched cat moves into the sanctuary"
