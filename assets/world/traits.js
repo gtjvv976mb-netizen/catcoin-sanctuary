@@ -518,6 +518,8 @@ export const MODEL_LIMITS = {
   TUBBSCAT: { avoid: ["legLick", "earScratch", "flop", "roll"], why: "a round bean on stub legs: a raised hind leg or a roll onto its side tears it" },
   GATEKITTY: { avoid: ["earScratch"], why: "a huge round belly: no hind paw to the ear" },
   MRBCHONK: { avoid: ["earScratch"], why: "a very heavy body: no hind paw to the ear" },
+  // (2026-10-06: the four launched trend cats' models and batch 3)
+  LECHONKCAT: { avoid: ["earScratch"], why: "Le Chonk: a huge, deep-coated ginger; its hind paw stops a little short of the ear" },
   OJINEKO: { avoid: ["earScratch"], why: "a huge round Exotic: no hind paw to the ear" },
   PONTAKUN: { avoid: ["earScratch"], why: "big, round and thick-furred: no hind paw to the ear" },
   IDPHOTO: { avoid: ["earScratch"], why: "a short-legged Munchkin: no hind paw to the ear" },
