@@ -2,6 +2,78 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107480359700992265",
+      "url": "https://x.com/catcosanctuary/status/2107480359700992265",
+      "name": "Futaba",
+      "coinName": "Futaba the Chaircat",
+      "ticker": "FUTABACAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of Futaba.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/FUTABACAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/FUTABACAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107480359700992265.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T14:46:41Z",
+      "attempts": 0,
+      "cat": {
+        "id": "futaba-qnote",
+        "ticker": "FUTABACAT",
+        "name": "Futaba",
+        "coinName": "Futaba the Chaircat",
+        "owner": "qnote Inc., Tokyo (@qnote_inc)",
+        "category": "company",
+        "story": "Futaba (ふたば) was the first office cat at qnote Inc., a web and app development company in Suginami, Tokyo. President Nobuyuki Tsuruta met her at a sushi restaurant, where she was a shelter cat looking for an adopter, and she joined the office in 2004, a year after the company was founded. She later had six kittens, and qnote's growing 'cat sales department' gave every cat a job title. Futaba's title was 会長 (chair). The company's official X account says it mostly posts about the office cats. Futaba died in August 2024 at the age of 20, and qnote livestreamed her farewell gathering.",
+        "look": "Slim cream / pale-apricot (light buff) shorthair with faint darker rings on the tail, pale green eyes, a pink nose and large upright ears; a small, kittenish face even in old age.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/qnote_inc/status/1185198863679811584",
+          "author": "qnote_inc",
+          "handle": "qnote_inc",
+          "date": "2019-10-18",
+          "dateType": "posted",
+          "text": "ゴロンゴロンしてるふたば会長。 みなさま、おやすみなさーい(ΦωΦ) #qnote_cat #猫会社 #猫社員 #cat",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "qnote猫社員紹介 (qnote cats, official company page)",
+            "url": "https://www.qnote.co.jp/qnote_cats/"
+          },
+          {
+            "label": "How Can Humans and Cats Co-Exist in the Office? (WORK MILL, 2023-04-24)",
+            "url": "https://workmill.jp/en/webzine/cats-office-20230424/"
+          },
+          {
+            "label": "Tokyo Company Hires 11 Cats as Official Sales Department Employees (AOL / Always Pets, 2026-02-11)",
+            "url": "https://www.aol.com/articles/tokyo-company-hires-11-cats-162445126.html"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by qnote Inc., Tokyo (@qnote_inc).",
+        "sensitivity": "In loving memory of Futaba.",
+        "portrait": "assets/portraits/FUTABACAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "qnote_inc"
+    },
+    {
       "postId": "2107457414387622310",
       "url": "https://x.com/MistralAI/status/2107457414387622310",
       "name": "Le Chonk",
