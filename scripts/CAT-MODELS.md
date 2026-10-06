@@ -256,3 +256,13 @@ failed, have had models since the third run.
   proof photos (none showed people, so none was cropped). All ten stand on four legs and face +X with no `--yaw`.
 - Milko's first multi-view job hung; a second one with the same four views is the model (`stuck_job` is noted in the
   scratch record only).
+
+### 2026-10-06 (evening): nine researched cats and four launched trend cats
+
+- Cheddar, Pawfficer Smudge, the Burwood cat, Caliban, Don Gato, Guppy, The Bear, Koneroku and Yamaneko from their
+  proof photos; Scroll, King, Milkbelly and Le Chonk (launched from X posts, with no portrait or model until now)
+  from their launch posts' photos. Made the same way; all thirteen stand on four legs.
+- `--yaw 180` for YAMANEKO, CHEDDARVPD, BURWOODCAT and LECHONKCAT (plumed tails outweigh the head).
+- Every new model was checked through every clip (the herd test, fit-clips, and side-view strips of curl up, sleep,
+  wake, roll, flop and stretch): fit-clips turned none down. LECHONKCAT, the widest cat yet (0.40 to a length of
+  1), can't get a hind paw to its ear: a MODEL_LIMITS entry. It sleeps in its loaf, as round cats do in the rig.

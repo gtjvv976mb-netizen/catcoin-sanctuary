@@ -9366,5 +9366,39 @@
    "width": 0.4004
   },
   "yaw": 180.0
+ },
+ "KING": {
+  "image_job": "c2fa76b3-b4f7-4455-90d8-97f3e923daf3",
+  "clean_job": "5ec19d25-addf-4f3c-9599-f7ea642ac7b6",
+  "view_jobs": {
+   "front": "fdec7c3f-dcaa-445c-8a2e-9134d6a94209",
+   "left": "54fcfd44-69a2-4346-9098-ff6a26ac915e",
+   "back": "8b0a745e-b515-4708-b088-098d2b5ec8ee",
+   "right": "7c126f2b-37cc-49eb-b0d1-5af5931e78a8"
+  },
+  "model_job": "74d9f3ba-ed5c-4acf-b006-68536ff51a67",
+  "model": "tripo_h3_1_multiview_to_3d (front,left,back,right; texture and geometry detailed)",
+  "faces": "adaptive raw, packed ~20k",
+  "pose": "standing on all four legs",
+  "stance": "square",
+  "status": "done",
+  "hd": true,
+  "si": 0.02,
+  "si_lo": 0.003,
+  "tex": 1024,
+  "tex_lo": 256,
+  "q": 88,
+  "credits": 27,
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3Jj13tEoR43bKhKT64AD0fklelv/hf_20261006_160532_74d9f3ba-ed5c-4acf-b006-68536ff51a67.glb",
+  "source": "adoptable (photorealistic portrait from the real cat's proof photo, gpt_image_2_5 high); squared stance",
+  "sizes": {
+   "hi": 1011360,
+   "lo": 144100
+  },
+  "dims": {
+   "len": 1.0145,
+   "height": 1.0,
+   "width": 0.285
+  }
  }
 }
