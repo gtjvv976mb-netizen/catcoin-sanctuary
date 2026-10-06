@@ -2,6 +2,78 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107414914172408206",
+      "url": "https://x.com/catcosanctuary/status/2107414914172408206",
+      "name": "Mint",
+      "coinName": "Pien Cat Mint",
+      "ticker": "PIENMINT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Mint, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/PIENMINT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/PIENMINT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107414914172408206.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T10:21:03Z",
+      "attempts": 0,
+      "cat": {
+        "id": "mint-piennekomint",
+        "ticker": "PIENMINT",
+        "name": "Mint",
+        "coinName": "Pien Cat Mint",
+        "owner": "Owner of @piennekomint (ぴえん猫ミント), Japan",
+        "category": "viral",
+        "story": "Mint (ミント) is a rescue cat in Japan nicknamed the 'pien cat' (ぴえん猫) because her face always looks sad and droopy-eyed, even when she is happy. She was neglected by her mother at 2 days old, taken in by a rescue group and listed on an adoption site, where her owner chose her. Her before-and-after photos four years later, still wearing the same 'pien face', were viewed 4.85 million times on X (ORICON NEWS, Nov 2025). A vet found nothing wrong: she simply has droopy eyes. Her owner named her after mint because she was born in summer, has blue eyes and a fresh look, matching the plant names of her older cat siblings. Despite the sad face she is playful and mischievous, and follows her family everywhere. Her X account @piennekomint also runs a weekly manga series about her.",
+        "look": "Slim, lightly built young cat with long legs. White lower face, muzzle, chest, legs and belly. Pale grey-fawn tabby on the top of the head, cheeks and back, with dark grey tabby stripes on the forehead and a grey-brown smudge down the bridge of the nose. Large, deep blue eyes that droop at the outer corners and give her a permanently sad 'pien' look. Pink nose, pink chin. Large upright ears with pale pink insides and dark-edged rims.",
+        "coat": {
+          "base": "grey",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "blue"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/piennekomint/status/2106558712794300439",
+          "author": "piennekomint",
+          "handle": "piennekomint",
+          "date": "2026-10-04",
+          "dateType": "posted",
+          "text": "どうも、喜怒哀楽の「哀」担当です… 「喜」「怒」「楽」メンバー募集中です",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "ORICON NEWS: 悲しそうな顔の保護猫「愛情かけたら顔つきも変わるかな？」→4年後…変わらない“ぴえん顔”に485万表示 (2025-11-10)",
+            "url": "https://www.oricon.co.jp/special/73070/"
+          },
+          {
+            "label": "LIMO: 「ブレても可愛いのすごい」ぴえん猫の手ブレ写真に「なんでこんなに可愛いの」と共感の声届く (2026-07-16)",
+            "url": "https://limo.media/articles/-/132162"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Mint",
+          "contract": "58vXwKSf3somTzTSqAPJvwDBVH6x5sZAqYNCjDMapump",
+          "mcapUsd": 0
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Owner of @piennekomint (ぴえん猫ミント), Japan.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/PIENMINT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "piennekomint"
+    },
+    {
       "postId": "2107324972062429312",
       "url": "https://x.com/KittiesVids/status/2107324972062429312",
       "name": "Milk Belly Cat",
