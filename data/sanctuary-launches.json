@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/SIMPKIN4.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107346386731892829.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T05:47:29Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "simpkin-iv-hertford",
         "ticker": "SIMPKIN4",
@@ -75,7 +75,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "TFletcher"
+      "feesTo": "TFletcher",
+      "mintNonce": 1134092,
+      "tx": "4T5P8YvnxGcs7EH5eZgpotvVoijcwyh1zCyqhU66Q36Y3Atq48zgsY7fruxsfzgVKPNDpAPbqgqH4vYBAqkUEDYs",
+      "sentAt": "2026-10-06T05:57:40Z",
+      "lastValidBlockHeight": 431851850,
+      "mintPublic": "12fmBKMpPuDCxic3UGxenpUN3Av37wZdBTi6JUXNcats",
+      "spentLamports": 5567200,
+      "settledAt": "2026-10-06T05:57:50Z",
+      "launchedAt": "2026-10-06T05:57:40Z"
     },
     {
       "postId": "2106850528340971998",
@@ -148,7 +156,10 @@
       "spentLamports": 5546880,
       "settledAt": "2026-10-06T05:04:04Z",
       "launchedAt": "2026-10-06T05:03:55Z",
-      "recordedAt": "2026-10-06T05:04:11Z"
+      "recordedAt": "2026-10-06T05:04:11Z",
+      "feeRoute": {
+        "at": "2026-10-06T05:50:07Z"
+      }
     },
     {
       "postId": "2106947484836909437",
