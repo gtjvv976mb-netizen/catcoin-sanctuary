@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/TONCHAN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106817367426707477.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T15:02:33Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "ton-chan",
         "ticker": "TONCHAN",
@@ -67,7 +67,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "tongarirooms"
+      "feesTo": "tongarirooms",
+      "mintNonce": 2737329,
+      "tx": "2yCioNewqzugGdUYLsuxZAUJAxZESTerKAcphQhZSFQW5ocy46BwmkKxJu2AAX2bMLN2kHAX8c5JELQbdenwu5t5",
+      "sentAt": "2026-10-06T15:12:24Z",
+      "lastValidBlockHeight": 431976295,
+      "mintPublic": "EyUmPPRdLTKgq73PEHp9KmUGSoo3ma5KXKgKQT84cats",
+      "spentLamports": 5551960,
+      "settledAt": "2026-10-06T15:12:33Z",
+      "launchedAt": "2026-10-06T15:12:24Z"
     },
     {
       "postId": "2107480359700992265",
@@ -148,7 +156,10 @@
       "spentLamports": 5618000,
       "settledAt": "2026-10-06T14:59:37Z",
       "launchedAt": "2026-10-06T14:59:28Z",
-      "recordedAt": "2026-10-06T14:59:44Z"
+      "recordedAt": "2026-10-06T14:59:44Z",
+      "feeRoute": {
+        "at": "2026-10-06T15:05:21Z"
+      }
     },
     {
       "postId": "2107457414387622310",
