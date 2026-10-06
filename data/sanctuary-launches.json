@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/ATTLEECAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107379497955950647.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T08:31:14Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "attlee-speakers-cat",
         "ticker": "ATTLEECAT",
@@ -75,7 +75,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "CommonsSpeaker"
+      "feesTo": "CommonsSpeaker",
+      "mintNonce": 13225269,
+      "tx": "2RWkemsYQzNVTFMJamkwkSKXEpxAZGuPcBGYFtPNvHtuHbCDMkKDMZtUcwPo7sA9kuXeY3jUir8y81d8wtRGYdVV",
+      "sentAt": "2026-10-06T08:42:54Z",
+      "lastValidBlockHeight": 431888969,
+      "mintPublic": "EQTpHDZXUU9Mow1cJH4Mdy6EkTtPuQ1Qnh1jbgSEcats",
+      "spentLamports": 5643400,
+      "settledAt": "2026-10-06T08:43:03Z",
+      "launchedAt": "2026-10-06T08:42:54Z"
     },
     {
       "postId": "2107364325073580387",
@@ -152,7 +160,10 @@
       "spentLamports": 5567200,
       "settledAt": "2026-10-06T08:08:12Z",
       "launchedAt": "2026-10-06T08:07:59Z",
-      "recordedAt": "2026-10-06T08:08:18Z"
+      "recordedAt": "2026-10-06T08:08:18Z",
+      "feeRoute": {
+        "at": "2026-10-06T08:33:42Z"
+      }
     },
     {
       "postId": "2107346386731892829",
