@@ -2,6 +2,79 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106802226039525386",
+      "url": "https://x.com/catcosanctuary/status/2106802226039525386",
+      "name": "Kiku-chan",
+      "coinName": "Kiku-chan",
+      "ticker": "KIKUCHAN",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Kiku-chan (菊ちゃん) is a real cat who came from a rescue-cat café.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/KIKUCHAN.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/KIKUCHAN.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106802226039525386.json",
+      "status": "launched",
+      "preparedAt": "2026-10-06T15:27:49Z",
+      "attempts": 1,
+      "cat": {
+        "id": "kiku-chan",
+        "ticker": "KIKUCHAN",
+        "name": "Kiku-chan",
+        "coinName": "Kiku-chan",
+        "owner": "Sobun Minato (湊文), who runs @sobun_nekomanga",
+        "category": "viral",
+        "story": "Kiku-chan (菊ちゃん) is a real cat who came from a rescue-cat café. The account @sobun_nekomanga, with about 158,000 followers, shares two-page manga, photos and videos of Kiku-chan's daily life. KADOKAWA published the comic essay 'Neko no Kiku-chan' (猫の菊ちゃん), describing a shy cat from a rescue café and an elderly couple sharing small, gentle, happy days. The series has reached a third volume. In March 2026 the account marked Kiku-chan's 10th birthday. Kiku-chan was treated for a swollen anal gland in 2025 and for a recurrence in August 2026, and the account has since reported a full recovery.",
+        "look": "Calico tabby (caliby): orange and dark-brown/black tabby patches on the head, back and tail; white muzzle, chin, chest and paws; pink nose; green eyes (as drawn by the account; closed in the photo).",
+        "coat": {
+          "base": "white",
+          "second": "ginger",
+          "pattern": "calico",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/sobun_nekomanga/status/2028750068984291491",
+          "author": "sobun_nekomanga",
+          "handle": "sobun_nekomanga",
+          "date": "2026-03-03",
+          "dateType": "posted",
+          "text": "いつも菊ちゃんをみてくださりありがとうございます。 毎日たくさん遊んで、たくさんおしゃべりしています。 これからもどうぞよろしくお願いいたします🌸",
+          "note": "Verified on 2026-10-02",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "「猫の菊ちゃん」湊文 [コミックエッセイ] - KADOKAWA",
+            "url": "https://www.kadokawa.co.jp/product/322001000458/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Sobun Minato (湊文), who runs @sobun_nekomanga.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/KIKUCHAN.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "sobun_nekomanga",
+      "mintNonce": 5569036,
+      "tx": "3XrvoAEzt5kbAFnpNreQVy1oD2yr8CXBMiHHKSdg5KFhrthxRG4NphCYzJcUAAvpB86RL3cnxefjf91ZwenkaBLa",
+      "sentAt": "2026-10-06T15:38:07Z",
+      "lastValidBlockHeight": 431982013,
+      "mintPublic": "3U8kr4W7saTimmmUyYhjCbw6pWwBE9rG8PPFMuiscats",
+      "spentLamports": 5562120,
+      "settledAt": "2026-10-06T15:38:16Z",
+      "launchedAt": "2026-10-06T15:38:07Z",
+      "recordedAt": "2026-10-06T15:38:23Z"
+    },
+    {
       "postId": "2106817367426707477",
       "url": "https://x.com/catcosanctuary/status/2106817367426707477",
       "name": "Ton-chan",
@@ -76,7 +149,10 @@
       "spentLamports": 5551960,
       "settledAt": "2026-10-06T15:12:33Z",
       "launchedAt": "2026-10-06T15:12:24Z",
-      "recordedAt": "2026-10-06T15:12:39Z"
+      "recordedAt": "2026-10-06T15:12:39Z",
+      "feeRoute": {
+        "at": "2026-10-06T15:30:33Z"
+      }
     },
     {
       "postId": "2107480359700992265",
