@@ -326,6 +326,13 @@
       "attempts": 1,
       "postedAt": "2026-10-06T21:25:55.029Z",
       "tweet": "2107583150582812688"
+    },
+    "PUFFCHEF": {
+      "postId": "2107433237702197476",
+      "status": "failed",
+      "at": "2026-10-06T23:06:08.813Z",
+      "attempts": 1,
+      "error": "X API POST /2/tweets: HTTP 400 {\"detail\":\"One or more parameters to your request was invalid.\",\"errors\":[{\"message\":\"The Tweet contains an invalid URL.\",\"parameters\":{\"text\":[\"😻 Puff, launched by the sanctuary on PumpFun\\n💸 Fees go to the creator, @thatlittlepuff_ via UsePaid\\n🔗 https://usepaid.app/token/F4GnKsS6T3kZLWgVM4E5ZC"
     }
   }
 }
