@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-06T04:16:44.808Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-06T04:56:54.839Z",
+ "lens": "big",
+ "query": "(from:NintendoAmerica OR from:Pokemon OR from:PlayStation OR from:Xbox OR from:Spotify OR from:McDonalds OR from:Wendys OR from:tacobell OR from:Starbucks OR from:CocaCola OR from:Nike OR from:NBA OR from:NFL OR from:TheSimpsons OR from:CartoonNetwork OR from:adultswim OR from:Crunchyroll OR from:hellokitty OR from:binance OR from:coinbase OR from:CoinMarketCap) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-10-06",
-  "dayUsed": 81,
+  "dayUsed": 84,
   "month": "2026-10",
-  "monthUsed": 1637,
+  "monthUsed": 1640,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -21,6 +21,7 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2107259544539631665",
   "2106726286139822483",
   "2106564368871690606",
   "2106559153431023766",
@@ -38,6 +39,90 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2107259544539631665",
+   "url": "https://x.com/Crunchyroll/status/2107259544539631665",
+   "text": "What happens when a boy who talks to animals befriends a black cat? 🐈‍⬛\n\nAn action-packed series full of supernatural fights with the fate of the universe on the line! 👊💥 \n\nWatch BLACK TORCH on Crunchyroll! https://t.co/5j9uYKAS37",
+   "author": {
+    "handle": "Crunchyroll",
+    "name": "Crunchyroll",
+    "followers": 10478354
+   },
+   "postedAt": "2026-10-06T00:00:01Z",
+   "likes": 250,
+   "views": 47932,
+   "reposts": 25,
+   "heat": 157,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/media/HT3D_OGWcAAQPgw.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "Crunchyroll",
+   "lens": "big",
+   "readAt": "2026-10-06T04:56:54.839Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": null,
+    "memeName": "Mononoke Cat",
+    "personFace": false,
+    "kind": "cartoon",
+    "coinName": "Mononoke Cat",
+    "ticker": "MONO",
+    "lore": "A stern black anime cat declares \"I'm a mononoke\" before befriending a boy who talks to animals in BLACK TORCH.",
+    "sensitive": false,
+    "why": "Post centers on one cartoon black cat from an anime, harmless and memeable, though unnamed in the post.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "7ZJqdo1uoUVen6Q8QGSwDWyYajGFAUkgT6knoQcxpump",
+     "name": "Mono Market",
+     "symbol": "MONO",
+     "url": "https://dexscreener.com/solana/2l9kzff8z3zkdsgnurbtk6kg56xklqekrwj7szuk5u3m"
+    },
+    {
+     "mint": "G4vJArA8PphEMZFiYEngC2hBaNTA7Gp2djgNiCtxpump",
+     "name": "Mono Pad",
+     "symbol": "MONO",
+     "url": "https://dexscreener.com/solana/8kpvznewibvuc8gci7pqewqhtk1qptfmqvgfexquu2dy"
+    },
+    {
+     "mint": "HJ5BFTN4tqo86YayJazze8DK4nMdhe5UcoPG5BNLpump",
+     "name": "Mono Pad",
+     "symbol": "MONO",
+     "url": "https://dexscreener.com/solana/awkoly9sncabqa8evn46rc7k1mmbhqe382qvcy4vh7nd"
+    },
+    {
+     "mint": "CWvf5wetoetK9FVPifbXt6Z7pizH8YXdydRJZ1vHpump",
+     "name": "Monolith",
+     "symbol": "MONO",
+     "url": "https://dexscreener.com/solana/dqzz3bhaps9txsbj2oagudiyfmkqmka3djan9jyckksc"
+    },
+    {
+     "mint": "BYp3tvpvuAFmk5rvh9jQE2eszrdgMb852xE2fzHmT5eH",
+     "name": "Monocoin",
+     "symbol": "MONO",
+     "url": "https://dexscreener.com/solana/dtgk19ls8dg2nlub7pdzwcftrehw5o3gdrbxphkwmv9t"
+    },
+    {
+     "mint": "GQCXFpeLK6Y1JPMGfqX7f8i1xZhsg35KUCLASQcLpump",
+     "name": "Mr Monopoly",
+     "symbol": "MONO",
+     "url": "https://dexscreener.com/solana/56qmkcy6hkanbzhebjrx8jmtfcqvqe4u78imijjdzggm"
+    },
+    {
+     "mint": "Bk9F16C3aMavkZ86SMoZevbmCFPqibHTSGiAcDSLpump",
+     "name": "Mono",
+     "symbol": "MONO",
+     "url": "https://dexscreener.com/solana/dwpxdufvkxathvzjxfrxwwym2npnjvr4zi9qx1b83qeq"
+    }
+   ],
+   "status": "signal"
+  },
   {
    "id": "2106964476432146697",
    "url": "https://x.com/ShitpostGate/status/2106964476432146697",
@@ -1058,10 +1143,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 7,
+  "nextLens": 3,
+  "bigChunk": 8,
   "figureChunk": 1,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
