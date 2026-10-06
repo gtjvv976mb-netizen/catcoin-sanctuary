@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/SNACKSCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107396451005350235.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T09:06:24Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "snacks-best-coast",
         "ticker": "SNACKSCAT",
@@ -75,7 +75,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "BethanyCoast"
+      "feesTo": "BethanyCoast",
+      "mintNonce": 9375521,
+      "tx": "3NfNNJNhjT6rRpVBkX6qAoi1chLNsKaXqtFnnLcHRt7d5u3e6LAf4A69vzRSZ5dirsxLNrvxMbSG7q176h5RLgEb",
+      "sentAt": "2026-10-06T09:16:08Z",
+      "lastValidBlockHeight": 431896426,
+      "mintPublic": "A6Rx7R5G5WiJ6W4HH1vLFAGCmL1HcVdfKwww2eQCcats",
+      "spentLamports": 5592600,
+      "settledAt": "2026-10-06T09:16:18Z",
+      "launchedAt": "2026-10-06T09:16:08Z"
     },
     {
       "postId": "2107379497955950647",
@@ -160,7 +168,10 @@
       "spentLamports": 5643400,
       "settledAt": "2026-10-06T08:43:03Z",
       "launchedAt": "2026-10-06T08:42:54Z",
-      "recordedAt": "2026-10-06T08:43:09Z"
+      "recordedAt": "2026-10-06T08:43:09Z",
+      "feeRoute": {
+        "at": "2026-10-06T09:08:29Z"
+      }
     },
     {
       "postId": "2107364325073580387",
