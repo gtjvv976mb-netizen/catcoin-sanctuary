@@ -2,6 +2,65 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107324972062429312",
+      "url": "https://x.com/KittiesVids/status/2107324972062429312",
+      "name": "Milk Belly Cat",
+      "coinName": "Milk Belly Cat",
+      "ticker": "MILKBELLY",
+      "venue": "pump-sol",
+      "policy": "viral",
+      "kind": "real",
+      "lore": "A sleepy tabby kitten lies belly-up getting tummy rubs, completely full of milk.",
+      "image": "https://pbs.twimg.com/amplify_video_thumb/2107114689138475008/img/YL9wPu2tGWg7ICMB.jpg",
+      "coinImage": "https://pbs.twimg.com/amplify_video_thumb/2107114689138475008/img/YL9wPu2tGWg7ICMB.jpg",
+      "metadataPath": "coins/2107324972062429312.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T10:10:34Z",
+      "attempts": 0,
+      "cat": {
+        "id": "milk-belly-cat",
+        "ticker": "MILKBELLY",
+        "name": "Milk Belly Cat",
+        "coinName": "Milk Belly Cat",
+        "owner": "Kitties Videos",
+        "category": "viral",
+        "story": "A sleepy tabby kitten lies belly-up getting tummy rubs, completely full of milk. Milk Belly Cat was trending on X on October 6, 2026, and the sanctuary gave it a coin.",
+        "look": "Milk Belly Cat, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/KittiesVids/status/2107324972062429312",
+          "author": "KittiesVids",
+          "handle": "KittiesVids",
+          "date": "2026-10-06",
+          "dateType": "posted",
+          "text": "full of milk https://t.co/4Kr65JKtB6",
+          "note": "Found by the sanctuary's trend watch on 2026-10-06.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Kitties Videos.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "KittiesVids",
+      "photoCredit": true
+    },
+    {
       "postId": "2107396451005350235",
       "url": "https://x.com/catcosanctuary/status/2107396451005350235",
       "name": "Snacks",
