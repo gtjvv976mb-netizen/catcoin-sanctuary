@@ -67,7 +67,8 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "castleandkey"
+      "feesTo": "castleandkey",
+      "mintNonce": 2443666
     },
     {
       "postId": "2106802226039525386",
@@ -140,7 +141,10 @@
       "spentLamports": 5562120,
       "settledAt": "2026-10-06T15:38:16Z",
       "launchedAt": "2026-10-06T15:38:07Z",
-      "recordedAt": "2026-10-06T15:38:23Z"
+      "recordedAt": "2026-10-06T15:38:23Z",
+      "feeRoute": {
+        "at": "2026-10-06T15:42:50Z"
+      }
     },
     {
       "postId": "2106817367426707477",

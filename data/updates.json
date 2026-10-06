@@ -1,7 +1,10 @@
 {
-  "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest.",
-  "minGapMinutes": 180,
-  "lastPostedAt": "2026-10-06T13:02:30.843Z",
+  "note": "Site updates for @catcosanctuary on X, posted one a run by scripts/post-updates.mjs, in this order, after any adoption not posted yet (data/adoptions.json), at least minGapMinutes apart and 15 minutes after the announcer's last post. Add a post with approved: true and status: queued; the script records the rest. The sanctuary's launch posts go earliest launch first; a ticker in launchesFirst goes ahead of the rest.",
+  "minGapMinutes": 60,
+  "launchesFirst": [
+    "LECHONKCAT"
+  ],
+  "lastPostedAt": "2026-10-06T15:53:32.235Z",
   "posts": [
     {
       "id": "adoptions-found",
@@ -281,6 +284,13 @@
       "attempts": 1,
       "postedAt": "2026-10-06T13:02:30.843Z",
       "tweet": "2107456464990146913"
+    },
+    "LECHONKCAT": {
+      "postId": "2107457414387622310",
+      "status": "posted",
+      "attempts": 1,
+      "postedAt": "2026-10-06T15:53:32.235Z",
+      "tweet": "2107499504781885840"
     }
   }
 }

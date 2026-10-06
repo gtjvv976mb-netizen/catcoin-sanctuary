@@ -60,7 +60,8 @@ const quiet = { log: () => {} };
 const catbus = () => candidates({ posts: [] }, ADOPTIONS, { cats: CATS, ownMints: new Set(COLLECTION.cats.map((c) => c.mint)) }).find((c) => c.id === "NEKOBUS");
 
 test("every shipped update is approved and queued, fits 280, passes the rules, links only the site and carries 1-2 of the announcer's hashtags", () => {
-  assert.equal(UPDATES.minGapMinutes, 180);
+  assert.equal(UPDATES.minGapMinutes, 60, "the owner set launch posts to one an hour (2026-10-06)");
+  assert.ok(UPDATES.launchesFirst === undefined || (Array.isArray(UPDATES.launchesFirst) && UPDATES.launchesFirst.every((t) => /^[A-Z0-9]{2,10}$/.test(t))), "launchesFirst lists tickers");
   assert.ok(UPDATES.lastPostedAt === null || !Number.isNaN(Date.parse(UPDATES.lastPostedAt)));
   assert.equal(SHIPPED.adoptionsPosted.NEKOBUS.status, "posted", "Catbus went out as its thread: never posted twice");
   assert.ok(fs.existsSync(path.join(ROOT, "data/thread-adoption-catbus.json")));
@@ -419,4 +420,10 @@ test("a UsePaid coin's launch post says its fees go to the creator and tags that
   assert.equal(items(row({ feesTo: "MorrisAnimal" })), 0, "not routed yet: it waits");
   assert.equal(items(row({ feesTo: "MorrisAnimal", feeRoute: { at: "2026-10-02T19:00:00Z" } })), 1);
   assert.equal(items(row({ feesTo: "MorrisAnimal", feeRouteTries: 5, feeRouteError: "x" })), 1, "given up on: it goes, without the line");
+  // Earliest launch first, unless the owner moves a ticker to the front (updates.launchesFirst).
+  const two = [row({ ticker: "OLDER", launchedAt: "2026-10-02T18:00:00Z" }), row({ ticker: "NEWER", launchedAt: "2026-10-02T20:00:00Z" })];
+  const both = { cats: [{ key: "OLDER", sanctuary: true, launched: true }, { key: "NEWER", sanctuary: true, launched: true }], adoptables: two.map((r) => ({ ticker: r.ticker, launch: { mint: r.mintPublic, tx: "x" } })), proved: new Set([two[0].mintPublic]) };
+  assert.deepEqual(launchItems({}, two, both).map((i) => i.id), ["OLDER", "NEWER"]);
+  assert.deepEqual(launchItems({ launchesFirst: ["NEWER"] }, two, both).map((i) => i.id), ["NEWER", "OLDER"]);
+  assert.deepEqual(launchItems({ launchesFirst: ["GONE", "NEWER"] }, two, both).map((i) => i.id), ["NEWER", "OLDER"], "a ticker not waiting changes nothing");
 });
