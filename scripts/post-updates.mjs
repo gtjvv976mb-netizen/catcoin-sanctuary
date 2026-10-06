@@ -236,7 +236,7 @@ const retryable = (s) => !s || s.status === "queued" || (s.status === "failed" &
 
 /**
  * The sanctuary's own launches that may be announced (data/sanctuary-launches.json rows), earliest
- * first: "launched" and recorded, the cat in `adoptables` (data/adoptables.json's cats) carrying that
+ * first (but any ticker in data/updates.json `launchesFirst`, which the owner moves to the front, in that list's order): "launched" and recorded, the cat in `adoptables` (data/adoptables.json's cats) carrying that
  * very mint and transaction as its launch, the mint `proved` (in data/collection.json as validated),
  * the announcer's cat `launched` by the page's own rule (listCats: assets/ui/adoptables.js
  * provedLaunch, that mint, tx and launchpad under the cat's coin name and ticker), not held for
@@ -245,13 +245,15 @@ const retryable = (s) => !s || s.status === "queued" || (s.status === "failed" &
 export function launchItems(updates, launches, { cats, adoptables = [], proved = new Set(), heldKeys = new Set() }) {
   const byKey = new Map(cats.map((c) => [c.key, c]));
   const done = updates.launchesPosted || {};
+  const first = Array.isArray(updates.launchesFirst) ? updates.launchesFirst : [];
+  const rank = (r) => { const i = first.indexOf(r.ticker); return i < 0 ? first.length : i; };
   return (Array.isArray(launches) ? launches : [])
     .filter((r) => r?.status === "launched" && typeof r.recordedAt === "string" && typeof r.ticker === "string" && isAddress(r.mintPublic) && proved.has(r.mintPublic))
     .filter((r) => { const a = adoptables.find((c) => c?.ticker === r.ticker); return a?.launch?.mint === r.mintPublic && a.launch.tx === r.tx && byKey.get(r.ticker)?.sanctuary && byKey.get(r.ticker)?.launched; })
     .filter((r) => !heldKeys.has(r.ticker) && retryable(done[r.ticker]))
     // A UsePaid coin's post says its fees go to the creator: it waits until its fee route is on chain (or has failed for good).
     .filter((r) => !r.feesTo || !!r.feeRoute || (r.feeRouteTries ?? 0) >= FEE_ROUTE_MAX_TRIES)
-    .sort((a, b) => Date.parse(a.launchedAt ?? a.recordedAt) - Date.parse(b.launchedAt ?? b.recordedAt))
+    .sort((a, b) => rank(a) - rank(b) || Date.parse(a.launchedAt ?? a.recordedAt) - Date.parse(b.launchedAt ?? b.recordedAt))
     .map((r) => ({ kind: "launch", id: r.ticker, launch: r, cat: byKey.get(r.ticker) }));
 }
 
