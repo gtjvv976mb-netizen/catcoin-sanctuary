@@ -1,19 +1,20 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-06T09:27:58.715Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-06T10:08:42.786Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-06",
-  "dayUsed": 185,
+  "dayUsed": 205,
   "month": "2026-10",
-  "monthUsed": 1741,
+  "monthUsed": 1761,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
+  "2107324972062429312",
   "2106947484836909437",
   "2105789767132615061",
   "2105654129674633645",
@@ -39,6 +40,87 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2107324972062429312",
+   "url": "https://x.com/KittiesVids/status/2107324972062429312",
+   "text": "full of milk https://t.co/4Kr65JKtB6",
+   "author": {
+    "handle": "KittiesVids",
+    "name": "Kitties Videos",
+    "followers": 62868
+   },
+   "postedAt": "2026-10-06T04:20:00Z",
+   "likes": 3034,
+   "views": 41981,
+   "reposts": 340,
+   "heat": 711,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2107114689138475008/img/YL9wPu2tGWg7ICMB.jpg"
+    }
+   ],
+   "stage": "rising",
+   "lens": "big",
+   "readAt": "2026-10-06T10:08:42.786Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Milk Belly Cat",
+    "memeName": "Milk Belly Cat",
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Milk Belly Cat",
+    "ticker": "MILKBELLY",
+    "lore": "A sleepy tabby kitten lies belly-up getting tummy rubs, completely full of milk.",
+    "sensitive": false,
+    "why": "One real kitten in a wholesome belly-rub moment, no name given.",
+    "readBy": "claude",
+    "nameFrom": "meme"
+   },
+   "known": false,
+   "taken": [],
+   "status": "candidate"
+  },
+  {
+   "id": "2107309872694149419",
+   "url": "https://x.com/KittiesVids/status/2107309872694149419",
+   "text": "angry but cute https://t.co/mm9TrQ32Mi",
+   "author": {
+    "handle": "KittiesVids",
+    "name": "Kitties Videos",
+    "followers": 62868
+   },
+   "postedAt": "2026-10-06T03:20:00Z",
+   "likes": 5141,
+   "views": 129982,
+   "reposts": 551,
+   "heat": 1107,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2107118011316613120/img/UuZyeKQtaEldKmzJ.jpg"
+    }
+   ],
+   "stage": "viral",
+   "lens": "big",
+   "readAt": "2026-10-06T10:08:42.786Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Angry But Cute Cat",
+    "ticker": "ANGCUTE",
+    "lore": "A whiskery little cat gets petted by a ringed hand, looking angry but staying unbearably cute.",
+    "sensitive": false,
+    "why": "Close-up of one real cat being petted, a harmless fun moment with no name given.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [],
+   "status": "passed"
+  },
   {
    "id": "2107259544539631665",
    "url": "https://x.com/Crunchyroll/status/2107259544539631665",
@@ -1143,10 +1225,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 2,
+  "nextLens": 3,
+  "bigChunk": 3,
   "figureChunk": 1,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
