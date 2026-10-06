@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107364325073580387",
+      "url": "https://x.com/catcosanctuary/status/2107364325073580387",
+      "name": "Sweetcorn",
+      "coinName": "Sweetcorn",
+      "ticker": "SWEETCORN",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Sweetcorn, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/SWEETCORN.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/SWEETCORN.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107364325073580387.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T06:57:57Z",
+      "attempts": 0,
+      "cat": {
+        "id": "sweetcorn-zhou-guanyu",
+        "ticker": "SWEETCORN",
+        "name": "Sweetcorn",
+        "coinName": "Sweetcorn",
+        "owner": "Zhou Guanyu (Formula 1 driver, @ZhouGuanyu24)",
+        "category": "celebrity",
+        "story": "Sweetcorn is the female cat of Zhou Guanyu, China's first Formula 1 driver, who got her over the winter and gave her her own Instagram account. She grew to more than 60,000 Instagram followers and inspired her own merchandise: for the 2024 Singapore Grand Prix Zhou released a Sweetcorn range, partly designed by him, with hoodies showing an animated Sweetcorn driving an F1 car, and it sold out. He also unveiled a 'TeamZHOU x Sweetcorn' special helmet for that night race, photographed beside her. Zhou: 'I love her and everything about her.' He says she has a 'human-like understanding about things, what not to do and what to do.'",
+        "look": "Golden shaded cat with dense, plush coat: warm apricot-gold on head and back with faint darker tabby striping on the forehead, cream-white chin, chest and muzzle, pink nose, large round green eyes, medium rounded ears with pale inner fur, compact cobby build (British Shorthair-like; breed not confirmed by sources).",
+        "coat": {
+          "base": "golden",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/ZhouGuanyu24/status/1835975195913306540",
+          "author": "ZhouGuanyu24",
+          "handle": "ZhouGuanyu24",
+          "date": "2024-09-17",
+          "dateType": "posted",
+          "text": "TeamZHOU x Sweetcorn 🐱😍 Special helmet for a special night race! 🌃✨ #TeamZHOU #SingaporeGP",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Cat's out of the bag for F1 driver's viral sensation (Ben Waterworth, originally for The Roar, 20 Oct 2024)",
+            "url": "https://www.benwaterworth.com/post/cat-s-out-of-the-bag-for-f1-driver-s-viral-sensation"
+          },
+          {
+            "label": "F1: Nine things you need to know about China's Zhou Guanyu - Planet Sport",
+            "url": "https://www.planetsport.com/motorsport/news/f1-nine-things-you-need-to-know-about-chinas-zhou-guanyu"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Zhou Guanyu (Formula 1 driver, @ZhouGuanyu24).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/SWEETCORN.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "ZhouGuanyu24"
+    },
+    {
       "postId": "2107346386731892829",
       "url": "https://x.com/catcosanctuary/status/2107346386731892829",
       "name": "Simpkin IV",
