@@ -1,19 +1,21 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-06T13:28:23.290Z",
- "lens": "figures",
- "query": "((\"Garfield\" (cat OR cats OR kitten OR kitty)) OR \"Grumpy Cat\" OR \"Tardar Sauce\" OR \"Nyan Cat\" OR \"Keyboard Cat\" OR \"Doraemon\" OR \"Tom and Jerry\" OR \"Top Cat\" OR \"Heathcliff the Cat\" OR (\"Jiji\" (cat OR cats OR kitten OR kitty)) OR \"Duchess the cat\" OR \"Toulouse the cat\" OR \"Berlioz the cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-06T14:08:33.303Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-06",
-  "dayUsed": 266,
+  "dayUsed": 287,
   "month": "2026-10",
-  "monthUsed": 1822,
+  "monthUsed": 1843,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
+  "2107470958038516177",
+  "2107457414387622310",
   "2107324972062429312",
   "2106947484836909437",
   "2105789767132615061",
@@ -40,6 +42,233 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2107470958038516177",
+   "url": "https://x.com/CatWorkers/status/2107470958038516177",
+   "text": "🐈 King the cat\n🛒 Aubuchon Ace Hardware (Franklin, MA) https://t.co/Mo6vjUKHYi",
+   "author": {
+    "handle": "CatWorkers",
+    "name": "cats with jobs 🛠",
+    "followers": 2312291
+   },
+   "postedAt": "2026-10-06T14:00:05Z",
+   "likes": 31,
+   "views": 3255,
+   "reposts": 3,
+   "heat": 70,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HT89qtMXoAA-eA-.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "CatWorkers",
+   "lens": "big",
+   "readAt": "2026-10-06T14:08:33.303Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "King",
+    "memeName": null,
+    "personFace": false,
+    "kind": "real",
+    "coinName": "King the Hardware Cat",
+    "ticker": "KING",
+    "lore": "King the cat holds court atop the driveway marker display at Aubuchon Ace Hardware in Franklin, MA, keeping watch over the aisles.",
+    "sensitive": false,
+    "why": "A single named shop cat on the job, wholesome and harmless.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "HgAEQbgPU8o8g8oAsNgu2hgQ87eQEBNfVourwznepump",
+     "name": "Christ is King",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/2zyu5jzrauayou3qtefns2iwn4bhkgznuykeoprgceap"
+    },
+    {
+     "mint": "9noXzpXnkyEcKF3AeXqUHTdR59V5uvrRBUZ9bwfQwxeq",
+     "name": "KING",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/3ghtbrtdhwqevrjq86s9rpzpajlmmacgwbz1fadqmj4v"
+    },
+    {
+     "mint": "EwBUeMFm8Zcn79iJkDns3NdcL8t8B6Xikh9dKgZtpump",
+     "name": "CHARLES",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/aqnfw4cd8wecaapsyfbpyqbvb4c1txypthbya6f4zmbo"
+    },
+    {
+     "mint": "4u1xmmG794nNLg3qCFb8ZSek9BAcoNua1ZYcskZrpump",
+     "name": "the vaguepost king",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/7ug4asstj14sfdbtd48zyl5r1hkzgvscwdhyxrn28fld"
+    },
+    {
+     "mint": "96fbCVq4G1hA3HZRDgozE8vruRJJgZh8wALdSn5Upump",
+     "name": "KING WILLIAM V",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/gkvphrwrjpriwif1wdwbcehs4ususwd54md4su8c3vjk"
+    },
+    {
+     "mint": "2rFNkrUaPdTFSCNu5KJoGL2Aiq7YZDE8DYZGZzAJCoKc",
+     "name": "Anonymous BTC Whale",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/7gnxybyz4k5dxpvcgsr62tyyhtvhsvqzq5hcsa4w2ycx"
+    },
+    {
+     "mint": "2nxtQZjhEH1ukbrdQKdzkMubNoRVYie5pv1G7r1wpump",
+     "name": "King of the Alps",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/fcsawxn8cvagseuvtxgxzwlhyxx2lnkhki7w9xpratiz"
+    },
+    {
+     "mint": "4kdX3qeL1t8CoVLVM6XDygTBWz8XfWLRSuLJmojJpump",
+     "name": "Mansa Musa",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/cggfnxxp54rgwp74gee1jgojupb6y9etma2xxpncnbdp"
+    },
+    {
+     "mint": "9A5QWVQuNSHWQsxi1w1dAZ8yAr9RbMsdpkGXMNt3pump",
+     "name": "Rise Of Kingdom",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/8hazyecxlpjugkqdcfiqjmzghwaqpp2esfnt3hduz5u9"
+    },
+    {
+     "mint": "HJfWZ4Ns6ydxYUebrH8mh9yqNqvYAuiTMLjYDjJwpump",
+     "name": "Jesus is King",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/cyjxgdlmrsqjbhe3msdytcudyta4hnfmlhg2aveynzve"
+    },
+    {
+     "mint": "Fa3GTNddUqnzqWz2TSh8GEGCku3dokgQeQskXew9pump",
+     "name": "King Tate II",
+     "symbol": "KING",
+     "url": "https://dexscreener.com/solana/71rzdsutwuyycqmyezy3nfk9oaspzwwxrr2kgvg9qwgx"
+    }
+   ],
+   "status": "candidate"
+  },
+  {
+   "id": "2107457414387622310",
+   "url": "https://x.com/MistralAI/status/2107457414387622310",
+   "text": "Meet Mistral Large 4, aka Le Chonk. \n\n• 1T parameters, natively multimodal. 49B active.\nIt is the best open weights model from US or Europe on aggregated benchmarks.\n• State-of-the-art on critical workloads, including cyber defense, manufacturing and finance and it surpasses closed frontier models on visual grounding.\n• Forged in Europe end-to-end and is deployable from Europe via our own Mistral Cloud infrastructure.\n• Available to all via API today. Working with cybersecurity partners privately.\n\nOpen weights release end of October.",
+   "author": {
+    "handle": "MistralAI",
+    "name": "Mistral AI",
+    "followers": 211169
+   },
+   "postedAt": "2026-10-06T13:06:16Z",
+   "likes": 12075,
+   "views": 477122,
+   "reposts": 1470,
+   "heat": 19085,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2107456560108601344/img/JNzxxKyVVsXLGnCS.jpg"
+    }
+   ],
+   "stage": "approved",
+   "lens": "approved",
+   "readAt": "2026-10-06T14:08:28.241Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": "Le Chonk Cat",
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Le Chonk",
+    "ticker": "CHONK",
+    "lore": "A fluffy ginger cat strolls through a museum of cat masterpieces toward a giant pixel 4, nicknamed Le Chonk.",
+    "sensitive": false,
+    "why": "It's a product launch ad using a cat as mascot, not a post about one particular cat.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "2UfsAijU7msunH4yrSoR7ZmV9tb5z4qEXWeKVaCqpump",
+     "name": "The Fat Wizard Cat",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/edbxpcsey69tp7xpnr5aqhmserhmnet1wwyojiyzfhrh"
+    },
+    {
+     "mint": "E1zA94mNEega7HS7stsZayjoRjHo3rYtZnJWZ9Tm53ji",
+     "name": "CHONKYCAT",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/9vkcd17433huqxzltwwthmc9nfzgn1ktb2fnk8mz5epc"
+    },
+    {
+     "mint": "3HCgm9FUB7ZBE3dhJKn1mHmARmEakVhsszrmwrNbaMj4",
+     "name": "Le Chonk",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/6garswfxemfedf4fxvqbxbt9oynzur7vliekdujidr3v"
+    },
+    {
+     "mint": "5eXRyvSWULfWQr32jfx6sh3snTSm44FRGUrrjWyHpump",
+     "name": "Le Chonk",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/fyvf1cxpxvpi2hcrgmtej1pdv85naxzbrb6rwi4r3tmc"
+    },
+    {
+     "mint": "FzCovsArsgQSRzNNUuXWbjJTjN3G526tjKnVfredpump",
+     "name": "Le Chonk",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/5s78bq3nreagxggfamqtdnvvteg4pjpwqhut6yfswy4c"
+    },
+    {
+     "mint": "6zn8ZsrjT6cMtT6y11KXvN8LGkYPmm4uDwB1GJetpump",
+     "name": "Chonkus Maximus",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/pe6xenu22vkrfcwenvkvlnpw1p4e4ryqqqm9bccqlke"
+    },
+    {
+     "mint": "E4Ujy4LDdDLj22G8vBwTjPcxtP6bP7ZCVdQ5FG3L49yh",
+     "name": "Le Chonk",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/hljx95e9myf86e4f8ky1gn3yp1n4cvejw48k74mt4uqv"
+    },
+    {
+     "mint": "FeAWY9L9hr82TvTuEyi328V9FP7GxVuGLx7xNg6kzWVa",
+     "name": "Le Chonk",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/eemwrdlbcqyi6fned6fu5x8npecaescwjlqr5jbvgnnq"
+    },
+    {
+     "mint": "HQJTwRSQbjs65kV3VzMF3x9iSogAxygWZBY1vF8Tpump",
+     "name": "Le Chonk",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/bany7vhe9pvqnctcyd17f874bp5rqwnvpfvd7aujjfx"
+    },
+    {
+     "mint": "7iXZi55AyKbJv5e9XTQuVcywdT2ejHjGBf3NKuCLpump",
+     "name": "Chonk Cat",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/4y4hffenmdkmusvk1klyzsil21gotv5ecyeobwyi5cfg"
+    },
+    {
+     "mint": "HqxZenPHJzpuGFpVAVk9HsVY58EcSM6sdsd7kQrmpump",
+     "name": "The Fat Wizard Cat",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/a5jvoydibjcxvswjl6kq2yk6czsahaaaasd5snsra2bg"
+    },
+    {
+     "mint": "HeTg9iPvanKD7EeaweWeEtZpeR4eCgF46Dhi1VU3MjFn",
+     "name": "Le Chonk",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/9vd5wl9pepkfjbitnsyxvwtpuqqyap6yqzhpyjqedeek"
+    },
+    {
+     "mint": "AatDHBP9vfA3ji8yPhWYERFvbD8ZNtcp5uwKL5A7ZMah",
+     "name": "Le Chonk",
+     "symbol": "CHONK",
+     "url": "https://dexscreener.com/solana/7zcspr3voe8g4kim7rjpktsancyxtjwdmjsczyah3gsk"
+    }
+   ],
+   "status": "candidate"
+  },
   {
    "id": "2107324972062429312",
    "url": "https://x.com/KittiesVids/status/2107324972062429312",
@@ -1225,10 +1454,10 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 5,
+  "nextLens": 1,
+  "bigChunk": 6,
   "figureChunk": 1,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
