@@ -2,6 +2,65 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107470958038516177",
+      "url": "https://x.com/CatWorkers/status/2107470958038516177",
+      "name": "King",
+      "coinName": "King the Hardware Cat",
+      "ticker": "KING",
+      "venue": "pump-sol",
+      "policy": "big-account",
+      "kind": "real",
+      "lore": "King the cat holds court atop the driveway marker display at Aubuchon Ace Hardware in Franklin, MA, keeping watch over the aisles.",
+      "image": "https://pbs.twimg.com/media/HT89qtMXoAA-eA-.jpg",
+      "coinImage": "https://pbs.twimg.com/media/HT89qtMXoAA-eA-.jpg",
+      "metadataPath": "coins/2107470958038516177.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T14:19:29Z",
+      "attempts": 0,
+      "cat": {
+        "id": "king",
+        "ticker": "KING",
+        "name": "King",
+        "coinName": "King the Hardware Cat",
+        "owner": "cats with jobs 🛠",
+        "category": "viral",
+        "story": "King the cat holds court atop the driveway marker display at Aubuchon Ace Hardware in Franklin, MA, keeping watch over the aisles. King was trending on X on October 6, 2026, and the sanctuary gave it a coin.",
+        "look": "King, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/CatWorkers/status/2107470958038516177",
+          "author": "CatWorkers",
+          "handle": "CatWorkers",
+          "date": "2026-10-06",
+          "dateType": "posted",
+          "text": "🐈 King the cat 🛒 Aubuchon Ace Hardware (Franklin, MA) https://t.co/Mo6vjUKHYi",
+          "note": "Found by the sanctuary's trend watch on 2026-10-06.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by cats with jobs 🛠.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "CatWorkers",
+      "photoCredit": false
+    },
+    {
       "postId": "2107332288132645272",
       "url": "https://x.com/catcosanctuary/status/2107332288132645272",
       "name": "Doorkins Magnificat",
@@ -15,9 +74,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/DOORKINS.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107332288132645272.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T14:05:50Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "doorkins-magnificat",
         "ticker": "DOORKINS",
@@ -67,7 +126,16 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "DoorkinsM"
+      "feesTo": "DoorkinsM",
+      "mintNonce": 2992892,
+      "tx": "2Qj1KXhYNzqH8StuWDSF8YX5LJ8JFPQWfQme1vBSCTcyVgZx3XDj5ZYk1dRFMVouHQ7EdtKrkFnuSG1yVkmgVHb4",
+      "sentAt": "2026-10-06T14:16:21Z",
+      "lastValidBlockHeight": 431963792,
+      "mintPublic": "Ced2anqoim6ToFQu5FV5bE2nuJomA9x1yADZ8fgpcats",
+      "spentLamports": 5612920,
+      "settledAt": "2026-10-06T14:16:30Z",
+      "launchedAt": "2026-10-06T14:16:21Z",
+      "recordedAt": "2026-10-06T14:16:37Z"
     },
     {
       "postId": "2107451411722031352",
@@ -144,7 +212,10 @@
       "spentLamports": 5623080,
       "settledAt": "2026-10-06T12:54:51Z",
       "launchedAt": "2026-10-06T12:54:41Z",
-      "recordedAt": "2026-10-06T12:54:57Z"
+      "recordedAt": "2026-10-06T12:54:57Z",
+      "feeRoute": {
+        "at": "2026-10-06T14:08:20Z"
+      }
     },
     {
       "postId": "2107433237702197476",
