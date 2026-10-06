@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/KIKUCHAN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106802226039525386.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T15:27:49Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "kiku-chan",
         "ticker": "KIKUCHAN",
@@ -63,7 +63,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "sobun_nekomanga"
+      "feesTo": "sobun_nekomanga",
+      "mintNonce": 5569036,
+      "tx": "3XrvoAEzt5kbAFnpNreQVy1oD2yr8CXBMiHHKSdg5KFhrthxRG4NphCYzJcUAAvpB86RL3cnxefjf91ZwenkaBLa",
+      "sentAt": "2026-10-06T15:38:07Z",
+      "lastValidBlockHeight": 431982013,
+      "mintPublic": "3U8kr4W7saTimmmUyYhjCbw6pWwBE9rG8PPFMuiscats",
+      "spentLamports": 5562120,
+      "settledAt": "2026-10-06T15:38:16Z",
+      "launchedAt": "2026-10-06T15:38:07Z"
     },
     {
       "postId": "2106817367426707477",
@@ -140,7 +148,10 @@
       "spentLamports": 5551960,
       "settledAt": "2026-10-06T15:12:33Z",
       "launchedAt": "2026-10-06T15:12:24Z",
-      "recordedAt": "2026-10-06T15:12:39Z"
+      "recordedAt": "2026-10-06T15:12:39Z",
+      "feeRoute": {
+        "at": "2026-10-06T15:30:33Z"
+      }
     },
     {
       "postId": "2107480359700992265",
