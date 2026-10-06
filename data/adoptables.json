@@ -1,6 +1,6 @@
 {
   "note": "Adoptable cats: famous real, fictional and viral cats with no sanctuary coin yet. Fan tributes, not affiliated with their owners. Built by scripts/build-adoptables.mjs; checked by assets/ui/adoptables.js.",
-  "checked": "2026-10-06",
+  "checked": "2026-10-03",
   "cats": [
     {
       "id": "meredith",
@@ -8733,8 +8733,8 @@
         "eyes": "yellow"
       },
       "pair": {
-        "symbol": "STONK",
-        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+        "symbol": "SOL",
+        "mint": "So11111111111111111111111111111111111111112"
       },
       "proof": {
         "kind": "x",
@@ -8768,7 +8768,13 @@
       "portrait": "assets/portraits/CUCUWIG.jpg",
       "portraitStatus": "ready",
       "confidence": "medium",
-      "lore": null
+      "lore": null,
+      "launch": {
+        "mint": "8TWeYE2LUjmxXjhrGREkDN4kz9uzhrkQiDAvDdYZcats",
+        "tx": "5Tr18yBtTRvt3DdrpM6kUUQ2HFhU7ubzHNcCnZEUsbykRBHJnmNdL8xBe8JfFqM6Ak5XyXgZ5eCEfqiRgmWRztkF",
+        "launchpad": "pump.fun",
+        "at": "2026-10-06T03:13:10Z"
+      }
     },
     {
       "id": "bubsy-bobcat",
@@ -9485,6 +9491,52 @@
       "portraitStatus": "ready",
       "confidence": "high",
       "lore": null
+    },
+    {
+      "id": "ancient-scroll-cat",
+      "ticker": "SCROLL",
+      "name": "Ancient Scroll Cat",
+      "coinName": "Ancient Scroll Cat",
+      "owner": "Kitties Videos",
+      "category": "viral",
+      "story": "A grumpy black cat prowls the pavement looking exactly like a fierce beast painted in an ancient ink scroll. Ancient Scroll Cat was trending on X on October 5, 2026, and the sanctuary gave it a coin.",
+      "look": "Ancient Scroll Cat, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+      "coat": {
+        "base": "cream",
+        "second": "",
+        "pattern": "solid",
+        "eyes": ""
+      },
+      "pair": {
+        "symbol": "SOL",
+        "mint": "So11111111111111111111111111111111111111112"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/KittiesVids/status/2106947484836909437",
+        "author": "KittiesVids",
+        "handle": "KittiesVids",
+        "date": "2026-10-05",
+        "dateType": "posted",
+        "text": "https://t.co/7T9eOthCzf",
+        "note": "Found by the sanctuary's trend watch on 2026-10-05.",
+        "image": null
+      },
+      "sources": [],
+      "existingCoin": null,
+      "memorial": false,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Kitties Videos.",
+      "sensitivity": "",
+      "portrait": null,
+      "portraitStatus": "pending",
+      "confidence": "high",
+      "lore": null,
+      "launch": {
+        "mint": "D9cLzCQse5seCGx8GhJdhdjSvAgr2Ug95EXPXumDcats",
+        "tx": "3SFMdXMU8gGcowcsMfvdZzNKpCyzvq63z5SgoarASFWJTRP3ipzKg8gWKNE2uZ5ohni6WGufGVsG11azMvH33QYH",
+        "launchpad": "pump.fun",
+        "at": "2026-10-06T02:37:15Z"
+      }
     },
     {
       "id": "hodge-southwark-cathedral",
