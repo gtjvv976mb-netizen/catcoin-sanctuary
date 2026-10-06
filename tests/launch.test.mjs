@@ -82,7 +82,9 @@ test("launch workflow: a commit after each phase, the token handed to git for th
   const [c1, c2, c3] = commits;
   assert.match(c1, /git add -- data\/sanctuary-launches\.json coins data\/real-photos\.json\n/, "the ledger, the coin's metadata, and a photo data/photo-hide.json hid or showed again");
   assert.match(c2, /git add -- data\/sanctuary-launches\.json\n/);
-  assert.match(c3, /git add -- data\/sanctuary-launches\.json data\/adoptables\.json data\/launches\.json data\/real-photos\.json data\/cat-watch\.json scripts\/meshy\.queue\.json\n/);
+  assert.match(c3, /git add -- data\/sanctuary-launches\.json data\/adoptables\.json data\/launches\.json data\/real-photos\.json data\/cat-watch\.json scripts\/meshy\.queue\.json data\/traits\.json\n/);
+  // A cat new to the sanctuary is a new resident: the record step builds its traits row, or the Pages tests fail.
+  assert.match(W, /node scripts\/launch\.mjs record\n\s+node scripts\/build-traits\.mjs\n/);
   // data/announced.json is the Announce workflow's alone (it holds the launcher's cats by rule): committed here, it raced
   // Announce's own commit, whose single rebase could then fail after its X post went out.
   assert.ok(!/announced\.json/.test(W.replace(/^#.*$/gm, "")), "the Launch workflow never commits data/announced.json");
