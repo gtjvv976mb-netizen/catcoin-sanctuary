@@ -14,9 +14,9 @@
       "image": "https://pbs.twimg.com/amplify_video_thumb/2107114689138475008/img/YL9wPu2tGWg7ICMB.jpg",
       "coinImage": "https://pbs.twimg.com/amplify_video_thumb/2107114689138475008/img/YL9wPu2tGWg7ICMB.jpg",
       "metadataPath": "coins/2107324972062429312.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T10:10:34Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "milk-belly-cat",
         "ticker": "MILKBELLY",
@@ -58,7 +58,15 @@
         "lore": null
       },
       "feesTo": "KittiesVids",
-      "photoCredit": true
+      "photoCredit": true,
+      "mintNonce": 20112307,
+      "tx": "3EN258rR75DghLkGuWm6F9qgo6N35hipPFiYW627YzVC4DDf85d2tZinZ3zPKS3EVn3nQDqnd73joQVr2Rb2Hcu1",
+      "sentAt": "2026-10-06T10:18:17Z",
+      "lastValidBlockHeight": 431910367,
+      "mintPublic": "3S9NLHHjDwzv3XNQsTwEm9WJ6esK3nnYPfGGVPhZcats",
+      "spentLamports": 5592600,
+      "settledAt": "2026-10-06T10:18:27Z",
+      "launchedAt": "2026-10-06T10:18:17Z"
     },
     {
       "postId": "2107396451005350235",
@@ -143,7 +151,10 @@
       "spentLamports": 5592600,
       "settledAt": "2026-10-06T09:16:18Z",
       "launchedAt": "2026-10-06T09:16:08Z",
-      "recordedAt": "2026-10-06T09:16:25Z"
+      "recordedAt": "2026-10-06T09:16:25Z",
+      "feeRoute": {
+        "at": "2026-10-06T10:12:11Z"
+      }
     },
     {
       "postId": "2107379497955950647",
