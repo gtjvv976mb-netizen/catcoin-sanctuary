@@ -2954,8 +2954,9 @@ test("the mint address ends in LAUNCH_MINT_SUFFIX (\"cats\" unless set): the sen
   assert.equal(dryRun.outcome, "dry", logs.join("\n"));
   assert.ok(logs.some((l) => /will end in "p" when it is sent for real/.test(l)), logs.join("\n"));
   assert.equal(t.json(FILES.ledger).launches[0].mintNonce, undefined);
-  // Out of its minutes (a budget of nothing, one thread, "pump"): the row remembers where the scan got to, nothing is sent.
-  const grinding = await send({ io: t.io, env: ON(w, { LAUNCH_MINT_SUFFIX: "pump" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: (l) => logs.push(l), ...quick, mintGrindMs: 0, mintGrindWorkers: 1 });
+  // Out of its minutes (a budget of nothing, one thread, a six-letter suffix: the first 4000 nonces of a random wallet find
+  // it about once in 10 million runs, where "pump" was found about once in 3000): the row remembers where the scan got to, nothing is sent.
+  const grinding = await send({ io: t.io, env: ON(w, { LAUNCH_MINT_SUFFIX: "zzzzzz" }), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c0.now, sleep: c0.sleep, log: (l) => logs.push(l), ...quick, mintGrindMs: 0, mintGrindWorkers: 1 });
   assert.equal(grinding.outcome, "mint_grinding", logs.join("\n"));
   const waiting = t.json(FILES.ledger).launches[0];
   assert.deepEqual([waiting.status, waiting.mintNonce, waiting.mintGrind, waiting.attempts], ["prepared", undefined, { next: 4001 }, 0]);
