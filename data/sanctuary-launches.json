@@ -14,9 +14,9 @@
       "image": "https://pbs.twimg.com/media/HT89qtMXoAA-eA-.jpg",
       "coinImage": "https://pbs.twimg.com/media/HT89qtMXoAA-eA-.jpg",
       "metadataPath": "coins/2107470958038516177.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T14:19:29Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "king",
         "ticker": "KING",
@@ -58,7 +58,15 @@
         "lore": null
       },
       "feesTo": "CatWorkers",
-      "photoCredit": false
+      "photoCredit": false,
+      "mintNonce": 6542667,
+      "tx": "2URuGDET4q2a67JqW7ggC1LmNaZJp1QkE2THohPNvLyZ4syRuxRBS6QMTvjJs2TeHTDq3Qg1KezW4apREjtdTf7a",
+      "sentAt": "2026-10-06T14:29:25Z",
+      "lastValidBlockHeight": 431966698,
+      "mintPublic": "EaoamwMiQJc3A5PcDfuoWZGtmkAgbd2JAfGK55ykcats",
+      "spentLamports": 5602760,
+      "settledAt": "2026-10-06T14:29:34Z",
+      "launchedAt": "2026-10-06T14:29:25Z"
     },
     {
       "postId": "2107332288132645272",
@@ -135,7 +143,10 @@
       "spentLamports": 5612920,
       "settledAt": "2026-10-06T14:16:30Z",
       "launchedAt": "2026-10-06T14:16:21Z",
-      "recordedAt": "2026-10-06T14:16:37Z"
+      "recordedAt": "2026-10-06T14:16:37Z",
+      "feeRoute": {
+        "at": "2026-10-06T14:22:24Z"
+      }
     },
     {
       "postId": "2107451411722031352",
