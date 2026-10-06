@@ -14,9 +14,9 @@
       "image": "https://pbs.twimg.com/amplify_video_thumb/2107456560108601344/img/JNzxxKyVVsXLGnCS.jpg",
       "coinImage": "https://pbs.twimg.com/amplify_video_thumb/2107456560108601344/img/JNzxxKyVVsXLGnCS.jpg",
       "metadataPath": "coins/2107457414387622310.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T14:33:08Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "le-chonk",
         "ticker": "LECHONKCAT",
@@ -58,7 +58,15 @@
         "lore": null
       },
       "feesTo": "MistralAI",
-      "photoCredit": true
+      "photoCredit": true,
+      "mintNonce": 12966898,
+      "tx": "F9enRDnGHqB9rtUF6nELX9MiDC4NbQ8beJYCvZmBhByvDcAyefn4ZyLiYTdq5jYxpQxNvpCx8tu9dvZazwCAWiQ",
+      "sentAt": "2026-10-06T14:43:37Z",
+      "lastValidBlockHeight": 431969881,
+      "mintPublic": "F2ffsMXqmangvQmArskDsmWvRFT1RLeeGsEiuAv1cats",
+      "spentLamports": 5567200,
+      "settledAt": "2026-10-06T14:43:46Z",
+      "launchedAt": "2026-10-06T14:43:37Z"
     },
     {
       "postId": "2107470958038516177",
@@ -126,7 +134,10 @@
       "spentLamports": 5602760,
       "settledAt": "2026-10-06T14:29:34Z",
       "launchedAt": "2026-10-06T14:29:25Z",
-      "recordedAt": "2026-10-06T14:30:16Z"
+      "recordedAt": "2026-10-06T14:30:16Z",
+      "feeRoute": {
+        "at": "2026-10-06T14:36:08Z"
+      }
     },
     {
       "postId": "2107332288132645272",
