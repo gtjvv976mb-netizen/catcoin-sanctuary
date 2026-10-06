@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106850528340971998",
+      "url": "https://x.com/catcosanctuary/status/2106850528340971998",
+      "name": "Mii-ko",
+      "coinName": "Mii-ko",
+      "ticker": "MIIKOCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Mii-ko (ミー子) is the longest-resident cat of Chorakuji temple in Nasu, Tochigi, whose X account has about 269,000 followers.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/MIIKOCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/MIIKOCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106850528340971998.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T03:36:11Z",
+      "attempts": 0,
+      "cat": {
+        "id": "miiko-chorakuji",
+        "ticker": "MIIKOCAT",
+        "name": "Mii-ko",
+        "coinName": "Mii-ko",
+        "owner": "Chorakuji (長楽寺), a temple in Nasu, Tochigi, whose X account is @nasu_chourakuji",
+        "category": "company",
+        "story": "Mii-ko (ミー子) is the longest-resident cat of Chorakuji temple in Nasu, Tochigi, whose X account has about 269,000 followers. Josei Seven reports that she gave birth to Hii-chan, Shiro-kun and Maa-kun there in 2011; Ko-chan and Taa-kun later joined from a vet clinic in 2020. Videos of all the cats climbing onto the abbot's lap and back as he eats breakfast, which fans call the 'all-cats-on-top breakfast' (猫全部のせ朝食), went viral. Mii-ko is described as the cat most in tune with the abbot, and the temple's cats appear in photo books including 'Terafuku Neko' (2022). In September 2026 the temple called her 16 and posted her morning walks and 'lap lessons'.",
+        "look": "Calico: white chest, muzzle and paws with orange and black patches; orange tail with tabby striping; yellow-green eye; her right eye appears closed in recent photos (verify with photos); slim senior build.",
+        "coat": {
+          "base": "white",
+          "second": "ginger",
+          "pattern": "calico",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/nasu_chourakuji/status/2095278857284927572",
+          "author": "nasu_chourakuji",
+          "handle": "nasu_chourakuji",
+          "date": "2026-09-02",
+          "dateType": "posted",
+          "text": "さんぽに行けないと拗ねミー子",
+          "note": "Verified on 2026-10-02",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "「猫全部のせ朝食」で話題！那須・長楽寺で暮らす6匹の“福猫”と住職たちの日常 | 女性セブンプラス",
+            "url": "https://j7p.jp/87277"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Chorakuji (長楽寺), a temple in Nasu, Tochigi, whose X account is @nasu_chourakuji.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/MIIKOCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "nasu_chourakuji"
+    },
+    {
       "postId": "2106947484836909437",
       "url": "https://x.com/KittiesVids/status/2106947484836909437",
       "name": "Ancient Scroll Cat",
