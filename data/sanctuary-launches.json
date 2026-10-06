@@ -2,6 +2,82 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107346386731892829",
+      "url": "https://x.com/catcosanctuary/status/2107346386731892829",
+      "name": "Simpkin IV",
+      "coinName": "Simpkin IV",
+      "ticker": "SIMPKIN4",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Simpkin IV, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/SIMPKIN4.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/SIMPKIN4.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107346386731892829.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T05:47:29Z",
+      "attempts": 0,
+      "cat": {
+        "id": "simpkin-iv-hertford",
+        "ticker": "SIMPKIN4",
+        "name": "Simpkin IV",
+        "coinName": "Simpkin IV",
+        "owner": "Hertford College, University of Oxford (@HertfordCollege)",
+        "category": "company",
+        "story": "Simpkin is the name of the resident cat at Hertford College, Oxford, a tradition started in the early 1970s by principal Geoffrey Warnock, with each cat named after a Beatrix Potter character. Simpkin IV, originally called Buddy and found as a stray in the Torbay area, joined Hertford in January 2017; unlike his black-and-white predecessors he is entirely black. The college lists him as staff with 'overall management responsibility' and an office in the Lodge. In January 2022 Exeter College banned him from its library with a sign reading 'He is called Simpkin and belongs at Hertford! WARNING: HE BITES!', prompting Principal Tom Fletcher to call it 'a breach of international convention'. The Bodleian Libraries later reported spotting him in the Clarendon Building.",
+        "look": "Solid black all over (no white markings), medium-length slightly fluffy coat, compact build, yellow-amber eyes (eye colour from the Exeter library sign photo - verify with photos).",
+        "coat": {
+          "base": "black",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/TFletcher/status/1483083381932015621",
+          "author": "TFletcher",
+          "handle": "TFletcher",
+          "date": "2022-01-17",
+          "dateType": "posted",
+          "text": "Defiant in the face of exclusion and injustice. Simpkin and I have now concluded our press conference in the marquee. Happy to report that, despite provocation, our cat is in good spirits and definitely never bites anyone, ever.",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Simpkin (cat) - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Simpkin_(cat)"
+          },
+          {
+            "label": "Simpkin IV - Hertford College (staff page)",
+            "url": "https://www.hertford.ox.ac.uk/staff/simpkin-iv/"
+          },
+          {
+            "label": "Hertford cat Simpkin banned from Exeter College library - Cherwell",
+            "url": "https://cherwell.org/2022/01/15/hertford-cat-simpkin-banned-from-exeter-college-library/"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "SIMPKIN",
+          "contract": "GRDW7NXWeer4ayHLg4bBLCTiMA8kPmvYbdv6Ufbupump",
+          "mcapUsd": 3387
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Hertford College, University of Oxford (@HertfordCollege).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/SIMPKIN4.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "TFletcher"
+    },
+    {
       "postId": "2106850528340971998",
       "url": "https://x.com/catcosanctuary/status/2106850528340971998",
       "name": "Mii-ko",
