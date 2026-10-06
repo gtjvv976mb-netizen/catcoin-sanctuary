@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/SWEETCORN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107364325073580387.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T06:57:57Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "sweetcorn-zhou-guanyu",
         "ticker": "SWEETCORN",
@@ -68,9 +68,14 @@
         "lore": null
       },
       "feesTo": "ZhouGuanyu24",
-      "mintGrind": {
-        "next": 30452001
-      }
+      "mintNonce": 40172077,
+      "tx": "4SxdnUHvi4mg5mZzvjhNFfnbDLzcP2hpbEavYpcNMZ2VCwbCHCTt4SsBL5oUswSq7q1t7D56n2RdGGKVnuvJ4C6j",
+      "sentAt": "2026-10-06T08:08:00Z",
+      "lastValidBlockHeight": 431881072,
+      "mintPublic": "2VMmdwGCDrbBD9Md1JAXmV4mG3mPaL64xWebdDC4cats",
+      "spentLamports": 5567200,
+      "settledAt": "2026-10-06T08:08:12Z",
+      "launchedAt": "2026-10-06T08:07:59Z"
     },
     {
       "postId": "2107346386731892829",
