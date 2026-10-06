@@ -249,3 +249,10 @@ failed, have had models since the third run.
   portrait and photo, four squared views, Tripo H3.1 multi-view. All nine stand on four legs.
 - `--yaw 180` for ATTLEECAT, SNACKSCAT and PUFFCHEF (plumed tails outweigh the head).
 - PUFFCHEF's thick plumed tail folds through its flank when it curls up: a new MODEL_LIMITS entry (it dozes in its loaf).
+
+### 2026-10-06 (later): ten more researched cats
+
+- Futaba, Rick Key, Mugi, Higan, Fukurashi, Torahiko, Shachi, Oreo, Milko and Anago, made the same way from their
+  proof photos (none showed people, so none was cropped). All ten stand on four legs and face +X with no `--yaw`.
+- Milko's first multi-view job hung; a second one with the same four views is the model (`stuck_job` is noted in the
+  scratch record only).
