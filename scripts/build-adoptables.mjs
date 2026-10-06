@@ -41,7 +41,8 @@ export const MEMORIAL = new Set(["maru", "bob", "lilbub", "kittypurry", "delilah
   // Cats whose own stories and sources say they died (checked 2026-10-01): their cards and coins are tributes.
   "felicette", "stubbs", "socks", "colonelmeow", "venus", "cc", "felixhudds", "nitama", "oscar", "empresstang", "curious-zelda", "ollie-gervais", "peepee-the-cat", "jjing-jjing-moon-jae-in", "professor-meowingtons-deadmau5", "sockington", "henri-le-chat-noir", "clive-beckinsale", "dewey-readmore-books", "ken-chan-onomichi-museum",
   "doorkins-magnificat", "snacks-best-coast", "futaba-qnote", "fukurashi-masahiro-sakurai", "anago-neko-samurai",
-  "don-gato-auronplay", "guppy-mcmillen", "the-bear-mysadcat"]);
+  "don-gato-auronplay", "guppy-mcmillen", "the-bear-mysadcat",
+  "bacon-nekojii", "hadji-keith-hernandez", "niblo-anthony-hopkins"]);
 /* A ticker the research suggested that clashes with the cat's own existing coin gets another (re-checked free on Jupiter and StonkFun). */
 /* A coat the look's words read wrongly (a colourpoint read as a tortie, a pink cartoon cat). */
 export const COAT_OVERRIDES = { choupette: { base: "white", second: "cream", pattern: "point", eyes: "blue" }, cheshire: { base: "lilac", second: "", pattern: "tabby", eyes: "yellow" } };

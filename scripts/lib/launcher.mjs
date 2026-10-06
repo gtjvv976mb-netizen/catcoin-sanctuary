@@ -133,6 +133,8 @@ import { coatFromLook } from "./coat.mjs";
 import { tickerFor, loreFrom } from "./read-cat-post.mjs";
 import { RpcError } from "./rpc.mjs";
 import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
+/** A stand-in mint for drafting a launch post before the coin exists: its UsePaid page link counts 23 characters on X whatever the mint. */
+const ANY_MINT = "So11111111111111111111111111111111111111112";
 import { validateRewardsLedger, earmarkSignatures, earmarkLamports, rewardsMode, REWARDS_FILES } from "./rewards.mjs";
 import { measureClaim } from "./pump-fees.mjs";
 import { buildFeeRouteTransaction, signFeeRouteTransaction, unsignedFeeRouteTransaction, sharingConfig, decodeSharingConfig, routedTo, usePaidLine, X_HANDLE, USEPAID_RECIPIENT, FEE_ROUTE_MAX_TRIES } from "./fee-route.mjs";
@@ -788,7 +790,7 @@ export function candidateRow(post, ctx) {
   if (!d.ok) return no(`the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
   // The post names the launchpad: drafted for the venue's, and for pump.fun's (the fallback's).
   for (const launchpad of new Set([venue.launchpad, PUMP_SOL.launchpad])) {
-    const post2 = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad, cited, tribute: fanTribute(row.kind), usePaid: row.feesTo ?? null });
+    const post2 = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad, cited, tribute: fanTribute(row.kind), usePaid: row.feesTo ?? null, mint: row.feesTo ? ANY_MINT : null });
     if (!post2.ok) return no(`its X post would be held (${post2.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
   }
   if (rowProblem(row)) return no(`the ledger row would be malformed: ${rowProblem(row)}`);
@@ -994,7 +996,7 @@ export function sanctuaryRow(entry, ctx) {
     };
     const d = checkUpdate(coinMetadata(row).description, tributeCited);
     if (!d.ok) { problem = `the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`; continue; }
-    const post = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad: PUMP_SOL.launchpad, cited, tribute: fanTribute(kind), usePaid: feesTo ?? null });
+    const post = draftLaunch({ id: ticker, name }, { coinName, ticker, lore, launchpad: PUMP_SOL.launchpad, cited, tribute: fanTribute(kind), usePaid: feesTo ?? null, mint: feesTo ? ANY_MINT : null });
     if (!post.ok) { problem = `its launch post would be held (${post.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`; continue; }
     if (rowProblem(row)) return no(`the ledger row would be malformed: ${rowProblem(row)}`);
     return { row, route: { venue: PUMP_SOL.id, pair: { ...SOL_PAIR }, reason: "a sanctuary cat, after its X post" } };
