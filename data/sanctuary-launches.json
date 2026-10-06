@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/DOORKINS.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107332288132645272.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T14:05:50Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "doorkins-magnificat",
         "ticker": "DOORKINS",
@@ -67,7 +67,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "DoorkinsM"
+      "feesTo": "DoorkinsM",
+      "mintNonce": 2992892,
+      "tx": "2Qj1KXhYNzqH8StuWDSF8YX5LJ8JFPQWfQme1vBSCTcyVgZx3XDj5ZYk1dRFMVouHQ7EdtKrkFnuSG1yVkmgVHb4",
+      "sentAt": "2026-10-06T14:16:21Z",
+      "lastValidBlockHeight": 431963792,
+      "mintPublic": "Ced2anqoim6ToFQu5FV5bE2nuJomA9x1yADZ8fgpcats",
+      "spentLamports": 5612920,
+      "settledAt": "2026-10-06T14:16:30Z",
+      "launchedAt": "2026-10-06T14:16:21Z"
     },
     {
       "postId": "2107451411722031352",
@@ -144,7 +152,10 @@
       "spentLamports": 5623080,
       "settledAt": "2026-10-06T12:54:51Z",
       "launchedAt": "2026-10-06T12:54:41Z",
-      "recordedAt": "2026-10-06T12:54:57Z"
+      "recordedAt": "2026-10-06T12:54:57Z",
+      "feeRoute": {
+        "at": "2026-10-06T14:08:20Z"
+      }
     },
     {
       "postId": "2107433237702197476",
