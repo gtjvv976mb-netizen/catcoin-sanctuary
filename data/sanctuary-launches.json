@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/MINIRACAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107451411722031352.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T12:44:37Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "minira-diary",
         "ticker": "MINIRACAT",
@@ -67,7 +67,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "MiniraDiary"
+      "feesTo": "MiniraDiary",
+      "mintNonce": 10464202,
+      "tx": "ykjzxeJ7a3dsM3JRBAktB2jhYPKqq3wQAaCSmXiJCn8umNuRfgXKHJonDQ9TcQonUVVXLaowURptChqBNMtBAhv",
+      "sentAt": "2026-10-06T12:54:42Z",
+      "lastValidBlockHeight": 431945520,
+      "mintPublic": "GzBpgYkMyR9cnA9wu9AaUXfwtzXh46VCapcAYBnycats",
+      "spentLamports": 5623080,
+      "settledAt": "2026-10-06T12:54:51Z",
+      "launchedAt": "2026-10-06T12:54:41Z"
     },
     {
       "postId": "2107433237702197476",
@@ -144,7 +152,10 @@
       "spentLamports": 5562120,
       "settledAt": "2026-10-06T11:41:26Z",
       "launchedAt": "2026-10-06T11:41:17Z",
-      "recordedAt": "2026-10-06T11:41:31Z"
+      "recordedAt": "2026-10-06T11:41:31Z",
+      "feeRoute": {
+        "at": "2026-10-06T12:47:00Z"
+      }
     },
     {
       "postId": "2107414914172408206",
