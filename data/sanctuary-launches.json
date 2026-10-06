@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/PUFFCHEF.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107433237702197476.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T11:31:56Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "that-little-puff",
         "ticker": "PUFFCHEF",
@@ -67,7 +67,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "thatlittlepuff_"
+      "feesTo": "thatlittlepuff_",
+      "mintNonce": 7666182,
+      "tx": "3aQP8mfPZiRz3P7BmM6sSkyD27E7B5LLTpKMUNSLSxY61AsKHVEunPCSmkz3UQSJ4psWSLaaQjhLSR7nhXrLDVuV",
+      "sentAt": "2026-10-06T11:41:17Z",
+      "lastValidBlockHeight": 431929032,
+      "mintPublic": "F4GnKsS6T3kZLWgVM4E5ZCjtymt3WfEGjoDfsg4Vcats",
+      "spentLamports": 5562120,
+      "settledAt": "2026-10-06T11:41:26Z",
+      "launchedAt": "2026-10-06T11:41:17Z"
     },
     {
       "postId": "2107414914172408206",
@@ -148,7 +156,10 @@
       "spentLamports": 5582440,
       "settledAt": "2026-10-06T10:29:15Z",
       "launchedAt": "2026-10-06T10:29:05Z",
-      "recordedAt": "2026-10-06T10:29:22Z"
+      "recordedAt": "2026-10-06T10:29:22Z",
+      "feeRoute": {
+        "at": "2026-10-06T11:34:17Z"
+      }
     },
     {
       "postId": "2107324972062429312",
