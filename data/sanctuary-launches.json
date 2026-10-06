@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/MIIKOCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106850528340971998.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T03:36:11Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "miiko-chorakuji",
         "ticker": "MIIKOCAT",
@@ -64,9 +64,14 @@
         "lore": null
       },
       "feesTo": "nasu_chourakuji",
-      "mintGrind": {
-        "next": 17372001
-      }
+      "mintNonce": 30618288,
+      "tx": "44KbNycEQ7MERBVQ7Cg8bQFsqZ8iQgsYt5nVWgSZkm7sZJdXeFff1pLVxyVVcMZQVGhVUnyu8z7yHMkigTzyb4rK",
+      "sentAt": "2026-10-06T05:03:55Z",
+      "lastValidBlockHeight": 431839788,
+      "mintPublic": "J8HFu4h4TdL8zndL44qXPcL2bDdGjXFG76C5S6H8cats",
+      "spentLamports": 5546880,
+      "settledAt": "2026-10-06T05:04:04Z",
+      "launchedAt": "2026-10-06T05:03:55Z"
     },
     {
       "postId": "2106947484836909437",
