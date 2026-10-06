@@ -1,6 +1,6 @@
 {
   "note": "New cats to release after the initial roster: one an hour, in this order. Add { \"key\": \"<TICKER>\", \"approved\": true, \"added\": \"<date>\" } once the cat is in data/planned.json or data/adoptables.json with a proof, a portrait and a kit (assets/kits/kits.json). A cat listed here is hidden on the site until scripts/announce.mjs has posted it on X and set status \"released\", releasedAt and tweet. approved: false keeps it waiting (and hidden). A cat held in data/announced.json stays held, except an adoptable cat held only because announcing is paused: queueing it releases it. shown: true marks a cat the site already shows; it is queued only to order its X post and is never hidden.",
-  "lastReleaseAt": "2026-10-06T18:36:22.198Z",
+  "lastReleaseAt": "2026-10-06T19:46:40.252Z",
   "cats": [
     {
       "key": "BIGGLESCAT",
@@ -1661,7 +1661,11 @@
       "key": "TORAHIKO",
       "approved": true,
       "added": "2026-10-06",
-      "shown": true
+      "shown": true,
+      "status": "released",
+      "name": "Torahiko",
+      "releasedAt": "2026-10-06T19:46:40.252Z",
+      "tweet": "2107558172906893542"
     },
     {
       "key": "SHACHIHIME",
