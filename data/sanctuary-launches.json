@@ -2,6 +2,65 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107457414387622310",
+      "url": "https://x.com/MistralAI/status/2107457414387622310",
+      "name": "Le Chonk",
+      "coinName": "Le Chonk",
+      "ticker": "LECHONKCAT",
+      "venue": "pump-sol",
+      "policy": "approved",
+      "kind": "real",
+      "lore": "Le Chonk is the big fluffy ginger cat in Mistral AI's launch video for its Mistral Large 4 model",
+      "image": "https://pbs.twimg.com/amplify_video_thumb/2107456560108601344/img/JNzxxKyVVsXLGnCS.jpg",
+      "coinImage": "https://pbs.twimg.com/amplify_video_thumb/2107456560108601344/img/JNzxxKyVVsXLGnCS.jpg",
+      "metadataPath": "coins/2107457414387622310.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T14:33:08Z",
+      "attempts": 0,
+      "cat": {
+        "id": "le-chonk",
+        "ticker": "LECHONKCAT",
+        "name": "Le Chonk",
+        "coinName": "Le Chonk",
+        "owner": "Mistral AI",
+        "category": "viral",
+        "story": "Le Chonk is the big fluffy ginger cat in Mistral AI's launch video for its Mistral Large 4 model. Le Chonk was trending on X on October 6, 2026, and the sanctuary gave it a coin.",
+        "look": "Le Chonk, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/MistralAI/status/2107457414387622310",
+          "author": "MistralAI",
+          "handle": "MistralAI",
+          "date": "2026-10-06",
+          "dateType": "posted",
+          "text": "Meet Mistral Large 4, aka Le Chonk. • 1T parameters, natively multimodal. 49B active. It is the best open weights model from US or Europe on aggregated benchmarks. • State-of-the-art on critical workloads, including cyber defense, manufacturing and finance and it surpasses closed frontier models on visual grounding. • Forged in Europe end-to-end and is deployable from Europe via our own Mistral Cloud infrastructure. • Available to all via API today. Working with cybersecurity partners privately. Open weights release end of October.",
+          "note": "Found by the sanctuary's trend watch on 2026-10-06.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Mistral AI.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "medium",
+        "lore": null
+      },
+      "feesTo": "MistralAI",
+      "photoCredit": true
+    },
+    {
       "postId": "2107470958038516177",
       "url": "https://x.com/CatWorkers/status/2107470958038516177",
       "name": "King",
