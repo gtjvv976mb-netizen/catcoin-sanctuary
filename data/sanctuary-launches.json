@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/FUTABACAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107480359700992265.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T14:46:41Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "futaba-qnote",
         "ticker": "FUTABACAT",
@@ -71,7 +71,15 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "qnote_inc"
+      "feesTo": "qnote_inc",
+      "mintNonce": 14555214,
+      "tx": "4hTfCaquMbGsgKLjaMti2A6KmDUnyt4yKe2c89jfsF9w3DBT7TtJxATmcV7p3pLZwi1hG6Yf1jFH82LgTwKqWgUf",
+      "sentAt": "2026-10-06T14:59:28Z",
+      "lastValidBlockHeight": 431973419,
+      "mintPublic": "CCRQbBEMhAY3dfjALNm5a2NNBsaHDCqJ82tZ8q51cats",
+      "spentLamports": 5618000,
+      "settledAt": "2026-10-06T14:59:37Z",
+      "launchedAt": "2026-10-06T14:59:28Z"
     },
     {
       "postId": "2107457414387622310",
@@ -139,7 +147,10 @@
       "spentLamports": 5567200,
       "settledAt": "2026-10-06T14:43:46Z",
       "launchedAt": "2026-10-06T14:43:37Z",
-      "recordedAt": "2026-10-06T14:43:53Z"
+      "recordedAt": "2026-10-06T14:43:53Z",
+      "feeRoute": {
+        "at": "2026-10-06T14:49:22Z"
+      }
     },
     {
       "postId": "2107470958038516177",
