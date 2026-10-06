@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107451411722031352",
+      "url": "https://x.com/catcosanctuary/status/2107451411722031352",
+      "name": "Minira",
+      "coinName": "Minira the Mini Lion",
+      "ticker": "MINIRACAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Minira, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/MINIRACAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/MINIRACAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107451411722031352.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T12:44:37Z",
+      "attempts": 0,
+      "cat": {
+        "id": "minira-diary",
+        "ticker": "MINIRACAT",
+        "name": "Minira",
+        "coinName": "Minira the Mini Lion",
+        "owner": "Owner of @MiniraDiary (みにら日記-MiniraDiary-), Japan; YouTube 'みにら日記'",
+        "category": "viral",
+        "story": "Minira (みにら) is a male Minuet cat from Japan and the star of the YouTube channel 'Minira Diary' (みにら日記). His X bio says his name comes from 'mini lion' (ミニライオン → みにら) and calls him the maverick of the cat-YouTuber world. In July 2022 ABEMA TIMES reported on a viral X post from @MiniraDiary. Two-year-old Minira gave his owner a hard side-eye after only two kibbles fell out of the bag, apparently thinking that was all his dinner would be. Fans replied 'the best' and 'irresistible'. The account, active on X since 2021, has more than 100,000 followers. It posts Minira's daily life and runs fan threads that collect other people's cat photos.",
+        "look": "Compact, round-faced, short-legged cat (Minuet) with a plush coat. Golden-brown tabby with darker brown stripes on the forehead, cheeks and legs. Cream-white muzzle, chin and chest. Very large round eyes in olive-green to hazel, pink-brown nose, long white whiskers. Dark striped paws with brown toe tufts. Sometimes wears a black collar with a small tag.",
+        "coat": {
+          "base": "golden",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/MiniraDiary/status/2105566361070317822",
+          "author": "MiniraDiary",
+          "handle": "MiniraDiary",
+          "date": "2026-10-01",
+          "dateType": "posted",
+          "text": "涼しくなってきて明らかに顔が丸くなってきてる",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "ABEMA TIMES: 口ほどにものを言いすぎ!? ジト目で訴えてくるネコに「最高」「たまらん」と歓喜の声 (2022-07-02)",
+            "url": "https://times.abema.tv/articles/-/10029882"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Minira",
+          "contract": "6mDDzJ6sA6uRcxWq8YJ4SvFgUfwS1Qq8ihT34pYVpump",
+          "mcapUsd": 1929
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Owner of @MiniraDiary (みにら日記-MiniraDiary-), Japan; YouTube 'みにら日記'.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/MINIRACAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "MiniraDiary"
+    },
+    {
       "postId": "2107433237702197476",
       "url": "https://x.com/catcosanctuary/status/2107433237702197476",
       "name": "Puff",
