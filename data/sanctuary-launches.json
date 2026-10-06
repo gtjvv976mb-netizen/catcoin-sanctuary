@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107494537010598149",
+      "url": "https://x.com/catcosanctuary/status/2107494537010598149",
+      "name": "Rick Key",
+      "coinName": "Rick Key the Distillery Cat",
+      "ticker": "RICKKEY",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Rick Key, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/RICKKEY.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/RICKKEY.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107494537010598149.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T15:40:26Z",
+      "attempts": 0,
+      "cat": {
+        "id": "rick-key-castle-and-key",
+        "ticker": "RICKKEY",
+        "name": "Rick Key",
+        "coinName": "Rick Key the Distillery Cat",
+        "owner": "Castle & Key Distillery, Frankfort, Kentucky (@castleandkey)",
+        "category": "company",
+        "story": "Rick, also written Rick Key or Rick-Key (Louisville Public Media called him Ricky in 2017), is the distillery cat at Castle & Key in Frankfort, Kentucky, on the grounds of the Old Taylor Distillery built in 1887. Brand ambassador Brett Connors adopted the former stray from a pet store in Lexington. He was meant to keep mice away from the grain, but became what Connors called a 'cat-bassador' who greets visitors instead. The distillery calls him its 'Master Distinguished Gentleman'. In October 2023 it released Rick's Pick, his first single barrel bourbon, and in January 2024 it celebrated his 12th birthday.",
+        "look": "Orange (ginger) and white bicolour shorthair: white muzzle, chin, chest, belly and legs; ginger cap over the head and ears, ginger back and a ginger tail with darker rings; amber eyes, pink nose; sturdy, stocky build. He has been photographed in a blue tie or bandana.",
+        "coat": {
+          "base": "ginger",
+          "second": "white",
+          "pattern": "bicolour",
+          "eyes": "amber"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/castleandkey/status/1745191278927585729",
+          "author": "castleandkey",
+          "handle": "castleandkey",
+          "date": "2024-01-10",
+          "dateType": "posted",
+          "text": "Happy 12th birthday to our very own, Rick Key! 🥳🐈🧁🏰 Protector of our castle and keeper of our hearts — our family wouldn’t be complete without our Master Distinguished Gentleman™️! Join us in a toast and wishing him the happiest birthday! 🥃🫶🏼 #castleandkey #rickkey",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Meet Castle And Key's Newest Employee: Ricky, The Distillery Cat (Louisville Public Media, 2017-08-02)",
+            "url": "https://lpm.org/news/2017-08-02/meet-castle-and-keys-newest-employee-ricky-the-distillery-cat"
+          },
+          {
+            "label": "Cats of the Bluegrass (VisitLEX)",
+            "url": "https://www.visitlex.com/cats-of-the-bluegrass/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Castle & Key Distillery, Frankfort, Kentucky (@castleandkey).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/RICKKEY.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "castleandkey"
+    },
+    {
       "postId": "2106802226039525386",
       "url": "https://x.com/catcosanctuary/status/2106802226039525386",
       "name": "Kiku-chan",
