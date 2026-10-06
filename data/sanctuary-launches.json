@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107332288132645272",
+      "url": "https://x.com/catcosanctuary/status/2107332288132645272",
+      "name": "Doorkins Magnificat",
+      "coinName": "Doorkins Magnificat",
+      "ticker": "DOORKINS",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of Doorkins Magnificat.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/DOORKINS.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/DOORKINS.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107332288132645272.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T14:05:50Z",
+      "attempts": 0,
+      "cat": {
+        "id": "doorkins-magnificat",
+        "ticker": "DOORKINS",
+        "name": "Doorkins Magnificat",
+        "coinName": "Doorkins Magnificat",
+        "owner": "Southwark Cathedral, London (@Southwarkcathed)",
+        "category": "company",
+        "story": "Doorkins Magnificat was a stray who first came to Southwark Cathedral around 2008-2009, turning up at the doors every morning for food, and made the cathedral her home for over a decade. She famously slept through a visit from the Queen, starred in a 2017 children's picture book about her adventures, and her likeness was carved into a stone corbel on the cathedral. She had her own Twitter account, @DoorkinsM. In October 2019, as her eyesight failed, she retired to live with one of the cathedral's vergers.",
+        "look": "Slender brown/tawny mackerel tabby with dark stripes and banded tail, white chin and muzzle, pale green-gold eyes, large upright ears; sleek short coat. (Real photo in @DoorkinsM banner; avatar is a painted portrait.)",
+        "coat": {
+          "base": "brown",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "gold"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/DoorkinsM/status/1186984427055915009",
+          "author": "DoorkinsM",
+          "handle": "DoorkinsM",
+          "date": "2019-10-23",
+          "dateType": "posted",
+          "text": "It is with great sadness to say that I am now not living at Southwark Cathedral. Due to my deteriorating health especially eyesight (I keep bumping into old things...not the Dean!) I am going to be living with one of the Cathedral staff where I will enjoy my semi-retirement. 1/5",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Sad news: Doorkins Magnificat (English Cathedrals)",
+            "url": "https://englishcathedrals.co.uk/latest-news/sad-news-doorkins-magnificat"
+          },
+          {
+            "label": "Doorkins the cathedral cat retires after a decade delighting visitors (London SE1)",
+            "url": "https://www.se1.news/doorkins-magnificat-southwark-cathedral-retirement"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Southwark Cathedral, London (@Southwarkcathed).",
+        "sensitivity": "In loving memory of Doorkins Magnificat.",
+        "portrait": "assets/portraits/DOORKINS.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "DoorkinsM"
+    },
+    {
       "postId": "2107451411722031352",
       "url": "https://x.com/catcosanctuary/status/2107451411722031352",
       "name": "Minira",
