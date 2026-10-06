@@ -32,7 +32,7 @@ const ADOPT = JSON.parse(read("data/adoptables.json")).cats;
 
 test("every resident has a character in data/traits.json, in range, with the words behind each value", async () => {
   const list = await residents();
-  assert.equal(list.length, 262);
+  assert.equal(list.length, 271);
   assert.equal(Object.keys(TABLE).length, list.length, "one row per resident, no strays");
   for (const r of list) {
     const t = TABLE[r.id];
@@ -56,7 +56,7 @@ test("every resident has a character in data/traits.json, in range, with the wor
     if (t.signature) assert.ok(t.why.signature, `${r.id}.signature says why`);
     assert.deepEqual(traitsOf(r), normalizeTraits(t), `${r.id}: traitsOf reads its row`);
   }
-  // 2026-09-30: 150 -> 170 KB for the 284 residents (251 since 2026-10-01, 252 since 2026-10-02, 262 since 2026-10-03) (about 545 bytes a row).
+  // 2026-09-30: 150 -> 170 KB for the 284 residents (251 since 2026-10-01, 252 since 2026-10-02, 262 since 2026-10-03, 271 since 2026-10-06) (about 545 bytes a row).
   assert.ok(read("data/traits.json").length < 170 * 1024, "data/traits.json stays small");
   assert.ok(!/https?:/.test(read("data/traits.json")), "no links in the file");
 });
@@ -232,7 +232,7 @@ test("traitsOf: its table row, else what residents.js attached, else read from i
   assert.deepEqual(deriveTraits({ id: "MARUBOX", ticker: "MARUBOX" }).signature, "boxSit", "overrides apply at run time too");
   // Without data/traits.json the page still loads every cat, with no rows attached.
   const bare = await residents(["data/traits.json"]);
-  assert.equal(bare.length, 262);
+  assert.equal(bare.length, 271);
   assert.ok(bare.every((x) => x.traits === undefined));
   assert.equal(traitsOf(bare.find((x) => x.id === "WARMSPOT")).signature, "loaf", "and each is read from its words instead");
 });

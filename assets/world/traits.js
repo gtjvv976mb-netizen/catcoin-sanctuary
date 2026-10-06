@@ -279,6 +279,7 @@ export const TRAIT_OVERRIDES = {
   SNOWCURL: { energy: .4, social: .6, proud: .55, grace: .6, signature: "wash", note: "Tesla's Balloon Cat: a calm poser, one paw lifted to her face" },
   COOPERCAT: { curious: .65, proud: .6, grace: .6, note: "a tidy worker sorting petals" },
   RUBYCAT: { energy: .45, social: .6, curious: .55, note: "a relaxed stroller" },
+  SNACKSCAT: { proud: .5, playful: .5, note: "'merch king' and his plush toy are his owner's words about his merchandise, not pride or play" },
   KONPEIMISO: { bold: .5, proud: .5, legs: "normal", note: "the model is Miso, the long-legged American Shorthair; 'hiding' and the photo book are their owner's words about the pair, not shyness or pride" },
   MARUBOX: { playful: .8, curious: .8, bold: .65, energy: .6, signature: "boxSit", note: "Maru: dives into every box, however small" },
   GLICAT: { social: .75, bold: .7, sleepy: .6, energy: .4, proud: .6, signature: "loaf", note: "Gli of Hagia Sophia: calm with every visitor, loafing on her ledge" },
