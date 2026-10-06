@@ -1,6 +1,6 @@
 {
   "note": "Adoptable cats: famous real, fictional and viral cats with no sanctuary coin yet. Fan tributes, not affiliated with their owners. Built by scripts/build-adoptables.mjs; checked by assets/ui/adoptables.js.",
-  "checked": "2026-10-03",
+  "checked": "2026-10-06",
   "cats": [
     {
       "id": "meredith",
@@ -10104,6 +10104,516 @@
         "launchpad": "pump.fun",
         "at": "2026-10-06T10:18:17Z"
       }
+    },
+    {
+      "id": "futaba-qnote",
+      "ticker": "FUTABACAT",
+      "name": "Futaba",
+      "coinName": "Futaba the Chaircat",
+      "owner": "qnote Inc., Tokyo (@qnote_inc)",
+      "category": "company",
+      "story": "Futaba (ふたば) was the first office cat at qnote Inc., a web and app development company in Suginami, Tokyo. President Nobuyuki Tsuruta met her at a sushi restaurant, where she was a shelter cat looking for an adopter, and she joined the office in 2004, a year after the company was founded. She later had six kittens, and qnote's growing 'cat sales department' gave every cat a job title. Futaba's title was 会長 (chair). The company's official X account says it mostly posts about the office cats. Futaba died in August 2024 at the age of 20, and qnote livestreamed her farewell gathering.",
+      "look": "Slim cream / pale-apricot (light buff) shorthair with faint darker rings on the tail, pale green eyes, a pink nose and large upright ears; a small, kittenish face even in old age.",
+      "coat": {
+        "base": "cream",
+        "second": "",
+        "pattern": "solid",
+        "eyes": "green"
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/qnote_inc/status/1185198863679811584",
+        "author": "qnote_inc",
+        "handle": "qnote_inc",
+        "date": "2019-10-18",
+        "dateType": "posted",
+        "text": "ゴロンゴロンしてるふたば会長。 みなさま、おやすみなさーい(ΦωΦ) #qnote_cat #猫会社 #猫社員 #cat",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "qnote猫社員紹介 (qnote cats, official company page)",
+          "url": "https://www.qnote.co.jp/qnote_cats/"
+        },
+        {
+          "label": "How Can Humans and Cats Co-Exist in the Office? (WORK MILL, 2023-04-24)",
+          "url": "https://workmill.jp/en/webzine/cats-office-20230424/"
+        },
+        {
+          "label": "Tokyo Company Hires 11 Cats as Official Sales Department Employees (AOL / Always Pets, 2026-02-11)",
+          "url": "https://www.aol.com/articles/tokyo-company-hires-11-cats-162445126.html"
+        }
+      ],
+      "existingCoin": null,
+      "memorial": true,
+      "tribute": "Fan tribute, not affiliated with or endorsed by qnote Inc., Tokyo (@qnote_inc).",
+      "sensitivity": "In loving memory of Futaba.",
+      "portrait": "assets/portraits/FUTABACAT.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "rick-key-castle-and-key",
+      "ticker": "RICKKEY",
+      "name": "Rick Key",
+      "coinName": "Rick Key the Distillery Cat",
+      "owner": "Castle & Key Distillery, Frankfort, Kentucky (@castleandkey)",
+      "category": "company",
+      "story": "Rick, also written Rick Key or Rick-Key (Louisville Public Media called him Ricky in 2017), is the distillery cat at Castle & Key in Frankfort, Kentucky, on the grounds of the Old Taylor Distillery built in 1887. Brand ambassador Brett Connors adopted the former stray from a pet store in Lexington. He was meant to keep mice away from the grain, but became what Connors called a 'cat-bassador' who greets visitors instead. The distillery calls him its 'Master Distinguished Gentleman'. In October 2023 it released Rick's Pick, his first single barrel bourbon, and in January 2024 it celebrated his 12th birthday.",
+      "look": "Orange (ginger) and white bicolour shorthair: white muzzle, chin, chest, belly and legs; ginger cap over the head and ears, ginger back and a ginger tail with darker rings; amber eyes, pink nose; sturdy, stocky build. He has been photographed in a blue tie or bandana.",
+      "coat": {
+        "base": "ginger",
+        "second": "white",
+        "pattern": "bicolour",
+        "eyes": "amber"
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/castleandkey/status/1745191278927585729",
+        "author": "castleandkey",
+        "handle": "castleandkey",
+        "date": "2024-01-10",
+        "dateType": "posted",
+        "text": "Happy 12th birthday to our very own, Rick Key! 🥳🐈🧁🏰 Protector of our castle and keeper of our hearts — our family wouldn’t be complete without our Master Distinguished Gentleman™️! Join us in a toast and wishing him the happiest birthday! 🥃🫶🏼 #castleandkey #rickkey",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "Meet Castle And Key's Newest Employee: Ricky, The Distillery Cat (Louisville Public Media, 2017-08-02)",
+          "url": "https://lpm.org/news/2017-08-02/meet-castle-and-keys-newest-employee-ricky-the-distillery-cat"
+        },
+        {
+          "label": "Cats of the Bluegrass (VisitLEX)",
+          "url": "https://www.visitlex.com/cats-of-the-bluegrass/"
+        }
+      ],
+      "existingCoin": null,
+      "memorial": false,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Castle & Key Distillery, Frankfort, Kentucky (@castleandkey).",
+      "sensitivity": "",
+      "portrait": "assets/portraits/RICKKEY.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "mugi-kiriya-ryokan",
+      "ticker": "NOZAWAMUGI",
+      "name": "Mugi",
+      "coinName": "Mugi of Nozawa Onsen",
+      "owner": "Kiriya Ryokan, Nozawa Onsen, Nagano (@kiriya_ryokan)",
+      "category": "company",
+      "story": "Mugi (ムギ) is one of the kanban neko (signboard cats) at Kiriya Ryokan, a hot-spring inn in Nozawa Onsen, Nagano, that calls itself a 'cat inn' (ねこ宿) where ten signboard cats welcome guests. The inn introduced her on X in September 2022 as its newest cat, from the village's Oyu-dori street, starting her signboard-cat training. In Rakuten Travel's 2023 ranking of inns' signboard cats she came second. All About wrote that she is not shy, loves being petted, and has a wheat-coloured coat mixed with white 'like milk tea', and that she was training as the warmer of guests' laps and slippers.",
+      "look": "Cream / pale-ginger and white shorthair: white muzzle, chest, legs and paws; pale ginger patches over the head, ears and back; round golden-amber eyes, pink nose; wears a collar with a small pendant.",
+      "coat": {
+        "base": "cream",
+        "second": "white",
+        "pattern": "bicolour",
+        "eyes": "amber"
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/kiriya_ryokan/status/1854888168539275752",
+        "author": "kiriya_ryokan",
+        "handle": "kiriya_ryokan",
+        "date": "2024-11-08",
+        "dateType": "posted",
+        "text": "必要以上に貫禄のある顔がとれた。 ムギはまだ2歳半だから。 #野沢温泉 #桐屋旅館 #ねこ温泉 #ねこ宿 #看板猫",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "「全国の宿 自慢の看板猫」ランキング！ 2位は長野県「野沢温泉 桐屋旅館」の「ムギ」ちゃん (All About News, 2023-02-16)",
+          "url": "https://news.allabout.co.jp/articles/o/56927/"
+        },
+        {
+          "label": "Kiriya Ryokan official site",
+          "url": "https://kiriya.jp/"
+        }
+      ],
+      "existingCoin": null,
+      "memorial": false,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Kiriya Ryokan, Nozawa Onsen, Nagano (@kiriya_ryokan).",
+      "sensitivity": "",
+      "portrait": "assets/portraits/NOZAWAMUGI.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "higan-jushoin",
+      "ticker": "HIGANCAT",
+      "name": "Higan",
+      "coinName": "Higan the Temple Cat",
+      "owner": "Myoshinji Jushoin temple, Kyoto (@jusyoin)",
+      "category": "company",
+      "story": "Higan (彼岸) is the kanban neko (signboard cat) of Jushoin (壽聖院), a sub-temple of Myoshinji in Kyoto and the family temple of Ishida Mitsunari's clan. As a kitten he wandered into a Zen training monastery in Oita during the autumn equinox week (o-higan), so the roshi named him Higan. He bonded with the trainee priest Nishida, who brought him along when he became Jushoin's head priest. In June 2024 a photo of Higan perched on the priest's shoulder was compared to the Toguro brothers from Yu Yu Hakusho and drew about 97,000 likes on the temple's X account. The temple says he turned 11 in 2026.",
+      "look": "Silver-grey tabby and white (saba-tora with white) shorthair: white muzzle, chest, belly and legs; grey mackerel-tabby patches over the head, ears and back; ringed grey tail with a dark tip; pink nose and pink toe pads; wears a collar with bells. Eye colour: verify with photos.",
+      "coat": {
+        "base": "silver",
+        "second": "",
+        "pattern": "tabby",
+        "eyes": ""
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/jusyoin/status/2106581798386032686",
+        "author": "jusyoin",
+        "handle": "jusyoin",
+        "date": "2026-10-04",
+        "dateType": "posted",
+        "text": "なんかおかしいぞと床をクンクンしまくった末、「床が暖かくなるやつ始まったのでは…！」と気づいた彼岸",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "「戸愚呂(猫)」で大人気に！Xで9.7万いいねのお寺の看板猫・彼岸と住職の出合いとは？ (Walkerplus)",
+          "url": "https://www.walkerplus.com/article/1220630/"
+        },
+        {
+          "label": "京都・妙心寺 壽聖院 石田三成一族ゆかりのお寺の「彼岸」 (ねこびより, 2025-04-07)",
+          "url": "https://necobiyori.jp/nekobiyori/20870/"
+        }
+      ],
+      "existingCoin": null,
+      "memorial": false,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Myoshinji Jushoin temple, Kyoto (@jusyoin).",
+      "sensitivity": "",
+      "portrait": "assets/portraits/HIGANCAT.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "fukurashi-masahiro-sakurai",
+      "ticker": "FUKURA",
+      "name": "Fukurashi",
+      "coinName": "Fukurashi",
+      "owner": "Masahiro Sakurai, game designer (Kirby, Super Smash Bros.) (@Sora_Sakurai)",
+      "category": "celebrity",
+      "story": "Fukurashi (ふくらし), formally named Fukura, was the female Scottish Fold of Masahiro Sakurai, the game designer behind Kirby and Super Smash Bros. He introduced his new cat in his Famitsu column in July 2009 and shared her photos on X for years; she was born on 6 April. A 2022 video on his YouTube channel 'Masahiro Sakurai on Creating Games' about nothing but her outdrew some of his game-related videos, and she appeared on the cover of his biographical manga. After battling pleural effusion, heart failure, kidney failure and cystitis, she died peacefully at home at 7 am JST on 6 February 2026, aged 17. 'Thank you for everything!' Sakurai wrote.",
+      "look": "Scottish Fold with small folded ears; brown tabby-and-white bicolor: brown mackerel-tabby cap over the ears and around both eyes, split by a white blaze down the forehead, white muzzle, chin, chest, belly and legs, brown tabby patches on the back; large round amber-gold eyes; pink nose; round, plush build.",
+      "coat": {
+        "base": "brown",
+        "second": "white",
+        "pattern": "tabby",
+        "eyes": ""
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/Sora_Sakurai/status/320354651432173571",
+        "author": "Sora_Sakurai",
+        "handle": "Sora_Sakurai",
+        "date": "2013-04-06",
+        "dateType": "posted",
+        "text": "@Junichi_Masuda なんと！ うちのふくらしと同じ誕生日ですよ。(スコティッシュ♀ 4歳)",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "Masahiro Sakurai's beloved pet cat, Fukurashi, passes away at 17 years old (AUTOMATON WEST, 6 Feb 2026)",
+          "url": "https://automaton-media.com/en/news/masahiro-sakurais-beloved-pet-cat-fukurashi-passes-away-at-17-years-old/"
+        },
+        {
+          "label": "桜井政博 - Wikipedia (Japanese; cat section: Scottish Fold female 'Fukura', nicknamed 'Fukurashi')",
+          "url": "https://ja.wikipedia.org/wiki/%E6%A1%9C%E4%BA%95%E6%94%BF%E5%8D%9A"
+        },
+        {
+          "label": "Sakurai takes a paws from gaming videos to talk about his cat (Nintendo Wire, 18 Nov 2022)",
+          "url": "https://nintendowire.com/news/2022/11/18/sakurai-takes-a-paws-from-gaming-videos-to-talk-about-his-cat"
+        }
+      ],
+      "existingCoin": {
+        "symbol": "Fukurashi",
+        "contract": "8jXmuSUYWqbw8ReK4ZgQo8UGuWYHG4gnTBEAyNR7pump",
+        "mcapUsd": 2826
+      },
+      "memorial": true,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Masahiro Sakurai, game designer (Kirby, Super Smash Bros.) (@Sora_Sakurai).",
+      "sensitivity": "In loving memory of Fukurashi.",
+      "portrait": "assets/portraits/FUKURA.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "torahiko-yoichi-ochiai",
+      "ticker": "TORAHIKO",
+      "name": "Torahiko",
+      "coinName": "Torahiko",
+      "owner": "Yoichi Ochiai, media artist (@ochyai)",
+      "category": "celebrity",
+      "story": "Torahiko (トラ彦) is the black cat of Japanese media artist Yoichi Ochiai, who posts him constantly under the #トラ彦 hashtag. Ochiai marked two years with him in February 2023 and announced in November 2024 that he had turned four. Photos of Torahiko were part of Ochiai's 2023 exhibition 'Hare Tokidoki Leica' at the Leica Galleries in Tokyo and Kyoto, which NTV News singled out for its pictures of his beloved cat. At Expo 2025 Osaka, Ochiai's null² pavilion featured Torahiko in its picture book ('He's the one. His face is flat,' Ochiai wrote), and Ochiai says the pavilion had the biggest stamp of any pavilion: a Torahiko stamp. He now lives with Ochiai and a second black cat, Wajiro.",
+      "look": "Solid black with a dense, plush coat; flat, rounded face with a short muzzle (Ochiai: 'his face is flat'; Exotic Shorthair-like, breed not confirmed by sources); round amber-to-orange eyes; small rounded ears; stocky, cobby body and thick tail.",
+      "coat": {
+        "base": "black",
+        "second": "",
+        "pattern": "solid",
+        "eyes": "orange"
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/ochyai/status/1956970939830489329",
+        "author": "ochyai",
+        "handle": "ochyai",
+        "date": "2025-08-17",
+        "dateType": "posted",
+        "text": "#null2 の絵本に出てくるトラ彦はこの方です．顔が平らです．#expo2025",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "落合陽一の見た1年を表現する写真展 見どころは「愛猫」と「ガンプラの茶室」 (日テレNEWS NNN, 8 Sep 2023)",
+          "url": "https://news.ntv.co.jp/category/culture/55bb1bd6012945b0acb97a01aadf15dc"
+        }
+      ],
+      "existingCoin": null,
+      "memorial": false,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Yoichi Ochiai, media artist (@ochyai).",
+      "sensitivity": "",
+      "portrait": "assets/portraits/TORAHIKO.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "shachi-daisuke-sakuma",
+      "ticker": "SHACHIHIME",
+      "name": "Shachi",
+      "coinName": "Shachi-hime",
+      "owner": "Daisuke Sakuma of Snow Man, J-pop idol (@SAK_SAK_SAKUMA)",
+      "category": "celebrity",
+      "story": "Shachi (シャチ), whom he calls 'Shachi-hime' (Princess Shachi), is the calico cat of Daisuke Sakuma of the J-pop group Snow Man. She shares his home with the brown tabby Tuna, and he posts the pair as #ツナシャチ. Sakuma celebrated her third birthday on 17 April 2025 and her fourth in April 2026, calling her the household's 'scatterbrained princess'. Japanese music site THE FIRST TIMES regularly reports his cat posts, including a November 2025 photo of her relaxing with her eyes closed on his chest captioned 'S・M・T (Shachi is truly an angel)'. His posts also show her sitting politely in front of her bowl waiting for breakfast, and taking turns with Tuna to occupy his lap while he works at the dining table.",
+      "look": "Calico (tortoiseshell-and-white): black mask over the eyes and ears with orange patches on the forehead, a white blaze down the nose into a white muzzle, chest, belly and legs, a small orange spot beside the pink nose, black-and-orange patched back and a long black tail; yellow-green eyes; slim build.",
+      "coat": {
+        "base": "white",
+        "second": "black",
+        "pattern": "calico",
+        "eyes": ""
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/SAK_SAK_SAKUMA/status/1934180173865509216",
+        "author": "SAK_SAK_SAKUMA",
+        "handle": "SAK_SAK_SAKUMA",
+        "date": "2025-06-15",
+        "dateType": "posted",
+        "text": "お皿の前でお座りして、 朝ごはんを待つシャチちゃん。 可愛すぎな。 #お座りシャチちゃん",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "佐久間大介の胸の上で愛猫が目を閉じてリラックスした姿を激写！ (THE FIRST TIMES)",
+          "url": "https://www.thefirsttimes.jp/news/0000718440/"
+        },
+        {
+          "label": "佐久間大介が自身の胸に顔をうずめる愛猫の姿を公開 (THE FIRST TIMES, 26 May 2025)",
+          "url": "https://www.thefirsttimes.jp/news/0000622823/"
+        }
+      ],
+      "existingCoin": null,
+      "memorial": false,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Daisuke Sakuma of Snow Man, J-pop idol (@SAK_SAK_SAKUMA).",
+      "sensitivity": "",
+      "portrait": "assets/portraits/SHACHIHIME.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "oreo-ayako-fuji",
+      "ticker": "OREOCHAN",
+      "name": "Oreo",
+      "coinName": "Oreo-chan",
+      "owner": "Ayako Fuji, enka singer (@fuji_ayako)",
+      "category": "celebrity",
+      "story": "Oreo (オレオ) is a rescue cat of enka singer Ayako Fuji, who posts her on X with her brother Maru as the duo 'MaruOre' (マルオレ). Oreo was the first-born and only girl in a litter of four, with Maru, Kotetsu and Yukio; Fuji marked the siblings' two-month birthday in August 2019. In her FRaU column Fuji says Oreo does everything perfectly and is a master of the 'calculatedly cute' look, and on X she called her a 'beautiful goddess cat'. The pair starred in the 2020 photobook 'Maru to Oreo to Fuji Ayako' and a 2023 comic, and Fuji donates proceeds from MaruOre charity goods to animal-welfare groups: ¥1,000,000 on Cat Day 2026.",
+      "look": "Black-and-white bicolor (hachiware): black cap and ears split by a white inverted-V blaze down the face, white muzzle, chin, chest and belly, black back and tail; round yellow-amber eyes; small dark nose; slender, medium build.",
+      "coat": {
+        "base": "black",
+        "second": "white",
+        "pattern": "bicolour",
+        "eyes": "amber"
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/fuji_ayako/status/1243767812306259969",
+        "author": "fuji_ayako",
+        "handle": "fuji_ayako",
+        "date": "2020-03-28",
+        "dateType": "posted",
+        "text": "美神猫と書いてオレオと読む #親バカ #こんな時こそ猫に癒されよう",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "2匹の愛猫「マルオレ」のやさしく支え合う姉弟愛に藤あや子も感動 (FRaU / gendai.media, 29 Nov 2020)",
+          "url": "https://gendai.media/articles/-/77817"
+        },
+        {
+          "label": "見たら幸せに？笑いの神降臨？藤あや子の愛猫「マルオレちゃん」の３つの定説 (FRaU / gendai.media, 27 Mar 2022)",
+          "url": "https://gendai.media/articles/-/93737"
+        }
+      ],
+      "existingCoin": {
+        "symbol": "MaruOreo",
+        "contract": "Einr4vNkzAsVUXRT9C2JgVezk1bMAjhJmKXYAk8Rpump",
+        "mcapUsd": 3481
+      },
+      "memorial": false,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Ayako Fuji, enka singer (@fuji_ayako).",
+      "sensitivity": "",
+      "portrait": "assets/portraits/OREOCHAN.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "milko-zero-gravity-cat",
+      "ticker": "MILKOCAT",
+      "name": "Milko",
+      "coinName": "Milko the Zero-Gravity Cat",
+      "owner": "Chisa Nakagawa (中川ちさ), Japan; X/Instagram @ccchisa76 (無重力猫ミルコのお家)",
+      "category": "viral",
+      "story": "Milko (ミルコ) is a male white cat in Japan, famous online as the 'zero-gravity cat' (無重力猫) because so many of his photos catch him flying through the air. He was rescued as a kitten after being abandoned, crying, in a company parking lot, badly underweight, and nursed back to health. His owner, writer Chisa Nakagawa, named him after a fighter so he would grow up strong. As a kitten he had dark marks on his head that faded until he was pure white. His jumping photos led to TV appearances and photo books, starting with 'Mujuryoku Neko Tobikkiri Milko!' (announced 2016). The account @ccchisa76 (about 141k followers) shares Milko and his housemates. On 28 Aug 2026 it marked his 11th anniversary as a house cat.",
+      "look": "Solid white short-haired male with pink nose, pink inner ears and pink paw pads; eyes pale grey-green; often wears a red collar. Usually shown mid-leap with legs stretched out.",
+      "coat": {
+        "base": "white",
+        "second": "",
+        "pattern": "solid",
+        "eyes": ""
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/ccchisa76/status/2070336681388265785",
+        "author": "ccchisa76",
+        "handle": "ccchisa76",
+        "date": "2026-06-26",
+        "dateType": "posted",
+        "text": "ミルコ！スマイル！いただきました😊！",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "FRaU (gendai.media): 韓国からのオファーも来た猫ズ！まるでBTS？踊るにゃんこチーム (2020-12-09)",
+          "url": "https://gendai.media/articles/-/78107"
+        },
+        {
+          "label": "Walker Plus: \"無重力猫\"ミルコたち5匹の猫のマイブームに迫る (2020-09-19)",
+          "url": "https://www.walkerplus.com/article/1006464/"
+        }
+      ],
+      "existingCoin": null,
+      "memorial": false,
+      "tribute": "Fan tribute, not affiliated with or endorsed by Chisa Nakagawa (中川ちさ), Japan; X/Instagram @ccchisa76 (無重力猫ミルコのお家).",
+      "sensitivity": "",
+      "portrait": "assets/portraits/MILKOCAT.jpg",
+      "portraitStatus": "ready",
+      "confidence": "high",
+      "lore": null
+    },
+    {
+      "id": "anago-neko-samurai",
+      "ticker": "ANAGOCAT",
+      "name": "Anago",
+      "coinName": "Anago (Neko Samurai's Tamanojo)",
+      "owner": "ZOO Animal Production (ZOO動物プロ), Tokyo; X @zoo_japan",
+      "category": "tv-movie",
+      "story": "Anago (あなご) was the white female cat who played Tamanojo, the cat co-star of samurai Kazuki Kitamura in the 'Neko Samurai' (猫侍) TV series and films. Japanese Wikipedia lists her with two white cats named Sakura who shared the role. The agency ZOO Animal Production placed her in other work too, including NHK's Taiga drama 'Taira no Kiyomori' (2012) and NTV's 'anone' (2018). Her agency called her a 'white-cat legend' and a 'bimajo' (ageless beauty). She died peacefully in her favourite bed on 13 August 2019, aged 21. Her last role, NHK BS's 'Neko Tantei no Jikenbo 2', aired on 18 September 2019. ZOO still marks the anniversary each year, and fans bring flowers.",
+      "look": "Pure white short-haired female with large green eyes, pink nose and pink inner ears; slim build; in later photos wore a pink ribbon collar with a small black-cat charm.",
+      "coat": {
+        "base": "white",
+        "second": "",
+        "pattern": "solid",
+        "eyes": "green"
+      },
+      "pair": {
+        "symbol": "STONK",
+        "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+      },
+      "proof": {
+        "kind": "x",
+        "url": "https://x.com/zoo_japan/status/1955593927278620815",
+        "author": "zoo_japan",
+        "handle": "zoo_japan",
+        "date": "2025-08-13",
+        "dateType": "posted",
+        "text": "本日はあなごちゃん命日💐 沢山のご来店ありがとうございました🐈🐾 今でもこうして思い出してくださること、 大変嬉しく思います☺️ありがとうございます🐾 #ZOO #ZOO動物プロ #あなご",
+        "note": "Verified on 2026-10-06",
+        "image": null
+      },
+      "sources": [
+        {
+          "label": "Wikipedia (ja): 猫侍 — cast: 玉之丞 - あなご（14歳 ♀）・さくら…",
+          "url": "https://ja.wikipedia.org/wiki/猫侍"
+        },
+        {
+          "label": "MANTANWEB: あなご：「猫侍」などで人気のタレント猫 “遺作”「猫探偵の事件簿2」が18日放送 (2019-09-17)",
+          "url": "https://mantan-web.jp/article/20190917dog00m200023000c.html"
+        },
+        {
+          "label": "ZOO動物プロ official blog: あなごさん、虹の橋を渡りました (2019-08-13)",
+          "url": "https://ameblo.jp/zoojapan/entry-12497308898.html"
+        },
+        {
+          "label": "crank-in.net: 『猫侍』北村一輝、白猫あなごにデレデレ! (2015-03-27)",
+          "url": "https://www.crank-in.net/news/36070"
+        }
+      ],
+      "existingCoin": null,
+      "memorial": true,
+      "tribute": "Fan tribute, not affiliated with or endorsed by ZOO Animal Production (ZOO動物プロ), Tokyo; X @zoo_japan.",
+      "sensitivity": "In loving memory of Anago.",
+      "portrait": "assets/portraits/ANAGOCAT.jpg",
+      "portraitStatus": "ready",
+      "confidence": "medium",
+      "lore": null
     }
   ]
 }
