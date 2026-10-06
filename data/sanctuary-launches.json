@@ -2,6 +2,82 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107396451005350235",
+      "url": "https://x.com/catcosanctuary/status/2107396451005350235",
+      "name": "Snacks",
+      "coinName": "Snacks the Cat",
+      "ticker": "SNACKSCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of Snacks.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/SNACKSCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/SNACKSCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107396451005350235.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-06T09:06:24Z",
+      "attempts": 0,
+      "cat": {
+        "id": "snacks-best-coast",
+        "ticker": "SNACKSCAT",
+        "name": "Snacks",
+        "coinName": "Snacks the Cat",
+        "owner": "Bethany Cosentino of Best Coast (@BethanyCoast)",
+        "category": "celebrity",
+        "story": "Snacks was the orange Maine Coon of Best Coast singer Bethany Cosentino, adopted around the release of the band's 2010 debut album Crazy for You, which has him on the cover. He was the band's mascot, had his own plush toy sold as merch, was worked into the songs 'Goodbye' and 'Leading', appeared on the 'Leading' single cover, and was featured with Cosentino in a PETA ad campaign. Cosentino called him 'the third member of this band. Our mascot. Our cover star. Our merch king.' He lived 14 years; she wrote: 'long live snacks the cat.'",
+        "look": "Long-haired orange (ginger) Maine Coon: soft, fluffy apricot-orange coat with a paler cream ruff and chest, faint tabby shading, long whiskers, tufted ears, large build. The verified photo shows him as a senior cat; verify eye colour with photos.",
+        "coat": {
+          "base": "ginger",
+          "second": "cream",
+          "pattern": "tabby",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/BethanyCoast/status/1491553397295620096",
+          "author": "BethanyCoast",
+          "handle": "BethanyCoast",
+          "date": "2022-02-09",
+          "dateType": "posted",
+          "text": "said goodbye to my best friend in the entire world today. my true love. my guardian angel. there will never be another one like him. he forever changed me. long live snacks the cat 💔✨🤍",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Snacks the Cat, Best Coast's Honorary Third Member, Has Died at 14 - Consequence",
+            "url": "https://consequence.net/2022/02/best-coasts-cat-snacks-dead/"
+          },
+          {
+            "label": "Bethany Cosentino's cat and Best Coast album cover star Snacks has died - The Line of Best Fit",
+            "url": "https://www.thelineofbestfit.com/news/latest-news/bethany-cosentinos-cat-and-best-coast-album-cover-star-snacks-has-died"
+          },
+          {
+            "label": "Snacks, Bethany Cosentino's Cat And Best Coast Cover Art Star Has Died - Uproxx",
+            "url": "https://uproxx.com/indie/snacks-bethany-cosentino-cat-dead/"
+          },
+          {
+            "label": "List of individual cats (Cats of famous people) - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/List_of_individual_cats"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Bethany Cosentino of Best Coast (@BethanyCoast).",
+        "sensitivity": "In loving memory of Snacks.",
+        "portrait": "assets/portraits/SNACKSCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "BethanyCoast"
+    },
+    {
       "postId": "2107379497955950647",
       "url": "https://x.com/catcosanctuary/status/2107379497955950647",
       "name": "Attlee",
