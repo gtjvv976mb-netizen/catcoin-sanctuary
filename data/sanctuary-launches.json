@@ -67,7 +67,8 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "auronplay"
+      "feesTo": "auronplay",
+      "mintNonce": 9230364
     },
     {
       "postId": "2107681486891524264",
@@ -144,7 +145,10 @@
       "spentLamports": 5546880,
       "settledAt": "2026-10-07T04:12:59Z",
       "launchedAt": "2026-10-07T04:12:49Z",
-      "recordedAt": "2026-10-07T04:13:05Z"
+      "recordedAt": "2026-10-07T04:13:05Z",
+      "feeRoute": {
+        "at": "2026-10-07T05:00:22Z"
+      }
     },
     {
       "postId": "2107494537010598149",
