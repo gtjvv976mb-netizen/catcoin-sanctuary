@@ -48,7 +48,7 @@ import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost
 import { kitsOf, adoptionProblem, ownMints } from "./lib/adoptions.mjs";
 import { nameKey } from "../assets/ui/adoptables.js";
 import { isAddress } from "../assets/collection.js";
-import { FEE_ROUTE_MAX_TRIES } from "./lib/fee-route.mjs";
+import { FEE_ROUTE_MAX_TRIES, usePaidTokenUrl } from "./lib/fee-route.mjs";
 
 export const DEFAULT_GAP_MINUTES = 180;
 /** Minutes to leave after the announcer's last post. */
@@ -177,7 +177,7 @@ export const fanTribute = (kind) => (kind === "real" ? FAN_TRIBUTE.real : FAN_TR
 export const usePaidLaunchLine = (handle) => `💸 Fees go to the creator, @${handle} via UsePaid`;
 /** The coin's own page on UsePaid (its creator-fee records), linked under its UsePaid line (the owner, 2026-10-06): the one
     place a launch post carries an address, and only this coin's own proved mint (`mint`, launchItems). */
-export const usePaidTokenUrl = (mint) => `https://usepaid.app/token/${mint}`;
+export { usePaidTokenUrl };
 // X counts every link as 23 characters, however long.
 const AS_POSTED = "https://t.co/" + "x".repeat(10);
 const FEE_HANDLE = /^[A-Za-z0-9_]{1,15}$/;

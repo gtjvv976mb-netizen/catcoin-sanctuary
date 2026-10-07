@@ -160,6 +160,7 @@ jobs:
       contents: write
     outputs:
       recorded: ${{ steps.commit-record.outputs.recorded }}
+      again: ${{ steps.send.outputs.again }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -194,7 +195,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add -- data/sanctuary-launches.json
+          git add -- data/sanctuary-launches.json coins
           if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Launch: record the launch"
@@ -234,6 +235,22 @@ jobs:
             git -c http.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main
           fi
           if [ "$RECORDED" = "true" ]; then echo "recorded=true" >> "$GITHUB_OUTPUT"; fi
+
+  # A UsePaid coin's website is its own UsePaid page: the send found its mint and rewrote its metadata (committed above),
+  # sending nothing; the next run, started here at once, deploys the site with it and sends.
+  again:
+    needs: launch
+    if: ${{ !cancelled() && needs.launch.outputs.again == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Start the next launch run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: gh workflow run launch.yml -R "$REPO" --ref main
 
   publish:
     needs: launch
