@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107695972138487817",
+      "url": "https://x.com/catcosanctuary/status/2107695972138487817",
+      "name": "Don Gato",
+      "coinName": "Don Gato",
+      "ticker": "AURONGATO",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of Don Gato.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/AURONGATO.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/AURONGATO.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107695972138487817.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-07T04:57:12Z",
+      "attempts": 0,
+      "cat": {
+        "id": "don-gato-auronplay",
+        "ticker": "AURONGATO",
+        "name": "Don Gato",
+        "coinName": "Don Gato",
+        "owner": "AuronPlay (@auronplay)",
+        "category": "celebrity",
+        "story": "Don Gato was the black cat of Spanish YouTuber and Twitch streamer AuronPlay (Raúl Álvarez Genes), one of the most-followed Spanish-language creators. He was a familiar presence in AuronPlay's life for 8 years. In April 2021 AuronPlay told fans that Don Gato had been hospitalised with a suspected liver problem, and he posted updates from the vet. Don Gato died on 26 April 2021. AuronPlay thanked him \"for these 8 years\" and thanked the veterinary team. Colombian outlets El Heraldo and Noticias Caracol reported the loss. When AuronPlay adopted his next cat, Lukas, in July 2021, he wrote that if Lukas gave half the love Don Gato gave, he would be the best cat in the world.",
+        "look": "Solid black short-haired cat with a small white patch on the chest. Round amber-yellow eyes, black nose, medium upright ears.",
+        "coat": {
+          "base": "black",
+          "second": "white",
+          "pattern": "solid",
+          "eyes": "yellow"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/auronplay/status/1386700752207454211",
+          "author": "auronplay",
+          "handle": "auronplay",
+          "date": "2021-04-26",
+          "dateType": "posted",
+          "text": "Don Gato ha fallecido esta tarde, finalmente no ha podido superar la enfermedad. Estoy absolutamente desolado y a la vez lleno de rabia e ira. Hoy ha muerto una parte de mi. Gracias por estos 8 años, te quiero mucho.",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "AuronPlay se encuentra de luto por la muerte de su mascota 'Don Gato' (El Heraldo)",
+            "url": "https://www.elheraldo.co/entretenimiento/2021/04/26/auronplay-se-encuentra-de-luto-por-la-muerte-de-su-mascota-don-gato-812324/"
+          },
+          {
+            "label": "Murió Don Gato, la mascota de uno de los youtubers más populares de España (Noticias Caracol)",
+            "url": "https://www.noticiascaracol.com/entretenimiento/murio-don-gato-la-mascota-de-uno-de-los-youtubers-mas-populares-de-espana"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by AuronPlay (@auronplay).",
+        "sensitivity": "In loving memory of Don Gato.",
+        "portrait": "assets/portraits/AURONGATO.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "auronplay"
+    },
+    {
       "postId": "2107681486891524264",
       "url": "https://x.com/catcosanctuary/status/2107681486891524264",
       "name": "Caliban",
