@@ -2,6 +2,65 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107833539941040431",
+      "url": "https://x.com/CatWorkers/status/2107833539941040431",
+      "name": "Kiki",
+      "coinName": "Kiki the Hardware Cat",
+      "ticker": "KIKI",
+      "venue": "pump-sol",
+      "policy": "big-account",
+      "kind": "real",
+      "lore": "Kiki works at Aubuchon Hardware in Sudbury, MA, supervising the aisle from atop a stack of air conditioner boxes.",
+      "image": "https://pbs.twimg.com/media/HUCHbvyXwAAwU4E.jpg",
+      "coinImage": "https://pbs.twimg.com/media/HUCHbvyXwAAwU4E.jpg",
+      "metadataPath": "coins/2107833539941040431.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-07T14:56:09Z",
+      "attempts": 0,
+      "cat": {
+        "id": "kiki",
+        "ticker": "KIKI",
+        "name": "Kiki",
+        "coinName": "Kiki the Hardware Cat",
+        "owner": "cats with jobs 🛠",
+        "category": "viral",
+        "story": "Kiki works at Aubuchon Hardware in Sudbury, MA, supervising the aisle from atop a stack of air conditioner boxes. Kiki was trending on X on October 7, 2026, and the sanctuary gave it a coin.",
+        "look": "Kiki, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/CatWorkers/status/2107833539941040431",
+          "author": "CatWorkers",
+          "handle": "CatWorkers",
+          "date": "2026-10-07",
+          "dateType": "posted",
+          "text": "🐈 Kiki the cat 🛒 Aubuchon Hardware (Sudbury, MA) https://t.co/odHwEgaBzc",
+          "note": "Found by the sanctuary's trend watch on 2026-10-07.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by cats with jobs 🛠.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "CatWorkers",
+      "photoCredit": true
+    },
+    {
       "postId": "2107742732810695136",
       "url": "https://x.com/CatWorkers/status/2107742732810695136",
       "name": "Book Store Cat",
