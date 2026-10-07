@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/AURONGATO.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107695972138487817.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-07T04:57:12Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "don-gato-auronplay",
         "ticker": "AURONGATO",
@@ -68,7 +68,14 @@
         "lore": null
       },
       "feesTo": "auronplay",
-      "mintNonce": 9230364
+      "mintNonce": 9230364,
+      "tx": "Da3jJM6nCAGnv2Ngj1ar3FCAQJZcdn9VpA99yHeMCqTvXwQvbhZ3BZoyR7ToHxBUAdWZX2xZav84uL4dEMU5cJt",
+      "sentAt": "2026-10-07T05:59:24Z",
+      "lastValidBlockHeight": 432173609,
+      "mintPublic": "F6ChYQZ2gv16GEwJdJQ49megVggtD5z4n8qSpmGccats",
+      "spentLamports": 5562120,
+      "settledAt": "2026-10-07T05:59:33Z",
+      "launchedAt": "2026-10-07T05:59:24Z"
     },
     {
       "postId": "2107681486891524264",
