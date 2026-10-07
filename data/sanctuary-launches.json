@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/GUPPYCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107711096614264915.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-07T06:09:46Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "guppy-mcmillen",
         "ticker": "GUPPYCAT",
@@ -67,7 +67,16 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "edmundmcmillen"
+      "feesTo": "edmundmcmillen",
+      "mintNonce": 17363243,
+      "tx": "54BYybLPJkNCq9rPjXiTHquC7zSSTz3duHVpEVvWBmmSsEu9AYgCYK3NeS6RYBdeTc4YaR6EV5YjQTGp4jroG2YE",
+      "sentAt": "2026-10-07T06:21:28Z",
+      "lastValidBlockHeight": 432178542,
+      "mintPublic": "4PiwJJF5XV5VaojLBQKSze3nkKAfuHzY5HVKAqCfcats",
+      "spentLamports": 5541800,
+      "settledAt": "2026-10-07T06:21:37Z",
+      "launchedAt": "2026-10-07T06:21:28Z",
+      "recordedAt": "2026-10-07T06:21:44Z"
     },
     {
       "postId": "2107695972138487817",
@@ -144,7 +153,10 @@
       "spentLamports": 5562120,
       "settledAt": "2026-10-07T05:59:33Z",
       "launchedAt": "2026-10-07T05:59:24Z",
-      "recordedAt": "2026-10-07T05:59:38Z"
+      "recordedAt": "2026-10-07T05:59:38Z",
+      "feeRoute": {
+        "at": "2026-10-07T06:12:29Z"
+      }
     },
     {
       "postId": "2107681486891524264",
