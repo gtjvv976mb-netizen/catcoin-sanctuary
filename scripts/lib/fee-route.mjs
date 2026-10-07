@@ -40,6 +40,8 @@ export const WSOL_MINT = "So11111111111111111111111111111111111111112";
 export const USEPAID_RECIPIENT = "FfLpuH4WPn2MR8Lqn1MpwQc1HtAPPqL3qvMWZjnFHGpv";
 /** UsePaid's line in a coin's description, which names the X account it pays. */
 export const usePaidLine = (handle) => `Fees to @${handle} via UsePaid`;
+/** A coin's own page on UsePaid (its creator-fee records): a UsePaid coin's website (the owner, 2026-10-07). */
+export const usePaidTokenUrl = (mint) => `https://usepaid.app/token/${mint}`;
 /** An X handle UsePaid can name: 1 to 15 letters, digits or underscores. */
 export const X_HANDLE = /^\w{1,15}$/;
 

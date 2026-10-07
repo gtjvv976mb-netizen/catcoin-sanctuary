@@ -137,7 +137,7 @@ import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
 const ANY_MINT = "So11111111111111111111111111111111111111112";
 import { validateRewardsLedger, earmarkSignatures, earmarkLamports, rewardsMode, REWARDS_FILES } from "./rewards.mjs";
 import { measureClaim } from "./pump-fees.mjs";
-import { buildFeeRouteTransaction, signFeeRouteTransaction, unsignedFeeRouteTransaction, sharingConfig, decodeSharingConfig, routedTo, usePaidLine, X_HANDLE, USEPAID_RECIPIENT, FEE_ROUTE_MAX_TRIES } from "./fee-route.mjs";
+import { buildFeeRouteTransaction, signFeeRouteTransaction, unsignedFeeRouteTransaction, sharingConfig, decodeSharingConfig, routedTo, usePaidLine, usePaidTokenUrl, X_HANDLE, USEPAID_RECIPIENT, FEE_ROUTE_MAX_TRIES } from "./fee-route.mjs";
 import { kitsOf, sameKit, KITS_LIVE } from "./adoptions.mjs";
 
 /* ── constants ─────────────────────────────────────────────────────────────────────────── */
@@ -383,7 +383,9 @@ const creditOf = (row) => (row.photoCredit === true && coinImageOf(row) === row.
 export function coinMetadata(row) {
   const venue = venueById(row.venue);
   if (!venue) throw new LaunchError(`unknown venue ${row.venue}`);
-  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row), feesTo: row.feesTo ?? null }), image: coinImageOf(row), website: cardUrl(row.ticker), twitter: row.url, createdOn: SITE_ORIGIN });
+  // A UsePaid coin's website is its own UsePaid page once its mint is known (usePaidMint, set by the send); else its card.
+  const website = row.usePaidMint ? usePaidTokenUrl(row.usePaidMint) : cardUrl(row.ticker);
+  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row), feesTo: row.feesTo ?? null }), image: coinImageOf(row), website, twitter: row.url, createdOn: SITE_ORIGIN });
 }
 /** The metadata file's exact text. */
 export const metadataText = (meta) => `${JSON.stringify(meta, null, 2)}\n`;
@@ -416,7 +418,7 @@ export const LEDGER_NOTE = "The sanctuary's automatic launcher's ledger (scripts
 export const STATUSES = Object.freeze(["prepared", "sending", "launched", "failed"]);
 const ROW_FIELDS = ["postId", "url", "name", "coinName", "ticker", "venue", "policy", "figure", "kind", "lore", "image", "coinImage", "photoCredit", "metadataPath", "status", "preparedAt", "attempts", "cat",
   "tx", "sentAt", "lastValidBlockHeight", "mintPublic", "spentLamports", "settledAt", "launchedAt", "recordedAt", "retry", "reason", "fallback", "mintNonce", "mintGrind",
-  "feesTo", "feeRoute", "feeRouteTries", "feeRouteError"];
+  "feesTo", "feeRoute", "feeRouteTries", "feeRouteError", "usePaidMint"];
 /** Why a cat launched: a trending post by the owner's rules (policyOf), or "sanctuary": one of the sanctuary's own cats, after its X post (sanctuaryRow). */
 export const POLICIES = Object.freeze(["figure", "trend", "big-account", "approved", "viral", "sanctuary"]);
 /** The trend watch's reading kinds a launched cat may have (a row's `kind`: "real" is a pet, the others characters). */
@@ -469,6 +471,7 @@ export function rowProblem(r) {
   if ((r.feeRoute !== undefined || r.feeRouteTries !== undefined || r.feeRouteError !== undefined) && (r.feesTo === undefined || r.status !== "launched")) return "only a launched coin with feesTo has its fees routed";
   if (r.feeRouteTries !== undefined && !(Number.isInteger(r.feeRouteTries) && r.feeRouteTries >= 1 && r.feeRouteTries <= FEE_ROUTE_MAX_TRIES)) return `feeRouteTries must be 1..${FEE_ROUTE_MAX_TRIES}`;
   if (r.feeRouteError !== undefined && (typeof r.feeRouteError !== "string" || r.feeRouteError.length > 300)) return "feeRouteError must be short text";
+  if (r.usePaidMint !== undefined && (!isAddress(r.usePaidMint) || r.feesTo === undefined)) return "usePaidMint is the mint a UsePaid coin is sent with (its website is that mint's UsePaid page)";
   return null;
 }
 
@@ -1559,7 +1562,7 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
   // coin instead (its metadata is rewritten below and deployed before the send).
   for (const row of ledger.launches.filter((r) => r.status === "prepared" && r.feesTo && !feeHandle(r.feesTo, ctx.noFeesTo))) {
     if (mode !== "on") continue;
-    const next = { ...row }; delete next.feesTo;
+    const next = { ...row }; delete next.feesTo; delete next.usePaidMint;   // (its website is its card again)
     replaceRow(ledger, next);
     out.changed = true;
     log(`Launcher: ${row.ticker}'s fees no longer go to @${row.feesTo} (data/fee-exclusions.json): it launches as a holder rewards coin.`);
@@ -1974,6 +1977,17 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
       log(`Launcher: ${row.ticker} waits: its card changed since it was prepared; the prepare phase rewrites its metadata, then it is sent.`);
       return { ...out, outcome: "card_changed" };
     }
+  }
+
+  // 4b. A UsePaid coin's website is its own UsePaid page (the owner, 2026-10-07). Its mint is known only here (the wallet
+  //     key derives it), so the row keeps it and its metadata is rewritten; nothing is sent this run. The next one, which
+  //     the workflow starts at once (`again`), deploys the site with it and sends.
+  if (row.feesTo && row.usePaidMint !== mint.publicKey && mode === "on" && !virtual) {
+    row = { ...row, usePaidMint: mint.publicKey };
+    replaceRow(ledger, row); saveLedger(io, ledger);
+    io.writeText(row.metadataPath, metadataText(coinMetadata(row)));
+    log(`Launcher: ${row.ticker}'s website is its UsePaid page, ${usePaidTokenUrl(mint.publicKey)}; its metadata is rewritten, and the next run deploys it and sends. Nothing was sent.`);
+    return { ...out, outcome: "website_set", again: true };
   }
 
   // 5. The metadata: the committed file, served by the site at the coin's uri.

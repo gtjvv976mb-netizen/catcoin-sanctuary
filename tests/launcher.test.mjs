@@ -2179,7 +2179,7 @@ test("the key and the RPC URL never appear in the output, whatever happens", asy
   assert.equal(scrubber(["0123456789abcdefghij"])("short 0123456789a"), "short 0123456789a", "a piece shorter than 12 characters is no secret");
 });
 
-test("the CLI's outputs for the workflow: pending, deploy, launched, recorded", async () => {
+test("the CLI's outputs for the workflow: pending, deploy, launched, again, recorded", async () => {
   const w = throwaway();
   const t = site({ wallet: w.address });
   const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
@@ -2191,7 +2191,7 @@ test("the CLI's outputs for the workflow: pending, deploy, launched, recorded", 
   web.deployed = true;
   assert.equal(await main(["send"], io), 0);
   assert.equal(await main(["record"], io), 0);
-  assert.equal(fs.readFileSync(out, "utf8"), "pending=true\ndeploy=true\nlaunched=true\nrecorded=true\n");
+  assert.equal(fs.readFileSync(out, "utf8"), "pending=true\ndeploy=true\nlaunched=true\nagain=false\nrecorded=true\n");
   assert.equal(await main(["nonsense"], io), 2);
 });
 
@@ -3064,6 +3064,57 @@ test("routeFees: after the launch, the creator's fee route is simulated, sent on
   assert.equal(await routeFees({ ...launched, feesTo: undefined }, opts(fakeRpc())), null);
 });
 
+
+test("a UsePaid coin's website is its own UsePaid page: the send that learns its mint writes it into the coin's metadata and sends nothing; the next run sends that very mint", async () => {
+  const w = throwaway();
+  const id = "2100000000000000778";
+  const t = site({ wallet: w.address, approve: [id], posts: [post(id, { name: "Orbitpaw", ticker: "ORBITPAW", kind: "real", nameFrom: null, figure: null, author: "KittiesVids", lore: "Orbitpaw naps on the mission control desk." })] });
+  fs.writeFileSync(path.join(t.root, "data/fee-exclusions.json"), JSON.stringify({ note: "test", accounts: [] }));
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock(), logs = [];
+  const env = ON(w, { LAUNCH_FEES_TO: "usepaid" });
+  assert.equal((await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now })).prepared, id);
+  let row = t.json(FILES.ledger).launches[0];
+  assert.equal(row.feesTo, "KittiesVids");
+  assert.doesNotMatch(t.read(row.metadataPath), /usepaid\.app/, "the card until its mint is known");
+  web.deployed = true;
+  // A dry run learns nothing and writes nothing.
+  const dry = await send({ io: t.io, env: { ...env, LAUNCH_ENABLED: "dry" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
+  assert.notEqual(dry.outcome, "website_set", logs.join("\n"));
+  assert.equal(t.json(FILES.ledger).launches[0].usePaidMint, undefined);
+  const first = await send({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
+  assert.deepEqual([first.outcome, first.again, first.launched], ["website_set", true, false], logs.join("\n"));
+  row = t.json(FILES.ledger).launches[0];
+  assert.equal(row.status, "prepared");
+  assert.ok(isAddress(row.usePaidMint), row.usePaidMint);
+  assert.equal(rowProblem(row), null);
+  assert.equal(JSON.parse(t.read(row.metadataPath)).website, `https://usepaid.app/token/${row.usePaidMint}`);
+  assert.equal(t.read(row.metadataPath), metadataText(coinMetadata(row)));
+  assert.equal(sol.calls.filter((x) => x.method === "sendTransaction").length, 0, "nothing sent");
+  // The next run: the prepare keeps that metadata, the site serves it, and the send sends that very mint.
+  assert.equal((await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now })).pending, true);
+  assert.equal(JSON.parse(t.read(row.metadataPath)).website, `https://usepaid.app/token/${row.usePaidMint}`);
+  const second = await send({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
+  assert.equal(second.outcome, "launched", logs.join("\n"));
+  assert.notEqual(second.again, true);
+  const sent = t.json(FILES.ledger).launches[0];
+  assert.equal(sent.mintPublic, sent.usePaidMint, "the coin is the mint its website names");
+  assert.equal(rowProblem(sent), null);
+  // Only a UsePaid coin carries it, and only an address.
+  assert.match(rowProblem({ ...row, feesTo: undefined }), /usePaidMint/);
+  // A coin whose account is excluded before it is sent loses its UsePaid page with its line: its website is its card again.
+  const t2 = site({ wallet: w.address, approve: [id], posts: [post(id, { name: "Orbitpaw", ticker: "ORBITPAW", kind: "real", nameFrom: null, figure: null, author: "KittiesVids", lore: "Orbitpaw naps on the mission control desk." })] });
+  fs.writeFileSync(path.join(t2.root, "data/fee-exclusions.json"), JSON.stringify({ note: "test", accounts: [] }));
+  const sol2 = fakeSolana({ wallet: w.address }), web2 = fakeSite(t2.root);
+  await prepare({ io: t2.io, env, rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c.now });
+  web2.deployed = true;
+  assert.equal((await send({ io: t2.io, env, rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c.now, sleep: c.sleep, log: () => {}, ...quick })).outcome, "website_set");
+  fs.writeFileSync(path.join(t2.root, "data/fee-exclusions.json"), JSON.stringify({ note: "test", accounts: ["kittiesvids"] }));
+  await prepare({ io: t2.io, env, rpc: sol2.rpc, fetchImpl: web2.fetchImpl, now: c.now });
+  const dropped = t2.json(FILES.ledger).launches[0];
+  assert.deepEqual([dropped.feesTo, dropped.usePaidMint, rowProblem(dropped)], [undefined, undefined, null]);
+  assert.doesNotMatch(t2.read(dropped.metadataPath), /usepaid\.app|UsePaid/);
+  assert.match(rowProblem({ ...row, usePaidMint: "nope" }), /usePaidMint/);
+});
 
 test("UsePaid's exclusions (data/fee-exclusions.json): government, brands and media are never paid; a prepared coin of one launches as a holder rewards coin", async () => {
   const shipped = feeExclusionsOf({ readText: (rel) => readRoot(rel) });

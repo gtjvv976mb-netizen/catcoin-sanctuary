@@ -34,15 +34,18 @@ test("launch workflow: every action pinned to its release's commit, the same two
   assert.equal([...W.matchAll(/actions\/checkout@/g)].length, 2);
 });
 
-test("launch workflow: the jobs and their permissions: contents for the two that commit, actions for the two that only dispatch", () => {
-  assert.deepEqual([...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim()), ["contents: write", "actions: write", "contents: write", "actions: write"]);
-  assert.deepEqual([...W.matchAll(/^  ([a-z][\w-]*):\n    (?:needs|if|runs-on)/gm)].map((m) => m[1]), ["prepare", "metadata", "launch", "publish"]);
+test("launch workflow: the jobs and their permissions: contents for the two that commit, actions for the three that only dispatch", () => {
+  assert.deepEqual([...W.matchAll(/^\s+permissions:\n((?:\s{6}\S.*\n)+)/gm)].map((m) => m[1].trim()), ["contents: write", "actions: write", "contents: write", "actions: write", "actions: write"]);
+  assert.deepEqual([...W.matchAll(/^  ([a-z][\w-]*):\n    (?:needs|if|runs-on)/gm)].map((m) => m[1]), ["prepare", "metadata", "launch", "again", "publish"]);
   // Off unless LAUNCH_ENABLED is on or dry (fails closed: an unset variable runs nothing).
   assert.match(job("prepare"), /if: \$\{\{ vars\.LAUNCH_ENABLED == 'on' \|\| vars\.LAUNCH_ENABLED == 'dry' \}\}/);
   assert.match(job("metadata"), /needs: prepare\n\s+if: \$\{\{ needs\.prepare\.outputs\.deploy == 'true' \}\}/);
   assert.match(job("launch"), /needs: \[prepare, metadata\]\n\s+if: \$\{\{ !cancelled\(\) && needs\.prepare\.result == 'success' && needs\.prepare\.outputs\.pending == 'true' \}\}/);
   assert.match(job("publish"), /needs: launch\n\s+if: \$\{\{ !cancelled\(\) && needs\.launch\.outputs\.recorded == 'true' \}\}/);
-  for (const name of ["prepare", "metadata", "launch", "publish"]) assert.match(job(name), /timeout-minutes: \d+/, name);
+  // A UsePaid coin's send that set its website (its mint's UsePaid page) sends nothing: the next run starts at once.
+  assert.match(job("launch"), /again: \$\{\{ steps\.send\.outputs\.again \}\}/);
+  assert.match(job("again"), /needs: launch\n\s+if: \$\{\{ !cancelled\(\) && needs\.launch\.outputs\.again == 'true' \}\}[\s\S]*run: gh workflow run launch\.yml -R "\$REPO" --ref main/);
+  for (const name of ["prepare", "metadata", "launch", "again", "publish"]) assert.match(job(name), /timeout-minutes: \d+/, name);
 });
 
 test("launch workflow: the wallet key is in the send step only; the RPC URL in prepare and send; nothing else sees a secret", () => {
@@ -81,7 +84,7 @@ test("launch workflow: a commit after each phase, the token handed to git for th
   assert.equal(commits.length, 3);
   const [c1, c2, c3] = commits;
   assert.match(c1, /git add -- data\/sanctuary-launches\.json coins data\/real-photos\.json\n/, "the ledger, the coin's metadata, and a photo data/photo-hide.json hid or showed again");
-  assert.match(c2, /git add -- data\/sanctuary-launches\.json\n/);
+  assert.match(c2, /git add -- data\/sanctuary-launches\.json coins\n/, "the ledger, and the metadata a UsePaid coin's website was written into");
   assert.match(c3, /git add -- data\/sanctuary-launches\.json data\/adoptables\.json data\/launches\.json data\/real-photos\.json data\/cat-watch\.json scripts\/meshy\.queue\.json data\/traits\.json\n/);
   // A cat new to the sanctuary is a new resident: the record step builds its traits row, or the Pages tests fail.
   assert.match(W, /node scripts\/launch\.mjs record\n\s+node scripts\/build-traits\.mjs\n/);

@@ -23,7 +23,7 @@
  *   LAUNCH_PRIORITY_MICROLAMPORTS   the caps (defaults 3, 0.03, 0.1, 0.02; 100000), clamped
  *   LAUNCH_PUMP_QUOTE         (prepare and send) "on" opts in to pump.fun launches priced in a coin
  *                             data/pump-quotes.json lists (unverified); anything else keeps them off
- *   GITHUB_OUTPUT             where the workflow reads pending, deploy, launched and recorded
+ *   GITHUB_OUTPUT             where the workflow reads pending, deploy, launched, again and recorded
  *
  * Neither the key nor the RPC URL is ever printed: every line goes through a scrubber that blanks
  * both, and no error the launcher makes quotes either.
@@ -127,7 +127,7 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
       Object.assign(outputs, { pending: r.pending, deploy: r.deploy });
     } else if (phase === "send") {
       const r = await send({ io, env, rpc: rpc(), fetchImpl, now, sleep, log, scrub });
-      Object.assign(outputs, { launched: r.launched });
+      Object.assign(outputs, { launched: r.launched, again: r.again === true });
       code = r.code;
     } else if (phase === "record") {
       const r = record({ io, env, now, log });
