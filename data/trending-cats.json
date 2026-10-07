@@ -1,19 +1,20 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-07T06:06:50.711Z",
- "lens": "figures",
- "query": "(\"Oliver and Company\" OR \"Dinah the cat\" OR \"Itchy and Scratchy\" OR \"Mr. Jinks\" OR \"Mr Jinks\" OR \"Big Floppa\" OR \"Floppa\" OR \"Bingus\" OR \"Huh Cat\" OR \"Banana Cat\" OR \"Polite Cat\" OR \"Chipi Chipi Cat\" OR \"Chipi Chipi Chapa Chapa\" OR \"OIIA Cat\" OR \"OIIAI Cat\" OR \"Happy Happy Happy Cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-07T06:46:57.440Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-07",
-  "dayUsed": 124,
+  "dayUsed": 144,
   "month": "2026-10",
-  "monthUsed": 1987,
+  "monthUsed": 2007,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
+  "2107642061583258098",
   "2107470958038516177",
   "2107457414387622310",
   "2107324972062429312",
@@ -45,6 +46,129 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2107652799261442374",
+   "url": "https://x.com/ShitpostGate/status/2107652799261442374",
+   "text": "https://t.co/HRJ53HCDk5",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1612143
+   },
+   "postedAt": "2026-10-07T02:02:40Z",
+   "likes": 2386,
+   "views": 22344,
+   "reposts": 52,
+   "heat": 573,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HT_jDN-W4AAzRwa.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-07T06:46:57.440Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": true,
+    "why": "No cat at all; a crime/drug mugshot meme, unsuitable.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "passed"
+  },
+  {
+   "id": "2107652666319085885",
+   "url": "https://x.com/ShitpostGate/status/2107652666319085885",
+   "text": "https://t.co/s3XCncK8rm",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1612143
+   },
+   "postedAt": "2026-10-07T02:02:08Z",
+   "likes": 3848,
+   "views": 57398,
+   "reposts": 49,
+   "heat": 952,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HT_i7c_XMAATeup.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-07T06:46:57.440Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": true,
+    "why": "A greentext sex joke with no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "passed"
+  },
+  {
+   "id": "2107642061583258098",
+   "url": "https://x.com/KittiesVids/status/2107642061583258098",
+   "text": "love attack https://t.co/Uwvd4xQ6OB",
+   "author": {
+    "handle": "KittiesVids",
+    "name": "Kitties Videos",
+    "followers": 63039
+   },
+   "postedAt": "2026-10-07T01:20:00Z",
+   "likes": 3817,
+   "views": 43060,
+   "reposts": 291,
+   "heat": 886,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2107472242804461569/img/QXw5GpPnqXcW6w4M.jpg"
+    }
+   ],
+   "stage": "rising",
+   "lens": "big",
+   "readAt": "2026-10-07T06:46:57.440Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "CCTV Office Cat",
+    "memeName": "CCTV Office Cat",
+    "personFace": false,
+    "kind": "real",
+    "coinName": "CCTV Office Cat",
+    "ticker": "CCTVCAT",
+    "lore": "Caught on office security camera climbing onto a worker's chair for a surprise love attack while they type.",
+    "sensitive": false,
+    "why": "A single real cat in a fun CCTV moment, no faces visible and nothing upsetting.",
+    "readBy": "claude",
+    "nameFrom": "meme"
+   },
+   "known": false,
+   "taken": [],
+   "status": "candidate"
+  },
   {
    "id": "2107611014405775753",
    "url": "https://x.com/ShitpostGate/status/2107611014405775753",
@@ -1670,10 +1794,10 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 2,
+  "nextLens": 1,
+  "bigChunk": 3,
   "figureChunk": 0,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
