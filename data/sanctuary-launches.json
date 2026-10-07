@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/RICKKEY.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107494537010598149.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-06T15:40:26Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "rick-key-castle-and-key",
         "ticker": "RICKKEY",
@@ -68,7 +68,14 @@
         "lore": null
       },
       "feesTo": "castleandkey",
-      "mintNonce": 2443666
+      "mintNonce": 2443666,
+      "tx": "4anPBxEBytyXxSMpLFRgnrTjXuL2zuAMhuickwvX8NM49MuccUQ9MQ34xomhmPp94ZVMpfgZiwgKPibjnhZ4DYKB",
+      "sentAt": "2026-10-07T02:54:45Z",
+      "lastValidBlockHeight": 432132247,
+      "mintPublic": "6FgEPc4giFFt2Lg7CVZhVAHR22ywAKymqAmdnB13cats",
+      "spentLamports": 5648480,
+      "settledAt": "2026-10-07T02:54:55Z",
+      "launchedAt": "2026-10-07T02:54:45Z"
     },
     {
       "postId": "2106802226039525386",
