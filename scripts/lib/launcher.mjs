@@ -379,13 +379,21 @@ export const photoCredit = (handle) => `Photo: @${handle} on X.`;
 /** A row's credit: only when its coin shows the post's photo and the row says the credit fits (`photoCredit`), else null. */
 const creditOf = (row) => (row.photoCredit === true && coinImageOf(row) === row.image && X_POST_URL.test(row.url ?? "") ? photoCredit(X_POST_URL.exec(row.url)[1]) : null);
 
+/** The X link a coin shows: the post its lore comes from (the owner, 2026-10-07). A trending or approved cat's is the post it
+    launched from; a sanctuary cat launches from the sanctuary's own post, so its link is its card's proof post, where its
+    lore comes from (that post, or the row's own when it has none). The row's url stays the post it launched from. */
+export function loreXUrl(row) {
+  const proof = row.policy === "sanctuary" ? String(row.cat?.proof?.url ?? "").replace("://twitter.com/", "://x.com/") : "";
+  return X_POST_URL.test(proof) ? proof : row.url;
+}
+
 /** The metadata JSON a row's coin serves, in its venue's shape. */
 export function coinMetadata(row) {
   const venue = venueById(row.venue);
   if (!venue) throw new LaunchError(`unknown venue ${row.venue}`);
   // A UsePaid coin's website is its own UsePaid page once its mint is known (usePaidMint, set by the send); else its card.
   const website = row.usePaidMint ? usePaidTokenUrl(row.usePaidMint) : cardUrl(row.ticker);
-  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row), feesTo: row.feesTo ?? null }), image: coinImageOf(row), website, twitter: row.url, createdOn: SITE_ORIGIN });
+  return venue.metadata({ name: row.coinName, symbol: row.ticker, description: descriptionOf(row.lore, row.kind, { credit: creditOf(row), feesTo: row.feesTo ?? null }), image: coinImageOf(row), website, twitter: loreXUrl(row), createdOn: SITE_ORIGIN });
 }
 /** The metadata file's exact text. */
 export const metadataText = (meta) => `${JSON.stringify(meta, null, 2)}\n`;

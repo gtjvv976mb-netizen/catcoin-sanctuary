@@ -24,7 +24,7 @@ import { createRpc } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletCoinsOf, feesToMode, feeHandle, feeExclusionsOf, routeFees, FEE_ROUTE_MAX_TRIES, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
-  coinMetadata, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
+  coinMetadata, loreXUrl, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
   descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
   sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, pumpSearchSince, SEARCH_LEADERS, unreadWindows, DIED, OWN_WAIT_ALERT_HOURS,
@@ -2287,13 +2287,10 @@ test("shipped: the ledger and every coin's metadata are valid (the ledger and th
     assert.equal(text, metadataText(m), f);
     assert.deepEqual(Object.keys(m), ["name", "symbol", "description", "image", "showName", "createdOn", "website", "twitter"], f);
     assert.equal(m.createdOn, SITE_ORIGIN); assert.equal(m.showName, true);
-    assert.ok(/^https:\/\/x\.com\/[A-Za-z0-9_]{1,15}\/status\/\d{5,25}$/.test(m.twitter) && postIdOf(m.twitter) === f.slice(0, -5), `${f}: its X link is the cat's own post`);
-    assert.equal(m.website, `${SITE_ORIGIN}/#cat=${m.symbol}`);
-    // A sanctuary cat's coin (launched from the sanctuary's own post) shows its picture on the site.
-    // Decided from the file itself (the ledger drops old finished rows; a coin's file stays for good): its X link is the sanctuary's own post of this id.
-    const own = m.twitter === `https://x.com/${OWN_HANDLE}/status/${f.slice(0, -5)}`;
-    assert.ok(/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE || (own && SITE_PICTURE.test(m.image)),
-      `${f}: the post's photo, the site's own for a hidden one, or a sanctuary cat's picture on the site`);
+    // Its X link is the post its lore comes from: a trending or approved cat's, the post of this id; a sanctuary cat's
+    // (its picture on the site, launched from the sanctuary's own post of this id), that post or its card's proof post.
+    assert.ok(shippedCoinOk(m, f), `${f}: an X link to the post its lore comes from, and the post's photo, the site's own for a hidden one, or a sanctuary cat's picture on the site`);
+    assert.ok(m.website === `${SITE_ORIGIN}/#cat=${m.symbol}` || /^https:\/\/usepaid\.app\/token\/[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(m.website), `${f}: its card, or its UsePaid page`);
     assert.ok(Buffer.byteLength(metadataUri(f.slice(0, -5))) <= 200);
   }
   // The mint of a row not sent yet is never public.
@@ -2344,7 +2341,10 @@ test("sanctuary cats: once posted on X, a cat with no coin launches from the san
   assert.deepEqual([row.coinImage, row.photoCredit, row.cat.launch, row.cat.id], [row.image, false, undefined, c.id]);
   assert.equal(rowProblem(row), null);
   const meta = coinMetadata(row);
-  assert.deepEqual([meta.name, meta.symbol, meta.image, meta.twitter, meta.website], [row.coinName, c.ticker, row.image, row.url, `${SITE_ORIGIN}/#cat=${encodeURIComponent(c.ticker)}`]);
+  // Its X link is the post its lore comes from (its card's proof post), not the sanctuary's own post it launches from.
+  assert.deepEqual([meta.name, meta.symbol, meta.image, meta.twitter, meta.website], [row.coinName, c.ticker, row.image, c.proof.url, `${SITE_ORIGIN}/#cat=${encodeURIComponent(c.ticker)}`]);
+  assert.notEqual(meta.twitter, row.url);
+  assert.equal(loreXUrl({ ...row, cat: { ...row.cat, proof: { ...row.cat.proof, url: "not a post" } } }), row.url, "no proof post: the post it launches from");
   assert.ok(meta.description.startsWith(row.lore.replace(/[.!?…]$/, "")), meta.description);
   // Not posted yet (queued, or released with no tweet id): nothing.
   for (const e of [{ ...released(c.ticker), status: undefined }, { ...released(c.ticker), tweet: undefined }]) assert.match(sanctuaryRow(e, ownCtx({ entries: [e] })).problem, /not posted on X yet/);
@@ -2776,7 +2776,7 @@ test("sanctuary cats: record refuses a cat whose card names its coin otherwise n
   assert.equal(t.json(FILES.adoptables).cats.find((x) => x.ticker === c.ticker).launch, undefined);
 });
 
-test("shipped data after a sanctuary prepare: its coin file passes the shipped coins check (a sanctuary cat's picture on the site, from the sanctuary's own post)", async () => {
+test("shipped data after a sanctuary prepare: its coin file passes the shipped coins check (a sanctuary cat's picture on the site, its X link the post its lore comes from)", async () => {
   const c = ownCat();
   const w = throwaway();
   const t = ownSite(c, { wallet: w.address, posts: [] });
@@ -2786,7 +2786,7 @@ test("shipped data after a sanctuary prepare: its coin file passes the shipped c
   const row = ledger.launches.find((r) => r.postId === OWN_TWEET);
   const m = JSON.parse(t.read(row.metadataPath));
   assert.equal(t.read(row.metadataPath), metadataText(m));
-  assert.ok(SITE_PICTURE.test(m.image) && m.twitter === `https://x.com/${OWN_HANDLE}/status/${OWN_TWEET}` && postIdOf(m.twitter) === OWN_TWEET);
+  assert.ok(SITE_PICTURE.test(m.image) && m.twitter === c.proof.url && shippedCoinOk(m, `${OWN_TWEET}.json`));
   assert.equal(m.website, `${SITE_ORIGIN}/#cat=${m.symbol}`);
   assert.ok(Buffer.byteLength(metadataUri(OWN_TWEET)) <= 200);
 });
@@ -2922,15 +2922,26 @@ test("sanctuary cats: a prepared cat follows its card until it is sent (marked m
   assert.equal(s2.outcome, "launched");
 });
 
-test("shipped coins check: a sanctuary coin's file passes on its own (its X link the sanctuary's own post of its id), even once the ledger has dropped its row", () => {
+test("shipped coins check: a coin's file passes on its own, even once the ledger has dropped its row (a sanctuary coin: its picture on the site, its X link the sanctuary's post of its id or its lore post)", () => {
   const id = "2105999999999999777";
   const m = { image: `${SITE_ORIGIN}/assets/portraits/SGTTIBBS.jpg`, twitter: `https://x.com/${OWN_HANDLE}/status/${id}` };
-  const ok = (meta, f) => /^https:\/\/pbs\.twimg\.com\//.test(meta.image) || meta.image === SITE_IMAGE || (meta.twitter === `https://x.com/${OWN_HANDLE}/status/${f.slice(0, -5)}` && SITE_PICTURE.test(meta.image));
-  assert.ok(ok(m, `${id}.json`));
-  assert.ok(!ok(m, "2105999999999999778.json"), "another post's id");
-  assert.ok(!ok({ ...m, twitter: `https://x.com/someone/status/${id}` }, `${id}.json`), "a stranger's post");
-  assert.ok(!ok({ ...m, image: `${SITE_ORIGIN}/assets/og-image.jpg` }, `${id}.json`) || SITE_IMAGE === `${SITE_ORIGIN}/assets/og-image.jpg`);
+  assert.ok(shippedCoinOk(m, `${id}.json`), "an older sanctuary coin: the sanctuary's own post");
+  assert.ok(shippedCoinOk({ ...m, twitter: "https://x.com/chrislynchmedia/status/1570189120206700550" }, `${id}.json`), "a sanctuary coin: its lore post");
+  assert.ok(!shippedCoinOk({ ...m, twitter: "https://example.com/a" }, `${id}.json`), "not an X post");
+  // A trending coin (the post's photo): its X link is the post of its own id, never another.
+  const trend = { image: "https://pbs.twimg.com/media/x.jpg", twitter: `https://x.com/someone/status/${id}` };
+  assert.ok(shippedCoinOk(trend, `${id}.json`));
+  assert.ok(!shippedCoinOk(trend, "2105999999999999778.json"), "another post's id");
+  assert.ok(!shippedCoinOk({ ...m, image: `${SITE_ORIGIN}/assets/og-image.jpg` }, "2105999999999999778.json") || SITE_IMAGE === `${SITE_ORIGIN}/assets/og-image.jpg`);
 });
+
+/** The shipped coins check, from a coin's file alone: an X link to a post, the post of the file's id for a trending or approved
+    coin (the post's photo, or the site's own for a hidden one); a sanctuary coin (its picture on the site) may link its lore post. */
+function shippedCoinOk(m, f) {
+  if (!/^https:\/\/x\.com\/[A-Za-z0-9_]{1,15}\/status\/\d{5,25}$/.test(m.twitter ?? "")) return false;
+  if (SITE_PICTURE.test(m.image ?? "")) return true;
+  return postIdOf(m.twitter) === f.slice(0, -5) && (/^https:\/\/pbs\.twimg\.com\//.test(m.image) || m.image === SITE_IMAGE);
+}
 
 test("the mint address ends in LAUNCH_MINT_SUFFIX (\"cats\" unless set): the send scans for the smallest nonce, keeps it on the row, and sends that mint; a scan out of its minutes goes on next run; a dry run scans nothing", async () => {
   const d = launchCaps({});
