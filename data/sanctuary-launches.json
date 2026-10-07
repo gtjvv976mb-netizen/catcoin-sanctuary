@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107728338324488653",
+      "url": "https://x.com/catcosanctuary/status/2107728338324488653",
+      "name": "The Bear",
+      "coinName": "The Bear",
+      "ticker": "MYSADCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of The Bear.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/MYSADCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/MYSADCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107728338324488653.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-07T23:49:14Z",
+      "attempts": 0,
+      "cat": {
+        "id": "the-bear-mysadcat",
+        "ticker": "MYSADCAT",
+        "name": "The Bear",
+        "coinName": "The Bear",
+        "owner": "Tom Cox, UK author and former Guardian columnist / account @MYSADCAT (Tom's own account is @cox_tom)",
+        "category": "viral",
+        "story": "The Bear was the cat behind @MYSADCAT, a UK X account (about 192k followers) known for photos captioned 'My cat is sad because...'. Tom Cox set it up to promote his books about The Bear, who appears in six of them. The Guardian reported that he was found in a plastic bag on the hard shoulder of a motorway with several siblings, and that he was named for looking like a teddy bear. Cox called him 'the most polite cat I have ever met', a cat who asked for food by nodding toward the cupboard. He lived through flea allergies, carbon monoxide poisoning and an attack by feral cats. Fans called themselves 'The Bear's Army'. He turned 20 in October 2015.",
+        "look": "Black domestic cat with a fluffy, slightly scruffy coat and a small white patch on his chest. Large round yellow-green eyes, often with a mournful look, and slightly ragged ear edges. Use a black cat with a soulful, wide-eyed gaze.",
+        "coat": {
+          "base": "black",
+          "second": "white",
+          "pattern": "solid",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/MYSADCAT/status/729208364123754496",
+          "author": "MYSADCAT",
+          "handle": "MYSADCAT",
+          "date": "2016-05-08",
+          "dateType": "posted",
+          "text": "Good morning from The Bear.",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "The Guardian: The cat with 17 lives (Tom Cox, 5 Dec 2012)",
+            "url": "https://www.theguardian.com/lifeandstyle/2012/dec/05/cat-with-17-lives"
+          },
+          {
+            "label": "Tom Cox (owner's site): Goodbye, Kind Friend: RIP The Bear (1995-2016), 17 Dec 2016",
+            "url": "https://www.tom-cox.com/goodbye-kind-friend-rip-the-bear-1995-2016-68d66faee24216001bf6ca79/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Tom Cox, UK author and former Guardian columnist / account @MYSADCAT (Tom's own account is @cox_tom).",
+        "sensitivity": "In loving memory of The Bear.",
+        "portrait": "assets/portraits/MYSADCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "MYSADCAT"
+    },
+    {
       "postId": "2107833539941040431",
       "url": "https://x.com/CatWorkers/status/2107833539941040431",
       "name": "Kiki",
