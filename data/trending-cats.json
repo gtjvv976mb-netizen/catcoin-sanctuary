@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-07T02:14:19.377Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-07T02:46:31.731Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-07",
-  "dayUsed": 44,
+  "dayUsed": 64,
   "month": "2026-10",
-  "monthUsed": 1907,
+  "monthUsed": 1927,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -24,6 +24,8 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2107611014405775753",
+  "2107607300647321997",
   "2107476716142690573",
   "2107259544539631665",
   "2106726286139822483",
@@ -43,6 +45,142 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2107611014405775753",
+   "url": "https://x.com/ShitpostGate/status/2107611014405775753",
+   "text": "https://t.co/4lIWQTjyDr",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1612178
+   },
+   "postedAt": "2026-10-06T23:16:38Z",
+   "likes": 6547,
+   "views": 148215,
+   "reposts": 621,
+   "heat": 2650,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2107610994759327744/img/lzHgckCFmxzmxqTK.jpg"
+    }
+   ],
+   "stage": "viral",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-07T02:46:31.731Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "It's a SpongeBob drinking meme, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2107607300647321997",
+   "url": "https://x.com/ShitpostGate/status/2107607300647321997",
+   "text": "https://t.co/6h2xTgtD10",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1612178
+   },
+   "postedAt": "2026-10-06T23:01:52Z",
+   "likes": 7664,
+   "views": 74793,
+   "reposts": 223,
+   "heat": 2366,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HT-5qx5XkAAXQ7S.jpg"
+    }
+   ],
+   "stage": "viral",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-07T02:46:31.731Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "A greentext meme about dating nuns, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2107561916528763233",
+   "url": "https://x.com/CatWorkers/status/2107561916528763233",
+   "text": "🐈‍⬛ Oreo the cat (now happily retired!)\n🛒 Aubuchon Hardware, Ayer, MA https://t.co/EDeQVxblTG",
+   "author": {
+    "handle": "CatWorkers",
+    "name": "cats with jobs 🛠",
+    "followers": 2312329
+   },
+   "postedAt": "2026-10-06T20:01:32Z",
+   "likes": 594,
+   "views": 22035,
+   "reposts": 28,
+   "heat": 129,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HT-QZPiWYAA5MwV.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "CatWorkers",
+   "lens": "big",
+   "readAt": "2026-10-07T02:46:31.731Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Oreo",
+    "memeName": null,
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Oreo the Hardware Cat",
+    "ticker": "OREO",
+    "lore": "Oreo the tuxedo cat supervised the carts outside Aubuchon Hardware in Ayer, MA from his cardboard box, and is now happily retired.",
+    "sensitive": false,
+    "why": "A single named shop cat in a cheerful working-cat post.",
+    "readBy": "claude"
+   },
+   "known": true,
+   "taken": [
+    {
+     "mint": "DnmocvU1XJ33bs6fd178XbXbNmQrfzQToaSStrNcpump",
+     "name": "The Hikikomori",
+     "symbol": "OREO",
+     "url": "https://dexscreener.com/solana/chslrffhzzk7jrutapjcdu6s7wsrepmued1sdiy8t61t"
+    },
+    {
+     "mint": "RvBPM6zQmtuarmNzjMtAadK8BnavgiB3Wqvmt3npump",
+     "name": "MILKA",
+     "symbol": "OREO",
+     "url": "https://dexscreener.com/solana/8kfj8hlvqz3n7pywknaat2kaw2sshiegdtbsyum25zfj"
+    }
+   ],
+   "status": "passed"
+  },
   {
    "id": "2107476716142690573",
    "url": "https://x.com/CoinMarketCap/status/2107476716142690573",
@@ -1532,13 +1670,35 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 8,
+  "nextLens": 3,
+  "bigChunk": 0,
   "figureChunk": 0,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
+   "oreo": {
+    "name": "Oreo",
+    "firstSeen": "2026-10-06T20:01:32.000Z",
+    "lastSeen": "2026-10-06T20:01:32.000Z",
+    "authors": [
+     "CatWorkers"
+    ],
+    "posts": [
+     "2107561916528763233"
+    ],
+    "likes": 594,
+    "sightings": [
+     {
+      "at": "2026-10-06T20:01:32.000Z",
+      "author": "CatWorkers",
+      "post": "2107561916528763233",
+      "likes": 594,
+      "seen": "2026-10-07T02:46:31.731Z",
+      "via": "big"
+     }
+    ]
+   },
    "cookie": {
     "name": "Cookie",
     "firstSeen": "2026-10-05T18:58:13.000Z",
