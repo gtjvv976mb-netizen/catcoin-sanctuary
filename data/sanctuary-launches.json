@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/BURWOODCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107664221584634076.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-07T06:50:45Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "harry-burwood",
         "ticker": "BURWOODCAT",
@@ -69,7 +69,14 @@
       },
       "feesTo": "chrislynchmedia",
       "mintNonce": 2007762,
-      "usePaidMint": "B73T7tHFJFo9BqAAV6ZJ59DtZmXfYV1VVnNGkMFMcats"
+      "usePaidMint": "B73T7tHFJFo9BqAAV6ZJ59DtZmXfYV1VVnNGkMFMcats",
+      "tx": "5pA7pCsKmriioZ7VSRGHCRPecmuKKCXkCzg4d72NjzcMekcw4myU9q3uYoZdYYCbDaHYsVzsZvhsSRQ1VtM6ePMF",
+      "sentAt": "2026-10-07T10:56:19Z",
+      "lastValidBlockHeight": 432240155,
+      "mintPublic": "B73T7tHFJFo9BqAAV6ZJ59DtZmXfYV1VVnNGkMFMcats",
+      "spentLamports": 5551960,
+      "settledAt": "2026-10-07T10:56:28Z",
+      "launchedAt": "2026-10-07T10:56:19Z"
     },
     {
       "postId": "2107711096614264915",
