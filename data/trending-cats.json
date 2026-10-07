@@ -1,20 +1,21 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-07T08:47:12.227Z",
- "lens": "figures",
- "query": "((\"Garfield\" (cat OR cats OR kitten OR kitty)) OR \"Grumpy Cat\" OR \"Tardar Sauce\" OR \"Nyan Cat\" OR \"Keyboard Cat\" OR \"Doraemon\" OR \"Tom and Jerry\" OR \"Top Cat\" OR \"Heathcliff the Cat\" OR (\"Jiji\" (cat OR cats OR kitten OR kitty)) OR \"Duchess the cat\" OR \"Toulouse the cat\" OR \"Berlioz the cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-07T09:27:14.713Z",
+ "lens": "big",
+ "query": "(from:TheEllenShow OR from:jimmyfallon OR from:ConanOBrien OR from:KevinHart4real OR from:Cristiano OR from:neymarjr OR from:KingJames OR from:BillGates OR from:MrBeast OR from:KSI OR from:NASA OR from:SpaceX OR from:Tesla OR from:netflix OR from:Disney OR from:Pixar OR from:Marvel OR from:YouTube OR from:instagram OR from:Google OR from:OpenAI) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-10-07",
-  "dayUsed": 184,
+  "dayUsed": 185,
   "month": "2026-10",
-  "monthUsed": 2047,
+  "monthUsed": 2048,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
   "2107642061583258098",
+  "2107583030772814023",
   "2107470958038516177",
   "2107457414387622310",
   "2107324972062429312",
@@ -250,6 +251,169 @@
    "known": false,
    "taken": null,
    "status": "signal"
+  },
+  {
+   "id": "2107583030772814023",
+   "url": "https://x.com/Google/status/2107583030772814023",
+   "text": "@twid Shhh, Miso's napping 🐱",
+   "author": {
+    "handle": "Google",
+    "name": "Google",
+    "followers": 31909724
+   },
+   "postedAt": "2026-10-06T21:25:26Z",
+   "likes": 201,
+   "views": 19620,
+   "reposts": 19,
+   "heat": 36,
+   "media": [],
+   "stage": "big-account",
+   "bigAccount": "Google",
+   "lens": "big",
+   "readAt": "2026-10-07T09:27:14.713Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Miso",
+    "memeName": null,
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Miso",
+    "ticker": "MISO",
+    "lore": "Miso is napping, so everyone has to whisper.",
+    "sensitive": false,
+    "why": "Post centers on one named cat, Miso, taking a nap.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "F8Je5eS9AYNKgWBPaRvT6jDsfM169GejMCrwx8Xxafzc",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/dx7ecowqbnjnk8fdizupzurfq3vducmirvtuflul4ywk"
+    },
+    {
+     "mint": "FSQjGNE1VJs3XUQ1eGbJyFer4zEWjexr7tC37uuhjMa6",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/fe4pg1mpfextx758ycikejtomxgbkbvkaejcyhxe4vnn"
+    },
+    {
+     "mint": "DcyqmjcTqD4y8XrhfZbsaFeBgRTdhwZHa2KSt8Tapump",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/cwc818hk9cncanwvwafagx4sykma5q2tt53x4zq7eico"
+    },
+    {
+     "mint": "2n6ZKkB3PfNZXBsjSYEnk74dFTCyPDDNTKvzNkLivXUz",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/faqo9ofvgmexrqwqrugcsgpwxk5xkqol4q77sqynbcex"
+    },
+    {
+     "mint": "F2BzbUdJgdjjpr7d6qCnzojKPyjDwaSRsHLhmwT9pump",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/m3wreyj78zlsubdpv8rfnbqtvq4xsmgrzqbqtyrufuf"
+    },
+    {
+     "mint": "3J4svLtHafEAWpC7DZuKyNZm3wCtsmeKsBW4HXoVcuEK",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/74a7wml5qoppngdzbqqgxxvmcw8sjlzeslhlsdapeji3"
+    },
+    {
+     "mint": "FBXYG76uvw74i3guLWptrsGwLTR6gCFoaWMgVH79pump",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/6aee3ulrmy9zy9evwq85eat5tbxmvr3djvyn3v8gwa6o"
+    },
+    {
+     "mint": "34aERoBzEm2PihyAiNV3wbnrc8QSdv5omrRdfuFmKEDk",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/4awcmxjtdnyyxocw9ekoaqavux7iqbnuwjn8rdnq5mdt"
+    },
+    {
+     "mint": "Dnq5PeZNMn4ZE6EQE7KDu4ygryRaatQgb42EwPpRpump",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/h3h6z8r4eygn4bmddclb5k5jbwylaxqdtxs6xhayxddv"
+    },
+    {
+     "mint": "Em4YS3gvZi72zJQ9JZzjiRqDFCUn8xff1tPxf4mNpump",
+     "name": "味噌 (miso)",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/dqmkplgv3zea42xr1bz6fmj5mxkfs9qo4qhj5ghkl126"
+    },
+    {
+     "mint": "9ddBkYDHiqVvxecCG7RM6Tmen9fTeTPPquhLLwTopump",
+     "name": "Kimchi's Cat",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/jbum3nc6uer1yqa98xvj2xdwwopeybzcmqzupmah42bb"
+    },
+    {
+     "mint": "GuPcraoKc3b3n728r3D7e2pAcmPTKv64m3732KPPpump",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/3asd55fse21mstfpycjbhd12j4snkxmt8bd4rmkrwe2b"
+    },
+    {
+     "mint": "EgGbCxTwL4ywMUH9GyQqAPNoVY6CDxdGEohPGTE32Qgm",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/3m3q4sjctez4kart3avcrxdeb15fetsqqzeyoyc5bfjk"
+    },
+    {
+     "mint": "BJqRcvz6rbCpVfNQfrSnTDS338bFPYog6UFq3eMsmQ3X",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/7yjgnvdtb8edse3fkcpw8s5giqhwvjxcqstyqtmtok4h"
+    },
+    {
+     "mint": "DLe6xjwe8g82TQvF8nPJkzssRnqZQgnEPujjP9TsgN7Y",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/9z6wb5xmfbvyqxrujzxnxbvpgcrwscwy7bwaufn221rr"
+    },
+    {
+     "mint": "7M4vFCsXWgjNzXbqdTXBXkcM8BBgBLnHhgiccfxfpump",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/fsuejjszcsbnmjwot3umqueirhya5su1ecwlgmg7xj6f"
+    },
+    {
+     "mint": "TpAA1pvfsCsXLTJDsY85dQcKfiUAKa1zRspy8tHpump",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/dwswf9nensjfd4lxuqdrsfewajdh5hcreyqtabauqhpn"
+    },
+    {
+     "mint": "6yD9HBqMF9ZMvkDFe775CEUdekTYRvEhB8DkwHjeGZ6a",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/2tzhvquvhfp7rrbdyuncxnnscavcsjhkx8c6gawiilkm"
+    },
+    {
+     "mint": "DtyzWzWCkRueFsCt1jaq1ntxyRRTWyMBh55eqPqEpump",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/fj4drjgw3ptdtcftsiqfahygbqopzuuxcvg7bpa3wh1x"
+    },
+    {
+     "mint": "5KvS3ijmwdoa9xXxbBvhUXrmJdnF84wds9Bobe39PLKR",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/fokescfu4zqwarjprpff8k19ervn8nghmvn8t6bu6xdx"
+    },
+    {
+     "mint": "22jifxqAajixoCn76XZVQebKF9SXFrvZLGbSdtgjV3Gz",
+     "name": "Miso",
+     "symbol": "MISO",
+     "url": "https://dexscreener.com/solana/28uke2iqjnjacsdak5h6waumyswwhzcxzqxqvbsgdrug"
+    }
+   ],
+   "status": "candidate"
   },
   {
    "id": "2107561916528763233",
@@ -1794,10 +1958,10 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 4,
+  "nextLens": 1,
+  "bigChunk": 5,
   "figureChunk": 1,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
