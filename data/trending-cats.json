@@ -1,19 +1,20 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-07T10:13:23.235Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-07T10:53:03.841Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-07",
-  "dayUsed": 205,
+  "dayUsed": 225,
   "month": "2026-10",
-  "monthUsed": 2068,
+  "monthUsed": 2088,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
+  "2107742732810695136",
   "2107642061583258098",
   "2107583030772814023",
   "2107470958038516177",
@@ -47,6 +48,55 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2107742732810695136",
+   "url": "https://x.com/CatWorkers/status/2107742732810695136",
+   "text": "Book store cat.\n\n📸 Meow Mau Miao 大小貓咪 https://t.co/udD1QdtXEl",
+   "author": {
+    "handle": "CatWorkers",
+    "name": "cats with jobs 🛠",
+    "followers": 2312312
+   },
+   "postedAt": "2026-10-07T08:00:02Z",
+   "likes": 284,
+   "views": 19564,
+   "reposts": 15,
+   "heat": 177,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/G2PYjkmXcAAGyp9.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "CatWorkers",
+   "lens": "big",
+   "readAt": "2026-10-07T10:53:03.841Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Book Store Cat",
+    "memeName": "Book Store Cat",
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Book Store Cat",
+    "ticker": "BOOKCAT",
+    "lore": "An orange tabby keeping watch over the shelves of a packed bookstore, posing proudly among the stacks.",
+    "sensitive": false,
+    "why": "A single real cat working in a bookstore, wholesome and unnamed.",
+    "readBy": "claude",
+    "nameFrom": "meme"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "Fp1QghtxueAeMRLQNCWe2zKD2T3PTsn55kkt3afZPRna",
+     "name": "BookCat",
+     "symbol": "BOOKCAT",
+     "url": "https://dexscreener.com/solana/8idtyxtc3bislhb7ob3au4bpvvqp2fpmko1zxhqa1bgf"
+    }
+   ],
+   "status": "candidate"
+  },
   {
    "id": "2107652799261442374",
    "url": "https://x.com/ShitpostGate/status/2107652799261442374",
@@ -1958,10 +2008,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 5,
+  "nextLens": 3,
+  "bigChunk": 6,
   "figureChunk": 1,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
