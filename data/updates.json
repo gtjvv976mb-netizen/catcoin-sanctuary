@@ -347,6 +347,13 @@
       "at": "2026-10-07T02:27:59.010Z",
       "attempts": 3,
       "error": "X API POST /2/tweets: HTTP 400 {\"detail\":\"One or more parameters to your request was invalid.\",\"errors\":[{\"message\":\"The Tweet contains an invalid URL.\",\"parameters\":{\"text\":[\"😻 Doorkins Magnificat, launched by the sanctuary on PumpFun\\n💸 Fees to @DoorkinsM via UsePaid: https://usepaid.app/token/Ced2anqoim6ToFQu5FV5bE2nuJomA9x1"
+    },
+    "KING": {
+      "postId": "2107470958038516177",
+      "status": "failed",
+      "at": "2026-10-07T03:09:05.400Z",
+      "attempts": 1,
+      "error": "X API POST /2/tweets: HTTP 400 {\"detail\":\"One or more parameters to your request was invalid.\",\"errors\":[{\"message\":\"The Tweet contains an invalid URL.\",\"parameters\":{\"text\":[\"😻 King, launched by the sanctuary on PumpFun\\n💸 Fees go to the creator, @CatWorkers via UsePaid\\n🔗 https://usepaid.app/token/EaoamwMiQJc3A5PcDfuoWZGtmkA"
     }
   }
 }
