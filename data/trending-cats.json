@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-08T09:29:38.181Z",
- "lens": "figures",
- "query": "((\"Garfield\" (cat OR cats OR kitten OR kitty)) OR \"Grumpy Cat\" OR \"Tardar Sauce\" OR \"Nyan Cat\" OR \"Keyboard Cat\" OR \"Doraemon\" OR \"Tom and Jerry\" OR \"Top Cat\" OR \"Heathcliff the Cat\" OR (\"Jiji\" (cat OR cats OR kitten OR kitty)) OR \"Duchess the cat\" OR \"Toulouse the cat\" OR \"Berlioz the cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-08T10:09:55.595Z",
+ "lens": "big",
+ "query": "(from:NintendoAmerica OR from:Pokemon OR from:PlayStation OR from:Xbox OR from:Spotify OR from:McDonalds OR from:Wendys OR from:tacobell OR from:Starbucks OR from:CocaCola OR from:Nike OR from:NBA OR from:NFL OR from:TheSimpsons OR from:CartoonNetwork OR from:adultswim OR from:Crunchyroll OR from:hellokitty OR from:binance OR from:coinbase OR from:CoinMarketCap) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-10-08",
-  "dayUsed": 201,
+  "dayUsed": 206,
   "month": "2026-10",
-  "monthUsed": 2373,
+  "monthUsed": 2378,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -31,6 +31,7 @@
  "signals": [
   "2108008136732983396",
   "2107994590242562547",
+  "2107878727451377803",
   "2107611014405775753",
   "2107607300647321997",
   "2107476716142690573",
@@ -182,6 +183,47 @@
     }
    ],
    "status": "candidate"
+  },
+  {
+   "id": "2107878727451377803",
+   "url": "https://x.com/XBOX/status/2107878727451377803",
+   "text": "Add these to your “need to play” list\n\n⚔️ Mortal Shell II\n💨 Avatar Legends: The Fighting Game\n🐱 Mewgenics\n👁️ The Sinking City 2\n🪵 Woodo\n🏝️ Lou’s Lagoon\n\nCheck out October's Indie Selects: https://t.co/mu1mc6wQH5 https://t.co/sU60463IEh",
+   "author": {
+    "handle": "XBOX",
+    "name": "XBOX | Emergence Begins",
+    "followers": 26294203
+   },
+   "postedAt": "2026-10-07T17:00:25Z",
+   "likes": 906,
+   "views": 701744,
+   "reposts": 65,
+   "heat": 469,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/media/HUCwh7QWwAExaSX.png"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "Xbox",
+   "lens": "big",
+   "readAt": "2026-10-08T10:09:55.595Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "A gaming promo listing indie titles, no particular cat featured.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
   },
   {
    "id": "2107833539941040431",
@@ -2209,10 +2251,10 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 7,
+  "nextLens": 1,
+  "bigChunk": 8,
   "figureChunk": 1,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
