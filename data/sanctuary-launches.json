@@ -68,7 +68,10 @@
       "spentLamports": 5541800,
       "settledAt": "2026-10-08T04:31:16Z",
       "launchedAt": "2026-10-08T04:31:06Z",
-      "recordedAt": "2026-10-08T04:31:22Z"
+      "recordedAt": "2026-10-08T04:31:22Z",
+      "feeRoute": {
+        "at": "2026-10-08T04:37:15Z"
+      }
     },
     {
       "postId": "2107728338324488653",
@@ -84,9 +87,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/MYSADCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107728338324488653.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-07T23:49:14Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "the-bear-mysadcat",
         "ticker": "MYSADCAT",
@@ -139,7 +142,13 @@
       "feesTo": "MYSADCAT",
       "mintNonce": 8956956,
       "usePaidMint": "E69P8DaXPbAyWxuaFvqZDANkcmrCddDA66GWeEwNcats",
-      "reason": "gave way to a trending cat; prepared again once the slot is free"
+      "tx": "4hrDrpW2wAUyRPc2MJveermf63iYbXT3W2CiBPtqBrjM5aL3vEBuppW6j9H8PMtcRqyWTykCNquQY24epyB7Hbow",
+      "sentAt": "2026-10-08T04:37:36Z",
+      "lastValidBlockHeight": 432476841,
+      "mintPublic": "E69P8DaXPbAyWxuaFvqZDANkcmrCddDA66GWeEwNcats",
+      "spentLamports": 5557040,
+      "settledAt": "2026-10-08T04:37:46Z",
+      "launchedAt": "2026-10-08T04:37:36Z"
     },
     {
       "postId": "2107833539941040431",
