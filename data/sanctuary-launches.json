@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107603270428438996",
+      "url": "https://x.com/catcosanctuary/status/2107603270428438996",
+      "name": "Milko",
+      "coinName": "Milko the Zero-Gravity Cat",
+      "ticker": "MILKOCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Milko, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/MILKOCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/MILKOCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107603270428438996.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-08T23:11:44Z",
+      "attempts": 0,
+      "cat": {
+        "id": "milko-zero-gravity-cat",
+        "ticker": "MILKOCAT",
+        "name": "Milko",
+        "coinName": "Milko the Zero-Gravity Cat",
+        "owner": "Chisa Nakagawa (中川ちさ), Japan; X/Instagram @ccchisa76 (無重力猫ミルコのお家)",
+        "category": "viral",
+        "story": "Milko (ミルコ) is a male white cat in Japan, famous online as the 'zero-gravity cat' (無重力猫) because so many of his photos catch him flying through the air. He was rescued as a kitten after being abandoned, crying, in a company parking lot, badly underweight, and nursed back to health. His owner, writer Chisa Nakagawa, named him after a fighter so he would grow up strong. As a kitten he had dark marks on his head that faded until he was pure white. His jumping photos led to TV appearances and photo books, starting with 'Mujuryoku Neko Tobikkiri Milko!' (announced 2016). The account @ccchisa76 (about 141k followers) shares Milko and his housemates. On 28 Aug 2026 it marked his 11th anniversary as a house cat.",
+        "look": "Solid white short-haired male with pink nose, pink inner ears and pink paw pads; eyes pale grey-green; often wears a red collar. Usually shown mid-leap with legs stretched out.",
+        "coat": {
+          "base": "white",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/ccchisa76/status/2070336681388265785",
+          "author": "ccchisa76",
+          "handle": "ccchisa76",
+          "date": "2026-06-26",
+          "dateType": "posted",
+          "text": "ミルコ！スマイル！いただきました😊！",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "FRaU (gendai.media): 韓国からのオファーも来た猫ズ！まるでBTS？踊るにゃんこチーム (2020-12-09)",
+            "url": "https://gendai.media/articles/-/78107"
+          },
+          {
+            "label": "Walker Plus: \"無重力猫\"ミルコたち5匹の猫のマイブームに迫る (2020-09-19)",
+            "url": "https://www.walkerplus.com/article/1006464/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Chisa Nakagawa (中川ちさ), Japan; X/Instagram @ccchisa76 (無重力猫ミルコのお家).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/MILKOCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "ccchisa76"
+    },
+    {
       "postId": "2107633940790124577",
       "url": "https://x.com/catcosanctuary/status/2107633940790124577",
       "name": "Cheddar",
