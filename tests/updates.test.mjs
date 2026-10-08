@@ -8,8 +8,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { ROOT } from "./helpers.mjs";
 import { SITE, HASHTAGS, LIMIT, cardLink, weightedLength, listCats, checkPost } from "../scripts/announce.mjs";
-import { checkUpdate, draftAdoption, candidates, waitReason, lastAnnouncerPost, validAdoption, run, IMAGE_PATH, MAX_ATTEMPTS, LAUNCHPADS, draftLaunch, launchItems, fanTribute, usePaidLaunchLine, usePaidTokenUrl } from "../scripts/post-updates.mjs";
-import { guardDraft } from "../scripts/announce.mjs";
+import { checkUpdate, draftAdoption, candidates, waitReason, lastAnnouncerPost, validAdoption, run, IMAGE_PATH, MAX_ATTEMPTS, LAUNCHPADS, draftLaunch, launchItems, fanTribute, usePaidLaunchLine } from "../scripts/post-updates.mjs";
 import { kitsOf } from "../scripts/lib/adoptions.mjs";
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
@@ -42,12 +41,12 @@ function sandbox({ updates = UPDATES, adoptions = ADOPTIONS, announced = { cats:
   return { dir, read: (f) => JSON.parse(fs.readFileSync(path.join(dir, "data", f), "utf8")), raw: (f) => fs.readFileSync(path.join(dir, "data", f), "utf8") };
 }
 /** A fake X: records every request, answers each post with a new id; `onTweet` sees each post as it is made. */
-function fakeX({ fail = null, onTweet = null } = {}) {
+function fakeX({ fail = null, onTweet = null, failBody = { title: "nope" } } = {}) {
   const calls = []; let n = 500;
   const f = async (url, init) => {
     calls.push({ url, init });
     assert.match(init.headers.Authorization, /^OAuth oauth_consumer_key="k", .*oauth_signature="/);
-    if (fail?.(url)) return new Response(JSON.stringify({ title: "nope" }), { status: fail(url) });
+    if (fail?.(url)) return new Response(JSON.stringify(failBody), { status: fail(url) });
     if (url.includes("media/upload")) return new Response(JSON.stringify({ data: { id: "m1" } }), { status: 200 });
     onTweet?.(JSON.parse(init.body));
     return new Response(JSON.stringify({ data: { id: String(n++) } }), { status: 201 });
@@ -295,6 +294,28 @@ test("a 429 stops the run: nothing else is tried, the post keeps its tries and g
   assert.equal(r2.posted.id, "NEKOBUS");
 });
 
+test("X refusing a link in a post (400 'invalid URL', a blocked domain) holds it at once, never retried; a 402 or 403 keeps its tries", async () => {
+  const s = sandbox();
+  const body = { detail: "One or more parameters to your request was invalid.", errors: [{ message: "The Tweet contains an invalid URL.", parameters: { text: ["..."] } }], title: "Invalid Request" };
+  const logs = [];
+  const r = await run({ root: s.dir, env: CREDS, fetchImpl: fakeX({ fail: (u) => (u.endsWith("/2/tweets") ? 400 : null), failBody: body }), now: at(T0), log: (m) => logs.push(m) });
+  assert.deepEqual([r.failed, r.held], [[], ["NEKOBUS"]]);
+  const st = s.read("updates.json").adoptionsPosted.NEKOBUS;
+  assert.equal(st.status, "held");
+  assert.equal(st.violations[0].rule, "x_link");
+  assert.ok(logs.some((l) => /^::error::Updates: X refused a link/.test(l)), logs.join("\n"));
+  // Held: the next run does not try it again.
+  const x2 = fakeX();
+  const r2 = await run({ root: s.dir, env: CREDS, fetchImpl: x2, now: at(T0 + 20 * MIN), ...quiet });
+  assert.notEqual(r2.posted?.id, "NEKOBUS");
+  for (const code of [402, 403]) {
+    const s2 = sandbox();
+    await run({ root: s2.dir, env: CREDS, fetchImpl: fakeX({ fail: (u) => (u.endsWith("/2/tweets") ? code : null) }), now: at(T0), ...quiet });
+    const rec = s2.read("updates.json").adoptionsPosted.NEKOBUS;
+    assert.deepEqual([rec.status, rec.attempts], ["failed", 0], String(code));
+  }
+});
+
 test("a failed post is tried at most 3 times, one try a run, then the queue moves on", async () => {
   const s = sandbox();
   let t = T0;
@@ -393,33 +414,6 @@ test("the last line before X: an update or adoption draft naming a Solana addres
   assert.ok(!logs.some((m) => m.includes(mint) && /would post/.test(m)));
 });
 
-
-test("a routed UsePaid coin's launch post links the coin's own UsePaid page under its UsePaid line, for every cat waiting to launch; only that page's mint gets past the last guard", () => {
-  const mint = "F2ffsMXqmangvQmArskDsmWvRFT1RLeeGsEiuAv1cats";
-  assert.equal(usePaidTokenUrl(mint), `https://usepaid.app/token/${mint}`);
-  for (const c of ADOPTABLES.cats.filter((x) => !x.launch)) {
-    const kind = c.category === "tv-movie" ? "fiction" : "real";
-    const args = { coinName: c.coinName || c.name, ticker: c.ticker, lore: null, tribute: fanTribute(kind) };
-    if (!draftLaunch({ id: c.ticker, name: c.name }, args).ok) continue;
-    // A real cat with a 12-character handle: the page always. The longest handle X allows, or a long character name (no
-    // character launches while LAUNCH_CHARACTERS is off): the page, or the tribute kept without it.
-    for (const handle of ["Abcdefghijkl", "Abcdefghijklmno"]) {
-      const d = draftLaunch({ id: c.ticker, name: c.name }, { ...args, usePaid: handle, mint });
-      assert.ok(d.ok, `${c.ticker}: ${JSON.stringify(d.violations)}`);
-      const linked = d.text.includes(`${usePaidLaunchLine(handle)}\n🔗 ${usePaidTokenUrl(mint)}`) || d.text.includes(`💸 Fees to @${handle} via UsePaid: ${usePaidTokenUrl(mint)}`);
-      if (!linked && (handle.length === 15 || kind === "fiction") && d.text.includes(fanTribute(kind))) continue;
-      assert.ok(linked, `${c.ticker}: ${d.text}`);
-      // X counts the link as 23 characters.
-      assert.ok(weightedLength(d.text.replace(usePaidTokenUrl(mint), "x".repeat(23))) <= LIMIT, `${c.ticker}: ${d.text}`);
-      assert.equal(d.text.match(/@/g).length, 1);
-      assert.ok(guardDraft(d, [usePaidTokenUrl(mint)]).ok, "the coin's own page passes the last guard");
-      assert.equal(guardDraft(d, []).ok, false, "and nothing else would let an address through");
-    }
-  }
-  // No UsePaid account, no page; a malformed mint is never linked.
-  assert.ok(!draftLaunch({ id: "MOCHI", name: "Mochi" }, { coinName: "Mochi", ticker: "MOCHI", mint }).text.includes("usepaid.app"));
-  assert.deepEqual(draftLaunch({ id: "MOCHI", name: "Mochi" }, { coinName: "Mochi", ticker: "MOCHI", usePaid: "Mochi", mint: "not-a-mint" }).violations.map((v) => v.rule), ["mint"]);
-});
 
 test("a UsePaid coin's launch post says its fees go to the creator and tags that account, beside the fan-tribute line, for every cat waiting to launch; it waits for its fee route", () => {
   assert.equal(usePaidLaunchLine("MorrisAnimal"), "💸 Fees go to the creator, @MorrisAnimal via UsePaid");

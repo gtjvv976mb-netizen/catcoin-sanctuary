@@ -48,7 +48,7 @@ import { SITE, HASHTAGS, INGAME_LINE, LIMIT, DEFAULT_CONFIG, cardLink, checkPost
 import { kitsOf, adoptionProblem, ownMints } from "./lib/adoptions.mjs";
 import { nameKey } from "../assets/ui/adoptables.js";
 import { isAddress } from "../assets/collection.js";
-import { FEE_ROUTE_MAX_TRIES, usePaidTokenUrl } from "./lib/fee-route.mjs";
+import { FEE_ROUTE_MAX_TRIES } from "./lib/fee-route.mjs";
 
 export const DEFAULT_GAP_MINUTES = 180;
 /** Minutes to leave after the announcer's last post. */
@@ -175,13 +175,8 @@ export const fanTribute = (kind) => (kind === "real" ? FAN_TRIBUTE.real : FAN_TR
 /** A UsePaid coin's line in its launch post, tagging the X account its creator fees go to for good (scripts/lib/fee-route.mjs;
     the owner, 2026-10-02, and the tag 2026-10-04): the post's one mention. */
 export const usePaidLaunchLine = (handle) => `💸 Fees go to the creator, @${handle} via UsePaid`;
-/** The coin's own page on UsePaid (its creator-fee records), linked under its UsePaid line (the owner, 2026-10-06): the one
-    place a launch post carries an address, and only this coin's own proved mint (`mint`, launchItems). */
-export { usePaidTokenUrl };
-// X counts every link as 23 characters, however long.
-const AS_POSTED = "https://t.co/" + "x".repeat(10);
 const FEE_HANDLE = /^[A-Za-z0-9_]{1,15}$/;
-export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "pump.fun", cited: also = [], tribute = null, usePaid = null, mint = null } = {}) {
+export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "pump.fun", cited: also = [], tribute = null, usePaid = null } = {}) {
   const pad = LAUNCHPADS[launchpad];
   const bad = [];
   if (!KIT_NAME.test(cat?.name ?? "")) bad.push({ rule: "kit_name", term: String(cat?.name ?? "").slice(0, 40), field: "name" });
@@ -192,7 +187,6 @@ export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "p
   if (typeof cat?.id !== "string" || !cat.id) bad.push({ rule: "card", term: String(cat?.id), field: "id" });
   if (tribute !== null && !Object.values(FAN_TRIBUTE).includes(tribute)) bad.push({ rule: "tribute", term: String(tribute).slice(0, 40), field: "tribute" });
   if (usePaid && !FEE_HANDLE.test(usePaid)) bad.push({ rule: "fees_to", term: String(usePaid).slice(0, 20), field: "usePaid" });
-  if (mint !== null && !isAddress(mint)) bad.push({ rule: "mint", term: String(mint).slice(0, 12), field: "mint" });
   if (bad.length) return { ok: false, text: null, violations: bad };
 
   const link = cardLink(cat.id);
@@ -202,33 +196,24 @@ export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "p
   const coins = [...new Set([`😻 ${named}, launched by the sanctuary on ${pad}`, `😻 ${cat.name}, launched by the sanctuary on ${pad}`])];
   const mintLine = "🔍 Its one real mint is on its card 👇";
   const lores = [...(lore ? [`📜 ${lore.trim()}`] : []), ""];
-  // A UsePaid coin's block: its line, and under it the coin's own UsePaid page when its mint is known; failing that, a
-  // shorter line with the page after it; kept or dropped whole. `plain` is the block as the rules read it (no page).
-  const url = usePaid && mint ? usePaidTokenUrl(mint) : null;
-  const short = usePaid ? `💸 Fees to @${usePaid} via UsePaid` : null;
-  const blocks = !usePaid ? [] : url
-    ? [{ text: `${usePaidLaunchLine(usePaid)}\n🔗 ${url}`, plain: usePaidLaunchLine(usePaid) }, { text: `${short}: ${url}`, plain: short }]
-    : [{ text: usePaidLaunchLine(usePaid), plain: usePaidLaunchLine(usePaid) }];
-  const check = (lines, citing, block) => {
+  const fees = usePaid ? usePaidLaunchLine(usePaid) : null;
+  const check = (lines, citing) => {
     const text = lines.filter(Boolean).join("\n");
-    // The rules read the post without the UsePaid page (the site's own link stays its one link); the length counts the page as X does.
-    const rest = block ? text.replace(block.text, block.plain) : text;
-    const r = checkUpdate(rest, block ? [...citing, block.plain] : citing);
-    if (url && block && weightedLength(text.replace(url, AS_POSTED)) > LIMIT) r.violations.push({ rule: "length", term: String(weightedLength(text)), field: "post" });
-    if (ADDRESS_LIKE.test(rest)) r.violations.push({ rule: "address", term: rest.match(ADDRESS_LIKE)[0].slice(0, 12), field: "post" });
-    if ((block ? text.replace(block.text, "") : text).includes("@")) r.violations.push({ rule: "mention", term: "@", field: "post" });
+    const r = checkUpdate(text, fees ? [...citing, fees] : citing);
+    if (ADDRESS_LIKE.test(text)) r.violations.push({ rule: "address", term: text.match(ADDRESS_LIKE)[0].slice(0, 12), field: "post" });
+    if ((fees ? text.replace(fees, "") : text).includes("@")) r.violations.push({ rule: "mention", term: "@", field: "post" });
     return { text, violations: r.violations };
   };
   // Longest first: both names, the lore, the mint line and both hashtags, then fewer (the card link always). A UsePaid
-  // coin's block stays: the header goes before it does.
-  const first = (line, citing, block = null) => {
+  // coin's line (`fees`) stays: the header goes before it does.
+  const first = (line, citing, fees = null) => {
     let violations = [];
-    for (const head of block ? [hook, null] : [hook]) {
+    for (const head of fees ? [hook, null] : [hook]) {
       for (const coin of coins) {
         for (const loreLine of lores) {
           // A UsePaid coin's post may go without hashtags rather than without its tag.
-          for (const [tags, where] of [[HASHTAGS, mintLine], [HASHTAGS.slice(0, 1), mintLine], [HASHTAGS, null], [HASHTAGS.slice(0, 1), null], ...(block ? [[[], null]] : [])]) {
-            const r = check([head, coin, block?.text, loreLine, line, where, link, tags.join(" ")], citing, block);
+          for (const [tags, where] of [[HASHTAGS, mintLine], [HASHTAGS.slice(0, 1), mintLine], [HASHTAGS, null], [HASHTAGS.slice(0, 1), null], ...(fees ? [[[], null]] : [])]) {
+            const r = check([head, coin, fees, loreLine, line, where, link, tags.join(" ")], citing);
             if (!r.violations.length) return { ok: true, text: r.text, violations: [] };
             violations = r.violations;
           }
@@ -237,11 +222,11 @@ export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "p
     }
     return { ok: false, text: null, violations };
   };
-  // With the fan-tribute line (and a UsePaid coin's block, the long one first) when some version of the post fits every
-  // rule with it; the tribute is kept before the UsePaid block; else the post as it would be without.
-  for (const [t, b] of [...blocks.map((b) => [tribute, b]), [tribute, null], ...blocks.map((b) => [null, b])]) {
-    if (!t && !b) continue;
-    const d = first(t, t ? [...cited, t] : cited, b);
+  // With the fan-tribute line (and a UsePaid coin's line) when some version of the post fits every rule with it; the
+  // tribute is kept before the UsePaid line; else the post as it would be without.
+  for (const [t, f] of [[tribute, fees], [tribute, null], [null, fees]]) {
+    if (!t && !f) continue;
+    const d = first(t, t ? [...cited, t] : cited, f);
     if (d.ok) return d;
   }
   return first(null, cited);
@@ -369,14 +354,12 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
       : (updates.adoptionsPosted[item.id] ||= { mint: item.adoption.mint }));
   const launchpadOf = (key) => (adoptables.cats || []).find((c) => c.ticker === key)?.launch?.launchpad;
   for (const item of list) {
-    // The last line before X (announce.mjs guardDraft): no address in a post, but for a UsePaid coin's own UsePaid page.
-    const routed = item.kind === "launch" && item.launch.feeRoute && item.launch.feesTo ? item.launch : null;
+    // The last line before X (announce.mjs guardDraft): no address in a post.
     const d = guardDraft(item.kind === "update"
       ? { ...checkUpdate(item.post.text), text: item.post.text }
       : item.kind === "launch"
-        ? draftLaunch(item.cat, { coinName: item.launch.coinName, ticker: item.launch.ticker, lore: item.launch.lore ?? null, launchpad: launchpadOf(item.id), tribute: fanTribute(item.launch.kind), usePaid: routed ? routed.feesTo : null, mint: routed ? routed.mintPublic : null })
-        : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first }),
-      routed ? [usePaidTokenUrl(routed.mintPublic)] : []);
+        ? draftLaunch(item.cat, { coinName: item.launch.coinName, ticker: item.launch.ticker, lore: item.launch.lore ?? null, launchpad: launchpadOf(item.id), tribute: fanTribute(item.launch.kind), usePaid: item.launch.feeRoute ? item.launch.feesTo : null })
+        : draftAdoption(item.adoption, item.cat, { kit: kits.get(item.cat.key), category: category.get(item.cat.key), caption: captions[item.cat.key] ?? null, ingame: fs.existsSync(path.join(root, ingameShot(item.cat.key))), first: item.first }));
     summary.drafts.push({ kind: item.kind, id: item.id, ok: d.ok, text: d.text, length: d.text ? weightedLength(d.text) : null, violations: d.violations });
     if (!d.ok) {
       summary.held.push(item.id);
@@ -413,13 +396,23 @@ export async function run({ root, env = process.env, fetchImpl = fetch, now = ()
       log(`Updates: posted ${item.kind} ${item.id}: https://x.com/catcosanctuary/status/${tweet}`);
     } catch (e) {
       const status = e instanceof XError ? e.status : null;
-      // A 401 (the keys) or 429 (the rate) says nothing about the post: it keeps its tries.
-      Object.assign(rec, { status: "failed", at: stamp(), attempts: [401, 429].includes(status) ? tries - 1 : tries,
-        error: `${e.message}${e.body ? ` ${JSON.stringify(e.body).slice(0, 300)}` : ""}` });
+      const error = `${e.message}${e.body ? ` ${JSON.stringify(e.body).slice(0, 300)}` : ""}`;
+      // X refusing a link in the post ("The Tweet contains an invalid URL": a domain it blocks, as it did usepaid.app from
+      // 2026-10-06, which cost 14 launch posts all their tries) will refuse it on every try: the post is held for a person
+      // at once, not retried, and the run says so loudly.
+      if (status === 400 && /invalid URL/i.test(error)) {
+        Object.assign(rec, { status: "held", at: stamp(), violations: [{ rule: "x_link", term: "X refused a link in the post (The Tweet contains an invalid URL)", field: "post" }], error });
+        save();
+        summary.held.push(item.id);
+        log(`::error::Updates: X refused a link in ${item.kind} ${item.id}'s post (${e.message}); it is held for review, not retried. Its links: ${(d.text.match(/https?:\/\/\S+/g) || []).join(" ")}`);
+        break;
+      }
+      // A 401 (the keys), 402 (the API credits), 403 (the account's access) or 429 (the rate) says nothing about the post: it keeps its tries.
+      Object.assign(rec, { status: "failed", at: stamp(), attempts: [401, 402, 403, 429].includes(status) ? tries - 1 : tries, error });
       save();
       summary.failed.push(item.id);
       log(`::warning::Updates: ${item.kind} ${item.id} not posted (${e.message}).`);
-      if ([401, 403, 429].includes(status)) log("::warning::X refused the credentials or the rate; stopping this run.");
+      if ([401, 402, 403, 429].includes(status)) log("::warning::X refused the credentials, the credits, the account or the rate; stopping this run.");
     }
     break;                                                  // one try a run
   }
