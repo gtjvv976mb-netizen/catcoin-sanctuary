@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/CHEDDARVPD.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107633940790124577.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-08T18:01:26Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "cheddar-vpd",
         "ticker": "CHEDDARVPD",
@@ -65,7 +65,14 @@
       },
       "feesTo": "VPDHorses",
       "mintNonce": 7803273,
-      "usePaidMint": "AoZuc5NB1L1BquyVjaKfzSzX9vhBSn3YYS2Uqevycats"
+      "usePaidMint": "AoZuc5NB1L1BquyVjaKfzSzX9vhBSn3YYS2Uqevycats",
+      "tx": "5CzdshXBNwcF9GDom69AsJEYgm212xCtvAtxBDXwhj37GW6f7JmErPcWLqCa7ycA7k6twLunTYKoX95aqCkysmud",
+      "sentAt": "2026-10-08T18:20:45Z",
+      "lastValidBlockHeight": 432660788,
+      "mintPublic": "AoZuc5NB1L1BquyVjaKfzSzX9vhBSn3YYS2Uqevycats",
+      "spentLamports": 5689120,
+      "settledAt": "2026-10-08T18:20:54Z",
+      "launchedAt": "2026-10-08T18:20:45Z"
     },
     {
       "postId": "2107649079597527317",
