@@ -71,7 +71,9 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "TroyMI_Police"
+      "feesTo": "TroyMI_Police",
+      "mintNonce": 568511,
+      "usePaidMint": "9HvZ6Ct3wzxym4zhhqjiLkZULbKQByUBcSBoWksdcats"
     },
     {
       "postId": "2107924203986972792",
@@ -221,7 +223,10 @@
       "spentLamports": 5557040,
       "settledAt": "2026-10-08T04:37:46Z",
       "launchedAt": "2026-10-08T04:37:36Z",
-      "recordedAt": "2026-10-08T04:37:52Z"
+      "recordedAt": "2026-10-08T04:37:52Z",
+      "feeRoute": {
+        "at": "2026-10-08T11:31:21Z"
+      }
     },
     {
       "postId": "2107833539941040431",
