@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107633940790124577",
+      "url": "https://x.com/catcosanctuary/status/2107633940790124577",
+      "name": "Cheddar",
+      "coinName": "Cheddar",
+      "ticker": "CHEDDARVPD",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Cheddar, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/CHEDDARVPD.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/CHEDDARVPD.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107633940790124577.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-08T18:01:26Z",
+      "attempts": 0,
+      "cat": {
+        "id": "cheddar-vpd",
+        "ticker": "CHEDDARVPD",
+        "name": "Cheddar",
+        "coinName": "Cheddar",
+        "owner": "Vancouver Police Department Mounted Unit (@VPDHorses)",
+        "category": "company",
+        "story": "Cheddar is the official barn cat of the Vancouver Police Department's Mounted Unit, whose stables are in Stanley Park. The VPD's own profile lists him as a male mixed-breed cat born May 4, 2020, weighing 11 lbs, who came from the mountains of Merritt, BC. He patrols near the Mounted Unit barn, keeps mice and pests in check, and trails the handlers at feeding time. The unit's X account posts him as #PoliceCatCheddar: on duty in a hi-vis vest in the works yard (2022), after his New Year's bath (2024), and at a vet check where he got a clean bill of health and a reminder that he may be 'a bit rotund' (2024).",
+        "look": "Fluffy long-haired orange (ginger) tabby with a white chest ruff and bib, white muzzle and chin, white paws, a big plumed orange tail and amber eyes. Stocky and chunky. Wears a collar with a blue tag, and sometimes a neon-yellow and orange safety vest.",
+        "coat": {
+          "base": "ginger",
+          "second": "white",
+          "pattern": "tabby",
+          "eyes": "amber"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/VPDHorses/status/1591464615481069570",
+          "author": "VPDHorses",
+          "handle": "VPDHorses",
+          "date": "2022-11-12",
+          "dateType": "posted",
+          "text": "Police Cat Cheddar is on duty in the works yard! looks like he’s directing traffic… or hunting bugs???SafetyFirst!! @VancouverPD @ParkBoard #Vpdhorses #StanleyPark #FirstResponders",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "VPD Mounted Unit Horses – Meet Cheddar, the VPD Mounted Unit’s Official Barn Cat (Vancouver Police Department)",
+            "url": "https://vpd.ca/about-the-vpd/vpd-mounted-unit-horses/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Vancouver Police Department Mounted Unit (@VPDHorses).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/CHEDDARVPD.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "VPDHorses"
+    },
+    {
       "postId": "2107649079597527317",
       "url": "https://x.com/catcosanctuary/status/2107649079597527317",
       "name": "Pawfficer Donut",
