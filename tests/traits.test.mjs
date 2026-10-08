@@ -57,7 +57,8 @@ test("every resident has a character in data/traits.json, in range, with the wor
     assert.deepEqual(traitsOf(r), normalizeTraits(t), `${r.id}: traitsOf reads its row`);
   }
   // 2026-09-30: 150 -> 170 KB for the 284 residents (251 since 2026-10-01, 252 since 2026-10-02, 262 since 2026-10-03, 272 since 2026-10-06) (about 545 bytes a row).
-  assert.ok(read("data/traits.json").length < 170 * 1024, "data/traits.json stays small");
+  // 2026-10-08: 170 -> 190 KB for 319 residents (about 550 bytes a row), room for about 35 more.
+  assert.ok(read("data/traits.json").length < 190 * 1024, "data/traits.json stays small");
   assert.ok(!/https?:/.test(read("data/traits.json")), "no links in the file");
 });
 

@@ -304,7 +304,9 @@ test("page weight: the first view stays within budget", () => {
   // and models are fetched by path afterwards, so they are not in this budget at all.)
   // (Then, 2026-10-02, to 1165 KB (1161 KB measured): the real photo beside our version on a card, the big cats' bigOf at
   // 1.2x, and the Holder rewards section's "switched off" line while the rewards are not running.)
-  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1165 * 1024, "the page's own scripts over 1165 KB");
+  // (Then, 2026-10-08, to 1170 KB (1166.4 KB measured): the trait corrections for batches 4 and 5 in traits.js, each
+  // with the note saying which line of the cat's story was misread.)
+  assert.ok(of(/^assets\/(ui|world)\/|^assets\/(residents|collection)\.js$/) <= 1170 * 1024, "the page's own scripts over 1170 KB");
   assert.ok(of(/^data\//) <= 1.5 * MB, "the data over 1.5 MB");
   assert.ok(of(/\.woff2$/) <= 150 * 1024, "fonts over 150 KB");
   assert.ok(size("index.html") + size("assets/site.css") <= 60 * 1024, "page and stylesheet over 60 KB");
