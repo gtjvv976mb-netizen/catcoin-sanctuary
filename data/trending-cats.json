@@ -1,19 +1,20 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-08T02:56:55.300Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-08T03:37:06.428Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-08",
-  "dayUsed": 60,
+  "dayUsed": 80,
   "month": "2026-10",
-  "monthUsed": 2232,
+  "monthUsed": 2252,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
+  "2107924203986972792",
   "2107833539941040431",
   "2107742732810695136",
   "2107642061583258098",
@@ -28,6 +29,7 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2107994590242562547",
   "2107611014405775753",
   "2107607300647321997",
   "2107476716142690573",
@@ -49,6 +51,96 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2107994590242562547",
+   "url": "https://x.com/ShitpostGate/status/2107994590242562547",
+   "text": "https://t.co/iKJ0gU1W87",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1611952
+   },
+   "postedAt": "2026-10-08T00:40:49Z",
+   "likes": 2962,
+   "views": 17471,
+   "reposts": 73,
+   "heat": 1117,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUEZ6FwXMAAucu7.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-08T03:37:06.428Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "Courthouse wedding photo with people, no cat present.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2107924203986972792",
+   "url": "https://x.com/CatWorkers/status/2107924203986972792",
+   "text": "The really cool cat will serve you now.\n\n📸 Alex Ako https://t.co/q1Grpj2bbg",
+   "author": {
+    "handle": "CatWorkers",
+    "name": "cats with jobs 🛠",
+    "followers": 2312487
+   },
+   "postedAt": "2026-10-07T20:01:08Z",
+   "likes": 574,
+   "views": 31106,
+   "reposts": 24,
+   "heat": 123,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUDZ5FBWcAEwRSv.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "CatWorkers",
+   "lens": "big",
+   "readAt": "2026-10-08T03:37:06.428Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Bar Cat",
+    "memeName": "Bar Cat",
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Bar Cat",
+    "ticker": "BARCAT",
+    "lore": "A leashed Bengal sits on a dive bar counter beside a half-full beer, ready to serve you now.",
+    "sensitive": false,
+    "why": "One real cat in a fun bartender moment, no name given.",
+    "readBy": "claude",
+    "nameFrom": "meme"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "C7YZE1buB7p3362xy9RuWW4g8uUWk9YzGHUv8taUqPJr",
+     "name": "BARCA CAT",
+     "symbol": "BARCAT",
+     "url": "https://dexscreener.com/solana/amnrnye1rcohfq2urkdpyq7ddoycy9kukup9h8p22geo"
+    }
+   ],
+   "status": "candidate"
+  },
   {
    "id": "2107833539941040431",
    "url": "https://x.com/CatWorkers/status/2107833539941040431",
@@ -2075,10 +2167,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 2,
+  "nextLens": 3,
+  "bigChunk": 3,
   "figureChunk": 0,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
