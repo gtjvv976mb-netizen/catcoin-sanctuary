@@ -2,6 +2,65 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107924203986972792",
+      "url": "https://x.com/CatWorkers/status/2107924203986972792",
+      "name": "Bar Cat",
+      "coinName": "Bar Cat",
+      "ticker": "BARCAT",
+      "venue": "pump-sol",
+      "policy": "big-account",
+      "kind": "real",
+      "lore": "A leashed Bengal sits on a dive bar counter beside a half-full beer, ready to serve you now.",
+      "image": "https://pbs.twimg.com/media/HUDZ5FBWcAEwRSv.jpg",
+      "coinImage": "https://pbs.twimg.com/media/HUDZ5FBWcAEwRSv.jpg",
+      "metadataPath": "coins/2107924203986972792.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-08T03:40:43Z",
+      "attempts": 0,
+      "cat": {
+        "id": "bar-cat",
+        "ticker": "BARCAT",
+        "name": "Bar Cat",
+        "coinName": "Bar Cat",
+        "owner": "cats with jobs 🛠",
+        "category": "viral",
+        "story": "A leashed Bengal sits on a dive bar counter beside a half-full beer, ready to serve you now. Bar Cat was trending on X on October 7, 2026, and the sanctuary gave it a coin.",
+        "look": "Bar Cat, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/CatWorkers/status/2107924203986972792",
+          "author": "CatWorkers",
+          "handle": "CatWorkers",
+          "date": "2026-10-07",
+          "dateType": "posted",
+          "text": "The really cool cat will serve you now. 📸 Alex Ako https://t.co/q1Grpj2bbg",
+          "note": "Found by the sanctuary's trend watch on 2026-10-08.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by cats with jobs 🛠.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "CatWorkers",
+      "photoCredit": true
+    },
+    {
       "postId": "2107728338324488653",
       "url": "https://x.com/catcosanctuary/status/2107728338324488653",
       "name": "The Bear",
@@ -15,7 +74,7 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/MYSADCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107728338324488653.json",
-      "status": "prepared",
+      "status": "failed",
       "preparedAt": "2026-10-07T23:49:14Z",
       "attempts": 0,
       "cat": {
@@ -69,7 +128,10 @@
       },
       "feesTo": "MYSADCAT",
       "mintNonce": 8956956,
-      "usePaidMint": "E69P8DaXPbAyWxuaFvqZDANkcmrCddDA66GWeEwNcats"
+      "usePaidMint": "E69P8DaXPbAyWxuaFvqZDANkcmrCddDA66GWeEwNcats",
+      "retry": true,
+      "reason": "gave way to a trending cat; prepared again once the slot is free",
+      "settledAt": "2026-10-08T03:40:43Z"
     },
     {
       "postId": "2107833539941040431",
