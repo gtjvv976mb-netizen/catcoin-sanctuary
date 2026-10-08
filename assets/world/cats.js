@@ -188,6 +188,9 @@ const WAIT_ON = 0.5;
 const RISE_WAITS = 8;
 /** How long (s) a big cat whose way was stuck does only what it does in place (a rest, a wash) before it tries again. */
 const HEMMED = 10;
+/** Walks given up as stuck running from the same spot (it can set off no way at all) before a cat is pinned there: it
+    does its next thing where it stands (a rest, a wash), with no walk to wait at, and then tries once more. */
+const PINNED = 2;
 /** How far (units) a visitor comes into its friend's body to rub cheeks: touching. */
 const NUZZLE = 0.08;
 /** Near enough (units into the friend) to settle beside it: settling checks the room exactly. */
@@ -423,7 +426,8 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       and a cat still in the bed, slot or sunny spot it woke in keeps it while it stays. */
   function settleHere(cat, act) {
     if (cat.perch) return [];
-    if (STANDS.some((p) => Math.hypot(p.x - cat.x, p.z - cat.z) < 0.85 * Math.max(1, cat.size))) {
+    // (one pinned there, its steps off stuck time and again, stays: choose)
+    if (!pinned(cat) && STANDS.some((p) => Math.hypot(p.x - cat.x, p.z - cat.z) < 0.85 * Math.max(1, cat.size))) {
       const g = Math.max(1, cat.size), s = randomSpot(cat.rnd, cat, { near: cat, min: 1.4 * g, max: 3.2 * g }) || randomSpot(cat.rnd, cat);
       if (!s) return null;
       cat.dest = s;
@@ -512,7 +516,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
       // (the speed its step asks for, how much of its step another cat's body or a prop took back and for how long)
       wantV: 0, lastWa: start, held: 0, heldProp: 0, heldT: 0, crowdBy: null, crowdT: 0, ySettle: false, hardSum: 0, squeezeT: 0,
       // (every field a cat ever gets, from the start: the hot loops over all the cats stay fast when every cat has the same shape)
-      heldFree: 0, jamT: 0, crowdLong: 0, growth: null, legs: newLegs(), turnFlip: 0, hemmedUntil: 0,
+      heldFree: 0, jamT: 0, crowdLong: 0, growth: null, legs: newLegs(), turnFlip: 0, hemmedUntil: 0, stuckN: 0, stuckX: 0, stuckZ: 0,
     };
   }
 
@@ -610,8 +614,14 @@ export function createSanctuary({ residents, reduced = false, critters = null })
     opts.sort((a, b) => b[1] - a[1]);
     // (A big cat hemmed in, its way stuck, settles where it is a while (a rest, a wash) rather than set off on one errand
     // after another it can't go on, waiting its turn at each.)
-    for (const [kind] of opts) { if (cat.hemmedUntil > time && kind !== "rest" && kind !== "groom") continue; const act = build(cat, kind); if (act) return act; }
-    return build(cat, "rest");
+    // (Any cat pinned where it stands, its walks stuck from there time and again, does the next thing there and then tries
+    // once more: a bobcat squeezed in between a cat bed and a sleeper stood waiting at one errand after another a minute and more.)
+    const here = pinned(cat);
+    let act = null;
+    for (const [kind] of opts) { if ((cat.hemmedUntil > time || here) && kind !== "rest" && kind !== "groom") continue; if ((act = build(cat, kind))) break; }
+    act = act || build(cat, "rest");
+    if (here) { act.here = true; cat.stuckN = PINNED - 1; }
+    return act;
   }
 
   /* ── Building an activity: a list of small steps ───────────────────── */
@@ -1776,6 +1786,16 @@ export function createSanctuary({ residents, reduced = false, critters = null })
   function nextStep(act, step) { if (step.then) step.then(); act.i++; act.started = false; return true; }
   /** Gives up on the activity (the next is chosen in this same tick). */
   function abortAct(cat) { finish(cat, false); return true; }
+  /** A walk given up as stuck: what it was going to do is off. (A big cat does only what it does in place a while (HEMMED);
+      stuck again from the same spot, any cat counts it towards being pinned there (PINNED).) */
+  function stuck(cat) {
+    if (cat.big) cat.hemmedUntil = time + HEMMED;
+    if (!(cat.stuckN && atStuck(cat))) { cat.stuckN = 0; cat.stuckX = cat.x; cat.stuckZ = cat.z; }
+    cat.stuckN++;
+    return abortAct(cat);
+  }
+  const atStuck = (cat) => Math.hypot(cat.x - cat.stuckX, cat.z - cat.stuckZ) < 0.3 * Math.max(1, cat.size);
+  const pinned = (cat) => cat.stuckN >= PINNED && atStuck(cat);
 
   /** Runs the cat's activity for dt seconds. When a step ends, the next one starts in the same
       tick (with no time of its own yet), and when the activity ends the next is chosen at once,
@@ -1814,10 +1834,13 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         // steps clear first, checked again wherever it gets to. And not within a big cat's reach, nor a big
         // cat within a house cat's (tooNearBig): one step off for that, not a dance.)
         if (cat.posture === "stand" && step.type === "hold" && !cat.perch) {
-          const body = crowding(cat, cat.x, cat.z, cat.yaw, POSTURE_POSE[want], -0.04) || crowding(cat, cat.x, cat.z, cat.yaw, "walk", -0.04);
+          // (Pinned where it stands (choose: act.here), it settles there if its body sat or lying down is clear, sitting up if
+          // lying down would be in another's: its steps off are what it is stuck at.)
+          if (act.here && step.action !== "sit" && canDo(cat.traits, "sit") && crowding(cat, cat.x, cat.z, cat.yaw, POSTURE_POSE[want], -0.04) && !crowding(cat, cat.x, cat.z, cat.yaw, "sit", -0.04)) { step.action = "sit"; return true; }
+          const body = crowding(cat, cat.x, cat.z, cat.yaw, POSTURE_POSE[want], -0.04) || (act.here ? null : crowding(cat, cat.x, cat.z, cat.yaw, "walk", -0.04));
           // (A big cat hemmed in, its step away stuck already, settles where it is beside the house cat rather than try
           // the same blocked step again, errand after errand.)
-          const o = body || (step.bigRoomed || (cat.big && cat.hemmedUntil > time) ? null : tooNearBig(cat));
+          const o = body || (step.bigRoomed || act.here || (cat.big && cat.hemmedUntil > time) ? null : tooNearBig(cat));
           if (o) {
             if (!body) step.bigRoomed = true;
             const n = (step.roomTries = (step.roomTries || 0) + 1), s = n <= 3 && clearSpot(cat, o, POSTURE_POSE[want], n > 1 ? 2 : 1);
@@ -1888,7 +1911,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         cat.wa = "move"; cat.lookOn = false;
         const r = walk(cat, step, step.x, step.z, dt, speedOf(cat, step.mode), step.arrive, act.ignoreNow, !!step.through);
         if (r === "arrived") { cat.route = null; return nextStep(act, step); }
-        if (r === "stuck") { if (cat.big) cat.hemmedUntil = time + HEMMED; return abortAct(cat); }
+        if (r === "stuck") return stuck(cat);
         break;
       }
       case "chase": {
@@ -1905,7 +1928,7 @@ export function createSanctuary({ residents, reduced = false, critters = null })
         cat.wa = "move"; cat.stalk = !!step.stalk; setLook(cat, tg, 0.15);
         const r = walk(cat, step, cat.x + (tg.x - cat.x) * k, cat.z + (tg.z - cat.z) * k, dt, speedOf(cat, step.mode), 0.15, act.ignoreNow);
         if (r === "arrived") { cat.route = null; return nextStep(act, step); }
-        if (r === "stuck") { if (cat.big) cat.hemmedUntil = time + HEMMED; return abortAct(cat); }
+        if (r === "stuck") return stuck(cat);
         break;
       }
       case "pursue":
