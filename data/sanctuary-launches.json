@@ -2,6 +2,78 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107649079597527317",
+      "url": "https://x.com/catcosanctuary/status/2107649079597527317",
+      "name": "Pawfficer Donut",
+      "coinName": "Pawfficer Donut",
+      "ticker": "PAWFFICER",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Pawfficer Donut, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/PAWFFICER.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/PAWFFICER.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107649079597527317.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-08T11:28:01Z",
+      "attempts": 0,
+      "cat": {
+        "id": "pawfficer-donut",
+        "ticker": "PAWFFICER",
+        "name": "Pawfficer Donut",
+        "coinName": "Pawfficer Donut",
+        "owner": "Troy Police Department, Michigan (@TroyMI_Police)",
+        "category": "company",
+        "story": "Pawfficer Donut is the police cat of the Troy Police Department in suburban Detroit, Michigan. The department pledged to add a cat if its Twitter account reached 10,000 followers, and it went from 4,000 to 10,000 in eight days. Donut was sworn in by a judge on May 11, 2018, for the department's Feline Unit, which is meant for therapeutic purposes and public appearances. Proceeds from Troy Police Feline Unit merchandise go to the Michigan Humane Society. She became a regular on the department's X account, where her 'Caturday' posts ask people to drive sober, stop texting at the wheel and be civil to each other.",
+        "look": "Grey (blue-silver) tabby with darker grey stripes and markings, a white chin, chest and bib, large green eyes, upright ears and a pinkish-brown nose. Medium build. The department's photos carry a 'Troy Police Feline Unit' watermark.",
+        "coat": {
+          "base": "grey",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/TroyMI_Police/status/1400790650791006211",
+          "author": "TroyMI_Police",
+          "handle": "TroyMI_Police",
+          "date": "2021-06-04",
+          "dateType": "posted",
+          "text": "Happy #NationalDonutDay from Pawfficer Donut! 😺 Make sure you grab a donut (or two…) today. 🍩",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Michigan police department swears in police cat for special feline unit (WWMT, May 11, 2018)",
+            "url": "https://int.wwmt.com/news/state/troy-police-department-swore-in-police-cat-for-special-feline-unit"
+          },
+          {
+            "label": "New 'pawfficer' sworn in to Michigan police department (Bangor Daily News / AP, May 13, 2018)",
+            "url": "https://www.bangordailynews.com/2018/05/13/news/new-pawfficer-sworn-in-to-michigan-police-department"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Donut",
+          "contract": "5BP5LHsATM7HDBf3KNmHqqp9emRe4UxyyfsNj6Rmpump",
+          "mcapUsd": 0
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Troy Police Department, Michigan (@TroyMI_Police).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/PAWFFICER.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "TroyMI_Police"
+    },
+    {
       "postId": "2107924203986972792",
       "url": "https://x.com/CatWorkers/status/2107924203986972792",
       "name": "Bar Cat",
