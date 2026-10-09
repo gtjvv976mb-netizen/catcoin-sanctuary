@@ -9,9 +9,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import { ROOT } from "./helpers.mjs";
+import { ROOT, tempDir } from "./helpers.mjs";
 import {
   main, selectEntries, reserveOf, perRun, backlogOn, generatorOf, startTry, finishTry, cleanRow, bundlePaths, artifactPath, furthestRow, meshyOutcome, tripoOutcome, failTripoMake, byOf, canTry, restoreJob, stateOf, keysOf, launchedCats,
   glbProblems, rigProblems, glbPositions, readGlb, modelProblems, loadRig, MAX_TRIES, DEFAULT_RESERVE, GENERATORS, BUDGET, MODEL_TESTS, FILES, TRIPO_MAKE_MINUTES, MAKE_MARGIN_MS,
@@ -384,7 +383,7 @@ test("the checks: a shipped model passes (budget, a textured GLB, the garden's r
 /* ── the steps, on a throwaway repository with fakes ──────────────────────────────────── */
 
 function repo({ queue = QUEUE, meshyState = {}, jobs = {}, adoptables = ADOPT, state = null } = {}) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "models-"));
+  const root = tempDir("models-");
   const w = (rel, v) => { fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); fs.writeFileSync(path.join(root, rel), typeof v === "string" || Buffer.isBuffer(v) ? v : `${JSON.stringify(v, null, 1)}\n`); };
   w(FILES.queue, queue); w(FILES.meshyState, meshyState); w(FILES.jobs, jobs); w(FILES.adoptables, adoptables);
   w(FILES.photos, { cats: {}, none: {} });
@@ -662,7 +661,7 @@ async function packArtifact({ src = SAMPLE, hd } = {}) {
   const r = await main(["pack"], { env: { KEYS: "NEWCAT" }, root: runner.root, now: NOW, exec: fakePacker(runner, { src, ...(hd === undefined ? {} : { hd }) }), R, log: () => {} });
   assert.equal(r.outputs.live, "NEWCAT");
   runner.w(`${FILES.previews}/NEWCAT.png`, PNG);
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "models-art-"));
+  const dir = tempDir("models-art-");
   await main(["bundle", dir], { env: { KEYS: "NEWCAT" }, root: runner.root, now: NOW, log: () => {} });
   return dir;
 }
@@ -672,7 +671,7 @@ const testsOk = (calls = []) => (cmd, args) => { calls.push([cmd, ...args]); ass
  * false (its default, which the workflow keeps): any file or folder whose name starts with "." is left out.
  */
 function uploadLike(dir) {
-  const out = fs.mkdtempSync(path.join(os.tmpdir(), "models-up-"));
+  const out = tempDir("models-up-");
   const walk = (rel) => {
     for (const e of fs.readdirSync(path.join(dir, rel), { withFileTypes: true })) {
       if (e.name.startsWith(".")) continue;
@@ -685,7 +684,7 @@ function uploadLike(dir) {
 }
 /** `t`'s bundle for these keys, as the next job gets it (uploadLike). */
 async function artifactOf(t, keys) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "models-art-"));
+  const dir = tempDir("models-art-");
   await main(["bundle", dir], { env: { KEYS: keys }, root: t.root, now: NOW, log: () => {} });
   return uploadLike(dir);
 }
@@ -740,7 +739,7 @@ test("merge: a try whose Pack (or Meshy) job failed, timed out or was cancelled 
   runner.w(FILES.meshyState, ms);
   runner.w(FILES.state, { note: "n", cats: { NEWCAT: { attempts: 1, status: "made", at: "t", tasks: ["v1", "m1", "f1"] }, LATECAT: { attempts: 2, status: "started", at: "t" } } });
   runner.w(FILES.jobs, { NEWCAT: { model_job: "m1", url: "https://x/unchecked.glb", status: "done", previous: null } });
-  const meshyDir = fs.mkdtempSync(path.join(os.tmpdir(), "models-art-"));
+  const meshyDir = tempDir("models-art-");
   await main(["bundle", meshyDir], { env: { KEYS: "NEWCAT LATECAT" }, root: runner.root, now: NOW, log: () => {} });
   const t = repo();
   const jobsBefore = t.read(FILES.jobs);
@@ -762,7 +761,7 @@ test("merge: a try whose Pack (or Meshy) job failed, timed out or was cancelled 
 
 test("merge: the Tripo job's record wins for the rig; bundle and unbundle carry only the expected paths", async () => {
   const dir = await packArtifact();
-  const tripoDir = fs.mkdtempSync(path.join(os.tmpdir(), "models-art-"));
+  const tripoDir = tempDir("models-art-");
   const runner = repo();
   await main(["unbundle", dir], { env: { KEYS: "NEWCAT" }, root: runner.root, now: NOW, log: () => {} });
   assert.ok(runner.exists("assets/models/cats/NEWCAT.glb") && runner.json(FILES.state).cats.NEWCAT.status === "live");
@@ -782,7 +781,7 @@ test("merge: a Tripo try whose make or Pack job did not finish is recorded faile
   runner.w(FILES.jobs, { NEWCAT: { model_job: "m1", url: "https://tripo.example/m.glb", status: "done", previous: null } });
   runner.w(`${FILES.cache}/NEWCAT.raw.glb`, fs.readFileSync(path.join(ROOT, `assets/models/cats/${SAMPLE}.glb`)));
   runner.w(`${FILES.cache}/NEWCAT.raw.job`, "m1");
-  const madeDir = fs.mkdtempSync(path.join(os.tmpdir(), "models-art-"));
+  const madeDir = tempDir("models-art-");
   await main(["bundle", madeDir], { env: { KEYS: "NEWCAT LATECAT" }, root: runner.root, now: NOW, log: () => {} });
   const t = repo({ meshyState: { OTHER: { status: "done" } } });
   const jobsBefore = t.read(FILES.jobs), summary = path.join(t.root, "summary.md");
@@ -1046,7 +1045,7 @@ test("tripo.mjs make: a failure is recorded with its task ids and what it spent,
   assert.throws(() => makeModel("TINT", { root: t.root, run: () => assert.fail("no call") }), /not a queued rebuild/);
   assert.throws(() => makeModel("NEWCAT", { root: t.root, run: () => assert.fail("no call"), reserve: NaN }), /--reserve must be a number/);
   // Only a GLB inside the download folder is taken.
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), "tripo-dl-"));
+  const d = tempDir("tripo-dl-");
   fs.writeFileSync(path.join(d, "model.glb"), "not a glb");
   assert.throws(() => modelFileOf({ model_file: path.join(d, "model.glb"), files: ["/etc/hostname"] }, d), /no GLB/);
 });

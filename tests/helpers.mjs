@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { afterEach } from "node:test";
 import { fileURLToPath } from "node:url";
 import { base58Decode, base58Encode } from "../assets/collection.js";
 import { keypairFromSecret, deriveMintKeypair, transactionToJson } from "../scripts/lib/solana-tx.mjs";
@@ -113,9 +114,24 @@ export function fakeRpc({ histories = {}, transactions = recordedTransactions(),
   return { fetchImpl, calls };
 }
 
-/** A temporary copy of a data folder with the given files. Returns its root. */
+/* Every folder tempDir makes is removed once the test that made it finishes: a run leaves nothing in the OS temp dir
+   (a launcher fixture is a copy of data/, and hundreds of them filled the disk). Registered once per test file, on its
+   top-level tests (each file runs in its own process; no file has subtests). */
+const tempDirs = new Set();
+afterEach(() => {
+  for (const dir of tempDirs) fs.rmSync(dir, { recursive: true, force: true });
+  tempDirs.clear();
+});
+/** A new empty folder under the OS temp dir (`prefix` and six random characters), made inside a test and removed when it ends. */
+export function tempDir(prefix) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
+  tempDirs.add(dir);
+  return dir;
+}
+
+/** A temporary copy of a data folder with the given files (removed when the test ends). Returns its root. */
 export function tempSite({ wallets = { launchers: [] }, collection = { cats: [] }, state } = {}) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "sanctuary-"));
+  const root = tempDir("sanctuary-");
   fs.mkdirSync(path.join(root, "data"));
   const put = (name, value) => fs.writeFileSync(path.join(root, "data", name), `${JSON.stringify(value, null, 2)}\n`);
   put("wallets.json", wallets);

@@ -39,7 +39,7 @@
    out, and cats of every size hopping up a cat tree. */
 
 import { isMainThread, parentPort, workerData, Worker } from "node:worker_threads";
-import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -273,7 +273,8 @@ async function loadCritters(seed) {
     .replace('from "three";', `from "${THREE_URL}";`).replace('from "three/addons/utils/BufferGeometryUtils.js"', `from "${pathToFileURL(utils).href}"`)
     .replace('from "./layout.js"', `from "${v("assets/world/layout.js")}"`).replace('from "./rng.js"', `from "${v("assets/world/rng.js")}"`)
     .replace('makeRandom("critters")', `makeRandom("critters${seed}")`));
-  return { THREE: await import(THREE_URL), ...(await import(pathToFileURL(file).href)) };
+  // Loaded, the copies are not read again: removed (this runs in workers too, where no test hook would).
+  try { return { THREE: await import(THREE_URL), ...(await import(pathToFileURL(file).href)) }; } finally { rmSync(dir, { recursive: true, force: true }); }
 }
 
 /** The real garden with its birds and butterflies (critters.js, built as the page builds them; `seed` varies them)

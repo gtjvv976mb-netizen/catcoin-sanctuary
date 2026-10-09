@@ -2,8 +2,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
+import { tempDir } from "./helpers.mjs";
 import { ordered, imageRef, retextureBody, referenceBody, modelBody, recordModel, STANDING } from "../scripts/meshy.mjs";
 
 const QUEUE = { cats: {
@@ -36,7 +36,7 @@ test("the shipped queue: every cat has an action, a priority and a way to style 
 });
 
 test("reference pictures: https as is, repo JPG/PNG as data URIs, 'generate' and missing files as none", () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "meshy-"));
+  const dir = tempDir("meshy-");
   fs.writeFileSync(path.join(dir, "a.jpg"), Buffer.from([0xff, 0xd8, 0xff]));
   fs.writeFileSync(path.join(dir, "b.png"), Buffer.from([0x89, 0x50]));
   assert.equal(imageRef("https://pbs.twimg.com/media/x.jpg", dir), "https://pbs.twimg.com/media/x.jpg");

@@ -11,7 +11,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { randomBytes } from "node:crypto";
-import { ROOT, DATA_NOW, recordedAccounts } from "./helpers.mjs";
+import { ROOT, DATA_NOW, recordedAccounts, tempDir } from "./helpers.mjs";
 import { base58Encode, base58Decode, validateCollection, validateWallets, isAddress, SOL_PAIR, STOCK_PAIRS, validatePumpQuotes, MAX_CATS } from "../assets/collection.js";
 import { adoptableProblem, validateAdoptables, realPhotoOf, ADOPTABLE_CATEGORIES } from "../assets/ui/adoptables.js";
 import { coatProblem } from "../assets/collection.js";
@@ -107,7 +107,7 @@ const shipped = (rel) => fixtureFree(rel, JSON.parse(readRoot(rel)));
 
 /** A throwaway copy of the site's data (every data file, the 3D-model queue) with the launcher's wallet listed, and these trending posts. */
 function site({ posts = [post("2100000000000000001")], wallet = null, approve = [], listWallet = true, ledger = null, watch = WATCH, quotes = null } = {}) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "launcher-"));
+  const root = tempDir("launcher-");
   fs.cpSync(path.join(ROOT, "data"), path.join(root, "data"), { recursive: true });
   // No $CATSANC holder rewards (data/rewards: the live ledger's holders' SOL would change what the wallet may spend); a test writes its own.
   fs.rmSync(path.join(root, "data/rewards"), { recursive: true, force: true });

@@ -3,9 +3,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import { ROOT } from "./helpers.mjs";
+import { ROOT, tempDir } from "./helpers.mjs";
 import { validateAdoptables, adoptableProblem, existingCoinLine, tributeLine, ADOPTABLE_CATEGORIES, loreProblem, lorePath } from "../assets/ui/adoptables.js";
 import { buildAdoptables, usable, AdoptablesError } from "../scripts/build-adoptables.mjs";
 import { coatProblem } from "../assets/collection.js";
@@ -84,7 +83,7 @@ test("existing coin and tribute lines read as the card shows them", () => {
 });
 
 test("build: takes the strongest cats, skips low confidence and unsettled looks, marks portraits pending, holds new cats", () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "adopt-"));
+  const root = tempDir("adopt-");
   fs.mkdirSync(path.join(root, "data")); fs.mkdirSync(path.join(root, "assets/portraits"), { recursive: true });
   fs.writeFileSync(path.join(root, "data/planned.json"), JSON.stringify({ stocks: [], cats: [] }));
   fs.writeFileSync(path.join(root, "data/announced.json"), JSON.stringify({ cats: { LARRY10: { status: "posted" } } }));
@@ -116,7 +115,7 @@ test("build: takes the strongest cats, skips low confidence and unsettled looks,
 });
 
 test("build: a rebuild keeps the sanctuary's launches: a launch field survives, a changed name or ticker keeps the launched row, a cat the research dropped (or the launcher added) stays; an unreadable file stops it (K)", () => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), "adopt-launch-"));
+  const root = tempDir("adopt-launch-");
   fs.mkdirSync(path.join(root, "data")); fs.mkdirSync(path.join(root, "assets/portraits"), { recursive: true });
   fs.writeFileSync(path.join(root, "data/planned.json"), JSON.stringify({ stocks: [], cats: [] }));
   fs.writeFileSync(path.join(root, "data/announced.json"), JSON.stringify({ cats: {} }));
