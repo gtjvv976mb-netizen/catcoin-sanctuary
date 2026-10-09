@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/NOZAWAMUGI.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107511052162183661.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-09T21:46:17Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "mugi-kiriya-ryokan",
         "ticker": "NOZAWAMUGI",
@@ -69,7 +69,18 @@
       },
       "feesTo": "kiriya_ryokan",
       "mintNonce": 49335,
-      "usePaidMint": "GK5Voa5zv8st4cVnRYeSBjJahMTNDjT7qBVW5sTkcats"
+      "usePaidMint": "GK5Voa5zv8st4cVnRYeSBjJahMTNDjT7qBVW5sTkcats",
+      "tx": "WoGo8g87zUxXSV5MZnFHZsqGQTUtP8itkNunecNFM8Maz1p3NBp4nzZZULch16xKj29bw5DVAtjdu9Tf416ZFJc",
+      "sentAt": "2026-10-09T22:00:55Z",
+      "lastValidBlockHeight": 433054173,
+      "mintPublic": "GK5Voa5zv8st4cVnRYeSBjJahMTNDjT7qBVW5sTkcats",
+      "spentLamports": 5755160,
+      "settledAt": "2026-10-09T22:01:04Z",
+      "launchedAt": "2026-10-09T22:00:55Z",
+      "feeRoute": {
+        "tx": "5EQvjBMdnHXeC4YxMRZtCLrCWZ54bpFDzLiJBTgHbByxDu6eX6v9zpuKCV8CPdH6W54pH4yGEopCopX3tMCqRYxH",
+        "at": "2026-10-09T22:01:08Z"
+      }
     },
     {
       "postId": "2107525347147468842",
