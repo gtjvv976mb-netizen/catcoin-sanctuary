@@ -1,19 +1,20 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-08T23:26:54.435Z",
- "lens": null,
- "query": null,
+ "checkedAt": "2026-10-09T00:07:01.441Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
-  "day": "2026-10-08",
-  "dayUsed": 306,
+  "day": "2026-10-09",
+  "dayUsed": 20,
   "month": "2026-10",
-  "monthUsed": 2478,
+  "monthUsed": 2498,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
+  "2108286761226924247",
   "2107924203986972792",
   "2107833539941040431",
   "2107742732810695136",
@@ -29,6 +30,8 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2108319407315230954",
+  "2108304571605151905",
   "2108062638865256849",
   "2108008136732983396",
   "2107994590242562547",
@@ -54,6 +57,177 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2108319407315230954",
+   "url": "https://x.com/ShitpostGate/status/2108319407315230954",
+   "text": "https://t.co/gQXrlHtRiP",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1611695
+   },
+   "postedAt": "2026-10-08T22:11:32Z",
+   "likes": 1101,
+   "views": 9465,
+   "reposts": 37,
+   "heat": 660,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUJBVAfWUAEfm69.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-09T00:07:01.441Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "A 4chan screenshot about diet with a plate of food, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2108304571605151905",
+   "url": "https://x.com/ShitpostGate/status/2108304571605151905",
+   "text": "\"shit hit the fan\" https://t.co/S2vn3jjgxZ https://t.co/JWBIUGffZZ",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1611695
+   },
+   "postedAt": "2026-10-08T21:12:34Z",
+   "likes": 3725,
+   "views": 38492,
+   "reposts": 121,
+   "heat": 1497,
+   "media": [
+    {
+     "type": "animated_gif",
+     "url": "https://pbs.twimg.com/tweet_video_thumb/HUIz1MOW0AE_UJs.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-09T00:07:01.441Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "A reaction GIF of a man, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2108286761226924247",
+   "url": "https://x.com/CatWorkers/status/2108286761226924247",
+   "text": "🐈‍⬛ Callie the cat\n🛒 Aubuchon Hardware (Meredith, NH) https://t.co/xe6YrWJfQJ",
+   "author": {
+    "handle": "CatWorkers",
+    "name": "cats with jobs 🛠",
+    "followers": 2312288
+   },
+   "postedAt": "2026-10-08T20:01:48Z",
+   "likes": 447,
+   "views": 15653,
+   "reposts": 29,
+   "heat": 162,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUIjovKXsAEokYb.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "CatWorkers",
+   "lens": "big",
+   "readAt": "2026-10-09T00:07:01.441Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Callie",
+    "memeName": null,
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Callie",
+    "ticker": "CALLIE",
+    "lore": "Callie the black cat works the counter at Aubuchon Hardware in Meredith, NH, sitting by the paint cans and the review QR code.",
+    "sensitive": false,
+    "why": "A single named shop cat on the job, wholesome and harmless.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "8PKZchaDG3X1RXrAzkZmYZ74kM4Ygg5wsz84UDMsY8DV",
+     "name": "Callie the cat",
+     "symbol": "CALLIE",
+     "url": "https://dexscreener.com/solana/3sqkwk47meunttx6bnpj9b244flo3vemaic2orfaj7bk"
+    }
+   ],
+   "status": "candidate"
+  },
+  {
+   "id": "2108216695068467426",
+   "url": "https://x.com/ShitpostGate/status/2108216695068467426",
+   "text": "https://t.co/4KndEMzChl",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1611695
+   },
+   "postedAt": "2026-10-08T15:23:23Z",
+   "likes": 4498,
+   "views": 43830,
+   "reposts": 80,
+   "heat": 584,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUHj6QgWkAAXRP-.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-09T00:07:01.441Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": true,
+    "why": "A wedding selfie post with no cat at all, and it involves personal/identity topics.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "passed"
+  },
   {
    "id": "2108062638865256849",
    "url": "https://x.com/ShitpostGate/status/2108062638865256849",
@@ -2293,13 +2467,35 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 2,
+  "nextLens": 1,
+  "bigChunk": 3,
   "figureChunk": 1,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
+   "callie": {
+    "name": "Callie",
+    "firstSeen": "2026-10-08T20:01:48.000Z",
+    "lastSeen": "2026-10-08T20:01:48.000Z",
+    "authors": [
+     "CatWorkers"
+    ],
+    "posts": [
+     "2108286761226924247"
+    ],
+    "likes": 447,
+    "sightings": [
+     {
+      "at": "2026-10-08T20:01:48.000Z",
+      "author": "CatWorkers",
+      "post": "2108286761226924247",
+      "likes": 447,
+      "seen": "2026-10-09T00:07:01.441Z",
+      "via": "big"
+     }
+    ]
+   },
    "kiki": {
     "name": "Kiki",
     "firstSeen": "2026-10-07T14:00:52.000Z",
@@ -2341,50 +2537,6 @@
       "likes": 594,
       "seen": "2026-10-07T02:46:31.731Z",
       "via": "big"
-     }
-    ]
-   },
-   "cookie": {
-    "name": "Cookie",
-    "firstSeen": "2026-10-05T18:58:13.000Z",
-    "lastSeen": "2026-10-05T18:58:13.000Z",
-    "authors": [
-     "ChitChatWithAly"
-    ],
-    "posts": [
-     "2107183597840978170"
-    ],
-    "likes": 28,
-    "sightings": [
-     {
-      "at": "2026-10-05T18:58:13.000Z",
-      "author": "ChitChatWithAly",
-      "post": "2107183597840978170",
-      "likes": 28,
-      "seen": "2026-10-06T01:36:25.091Z",
-      "via": "viral"
-     }
-    ]
-   },
-   "sundae": {
-    "name": "Sundae",
-    "firstSeen": "2026-10-05T18:58:13.000Z",
-    "lastSeen": "2026-10-05T18:58:13.000Z",
-    "authors": [
-     "ChitChatWithAly"
-    ],
-    "posts": [
-     "2107183597840978170"
-    ],
-    "likes": 28,
-    "sightings": [
-     {
-      "at": "2026-10-05T18:58:13.000Z",
-      "author": "ChitChatWithAly",
-      "post": "2107183597840978170",
-      "likes": 28,
-      "seen": "2026-10-06T01:36:25.091Z",
-      "via": "viral"
      }
     ]
    }
