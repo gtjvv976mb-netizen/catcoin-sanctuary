@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107511052162183661",
+      "url": "https://x.com/catcosanctuary/status/2107511052162183661",
+      "name": "Mugi",
+      "coinName": "Mugi of Nozawa Onsen",
+      "ticker": "NOZAWAMUGI",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Mugi, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/NOZAWAMUGI.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/NOZAWAMUGI.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107511052162183661.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-09T21:46:17Z",
+      "attempts": 0,
+      "cat": {
+        "id": "mugi-kiriya-ryokan",
+        "ticker": "NOZAWAMUGI",
+        "name": "Mugi",
+        "coinName": "Mugi of Nozawa Onsen",
+        "owner": "Kiriya Ryokan, Nozawa Onsen, Nagano (@kiriya_ryokan)",
+        "category": "company",
+        "story": "Mugi (ムギ) is one of the kanban neko (signboard cats) at Kiriya Ryokan, a hot-spring inn in Nozawa Onsen, Nagano, that calls itself a 'cat inn' (ねこ宿) where ten signboard cats welcome guests. The inn introduced her on X in September 2022 as its newest cat, from the village's Oyu-dori street, starting her signboard-cat training. In Rakuten Travel's 2023 ranking of inns' signboard cats she came second. All About wrote that she is not shy, loves being petted, and has a wheat-coloured coat mixed with white 'like milk tea', and that she was training as the warmer of guests' laps and slippers.",
+        "look": "Cream / pale-ginger and white shorthair: white muzzle, chest, legs and paws; pale ginger patches over the head, ears and back; round golden-amber eyes, pink nose; wears a collar with a small pendant.",
+        "coat": {
+          "base": "cream",
+          "second": "white",
+          "pattern": "bicolour",
+          "eyes": "amber"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/kiriya_ryokan/status/1854888168539275752",
+          "author": "kiriya_ryokan",
+          "handle": "kiriya_ryokan",
+          "date": "2024-11-08",
+          "dateType": "posted",
+          "text": "必要以上に貫禄のある顔がとれた。 ムギはまだ2歳半だから。 #野沢温泉 #桐屋旅館 #ねこ温泉 #ねこ宿 #看板猫",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "「全国の宿 自慢の看板猫」ランキング！ 2位は長野県「野沢温泉 桐屋旅館」の「ムギ」ちゃん (All About News, 2023-02-16)",
+            "url": "https://news.allabout.co.jp/articles/o/56927/"
+          },
+          {
+            "label": "Kiriya Ryokan official site",
+            "url": "https://kiriya.jp/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Kiriya Ryokan, Nozawa Onsen, Nagano (@kiriya_ryokan).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/NOZAWAMUGI.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "kiriya_ryokan"
+    },
+    {
       "postId": "2107525347147468842",
       "url": "https://x.com/catcosanctuary/status/2107525347147468842",
       "name": "Higan",
