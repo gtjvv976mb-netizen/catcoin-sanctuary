@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107573034622103874",
+      "url": "https://x.com/catcosanctuary/status/2107573034622103874",
+      "name": "Shachi",
+      "coinName": "Shachi-hime",
+      "ticker": "SHACHIHIME",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Shachi (シャチ), whom he calls 'Shachi-hime' (Princess Shachi), is the calico cat of Daisuke Sakuma of the J-pop group Snow Man.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/SHACHIHIME.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/SHACHIHIME.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107573034622103874.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-09T10:14:51Z",
+      "attempts": 0,
+      "cat": {
+        "id": "shachi-daisuke-sakuma",
+        "ticker": "SHACHIHIME",
+        "name": "Shachi",
+        "coinName": "Shachi-hime",
+        "owner": "Daisuke Sakuma of Snow Man, J-pop idol (@SAK_SAK_SAKUMA)",
+        "category": "celebrity",
+        "story": "Shachi (シャチ), whom he calls 'Shachi-hime' (Princess Shachi), is the calico cat of Daisuke Sakuma of the J-pop group Snow Man. She shares his home with the brown tabby Tuna, and he posts the pair as #ツナシャチ. Sakuma celebrated her third birthday on 17 April 2025 and her fourth in April 2026, calling her the household's 'scatterbrained princess'. Japanese music site THE FIRST TIMES regularly reports his cat posts, including a November 2025 photo of her relaxing with her eyes closed on his chest captioned 'S・M・T (Shachi is truly an angel)'. His posts also show her sitting politely in front of her bowl waiting for breakfast, and taking turns with Tuna to occupy his lap while he works at the dining table.",
+        "look": "Calico (tortoiseshell-and-white): black mask over the eyes and ears with orange patches on the forehead, a white blaze down the nose into a white muzzle, chest, belly and legs, a small orange spot beside the pink nose, black-and-orange patched back and a long black tail; yellow-green eyes; slim build.",
+        "coat": {
+          "base": "white",
+          "second": "black",
+          "pattern": "calico",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/SAK_SAK_SAKUMA/status/1934180173865509216",
+          "author": "SAK_SAK_SAKUMA",
+          "handle": "SAK_SAK_SAKUMA",
+          "date": "2025-06-15",
+          "dateType": "posted",
+          "text": "お皿の前でお座りして、 朝ごはんを待つシャチちゃん。 可愛すぎな。 #お座りシャチちゃん",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "佐久間大介の胸の上で愛猫が目を閉じてリラックスした姿を激写！ (THE FIRST TIMES)",
+            "url": "https://www.thefirsttimes.jp/news/0000718440/"
+          },
+          {
+            "label": "佐久間大介が自身の胸に顔をうずめる愛猫の姿を公開 (THE FIRST TIMES, 26 May 2025)",
+            "url": "https://www.thefirsttimes.jp/news/0000622823/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Daisuke Sakuma of Snow Man, J-pop idol (@SAK_SAK_SAKUMA).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/SHACHIHIME.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "SAK_SAK_SAKUMA"
+    },
+    {
       "postId": "2107588155872297468",
       "url": "https://x.com/catcosanctuary/status/2107588155872297468",
       "name": "Oreo",
