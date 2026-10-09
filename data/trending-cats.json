@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-09T05:57:42.578Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-09T06:37:45.769Z",
+ "lens": "big",
+ "query": "(from:NintendoAmerica OR from:Pokemon OR from:PlayStation OR from:Xbox OR from:Spotify OR from:McDonalds OR from:Wendys OR from:tacobell OR from:Starbucks OR from:CocaCola OR from:Nike OR from:NBA OR from:NFL OR from:TheSimpsons OR from:CartoonNetwork OR from:adultswim OR from:Crunchyroll OR from:hellokitty OR from:binance OR from:coinbase OR from:CoinMarketCap) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-10-09",
-  "dayUsed": 142,
+  "dayUsed": 150,
   "month": "2026-10",
-  "monthUsed": 2620,
+  "monthUsed": 2628,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -33,6 +33,7 @@
   "2108361805747642420",
   "2108319407315230954",
   "2108304571605151905",
+  "2108184994674032779",
   "2108062638865256849",
   "2108008136732983396",
   "2107994590242562547",
@@ -230,6 +231,270 @@
    "status": "candidate"
   },
   {
+   "id": "2108271316813918511",
+   "url": "https://x.com/hellokitty/status/2108271316813918511",
+   "text": "Time to build your dream home and more in Hello Kitty Island Adventure! 🏠🏝️✨ Welcome Home is now available on all platforms. \n\nPlay now: https://t.co/ZdVs9RxkSk https://t.co/w3ae6cXmMr",
+   "author": {
+    "handle": "hellokitty",
+    "name": "Hello Kitty",
+    "followers": 384474
+   },
+   "postedAt": "2026-10-08T19:00:26Z",
+   "likes": 1815,
+   "views": 44469,
+   "reposts": 166,
+   "heat": 223,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/media/HUIVloAWsAAo7uk.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "hellokitty",
+   "lens": "big",
+   "readAt": "2026-10-09T06:37:45.769Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Hello Kitty",
+    "memeName": null,
+    "personFace": false,
+    "kind": "cartoon",
+    "coinName": "Hello Kitty",
+    "ticker": "KITTY",
+    "lore": "Hello Kitty welcomes everyone home outside her polka-dot house in Hello Kitty Island Adventure.",
+    "sensitive": false,
+    "why": "Post centres on the cartoon cat Hello Kitty promoting a game update.",
+    "readBy": "claude"
+   },
+   "known": true,
+   "taken": [
+    {
+     "mint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+     "name": "Hello Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/7ht9bafete5qc6sgmcw2xzvpi5ahd9zzih1dz9bcvnvv"
+    },
+    {
+     "mint": "EKEWAk7hfnwfR8DBb1cTayPPambqyC7pwNiYkaYQKQHp",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/stj9gp9kkvsbvtetbdsjwnl9jpgybcjyhawyyte4spw"
+    },
+    {
+     "mint": "8yJ15ee2AUQmwbWPxXLTTeBTzyMGn4MtSRKMqVHw1J1G",
+     "name": "KITTY AI",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/4yq6p6qhrqrkd5pk2prvkhysexhgdbc9uidnjtsnhpkk"
+    },
+    {
+     "mint": "DFfPq2hHbJeunp1F6eNyuyvBHcPpnTqaawn2tAFUpump",
+     "name": "Hello Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/hsrtbrwab29bpg6weshz61y6vybzvjjzoreguqtupfm9"
+    },
+    {
+     "mint": "6bSj6uK5wkdELQaFg8cqV1d5bbckVcWAka53hYPrp8e1",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/emqkdkrqr38r1subakq8kmuofxcsx4dwadvz8vct1bhd"
+    },
+    {
+     "mint": "8YJWJbP7fYAGWJPaXN1JnkJkCVj5qUPfn1NeRp9sMsmP",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/36bnn5e2su51kqqcc4skqdfknuwrf81ggj8idjq9ksyd"
+    },
+    {
+     "mint": "CdHo359iJeFi5i49qKhYy44a1yF2UGX2i6oM2rL9pump",
+     "name": "office hello kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/6kbls3saywk1fo69b9e27aztzt72ke4zw3dlasr2hdt9"
+    },
+    {
+     "mint": "6wrGbTGsnG5WL9RDRgPRpaSnWpy63FR8tJL8fjPvv6DR",
+     "name": "KITTY",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/ek4lygqmnypnarplhadsz4vsk7nclhmreafgaotfbggx"
+    },
+    {
+     "mint": "GDug662YCjKjCfLARUM1fiBtPWZU8w4GcuNu2hejpump",
+     "name": "First Digital Cat (1968)",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/5zy14p5wifsdy6qvo3gbbywldfbw1mc1vvgvtshurqy7"
+    },
+    {
+     "mint": "29xLbDnCAekGCtubqT4XxqQh9kYcsfxaF8SJEkButJhU",
+     "name": "DinoKitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/elxahxspwjehxigedzwtot6ly96fhan9asvs4q8nbuaj"
+    },
+    {
+     "mint": "8J739niomuTJdjoiwVpTgx8JdcKhYrjy5KB4tycjpump",
+     "name": "Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/4r9wuewaxzvg5azl9ps4fbqcysxsr22qjub1vyvsfdxh"
+    },
+    {
+     "mint": "2PqiuSJhTCZb8w4HATqcnpWig2PddPnhge6qxnaopump",
+     "name": "Kitty Explain",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/hudngmqspqvnhbakrhq1geapamsarnfvwxcbq9cng4iy"
+    },
+    {
+     "mint": "9G1zWztLVdRfbSi9h3bErsZYo4G1eDDSr8fsE3hYpump",
+     "name": "KITTY",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/dsqumaepeviccdjxmqvhi9egwmnkk3vz1q1ggd6ah4dt"
+    },
+    {
+     "mint": "6JdcMdhqgCtcP4U9tieRqmKLhPLxRMLC67QfmdXAJBvZ",
+     "name": "KITTY SOLANA",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/b3y2si26khhbtaj4hgbw4tcy7ginksrkx8ydruzp1pvd"
+    },
+    {
+     "mint": "FGcy21LZayyuGwML8iBqL7UkWuNDVLr4pMQujTYMDVy7",
+     "name": "Hello Kitty ",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/5vybpsxwrp2jsekakfylu6isuefmuxfivbifixdc5mun"
+    }
+   ],
+   "status": "passed"
+  },
+  {
+   "id": "2108256111040053354",
+   "url": "https://x.com/NintendoAmerica/status/2108256111040053354",
+   "text": "#NintendoSwitchOnline members! From Oct 9 at 10am PT to Oct 15 at 11:59pm PT, you can download and try the full Hello Kitty Island Adventure game at no additional cost.\n\nLearn more: https://t.co/wP9NSquvN5 https://t.co/BQmb79KKm9",
+   "author": {
+    "handle": "NintendoAmerica",
+    "name": "Nintendo of America",
+    "followers": 15763142
+   },
+   "postedAt": "2026-10-08T18:00:01Z",
+   "likes": 10284,
+   "views": 696041,
+   "reposts": 773,
+   "heat": 1488,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUDOf82XkAAjclw.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "NintendoAmerica",
+   "lens": "big",
+   "readAt": "2026-10-09T06:37:45.769Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Hello Kitty",
+    "memeName": null,
+    "personFace": false,
+    "kind": "cartoon",
+    "coinName": "Hello Kitty",
+    "ticker": "KITTY",
+    "lore": "Hello Kitty leads an island adventure with her friends, fishing, surfing and exploring a sunny tropical paradise.",
+    "sensitive": false,
+    "why": "Promo art for Hello Kitty Island Adventure centers on the cartoon cat Hello Kitty.",
+    "readBy": "claude"
+   },
+   "known": true,
+   "taken": [
+    {
+     "mint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+     "name": "Hello Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/7ht9bafete5qc6sgmcw2xzvpi5ahd9zzih1dz9bcvnvv"
+    },
+    {
+     "mint": "EKEWAk7hfnwfR8DBb1cTayPPambqyC7pwNiYkaYQKQHp",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/stj9gp9kkvsbvtetbdsjwnl9jpgybcjyhawyyte4spw"
+    },
+    {
+     "mint": "8yJ15ee2AUQmwbWPxXLTTeBTzyMGn4MtSRKMqVHw1J1G",
+     "name": "KITTY AI",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/4yq6p6qhrqrkd5pk2prvkhysexhgdbc9uidnjtsnhpkk"
+    },
+    {
+     "mint": "DFfPq2hHbJeunp1F6eNyuyvBHcPpnTqaawn2tAFUpump",
+     "name": "Hello Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/hsrtbrwab29bpg6weshz61y6vybzvjjzoreguqtupfm9"
+    },
+    {
+     "mint": "6bSj6uK5wkdELQaFg8cqV1d5bbckVcWAka53hYPrp8e1",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/emqkdkrqr38r1subakq8kmuofxcsx4dwadvz8vct1bhd"
+    },
+    {
+     "mint": "8YJWJbP7fYAGWJPaXN1JnkJkCVj5qUPfn1NeRp9sMsmP",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/36bnn5e2su51kqqcc4skqdfknuwrf81ggj8idjq9ksyd"
+    },
+    {
+     "mint": "CdHo359iJeFi5i49qKhYy44a1yF2UGX2i6oM2rL9pump",
+     "name": "office hello kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/6kbls3saywk1fo69b9e27aztzt72ke4zw3dlasr2hdt9"
+    },
+    {
+     "mint": "6wrGbTGsnG5WL9RDRgPRpaSnWpy63FR8tJL8fjPvv6DR",
+     "name": "KITTY",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/ek4lygqmnypnarplhadsz4vsk7nclhmreafgaotfbggx"
+    },
+    {
+     "mint": "GDug662YCjKjCfLARUM1fiBtPWZU8w4GcuNu2hejpump",
+     "name": "First Digital Cat (1968)",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/5zy14p5wifsdy6qvo3gbbywldfbw1mc1vvgvtshurqy7"
+    },
+    {
+     "mint": "29xLbDnCAekGCtubqT4XxqQh9kYcsfxaF8SJEkButJhU",
+     "name": "DinoKitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/elxahxspwjehxigedzwtot6ly96fhan9asvs4q8nbuaj"
+    },
+    {
+     "mint": "8J739niomuTJdjoiwVpTgx8JdcKhYrjy5KB4tycjpump",
+     "name": "Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/4r9wuewaxzvg5azl9ps4fbqcysxsr22qjub1vyvsfdxh"
+    },
+    {
+     "mint": "2PqiuSJhTCZb8w4HATqcnpWig2PddPnhge6qxnaopump",
+     "name": "Kitty Explain",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/hudngmqspqvnhbakrhq1geapamsarnfvwxcbq9cng4iy"
+    },
+    {
+     "mint": "9G1zWztLVdRfbSi9h3bErsZYo4G1eDDSr8fsE3hYpump",
+     "name": "KITTY",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/dsqumaepeviccdjxmqvhi9egwmnkk3vz1q1ggd6ah4dt"
+    },
+    {
+     "mint": "6JdcMdhqgCtcP4U9tieRqmKLhPLxRMLC67QfmdXAJBvZ",
+     "name": "KITTY SOLANA",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/b3y2si26khhbtaj4hgbw4tcy7ginksrkx8ydruzp1pvd"
+    },
+    {
+     "mint": "FGcy21LZayyuGwML8iBqL7UkWuNDVLr4pMQujTYMDVy7",
+     "name": "Hello Kitty ",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/5vybpsxwrp2jsekakfylu6isuefmuxfivbifixdc5mun"
+    }
+   ],
+   "status": "passed"
+  },
+  {
    "id": "2108216695068467426",
    "url": "https://x.com/ShitpostGate/status/2108216695068467426",
    "text": "https://t.co/4KndEMzChl",
@@ -269,6 +534,47 @@
    "known": false,
    "taken": null,
    "status": "passed"
+  },
+  {
+   "id": "2108184994674032779",
+   "url": "https://x.com/coinbase/status/2108184994674032779",
+   "text": ".@Goupenguin trading and watching cats at the same time. https://t.co/pYxrioK2Rp",
+   "author": {
+    "handle": "coinbase",
+    "name": "Coinbase 🛡️",
+    "followers": 7205561
+   },
+   "postedAt": "2026-10-08T13:17:25Z",
+   "likes": 114,
+   "views": 92356,
+   "reposts": 15,
+   "heat": 62,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2108184888759517184/img/rpWgoiTYHtNnUdWz.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "coinbase",
+   "lens": "big",
+   "readAt": "2026-10-09T06:37:45.769Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": "Penguin Cat",
+    "personFace": true,
+    "kind": "real",
+    "coinName": "Penguin Cat",
+    "ticker": "PENGUINCAT",
+    "lore": "A tuxedo cat standing upright like a penguin beside its mini twin, watched during a live trading stream.",
+    "sensitive": false,
+    "why": "The image shows a penguin-like standing tuxedo cat (and a smaller copy), but the post is about a trader, and a person's face is visible.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [],
+   "status": "signal"
   },
   {
    "id": "2108062638865256849",
@@ -2509,10 +2815,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 7,
+  "nextLens": 3,
+  "bigChunk": 8,
   "figureChunk": 1,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
