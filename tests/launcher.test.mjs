@@ -3076,6 +3076,59 @@ test("routeFees: after the launch, the creator's fee route is simulated, sent on
 });
 
 
+test("routeFees reads the sharing config at \"confirmed\": a route the chain has confirmed but not finalized is done in the run that sent it, not hours later", async () => {
+  const w = throwaway();
+  const mint = throwaway().address;
+  const launched = { postId: "2100000000000000603", ticker: "PUDDLEBT", coinName: "Puddleboot Cat", status: "launched", feesTo: "floppafan", mintPublic: mint };
+  const caps = { priorityMicroLamports: 100_000, minBalanceLamports: 20_000_000 };
+  const routed = () => {
+    const b = Buffer.alloc(1024);
+    Buffer.from(base58Decode(mint)).copy(b, 11); Buffer.from(base58Decode(w.address)).copy(b, 43); b[75] = 1; b.writeUInt32LE(1, 76);
+    Buffer.from(base58Decode(USEPAID_RECIPIENT_T)).copy(b, 80); b.writeUInt16LE(10_000, 112);
+    return b.toString("base64");
+  };
+  // The chain as an RPC sees it: once sent, the config is there at "confirmed" (after `lag` reads at it), and at
+  // "finalized" (the RPC's default) only later; the signature's status is "confirmed".
+  const chain = ({ lag = 0 } = {}) => {
+    const r = { sent: [], reads: [], sentYet: false };
+    Object.assign(r, {
+      getMultipleAccounts: async (addresses, { commitment = "finalized" } = {}) => {
+        r.reads.push(commitment);
+        const seen = r.sentYet && commitment === "confirmed" && r.reads.filter((c) => c === "confirmed").length > 1 + lag;
+        return [seen ? { data: [routed(), "base64"] } : null];
+      },
+      getBalance: async () => 1_000_000_000,
+      getLatestBlockhash: async () => ({ blockhash: "11111111111111111111111111111111", lastValidBlockHeight: 100 }),
+      simulateTransaction: async () => ({ err: null, accounts: [{ lamports: 991_000_000 }] }),
+      sendTransaction: async (tx) => { r.sent.push(tx); r.sentYet = true; return "x"; },
+      getSignatureStatuses: async () => [{ confirmationStatus: "confirmed", err: null }],
+      getSignaturesForAddress: async () => [],
+    });
+    return r;
+  };
+  let t = NOW;
+  const opts = (rpc, logs = []) => ({ io: { readText: () => null }, rpc, wallet: w.kp, caps, now: () => t, sleep: async (ms) => { t += ms; }, log: (l) => logs.push(l), confirmWaitMs: 60_000, confirmPollMs: 3_000 });
+  // Confirmed, not finalized: done at once, with its signature, every read at "confirmed".
+  const rpc = chain();
+  const done = await routeFees(launched, opts(rpc));
+  assert.equal(rpc.sent.length, 1);
+  assert.ok(done?.feeRoute?.tx, "the route is done in the run that sent it");
+  assert.ok(rpc.reads.every((c) => c === "confirmed"), `reads at ${rpc.reads.join(", ")}`);
+  // A node a few reads behind: read again within the wait, still done, and still sent once.
+  const slow = chain({ lag: 3 });
+  const late = await routeFees(launched, opts(slow));
+  assert.equal(slow.sent.length, 1);
+  assert.ok(late?.feeRoute?.tx);
+  // Never seen within the wait: a wait (no try used, nothing sent again), and the reads stop at the wait's end.
+  const never = chain({ lag: 1000 });
+  const logs = [];
+  t = NOW;
+  assert.equal(await routeFees(launched, opts(never, logs)), null);
+  assert.equal(never.sent.length, 1);
+  assert.ok(never.reads.length <= 2 + 60_000 / 3_000, `${never.reads.length} reads`);
+  assert.ok(logs.some((l) => /not on chain yet/.test(l)));
+});
+
 test("a UsePaid coin's website is its own UsePaid page: the send that learns its mint writes it into the coin's metadata and sends nothing; the next run sends that very mint", async () => {
   const w = throwaway();
   const id = "2100000000000000778";
@@ -3110,6 +3163,16 @@ test("a UsePaid coin's website is its own UsePaid page: the send that learns its
   const sent = t.json(FILES.ledger).launches[0];
   assert.equal(sent.mintPublic, sent.usePaidMint, "the coin is the mint its website names");
   assert.equal(rowProblem(sent), null);
+  // Its fee route not on chain yet (this chain shows no sharing config): every run has work until it is, so the send step
+  // routes it with no new cat to launch; once routed, none.
+  assert.equal(sent.feeRoute, undefined);
+  record({ io: t.io, env, now: c.now });
+  assert.equal((await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now })).pending, true, "its fee route is still due");
+  assert.equal((await prepare({ io: t.io, env: { ...env, LAUNCH_ENABLED: "dry" }, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now })).pending, false, "a dry run routes nothing");
+  const routedLedger = t.json(FILES.ledger);
+  routedLedger.launches[0] = { ...routedLedger.launches[0], feeRoute: { at: "2026-10-09T10:35:27Z" } };
+  fs.writeFileSync(path.join(t.root, FILES.ledger), JSON.stringify(routedLedger, null, 2));
+  assert.equal((await prepare({ io: t.io, env, rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now })).pending, false, "routed: nothing more");
   // Only a UsePaid coin carries it, and only an address.
   assert.match(rowProblem({ ...row, feesTo: undefined }), /usePaidMint/);
   // A coin whose account is excluded before it is sent loses its UsePaid page with its line: its website is its card again.

@@ -1506,8 +1506,8 @@ function selectionContext(io, ledger, nowMs, { env = {}, quotes = { usable: [] }
 
 /**
  * PREPARE (no key). Returns { mode, changed, pending, deploy, prepared, photos? }: `pending` when the
- * send or record phase has work (a row in flight or launched but not recorded, or, in dry mode, a cat
- * to simulate); `deploy` when a prepared row's metadata is not served yet, or data/real-photos.json
+ * send or record phase has work (a row in flight or launched but not recorded, a launched coin whose fees
+ * are still to be routed through UsePaid, or, in dry mode, a cat to simulate); `deploy` when a prepared row's metadata is not served yet, or data/real-photos.json
  * just changed with data/photo-hide.json (`photos`: the tickers hidden or shown again): the workflow
  * then deploys the site.
  */
@@ -1664,6 +1664,10 @@ export async function prepare({ io, env = {}, rpc, fetchImpl, now = Date.now, lo
     if (unserved) log(`Launcher: ${metadataUri(prepared.postId)} is not served yet; the site is to be deployed.`);
   }
   out.pending ||= inFlight(ledger).length > 0 || ledger.launches.some((r) => r.status === "launched" && !r.recordedAt);
+  // A coin whose fees are still to be routed: the send step routes them (its step 1b) with no cat to launch. Only a run that
+  // launched a cat ran it before, so a route its launch's own run missed waited for the next launch, hours later, and its
+  // X post with it (2026-10-09).
+  out.pending ||= mode === "on" && ledger.launches.some((r) => r.status === "launched" && r.feesTo && !r.feeRoute && (r.feeRouteTries ?? 0) < FEE_ROUTE_MAX_TRIES);
   return out;
 }
 
@@ -1765,8 +1769,10 @@ export async function routeFees(row, { io, rpc, wallet, env = {}, caps, now = Da
     return { ...row, feeRouteTries: tries, feeRouteError: text };
   };
   const config = sharingConfig(row.mintPublic);
+  // Read at "confirmed", the level the confirmation below waits for: the RPC's default, "finalized", trails it by about
+  // 13 seconds, so a read right after the send found no config and every route waited hours for a later run (2026-10-09).
   const readConfig = async () => {
-    const [a] = (await rpc.getMultipleAccounts([config])) ?? [];
+    const [a] = (await rpc.getMultipleAccounts([config], { commitment: "confirmed" })) ?? [];
     return a?.data?.[0] ? decodeSharingConfig(Buffer.from(a.data[0], "base64")) : null;
   };
   let existing;
@@ -1810,8 +1816,13 @@ export async function routeFees(row, { io, rpc, wallet, env = {}, caps, now = Da
     if (st?.err) return failed(`the transaction failed on chain (${errText(st.err)}): https://solscan.io/tx/${signature}`);
     if (st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) break;
   }
-  try { existing = await readConfig(); } catch { existing = null; }
-  if (routedTo(existing, USEPAID_RECIPIENT)) return done(signature);
+  // (read again until the wait ends: an RPC node a little behind the one that confirmed it answers with no config yet)
+  for (let reads = Math.max(1, Math.floor(confirmWaitMs / confirmPollMs)); ; reads--) {
+    try { existing = await readConfig(); } catch { existing = null; }
+    if (routedTo(existing, USEPAID_RECIPIENT)) return done(signature);
+    if (reads <= 1 || now() + confirmPollMs > deadline) break;
+    await sleep(confirmPollMs);
+  }
   log(`Launcher: ${row.ticker}'s fee route was sent (https://solscan.io/tx/${signature}) but is not on chain yet; the next run reads the coin's sharing config.`);
   return null;
 }
