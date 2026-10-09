@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/HIGANCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107525347147468842.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-09T17:04:03Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "higan-jushoin",
         "ticker": "HIGANCAT",
@@ -69,7 +69,18 @@
       },
       "feesTo": "jusyoin",
       "mintNonce": 2144620,
-      "usePaidMint": "BQEmgAMDSDBv4SYZSCeWWBDiukDd2ZKzjUQiUx8ncats"
+      "usePaidMint": "BQEmgAMDSDBv4SYZSCeWWBDiukDd2ZKzjUQiUx8ncats",
+      "tx": "yDPS5t7L5WymcLQFuGy7zSFcYHAXhUUunoQpgQXxDthi2A53ySQACu5fiJsrQERcnHCB64vrMk4Kg9hj29XCM2Y",
+      "sentAt": "2026-10-09T17:21:50Z",
+      "lastValidBlockHeight": 432977584,
+      "mintPublic": "BQEmgAMDSDBv4SYZSCeWWBDiukDd2ZKzjUQiUx8ncats",
+      "spentLamports": 5745000,
+      "settledAt": "2026-10-09T17:21:59Z",
+      "launchedAt": "2026-10-09T17:21:50Z",
+      "feeRoute": {
+        "tx": "2Zx5oNKzLokuVpSEK5f96ZgpwrFpSdz4gTCkzZYuQixeJbcBxU5vP9XSH4iQmpjCxF1orN77A8xSYtnTwhsJG5kK",
+        "at": "2026-10-09T17:22:03Z"
+      }
     },
     {
       "postId": "2107540481462968579",
