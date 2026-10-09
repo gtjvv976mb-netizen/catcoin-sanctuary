@@ -199,11 +199,12 @@ test("trend watch workflow: pinned actions, contents: write for the scan, secret
   assert.match(next, /\n  next:\n    needs: scan\n/, "the chain needs only the scan");
 });
 
-test("trend watch workflow: the commit step counts the candidates the commit adds (git and jq, as the runner has them)", { skip: process.platform === "win32" }, async () => {
+test("trend watch workflow: the commit step counts the candidates the commit adds (git and jq, as the runner has them)", { skip: process.platform === "win32" }, async (t) => {
   const fs = await import("node:fs"), os = await import("node:os"), path = await import("node:path"), { execFileSync } = await import("node:child_process");
   const W = fs.readFileSync(new URL("../.github/workflows/trendwatch.yml", import.meta.url), "utf8");
   const lines = W.match(/\n {10}(fresh=\$\(comm[^\n]*\\\n[^\n]*)\n/)[1].replace(/\\\n\s*/, "");
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "tw-"));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const git = (...a) => execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", ...a], { cwd: dir, encoding: "utf8" });
   const put = (v) => { fs.mkdirSync(path.join(dir, "data"), { recursive: true }); fs.writeFileSync(path.join(dir, "data/trending-cats.json"), JSON.stringify(v)); };
   const count = () => execFileSync("bash", ["-eo", "pipefail", "-c", `${lines}\necho "$fresh"`], { cwd: dir, encoding: "utf8" }).trim();

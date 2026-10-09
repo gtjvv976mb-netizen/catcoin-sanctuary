@@ -3,9 +3,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import { ROOT } from "./helpers.mjs";
+import { ROOT, tempDir } from "./helpers.mjs";
 import { listCats, run, pick, DEFAULT_CONFIG } from "../scripts/announce.mjs";
 import { teaserId, silhouettePath, upcoming, hintProblems, giveaways, nextCatFile, CATEGORIES } from "../scripts/lib/next-cat.mjs";
 import { readNext, countdown, CHIPS } from "../assets/ui/teaser.js";
@@ -64,7 +63,7 @@ test("every upcoming cat has a silhouette and a hint", () => {
 });
 
 function sandbox(state, queue = { cats: [] }, config = { dryRun: false, perRun: 1, thread: false, announceBacklog: true, backlogPerRun: 1 }) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "teaser-"));
+  const dir = tempDir("teaser-");
   fs.mkdirSync(path.join(dir, "data"));
   const cats = PLANNED.cats.slice(0, 6);
   const w = (f, v) => fs.writeFileSync(path.join(dir, "data", f), JSON.stringify(v));
@@ -102,7 +101,7 @@ test("the order matches pick(): new cats, then retries, then the backlog, then t
 test("after a release the teaser moves on to the following cat in the queue", async () => {
   const cats = PLANNED.cats.filter((c) => c.proof?.url).slice(0, 4);
   const [a, b, c] = cats.slice(1).map((x) => x.ticker);
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "teaser-rel-"));
+  const dir = tempDir("teaser-rel-");
   for (const d of ["data", "assets/portraits", "assets/kits", "assets/ingame"]) fs.mkdirSync(path.join(dir, d), { recursive: true });
   const w = (f, v) => fs.writeFileSync(path.join(dir, "data", f), JSON.stringify(v));
   w("planned.json", { ...PLANNED, cats }); w("collection.json", { cats: [] }); w("announce-config.json", { dryRun: false, perRun: 1, thread: false });

@@ -20,6 +20,7 @@ fs.copyFileSync(path.join(ROOT, "assets/world/catmotion.js"), path.join(tmp, "ca
 const THREE = await import(THREE_URL);
 const R = await import(pathToFileURL(path.join(tmp, "catrig.mjs")).href);
 const M = await import(pathToFileURL(path.join(tmp, "catmotion.js")).href);
+fs.rmSync(tmp, { recursive: true, force: true }); // loaded: the copies are not read again
 
 /** A box cat as a triangle mesh: body, head, four legs and a tail, 1 unit tall, facing +x. */
 function boxCat() {

@@ -2,9 +2,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
-import { ROOT } from "./helpers.mjs";
+import { ROOT, tempDir } from "./helpers.mjs";
 import { INGAME_LINE, listCats, draft, checkPost, weightedLength, cardLink, pick, run, LIMIT, readiness, rosterLeft, releasesFile, PAUSED_REASON, addressIn, guardDraft, provedCollection, postImages } from "../scripts/announce.mjs";
 import { proveLaunchPump } from "../scripts/lib/chain.mjs";
 import { pumpLaunch } from "./helpers.mjs";
@@ -17,7 +16,7 @@ const CATS = listCats(PLANNED);
 const CREDS = { X_API_KEY: "k", X_API_SECRET: "s", X_ACCESS_TOKEN: "t", X_ACCESS_SECRET: "a" };
 
 function sandbox({ announced = { cats: {} }, config = {}, planned = PLANNED, queue = null, collection = { cats: [] }, adoptables = null, wallets = null } = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "announce-"));
+  const dir = tempDir("announce-");
   fs.mkdirSync(path.join(dir, "data"));
   const w = (f, v) => fs.writeFileSync(path.join(dir, "data", f), JSON.stringify(v));
   w("planned.json", planned); w("collection.json", collection); w("announced.json", announced); w("announce-config.json", config);
@@ -321,7 +320,7 @@ test("adoptable cats: the lore picture object gives the portrait path", () => {
 });
 
 test("adoptable cats with no lore picture yet: their own portrait is the post image, and they are ready with it", () => {
-  const s = fs.mkdtempSync(path.join(os.tmpdir(), "announce-"));
+  const s = tempDir("announce-");
   fs.mkdirSync(path.join(s, "assets/portraits"), { recursive: true });
   fs.writeFileSync(path.join(s, "assets/portraits/NOLORE.jpg"), Buffer.from([0xff, 0xd8, 0xff]));
   const [c, p] = listCats({ stocks: [], cats: [] }, { cats: [] }, { cats: [
