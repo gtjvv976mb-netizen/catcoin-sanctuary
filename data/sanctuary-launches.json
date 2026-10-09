@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/FUKURA.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107540481462968579.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-09T15:23:44Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "fukurashi-masahiro-sakurai",
         "ticker": "FUKURA",
@@ -77,7 +77,18 @@
       },
       "feesTo": "Sora_Sakurai",
       "mintNonce": 1921105,
-      "usePaidMint": "4w7mZfZFxvkKyKFtfjVjYynixoJB4sgaKBeveqjPcats"
+      "usePaidMint": "4w7mZfZFxvkKyKFtfjVjYynixoJB4sgaKBeveqjPcats",
+      "tx": "62FDfsbmPrh7swucJQ1utUfBvLDT8MXF1HrozqHJqT8kQag8Pz5wvFFWSdVDoRt1oEYZ52AspdcPC7WpUrTs5aja",
+      "sentAt": "2026-10-09T15:40:33Z",
+      "lastValidBlockHeight": 432949823,
+      "mintPublic": "4w7mZfZFxvkKyKFtfjVjYynixoJB4sgaKBeveqjPcats",
+      "spentLamports": 5678960,
+      "settledAt": "2026-10-09T15:40:42Z",
+      "launchedAt": "2026-10-09T15:40:33Z",
+      "feeRoute": {
+        "tx": "3uZypAkuLdbfJ5qft2nnSvUFNUCYaLp5hW2YeyKzpnrAAf7sugKTM1L9XvMewdEqkXZKn1NyfaPXRji7eh1KLmhq",
+        "at": "2026-10-09T15:40:46Z"
+      }
     },
     {
       "postId": "2107558172906893542",
