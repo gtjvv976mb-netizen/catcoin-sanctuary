@@ -2,6 +2,72 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107558172906893542",
+      "url": "https://x.com/catcosanctuary/status/2107558172906893542",
+      "name": "Torahiko",
+      "coinName": "Torahiko",
+      "ticker": "TORAHIKO",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Torahiko, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/TORAHIKO.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/TORAHIKO.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107558172906893542.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-09T14:59:45Z",
+      "attempts": 0,
+      "cat": {
+        "id": "torahiko-yoichi-ochiai",
+        "ticker": "TORAHIKO",
+        "name": "Torahiko",
+        "coinName": "Torahiko",
+        "owner": "Yoichi Ochiai, media artist (@ochyai)",
+        "category": "celebrity",
+        "story": "Torahiko (トラ彦) is the black cat of Japanese media artist Yoichi Ochiai, who posts him constantly under the #トラ彦 hashtag. Ochiai marked two years with him in February 2023 and announced in November 2024 that he had turned four. Photos of Torahiko were part of Ochiai's 2023 exhibition 'Hare Tokidoki Leica' at the Leica Galleries in Tokyo and Kyoto, which NTV News singled out for its pictures of his beloved cat. At Expo 2025 Osaka, Ochiai's null² pavilion featured Torahiko in its picture book ('He's the one. His face is flat,' Ochiai wrote), and Ochiai says the pavilion had the biggest stamp of any pavilion: a Torahiko stamp. He now lives with Ochiai and a second black cat, Wajiro.",
+        "look": "Solid black with a dense, plush coat; flat, rounded face with a short muzzle (Ochiai: 'his face is flat'; Exotic Shorthair-like, breed not confirmed by sources); round amber-to-orange eyes; small rounded ears; stocky, cobby body and thick tail.",
+        "coat": {
+          "base": "black",
+          "second": "",
+          "pattern": "solid",
+          "eyes": "orange"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/ochyai/status/1956970939830489329",
+          "author": "ochyai",
+          "handle": "ochyai",
+          "date": "2025-08-17",
+          "dateType": "posted",
+          "text": "#null2 の絵本に出てくるトラ彦はこの方です．顔が平らです．#expo2025",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "落合陽一の見た1年を表現する写真展 見どころは「愛猫」と「ガンプラの茶室」 (日テレNEWS NNN, 8 Sep 2023)",
+            "url": "https://news.ntv.co.jp/category/culture/55bb1bd6012945b0acb97a01aadf15dc"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Yoichi Ochiai, media artist (@ochyai).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/TORAHIKO.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "ochyai",
+      "mintNonce": 2003283,
+      "usePaidMint": "3anuMVEmpnnk23mdfsGMwSWpsx7eAGYbmJdKk2b4cats"
+    },
+    {
       "postId": "2107573034622103874",
       "url": "https://x.com/catcosanctuary/status/2107573034622103874",
       "name": "Shachi",
@@ -77,7 +143,10 @@
       "spentLamports": 5709440,
       "settledAt": "2026-10-09T10:35:23Z",
       "launchedAt": "2026-10-09T10:35:14Z",
-      "recordedAt": "2026-10-09T10:35:30Z"
+      "recordedAt": "2026-10-09T10:35:30Z",
+      "feeRoute": {
+        "at": "2026-10-09T15:03:14Z"
+      }
     },
     {
       "postId": "2107588155872297468",
