@@ -2,6 +2,82 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107540481462968579",
+      "url": "https://x.com/catcosanctuary/status/2107540481462968579",
+      "name": "Fukurashi",
+      "coinName": "Fukurashi",
+      "ticker": "FUKURA",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of Fukurashi.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/FUKURA.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/FUKURA.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107540481462968579.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-09T15:23:44Z",
+      "attempts": 0,
+      "cat": {
+        "id": "fukurashi-masahiro-sakurai",
+        "ticker": "FUKURA",
+        "name": "Fukurashi",
+        "coinName": "Fukurashi",
+        "owner": "Masahiro Sakurai, game designer (Kirby, Super Smash Bros.) (@Sora_Sakurai)",
+        "category": "celebrity",
+        "story": "Fukurashi (ふくらし), formally named Fukura, was the female Scottish Fold of Masahiro Sakurai, the game designer behind Kirby and Super Smash Bros. He introduced his new cat in his Famitsu column in July 2009 and shared her photos on X for years; she was born on 6 April. A 2022 video on his YouTube channel 'Masahiro Sakurai on Creating Games' about nothing but her outdrew some of his game-related videos, and she appeared on the cover of his biographical manga. After battling pleural effusion, heart failure, kidney failure and cystitis, she died peacefully at home at 7 am JST on 6 February 2026, aged 17. 'Thank you for everything!' Sakurai wrote.",
+        "look": "Scottish Fold with small folded ears; brown tabby-and-white bicolor: brown mackerel-tabby cap over the ears and around both eyes, split by a white blaze down the forehead, white muzzle, chin, chest, belly and legs, brown tabby patches on the back; large round amber-gold eyes; pink nose; round, plush build.",
+        "coat": {
+          "base": "brown",
+          "second": "white",
+          "pattern": "tabby",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/Sora_Sakurai/status/320354651432173571",
+          "author": "Sora_Sakurai",
+          "handle": "Sora_Sakurai",
+          "date": "2013-04-06",
+          "dateType": "posted",
+          "text": "@Junichi_Masuda なんと！ うちのふくらしと同じ誕生日ですよ。(スコティッシュ♀ 4歳)",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Masahiro Sakurai's beloved pet cat, Fukurashi, passes away at 17 years old (AUTOMATON WEST, 6 Feb 2026)",
+            "url": "https://automaton-media.com/en/news/masahiro-sakurais-beloved-pet-cat-fukurashi-passes-away-at-17-years-old/"
+          },
+          {
+            "label": "桜井政博 - Wikipedia (Japanese; cat section: Scottish Fold female 'Fukura', nicknamed 'Fukurashi')",
+            "url": "https://ja.wikipedia.org/wiki/%E6%A1%9C%E4%BA%95%E6%94%BF%E5%8D%9A"
+          },
+          {
+            "label": "Sakurai takes a paws from gaming videos to talk about his cat (Nintendo Wire, 18 Nov 2022)",
+            "url": "https://nintendowire.com/news/2022/11/18/sakurai-takes-a-paws-from-gaming-videos-to-talk-about-his-cat"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Fukurashi",
+          "contract": "8jXmuSUYWqbw8ReK4ZgQo8UGuWYHG4gnTBEAyNR7pump",
+          "mcapUsd": 2826
+        },
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Masahiro Sakurai, game designer (Kirby, Super Smash Bros.) (@Sora_Sakurai).",
+        "sensitivity": "In loving memory of Fukurashi.",
+        "portrait": "assets/portraits/FUKURA.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "Sora_Sakurai"
+    },
+    {
       "postId": "2107558172906893542",
       "url": "https://x.com/catcosanctuary/status/2107558172906893542",
       "name": "Torahiko",
