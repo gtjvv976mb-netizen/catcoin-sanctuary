@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106740598761812056",
+      "url": "https://x.com/catcosanctuary/status/2106740598761812056",
+      "name": "Betty",
+      "coinName": "Betty",
+      "ticker": "JRMOUSER",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Betty lives at Folklore Coffee and Bagels on platform 2 of Sutton Coldfield station near Birmingham.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/JRMOUSER.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/JRMOUSER.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106740598761812056.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-10T15:55:05Z",
+      "attempts": 0,
+      "cat": {
+        "id": "betty-sutton-coldfield",
+        "ticker": "JRMOUSER",
+        "name": "Betty",
+        "coinName": "Betty",
+        "owner": "Alex Light, Folklore Coffee and Bagels (Sutton Coldfield station); appointed by West Midlands Railway",
+        "category": "company",
+        "story": "Betty lives at Folklore Coffee and Bagels on platform 2 of Sutton Coldfield station near Birmingham. In 2025 she was a stray raising three kittens near an apartment block in Sutton Coldfield town centre; café owner Alex Light found homes for the kittens and adopted Betty himself, and the once-feral cat settled into life at the café, waking at 5:30 a.m. with the coffee shop. Ahead of International Cat Day in August 2026, West Midlands Railway appointed her 'Junior Mouse Catcher', its second official station cat after George, Stourbridge Junction's 'Senior Mouse Catcher' since 2021. WMR praised her 'safety paw-trols' and 'whisker-sessments'; she has her own Instagram account.",
+        "look": "Solid black short coat, round yellow-green eyes, medium build. In WMR's announcement photo she wears a colourful harlequin-pattern bandana and a blue lead.",
+        "coat": {
+          "base": "black",
+          "second": "",
+          "pattern": "solid",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/WestMidRailway/status/2085660525854093781",
+          "author": "WestMidRailway",
+          "handle": "WestMidRailway",
+          "date": "2026-08-07",
+          "dateType": "posted",
+          "text": "🐈‍⬛ Meet Betty! Sutton Coldfield's new Junior Mouse Catcher, and WMR's second official station cat, joining George @TheStourbridge Station Cat. 🐾 Once a stray raising three kittens, she was adopted by Folklore Coffee owner Alex, and now on the payroll full-time.",
+          "note": "Verified on 2026-10-02",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Sutton Coldfield station cat lands paw-fect new role with West Midlands Railway | RailBusinessDaily",
+            "url": "https://news.railbusinessdaily.com/sutton-coldfield-station-cat-lands-paw-fect-new-role-with-west-midlands-railway/"
+          },
+          {
+            "label": "Paw-motion? Train station cat hired to be Junior Mouse Catcher | Talker News",
+            "url": "https://talker.news/2026/08/07/paw-motion-train-station-cat-hired-to-be-junior-mouse-catcher/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Alex Light, Folklore Coffee and Bagels (Sutton Coldfield station); appointed by West Midlands Railway.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/JRMOUSER.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "WestMidRailway"
+    },
+    {
       "postId": "2106755747254338020",
       "url": "https://x.com/catcosanctuary/status/2106755747254338020",
       "name": "Horatio",
