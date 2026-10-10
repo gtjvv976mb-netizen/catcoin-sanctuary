@@ -125,8 +125,13 @@ How to make the art, per cat:
    stance", which is the current method:
    - A realistic portrait from the proof photo, cropped to the cat, no people: `gpt_image_2_5`, high, 1:1.
    - Save it as `assets/portraits/<TICKER>.jpg`.
-   - Rebuild with `node scripts/build-adoptables.mjs data/research/adoptables-source.json`. The adoptable row's
-     `portrait` field is what the site and the announcer read; the file alone is not enough.
+   - Update the cat's row in `data/adoptables.json`. The adoptable row's `portrait` field is what the site and the
+     announcer read; the file alone is not enough.
+   - **Do not run a full rebuild** (`node scripts/build-adoptables.mjs data/research/adoptables-source.json`). That
+     file has only the cats approved since batch 2 (about 141 rows). The first 94 adoptable cats came from research
+     that is not in the repository, so a full rebuild drops them, even with `--top 1000`. Instead, build the one row
+     with `adoptableFrom` from `scripts/build-adoptables.mjs` and set it in place, then check the whole file with
+     `validateAdoptables` (`assets/ui/adoptables.js`). SILKSTRIPE was added this way on 2026-10-10.
 2. **Model:**
    - A squared standing 3/4 reference (4:3).
    - Four squared orthographic views, in the order front, left, back, right.
@@ -174,6 +179,13 @@ and brands, and news and media are never paid. The list matches exact handles on
 `data/fee-exclusions.json`: these coins pay the account their story came from, public body, company or not
 (HORATIOCAT's fees went to @CentreCoLibrary that day). The accounts already on the list stay on it until the owner
 says otherwise. The owner also chose @elonmusk, through UsePaid, for SILKSTRIPE's fees.
+
+**SILKSTRIPE (Elon Musk's cat Schrödinger), 2026-10-10.** The owner chose "the bot, on pump.fun in SOL". It moved from
+`data/planned.json` (NEURALINK's planned cat) to `data/adoptables.json` (research row `schrodinger-elon-musk` in
+`data/research/adoptables-source.json`), and it is queued in `data/release-queue.json`. After its X post the launcher
+launches it as a sanctuary cat on pump.fun in SOL, with fees to @elonmusk through UsePaid. Its coin's lore line is the
+plain "Schrödinger, one of the Catcoin Sanctuary's cats.": the richer lines name Elon Musk, and the content rules keep
+famous people's names out of a coin's description. NEURALINK's pair is free now, like the held-back cats' pairs.
 
 ## 5. The owner's standing rules (binding)
 
