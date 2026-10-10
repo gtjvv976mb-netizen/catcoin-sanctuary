@@ -82,9 +82,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/GOTAMACAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106726308180795723.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-10T16:15:32Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "gotama",
         "ticker": "GOTAMACAT",
@@ -141,7 +141,17 @@
       "feesTo": "ekichoTAMA",
       "mintNonce": 5831151,
       "usePaidMint": "3PNpXcccE7NQ6bDeMArGZVpJguddDMpCT5c1cgf5cats",
-      "reason": "gave way to a trending cat; prepared again once the slot is free"
+      "tx": "3ox9pzkcujj5FV31TtZ8Fo9fHQ3H33jrBvifJVN1seiBywVCmbvD2GxwwetVx7PUj4oWchW2AJjGov4jZfG1Wv1s",
+      "sentAt": "2026-10-10T18:45:41Z",
+      "lastValidBlockHeight": 433396219,
+      "mintPublic": "3PNpXcccE7NQ6bDeMArGZVpJguddDMpCT5c1cgf5cats",
+      "spentLamports": 5678960,
+      "settledAt": "2026-10-10T18:45:51Z",
+      "launchedAt": "2026-10-10T18:45:41Z",
+      "feeRoute": {
+        "tx": "ZVjuN2R2Ekx1YjUYYV477FHcyJjbwL8qBphwdsiePYWA7QtKXnMYkD62Vbzzf6R14AZHGZBa7Vi6qX87RSttRuQ",
+        "at": "2026-10-10T18:45:55Z"
+      }
     },
     {
       "postId": "2106740598761812056",
