@@ -1,19 +1,20 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-10T15:39:09.502Z",
+ "checkedAt": "2026-10-10T16:13:07.439Z",
  "lens": null,
  "query": null,
  "trends": [],
  "reads": {
   "day": "2026-10-10",
-  "dayUsed": 310,
+  "dayUsed": 311,
   "month": "2026-10",
-  "monthUsed": 3098,
+  "monthUsed": 3099,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
+  "2108949048061222995",
   "2108286761226924247",
   "2107924203986972792",
   "2107833539941040431",
@@ -59,6 +60,71 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2108949048061222995",
+   "url": "https://x.com/catcosanctuary/status/2108949048061222995",
+   "text": "📦🐈 For today's quantum buzz, a one-off exception to our real-cats rule: Schrödinger's Cat, from Erwin Schrödinger's 1935 thought experiment. In the box, two states at once, until someone looks.\n\n📸 adrianvelaleston, CC0\nhttps://t.co/zjtYHV94By\n#catcoin https://t.co/HVamcw9q4d",
+   "author": {
+    "handle": "catcosanctuary",
+    "name": "Catcoin Sanctuary",
+    "followers": 106
+   },
+   "postedAt": "2026-10-10T15:53:30Z",
+   "likes": 0,
+   "views": 3,
+   "reposts": 0,
+   "heat": 0,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUR9--HWMAA36TW.jpg"
+    }
+   ],
+   "stage": "approved",
+   "lens": "approved",
+   "readAt": "2026-10-10T16:13:03.193Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Schrödinger's Cat",
+    "memeName": null,
+    "personFace": false,
+    "kind": "fiction",
+    "coinName": "Schrodingers Cat",
+    "ticker": "SCHRO",
+    "lore": "A tabby sitting in a cardboard box, in two states at once until someone looks, straight from Schrödinger's 1935 thought experiment.",
+    "sensitive": false,
+    "why": "Post centers on one famous fictional cat in a box, playful and harmless.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "5TAxBKMoUwjNknBpYqvc9tjs2JuBNqW56AXCKWQVPjeW",
+     "name": "Schrödinger's Cat",
+     "symbol": "SCHRO",
+     "url": "https://dexscreener.com/solana/dm2j2u2posmyfmlnergvsxmjevovxfjvuakw8tshdeie"
+    },
+    {
+     "mint": "bbTD7VFGNm6Pr21QFffoEis6PVyW9n59qwjdgoqpump",
+     "name": "Schro",
+     "symbol": "SCHRO",
+     "url": "https://dexscreener.com/solana/hgjhxuuvxomqw9zm1zbqhdnoyvmmrvwvkqbtzc3ygagr"
+    },
+    {
+     "mint": "4zpPZ45zvMCtdSv8VKcMcEi2Zpy7rNm9ZaN3ZnLppump",
+     "name": "Schrodingers Rug",
+     "symbol": "SCHRO",
+     "url": "https://dexscreener.com/solana/2c269rxnvmi7pp4cabgmj3rvqdyj7rmxmzjqya6jqjtm"
+    },
+    {
+     "mint": "HWvWW9a6nXkHtqXDBSv7hrmTioHDKXAqWsky5jZT9iat",
+     "name": "Schrodingers Bag",
+     "symbol": "SCHRO",
+     "url": "https://dexscreener.com/solana/bqzsxw7xxv3gxpi2w5dss52rvawrz7y3mh7gndk3uvx2"
+    }
+   ],
+   "status": "candidate"
+  },
   {
    "id": "2108618499434111180",
    "url": "https://x.com/NintendoAmerica/status/2108618499434111180",
