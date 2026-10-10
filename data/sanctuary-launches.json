@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/JRMOUSER.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106740598761812056.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-10T15:55:05Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "betty-sutton-coldfield",
         "ticker": "JRMOUSER",
@@ -69,7 +69,18 @@
       },
       "feesTo": "WestMidRailway",
       "mintNonce": 1730578,
-      "usePaidMint": "4qNHsTWJz9kbXSKdMLABQuw317EK87CWPvpXUfohcats"
+      "usePaidMint": "4qNHsTWJz9kbXSKdMLABQuw317EK87CWPvpXUfohcats",
+      "tx": "3fU2kbXy4GUT4xoosdVcnpmfgcpCXmv3t7YoBBfUwwYEAbUKVqLGrCE6kfEw562jk3FUwFt3SQz1qDn7Yf8BbFHb",
+      "sentAt": "2026-10-10T16:12:14Z",
+      "lastValidBlockHeight": 433354268,
+      "mintPublic": "4qNHsTWJz9kbXSKdMLABQuw317EK87CWPvpXUfohcats",
+      "spentLamports": 5668800,
+      "settledAt": "2026-10-10T16:12:24Z",
+      "launchedAt": "2026-10-10T16:12:14Z",
+      "feeRoute": {
+        "tx": "29TqtzHLQdDVioLrqHEQiryBM4mQDtoddcSmjAxh2e68R3hRibJ4hBVgyp3MU5ufqFySWqb5RcP9Segah7GU67g3",
+        "at": "2026-10-10T16:12:27Z"
+      }
     },
     {
       "postId": "2106755747254338020",
