@@ -64,7 +64,7 @@ test("every shipped update is approved and queued, fits 280, passes the rules, l
   assert.ok(UPDATES.lastPostedAt === null || !Number.isNaN(Date.parse(UPDATES.lastPostedAt)));
   assert.equal(SHIPPED.adoptionsPosted.NEKOBUS.status, "posted", "Catbus went out as its thread: never posted twice");
   assert.ok(fs.existsSync(path.join(ROOT, "data/thread-adoption-catbus.json")));
-  assert.equal(UPDATES.posts.length, 11);
+  assert.equal(UPDATES.posts.length, 12, "12 since 2026-10-10: the Schrödinger's Cat one-off");
   assert.equal(new Set(UPDATES.posts.map((p) => p.id)).size, UPDATES.posts.length);
   for (const p of UPDATES.posts) {
     assert.equal(p.approved, true, p.id);

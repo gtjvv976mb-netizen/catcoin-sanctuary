@@ -170,8 +170,10 @@ and brands, and news and media are never paid. The list matches exact handles on
 - @YumejiArtMuseum: KURONOSUKE.
 - Businesses: @sirakababbq (GOOTENGU), @NLstaff (BOSSMETO) and @TappingAdmiral (NELSONPUB).
 
-Ask the owner which to add to `data/fee-exclusions.json`. A listed account's coin launches as a holder-rewards coin
-instead. Nothing has been changed yet.
+**The owner's answer (2026-10-10):** "just route the fees to the x creator page, regardless". Nothing is added to
+`data/fee-exclusions.json`: these coins pay the account their story came from, public body, company or not
+(HORATIOCAT's fees went to @CentreCoLibrary that day). The accounts already on the list stay on it until the owner
+says otherwise. The owner also chose @elonmusk, through UsePaid, for SILKSTRIPE's fees.
 
 ## 5. The owner's standing rules (binding)
 
