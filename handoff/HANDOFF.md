@@ -170,8 +170,10 @@ and brands, and news and media are never paid. The list matches exact handles on
 - @YumejiArtMuseum: KURONOSUKE.
 - Businesses: @sirakababbq (GOOTENGU), @NLstaff (BOSSMETO) and @TappingAdmiral (NELSONPUB).
 
-Ask the owner which to add to `data/fee-exclusions.json`. A listed account's coin launches as a holder-rewards coin
-instead. Nothing has been changed yet.
+**The owner's answer (2026-10-10):** "just route the fees to the x creator page, regardless". Nothing is added to
+`data/fee-exclusions.json`: these coins pay the account their story came from, public body, company or not
+(HORATIOCAT's fees went to @CentreCoLibrary that day). The accounts already on the list stay on it until the owner
+says otherwise. The owner also chose @elonmusk, through UsePaid, for SILKSTRIPE's fees.
 
 ## 5. The owner's standing rules (binding)
 
@@ -182,6 +184,10 @@ instead. Nothing has been changed yet.
     after fixing the cause, delete its row in `launchesPosted`/`adoptionsPosted` in `data/updates.json`, or set an
     update's `status` back to `queued`. PRs #61 and #63 did this.
 - **Real cats only.** `LAUNCH_CHARACTERS` stays off; a drawn or fictional cat never launches.
+  - **The one exception (2026-10-10):** the owner asked for Schrödinger's Cat (ticker CAT1935), the cat of the 1935
+    thought experiment, for the quantum meta on pump.fun. It launches from the sanctuary's own X post (so it is a
+    holder-rewards coin and nobody is paid), approved with `"character": true` in `data/launch-approvals.json`. That
+    flag works for one post only and never for the sanctuary's own cats; nothing else changed.
 - **Research** follows the scout's hard rules in `.claude/commands/scout.md`:
   - it is read-only on the web and invents nothing;
   - it writes only `data/research/inbox.json` and `log.json`;

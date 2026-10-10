@@ -271,13 +271,16 @@ export async function withApproved(trending, { approvals, creds, client, fetchIm
   try { answer = await lookupPosts(missing, creds, fetchImpl); }
   catch (e) { log(`Trend watch: X refused the approved posts' lookup (${e instanceof XError ? `HTTP ${e.status}` : e.message}); tried again next run.`); return { trending, added: [] }; }
   const n = answer?.data?.length || 0; reads.dayUsed += n; reads.monthUsed += n;
-  const rows = [];
+  const rows = [], unread = [];
   for (const p of approvedRows(answer, nowMs)) {
     const reading = memeNamed(client ? await readPost(p, client) : cleanReading(readPostByRules(p)));
-    rows.push({ ...p, readAt: reading ? new Date(nowMs).toISOString() : null, reading, known: false, taken: reading?.ticker ? await tickerTaken(reading.ticker, fetchImpl) : null, status: "candidate" });
-    log(`  approved: ${p.url} (${p.likes} likes, ${p.views} views)${reading ? ` -> ${reading.catName ?? "no name"} ${reading.ticker ?? ""}` : ""}`);
+    // Claude could not read it (busy, unreachable, no JSON): not listed, so the next run looks it up and reads it again
+    // (a post listed with no reading would read as sensitive to the launcher for good), as the scan does for its own posts.
+    if (!reading) { unread.push(p.id); log(`  approved: ${p.url}: could not be read; looked up and read again next run.`); continue; }
+    rows.push({ ...p, readAt: new Date(nowMs).toISOString(), reading, known: false, taken: reading.ticker ? await tickerTaken(reading.ticker, fetchImpl) : null, status: "candidate" });
+    log(`  approved: ${p.url} (${p.likes} likes, ${p.views} views) -> ${reading.catName ?? "no name"} ${reading.ticker ?? ""}`);
   }
-  for (const id of missing.filter((id) => !rows.some((r) => r.id === id))) log(`  approved post ${id}: not found, older than ${MAX_AGE_HOURS} hours, marked sensitive or without a picture; not listed.`);
+  for (const id of missing.filter((id) => !rows.some((r) => r.id === id) && !unread.includes(id))) log(`  approved post ${id}: not found, older than ${MAX_AGE_HOURS} hours, marked sensitive or without a picture; not listed.`);
   if (!rows.length) return { trending: { ...trending, reads }, added: [] };
   const posts = [...rows, ...prev].sort((a, b) => Date.parse(b.postedAt) - Date.parse(a.postedAt)).slice(0, KEEP);
   const candidates = [...new Set([...rows.map((r) => r.id), ...(Array.isArray(trending?.candidates) ? trending.candidates : [])])];

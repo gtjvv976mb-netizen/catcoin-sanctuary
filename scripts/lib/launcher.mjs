@@ -249,7 +249,9 @@ export function feeExclusionsOf(io, log = () => {}) {
 /** The owner's open launch rule (LAUNCH_OPEN, on unless "off"): real pets in viral or rising posts, and any cat a big account names, launch without approval. */
 export const openLaunches = (env = {}) => String(env.LAUNCH_OPEN ?? "").trim().toLowerCase() !== "off";
 /** The owner's character rule (LAUNCH_CHARACTERS, off unless "on"; 2026-10-02, after the legal review): a drawn or fictional
-    cat (a cartoon, game, film or mascot character: someone's trademark or copyright) launches only while it is on. */
+    cat (a cartoon, game, film or mascot character: someone's trademark or copyright) launches only while it is on, or
+    when the owner approves that one post as a character in data/launch-approvals.json (`"character": true`; namingsOf).
+    Only trending posts can carry that exception; the sanctuary's own cats stay real-only. */
 export const characterLaunches = (env = {}) => String(env.LAUNCH_CHARACTERS ?? "").trim().toLowerCase() === "on";
 
 /**
@@ -577,19 +579,23 @@ const NAMING_KINDS = ["real", "cartoon", "fiction"];
  * The owner's names for approved posts that name no cat themselves (a big account's "Meow 😽" under a cat's
  * picture, listed under the trend watch's signals): data/launch-approvals.json approve entries written
  * { "post": "<id or link>", "name": "Poole's Cat", "ticker"?: "POOLE", "kind"?: "real" | "cartoon" | "fiction",
- * "lore"?: "<one line about the cat>" }. A Map of post id -> { name, ticker, kind?, lore? }. An entry whose
- * name or ticker is unusable gives no naming (its post is still approved, and read as the trend watch read it).
+ * "lore"?: "<one line about the cat>", "character"?: true }. A Map of post id -> { name, ticker, kind?, lore?, character? }.
+ * An entry whose name or ticker is unusable gives no naming (its post is still approved, and read as the trend watch
+ * read it). The name is taken in its composed form (NFC), so an accent typed as a separate mark still names it.
+ * `character: true` is the owner's explicit exception to the real-cats rule for that one post (LAUNCH_CHARACTERS
+ * stays off for every other): kept only as the boolean true, on a naming whose kind is cartoon or fiction.
  */
 export function namingsOf(data) {
   const out = new Map();
   for (const v of Array.isArray(data?.approve) ? data.approve : []) {
     if (!isObj(v)) continue;
-    const id = approvedIdOf(v), name = typeof v.name === "string" ? oneLine(v.name, 40) : "";
+    const id = approvedIdOf(v), name = typeof v.name === "string" ? oneLine(v.name.normalize("NFC"), 40) : "";
     if (!id || !NAMING_NAME.test(name)) continue;
     const ticker = typeof v.ticker === "string" && v.ticker.trim() ? v.ticker.trim().replace(/^\$+/, "").toUpperCase() : tickerFor(name);
     if (!ticker || !TICKER.test(ticker)) continue;
     const lore = typeof v.lore === "string" ? oneLine(v.lore, 200) : "";
-    out.set(id, { name, ticker, ...(NAMING_KINDS.includes(v.kind) ? { kind: v.kind } : {}), ...(lore ? { lore } : {}) });
+    out.set(id, { name, ticker, ...(NAMING_KINDS.includes(v.kind) ? { kind: v.kind } : {}), ...(lore ? { lore } : {}),
+      ...(v.character === true && (v.kind === "cartoon" || v.kind === "fiction") ? { character: true } : {}) });
   }
   return out;
 }
@@ -703,18 +709,22 @@ export function adoptableFor(post, { figure = null, pair, taken = { ids: new Set
   const owner = oneLine(figure?.owner, 120) || (figure ? (["real", "meme"].includes(figure.kind) ? "its owners" : "its creators")
     : drawn ? "its creators" : oneLine(post.author?.name, 120) || `@${handle}`);
   const category = ADOPTABLE_CATEGORIES.includes(figure?.category) ? figure.category : figure?.kind === "meme" || !drawn ? "viral" : "tv-movie";
-  const look = typeof figure?.look === "string" && figure.look.length >= 20 && figure.look.length <= 600 ? figure.look : DEFAULT_LOOK(name);
+  // A post by the sanctuary itself (an owner-approved one-off, e.g. a character exception) was not found trending: its card says so.
+  const own = String(handle).toLowerCase() === OWN_HANDLE.toLowerCase();
+  const look = typeof figure?.look === "string" && figure.look.length >= 20 && figure.look.length <= 600 ? figure.look
+    : own ? `${name}, drawn from the picture in the sanctuary's own X post: the same fur colours, markings and eyes as there.` : DEFAULT_LOOK(name);
   const coat = figure?.coat && coatProblem(figure.coat) === null ? { ...figure.coat } : coatFromLook(look);
   const postedMs = Date.parse(post.postedAt);
   const lore = oneLine(r.lore, 200);
-  const story = `${/[.!?…]$/.test(lore) ? lore : `${lore}.`} ${name} was trending on X on ${dateText(postedMs)}, and the sanctuary gave it a coin.`;
+  const story = `${/[.!?…]$/.test(lore) ? lore : `${lore}.`} ${own ? `The sanctuary posted ${name} on X on ${dateText(postedMs)} and gave it a coin.`
+    : `${name} was trending on X on ${dateText(postedMs)}, and the sanctuary gave it a coin.`}`;
   let id = [slug(name), `${slug(name)}-${ticker.toLowerCase()}`, ticker.toLowerCase()].find((x) => ID_RE.test(x) && !taken.ids.has(x));
   for (let n = 2; !id && n < 10; n++) if (!taken.ids.has(`${ticker.toLowerCase()}-${n}`)) id = `${ticker.toLowerCase()}-${n}`;
   if (!id) return { problem: "no free id for the cat" };
   const cat = {
     id, ticker, name, coinName: oneLine(r.coinName, 60), owner, category, story, look, coat, pair: { symbol: pair.symbol, mint: pair.mint },
     proof: { kind: "x", url: post.url, author: handle, handle, date: ISO_SECONDS(postedMs).slice(0, 10), dateType: "posted", text: oneLine(post.text, 600),
-      note: `Found by the sanctuary's trend watch on ${ISO_SECONDS(nowMs).slice(0, 10)}.`, image: null },
+      note: own ? `The sanctuary's own post, approved by the owner on ${ISO_SECONDS(nowMs).slice(0, 10)}.` : `Found by the sanctuary's trend watch on ${ISO_SECONDS(nowMs).slice(0, 10)}.`, image: null },
     sources: [], existingCoin: null, memorial: false, tribute: tributeLine(owner), sensitivity: "",
     portrait: null, portraitStatus: "pending", confidence: r.readBy === "claude" ? "high" : "medium", lore: null,
   };
@@ -737,7 +747,11 @@ export function candidateRow(post, ctx) {
   // (ctx.characters is the owner's switch, characterLaunches: false in every run while LAUNCH_CHARACTERS is off)
   // The post's picture is the coin's image: never one that shows a person's face (Claude's reading says so).
   if (r.personFace === true) return no("its picture shows a person's face, and the picture would be the coin's image");
-  if (r.kind !== "real" && ctx.characters === false) return no(`a ${r.kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
+  // The owner's explicit exception for one post (namingsOf `character: true`): only for that post id, only as the owner
+  // named it (withNaming sets nameFrom "owner" and the naming's kind), and never past the checks above (sensitive, a face).
+  const naming = ctx.namings?.get(String(post.id));
+  const excepted = r.nameFrom === "owner" && naming?.character === true && naming.kind === r.kind;
+  if (r.kind !== "real" && ctx.characters === false && !excepted) return no(`a ${r.kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
   for (const k of ["catName", "coinName", "ticker", "lore"]) if (typeof r[k] !== "string" || !r[k].trim()) return no(`the reading has no ${k}`);
   const policy = policyOf(post, ctx);
   if (!policy) return no("not a watch-list cat: waits for the owner (data/launch-approvals.json)");
@@ -791,9 +805,10 @@ export function candidateRow(post, ctx) {
   // The fan-tribute line is the owner's fixed text (it says the coin is NOT official): a citation; the lore meets every rule.
   const tributeCited = [...cited, fanTribute(row.kind), ...(row.feesTo ? [usePaidLine(row.feesTo)] : [])];
   // The photo's credit goes in the description when it fits and meets every rule (a handle is the stranger's own text).
-  row.photoCredit = true;
+  // Never on the sanctuary's own post: its picture is not the sanctuary's photo to claim (as for the sanctuary's own cats).
+  row.photoCredit = handle.toLowerCase() !== OWN_HANDLE.toLowerCase();
   const credit = creditOf(row);
-  if (!credit || !coinMetadata(row).description.includes(credit) || !checkUpdate(coinMetadata(row).description, tributeCited).ok) row.photoCredit = false;
+  if (row.photoCredit && (!credit || !coinMetadata(row).description.includes(credit) || !checkUpdate(coinMetadata(row).description, tributeCited).ok)) row.photoCredit = false;
   const meta = coinMetadata(row);
   const d = checkUpdate(meta.description, tributeCited);
   if (!d.ok) return no(`the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);

@@ -792,6 +792,16 @@ test("an approved post the search never found is looked up by id (one read each)
   // X refusing the lookup: nothing listed, tried again next run.
   const refused = await withApproved(before, { approvals: new Set(["2001"]), creds: CREDS, client: null, fetchImpl: async () => new Response("{}", { status: 503 }), nowMs: NOW });
   assert.deepEqual(refused.added, []);
+  // Claude could not read it (no JSON back, or busy): not listed (a post listed with no reading would read as sensitive to
+  // the launcher for good), so the next run looks it up again and reads it.
+  const garbled = { messages: { create: async () => ({ content: [{ type: "text", text: "not json at all" }] }) } };
+  const unread = await withApproved(before, { approvals: new Set(["2001"]), creds: CREDS, client: garbled, fetchImpl, nowMs: NOW });
+  assert.deepEqual([unread.added, unread.trending.posts.some((p) => p.id === "2001")], [[], false]);
+  asked.length = 0;
+  const again = await withApproved(unread.trending, { approvals: new Set(["2001"]), creds: CREDS, client: claudeSays(cupsey), fetchImpl, nowMs: NOW });
+  assert.deepEqual(again.added, ["2001"]);
+  assert.equal(new URL(asked[0]).searchParams.get("ids"), "2001", "looked up again");
+  assert.equal(again.trending.posts.find((p) => p.id === "2001").reading.sensitive, false);
 });
 
 /* ---------- meme cats: the owner's kind of coin (Foot Cat, Wiwiwi Cat) ---------- */
