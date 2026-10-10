@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106771002797486339",
+      "url": "https://x.com/catcosanctuary/status/2106771002797486339",
+      "name": "Konpei & Miso",
+      "coinName": "Konpei & Miso",
+      "ticker": "KONPEIMISO",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Konpei and Miso are the two cats of voice actor Natsuki Hanae, who regularly posts them to his 2.2 million followers on X.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/KONPEIMISO.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/KONPEIMISO.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106771002797486339.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-10T07:44:47Z",
+      "attempts": 0,
+      "cat": {
+        "id": "konpei-miso",
+        "ticker": "KONPEIMISO",
+        "name": "Konpei & Miso",
+        "coinName": "Konpei & Miso",
+        "owner": "Natsuki Hanae (花江夏樹), voice actor (@hanae0626)",
+        "category": "celebrity",
+        "story": "Konpei and Miso are the two cats of voice actor Natsuki Hanae, who regularly posts them to his 2.2 million followers on X. Miso is an American Shorthair and Konpei a Munchkin. On 17 November 2022 Hanae released his first cat photo book, 'Konpei to Miso: Hanae-ke no Neko' (こんぺいとみそ 花江家のねこ), which he shot and produced himself over about three years: 128 pages of the pair sleeping, playing, hiding and as kittens, including unseen photos and shots taken on simple sets he built at home. His posts include Konpei's rare lap time and 'hunter Miso' on the prowl.",
+        "look": "Both are orange (red) tabbies with striped coats, cream-white chins and chests and amber-green eyes; Konpei is a Munchkin (short legs), Miso an American Shorthair. Verify with photos which is which.",
+        "coat": {
+          "base": "ginger",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/hanae0626/status/1796765175531671855",
+          "author": "hanae0626",
+          "handle": "hanae0626",
+          "date": "2024-06-01",
+          "dateType": "posted",
+          "text": "6月！久々のこんぺい。",
+          "note": "Verified on 2026-10-02",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "声優・花江夏樹さんの愛猫『こんぺいとみそ』が写真集に！アメショ＆マンチカンの日常をたっぷり収録 | Cat Press",
+            "url": "https://cat-press.com/cat-news/book-konpei-miso"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Natsuki Hanae (花江夏樹), voice actor (@hanae0626).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/KONPEIMISO.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "hanae0626"
+    },
+    {
       "postId": "2106785980464181499",
       "url": "https://x.com/catcosanctuary/status/2106785980464181499",
       "name": "Rido",
