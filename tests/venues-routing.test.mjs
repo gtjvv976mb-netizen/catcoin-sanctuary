@@ -124,7 +124,11 @@ test("usedStockPairs: one cat per stock pair, as the site keeps it for planned c
   const free = STOCK_PAIRS.filter((s) => !used.has(s.mint)).map((s) => s.symbol);
   // Only the pairs no planned cat has can be free: the two that never had one, and those of the cats held back with no lore
   // (data/held.json, 2026-10-01); the launcher may give one of them its StonkFun cat (then it is used too).
-  assert.ok(free.length <= 2 + read("held.json").held.length, free.join(", "));
+  // 2026-10-10: NEURALINK's planned cat, SILKSTRIPE (Elon Musk's Schrödinger), moved to the adoptables to launch on
+  // pump.fun in SOL, the owner's choice; its pair is free too.
+  const moved = ["NEURALINK"];
+  assert.ok(moved.every((s) => !PLANNED.cats.some((c) => c.pair.symbol === s)), "a moved cat's pair has no planned cat");
+  assert.ok(free.length <= 2 + read("held.json").held.length + moved.length, free.join(", "));
   assert.ok(free.length > 2, "the held-back cats' pairs are free again");
   for (const c of validatePlanned(PLANNED, { nowMs: DATA_NOW }).cats) assert.ok(used.has(c.pair.mint), `${c.ticker}'s pair`);
   // a proved StonkFun launch takes its pair; a pump.fun one (SOL) takes none; so does a launch sent but not yet proved (extra)

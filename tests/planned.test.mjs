@@ -323,7 +323,8 @@ const WEB_PROOF = { kind: "web", url: "https://www.spdrgoldshares.com/", author:
 const HOSTS = ["www.spdrgoldshares.com"];
 
 test("proof: every shipped planned cat has a valid proof, X proofs are status posts by their handle, pictures exist and are small WebP", () => {
-  assert.equal(PLANNED.cats.length, 58);
+  // 57 since 2026-10-10: SILKSTRIPE (Elon Musk's cat Schrödinger) moved to data/adoptables.json, for the bot to launch.
+  assert.equal(PLANNED.cats.length, 57);
   // The first 24 cats shipped with a proof; the 67 of the second launch sheet have none recorded yet. Of the first
   // 24, the 16 still planned keep theirs (2026-10-01: 8 were held back with the other invented cats, data/held.json).
   assert.ok(PLANNED.cats.slice(0, 16).every((c) => c.proof), "the first sheet's cats keep their proofs");
