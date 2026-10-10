@@ -2,6 +2,73 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2108969991848529959",
+      "url": "https://x.com/catcosanctuary/status/2108969991848529959",
+      "name": "Schrödinger",
+      "coinName": "Schrödinger",
+      "ticker": "SILKSTRIPE",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Schrödinger, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/SILKSTRIPE.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/SILKSTRIPE.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2108969991848529959.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-10T19:15:31Z",
+      "attempts": 0,
+      "cat": {
+        "id": "schrodinger-elon-musk",
+        "ticker": "SILKSTRIPE",
+        "name": "Schrödinger",
+        "coinName": "Schrödinger",
+        "owner": "Elon Musk (@elonmusk)",
+        "category": "celebrity",
+        "story": "Schrödinger is Elon Musk's cat, a female he has named in his own posts on X. In July 2018 he wrote: 'Will check with our cat, Schrödinger, but I don't think she's going to like it.' In April 2019: 'We have a big dog called Gatsby, a little dog called Marvin the Martian & a cat named Schrödinger.' In September 2023 he added: 'I tried liking our cat, but the feeling wasn't reciprocated. Not even slightly. One day she disappeared. To this day, we don't know if our cat (Schrödinger), is alive or dead.' He has never posted a photo of her. Business Insider's history of Musk's pets (2024) quotes the 2019 post.",
+        "look": "A lilac tabby, a slim, sleek female house cat in a soft pinkish dove-grey with very fine darker lilac pinstripes, a white chin and green eyes. She is Elon Musk's cat Schrödinger, aloof and famous for vanishing. Musk has never posted a photo of her, so this coat is the sanctuary's own drawing of her, the same in every picture.",
+        "coat": {
+          "base": "lilac",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/elonmusk/status/1703330562356957232",
+          "author": "elonmusk",
+          "handle": "elonmusk",
+          "date": "2023-09-17",
+          "dateType": "posted",
+          "text": "I tried liking our cat, but the feeling wasn’t reciprocated. Not even slightly. One day she disappeared. To this day, we don’t know if our cat (Schrödinger), is alive or dead.",
+          "note": "Verified on 2026-10-10",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "A brief history of Elon Musk's pets (Business Insider, 2024-11-12)",
+            "url": "https://www.businessinsider.com/elon-musk-history-of-pets-dogs-cats-hobbes-floki-schrodinger-2023-3"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Elon Musk (@elonmusk).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/SILKSTRIPE.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": {
+          "image": "assets/lore/SILKSTRIPE.webp",
+          "caption": "Schrödinger, Elon Musk's cat, who once vanished so completely that no one knows if she is alive or dead, slips between the fence rails so neatly she never bends a leaf."
+        }
+      },
+      "feesTo": "elonmusk"
+    },
+    {
       "postId": "2108949048061222995",
       "url": "https://x.com/catcosanctuary/status/2108949048061222995",
       "name": "Schrödinger's Cat",
