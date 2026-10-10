@@ -1,13 +1,20 @@
 {
   "wallets": {
     "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3": {
-      "newest": "3Z8miPsXn21opJCfUNNoLPfnaKH1fGd7avNomjRKyzo9M6HgyHDqKt41TotVVpkgkDcYHakaATWic7ecty55J3uB"
+      "newest": "5LjDi8oKXVfvB2enDdrY2zhDSFPnRYWA83H1Y4nEM5GKqykNcvrRf3zixAuxj9i7z5KPgj3TwoatFv8FHeKv3irA"
     },
     "HxhisqFBeZRJcBWkjnumk6HwWxFLGVVD6jfX23tXHzQh": {
       "newest": "63hF6fXDSftC4sWQHtWkzLKeHtGUGNjz7NF5Cf4XqEmUiMuRMyZ6YghaAmi2NJcePdHUN9PyFg3dJJCytCzkbrAs"
     }
   },
   "refused": [
+    {
+      "tx": "7vptTtWNzPP3Hk7fsd9sybHkhRBV4398ECFgNPhrSKBpQip2HdvzxRFjiDBhZE4FBzfTMTSt8f7rUrmAxkPvYDg",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "pump_dev_buy",
+      "detail": "a buy beside the create; the sanctuary's launcher never buys its own coin",
+      "time": "2026-10-10T21:35:39Z"
+    },
     {
       "tx": "2FwuAq3BtfGFSYhZu7jhdzNtA4jAs3R6UQfNx8qu8Voe1xsd5jb9ZfPgS3xy9rpzPFAgx7SZJCMJ7pqTidT3asXd",
       "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
@@ -73,6 +80,20 @@
     }
   ],
   "unread": [
+    {
+      "tx": "22cE88sbcx1ri8kJ68paACyuXgT7kXE2DCkAyqnsC8oLgBHAAzPLAFYyspEneY6jvNSa5BgGCYsWBN9F5BQVT5pb",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "tx_version",
+      "detail": "a transaction newer than version 0, which this builder does not read",
+      "time": "2026-10-10T21:05:55Z"
+    },
+    {
+      "tx": "9FEJxqBgXyYjNz3URLhe7ejVd6wDPum1j7cdtcKe6ZpjHbwsBunEUEPLWkY6VmimD24DRQRM8ti5Y6LXtRRDahx",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "tx_version",
+      "detail": "a transaction newer than version 0, which this builder does not read",
+      "time": "2026-10-10T21:05:45Z"
+    },
     {
       "tx": "3Z8miPsXn21opJCfUNNoLPfnaKH1fGd7avNomjRKyzo9M6HgyHDqKt41TotVVpkgkDcYHakaATWic7ecty55J3uB",
       "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
