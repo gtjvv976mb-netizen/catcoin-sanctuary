@@ -2,6 +2,67 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2108949048061222995",
+      "url": "https://x.com/catcosanctuary/status/2108949048061222995",
+      "name": "Schrödinger's Cat",
+      "coinName": "Schrödinger's Cat",
+      "ticker": "CAT1935",
+      "venue": "pump-sol",
+      "policy": "approved",
+      "kind": "fiction",
+      "lore": "The cat in Erwin Schrödinger's 1935 thought experiment, in two states at once until the box is opened",
+      "image": "https://pbs.twimg.com/media/HUR9--HWMAA36TW.jpg",
+      "coinImage": "https://pbs.twimg.com/media/HUR9--HWMAA36TW.jpg",
+      "metadataPath": "coins/2108949048061222995.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-10T16:23:55Z",
+      "attempts": 0,
+      "cat": {
+        "id": "schrodinger-s-cat",
+        "ticker": "CAT1935",
+        "name": "Schrödinger's Cat",
+        "coinName": "Schrödinger's Cat",
+        "owner": "its creators",
+        "category": "tv-movie",
+        "story": "The cat in Erwin Schrödinger's 1935 thought experiment, in two states at once until the box is opened. The sanctuary posted Schrödinger's Cat on X on October 10, 2026 and gave it a coin.",
+        "look": "Schrödinger's Cat, drawn from the picture in the sanctuary's own X post: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/catcosanctuary/status/2108949048061222995",
+          "author": "catcosanctuary",
+          "handle": "catcosanctuary",
+          "date": "2026-10-10",
+          "dateType": "posted",
+          "text": "📦🐈 For today's quantum buzz, a one-off exception to our real-cats rule: Schrödinger's Cat, from Erwin Schrödinger's 1935 thought experiment. In the box, two states at once, until someone looks. 📸 adrianvelaleston, CC0 https://t.co/zjtYHV94By #catcoin https://t.co/HVamcw9q4d",
+          "note": "The sanctuary's own post, approved by the owner on 2026-10-10.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by its creators.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "medium",
+        "lore": null
+      },
+      "photoCredit": false,
+      "mintGrind": {
+        "next": 17904001
+      }
+    },
+    {
       "postId": "2106726308180795723",
       "url": "https://x.com/catcosanctuary/status/2106726308180795723",
       "name": "Gotama",
@@ -15,7 +76,7 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/GOTAMACAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106726308180795723.json",
-      "status": "prepared",
+      "status": "failed",
       "preparedAt": "2026-10-10T16:15:32Z",
       "attempts": 0,
       "cat": {
@@ -73,7 +134,10 @@
       },
       "feesTo": "ekichoTAMA",
       "mintNonce": 5831151,
-      "usePaidMint": "3PNpXcccE7NQ6bDeMArGZVpJguddDMpCT5c1cgf5cats"
+      "usePaidMint": "3PNpXcccE7NQ6bDeMArGZVpJguddDMpCT5c1cgf5cats",
+      "retry": true,
+      "reason": "gave way to a trending cat; prepared again once the slot is free",
+      "settledAt": "2026-10-10T16:23:55Z"
     },
     {
       "postId": "2106740598761812056",
