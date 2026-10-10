@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106755747254338020",
+      "url": "https://x.com/catcosanctuary/status/2106755747254338020",
+      "name": "Horatio",
+      "coinName": "Horatio",
+      "ticker": "HORATIOCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Horatio is the star of Centre County Library's 'Caturday' posts.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/HORATIOCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/HORATIOCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106755747254338020.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-10T14:13:34Z",
+      "attempts": 0,
+      "cat": {
+        "id": "horatio-library",
+        "ticker": "HORATIOCAT",
+        "name": "Horatio",
+        "coinName": "Horatio",
+        "owner": "Lisa Shaffer, Centre County Library (Pennsylvania), which posts as @CentreCoLibrary",
+        "category": "company",
+        "story": "Horatio is the star of Centre County Library's 'Caturday' posts. Every Saturday the library shares him dressed as a public figure or character beside a matching book, film or CD from its collection, often alongside Jojo (#JojoThePirateCat), with guest appearances by Shaffer's other cats such as tuxedo cat Loki. Horatio belongs to librarian Lisa Shaffer, who makes his costumes; she calls him laid-back and treat-motivated, and says he now knows when she is making his costume. He has appeared as Barbie, a Rockford Peach and Elton John's 'honky cat', and the library wished him a happy 16th birthday on 18 May 2024. Onward State called him the library's social media sensation in April 2026.",
+        "look": "Orange-and-white male: ginger tabby head, back and legs with white muzzle, chest and paws; round face, amber eyes often half-closed; senior. Usually photographed in costume (knit hats, scarves, flower crown).",
+        "coat": {
+          "base": "ginger",
+          "second": "white",
+          "pattern": "tabby",
+          "eyes": "amber"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/CentreCoLibrary/status/1791848970773201092",
+          "author": "CentreCoLibrary",
+          "handle": "CentreCoLibrary",
+          "date": "2024-05-18",
+          "dateType": "posted",
+          "text": "Happy 16th birthday, Horatio! #Caturday #HappyBirthdayHoratio #SixteenCandles #HoratioTheCat #JojoThePirateCat",
+          "note": "Verified on 2026-10-02",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Meet Horatio The Cat: The Centre County Library's Social Media Sensation | Onward State",
+            "url": "https://onwardstate.com/2026/04/20/meet-horatio-the-cat-the-centre-county-librarys-social-media-sensation/"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Lisa Shaffer, Centre County Library (Pennsylvania), which posts as @CentreCoLibrary.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/HORATIOCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "CentreCoLibrary"
+    },
+    {
       "postId": "2106771002797486339",
       "url": "https://x.com/catcosanctuary/status/2106771002797486339",
       "name": "Konpei & Miso",
