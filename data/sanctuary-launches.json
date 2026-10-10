@@ -2,6 +2,78 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106711246728753452",
+      "url": "https://x.com/catcosanctuary/status/2106711246728753452",
+      "name": "Rokutama",
+      "coinName": "Rokutama",
+      "ticker": "ROKUCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Rokutama (ろくたま) is the newest cat of Wakayama Electric Railway, the Kishigawa Line made famous by stationmaster cat Tama.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/ROKUCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/ROKUCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106711246728753452.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-10T22:14:19Z",
+      "attempts": 0,
+      "cat": {
+        "id": "rokutama",
+        "ticker": "ROKUCAT",
+        "name": "Rokutama",
+        "coinName": "Rokutama",
+        "owner": "Wakayama Electric Railway (Kishigawa Line, Kishi Station), official account @ekichoTAMA",
+        "category": "company",
+        "story": "Rokutama (ろくたま) is the newest cat of Wakayama Electric Railway, the Kishigawa Line made famous by stationmaster cat Tama. The railway's official page lists her as female, born 5 May 2025 in Okayama Prefecture, and says she arrived in Wakayama as a stationmaster trainee (駅長候補生) on 7 January 2026; she began working at the station on 14 January 2026. The railway describes her as never threatening people and unfazed, though she dislikes loud noises and hates having her claws clipped; she loves playing on her own and is a big eater. She works alongside manager stationmaster Yontama and deputy Gotama, and in September 2026 helped present the railway's 2027 stationmaster-cat calendar.",
+        "look": "Dilute calico: mostly white with soft grey and cream/peach patches (grey across one side of the face and on the back), pink nose; dark eyes in kitten photos, yellow-green as a young adult; wears a collar with a small tag/bell.",
+        "coat": {
+          "base": "white",
+          "second": "grey",
+          "pattern": "calico",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/ekichoTAMA/status/2027701547950608567",
+          "author": "ekichoTAMA",
+          "handle": "ekichoTAMA",
+          "date": "2026-02-28",
+          "dateType": "posted",
+          "text": "にゃんご！ろくたまちゃんカワイイにゃんご！",
+          "note": "Verified on 2026-10-02",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "ねこ駅長について | 和歌山電鐵 (official cat stationmaster profiles)",
+            "url": "https://wakayama-dentetsu.co.jp/cat-stationmaster/"
+          },
+          {
+            "label": "駅長勤務体制の変更について | 和歌山電鐵 (Rokutama starts work 14 Jan 2026)",
+            "url": "https://wakayama-dentetsu.co.jp/info/16439/"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "ROKUTAMA",
+          "contract": "31yh4PqQkjWreoYL5eugr5hSYgMtLwnVzdg49CD4pump",
+          "mcapUsd": 1833
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Wakayama Electric Railway (Kishigawa Line, Kishi Station), official account @ekichoTAMA.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/ROKUCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "ekichoTAMA"
+    },
+    {
       "postId": "2108969991848529959",
       "url": "https://x.com/catcosanctuary/status/2108969991848529959",
       "name": "Schrödinger",
