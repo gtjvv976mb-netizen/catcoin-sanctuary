@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-10T12:56:50.808Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-10T14:17:01.869Z",
+ "lens": "figures",
+ "query": "(\"Oliver and Company\" OR \"Dinah the cat\" OR \"Itchy and Scratchy\" OR \"Mr. Jinks\" OR \"Mr Jinks\" OR \"Big Floppa\" OR \"Floppa\" OR \"Bingus\" OR \"Huh Cat\" OR \"Banana Cat\" OR \"Polite Cat\" OR \"Chipi Chipi Cat\" OR \"Chipi Chipi Chapa Chapa\" OR \"OIIA Cat\" OR \"OIIAI Cat\" OR \"Happy Happy Happy Cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-10",
-  "dayUsed": 270,
+  "dayUsed": 310,
   "month": "2026-10",
-  "monthUsed": 3058,
+  "monthUsed": 3098,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -2856,10 +2856,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 5,
-  "figureChunk": 1,
-  "lastLens": "viral",
+  "nextLens": 0,
+  "bigChunk": 6,
+  "figureChunk": 0,
+  "lastLens": "figures",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
@@ -2926,28 +2926,6 @@
       "likes": 4,
       "seen": "2026-10-09T04:37:35.139Z",
       "via": "figures"
-     }
-    ]
-   },
-   "kiki": {
-    "name": "Kiki",
-    "firstSeen": "2026-10-07T14:00:52.000Z",
-    "lastSeen": "2026-10-07T14:00:52.000Z",
-    "authors": [
-     "CatWorkers"
-    ],
-    "posts": [
-     "2107833539941040431"
-    ],
-    "likes": 178,
-    "sightings": [
-     {
-      "at": "2026-10-07T14:00:52.000Z",
-      "author": "CatWorkers",
-      "post": "2107833539941040431",
-      "likes": 178,
-      "seen": "2026-10-07T14:53:37.055Z",
-      "via": "big"
      }
     ]
    }
