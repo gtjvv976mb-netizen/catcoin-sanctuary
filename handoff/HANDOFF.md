@@ -182,6 +182,10 @@ instead. Nothing has been changed yet.
     after fixing the cause, delete its row in `launchesPosted`/`adoptionsPosted` in `data/updates.json`, or set an
     update's `status` back to `queued`. PRs #61 and #63 did this.
 - **Real cats only.** `LAUNCH_CHARACTERS` stays off; a drawn or fictional cat never launches.
+  - **The one exception (2026-10-10):** the owner asked for Schrödinger's Cat (ticker CAT1935), the cat of the 1935
+    thought experiment, for the quantum meta on pump.fun. It launches from the sanctuary's own X post (so it is a
+    holder-rewards coin and nobody is paid), approved with `"character": true` in `data/launch-approvals.json`. That
+    flag works for one post only and never for the sanctuary's own cats; nothing else changed.
 - **Research** follows the scout's hard rules in `.claude/commands/scout.md`:
   - it is read-only on the web and invents nothing;
   - it writes only `data/research/inbox.json` and `log.json`;

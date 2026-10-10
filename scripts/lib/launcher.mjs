@@ -249,7 +249,9 @@ export function feeExclusionsOf(io, log = () => {}) {
 /** The owner's open launch rule (LAUNCH_OPEN, on unless "off"): real pets in viral or rising posts, and any cat a big account names, launch without approval. */
 export const openLaunches = (env = {}) => String(env.LAUNCH_OPEN ?? "").trim().toLowerCase() !== "off";
 /** The owner's character rule (LAUNCH_CHARACTERS, off unless "on"; 2026-10-02, after the legal review): a drawn or fictional
-    cat (a cartoon, game, film or mascot character: someone's trademark or copyright) launches only while it is on. */
+    cat (a cartoon, game, film or mascot character: someone's trademark or copyright) launches only while it is on, or
+    when the owner approves that one post as a character in data/launch-approvals.json (`"character": true`; namingsOf).
+    Only trending posts can carry that exception; the sanctuary's own cats stay real-only. */
 export const characterLaunches = (env = {}) => String(env.LAUNCH_CHARACTERS ?? "").trim().toLowerCase() === "on";
 
 /**
@@ -577,19 +579,23 @@ const NAMING_KINDS = ["real", "cartoon", "fiction"];
  * The owner's names for approved posts that name no cat themselves (a big account's "Meow 😽" under a cat's
  * picture, listed under the trend watch's signals): data/launch-approvals.json approve entries written
  * { "post": "<id or link>", "name": "Poole's Cat", "ticker"?: "POOLE", "kind"?: "real" | "cartoon" | "fiction",
- * "lore"?: "<one line about the cat>" }. A Map of post id -> { name, ticker, kind?, lore? }. An entry whose
- * name or ticker is unusable gives no naming (its post is still approved, and read as the trend watch read it).
+ * "lore"?: "<one line about the cat>", "character"?: true }. A Map of post id -> { name, ticker, kind?, lore?, character? }.
+ * An entry whose name or ticker is unusable gives no naming (its post is still approved, and read as the trend watch
+ * read it). The name is taken in its composed form (NFC), so an accent typed as a separate mark still names it.
+ * `character: true` is the owner's explicit exception to the real-cats rule for that one post (LAUNCH_CHARACTERS
+ * stays off for every other): kept only as the boolean true, on a naming whose kind is cartoon or fiction.
  */
 export function namingsOf(data) {
   const out = new Map();
   for (const v of Array.isArray(data?.approve) ? data.approve : []) {
     if (!isObj(v)) continue;
-    const id = approvedIdOf(v), name = typeof v.name === "string" ? oneLine(v.name, 40) : "";
+    const id = approvedIdOf(v), name = typeof v.name === "string" ? oneLine(v.name.normalize("NFC"), 40) : "";
     if (!id || !NAMING_NAME.test(name)) continue;
     const ticker = typeof v.ticker === "string" && v.ticker.trim() ? v.ticker.trim().replace(/^\$+/, "").toUpperCase() : tickerFor(name);
     if (!ticker || !TICKER.test(ticker)) continue;
     const lore = typeof v.lore === "string" ? oneLine(v.lore, 200) : "";
-    out.set(id, { name, ticker, ...(NAMING_KINDS.includes(v.kind) ? { kind: v.kind } : {}), ...(lore ? { lore } : {}) });
+    out.set(id, { name, ticker, ...(NAMING_KINDS.includes(v.kind) ? { kind: v.kind } : {}), ...(lore ? { lore } : {}),
+      ...(v.character === true && (v.kind === "cartoon" || v.kind === "fiction") ? { character: true } : {}) });
   }
   return out;
 }
@@ -737,7 +743,11 @@ export function candidateRow(post, ctx) {
   // (ctx.characters is the owner's switch, characterLaunches: false in every run while LAUNCH_CHARACTERS is off)
   // The post's picture is the coin's image: never one that shows a person's face (Claude's reading says so).
   if (r.personFace === true) return no("its picture shows a person's face, and the picture would be the coin's image");
-  if (r.kind !== "real" && ctx.characters === false) return no(`a ${r.kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
+  // The owner's explicit exception for one post (namingsOf `character: true`): only for that post id, only as the owner
+  // named it (withNaming sets nameFrom "owner" and the naming's kind), and never past the checks above (sensitive, a face).
+  const naming = ctx.namings?.get(String(post.id));
+  const excepted = r.nameFrom === "owner" && naming?.character === true && naming.kind === r.kind;
+  if (r.kind !== "real" && ctx.characters === false && !excepted) return no(`a ${r.kind} character, someone's trademark or copyright: only real cats launch while LAUNCH_CHARACTERS is off`);
   for (const k of ["catName", "coinName", "ticker", "lore"]) if (typeof r[k] !== "string" || !r[k].trim()) return no(`the reading has no ${k}`);
   const policy = policyOf(post, ctx);
   if (!policy) return no("not a watch-list cat: waits for the owner (data/launch-approvals.json)");

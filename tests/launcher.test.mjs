@@ -3219,3 +3219,91 @@ test("UsePaid's exclusions (data/fee-exclusions.json): government, brands and me
   assert.equal(row.status, "prepared");
   assert.doesNotMatch(t.read(row.metadataPath), /UsePaid/);
 });
+
+/* ── the owner's one-post character exception (2026-10-10: Schrödinger's Cat) ─────────────────── */
+
+const SCHRO_ID = "2108999999999999001";
+/** The sanctuary's own X post of a picture for a character coin, as the trend watch lists an approved post it looked up. */
+const schroPost = (over = {}) => post(SCHRO_ID, { name: null, coin: null, ticker: null, lore: null, kind: "fiction", nameFrom: null, figure: null, aboutOneCat: false, author: "catcosanctuary",
+  text: "For today's quantum buzz, a one-off exception to our real-cats rule: Schrödinger's Cat, from Erwin Schrödinger's 1935 thought experiment.", ...over });
+const SCHRO_NAMING = Object.freeze({ post: `https://x.com/catcosanctuary/status/${SCHRO_ID}`, name: "Schrödinger's Cat", ticker: "CAT1935", kind: "fiction", character: true,
+  lore: "The cat in Erwin Schrödinger's 1935 thought experiment, in two states at once until the box is opened" });
+const charCtx = (posts, approve) => {
+  const file = { approve };
+  return { nowMs: NOW, approvals: approvalsOf(file), namings: namingsOf(file), watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")),
+    collection: shipped(FILES.collection), trending: { note: "test", candidates: [], posts }, characters: false, open: true };
+};
+
+test("the character rule with LAUNCH_CHARACTERS off: an approved, named cartoon or fiction post, a big account's cartoon and a figure all wait; only real cats launch", () => {
+  const plain = { ...SCHRO_NAMING }; delete plain.character;
+  const ctx = charCtx([schroPost()], [plain]);
+  const r = selectCandidate(ctx);
+  assert.equal(r.row, null);
+  assert.match(r.skipped[0].why, /only real cats launch while LAUNCH_CHARACTERS is off/);
+  const big = post("2108999999999999002", { kind: "cartoon", nameFrom: null, figure: null, big: "someaccount", name: "Toon Cat", coin: "Toon Cat", ticker: "TOONCAT" });
+  const fig = post("2108999999999999003");
+  for (const p of [big, fig]) assert.match(candidateRow(p, charCtx([p], [])).problem, /only real cats launch while LAUNCH_CHARACTERS is off/, p.id);
+});
+
+test("namingsOf keeps `character: true` only as the boolean true, on a usable naming whose kind is cartoon or fiction; the name is taken composed (NFC)", () => {
+  const id = SCHRO_ID;
+  const one = (v) => namingsOf({ approve: [{ post: id, name: "Toon Cat", ticker: "TOONCAT", ...v }] }).get(id);
+  assert.equal(one({ kind: "fiction", character: true }).character, true);
+  assert.equal(one({ kind: "cartoon", character: true }).character, true);
+  for (const v of [{ kind: "real", character: true }, { character: true }, { kind: "fiction", character: "true" }, { kind: "fiction", character: 1 }, { kind: "fiction" }])
+    assert.equal(one(v).character, undefined, JSON.stringify(v));
+  assert.equal(namingsOf({ approve: [id] }).size, 0, "a bare id carries no naming, so no exception");
+  assert.equal(namingsOf({ approve: [{ post: id, name: "<b>x</b>", kind: "fiction", character: true }] }).size, 0, "an unusable name gives no naming at all");
+  // An accent typed as a separate mark (o + U+0308) still names the post, composed.
+  assert.equal(namingsOf({ approve: [{ ...SCHRO_NAMING, name: "Schrödinger's Cat" }] }).get(id).name, "Schrödinger's Cat");
+});
+
+test("the owner's exception: the flagged post launches as the fictional character it is, and nothing else does (other posts, its own post unflagged, a sensitive reading, a face)", () => {
+  const unflagged = post("2108999999999999010", { h: 1, kind: "fiction", nameFrom: null, figure: null, aboutOneCat: false, name: null, coin: null, ticker: null, lore: null, author: "someone" });
+  const ctx = charCtx([unflagged, schroPost()], [SCHRO_NAMING, { post: unflagged.id, name: "Other Toon", ticker: "OTHERTOON", kind: "fiction" }]);
+  const pick = selectCandidate(ctx);
+  assert.ok(pick.row, JSON.stringify(pick.skipped));
+  assert.deepEqual([pick.row.postId, pick.row.name, pick.row.ticker, pick.row.kind, pick.row.policy, pick.row.venue], [SCHRO_ID, "Schrödinger's Cat", "CAT1935", "fiction", "approved", "pump-sol"]);
+  assert.match(pick.skipped.find((s) => s.id === unflagged.id).why, /only real cats launch while LAUNCH_CHARACTERS is off/, "a newer unflagged character post still waits");
+  assert.ok(coinMetadata(pick.row).description.includes("Not affiliated with or endorsed by the character's owners."), coinMetadata(pick.row).description);
+  assert.equal(pick.row.feesTo, undefined, "the sanctuary's own post: no account is paid, a holder-rewards coin");
+  // The flag on another post id does nothing for this one.
+  const elsewhere = charCtx([schroPost()], [{ ...SCHRO_NAMING, post: "2108999999999999099" }, { ...SCHRO_NAMING, character: undefined }]);
+  assert.equal(selectCandidate(elsewhere).row, null);
+  // Never past the checks before the rule: a sensitive reading, a person's face.
+  assert.match(selectCandidate(charCtx([schroPost({ sensitive: true })], [SCHRO_NAMING])).skipped[0].why, /sensitive/);
+  const face = schroPost(); face.reading.personFace = true;
+  assert.match(selectCandidate(charCtx([face], [SCHRO_NAMING])).skipped[0].why, /person's face/);
+  // The naming's kind must be the reading's kind as named: a "real" naming never carries the flag.
+  assert.equal(namingsOf({ approve: [{ ...SCHRO_NAMING, kind: "real" }] }).get(SCHRO_ID).character, undefined);
+});
+
+test("the owner's exception never reaches the sanctuary's own cats: a tv-movie adoptable stays refused while LAUNCH_CHARACTERS is off", () => {
+  const adoptables = shipped(FILES.adoptables);
+  const c = adoptables.cats.find((x) => x.category === "tv-movie" && !x.launch);
+  assert.ok(c, "a shipped tv-movie adoptable with no coin");
+  const queue = JSON.parse(readRoot("data/release-queue.json"));
+  const entry = queue.cats.find((q) => q.key === c.ticker && q.status === "released") ?? { key: c.ticker, status: "released", tweet: "2108999999999999555", releasedAt: iso(NOW - HOUR) };
+  const r = sanctuaryRow(entry, { ...charCtx([], [{ ...SCHRO_NAMING, post: `https://x.com/catcosanctuary/status/${entry.tweet}` }]), queue, adoptables, adoptions: { adoptions: [] }, captions: {}, exists: () => true });
+  assert.match(r.problem ?? "", /only real cats launch while LAUNCH_CHARACTERS is off/, JSON.stringify(r).slice(0, 300));
+});
+
+test("the owner's exception end to end, with no LAUNCH_CHARACTERS in the env (as the Launch workflow's send step has): prepared, sent, recorded as a fictional cat; a holder-rewards coin from the sanctuary's own post", async () => {
+  const w = throwaway();
+  const t = site({ posts: [schroPost()], wallet: w.address, approve: [SCHRO_NAMING] });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), logs = [];
+  const env = { LAUNCH_ENABLED: "on", LAUNCH_WALLET_KEY: w.base58, LAUNCH_MINT_SUFFIX: "none" };
+  const { p, s, r } = await launchOnce(t, { env, sol, web, log: (l) => logs.push(l) });
+  assert.equal(p.prepared, SCHRO_ID, logs.join("\n"));
+  assert.equal(s.outcome, "launched", logs.join("\n"));
+  assert.deepEqual(r.recorded, ["CAT1935"]);
+  const row = t.json(FILES.ledger).launches.find((x) => x.postId === SCHRO_ID);
+  assert.deepEqual([row.kind, row.policy, row.status, row.feesTo, row.venue], ["fiction", "approved", "launched", undefined, "pump-sol"]);
+  const cat = t.json(FILES.adoptables).cats.find((x) => x.ticker === "CAT1935");
+  assert.equal(cat.category, "tv-movie");
+  assert.equal(validateAdoptables(t.json(FILES.adoptables), { taken: new Set(t.json(FILES.planned).cats.map((x) => x.ticker)) }).refused.length, 0);
+  // Without the flag the same post is never prepared.
+  const t2 = site({ posts: [schroPost()], wallet: w.address, approve: [{ ...SCHRO_NAMING, character: false }] });
+  const p2 = await prepare({ io: t2.io, env, rpc: sol.rpc, fetchImpl: fakeSite(t2.root).fetchImpl, now: () => NOW, log: () => {} });
+  assert.equal(p2.prepared, null);
+});
