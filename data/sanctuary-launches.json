@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/HORATIOCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106755747254338020.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-10T14:13:34Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "horatio-library",
         "ticker": "HORATIOCAT",
@@ -65,7 +65,18 @@
       },
       "feesTo": "CentreCoLibrary",
       "mintNonce": 9392310,
-      "usePaidMint": "3Ucq8cL7KrotvdLBZkZoBxbM5yirExtL7fXVndwocats"
+      "usePaidMint": "3Ucq8cL7KrotvdLBZkZoBxbM5yirExtL7fXVndwocats",
+      "tx": "51ZTc49NnG8kcNv9tGFoJdrSen4cjnrV8xV1nNNHoMiwUCuHEHibHKppKshR1eMz7h4QtogLUVkzwzkfNNPzaviE",
+      "sentAt": "2026-10-10T14:32:06Z",
+      "lastValidBlockHeight": 433327003,
+      "mintPublic": "3Ucq8cL7KrotvdLBZkZoBxbM5yirExtL7fXVndwocats",
+      "spentLamports": 5689120,
+      "settledAt": "2026-10-10T14:32:16Z",
+      "launchedAt": "2026-10-10T14:32:06Z",
+      "feeRoute": {
+        "tx": "5a7t38BU1ceV79T9Cr3wdU5UkRKgdYBdSi5v5ZVTqQpe4Yoa1Sa4YRcp9FFZXfMgJXoQfcZkgQgJFNobtbVyXPvz",
+        "at": "2026-10-10T14:32:19Z"
+      }
     },
     {
       "postId": "2106771002797486339",
