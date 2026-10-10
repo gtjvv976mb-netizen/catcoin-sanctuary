@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/RIDOKUN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106785980464181499.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-10T01:30:33Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "rido-matsumaru",
         "ticker": "RIDOKUN",
@@ -65,7 +65,18 @@
       },
       "feesTo": "ryogomatsumaru",
       "mintNonce": 3405862,
-      "usePaidMint": "29CYYhKSu1iBeeYceX5CEHLogm12XGmDinqqzZXkcats"
+      "usePaidMint": "29CYYhKSu1iBeeYceX5CEHLogm12XGmDinqqzZXkcats",
+      "tx": "2eJxzm47orAhHq6QVKpCGRteLKdfzW5S8RpVVcKtXh61UZCR2j837aNhYmUqooQYSGxhonHciYMXVnW3jsDEi33D",
+      "sentAt": "2026-10-10T01:50:28Z",
+      "lastValidBlockHeight": 433117270,
+      "mintPublic": "29CYYhKSu1iBeeYceX5CEHLogm12XGmDinqqzZXkcats",
+      "spentLamports": 5658640,
+      "settledAt": "2026-10-10T01:50:38Z",
+      "launchedAt": "2026-10-10T01:50:28Z",
+      "feeRoute": {
+        "tx": "51AYFuYhzW4MqJFkRBgEX8Vku2HX1WLjMyNsTRbAPNnBMbUBBwG1ZYXTa6jhdkXhhSs5GqiZj7Beds2NEG5czfSq",
+        "at": "2026-10-10T01:50:41Z"
+      }
     },
     {
       "postId": "2107511052162183661",
