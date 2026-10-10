@@ -92,7 +92,7 @@ const trendingOf = (posts) => ({ note: "test", candidates: posts.map((p) => p.id
  * never depends on what the launcher has launched (they are the Launch workflow's own gate).
  */
 const FIXTURE_NAMES = new Set(["sir gloopington", "gloopington", "gloop", "bramblewick", "bramble", "plinko cat", "plinko", "quillbert", "quill", "moon kitty", "moonk",
-  "fresht", "other cat", "othercat", "zzz"]);
+  "fresht", "other cat", "othercat", "zzz", "boxed toon", "boxtoon1", "other toon", "othertoon", "toon cat", "tooncat", "zoë boxed"]);
 const fixtureNamed = (...names) => names.some((k) => typeof k === "string" && FIXTURE_NAMES.has(k.trim().toLowerCase()));
 /** A shipped file's contents with every cat, entry or key named like a fixture left out (the file as it is otherwise). */
 function fixtureFree(rel, v) {
@@ -3226,8 +3226,10 @@ const SCHRO_ID = "2108999999999999001";
 /** The sanctuary's own X post of a picture for a character coin, as the trend watch lists an approved post it looked up. */
 const schroPost = (over = {}) => post(SCHRO_ID, { name: null, coin: null, ticker: null, lore: null, kind: "fiction", nameFrom: null, figure: null, aboutOneCat: false, author: "catcosanctuary",
   text: "For today's quantum buzz, a one-off exception to our real-cats rule: Schrödinger's Cat, from Erwin Schrödinger's 1935 thought experiment.", ...over });
-const SCHRO_NAMING = Object.freeze({ post: `https://x.com/catcosanctuary/status/${SCHRO_ID}`, name: "Schrödinger's Cat", ticker: "CAT1935", kind: "fiction", character: true,
-  lore: "The cat in Erwin Schrödinger's 1935 thought experiment, in two states at once until the box is opened" });
+// Made-up names (in FIXTURE_NAMES), never the real coin's: once Schrödinger's Cat (CAT1935) is launched and recorded, its
+// name and ticker are taken in the shipped data, and tests that used them would refuse their own fixture.
+const SCHRO_NAMING = Object.freeze({ post: `https://x.com/catcosanctuary/status/${SCHRO_ID}`, name: "Boxed Toon", ticker: "BOXTOON1", kind: "fiction", character: true,
+  lore: "The cat in a 1935 thought experiment, in two states at once until the box is opened" });
 const charCtx = (posts, approve) => {
   const file = { approve };
   return { nowMs: NOW, approvals: approvalsOf(file), namings: namingsOf(file), watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")),
@@ -3254,8 +3256,8 @@ test("namingsOf keeps `character: true` only as the boolean true, on a usable na
     assert.equal(one(v).character, undefined, JSON.stringify(v));
   assert.equal(namingsOf({ approve: [id] }).size, 0, "a bare id carries no naming, so no exception");
   assert.equal(namingsOf({ approve: [{ post: id, name: "<b>x</b>", kind: "fiction", character: true }] }).size, 0, "an unusable name gives no naming at all");
-  // An accent typed as a separate mark (o + U+0308) still names the post, composed.
-  assert.equal(namingsOf({ approve: [{ ...SCHRO_NAMING, name: "Schrödinger's Cat" }] }).get(id).name, "Schrödinger's Cat");
+  // An accent typed as a separate mark (e + U+0308) still names the post, composed.
+  assert.equal(namingsOf({ approve: [{ ...SCHRO_NAMING, name: "Zoe\u0308 Boxed" }] }).get(id).name, "Zoë Boxed");
 });
 
 test("the owner's exception: the flagged post launches as the fictional character it is, and nothing else does (other posts, its own post unflagged, a sensitive reading, a face)", () => {
@@ -3263,10 +3265,12 @@ test("the owner's exception: the flagged post launches as the fictional characte
   const ctx = charCtx([unflagged, schroPost()], [SCHRO_NAMING, { post: unflagged.id, name: "Other Toon", ticker: "OTHERTOON", kind: "fiction" }]);
   const pick = selectCandidate(ctx);
   assert.ok(pick.row, JSON.stringify(pick.skipped));
-  assert.deepEqual([pick.row.postId, pick.row.name, pick.row.ticker, pick.row.kind, pick.row.policy, pick.row.venue], [SCHRO_ID, "Schrödinger's Cat", "CAT1935", "fiction", "approved", "pump-sol"]);
+  assert.deepEqual([pick.row.postId, pick.row.name, pick.row.ticker, pick.row.kind, pick.row.policy, pick.row.venue], [SCHRO_ID, "Boxed Toon", "BOXTOON1", "fiction", "approved", "pump-sol"]);
   assert.match(pick.skipped.find((s) => s.id === unflagged.id).why, /only real cats launch while LAUNCH_CHARACTERS is off/, "a newer unflagged character post still waits");
   assert.ok(coinMetadata(pick.row).description.includes("Not affiliated with or endorsed by the character's owners."), coinMetadata(pick.row).description);
   assert.equal(pick.row.feesTo, undefined, "the sanctuary's own post: no account is paid, a holder-rewards coin");
+  assert.equal(pick.row.photoCredit, false, "the sanctuary's own post: its picture is not credited to the sanctuary");
+  assert.doesNotMatch(coinMetadata(pick.row).description, /Photo: @/);
   // The flag on another post id does nothing for this one.
   const elsewhere = charCtx([schroPost()], [{ ...SCHRO_NAMING, post: "2108999999999999099" }, { ...SCHRO_NAMING, character: undefined }]);
   assert.equal(selectCandidate(elsewhere).row, null);
@@ -3296,11 +3300,16 @@ test("the owner's exception end to end, with no LAUNCH_CHARACTERS in the env (as
   const { p, s, r } = await launchOnce(t, { env, sol, web, log: (l) => logs.push(l) });
   assert.equal(p.prepared, SCHRO_ID, logs.join("\n"));
   assert.equal(s.outcome, "launched", logs.join("\n"));
-  assert.deepEqual(r.recorded, ["CAT1935"]);
+  assert.deepEqual(r.recorded, ["BOXTOON1"]);
   const row = t.json(FILES.ledger).launches.find((x) => x.postId === SCHRO_ID);
   assert.deepEqual([row.kind, row.policy, row.status, row.feesTo, row.venue], ["fiction", "approved", "launched", undefined, "pump-sol"]);
-  const cat = t.json(FILES.adoptables).cats.find((x) => x.ticker === "CAT1935");
+  const cat = t.json(FILES.adoptables).cats.find((x) => x.ticker === "BOXTOON1");
   assert.equal(cat.category, "tv-movie");
+  // Its card tells it as it was: the sanctuary's own post, not a trending one.
+  assert.doesNotMatch(cat.story, /trending on X/);
+  assert.match(cat.story, /The sanctuary posted Boxed Toon on X on .+ and gave it a coin\./);
+  assert.match(cat.proof.note, /^The sanctuary's own post, approved by the owner on \d{4}-\d{2}-\d{2}\.$/);
+  assert.equal(row.photoCredit, false);
   assert.equal(validateAdoptables(t.json(FILES.adoptables), { taken: new Set(t.json(FILES.planned).cats.map((x) => x.ticker)) }).refused.length, 0);
   // Without the flag the same post is never prepared.
   const t2 = site({ posts: [schroPost()], wallet: w.address, approve: [{ ...SCHRO_NAMING, character: false }] });

@@ -709,18 +709,22 @@ export function adoptableFor(post, { figure = null, pair, taken = { ids: new Set
   const owner = oneLine(figure?.owner, 120) || (figure ? (["real", "meme"].includes(figure.kind) ? "its owners" : "its creators")
     : drawn ? "its creators" : oneLine(post.author?.name, 120) || `@${handle}`);
   const category = ADOPTABLE_CATEGORIES.includes(figure?.category) ? figure.category : figure?.kind === "meme" || !drawn ? "viral" : "tv-movie";
-  const look = typeof figure?.look === "string" && figure.look.length >= 20 && figure.look.length <= 600 ? figure.look : DEFAULT_LOOK(name);
+  // A post by the sanctuary itself (an owner-approved one-off, e.g. a character exception) was not found trending: its card says so.
+  const own = String(handle).toLowerCase() === OWN_HANDLE.toLowerCase();
+  const look = typeof figure?.look === "string" && figure.look.length >= 20 && figure.look.length <= 600 ? figure.look
+    : own ? `${name}, drawn from the picture in the sanctuary's own X post: the same fur colours, markings and eyes as there.` : DEFAULT_LOOK(name);
   const coat = figure?.coat && coatProblem(figure.coat) === null ? { ...figure.coat } : coatFromLook(look);
   const postedMs = Date.parse(post.postedAt);
   const lore = oneLine(r.lore, 200);
-  const story = `${/[.!?…]$/.test(lore) ? lore : `${lore}.`} ${name} was trending on X on ${dateText(postedMs)}, and the sanctuary gave it a coin.`;
+  const story = `${/[.!?…]$/.test(lore) ? lore : `${lore}.`} ${own ? `The sanctuary posted ${name} on X on ${dateText(postedMs)} and gave it a coin.`
+    : `${name} was trending on X on ${dateText(postedMs)}, and the sanctuary gave it a coin.`}`;
   let id = [slug(name), `${slug(name)}-${ticker.toLowerCase()}`, ticker.toLowerCase()].find((x) => ID_RE.test(x) && !taken.ids.has(x));
   for (let n = 2; !id && n < 10; n++) if (!taken.ids.has(`${ticker.toLowerCase()}-${n}`)) id = `${ticker.toLowerCase()}-${n}`;
   if (!id) return { problem: "no free id for the cat" };
   const cat = {
     id, ticker, name, coinName: oneLine(r.coinName, 60), owner, category, story, look, coat, pair: { symbol: pair.symbol, mint: pair.mint },
     proof: { kind: "x", url: post.url, author: handle, handle, date: ISO_SECONDS(postedMs).slice(0, 10), dateType: "posted", text: oneLine(post.text, 600),
-      note: `Found by the sanctuary's trend watch on ${ISO_SECONDS(nowMs).slice(0, 10)}.`, image: null },
+      note: own ? `The sanctuary's own post, approved by the owner on ${ISO_SECONDS(nowMs).slice(0, 10)}.` : `Found by the sanctuary's trend watch on ${ISO_SECONDS(nowMs).slice(0, 10)}.`, image: null },
     sources: [], existingCoin: null, memorial: false, tribute: tributeLine(owner), sensitivity: "",
     portrait: null, portraitStatus: "pending", confidence: r.readBy === "claude" ? "high" : "medium", lore: null,
   };
@@ -801,9 +805,10 @@ export function candidateRow(post, ctx) {
   // The fan-tribute line is the owner's fixed text (it says the coin is NOT official): a citation; the lore meets every rule.
   const tributeCited = [...cited, fanTribute(row.kind), ...(row.feesTo ? [usePaidLine(row.feesTo)] : [])];
   // The photo's credit goes in the description when it fits and meets every rule (a handle is the stranger's own text).
-  row.photoCredit = true;
+  // Never on the sanctuary's own post: its picture is not the sanctuary's photo to claim (as for the sanctuary's own cats).
+  row.photoCredit = handle.toLowerCase() !== OWN_HANDLE.toLowerCase();
   const credit = creditOf(row);
-  if (!credit || !coinMetadata(row).description.includes(credit) || !checkUpdate(coinMetadata(row).description, tributeCited).ok) row.photoCredit = false;
+  if (row.photoCredit && (!credit || !coinMetadata(row).description.includes(credit) || !checkUpdate(coinMetadata(row).description, tributeCited).ok)) row.photoCredit = false;
   const meta = coinMetadata(row);
   const d = checkUpdate(meta.description, tributeCited);
   if (!d.ok) return no(`the coin's description breaks the content rules (${d.violations.map((x) => `${x.rule}: ${x.term}`).join("; ")})`);
