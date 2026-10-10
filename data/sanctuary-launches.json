@@ -14,9 +14,9 @@
       "image": "https://pbs.twimg.com/media/HUR9--HWMAA36TW.jpg",
       "coinImage": "https://pbs.twimg.com/media/HUR9--HWMAA36TW.jpg",
       "metadataPath": "coins/2108949048061222995.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-10T16:23:55Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "schrodinger-s-cat",
         "ticker": "CAT1935",
@@ -58,9 +58,14 @@
         "lore": null
       },
       "photoCredit": false,
-      "mintGrind": {
-        "next": 17904001
-      }
+      "mintNonce": 21792843,
+      "tx": "4WZ4S8Hp7MGYGELV1urZp7wKdjyMDvJpQuk3eVaYxfbS3MZCZkbWb1PqhTgPYL5un8HC4535jmQbaAZzLgKYjxQR",
+      "sentAt": "2026-10-10T17:21:56Z",
+      "lastValidBlockHeight": 433373347,
+      "mintPublic": "3LZC5uLSc5dVXHZbiVgTxxAAAwhp7d3ksXjsxWpmcats",
+      "spentLamports": 5729760,
+      "settledAt": "2026-10-10T17:22:05Z",
+      "launchedAt": "2026-10-10T17:21:56Z"
     },
     {
       "postId": "2106726308180795723",
