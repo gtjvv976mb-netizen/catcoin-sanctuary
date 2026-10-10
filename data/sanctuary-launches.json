@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/KONPEIMISO.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106771002797486339.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-10T07:44:47Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "konpei-miso",
         "ticker": "KONPEIMISO",
@@ -65,7 +65,18 @@
       },
       "feesTo": "hanae0626",
       "mintNonce": 5358007,
-      "usePaidMint": "6xcYHnrDzwDWakojP9paAQ45Px2N7iMNufWerF9pcats"
+      "usePaidMint": "6xcYHnrDzwDWakojP9paAQ45Px2N7iMNufWerF9pcats",
+      "tx": "6p7ajgwQuFDB46U19t4SUzhUu45pbybcafo1gtpN5crbiur4yw1r5iiPkgqBbLgYN4XhApsokuBGk1uzwqSYBUX",
+      "sentAt": "2026-10-10T08:03:07Z",
+      "lastValidBlockHeight": 433219836,
+      "mintPublic": "6xcYHnrDzwDWakojP9paAQ45Px2N7iMNufWerF9pcats",
+      "spentLamports": 5719600,
+      "settledAt": "2026-10-10T08:03:17Z",
+      "launchedAt": "2026-10-10T08:03:07Z",
+      "feeRoute": {
+        "tx": "awjDPR3hxMtgphDE6uJe86ZRz5zBjqzK52MgyitK9ttcLzZsr31zxqqJtt2c2UztLDTSrZeEUzivKUV48jfSeTa",
+        "at": "2026-10-10T08:03:21Z"
+      }
     },
     {
       "postId": "2106785980464181499",
