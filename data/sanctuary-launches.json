@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/SILKSTRIPE.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2108969991848529959.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-10T19:15:31Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "schrodinger-elon-musk",
         "ticker": "SILKSTRIPE",
@@ -68,7 +68,18 @@
       },
       "feesTo": "elonmusk",
       "mintNonce": 11237005,
-      "usePaidMint": "4H6r7nttLaWU9QbBG67EEASn4x3YUPshoCmoVveDcats"
+      "usePaidMint": "4H6r7nttLaWU9QbBG67EEASn4x3YUPshoCmoVveDcats",
+      "tx": "ZJzPPufSsjXgfhGEspYzLhKyEZ8dvH7q4jiyCqfPJcYwccR48wmefe3LoPrKDAs8XMr817uH3PWBpjbua5kSWMG",
+      "sentAt": "2026-10-10T19:40:08Z",
+      "lastValidBlockHeight": 433411170,
+      "mintPublic": "4H6r7nttLaWU9QbBG67EEASn4x3YUPshoCmoVveDcats",
+      "spentLamports": 5714520,
+      "settledAt": "2026-10-10T19:40:17Z",
+      "launchedAt": "2026-10-10T19:40:07Z",
+      "feeRoute": {
+        "tx": "355rcsB2oRDtV2Yxk8v1v523jupoaBwSajobYGztkXN5XBkRmSXaLi7F9MiNcAngK9ZHK1QqGj4oTaTcb88mCYzo",
+        "at": "2026-10-10T19:40:21Z"
+      }
     },
     {
       "postId": "2108949048061222995",
