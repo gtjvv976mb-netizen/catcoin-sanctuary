@@ -2,6 +2,77 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106561136971731353",
+      "url": "https://x.com/catcosanctuary/status/2106561136971731353",
+      "name": "Flossie",
+      "coinName": "Flossie, the Oldest Cat",
+      "ticker": "OLDFLOSSIE",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Flossie is a tortoiseshell moggie born on 29 December 1995 in a feral colony near St Helens Hospital, Merseyside, where hospital staff adopted her.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/OLDFLOSSIE.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/OLDFLOSSIE.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106561136971731353.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-11T19:00:10Z",
+      "attempts": 0,
+      "cat": {
+        "id": "flossie-oldest-cat",
+        "ticker": "OLDFLOSSIE",
+        "name": "Flossie",
+        "coinName": "Flossie, the Oldest Cat",
+        "owner": "Victoria Green (Orpington, England); Guinness World Records title holder",
+        "category": "viral",
+        "story": "Flossie is a tortoiseshell moggie born on 29 December 1995 in a feral colony near St Helens Hospital, Merseyside, where hospital staff adopted her. She lived ten years with her first owner, then 14 with that owner's sister and briefly with the sister's son before going to Cats Protection, and in 2022 was adopted by Victoria Green, who cares for senior cats. Deaf and with limited eyesight, she was confirmed by Guinness World Records in November 2022 as the oldest living cat at 26 years and 329 days. She turned 30 on 29 December 2025, when Dexerto's post about her drew over 227,000 likes on X.",
+        "look": "Small, slim tortoiseshell short-hair: mottled black, dark brown and ginger coat with a ginger blaze beside the nose and on the forehead, dark ears, eyes often half-closed; an elderly, fine-boned cat usually curled up asleep.",
+        "coat": {
+          "base": "black",
+          "second": "brown",
+          "pattern": "tortie",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/GWR/status/1595565081021992960",
+          "author": "GWR",
+          "handle": "GWR",
+          "date": "2022-11-23",
+          "dateType": "posted",
+          "text": "New record: Oldest living cat - Flossie aged 26 years and 329 days 😸 She's the human equivalent of 120 years old!",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Flossie (cat) - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Flossie_(cat)"
+          },
+          {
+            "label": "World's oldest cat confirmed at almost 27 years old | Guinness World Records",
+            "url": "https://www.guinnessworldrecords.com/news/2022/11/worlds-oldest-cat-confirmed-at-almost-27-years-old-726391"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "FLOSSIE",
+          "contract": "3dk4NGX3dJGZ52zhSanoHfxExqEE9AWL393Qpbbdpump",
+          "mcapUsd": 2248
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Victoria Green (Orpington, England); Guinness World Records title holder.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/OLDFLOSSIE.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      }
+    },
+    {
       "postId": "2107743524158628196",
       "url": "https://x.com/catcosanctuary/status/2107743524158628196",
       "name": "Koneroku (こねろく)",
