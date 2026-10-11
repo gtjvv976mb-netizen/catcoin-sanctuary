@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/OLDFLOSSIE.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106561136971731353.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-11T19:00:10Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "flossie-oldest-cat",
         "ticker": "OLDFLOSSIE",
@@ -70,7 +70,15 @@
         "portraitStatus": "ready",
         "confidence": "high",
         "lore": null
-      }
+      },
+      "mintNonce": 12782913,
+      "tx": "2aznjgnQdhYcq23vRPzGqyMoxqw1MoPjTYL2pe9R7MCM4rnrXUJJ6kdUZnWNQYagCXHmUsrZGkSE257DY6NY2xBJ",
+      "sentAt": "2026-10-11T19:12:08Z",
+      "lastValidBlockHeight": 433799276,
+      "mintPublic": "9K37haXgVjvKA9ViKjSZzigcufEERbFg1QSkBHg7cats",
+      "spentLamports": 5770400,
+      "settledAt": "2026-10-11T19:12:17Z",
+      "launchedAt": "2026-10-11T19:12:10Z"
     },
     {
       "postId": "2107743524158628196",
@@ -148,7 +156,7 @@
       "spentLamports": 5684040,
       "settledAt": "2026-10-11T14:29:56Z",
       "launchedAt": "2026-10-11T14:29:47Z",
-      "feeRouteTries": 1,
+      "feeRouteTries": 2,
       "feeRouteError": "the simulation did not pass ({\"InstructionError\":[2,{\"Custom\":6095}]})",
       "recordedAt": "2026-10-11T14:30:00Z"
     },
