@@ -2,6 +2,78 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2107758625842458657",
+      "url": "https://x.com/catcosanctuary/status/2107758625842458657",
+      "name": "Yamaneko (ヤマネコ)",
+      "coinName": "Yamaneko",
+      "ticker": "YAMANEKO",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Yamaneko is a male Siberian cat from Japan, born 29 July 2020.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/YAMANEKO.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/YAMANEKO.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2107758625842458657.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-11T06:32:45Z",
+      "attempts": 0,
+      "cat": {
+        "id": "yamaneko-siberian",
+        "ticker": "YAMANEKO",
+        "name": "Yamaneko (ヤマネコ)",
+        "coinName": "Yamaneko",
+        "owner": "Owner of @ymnc_rf (ヤマネコ), Japan",
+        "category": "viral",
+        "story": "Yamaneko is a male Siberian cat from Japan, born 29 July 2020. His X account @ymnc_rf (about 110k followers) posts under #ヤマネコレポート and is billed as 'the daily life of Yamaneko, a Siberian with a slightly rich range of expressions'. His habit of rolling his eyes white makes him look like he is pulling faces. A March 2023 post showing 12 of his expressions got more than 41,000 likes in three days. He is timid and affectionate, and his best friend is a stuffed dog called Inu-kun. In December 2025 ABEMA Times featured his belly-up 'banzai' pose during daily brushing. He also has LINE stickers.",
+        "look": "Large, fluffy long-haired Siberian. Brown/black mackerel-tabby coat with a cream-white chin, chest and bib, a heavy ruff and tufted ears. Greenish-amber eyes and a very bushy tail with dark stripes. Use a big fluffy brown tabby with a white bib and an expressive, wide-eyed face.",
+        "coat": {
+          "base": "brown",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "amber"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/ymnc_rf/status/2092810948201550089",
+          "author": "ymnc_rf",
+          "handle": "ymnc_rf",
+          "date": "2026-08-27",
+          "dateType": "posted",
+          "text": "そろそろ寝ようよーｯ！って呼びに来た昨夜のヤマネコ",
+          "note": "Verified on 2026-10-06",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "ABEMA Times: Yamaneko-kun's belly-up 'banzai' brushing pose (20 Dec 2025)",
+            "url": "https://times.abema.tv/articles/-/10215484"
+          },
+          {
+            "label": "AppBank: 表情豊かすぎる話題の猫 ヤマネコ (20 Mar 2023)",
+            "url": "https://www.appbank.net/2023/03/20/entertainment/2427348.php"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Yamane-Ko",
+          "contract": "EDi3kSsbRLX5d8sBFMaPa8JThMRVbEUzQN43rDxBpump",
+          "mcapUsd": 3224
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Owner of @ymnc_rf (ヤマネコ), Japan.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/YAMANEKO.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "ymnc_rf"
+    },
+    {
       "postId": "2106711246728753452",
       "url": "https://x.com/catcosanctuary/status/2106711246728753452",
       "name": "Rokutama",
