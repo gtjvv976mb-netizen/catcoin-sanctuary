@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-11T00:57:03.813Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-11T01:34:10.262Z",
+ "lens": "big",
+ "query": "(from:NintendoAmerica OR from:Pokemon OR from:PlayStation OR from:Xbox OR from:Spotify OR from:McDonalds OR from:Wendys OR from:tacobell OR from:Starbucks OR from:CocaCola OR from:Nike OR from:NBA OR from:NFL OR from:TheSimpsons OR from:CartoonNetwork OR from:adultswim OR from:Crunchyroll OR from:hellokitty OR from:binance OR from:coinbase OR from:CoinMarketCap) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-10-11",
-  "dayUsed": 20,
+  "dayUsed": 31,
   "month": "2026-10",
-  "monthUsed": 3119,
+  "monthUsed": 3130,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -31,6 +31,8 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2109071481971806266",
+  "2109001079828459841",
   "2108361805747642420",
   "2108319407315230954",
   "2108304571605151905",
@@ -60,6 +62,179 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2109071481971806266",
+   "url": "https://x.com/Crunchyroll/status/2109071481971806266",
+   "text": "This uncle's obsession with cute things has led him to...a cat cafe! 🐱 https://t.co/4Gdyu4fh4g",
+   "author": {
+    "handle": "Crunchyroll",
+    "name": "Crunchyroll",
+    "followers": 10467477
+   },
+   "postedAt": "2026-10-11T00:00:00Z",
+   "likes": 87,
+   "views": 20860,
+   "reposts": 7,
+   "heat": 197,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/media/HUP0wa5XYAAVYdh.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "Crunchyroll",
+   "lens": "big",
+   "readAt": "2026-10-11T01:34:10.262Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "cartoon",
+    "coinName": "Kitty Red Riding Hood",
+    "ticker": "HOOD",
+    "lore": "A cartoon kitty dressed as Red Riding Hood fills an uncle's daydream as he falls for cute things at a cat cafe.",
+    "sensitive": false,
+    "why": "A single cartoon cat character shown in a fun anime moment.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [
+    {
+     "mint": "h5NciPdMZ5QCB5BYETJMYBMpVx9ZuitR6HcVjyBhood",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/9ctxeyrstwtklfvts6c7rfqc7ptxy42ypdqcrhtv53ao"
+    },
+    {
+     "mint": "HooDYv5RewLRiMLnEVq3VJqdqxhuE6c5eYvqejMC3e9A",
+     "name": "Robinhood Markets - Backpack Securities",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/97r9nlqyoygfbqespduwuthq4fjjbk8phvugaweqfnva"
+    },
+    {
+     "mint": "iBuxd5tPodcUzx3Qsip2uW1mozSkzE3XNU8JpX2pump",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/7v2xnkfuw8fdarxyrhpdjccquvbddsce6dbmfzkxaura"
+    },
+    {
+     "mint": "D2XvLipYuPFgJ42kB6U4ihmHENStT7h2BS2iN5NtzZKg",
+     "name": "dogwifhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/bsipx7jgy87q8huaacq4kpgmcdrux3rbrxekej2moe4a"
+    },
+    {
+     "mint": "HgbjSdXhkAgm2Y4jed8t9ai5qFoNpFJSAYwM3u5UxB6t",
+     "name": "foreskin",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/6dalrvzupognyudvs8z4srrqakpidnmvkpf74qpplgu8"
+    },
+    {
+     "mint": "N6e1sSdvSEovoyeAeucaJR7BYeirUjua6iRj9Xcze7u",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/7npasf8td7iheevx4pqwqjhs1jtjmrj7tj2hvjw2ztgn"
+    },
+    {
+     "mint": "5BNRfBr6P9AAMQAWc5243rBjhFvJbcsJPvQouKHGdvQz",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/hv2txkxuhmrpqcrarnkm59mllnktbofgfyau4pujwha1"
+    },
+    {
+     "mint": "BMwtnnzo4kxZHuqmwr3iHKbbBkqtmtT5aGH53Wtxpump",
+     "name": "Hoodosterone",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/ekqvtga1txdb998cgtxf1spikqu6hyxshkh26qtldclt"
+    },
+    {
+     "mint": "hq3dxB9myo3wBrkxXMS24Vzb2gnLeMgmn5ZEyWipump",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/d2cnh2zhtldkqhsjmserpwxjr6ynuavcyqye1vqmpmxe"
+    },
+    {
+     "mint": "4B4a8YP8xUDQDXDw6eTHULtTHRbe69hmXJU3h6EPwJsZ",
+     "name": "hood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/ay16mbs6tgrg8yxgltfabqnoleljufvoegnjyxdptjaz"
+    },
+    {
+     "mint": "9rpnwGXVomWS18zZm1wJHfPJztUL7eArbYAV17CSpump",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/crsr4qnmdwtqcpfuxq5jvqb9chb62u2ztujcmvrlbesj"
+    },
+    {
+     "mint": "Ee97i7jdT9byGGWdKAL81arnVs6q79aiWLJw6sGpump",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/2dlegk8t7v75acsbqcp6q74dtkxoqnljsn1ig6mutcef"
+    },
+    {
+     "mint": "8wdKKAkr7BK3iTrChofx9rZFoJQQjpCWidrn8aJpnpLA",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/9krtrvazvgeerici43whx1ugyje4gwncg57njywdzysb"
+    },
+    {
+     "mint": "BiWhKz24Wsd5AbjvE9vE6NAjsbBhwfq1PfshD7o7pump",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/c2633gmmfnck7ibuqeq1dvuus6vkcuhndprgsekuae2s"
+    },
+    {
+     "mint": "C6mwVkF5zz5N4BCwbouXnQGN2t6AzM3jk9XqWASNpump",
+     "name": "Robinhood",
+     "symbol": "HOOD",
+     "url": "https://dexscreener.com/solana/238cesswbqr1zhtp55zfax2b6pbd61jgyxtur9pm56ap"
+    }
+   ],
+   "status": "signal"
+  },
+  {
+   "id": "2109001079828459841",
+   "url": "https://x.com/Crunchyroll/status/2109001079828459841",
+   "text": "How to properly handle your cat. 🐱 (via The Apothecary Diaries Season 3) https://t.co/bwH2GJ0DLf",
+   "author": {
+    "handle": "Crunchyroll",
+    "name": "Crunchyroll",
+    "followers": 10467477
+   },
+   "postedAt": "2026-10-10T19:20:15Z",
+   "likes": 1180,
+   "views": 43510,
+   "reposts": 89,
+   "heat": 288,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUStTlSWwAA_Nis.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "Crunchyroll",
+   "lens": "big",
+   "readAt": "2026-10-11T01:34:10.262Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "Anime screenshots of a girl with cat-ear hair being patted, not an actual cat.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
   {
    "id": "2108949048061222995",
    "url": "https://x.com/catcosanctuary/status/2108949048061222995",
@@ -2922,10 +3097,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 7,
+  "nextLens": 3,
+  "bigChunk": 8,
   "figureChunk": 0,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
