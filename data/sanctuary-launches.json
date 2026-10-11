@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/ROKUCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106711246728753452.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-10T22:14:19Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "rokutama",
         "ticker": "ROKUCAT",
@@ -73,7 +73,19 @@
       },
       "feesTo": "ekichoTAMA",
       "mintNonce": 1973524,
-      "usePaidMint": "2Gau21cmP1NTHMv9y6tcCtvhhPqWAJzcFJNA4Miccats"
+      "usePaidMint": "2Gau21cmP1NTHMv9y6tcCtvhhPqWAJzcFJNA4Miccats",
+      "tx": "619DiNZizvt84uLtBxobMfoQ6AA7Ye2zj63ZDb1m2F2rQpzjd62GEYw96sybW6UqzTL82AuYpH5atNVnSbZFcJUu",
+      "sentAt": "2026-10-11T06:14:06Z",
+      "lastValidBlockHeight": 433585537,
+      "mintPublic": "2Gau21cmP1NTHMv9y6tcCtvhhPqWAJzcFJNA4Miccats",
+      "spentLamports": 5678960,
+      "settledAt": "2026-10-11T06:14:15Z",
+      "launchedAt": "2026-10-11T06:14:06Z",
+      "feeRoute": {
+        "tx": "62yuxpQySobXUHwWUL44A16sTQQfNgVNAJcd69EETKyiocSjFbcvVGmeHcnS6k7KYHSsdJhWfgiUNNch47Bsz2H4",
+        "at": "2026-10-11T06:14:19Z"
+      },
+      "recordedAt": "2026-10-11T06:14:20Z"
     },
     {
       "postId": "2108969991848529959",
