@@ -132,7 +132,7 @@ import { venueById, venueIds, chooseVenue, takenPairs, PUMP_SOL, PUMP_QUOTE } fr
 import { coatFromLook } from "./coat.mjs";
 import { tickerFor, loreFrom } from "./read-cat-post.mjs";
 import { RpcError } from "./rpc.mjs";
-import { draftLaunch, checkUpdate, fanTribute } from "../post-updates.mjs";
+import { draftLaunch, postedName, checkUpdate, fanTribute } from "../post-updates.mjs";
 import { validateRewardsLedger, earmarkSignatures, earmarkLamports, rewardsMode, REWARDS_FILES } from "./rewards.mjs";
 import { measureClaim } from "./pump-fees.mjs";
 import { buildFeeRouteTransaction, signFeeRouteTransaction, unsignedFeeRouteTransaction, sharingConfig, decodeSharingConfig, routedTo, usePaidLine, usePaidTokenUrl, X_HANDLE, USEPAID_RECIPIENT, FEE_ROUTE_MAX_TRIES } from "./fee-route.mjs";
@@ -684,8 +684,9 @@ export function policyOf(post, { approvals = new Set(), watch = null, open = fal
 /** Everything a cat's name or ticker may not be (the sanctuary's cats, the ledger's live rows), lower case. */
 export function takenNames({ adoptables, planned, ledger }) {
   const out = new Set();
-  for (const c of [...(planned?.cats ?? []), ...(adoptables?.cats ?? [])]) for (const k of [c?.name, c?.coinName, c?.ticker, c?.launchTicker]) if (typeof k === "string") out.add(k.toLowerCase());
-  for (const r of ledger?.launches ?? []) if (r.status !== "failed" || (r.retry && r.attempts < MAX_ATTEMPTS)) for (const k of [r.name, r.coinName, r.ticker]) out.add(k.toLowerCase());
+  // A card's name also as its launch post gives it ("Koneroku (こねろく)" is posted as "Koneroku": postedName).
+  for (const c of [...(planned?.cats ?? []), ...(adoptables?.cats ?? [])]) for (const k of [c?.name, typeof c?.name === "string" ? postedName(c.name) : null, c?.coinName, c?.ticker, c?.launchTicker]) if (typeof k === "string") out.add(k.toLowerCase());
+  for (const r of ledger?.launches ?? []) if (r.status !== "failed" || (r.retry && r.attempts < MAX_ATTEMPTS)) for (const k of [r.name, postedName(r.name), r.coinName, r.ticker]) out.add(k.toLowerCase());
   return out;
 }
 
@@ -769,6 +770,9 @@ export function candidateRow(post, ctx) {
   if (/[@#$<>]|https?:|www\./i.test(lore)) return no("the lore line has a mention, a hashtag, a $ or a link");
   if (oneLine(post.text, 600).length < 10) return no("the post has too few words to quote as its proof");
   if ((ctx.ledger?.launches ?? []).some((x) => x.postId === String(post.id))) return no("already in the ledger");
+  // A stranger's reading never has a bracketed part: only the sanctuary's own cards are posted without one (postedName), and a
+  // bracketed name would be checked against the names below as one name but posted as another.
+  if (postedName(name) !== name) return no(`its X post would be held (kit_name: ${name.slice(0, 40)})`);
   const taken = takenNames(ctx);
   for (const k of [name, coinName, ticker]) if (taken.has(k.toLowerCase())) return no(`${k} is already a sanctuary cat, or launched`);
   // The launcher wallets' own pump.fun coins, the owner's by hand too (walletCoinsOf): never a second coin from one post or under one name.
