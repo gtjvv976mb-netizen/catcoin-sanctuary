@@ -479,7 +479,10 @@ test("the X post: the cat's name, one lore line, 'launched by the sanctuary on P
 
 test("the X post: a card name ending with its original in brackets is posted without them; any other name is refused as before", () => {
   for (const [name, want] of [["Koneroku (こねろく)", "Koneroku"], ["Maxwell (Jess)", "Maxwell"], ["Nakano-san (kari)", "Nakano-san"], ["Big Floppa", "Big Floppa"],
-    ["Neko.bus (x)", "Neko.bus (x)"], ["(x)", "(x)"], ["A (b) (c)", "A (b) (c)"], ["Koneroku (こねろく) cat", "Koneroku (こねろく) cat"]]) assert.equal(postedName(name), want, name);
+    ["Neko.bus (x)", "Neko.bus (x)"], ["(x)", "(x)"], ["A (b) (c)", "A (b) (c)"], ["Koneroku (こねろく) cat", "Koneroku (こねろく) cat"],
+    // What the brackets hold must be a kit name too: a mention, a cashtag, a hashtag or a link keeps the whole name refused.
+    ["Quillbert (@quillbert_cat)", "Quillbert (@quillbert_cat)"], ["Quillbert ($QUILL)", "Quillbert ($QUILL)"], ["Quillbert (#QuillArmy)", "Quillbert (#QuillArmy)"],
+    ["Quillbert (quill.io)", "Quillbert (quill.io)"]]) assert.equal(postedName(name), want, name);
   const d = draftLaunch({ id: "KONEROKU", name: "Koneroku (こねろく)" }, { coinName: "Koneroku", ticker: "KONEROKU", lore: "Naps in a shoe.", usePaid: "someone" });
   assert.ok(d.ok, JSON.stringify(d.violations));
   assert.ok(d.text.includes("😻 Koneroku (KONEROKU), launched by the sanctuary on PumpFun"), d.text);
@@ -487,6 +490,16 @@ test("the X post: a card name ending with its original in brackets is posted wit
   // Still refused: brackets around a name that is not a kit name without them, and a bracketed coin name (the coin is named by its kit).
   assert.deepEqual(draftLaunch({ id: "NEKO", name: "Neko.bus (x)" }, { coinName: "Neko", ticker: "NEKO" }).violations.map((v) => v.rule), ["kit_name"]);
   assert.deepEqual(draftLaunch({ id: "KONEROKU", name: "Koneroku" }, { coinName: "Koneroku (こねろく)", ticker: "KONEROKU" }).violations.map((v) => v.field), ["coinName"]);
+  // Only the sanctuary's own cards: a trending reading with a bracketed name is refused before it is drafted, as before, since
+  // the duplicate checks would read it as one name and its post would give another (a second coin for a sanctuary cat).
+  const ctx = { nowMs: NOW, approvals: new Set(["2100000000000000303"]), watch: WATCH, ledger: { launches: [] }, adoptables: shipped(FILES.adoptables), planned: JSON.parse(readRoot("data/planned.json")) };
+  const trend = (name, coin = "Quillbert", ticker = "QUILL") => candidateRow(post("2100000000000000303", { name, coin, ticker, kind: "real", nameFrom: null, figure: null, lore: "Quillbert sleeps in the salad bowl." }), ctx);
+  assert.ok(trend("Quillbert").row, trend("Quillbert").problem);
+  for (const name of ["Quillbert (クイル)", "Quillbert ($QUILL)", "Quillbert (@quillbert_cat)", "Quillbert (#QuillArmy)"]) assert.match(trend(name).problem ?? "", /kit_name/, name);
+  assert.match(trend("Koneroku (コネロク)", "Koneroku Cat", "KONECAT").problem ?? "", /kit_name/, "a bracketed variant of a sanctuary cat's name");
+  // And a card's name as its post gives it is taken: a reading named "Koneroku" is a sanctuary cat already, whatever its coin's name.
+  const taken = takenNames({ adoptables: { cats: [{ name: "Koneroku (こねろく)", coinName: "Kone", ticker: "KONEROKU" }] }, ledger: { launches: [{ name: "Yamaneko (ヤマネコ)", coinName: "Yama", ticker: "YAMANEKO", status: "launched" }] } });
+  for (const k of ["koneroku", "koneroku (こねろく)", "yamaneko", "yamaneko (ヤマネコ)"]) assert.ok(taken.has(k), k);
 });
 
 test("the fan-tribute line: every coin's description ends with it, whole; a real pet's names the cat's owners; a long lore is shortened, never the line", () => {
