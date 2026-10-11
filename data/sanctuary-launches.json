@@ -68,9 +68,8 @@
         "lore": null
       },
       "feesTo": "nkknrk",
-      "mintGrind": {
-        "next": 35840001
-      }
+      "mintNonce": 48269239,
+      "usePaidMint": "9mugmSp6pJQsegS5WarFgqfaNJFAfaxVRMxxV3FHcats"
     },
     {
       "postId": "2107758625842458657",
@@ -152,9 +151,11 @@
       "spentLamports": 5684040,
       "settledAt": "2026-10-11T06:49:27Z",
       "launchedAt": "2026-10-11T06:49:17Z",
-      "feeRouteTries": 1,
-      "feeRouteError": "the simulation did not pass ({\"InstructionError\":[2,{\"Custom\":6095}]})",
-      "recordedAt": "2026-10-11T06:49:30Z"
+      "recordedAt": "2026-10-11T06:49:30Z",
+      "feeRoute": {
+        "tx": "2BezV2xFzWyww3ncUJX9D6Xq4XirU1izbCLi9CP9RyiyaitvFjkYErcLUTqrqYzHrQUiZPqVK6sBaG1mHVwpPpZB",
+        "at": "2026-10-11T14:13:08Z"
+      }
     },
     {
       "postId": "2106711246728753452",
