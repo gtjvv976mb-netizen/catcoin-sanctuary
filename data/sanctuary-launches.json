@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/SAMBROWS.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106531152169189398.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-11T22:46:16Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "sam-has-eyebrows",
         "ticker": "SAMBROWS",
@@ -65,7 +65,18 @@
       },
       "feesTo": "Samhaseyebrows",
       "mintNonce": 1290048,
-      "usePaidMint": "6ugMULBU4CgZDK5qB6uTZxz5TR7LiAN4tPsdK71acats"
+      "usePaidMint": "6ugMULBU4CgZDK5qB6uTZxz5TR7LiAN4tPsdK71acats",
+      "tx": "2DkPcCe3uzNGQpeUxL7UreA1a4oTxf6khQrsTkz6ys6G2C5Nv5KgPkh6SxhcKr4ZBXdNhZyVERmGDfNFFGimjYcM",
+      "sentAt": "2026-10-11T23:01:06Z",
+      "lastValidBlockHeight": 433862067,
+      "mintPublic": "6ugMULBU4CgZDK5qB6uTZxz5TR7LiAN4tPsdK71acats",
+      "spentLamports": 5724680,
+      "settledAt": "2026-10-11T23:01:19Z",
+      "launchedAt": "2026-10-11T23:01:09Z",
+      "feeRoute": {
+        "tx": "36sRdi1ctSs85T25neGkeMeuffvZv8HrzZvgaYJRA7xEXxgzUa9uvToE12AjJxpFxZiP3952ZZzd8zw2pqD7c4N8",
+        "at": "2026-10-11T23:01:22Z"
+      }
     },
     {
       "postId": "2106561136971731353",
@@ -223,7 +234,7 @@
       "spentLamports": 5684040,
       "settledAt": "2026-10-11T14:29:56Z",
       "launchedAt": "2026-10-11T14:29:47Z",
-      "feeRouteTries": 3,
+      "feeRouteTries": 4,
       "feeRouteError": "the simulation did not pass ({\"InstructionError\":[2,{\"Custom\":6095}]})",
       "recordedAt": "2026-10-11T14:30:00Z"
     },
