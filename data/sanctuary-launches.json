@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106531152169189398",
+      "url": "https://x.com/catcosanctuary/status/2106531152169189398",
+      "name": "Sam",
+      "coinName": "Sam Has Eyebrows",
+      "ticker": "SAMBROWS",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Sam, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/SAMBROWS.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/SAMBROWS.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106531152169189398.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-11T22:46:16Z",
+      "attempts": 0,
+      "cat": {
+        "id": "sam-has-eyebrows",
+        "ticker": "SAMBROWS",
+        "name": "Sam",
+        "coinName": "Sam Has Eyebrows",
+        "owner": "Sam's owner in New York (not named in sources), who runs @samhaseyebrows",
+        "category": "viral",
+        "story": "Sam is the white cat with black 'eyebrows' who became an Instagram star in January 2013. His account, bio 'This is Sam. He has eyebrows.', passed 7,000 followers within days after a Reddit post, and news sites compared his dark, upward-slanting brow markings to Groucho Marx's. He also has an X account, @Samhaseyebrows.",
+        "look": "White short-haired cat with two black upward-slanting brow marks above the eyes, large round amber-copper eyes, pink inner ears and nose, a worried expression and a solid black tail.",
+        "coat": {
+          "base": "white",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/Samhaseyebrows/status/741031337776156672",
+          "author": "Samhaseyebrows",
+          "handle": "Samhaseyebrows",
+          "date": "2016-06-09",
+          "dateType": "posted",
+          "text": "Look Ma, no arms! #tbt #catloaf",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Cat With Eyebrows: Meet Sam, Instagram's New Browed Feline Sensation - IBTimes",
+            "url": "https://www.ibtimes.com/cat-eyebrows-meet-sam-instagrams-new-browed-feline-sensation-photos-1049356"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Sam's owner in New York (not named in sources), who runs @samhaseyebrows.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/SAMBROWS.jpg",
+        "portraitStatus": "ready",
+        "confidence": "medium",
+        "lore": null
+      },
+      "feesTo": "Samhaseyebrows"
+    },
+    {
       "postId": "2106561136971731353",
       "url": "https://x.com/catcosanctuary/status/2106561136971731353",
       "name": "Flossie",
