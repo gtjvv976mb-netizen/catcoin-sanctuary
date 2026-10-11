@@ -176,7 +176,19 @@ export const fanTribute = (kind) => (kind === "real" ? FAN_TRIBUTE.real : FAN_TR
     the owner, 2026-10-02, and the tag 2026-10-04): the post's one mention. */
 export const usePaidLaunchLine = (handle) => `💸 Fees go to the creator, @${handle} via UsePaid`;
 const FEE_HANDLE = /^[A-Za-z0-9_]{1,15}$/;
+/**
+ * The cat's name as a launch post gives it. A card name that ends with its original in brackets ("Koneroku (こねろく)",
+ * "Maxwell (Jess)") is posted without them, since brackets are not kit-name characters, but only when the name without
+ * them is a kit name. Any other name is returned as it is, so the post's kit_name check still refuses it (2026-10-11).
+ */
+export function postedName(name) {
+  const s = String(name ?? "");
+  if (KIT_NAME.test(s)) return s;
+  const bare = s.replace(/\s*\([^()]*\)$/u, "");
+  return bare !== s && KIT_NAME.test(bare) ? bare : s;
+}
 export function draftLaunch(cat, { coinName, ticker, lore = null, launchpad = "pump.fun", cited: also = [], tribute = null, usePaid = null } = {}) {
+  if (cat && typeof cat.name === "string") cat = { ...cat, name: postedName(cat.name) };
   const pad = LAUNCHPADS[launchpad];
   const bad = [];
   if (!KIT_NAME.test(cat?.name ?? "")) bad.push({ rule: "kit_name", term: String(cat?.name ?? "").slice(0, 40), field: "name" });
