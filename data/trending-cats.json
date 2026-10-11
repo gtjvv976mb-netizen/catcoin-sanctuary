@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-11T02:14:12.777Z",
- "lens": "figures",
- "query": "((\"Garfield\" (cat OR cats OR kitten OR kitty)) OR \"Grumpy Cat\" OR \"Tardar Sauce\" OR \"Nyan Cat\" OR \"Keyboard Cat\" OR \"Doraemon\" OR \"Tom and Jerry\" OR \"Top Cat\" OR \"Heathcliff the Cat\" OR (\"Jiji\" (cat OR cats OR kitten OR kitty)) OR \"Duchess the cat\" OR \"Toulouse the cat\" OR \"Berlioz the cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-11T02:54:20.347Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-11",
-  "dayUsed": 51,
+  "dayUsed": 71,
   "month": "2026-10",
-  "monthUsed": 3150,
+  "monthUsed": 3170,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -33,6 +33,8 @@
  "signals": [
   "2109071481971806266",
   "2109001079828459841",
+  "2108997815540031674",
+  "2108995426712223755",
   "2108361805747642420",
   "2108319407315230954",
   "2108304571605151905",
@@ -195,6 +197,47 @@
    "status": "signal"
   },
   {
+   "id": "2109003753668137396",
+   "url": "https://x.com/ShitpostGate/status/2109003753668137396",
+   "text": "https://t.co/9qkq8ML9xI https://t.co/g8BgkudNLa",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610704
+   },
+   "postedAt": "2026-10-10T19:30:52Z",
+   "likes": 4044,
+   "views": 27479,
+   "reposts": 297,
+   "heat": 665,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUSvvFfXMAAike0.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-11T02:54:20.347Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": true,
+    "why": "A generational-politics meme with people, no cat at all.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "passed"
+  },
+  {
    "id": "2109001079828459841",
    "url": "https://x.com/Crunchyroll/status/2109001079828459841",
    "text": "How to properly handle your cat. 🐱 (via The Apothecary Diaries Season 3) https://t.co/bwH2GJ0DLf",
@@ -229,6 +272,88 @@
     "lore": null,
     "sensitive": false,
     "why": "Anime screenshots of a girl with cat-ear hair being patted, not an actual cat.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2108997815540031674",
+   "url": "https://x.com/ShitpostGate/status/2108997815540031674",
+   "text": "https://t.co/6usR6yBghP https://t.co/9QvIX2Cv8C",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610704
+   },
+   "postedAt": "2026-10-10T19:07:17Z",
+   "likes": 4322,
+   "views": 51816,
+   "reposts": 156,
+   "heat": 662,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUSqVh5WEAAZoq9.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-11T02:54:20.347Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "cartoon",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "It's a translation-button joke meme using Gumball screenshots, not about one particular cat.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2108995426712223755",
+   "url": "https://x.com/ShitpostGate/status/2108995426712223755",
+   "text": "💀 https://t.co/qfAlLOGkcd",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610704
+   },
+   "postedAt": "2026-10-10T18:57:47Z",
+   "likes": 5757,
+   "views": 97194,
+   "reposts": 660,
+   "heat": 1013,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2108995399079837696/img/KQ1QjVfnRSYnOdgm.jpg"
+    }
+   ],
+   "stage": "viral",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-11T02:54:20.347Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "GTA San Andreas video game clip with no cat.",
     "readBy": "claude"
    },
    "known": false,
@@ -3097,10 +3222,10 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 8,
+  "nextLens": 1,
+  "bigChunk": 0,
   "figureChunk": 1,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
