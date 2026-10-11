@@ -63,7 +63,9 @@
         "confidence": "medium",
         "lore": null
       },
-      "feesTo": "Samhaseyebrows"
+      "feesTo": "Samhaseyebrows",
+      "mintNonce": 1290048,
+      "usePaidMint": "6ugMULBU4CgZDK5qB6uTZxz5TR7LiAN4tPsdK71acats"
     },
     {
       "postId": "2106561136971731353",
@@ -221,7 +223,7 @@
       "spentLamports": 5684040,
       "settledAt": "2026-10-11T14:29:56Z",
       "launchedAt": "2026-10-11T14:29:47Z",
-      "feeRouteTries": 2,
+      "feeRouteTries": 3,
       "feeRouteError": "the simulation did not pass ({\"InstructionError\":[2,{\"Custom\":6095}]})",
       "recordedAt": "2026-10-11T14:30:00Z"
     },
