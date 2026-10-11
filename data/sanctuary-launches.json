@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/YAMANEKO.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107758625842458657.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-11T06:32:45Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "yamaneko-siberian",
         "ticker": "YAMANEKO",
@@ -73,7 +73,16 @@
       },
       "feesTo": "ymnc_rf",
       "mintNonce": 1761189,
-      "usePaidMint": "87hd3TszyTfMzcZLwhVvpZeWjtxbVmULp6R1s61dcats"
+      "usePaidMint": "87hd3TszyTfMzcZLwhVvpZeWjtxbVmULp6R1s61dcats",
+      "tx": "5L711j2BxHLy2vLw8SuEMMXP7LYuR5xM6hKhpJdT16w1Smgymmfir4BASbW3oz3geg6HqkXD1s9BTSDaNHJ2cx8G",
+      "sentAt": "2026-10-11T06:49:17Z",
+      "lastValidBlockHeight": 433595226,
+      "mintPublic": "87hd3TszyTfMzcZLwhVvpZeWjtxbVmULp6R1s61dcats",
+      "spentLamports": 5684040,
+      "settledAt": "2026-10-11T06:49:27Z",
+      "launchedAt": "2026-10-11T06:49:17Z",
+      "feeRouteTries": 1,
+      "feeRouteError": "the simulation did not pass ({\"InstructionError\":[2,{\"Custom\":6095}]})"
     },
     {
       "postId": "2106711246728753452",
