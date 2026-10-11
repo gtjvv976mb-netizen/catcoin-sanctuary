@@ -33,7 +33,7 @@ import * as R from "../scripts/lib/rewards.mjs";
 import { USEPAID_RECIPIENT as USEPAID_RECIPIENT_T } from "../scripts/lib/fee-route.mjs";
 import { creatorVault, EVENT_IX_TAG, EVENT_DISC } from "../scripts/lib/pump-fees.mjs";
 import { main, fsStore, scrubber } from "../scripts/launch.mjs";
-import { draftLaunch, checkUpdate, ADDRESS_LIKE, FAN_TRIBUTE, fanTribute, run as postUpdates } from "../scripts/post-updates.mjs";
+import { draftLaunch, postedName, checkUpdate, ADDRESS_LIKE, FAN_TRIBUTE, fanTribute, run as postUpdates } from "../scripts/post-updates.mjs";
 import { weightedLength, LIMIT } from "../scripts/announce.mjs";
 import { cardLink, SITE, listCats, holdSanctuaryCats, provedCollection, sanctuaryCoins, run as announce } from "../scripts/announce.mjs";
 import { loadResidents } from "../assets/residents.js";
@@ -475,6 +475,18 @@ test("the X post: the cat's name, one lore line, 'launched by the sanctuary on P
   const long = "AbcdefghijkmnopqrstuvwxyzABCDEFG";
   assert.equal(long.length, 32);
   assert.equal(draftLaunch({ id: "LONG", name: long }, { coinName: "Long", ticker: "LONG" }).ok, false, "an address-like run of letters");
+});
+
+test("the X post: a card name ending with its original in brackets is posted without them; any other name is refused as before", () => {
+  for (const [name, want] of [["Koneroku (こねろく)", "Koneroku"], ["Maxwell (Jess)", "Maxwell"], ["Nakano-san (kari)", "Nakano-san"], ["Big Floppa", "Big Floppa"],
+    ["Neko.bus (x)", "Neko.bus (x)"], ["(x)", "(x)"], ["A (b) (c)", "A (b) (c)"], ["Koneroku (こねろく) cat", "Koneroku (こねろく) cat"]]) assert.equal(postedName(name), want, name);
+  const d = draftLaunch({ id: "KONEROKU", name: "Koneroku (こねろく)" }, { coinName: "Koneroku", ticker: "KONEROKU", lore: "Naps in a shoe.", usePaid: "someone" });
+  assert.ok(d.ok, JSON.stringify(d.violations));
+  assert.ok(d.text.includes("😻 Koneroku (KONEROKU), launched by the sanctuary on PumpFun"), d.text);
+  assert.ok(!d.text.includes("こねろく"), "the bracketed original is not posted");
+  // Still refused: brackets around a name that is not a kit name without them, and a bracketed coin name (the coin is named by its kit).
+  assert.deepEqual(draftLaunch({ id: "NEKO", name: "Neko.bus (x)" }, { coinName: "Neko", ticker: "NEKO" }).violations.map((v) => v.rule), ["kit_name"]);
+  assert.deepEqual(draftLaunch({ id: "KONEROKU", name: "Koneroku" }, { coinName: "Koneroku (こねろく)", ticker: "KONEROKU" }).violations.map((v) => v.field), ["coinName"]);
 });
 
 test("the fan-tribute line: every coin's description ends with it, whole; a real pet's names the cat's owners; a long lore is shortened, never the line", () => {
@@ -2348,6 +2360,19 @@ test("sanctuary cats: once posted on X, a cat with no coin launches from the san
   assert.ok(meta.description.startsWith(row.lore.replace(/[.!?…]$/, "")), meta.description);
   // Not posted yet (queued, or released with no tweet id): nothing.
   for (const e of [{ ...released(c.ticker), status: undefined }, { ...released(c.ticker), tweet: undefined }]) assert.match(sanctuaryRow(e, ownCtx({ entries: [e] })).problem, /not posted on X yet/);
+});
+
+test("sanctuary cats: a card name with its original in brackets (\"Koneroku (こねろく)\") launches; its launch post names it without the brackets", () => {
+  const c = ownCat();
+  const coinName = c.coinName || c.name;
+  const e = released(c.ticker);
+  const adoptables = { ...shipped(FILES.adoptables), cats: shipped(FILES.adoptables).cats.map((x) => (x.ticker === c.ticker ? { ...x, name: `${coinName} (テスト)`, coinName } : x)) };
+  const { row, problem } = sanctuaryRow(e, ownCtx({ entries: [e], adoptables }));
+  assert.ok(row, problem);
+  assert.deepEqual([row.name, row.coinName, row.ticker], [`${coinName} (テスト)`, coinName, c.ticker], "the ledger keeps the card's name");
+  const post = draftLaunch({ id: c.ticker, name: row.name }, { coinName: row.coinName, ticker: row.ticker, lore: row.lore, tribute: fanTribute(row.kind), usePaid: row.feesTo ?? null });
+  assert.ok(post.ok, JSON.stringify(post.violations));
+  assert.ok(!post.text.includes("テスト"), post.text);
 });
 
 test("sanctuary cats: never one with a coin (its launch, a visitor's adoption, a Collection entry, a live ledger row), with a sensitivity note other than its memorial, of low confidence, with no portrait, or whose kit launches as another ticker", () => {
