@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/KONEROKU.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2107743524158628196.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-11T07:18:50Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "koneroku",
         "ticker": "KONEROKU",
@@ -69,7 +69,16 @@
       },
       "feesTo": "nkknrk",
       "mintNonce": 48269239,
-      "usePaidMint": "9mugmSp6pJQsegS5WarFgqfaNJFAfaxVRMxxV3FHcats"
+      "usePaidMint": "9mugmSp6pJQsegS5WarFgqfaNJFAfaxVRMxxV3FHcats",
+      "tx": "2TgYaNa7pRpy7Hzhk4643vHC3KND1C711g68psYAYkXtVnMMzugSz7m2Jyn3mJJyFHDK7CDoha2YnrRxrZstvueZ",
+      "sentAt": "2026-10-11T14:29:44Z",
+      "lastValidBlockHeight": 433721887,
+      "mintPublic": "9mugmSp6pJQsegS5WarFgqfaNJFAfaxVRMxxV3FHcats",
+      "spentLamports": 5684040,
+      "settledAt": "2026-10-11T14:29:56Z",
+      "launchedAt": "2026-10-11T14:29:47Z",
+      "feeRouteTries": 1,
+      "feeRouteError": "the simulation did not pass ({\"InstructionError\":[2,{\"Custom\":6095}]})"
     },
     {
       "postId": "2107758625842458657",
