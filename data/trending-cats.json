@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-11T23:20:42.614Z",
- "lens": null,
- "query": null,
+ "checkedAt": "2026-10-12T00:00:53.103Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
-  "day": "2026-10-11",
-  "dayUsed": 303,
+  "day": "2026-10-12",
+  "dayUsed": 20,
   "month": "2026-10",
-  "monthUsed": 3402,
+  "monthUsed": 3422,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -31,6 +31,7 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2109362644251504926",
   "2109137154949443623",
   "2109071481971806266",
   "2109001079828459841",
@@ -65,6 +66,47 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2109362644251504926",
+   "url": "https://x.com/ShitpostGate/status/2109362644251504926",
+   "text": "https://t.co/5FYQ4FhPt3",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610521
+   },
+   "postedAt": "2026-10-11T19:16:59Z",
+   "likes": 8153,
+   "views": 87417,
+   "reposts": 204,
+   "heat": 1994,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUX2JX6WQAANUD3.jpg"
+    }
+   ],
+   "stage": "viral",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-12T00:00:53.103Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "A Marvel comic panel about taxes, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
   {
    "id": "2109137154949443623",
    "url": "https://x.com/ShitpostGate/status/2109137154949443623",
@@ -3264,10 +3306,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 8,
+  "nextLens": 3,
+  "bigChunk": 0,
   "figureChunk": 1,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
@@ -3289,50 +3331,6 @@
       "post": "2108439263079718968",
       "likes": 8,
       "seen": "2026-10-09T12:40:51.196Z",
-      "via": "figures"
-     }
-    ]
-   },
-   "callie": {
-    "name": "Callie",
-    "firstSeen": "2026-10-08T20:01:48.000Z",
-    "lastSeen": "2026-10-08T20:01:48.000Z",
-    "authors": [
-     "CatWorkers"
-    ],
-    "posts": [
-     "2108286761226924247"
-    ],
-    "likes": 578,
-    "sightings": [
-     {
-      "at": "2026-10-08T20:01:48.000Z",
-      "author": "CatWorkers",
-      "post": "2108286761226924247",
-      "likes": 578,
-      "seen": "2026-10-09T00:07:01.441Z",
-      "via": "big"
-     }
-    ]
-   },
-   "heathcliff": {
-    "name": "Heathcliff",
-    "firstSeen": "2026-10-08T17:33:46.000Z",
-    "lastSeen": "2026-10-08T17:33:46.000Z",
-    "authors": [
-     "JillySteeples"
-    ],
-    "posts": [
-     "2108249507594973387"
-    ],
-    "likes": 4,
-    "sightings": [
-     {
-      "at": "2026-10-08T17:33:46.000Z",
-      "author": "JillySteeples",
-      "post": "2108249507594973387",
-      "likes": 4,
-      "seen": "2026-10-09T04:37:35.139Z",
       "via": "figures"
      }
     ]
