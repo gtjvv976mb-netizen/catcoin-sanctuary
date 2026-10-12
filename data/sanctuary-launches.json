@@ -63,7 +63,9 @@
         "confidence": "high",
         "lore": null
       },
-      "feesTo": "uoftcanpol"
+      "feesTo": "uoftcanpol",
+      "mintNonce": 6049211,
+      "usePaidMint": "5ixk2fQLReVE8dhgnGf4XKweGwDaYRsDa8DE3aWcats"
     },
     {
       "postId": "2106531152169189398",
@@ -299,7 +301,7 @@
       "spentLamports": 5684040,
       "settledAt": "2026-10-11T14:29:56Z",
       "launchedAt": "2026-10-11T14:29:47Z",
-      "feeRouteTries": 4,
+      "feeRouteTries": 5,
       "feeRouteError": "the simulation did not pass ({\"InstructionError\":[2,{\"Custom\":6095}]})",
       "recordedAt": "2026-10-11T14:30:00Z"
     },
