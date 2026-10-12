@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106500889204670580",
+      "url": "https://x.com/catcosanctuary/status/2106500889204670580",
+      "name": "Nakano-san (kari)",
+      "coinName": "Nakano-san Station Master",
+      "ticker": "NAKANOSAN",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Nakano-san (kari), 'provisional Miss Nakano', is the cat station master of Nakanocho Station on the Choshi Electric Railway.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/NAKANOSAN.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/NAKANOSAN.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106500889204670580.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-12T09:21:56Z",
+      "attempts": 0,
+      "cat": {
+        "id": "nakano-san-choshi-dentetsu",
+        "ticker": "NAKANOSAN",
+        "name": "Nakano-san (kari)",
+        "coinName": "Nakano-san Station Master",
+        "owner": "Choshi Electric Railway (Choshi Dentetsu), Nakanocho Station, Chiba (@choden_inubou, @nakanosan_2026)",
+        "category": "company",
+        "story": "Nakano-san (kari), 'provisional Miss Nakano', is the cat station master of Nakanocho Station on the Choshi Electric Railway. Station staff rescued her as a weak, badly underweight kitten at the station on 14 October 2025. After a trial period she became a trainee employee, and the railway held her installation ceremony as station master in May 2026. She works mainly at weekends, about two hours a shift, greeting passengers in the waiting room and seeing trains off; the struggling railway publishes her monthly rota and sells her keyrings, financiers and commemorative tickets.",
+        "look": "Young, slim brown mackerel tabby (female) with dark stripes, a pale chin, large yellow-green eyes and big ears; wears a harness and, on duty, a tiny navy station-master cap.",
+        "coat": {
+          "base": "brown",
+          "second": "",
+          "pattern": "tabby",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/choden_inubou/status/2051933909211119726",
+          "author": "choden_inubou",
+          "handle": "choden_inubou",
+          "date": "2026-05-06",
+          "dateType": "posted",
+          "text": "本日、仲ノ町駅にて「なかのさん（仮）」の猫駅長・就任式を執り行いました。 昨年10月14日に仲ノ町駅で保護された小さな子猫が、ついに猫駅長になりました。 猫駅長として、多くの人に親しまれ、たくさんの笑顔と癒やしを届けてくれることを願っております🐾",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "猫駅長よろしくなの「なかのさん（仮）」就任 銚子電鉄 - 千葉日報",
+            "url": "https://www.chibanippo.co.jp/articles/1613186"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Choshi Electric Railway (Choshi Dentetsu), Nakanocho Station, Chiba (@choden_inubou, @nakanosan_2026).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/NAKANOSAN.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "choden_inubou"
+    },
+    {
       "postId": "2106516034496905682",
       "url": "https://x.com/catcosanctuary/status/2106516034496905682",
       "name": "Tuxedo Stan",
