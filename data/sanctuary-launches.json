@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/TUXSTAN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106516034496905682.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-12T02:03:24Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "tuxedo-stan-halifax",
         "ticker": "TUXSTAN",
@@ -65,7 +65,14 @@
       },
       "feesTo": "uoftcanpol",
       "mintNonce": 6049211,
-      "usePaidMint": "5ixk2fQLReVE8dhgnGf4XKweGwDaYRsDa8DE3aWcats"
+      "usePaidMint": "5ixk2fQLReVE8dhgnGf4XKweGwDaYRsDa8DE3aWcats",
+      "tx": "5mWjfHFaF4xJVmbN6qHUAjNvjjoWmBfaya5K39DpobsQ9kqQLQDCi2WkHqdE9aUJgtM25A6VT1h2WgXrhRwmQ94U",
+      "sentAt": "2026-10-12T02:19:36Z",
+      "lastValidBlockHeight": 433916679,
+      "mintPublic": "5ixk2fQLReVE8dhgnGf4XKweGwDaYRsDa8DE3aWcats",
+      "spentLamports": 5694200,
+      "settledAt": "2026-10-12T02:19:45Z",
+      "launchedAt": "2026-10-12T02:19:36Z"
     },
     {
       "postId": "2106531152169189398",
