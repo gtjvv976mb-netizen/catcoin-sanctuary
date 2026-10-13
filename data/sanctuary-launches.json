@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/MAXWELLCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106393843428135086.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-13T21:33:43Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "maxwell-the-cat-jess",
         "ticker": "MAXWELLCAT",
@@ -69,7 +69,18 @@
       },
       "feesTo": "Executor250624",
       "mintNonce": 2856505,
-      "usePaidMint": "Et2aE4364xuDYVbU3rH8XUWnVK3XMhNsnQWXHLjPcats"
+      "usePaidMint": "Et2aE4364xuDYVbU3rH8XUWnVK3XMhNsnQWXHLjPcats",
+      "tx": "2gQJcG6r1S6piJPx1Rgo4JJ33CSqJ3nyQGKZLo21u76miofUP4fkQv4oYKZqka4BYsZScZ7phmBk3tuwbrehC3AR",
+      "sentAt": "2026-10-13T21:51:22Z",
+      "lastValidBlockHeight": 434632851,
+      "mintPublic": "Et2aE4364xuDYVbU3rH8XUWnVK3XMhNsnQWXHLjPcats",
+      "spentLamports": 5729760,
+      "settledAt": "2026-10-13T21:51:32Z",
+      "launchedAt": "2026-10-13T21:51:22Z",
+      "feeRoute": {
+        "tx": "54dCDsETNcxmKDfbDd6ysqe8B3VyWGexWMEWPYpHNbm77TQtFEv8pca3vtHpwLAcmeTQvLLguLehwan4EdxBCFyn",
+        "at": "2026-10-13T21:51:38Z"
+      }
     },
     {
       "postId": "2106458243522331131",
