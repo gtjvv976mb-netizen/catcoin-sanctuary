@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-13T04:37:42.408Z",
- "lens": "figures",
- "query": "((\"Garfield\" (cat OR cats OR kitten OR kitty)) OR \"Grumpy Cat\" OR \"Tardar Sauce\" OR \"Nyan Cat\" OR \"Keyboard Cat\" OR \"Doraemon\" OR \"Tom and Jerry\" OR \"Top Cat\" OR \"Heathcliff the Cat\" OR (\"Jiji\" (cat OR cats OR kitten OR kitty)) OR \"Duchess the cat\" OR \"Toulouse the cat\" OR \"Berlioz the cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-13T05:17:44.748Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-13",
-  "dayUsed": 102,
+  "dayUsed": 122,
   "month": "2026-10",
-  "monthUsed": 3816,
+  "monthUsed": 3836,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -31,6 +31,7 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2109812603417420074",
   "2109362644251504926",
   "2109137154949443623",
   "2109071481971806266",
@@ -66,6 +67,47 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2109812603417420074",
+   "url": "https://x.com/ShitpostGate/status/2109812603417420074",
+   "text": "https://t.co/7VPX5aS7z5",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610322
+   },
+   "postedAt": "2026-10-13T01:04:57Z",
+   "likes": 4896,
+   "views": 54196,
+   "reposts": 506,
+   "heat": 1531,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2109812580533334016/img/eygOdp_MlI8mHjmz.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-13T05:17:44.748Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "A doodle comic of a top-hatted figure and a small blob, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
   {
    "id": "2109362644251504926",
    "url": "https://x.com/ShitpostGate/status/2109362644251504926",
@@ -3306,10 +3348,10 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 5,
+  "nextLens": 1,
+  "bigChunk": 6,
   "figureChunk": 1,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {}
