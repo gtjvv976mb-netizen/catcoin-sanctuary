@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { buildCollection, BuildError, serialize } from "../scripts/build-collection.mjs";
-import { createRpc } from "../scripts/lib/rpc.mjs";
+import { createRpc, PUBLIC_RPC } from "../scripts/lib/rpc.mjs";
 import { validateCollection, base58Encode } from "../assets/collection.js";
 import {
   fakeRpc, tempSite, readData, readDataJson, history, recordedTransactions, recordedAccounts, launchTx, launchHistory, V1,
@@ -251,6 +251,42 @@ test("the RPC client refuses a non-https URL and retries a rate limit before giv
   assert.equal(n, 3);
   const always = createRpc({ url: "https://rpc.example.test", fetchImpl: async () => new Response("{}", { status: 429 }), delayMs: 0, backoffMs: 0, retries: 2 });
   await assert.rejects(always.call("getSlot", []), /kept refusing/);
+});
+
+test("an RPC that keeps refusing hands over to the public endpoint for the rest of the run, with a warning that never names it; posts count both", async () => {
+  const PRIVATE = "https://rpc.example.test/?api-key=SECRET123";
+  const ok = (result) => new Response(JSON.stringify({ jsonrpc: "2.0", id: 1, result }), { status: 200 });
+  // The configured RPC answers 429 to everything (a spent plan); the public one answers.
+  const seen = [], logs = [];
+  const spent = async (u) => { seen.push(u); return u === PRIVATE ? new Response("{}", { status: 429 }) : ok(7); };
+  const rpc = createRpc({ url: PRIVATE, fetchImpl: spent, delayMs: 0, backoffMs: 0, retries: 2, fallbackDelayMs: 0, log: (m) => logs.push(m) });
+  assert.equal(await rpc.call("getSlot", []), 7);
+  assert.deepEqual(seen, [PRIVATE, PRIVATE, PRIVATE, PUBLIC_RPC]);
+  assert.equal(rpc.fellBack, true);
+  assert.equal(logs.length, 1);
+  assert.match(logs[0], /^::warning .*SOLANA_RPC_URL kept refusing \(429\) on getSlot.*public mainnet RPC/);
+  assert.doesNotMatch(logs.join("\n"), /SECRET123|example\.test/);
+  // The rest of the run stays on the public endpoint, with no second warning.
+  assert.equal(await rpc.call("getSlot", []), 7);
+  assert.deepEqual(seen.slice(4), [PUBLIC_RPC]);
+  assert.equal(logs.length, 1);
+  // A send whose posts to the configured RPC got no answer may have gone out: a refusal from the public one then counts every post.
+  const refused = async (u) => (u === PRIVATE ? Promise.reject(new TypeError("reset"))
+    : new Response(JSON.stringify({ jsonrpc: "2.0", id: 1, error: { code: -32002, message: "Transaction simulation failed" } }), { status: 200 }));
+  const send = createRpc({ url: PRIVATE, fetchImpl: refused, delayMs: 0, backoffMs: 0, retries: 2, fallbackDelayMs: 0 });
+  const e = await send.call("sendTransaction", ["AAA="]).catch((x) => x);
+  assert.deepEqual([e.code, e.posts], [-32002, 4]);
+  // Both refusing: the run stops as before. The public endpoint configured: nothing to hand over to.
+  const both = createRpc({ url: PRIVATE, fetchImpl: async () => new Response("{}", { status: 429 }), delayMs: 0, backoffMs: 0, retries: 1, fallbackDelayMs: 0 });
+  await assert.rejects(both.call("getSlot", []), /kept refusing \(429\)/);
+  const pub = [];
+  const only = createRpc({ url: PUBLIC_RPC, fetchImpl: async (u) => { pub.push(u); return new Response("{}", { status: 429 }); }, delayMs: 0, backoffMs: 0, retries: 1 });
+  await assert.rejects(only.call("getSlot", []), /kept refusing/);
+  assert.deepEqual([pub.length, only.fellBack], [2, false]);
+  // fallback: null turns it off.
+  const off = createRpc({ url: PRIVATE, fetchImpl: async () => new Response("{}", { status: 429 }), delayMs: 0, backoffMs: 0, retries: 0, fallback: null });
+  await assert.rejects(off.call("getSlot", []), /kept refusing/);
+  assert.equal(off.fellBack, false);
 });
 
 test("the recorded transactions the builder replays are the real ones (json, version 0 or legacy)", () => {

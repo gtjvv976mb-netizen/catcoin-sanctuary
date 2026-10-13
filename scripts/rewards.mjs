@@ -57,7 +57,7 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
   try {
     const io = fsStore(root);
     const url = String(env.SOLANA_RPC_URL ?? "").trim() || PUBLIC_RPC;
-    const rpc = rpcIn ?? createRpc({ url, fetchImpl, delayMs: url === PUBLIC_RPC ? 400 : 100 });
+    const rpc = rpcIn ?? createRpc({ url, fetchImpl, delayMs: url === PUBLIC_RPC ? 400 : 100, log });
     log(`Rewards: ${phase}; Solana through ${url === PUBLIC_RPC ? "the public mainnet RPC" : "the RPC in SOLANA_RPC_URL"}.`);
     if (phase === "snapshot") return (await snapshot({ io, env, rpc, fetchImpl, now, sleep, random, log, scrub })).code;
     const confirmOpts = { ...(confirmWaitMs !== undefined ? { confirmWaitMs } : {}), ...(confirmPollMs !== undefined ? { confirmPollMs } : {}) };

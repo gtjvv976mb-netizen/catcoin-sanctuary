@@ -352,7 +352,7 @@ async function main() {
   const custom = url !== PUBLIC_RPC;
   const delayMs = Number(process.env.RPC_DELAY_MS) > 0 ? Number(process.env.RPC_DELAY_MS) : custom ? 100 : 400;
   try {
-    const rpc = createRpc({ url, delayMs });
+    const rpc = createRpc({ url, delayMs, log: (m) => console.log(m) });
     console.log(`Reading Solana through ${custom ? "the RPC in SOLANA_RPC_URL" : "the public mainnet RPC"}, one call every ${delayMs} ms at most.`);
     const r = await buildCollection({ root, rpc, log: (m) => console.log(m) });
     console.log(`${r.read} ${r.read === 1 ? "transaction" : "transactions"} read, ${r.added.length} new ${r.added.length === 1 ? "cat" : "cats"}, `
