@@ -64,7 +64,8 @@
         "lore": null
       },
       "feesTo": "choden_inubou",
-      "mintNonce": 6695344
+      "mintNonce": 6695344,
+      "usePaidMint": "9bdrNQgmpy4g13L6QxFSfWcTmCtU5TnYgyhJgH6qcats"
     },
     {
       "postId": "2106516034496905682",
@@ -138,7 +139,11 @@
       "spentLamports": 5694200,
       "settledAt": "2026-10-12T02:19:45Z",
       "launchedAt": "2026-10-12T02:19:36Z",
-      "recordedAt": "2026-10-12T02:20:50Z"
+      "recordedAt": "2026-10-12T02:20:50Z",
+      "feeRoute": {
+        "tx": "4AnbrYD58GZVu2jckuzZE5xPLeZd1iSuJpb4NCJJYtsMgYaF8SjjKsoM2amefopYboBdewT8bs7ZLQpdnHQjbXE8",
+        "at": "2026-10-13T12:32:37Z"
+      }
     },
     {
       "postId": "2106531152169189398",
