@@ -15,8 +15,10 @@
  * how many times the call was posted: an error answered to a repeated send may be about a copy that
  * already went out (the launcher then treats the send as sent, never as refused).
  *
- * A configured RPC that keeps refusing (a spent plan's 429s, an outage) hands over to the public mainnet endpoint for the
- * rest of the run (`fallback`), with a warning that never names the URL. Its `posts` count every post of the call, on both
+ * A configured RPC that keeps refusing (a spent plan's 429s, an outage) or denies access (401, 402, 403) hands over to the
+ * public mainnet endpoint for the rest of the run (`fallback`), with a warning that never names the URL. The launcher and
+ * Rewards make one cheap call first (`probe`), so a run that hands over does so before any money check, which must all
+ * see one endpoint (`fellBack` tells a check that the endpoint changed under it). Its `posts` count every post of the call, on both
  * endpoints. (2026-10-12: SOLANA_RPC_URL answered every call with 429 for over a day, and the Collection, the launcher, fee
  * routes and so the X launch posts all stopped.)
  */
@@ -24,6 +26,15 @@
 export const PUBLIC_RPC = "https://api.mainnet-beta.solana.com";
 /** getTransaction's answer when the transaction is newer than maxSupportedTransactionVersion. */
 export const UNSUPPORTED_VERSION = -32015;
+
+/**
+ * One cheap call, made first, so a configured RPC that is refusing is left before anything reads balances or sends. Its
+ * answer, or an error, means nothing to the run: the calls after it meet any real trouble again, and stop the run as before.
+ */
+export async function probe(rpc) {
+  if (typeof rpc?.call !== "function") return;
+  try { await rpc.call("getSlot", [{ commitment: "finalized" }]); } catch { /* the hand-over, if any, has happened */ }
+}
 
 export class RpcError extends Error {
   constructor(message, { code = null, method = null, posts = null } = {}) { super(message); this.name = "RpcError"; this.code = code; this.method = method; this.posts = posts; }
@@ -58,10 +69,13 @@ export function createRpc({ url = PUBLIC_RPC, fetchImpl = globalThis.fetch, dela
       } catch { status = -1; }
       const limited = status === 429 || status >= 500 || status === -1 || body?.error?.code === 429 || body?.error?.code === -32429
         || (body?.error && /too many requests|rate limit/i.test(String(body.error.message)));
-      if (limited) {
+      // A configured RPC that denies access (401, 402, 403: a plan spent or a key revoked) hands over at once: the request
+      // was not taken, so posting the same bytes elsewhere is safe.
+      const denied = (status === 401 || status === 402 || status === 403) && !!spare;
+      if (limited || denied) {
         const why = status === -1 ? "no answer" : status;
-        if (attempt >= retries && spare) {
-          log(`::warning title=Solana RPC::the RPC in SOLANA_RPC_URL kept refusing (${why}) on ${method}; the rest of this run reads and sends through the public mainnet RPC. Check the RPC provider's plan.`);
+        if ((attempt >= retries || denied) && spare) {
+          log(`::warning title=Solana RPC::the RPC in SOLANA_RPC_URL ${denied ? "denied access" : "kept refusing"} (${why}) on ${method}; the rest of this run reads and sends through the public mainnet RPC. Check the RPC provider's plan.`);
           url = spare; spare = null; fell = true; delayMs = Math.max(delayMs, fallbackDelayMs);
           attempt = -1;
           continue;

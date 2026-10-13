@@ -283,6 +283,16 @@ test("an RPC that keeps refusing hands over to the public endpoint for the rest 
   const only = createRpc({ url: PUBLIC_RPC, fetchImpl: async (u) => { pub.push(u); return new Response("{}", { status: 429 }); }, delayMs: 0, backoffMs: 0, retries: 1 });
   await assert.rejects(only.call("getSlot", []), /kept refusing/);
   assert.deepEqual([pub.length, only.fellBack], [2, false]);
+  // A configured RPC that denies access (a spent plan answering 401, 402 or 403) is left at once, with no retries.
+  for (const status of [401, 402, 403]) {
+    const urls = [], warn = [];
+    const denied = createRpc({ url: PRIVATE, fetchImpl: async (u) => { urls.push(u); return u === PRIVATE ? new Response("{}", { status }) : ok(9); }, delayMs: 0, backoffMs: 0, retries: 4, fallbackDelayMs: 0, log: (m) => warn.push(m) });
+    assert.equal(await denied.call("getSlot", []), 9);
+    assert.deepEqual(urls, [PRIVATE, PUBLIC_RPC], `HTTP ${status}`);
+    assert.match(warn[0], new RegExp(`denied access \\(${status}\\)`));
+  }
+  // On the public endpoint itself, a 401 is an error as before.
+  await assert.rejects(createRpc({ url: PUBLIC_RPC, fetchImpl: async () => new Response("{}", { status: 401 }), delayMs: 0 }).call("getSlot", []), /HTTP 401/);
   // fallback: null turns it off.
   const off = createRpc({ url: PRIVATE, fetchImpl: async () => new Response("{}", { status: 429 }), delayMs: 0, backoffMs: 0, retries: 0, fallback: null });
   await assert.rejects(off.call("getSlot", []), /kept refusing/);

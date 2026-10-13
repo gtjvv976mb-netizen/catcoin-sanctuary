@@ -1326,6 +1326,7 @@ function proveFor(venue, tx, { wallet, row, quotes }) {
  */
 export async function settleSending(row, { rpc, nowMs, quotes = [] }) {
   const venue = venueById(row.venue);
+  const endpoint = rpc.fellBack;   // (scripts/lib/rpc.mjs: the status and the height below must come from one endpoint)
   const statuses = await rpc.getSignatureStatuses([row.tx]);
   const st = Array.isArray(statuses) ? statuses[0] : null;
   if (st) {
@@ -1349,6 +1350,9 @@ export async function settleSending(row, { rpc, nowMs, quotes = [] }) {
     return { row: done, changed: true, note: `${row.ticker}: launched, ${sol(spentOf(tx))} spent` };
   }
   const height = await rpc.getBlockHeight({ commitment: "finalized" });
+  // The RPC handed over to another endpoint between the status and the height: a "not seen" from one and a height from
+  // the other prove nothing, so the row waits for a run that reads both from one endpoint.
+  if (rpc.fellBack !== endpoint) return { row, changed: false, note: `${row.ticker}: the RPC changed endpoint while it was being settled; settled by a later run` };
   if (Number.isSafeInteger(height) && height > row.lastValidBlockHeight) {
     return { row: { ...row, status: "failed", settledAt: ISO_SECONDS(nowMs), retry: true, reason: "expired: the transaction never landed" }, changed: true,
       note: `${row.ticker}: the transaction never landed and its blockhash expired; it may be tried again with the same mint` };
@@ -1799,6 +1803,7 @@ export async function routeFees(row, { io, rpc, wallet, env = {}, caps, now = Da
   if (routedTo(existing, USEPAID_RECIPIENT)) return done();
   if (existing) return failed(`the coin already has a sharing config that does not give UsePaid every basis point (${existing.shareholders.map((h) => `${h.address.slice(0, 6)}… ${h.bps}`).join(", ")})`, { final: true });
   // The funds: never the $CATSANC holders' SOL, never under LAUNCH_MIN_BALANCE_SOL.
+  const endpoint = rpc.fellBack;   // (the balance, the earmark and the simulation must all come from one endpoint)
   const balance = await rpc.getBalance(wallet.publicKey);
   if (!Number.isSafeInteger(balance)) { log(`::warning title=Launcher::no balance for the wallet; ${row.ticker}'s fee route waits.`); return null; }
   const held = await rewardsEarmark({ io, rpc, wallet: wallet.publicKey, env, now });
@@ -1813,6 +1818,7 @@ export async function routeFees(row, { io, rpc, wallet, env = {}, caps, now = Da
   const sim = await rpc.simulateTransaction(unsigned, { addresses: [wallet.publicKey] });
   const after = sim?.accounts?.[0]?.lamports;
   if (!sim || (typeof sim.err === "string" && TRANSIENT_SIMULATION.includes(sim.err))) { log(`::warning title=Launcher::${row.ticker}'s fee route could not be simulated (${sim ? sim.err : "no answer"}); the next run tries again.`); return null; }
+  if (rpc.fellBack !== endpoint) { log(`::warning title=Launcher::the RPC changed endpoint while ${row.ticker}'s fee route was being checked; nothing was sent, the next run tries again.`); return null; }
   if (sim.err !== null) return failed(`the simulation did not pass (${errText(sim.err)})`);
   if (!Number.isSafeInteger(after)) return failed("the simulation gave no balance after it");
   const loss = balance - after + feeUpperBound(unsigned);
@@ -2074,6 +2080,7 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
       return { ...out, outcome: "adoption_unchecked" };
     }
   }
+  const endpoint = rpc.fellBack;   // (the balance, the earmark and the simulation must all come from one endpoint)
   const balance = await rpc.getBalance(wallet.publicKey);
   if (!Number.isSafeInteger(balance)) throw new LaunchError("the RPC gave no balance for the wallet");
   // The $CATSANC holders' SOL (the creator fees claimed for them, not paid out yet) is never the launcher's to spend:
@@ -2103,6 +2110,8 @@ export async function send({ io, env = {}, rpc, fetchImpl, now = Date.now, sleep
       computeUnitPriceMicroLamports: caps.priorityMicroLamports, holderReward: caps.holderRewards && !r.feesTo }, { fetchImpl, rpc, nowMs: now(), quotes: ctx.pumpQuotes, pumpQuoteOptIn: ctx.pumpQuoteOptIn });
     const unsigned = v.unsigned(built);
     const sim = await rpc.simulateTransaction(unsigned, { addresses: [wallet.publicKey] });
+    // The RPC handed over to another endpoint since the balance was read: its figures can't be set against this simulation's.
+    if (rpc.fellBack !== endpoint) return { venue: v, built, unsigned, simProblem: "the RPC changed endpoint during the checks", transient: true, loss: null };
     const after = sim?.accounts?.[0]?.lamports;
     const simProblem = !sim ? "no answer" : sim.err !== null ? errText(sim.err) : !Number.isSafeInteger(after) ? "no balance after it" : null;
     const transient = !!simProblem && (!sim || (typeof sim.err === "string" && TRANSIENT_SIMULATION.includes(sim.err)));

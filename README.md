@@ -627,7 +627,12 @@ One-time setup:
 4. **Verify the domain** for your GitHub account or organisation (Settings → Pages → Verified
    domains). This stops anyone else from pointing a Pages site at it.
 5. **Optional:** add a repository secret `SOLANA_RPC_URL` (an https RPC URL of your own) for the
-   hourly check. Without it, the check uses the public mainnet RPC, slowly and gently.
+   hourly check. Without it, the check uses the public mainnet RPC, slowly and gently. When the
+   secret's RPC keeps refusing (429, 5xx, no answer) or denies access (401, 402, 403), as a spent
+   plan does, each run of the Collection, the launcher and Rewards switches to the public RPC for
+   the rest of that run. Each run that switches logs a `::warning` titled "Solana RPC" (never
+   naming the URL). The bots keep going, but renew or replace the plan: the public RPC throttles,
+   and Rewards' hourly read needs a provider.
 
 The actions in both workflows are pinned to full commit SHAs.
 

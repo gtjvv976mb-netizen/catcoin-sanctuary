@@ -221,6 +221,15 @@ famous people's names out of a coin's description. NEURALINK's pair is free now,
 
 ## 6. What changed lately (newest first)
 
+- **2026-10-13: the Solana RPC fallback.** From 2026-10-12 about 09:00 UTC, the RPC in the `SOLANA_RPC_URL` secret
+  answered every call with 429, which looks like a spent plan.
+  - **What stopped:** the Collection and every Launch run failed. TUXSTAN's fee route and launch post, and NAKANOSAN's
+    launch, all waited, and nothing posted after 2026-10-12 02:25.
+  - **The fix (`scripts/lib/rpc.mjs`):** a configured RPC that keeps refusing, or denies access with 401/402/403,
+    hands over to the public mainnet RPC for the rest of the run, with a `::warning` titled "Solana RPC".
+  - **Safety:** the launcher and Rewards check the RPC once at the start, so the switch comes before any money check.
+    The launch, fee-route and settle checks wait for the next run if the endpoint changes under them.
+  - **Still to do: renew or replace the RPC plan.** The public RPC throttles, and Rewards' hourly read needs a provider.
 - **2026-10-09, PR #67 and this follow-up.** This handoff and `CLAUDE.md`. The temp-folder cleanup for tests, from
   the branch `claude/nifty-albattani-o9hq1b`, is merged.
 - **2026-10-09, PR #66.** A coin's fee route is now recorded in the run that sends it.
