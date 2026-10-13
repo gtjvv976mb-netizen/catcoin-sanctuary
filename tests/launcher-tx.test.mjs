@@ -555,8 +555,11 @@ test("a mint with a derivation nonce: deterministic per (wallet, post, nonce), a
 });
 
 test("the scan for a mint address ending in a suffix finds the smallest nonce, the same on one thread or three, and goes on from where its budget stopped it", async () => {
-  const w = fresh(), id = "1971234567890123456", key = w.seed;
-  const one = await grindMintNonce(key, id, { suffix: "pu", block: 300, workers: 1 });
+  const id = "1971234567890123456";
+  // A wallet whose answer lies past the first few nonces: with the answer at 1 or 2 (about 1 wallet in 1,700), two threads'
+  // first round below finds it, which is not what that part checks (Pages, 2026-10-13: {"nonce":2}).
+  let w, key, one;
+  do { w = fresh(); key = w.seed; one = await grindMintNonce(key, id, { suffix: "pu", block: 300, workers: 1 }); } while (one.nonce <= 4);
   assert.ok(isMintNonce(one.nonce), JSON.stringify(one));
   assert.ok(deriveMintKeypair(key, id, one.nonce).publicKey.endsWith("pu"));
   assert.equal(scanMintNonces(key, id, 1, one.nonce + 1, "pu"), one.nonce, "the smallest");
