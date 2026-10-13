@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/GOCCHAN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106458243522331131.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-13T16:27:02Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "go-chan-onomichi-museum",
         "ticker": "GOCCHAN",
@@ -69,7 +69,18 @@
       },
       "feesTo": "bijutsu1",
       "mintNonce": 3354299,
-      "usePaidMint": "CdSNURqK467BQHHNBu1a4eiwG2HeSLVTEBMpRFkgcats"
+      "usePaidMint": "CdSNURqK467BQHHNBu1a4eiwG2HeSLVTEBMpRFkgcats",
+      "tx": "2Vjxw2bzGv2hHVoDH3o9AktwL2RbX3j1Sa7Ay7Fv1yrfU9QJ3GKLBYgv3qBKywJRgFeTQtoLqYh3LZWswpWfQCf8",
+      "sentAt": "2026-10-13T16:43:42Z",
+      "lastValidBlockHeight": 434548472,
+      "mintPublic": "CdSNURqK467BQHHNBu1a4eiwG2HeSLVTEBMpRFkgcats",
+      "spentLamports": 5755160,
+      "settledAt": "2026-10-13T16:43:52Z",
+      "launchedAt": "2026-10-13T16:43:42Z",
+      "feeRoute": {
+        "tx": "4G2b8Sueg5wkeULg4YvRuzCTMARXV1tML2QRQtACuUYxn6jNmrb6HJxkRxMbD9mmS9vPJRVVvMv1oWrtBX4VfcXz",
+        "at": "2026-10-13T16:43:58Z"
+      }
     },
     {
       "postId": "2106500889204670580",
