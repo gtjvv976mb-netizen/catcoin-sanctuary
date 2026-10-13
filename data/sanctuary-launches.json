@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/NAKANOSAN.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106500889204670580.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-12T09:21:56Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "nakano-san-choshi-dentetsu",
         "ticker": "NAKANOSAN",
@@ -65,7 +65,19 @@
       },
       "feesTo": "choden_inubou",
       "mintNonce": 6695344,
-      "usePaidMint": "9bdrNQgmpy4g13L6QxFSfWcTmCtU5TnYgyhJgH6qcats"
+      "usePaidMint": "9bdrNQgmpy4g13L6QxFSfWcTmCtU5TnYgyhJgH6qcats",
+      "tx": "4Cjp7sFYxRSZgVXnsotCBvaCP6sMYstwvnaKzgKH67xPy3ygmb5GvieR5VQbSmZrg78og3bREcD1kUGUn9g9312d",
+      "sentAt": "2026-10-13T13:18:11Z",
+      "lastValidBlockHeight": 434492507,
+      "mintPublic": "9bdrNQgmpy4g13L6QxFSfWcTmCtU5TnYgyhJgH6qcats",
+      "spentLamports": 5775480,
+      "settledAt": "2026-10-13T13:18:21Z",
+      "launchedAt": "2026-10-13T13:18:12Z",
+      "feeRoute": {
+        "tx": "3S4QitmJ3g3kyQzKNgi175ujN8hourVTswDDGC3NPa3o2GH3aQ3A2kmN2SvqKceL8g3TCUX8X5XwabaYJjs9iGfo",
+        "at": "2026-10-13T13:18:27Z"
+      },
+      "recordedAt": "2026-10-13T13:18:29Z"
     },
     {
       "postId": "2106516034496905682",
