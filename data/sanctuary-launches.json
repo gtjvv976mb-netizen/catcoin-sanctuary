@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106458243522331131",
+      "url": "https://x.com/catcosanctuary/status/2106458243522331131",
+      "name": "Go-chan",
+      "coinName": "Go-chan, the Museum Cat",
+      "ticker": "GOCCHAN",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Go-chan, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/GOCCHAN.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/GOCCHAN.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106458243522331131.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-13T16:27:02Z",
+      "attempts": 0,
+      "cat": {
+        "id": "go-chan-onomichi-museum",
+        "ticker": "GOCCHAN",
+        "name": "Go-chan",
+        "coinName": "Go-chan, the Museum Cat",
+        "owner": "Onomichi City Museum of Art, Hiroshima (official @bijutsu1)",
+        "category": "company",
+        "story": "Go-chan (Gocchan) is the orange tabby who patrolled the grounds of the Onomichi City Museum of Art with his friend Ken-chan, the black cat famous for trying to get past the museum's security guard. Tokyo Weekender reports the two became inseparable museum visitors; life-size figures of both cats were made. The museum's official account posts near-daily 'Cats Who Leapt Through Time' photos of Go-chan resting by the office and in the cherry-tree grove west of the museum, which it calls his territory.",
+        "look": "Orange (ginger) mackerel tabby with a cream chin, muzzle and chest, darker ginger forehead stripes, amber-green eyes, a pink nose and a sturdy, round-cheeked build.",
+        "coat": {
+          "base": "ginger",
+          "second": "cream",
+          "pattern": "tabby",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/bijutsu1/status/2101802139106640089",
+          "author": "bijutsu1",
+          "handle": "bijutsu1",
+          "date": "2026-09-20",
+          "dateType": "posted",
+          "text": "時をかける猫ねこ174\"Cats Who Leapt Through Time\" (20180921) 『ゴッちゃん😺Go-chan』ちょうど 8年前🎨 美術館の西側にある桜の森はテリトリーでしニャ。#尾道市立美館 #尾道 #猫",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Ken-chan, the Beloved Cat Always Trying to Break Into a Museum, Passes Away - Tokyo Weekender",
+            "url": "https://www.tokyoweekender.com/japan-life/news-and-opinion/onomichi-city-museum-cat-ken-chan-passes-away/"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Go-chan",
+          "contract": "DWN23xBZRwg6X2eReMbPqNyWTZkL3Es4ZccdAY8hpump",
+          "mcapUsd": 0
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Onomichi City Museum of Art, Hiroshima (official @bijutsu1).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/GOCCHAN.jpg",
+        "portraitStatus": "ready",
+        "confidence": "medium",
+        "lore": null
+      },
+      "feesTo": "bijutsu1"
+    },
+    {
       "postId": "2106500889204670580",
       "url": "https://x.com/catcosanctuary/status/2106500889204670580",
       "name": "Nakano-san (kari)",
