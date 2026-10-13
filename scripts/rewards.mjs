@@ -37,7 +37,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { snapshot, send } from "./lib/rewards-run.mjs";
 import { RewardsError } from "./lib/rewards.mjs";
 import { LaunchError } from "./lib/launcher.mjs";
-import { createRpc, PUBLIC_RPC } from "./lib/rpc.mjs";
+import { createRpc, probe, PUBLIC_RPC } from "./lib/rpc.mjs";
 import { fsStore, scrubber, secretForms } from "./launch.mjs";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -57,8 +57,10 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
   try {
     const io = fsStore(root);
     const url = String(env.SOLANA_RPC_URL ?? "").trim() || PUBLIC_RPC;
-    const rpc = rpcIn ?? createRpc({ url, fetchImpl, delayMs: url === PUBLIC_RPC ? 400 : 100 });
+    const rpc = rpcIn ?? createRpc({ url, fetchImpl, delayMs: url === PUBLIC_RPC ? 400 : 100, log });
     log(`Rewards: ${phase}; Solana through ${url === PUBLIC_RPC ? "the public mainnet RPC" : "the RPC in SOLANA_RPC_URL"}.`);
+    // Probed now, so a refusing SOLANA_RPC_URL is left (and its warning printed) before the snapshot's hidden moment and any payout.
+    if (!rpcIn) await probe(rpc);
     if (phase === "snapshot") return (await snapshot({ io, env, rpc, fetchImpl, now, sleep, random, log, scrub })).code;
     const confirmOpts = { ...(confirmWaitMs !== undefined ? { confirmWaitMs } : {}), ...(confirmPollMs !== undefined ? { confirmPollMs } : {}) };
     return (await send({ io, env, rpc, now, sleep, log, scrub, claim: phase !== "pay", pay: phase !== "claim", ...confirmOpts })).code;

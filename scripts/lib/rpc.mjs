@@ -14,28 +14,48 @@
  * preflight refusal) is never retried: it throws an RpcError with the node's code, and with `posts`,
  * how many times the call was posted: an error answered to a repeated send may be about a copy that
  * already went out (the launcher then treats the send as sent, never as refused).
+ *
+ * A configured RPC that keeps refusing (a spent plan's 429s, an outage) or denies access (401, 402, 403) hands over to the
+ * public mainnet endpoint for the rest of the run (`fallback`), with a warning that never names the URL. The launcher and
+ * Rewards make one cheap call first (`probe`), so a run that hands over does so before any money check, which must all
+ * see one endpoint (`fellBack` tells a check that the endpoint changed under it). Its `posts` count every post of the call, on both
+ * endpoints. (2026-10-12: SOLANA_RPC_URL answered every call with 429 for over a day, and the Collection, the launcher, fee
+ * routes and so the X launch posts all stopped.)
  */
 
 export const PUBLIC_RPC = "https://api.mainnet-beta.solana.com";
 /** getTransaction's answer when the transaction is newer than maxSupportedTransactionVersion. */
 export const UNSUPPORTED_VERSION = -32015;
 
+/**
+ * One cheap call, made first, so a configured RPC that is refusing is left before anything reads balances or sends. Its
+ * answer, or an error, means nothing to the run: the calls after it meet any real trouble again, and stop the run as before.
+ */
+export async function probe(rpc) {
+  if (typeof rpc?.call !== "function") return;
+  try { await rpc.call("getSlot", [{ commitment: "finalized" }]); } catch { /* the hand-over, if any, has happened */ }
+}
+
 export class RpcError extends Error {
   constructor(message, { code = null, method = null, posts = null } = {}) { super(message); this.name = "RpcError"; this.code = code; this.method = method; this.posts = posts; }
 }
 
 export function createRpc({ url = PUBLIC_RPC, fetchImpl = globalThis.fetch, delayMs = 400, retries = 4, backoffMs = 2000, timeoutMs = 30_000,
-  sleep = (ms) => new Promise((r) => setTimeout(r, ms)), commitment = "finalized" } = {}) {
+  sleep = (ms) => new Promise((r) => setTimeout(r, ms)), commitment = "finalized", fallback = PUBLIC_RPC, fallbackDelayMs = 400, log = () => {} } = {}) {
   let u;
   try { u = new URL(url); } catch { throw new RpcError("SOLANA_RPC_URL is not a URL"); }
   if (u.protocol !== "https:") throw new RpcError("SOLANA_RPC_URL must be an https URL");
-  let last = 0, id = 0, calls = 0;
+  const isPublic = u.origin === new URL(PUBLIC_RPC).origin;
+  // The public endpoint, for a configured one that keeps refusing; none when the public one is what was configured.
+  let spare = fallback && !isPublic && new URL(fallback).origin !== u.origin ? fallback : null;
+  let last = 0, id = 0, calls = 0, fell = false;
 
   async function call(method, params) {
+    let posts = 0;
     for (let attempt = 0; ; attempt++) {
       const wait = last + delayMs - Date.now();
       if (wait > 0) await sleep(wait);
-      last = Date.now(); calls++;
+      last = Date.now(); calls++; posts++;
       let status = 0, body = null;
       try {
         const res = await fetchImpl(url, {
@@ -49,19 +69,31 @@ export function createRpc({ url = PUBLIC_RPC, fetchImpl = globalThis.fetch, dela
       } catch { status = -1; }
       const limited = status === 429 || status >= 500 || status === -1 || body?.error?.code === 429 || body?.error?.code === -32429
         || (body?.error && /too many requests|rate limit/i.test(String(body.error.message)));
-      if (limited) {
-        if (attempt >= retries) throw new RpcError(`${method}: the RPC kept refusing (${status === -1 ? "no answer" : status})`, { method, posts: attempt + 1 });
+      // A configured RPC that denies access (401, 402, 403: a plan spent or a key revoked) hands over at once: the request
+      // was not taken, so posting the same bytes elsewhere is safe.
+      const denied = (status === 401 || status === 402 || status === 403) && !!spare;
+      if (limited || denied) {
+        const why = status === -1 ? "no answer" : status;
+        if ((attempt >= retries || denied) && spare) {
+          log(`::warning title=Solana RPC::the RPC in SOLANA_RPC_URL ${denied ? "denied access" : "kept refusing"} (${why}) on ${method}; the rest of this run reads and sends through the public mainnet RPC. Check the RPC provider's plan.`);
+          url = spare; spare = null; fell = true; delayMs = Math.max(delayMs, fallbackDelayMs);
+          attempt = -1;
+          continue;
+        }
+        if (attempt >= retries) throw new RpcError(`${method}: the RPC kept refusing (${why})`, { method, posts });
         await sleep(backoffMs * 2 ** attempt);
         continue;
       }
-      if (status !== 200 || !body || typeof body !== "object") throw new RpcError(`${method}: HTTP ${status}`, { method, posts: attempt + 1 });
-      if (body.error) throw new RpcError(`${method}: ${String(body.error.message ?? "error").slice(0, 200)}`, { code: body.error.code ?? null, method, posts: attempt + 1 });
+      if (status !== 200 || !body || typeof body !== "object") throw new RpcError(`${method}: HTTP ${status}`, { method, posts });
+      if (body.error) throw new RpcError(`${method}: ${String(body.error.message ?? "error").slice(0, 200)}`, { code: body.error.code ?? null, method, posts });
       return body.result;
     }
   }
 
   return Object.freeze({
-    isPublic: u.origin === new URL(PUBLIC_RPC).origin,
+    isPublic,
+    /** Whether this run handed over to the public endpoint. */
+    get fellBack() { return fell; },
     get calls() { return calls; },
     call,
     /** Newest first. `before` and `until` are signatures; `until` itself is not returned. */

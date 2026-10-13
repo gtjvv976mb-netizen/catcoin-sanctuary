@@ -20,13 +20,13 @@ import { decodeCreateV2, PUMP } from "../scripts/lib/pump.mjs";
 import { proveLaunchPump, proveLaunch, TOKEN_2022_PROGRAM, SYSTEM_PROGRAM, LAUNCHLAB_PROGRAM } from "../scripts/lib/chain.mjs";
 import { PRICING_URL, DEXSCREENER_TOKENS_URL, WRAPPED_SOL_MINT } from "../scripts/lib/launchlab.mjs";
 import { VENUE_IDS } from "../scripts/lib/venues-routing.mjs";
-import { createRpc } from "../scripts/lib/rpc.mjs";
+import { createRpc, PUBLIC_RPC } from "../scripts/lib/rpc.mjs";
 import { venueById, venueIds, chooseVenue, registerVenue, PUMP_SOL, STONKFUN, PUMP_QUOTE } from "../scripts/lib/venues.mjs";
 import {
   prepare, send, record, launchMode, launchCaps, pumpQuoteOptIn, pairedLaunches, routeOf, walletCoinsOf, feesToMode, feeHandle, feeExclusionsOf, routeFees, FEE_ROUTE_MAX_TRIES, walletFromEnv, policyOf, selectCandidate, candidateRow, pendingPairs, validateLedger, ledgerText, rowProblem,
   coinMetadata, loreXUrl, metadataText, metadataUri, metadataPath, dayStats, capProblem, approvalsOf, namingsOf, withNaming, openLaunches, figuresAtHome, watchText, signatureOf, feeUpperBound, takenNames, collectionRoom,
   otherLauncherWallets, walletInstructions, FILES, LEDGER_NOTE, DEFAULT_CAPS, MAX_ATTEMPTS, SITE_ORIGIN, X_ACCOUNT, LAMPORTS_PER_SOL, CAP_RANGES, COLLECTION_MARGIN, TRANSIENT_SIMULATION, readOwned,
-  descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark,
+  descriptionOf, DESCRIPTION_MAX, photoCredit, coinImageFor, photoHideOf, applyPhotoHide, SITE_IMAGE, postIdOf, rewardsEarmark, settleSending,
   sanctuaryRow, selectSanctuary, loreLinesOf, kindOfAdoptable, OWN_HANDLE, SITE_PICTURE, ownProblemNow, kitLaunchedSince, pumpSearchSince, SEARCH_LEADERS, unreadWindows, DIED, OWN_WAIT_ALERT_HOURS,
 } from "../scripts/lib/launcher.mjs";
 import * as R from "../scripts/lib/rewards.mjs";
@@ -3165,6 +3165,70 @@ test("routeFees reads the sharing config at \"confirmed\": a route the chain has
   assert.equal(never.sent.length, 1);
   assert.ok(never.reads.length <= 2 + 60_000 / 3_000, `${never.reads.length} reads`);
   assert.ok(logs.some((l) => /not on chain yet/.test(l)));
+});
+
+test("the RPC changing endpoint during a launch's or a fee route's checks sends nothing and uses no attempt; a settle waits for one endpoint", async () => {
+  // The launch: the balance read before the hand-over, the simulation after it.
+  const w = throwaway();
+  const t = site({ wallet: w.address });
+  const sol = fakeSolana({ wallet: w.address }), web = fakeSite(t.root), c = clock();
+  await prepare({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now });
+  web.deployed = true;
+  let moved = false;
+  const moving = { ...sol.rpc, get fellBack() { return moved; }, getBalance: async (...a) => { const b = await sol.rpc.getBalance(...a); moved = true; return b; } };
+  const logs = [];
+  const r = await send({ io: t.io, env: ON(w), rpc: moving, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, log: (l) => logs.push(l), ...quick });
+  assert.equal(r.outcome, "simulation_failed", logs.join("\n"));
+  assert.deepEqual([t.json(FILES.ledger).launches[0].status, t.json(FILES.ledger).launches[0].attempts], ["prepared", 0]);
+  assert.ok(!sol.calls.some((x) => x.method === "sendTransaction"), "nothing sent");
+  assert.ok(logs.some((l) => /changed endpoint/.test(l)), logs.join("\n"));
+  // The same run on one endpoint sends.
+  const steady = await send({ io: t.io, env: ON(w), rpc: sol.rpc, fetchImpl: web.fetchImpl, now: c.now, sleep: c.sleep, log: () => {}, ...quick });
+  assert.equal(steady.outcome, "launched");
+  // A fee route: the balance before the hand-over, the simulation after it: a wait, nothing sent, no try used.
+  const mint = throwaway().address;
+  const launched = { postId: "2100000000000000604", ticker: "PUDDLEBT", coinName: "Puddleboot Cat", status: "launched", feesTo: "floppafan", mintPublic: mint };
+  let flipped = false;
+  const sent = [];
+  const routeRpc = {
+    get fellBack() { return flipped; },
+    getMultipleAccounts: async () => [null],
+    getBalance: async () => { flipped = true; return 1_000_000_000; },
+    getLatestBlockhash: async () => ({ blockhash: "11111111111111111111111111111111", lastValidBlockHeight: 100 }),
+    simulateTransaction: async () => ({ err: null, accounts: [{ lamports: 991_000_000 }] }),
+    sendTransaction: async (tx) => { sent.push(tx); return "x"; },
+    getSignatureStatuses: async () => [{ confirmationStatus: "confirmed", err: null }],
+    getSignaturesForAddress: async () => [],
+  };
+  const rlogs = [];
+  assert.equal(await routeFees(launched, { io: { readText: () => null }, rpc: routeRpc, wallet: w.kp, caps: { priorityMicroLamports: 100_000, minBalanceLamports: 20_000_000 }, now: () => NOW, sleep: async () => {}, log: (l) => rlogs.push(l), confirmWaitMs: 10, confirmPollMs: 1 }), null);
+  assert.equal(sent.length, 0);
+  assert.ok(rlogs.some((l) => /changed endpoint/.test(l)), rlogs.join("\n"));
+  // A settle: "not seen" from one endpoint and an expired height from the other prove nothing.
+  const sending = { ticker: "GLOOP", venue: "pump-sol", tx: "x", lastValidBlockHeight: 100 };
+  let after = false;
+  const split = await settleSending(sending, { rpc: { get fellBack() { return after; }, getSignatureStatuses: async () => { after = true; return [null]; }, getBlockHeight: async () => 500 }, nowMs: NOW });
+  assert.equal(split.changed, false);
+  assert.match(split.note, /changed endpoint/);
+  const one = await settleSending(sending, { rpc: { fellBack: false, getSignatureStatuses: async () => [null], getBlockHeight: async () => 500 }, nowMs: NOW });
+  assert.equal(one.row.status, "failed", "one endpoint: an expired blockhash with no status is expired");
+});
+
+test("the launcher probes SOLANA_RPC_URL first: one that denies access is left for the public RPC before any check, with a warning that never names it", async () => {
+  const PRIVATE = "https://rpc.example.test/?api-key=SECRET77";
+  const seen = [], out = [];
+  const fetchImpl = async (u, init) => {
+    seen.push([u, JSON.parse(init.body).method]);
+    return u === PRIVATE ? new Response("{}", { status: 401 }) : new Response(JSON.stringify({ jsonrpc: "2.0", id: 1, result: 7 }), { status: 200 });
+  };
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "probe-"));
+  try {
+    const code = await main(["prepare"], { env: { LAUNCH_ENABLED: "off", SOLANA_RPC_URL: PRIVATE }, root, fetchImpl, stdout: (l) => out.push(l), stderr: (l) => out.push(l) });
+    assert.equal(code, 0, out.join("\n"));
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+  assert.deepEqual(seen, [[PRIVATE, "getSlot"], [PUBLIC_RPC, "getSlot"]]);
+  assert.ok(out.some((l) => /^::warning title=Solana RPC::.*denied access \(401\) on getSlot/.test(l)), out.join("\n"));
+  assert.doesNotMatch(out.join("\n"), /SECRET77|example\.test/);
 });
 
 test("a UsePaid coin's website is its own UsePaid page: the send that learns its mint writes it into the coin's metadata and sends nothing; the next run sends that very mint", async () => {

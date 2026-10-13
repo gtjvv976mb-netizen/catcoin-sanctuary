@@ -32,7 +32,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { prepare, send, record, LaunchError } from "./lib/launcher.mjs";
-import { createRpc, PUBLIC_RPC } from "./lib/rpc.mjs";
+import { createRpc, probe, PUBLIC_RPC } from "./lib/rpc.mjs";
 import { base58Decode, base58Encode } from "../assets/collection.js";
 import { keypairFromSecret } from "./lib/solana-tx.mjs";
 
@@ -120,13 +120,14 @@ export async function main(argv = process.argv.slice(2), { env = process.env, ro
   try {
     const io = fsStore(root);
     const url = String(env.SOLANA_RPC_URL ?? "").trim() || PUBLIC_RPC;
-    const rpc = () => rpcIn ?? createRpc({ url, fetchImpl, delayMs: url === PUBLIC_RPC ? 400 : 100 });
+    // One client for the phase, probed first: a refusing SOLANA_RPC_URL is left before any check reads the wallet.
+    const rpc = async () => { if (rpcIn) return rpcIn; const c = createRpc({ url, fetchImpl, delayMs: url === PUBLIC_RPC ? 400 : 100, log }); await probe(c); return c; };
     if (phase === "prepare" || phase === "send") log(`Launcher: ${phase}; Solana through ${url === PUBLIC_RPC ? "the public mainnet RPC" : "the RPC in SOLANA_RPC_URL"}.`);
     if (phase === "prepare") {
-      const r = await prepare({ io, env, rpc: rpc(), fetchImpl, now, log, scrub });
+      const r = await prepare({ io, env, rpc: await rpc(), fetchImpl, now, log, scrub });
       Object.assign(outputs, { pending: r.pending, deploy: r.deploy });
     } else if (phase === "send") {
-      const r = await send({ io, env, rpc: rpc(), fetchImpl, now, sleep, log, scrub });
+      const r = await send({ io, env, rpc: await rpc(), fetchImpl, now, sleep, log, scrub });
       Object.assign(outputs, { launched: r.launched, again: r.again === true });
       code = r.code;
     } else if (phase === "record") {
