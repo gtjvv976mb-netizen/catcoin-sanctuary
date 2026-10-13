@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106393843428135086",
+      "url": "https://x.com/catcosanctuary/status/2106393843428135086",
+      "name": "Maxwell (Jess)",
+      "coinName": "Maxwell the Cat",
+      "ticker": "MAXWELLCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "'Maxwell the Cat', the spinning low-poly cat meme, is based on a real black-and-white cat named Jess.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/MAXWELLCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/MAXWELLCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106393843428135086.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-13T21:33:43Z",
+      "attempts": 0,
+      "cat": {
+        "id": "maxwell-the-cat-jess",
+        "ticker": "MAXWELLCAT",
+        "name": "Maxwell (Jess)",
+        "coinName": "Maxwell the Cat",
+        "owner": "Jess's owner, Imgur user Voidhawk42 (anonymous); meme model from Garry's Mod",
+        "category": "viral",
+        "story": "'Maxwell the Cat', the spinning low-poly cat meme, is based on a real black-and-white cat named Jess. In November 2017 her owner, Imgur user Voidhawk42, posted a photo of her lying on a sheet of paper marked 'Please do not bend'. In October 2022 a 3D model of her was uploaded to the Steam Workshop for Garry's Mod; a version modified by ScottRim spread the name Maxwell, and videos of the model spinning to songs went viral.",
+        "look": "Black-and-white tuxedo cat: glossy black head, back and tail, a white muzzle, chin, bib and front paws, long white whiskers, green eyes and a compact loaf-shaped build; famous lying on a 'Please do not bend' photo envelope.",
+        "coat": {
+          "base": "black",
+          "second": "white",
+          "pattern": "tuxedo",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/Executor250624/status/1626552255888429056",
+          "author": "Executor250624",
+          "handle": "Executor250624",
+          "date": "2023-02-17",
+          "dateType": "posted",
+          "text": "Y’all need to learn that this cat isn’t Uni, it’s Maxwell The Cat whose real name is Jess",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "The Full Story Behind That Spinning Cat You're Seeing Everywhere - Kotaku",
+            "url": "https://kotaku.com/maxwell-spinning-cat-explain-real-name-jess-garys-mod-1850142446"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "SPINCAT",
+          "contract": "PUPLWzMfACfkSDe2btZg2axsxum2fvfM5tjKjHQJFnu",
+          "mcapUsd": 11042
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Jess's owner, Imgur user Voidhawk42 (anonymous); meme model from Garry's Mod.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/MAXWELLCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "medium",
+        "lore": null
+      },
+      "feesTo": "Executor250624"
+    },
+    {
       "postId": "2106458243522331131",
       "url": "https://x.com/catcosanctuary/status/2106458243522331131",
       "name": "Go-chan",
