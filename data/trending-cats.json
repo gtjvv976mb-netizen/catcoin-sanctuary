@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-13T07:18:04.267Z",
- "lens": "figures",
- "query": "(\"Oliver and Company\" OR \"Dinah the cat\" OR \"Itchy and Scratchy\" OR \"Mr. Jinks\" OR \"Mr Jinks\" OR \"Big Floppa\" OR \"Floppa\" OR \"Bingus\" OR \"Huh Cat\" OR \"Banana Cat\" OR \"Polite Cat\" OR \"Chipi Chipi Cat\" OR \"Chipi Chipi Chapa Chapa\" OR \"OIIA Cat\" OR \"OIIAI Cat\" OR \"Happy Happy Happy Cat\") has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-13T08:01:20.209Z",
+ "lens": "big",
+ "query": "(from:NintendoAmerica OR from:Pokemon OR from:PlayStation OR from:Xbox OR from:Spotify OR from:McDonalds OR from:Wendys OR from:tacobell OR from:Starbucks OR from:CocaCola OR from:Nike OR from:NBA OR from:NFL OR from:TheSimpsons OR from:CartoonNetwork OR from:adultswim OR from:Crunchyroll OR from:hellokitty OR from:binance OR from:coinbase OR from:CoinMarketCap) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-10-13",
-  "dayUsed": 162,
+  "dayUsed": 172,
   "month": "2026-10",
-  "monthUsed": 3876,
+  "monthUsed": 3886,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -107,6 +107,118 @@
    "known": false,
    "taken": null,
    "status": "signal"
+  },
+  {
+   "id": "2109675588176724026",
+   "url": "https://x.com/hellokitty/status/2109675588176724026",
+   "text": "Vancouver, you're up next 🌹❤️ Join Hello Kitty for two special meet and greets at the #HelloKittyxBrunoMars Romantic Tour Pop-Up and Hello Kitty Cafe Vancouver! ⁠\n⁠\n❤️ Meet and Greet with Hello Kitty⁠ Oct 16 - Oct 18\n❤️ Shop exclusive merch ⁠at the Pop-Up Oct 13 - Oct 21 ⁠\n❤️ Enjoy the limited-time menu available at the Hello Kitty Cafe ⁠",
+   "author": {
+    "handle": "hellokitty",
+    "name": "Hello Kitty",
+    "followers": 384556
+   },
+   "postedAt": "2026-10-12T16:00:30Z",
+   "likes": 141,
+   "views": 7685,
+   "reposts": 22,
+   "heat": 16,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUcSv5TXEAAhPOV.jpg"
+    },
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUcSwlgXMAAnkgK.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "hellokitty",
+   "lens": "big",
+   "readAt": "2026-10-13T08:01:20.209Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Hello Kitty",
+    "memeName": null,
+    "personFace": false,
+    "kind": "cartoon",
+    "coinName": "Hello Kitty",
+    "ticker": "KITTY",
+    "lore": "Hello Kitty holds a bouquet of roses beside a guitar-playing cowboy for the Romantic Tour Pop-Up meet and greets in Vancouver.",
+    "sensitive": false,
+    "why": "Promo art for a single named cartoon cat, cheerful and harmless.",
+    "readBy": "claude"
+   },
+   "known": true,
+   "taken": [
+    {
+     "mint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+     "name": "Hello Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/g4ckbrtsgp4b4rgmwjop3mz72y7z9n6csskdrkusayvc"
+    },
+    {
+     "mint": "EKEWAk7hfnwfR8DBb1cTayPPambqyC7pwNiYkaYQKQHp",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/stj9gp9kkvsbvtetbdsjwnl9jpgybcjyhawyyte4spw"
+    },
+    {
+     "mint": "8yJ15ee2AUQmwbWPxXLTTeBTzyMGn4MtSRKMqVHw1J1G",
+     "name": "KITTY AI",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/4yq6p6qhrqrkd5pk2prvkhysexhgdbc9uidnjtsnhpkk"
+    },
+    {
+     "mint": "DFfPq2hHbJeunp1F6eNyuyvBHcPpnTqaawn2tAFUpump",
+     "name": "Hello Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/hsrtbrwab29bpg6weshz61y6vybzvjjzoreguqtupfm9"
+    },
+    {
+     "mint": "4wYRsoQhe839cXGY78ebTR4QuaUNkvUHMfg4GrgPpump",
+     "name": "Kitty Explain",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/eewfhinrtnvsphyedulswfdjtumcd7wrc44trqnyzni"
+    },
+    {
+     "mint": "6bSj6uK5wkdELQaFg8cqV1d5bbckVcWAka53hYPrp8e1",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/emqkdkrqr38r1subakq8kmuofxcsx4dwadvz8vct1bhd"
+    },
+    {
+     "mint": "HRwyJbwo2mEUbMVRMDaw9WVDqV2Jn6TCTNkWRRpUpump",
+     "name": "Kitty Explain",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/fqzpggstz7zjmp6jzewamlerka43ebvguu3m1pr5h4wb"
+    },
+    {
+     "mint": "6wrGbTGsnG5WL9RDRgPRpaSnWpy63FR8tJL8fjPvv6DR",
+     "name": "KITTY",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/ek4lygqmnypnarplhadsz4vsk7nclhmreafgaotfbggx"
+    },
+    {
+     "mint": "2PqiuSJhTCZb8w4HATqcnpWig2PddPnhge6qxnaopump",
+     "name": "Kitty Explain",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/hudngmqspqvnhbakrhq1geapamsarnfvwxcbq9cng4iy"
+    },
+    {
+     "mint": "5TcmPcYehZaFUjpJPNpm4YnAVjrbKQkPETZBeuXBWGPN",
+     "name": "Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/c2dewxwct4ypgobzdtlgbhxqzrb8977fhmcas8aht6vn"
+    },
+    {
+     "mint": "8vLn15PE7P8qP2rgDcrHgo1U4SvMqWzoG575x2cdioos",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/fjkv2bltnhswsmkoaycqga3yibgkg1wbeeypouqgzu75"
+    }
+   ],
+   "status": "passed"
   },
   {
    "id": "2109362644251504926",
@@ -3348,10 +3460,10 @@
   }
  ],
  "state": {
-  "nextLens": 0,
-  "bigChunk": 7,
+  "nextLens": 1,
+  "bigChunk": 8,
   "figureChunk": 0,
-  "lastLens": "figures",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {}
