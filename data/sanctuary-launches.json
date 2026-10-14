@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106317783617216604",
+      "url": "https://x.com/catcosanctuary/status/2106317783617216604",
+      "name": "Dewey Readmore Books",
+      "coinName": "Dewey Readmore Books",
+      "ticker": "DEWEYCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "In loving memory of Dewey Readmore Books.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/DEWEYCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/DEWEYCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106317783617216604.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-14T10:24:19Z",
+      "attempts": 0,
+      "cat": {
+        "id": "dewey-readmore-books",
+        "ticker": "DEWEYCAT",
+        "name": "Dewey Readmore Books",
+        "coinName": "Dewey Readmore Books",
+        "owner": "Spencer Public Library, Spencer, Iowa (librarian Vicki Myron)",
+        "category": "company",
+        "story": "On 18 January 1988 librarian Vicki Myron found an eight-week-old kitten in the Spencer Public Library's drop box. Named after Melvil Dewey, he became the library's cat and 'staff supervisor' until 2006. A 1990 charity photo contest win and coverage in The Des Moines Register, Country magazine and Paul Harvey's radio show made him famous, and a 2004 Japanese documentary gave him a following in Japan. His obituary ran in more than 270 newspapers, and Myron's 2008 book 'Dewey: The Small-Town Library Cat Who Touched the World' became a New York Times No. 1 bestseller.",
+        "look": "Long-haired orange (ginger) tabby with a fluffy white-cream chest ruff and muzzle, amber-gold eyes, tufted ears and a plush coat; pictured sitting on a stack of books.",
+        "coat": {
+          "base": "ginger",
+          "second": "white",
+          "pattern": "tabby",
+          "eyes": "gold"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/tothemax2050/status/1719700847804760423",
+          "author": "tothemax2050",
+          "handle": "tothemax2050",
+          "date": "2023-11-01",
+          "dateType": "posted",
+          "text": "Dewey Readmore Books (1987-2006) was the library cat of Spencer Public Library, Spencer, Iowa. Abandoned in the library’s drop bin on a cold winter night, Dewey was adopted by the library and lived there for the next 19 years. A book was published in 2008 to recount his life.",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Dewey Readmore Books - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Dewey_Readmore_Books"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": true,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Spencer Public Library, Spencer, Iowa (librarian Vicki Myron).",
+        "sensitivity": "In loving memory of Dewey Readmore Books.",
+        "portrait": "assets/portraits/DEWEYCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "tothemax2050"
+    },
+    {
       "postId": "2110098405821214918",
       "url": "https://x.com/CatWorkers/status/2110098405821214918",
       "name": "Margaret",
