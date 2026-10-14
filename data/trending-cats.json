@@ -1,19 +1,21 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-14T02:03:55.522Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-14T02:43:57.217Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-14",
-  "dayUsed": 43,
+  "dayUsed": 63,
   "month": "2026-10",
-  "monthUsed": 4069,
+  "monthUsed": 4089,
   "monthCap": 10000,
   "dayCap": 322
  },
  "searchError": null,
  "candidates": [
+  "2110117842792177687",
+  "2110098405821214918",
   "2108949048061222995",
   "2108286761226924247",
   "2107924203986972792",
@@ -31,7 +33,9 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2110175164709110147",
   "2110146787667271979",
+  "2110108315006967982",
   "2109812603417420074",
   "2109362644251504926",
   "2109137154949443623",
@@ -69,6 +73,47 @@
  ],
  "posts": [
   {
+   "id": "2110175164709110147",
+   "url": "https://x.com/ShitpostGate/status/2110175164709110147",
+   "text": "https://t.co/Hd9UBosDzJ https://t.co/88EIUu4G06",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610112
+   },
+   "postedAt": "2026-10-14T01:05:39Z",
+   "likes": 1288,
+   "views": 11765,
+   "reposts": 62,
+   "heat": 934,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUjZIORWMAAi_CU.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-14T02:43:57.217Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "Cartoon of a man flipping a calendar, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
    "id": "2110146787667271979",
    "url": "https://x.com/Google/status/2110146787667271979",
    "text": "@ohhdanqi Purr-fect use case 🐱",
@@ -103,6 +148,171 @@
    "known": false,
    "taken": null,
    "status": "signal"
+  },
+  {
+   "id": "2110117842792177687",
+   "url": "https://x.com/CatWorkers/status/2110117842792177687",
+   "text": "Luthier Okan Demirci is a master violin maker and restorer in Istanbul. Here he's joined by an apprentice. 🐱 https://t.co/46pJJp8lSL",
+   "author": {
+    "handle": "CatWorkers",
+    "name": "cats with jobs 🛠",
+    "followers": 2312232
+   },
+   "postedAt": "2026-10-13T21:17:52Z",
+   "likes": 1999,
+   "views": 33003,
+   "reposts": 156,
+   "heat": 486,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/ext_tw_video_thumb/2110117818985320448/pu/img/l_le3KAdBXZHFuEi.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "CatWorkers",
+   "lens": "big",
+   "readAt": "2026-10-14T02:43:57.217Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Luthier Cat",
+    "memeName": "Luthier Cat",
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Luthier Cat",
+    "ticker": "LUTHIER",
+    "lore": "A tuxedo cat apprentices at an Istanbul violin workshop, supervising wood shavings as the luthier carves a violin body.",
+    "sensitive": false,
+    "why": "One real cat in a fun workshop moment, no name given.",
+    "readBy": "claude",
+    "nameFrom": "meme"
+   },
+   "known": false,
+   "taken": [],
+   "status": "candidate"
+  },
+  {
+   "id": "2110108369071526212",
+   "url": "https://x.com/ShitpostGate/status/2110108369071526212",
+   "text": "https://t.co/VWqjsgPGBQ",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610112
+   },
+   "postedAt": "2026-10-13T20:40:13Z",
+   "likes": 3441,
+   "views": 34309,
+   "reposts": 120,
+   "heat": 664,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUicYCrXsAIuqK4.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-14T02:43:57.217Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": true,
+    "why": "Political/extremist meme with no cat at all.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "passed"
+  },
+  {
+   "id": "2110108315006967982",
+   "url": "https://x.com/ShitpostGate/status/2110108315006967982",
+   "text": "https://t.co/SpBgl5KEOH",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610112
+   },
+   "postedAt": "2026-10-13T20:40:00Z",
+   "likes": 8116,
+   "views": 128078,
+   "reposts": 712,
+   "heat": 1784,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2110108299236376576/img/-W-r7N25NSYl_3zT.jpg"
+    }
+   ],
+   "stage": "viral",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-14T02:43:57.217Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "The post shows a marmot being washed, not a cat.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
+  {
+   "id": "2110098405821214918",
+   "url": "https://x.com/CatWorkers/status/2110098405821214918",
+   "text": "🐈 Margaret the cat\n📚 Kick's Mix Bookstore (Newark, Ohio) https://t.co/1q9NT5MdlN",
+   "author": {
+    "handle": "CatWorkers",
+    "name": "cats with jobs 🛠",
+    "followers": 2312232
+   },
+   "postedAt": "2026-10-13T20:00:38Z",
+   "likes": 583,
+   "views": 17542,
+   "reposts": 39,
+   "heat": 124,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUiTUTBX0AAnzDE.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "CatWorkers",
+   "lens": "big",
+   "readAt": "2026-10-14T02:43:57.217Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Margaret",
+    "memeName": null,
+    "personFace": false,
+    "kind": "real",
+    "coinName": "Margaret",
+    "ticker": "MARGARET",
+    "lore": "Margaret the bookstore cat holds down the counter at Kick's Mix Bookstore beside a copy of 'Touch Not the Cat'.",
+    "sensitive": false,
+    "why": "A named working bookstore cat in a cheerful photo.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": [],
+   "status": "candidate"
   },
   {
    "id": "2110040244192186413",
@@ -3580,12 +3790,35 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 5,
+  "nextLens": 3,
+  "bigChunk": 6,
   "figureChunk": 1,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
-  "names": {}
+  "names": {
+   "margaret": {
+    "name": "Margaret",
+    "firstSeen": "2026-10-13T20:00:38.000Z",
+    "lastSeen": "2026-10-13T20:00:38.000Z",
+    "authors": [
+     "CatWorkers"
+    ],
+    "posts": [
+     "2110098405821214918"
+    ],
+    "likes": 583,
+    "sightings": [
+     {
+      "at": "2026-10-13T20:00:38.000Z",
+      "author": "CatWorkers",
+      "post": "2110098405821214918",
+      "likes": 583,
+      "seen": "2026-10-14T02:43:57.217Z",
+      "via": "big"
+     }
+    ]
+   }
+  }
  }
 }
