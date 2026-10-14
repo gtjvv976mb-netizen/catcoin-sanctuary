@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-14T09:59:07.924Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-14T10:37:32.782Z",
+ "lens": "big",
+ "query": "(from:KittiesVids OR from:CatWorkers OR from:ShitpostGate) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
  "trends": [],
  "reads": {
   "day": "2026-10-14",
-  "dayUsed": 212,
+  "dayUsed": 232,
   "month": "2026-10",
-  "monthUsed": 4238,
+  "monthUsed": 4258,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -33,6 +33,7 @@
   "2105623888126173495"
  ],
  "signals": [
+  "2110226418974003258",
   "2110175164709110147",
   "2110146787667271979",
   "2110108315006967982",
@@ -72,6 +73,88 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2110226572900712610",
+   "url": "https://x.com/ShitpostGate/status/2110226572900712610",
+   "text": "https://t.co/zHneYo3Rec",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610174
+   },
+   "postedAt": "2026-10-14T04:29:55Z",
+   "likes": 3783,
+   "views": 67434,
+   "reposts": 120,
+   "heat": 767,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2110226482907766784/img/EU367cC2p7-ireCW.jpg"
+    }
+   ],
+   "stage": "rising",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-14T10:37:32.782Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": true,
+    "why": "No cat; post is an offensive racial/slavery joke.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "passed"
+  },
+  {
+   "id": "2110226418974003258",
+   "url": "https://x.com/ShitpostGate/status/2110226418974003258",
+   "text": "https://t.co/d1TffFvlan",
+   "author": {
+    "handle": "ShitpostGate",
+    "name": "ShitpostGateway",
+    "followers": 1610174
+   },
+   "postedAt": "2026-10-14T04:29:19Z",
+   "likes": 5624,
+   "views": 128242,
+   "reposts": 291,
+   "heat": 1220,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2110226399873163264/img/iEVe8M4PbsHLfnaZ.jpg"
+    }
+   ],
+   "stage": "viral",
+   "bigAccount": "ShitpostGate",
+   "lens": "big",
+   "readAt": "2026-10-14T10:37:32.782Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": false,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": false,
+    "why": "The post shows a pan of sauce with a bay leaf joke, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "signal"
+  },
   {
    "id": "2110226272798605591",
    "url": "https://x.com/ShitpostGate/status/2110226272798605591",
@@ -3951,10 +4034,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 2,
+  "nextLens": 3,
+  "bigChunk": 3,
   "figureChunk": 0,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
