@@ -2,6 +2,65 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2110098405821214918",
+      "url": "https://x.com/CatWorkers/status/2110098405821214918",
+      "name": "Margaret",
+      "coinName": "Margaret",
+      "ticker": "MARGARET",
+      "venue": "pump-sol",
+      "policy": "big-account",
+      "kind": "real",
+      "lore": "Margaret the bookstore cat holds down the counter at Kick's Mix Bookstore beside a copy of 'Touch Not the Cat'.",
+      "image": "https://pbs.twimg.com/media/HUiTUTBX0AAnzDE.jpg",
+      "coinImage": "https://pbs.twimg.com/media/HUiTUTBX0AAnzDE.jpg",
+      "metadataPath": "coins/2110098405821214918.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-14T05:23:19Z",
+      "attempts": 0,
+      "cat": {
+        "id": "margaret",
+        "ticker": "MARGARET",
+        "name": "Margaret",
+        "coinName": "Margaret",
+        "owner": "cats with jobs 🛠",
+        "category": "viral",
+        "story": "Margaret the bookstore cat holds down the counter at Kick's Mix Bookstore beside a copy of 'Touch Not the Cat'. Margaret was trending on X on October 13, 2026, and the sanctuary gave it a coin.",
+        "look": "Margaret, drawn from the picture in the X post that made it famous: the same fur colours, markings and eyes as there.",
+        "coat": {
+          "base": "cream",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/CatWorkers/status/2110098405821214918",
+          "author": "CatWorkers",
+          "handle": "CatWorkers",
+          "date": "2026-10-13",
+          "dateType": "posted",
+          "text": "🐈 Margaret the cat 📚 Kick's Mix Bookstore (Newark, Ohio) https://t.co/1q9NT5MdlN",
+          "note": "Found by the sanctuary's trend watch on 2026-10-14.",
+          "image": null
+        },
+        "sources": [],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by cats with jobs 🛠.",
+        "sensitivity": "",
+        "portrait": null,
+        "portraitStatus": "pending",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "CatWorkers",
+      "photoCredit": true
+    },
+    {
       "postId": "2110117842792177687",
       "url": "https://x.com/CatWorkers/status/2110117842792177687",
       "name": "Luthier Cat",
