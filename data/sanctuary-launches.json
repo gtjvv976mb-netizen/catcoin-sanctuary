@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/DEWEYCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106317783617216604.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-14T10:24:19Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "dewey-readmore-books",
         "ticker": "DEWEYCAT",
@@ -65,7 +65,18 @@
       },
       "feesTo": "tothemax2050",
       "mintNonce": 604036,
-      "usePaidMint": "D7P6DAxa94FGaRZjakQARVACWyF6aRG2QWF862YHcats"
+      "usePaidMint": "D7P6DAxa94FGaRZjakQARVACWyF6aRG2QWF862YHcats",
+      "tx": "5nfxX6zsjohddpBNXhYCDDAA6VccWMXmMC8519sW6YiBHoWqAUTUpPtnv8hCxKGcENByqdHxjfCereLrokqErhj",
+      "sentAt": "2026-10-14T10:40:15Z",
+      "lastValidBlockHeight": 434844893,
+      "mintPublic": "D7P6DAxa94FGaRZjakQARVACWyF6aRG2QWF862YHcats",
+      "spentLamports": 5745000,
+      "settledAt": "2026-10-14T10:40:25Z",
+      "launchedAt": "2026-10-14T10:40:16Z",
+      "feeRoute": {
+        "tx": "22wtoqx76kM4GP6mz4JcvAKbeLxhMMikmhkJsUzp9UggM7hjgGDiCDLBPvXoKjzkfkesWnVTeWnukZKCqt7pA8Kf",
+        "at": "2026-10-14T10:40:31Z"
+      }
     },
     {
       "postId": "2110098405821214918",
