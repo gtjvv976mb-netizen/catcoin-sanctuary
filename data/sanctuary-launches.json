@@ -14,9 +14,9 @@
       "image": "https://pbs.twimg.com/media/HUiTUTBX0AAnzDE.jpg",
       "coinImage": "https://pbs.twimg.com/media/HUiTUTBX0AAnzDE.jpg",
       "metadataPath": "coins/2110098405821214918.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-14T05:23:19Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "margaret",
         "ticker": "MARGARET",
@@ -60,7 +60,18 @@
       "feesTo": "CatWorkers",
       "photoCredit": true,
       "mintNonce": 1081495,
-      "usePaidMint": "CArJq9gbV5Yjfnm9ajBNj2wE6h2nx6f4wiDqDPeWcats"
+      "usePaidMint": "CArJq9gbV5Yjfnm9ajBNj2wE6h2nx6f4wiDqDPeWcats",
+      "tx": "63mPWic2yzsDBhAbyFbdViNCUHDPwGhgCJEQnnNT4BYwNjbRUUU3thoec9fxEPni5V7PJhFwFgm2eSjYaeh7iytF",
+      "sentAt": "2026-10-14T05:39:55Z",
+      "lastValidBlockHeight": 434761895,
+      "mintPublic": "CArJq9gbV5Yjfnm9ajBNj2wE6h2nx6f4wiDqDPeWcats",
+      "spentLamports": 5684040,
+      "settledAt": "2026-10-14T05:40:05Z",
+      "launchedAt": "2026-10-14T05:39:55Z",
+      "feeRoute": {
+        "tx": "3bSF3yFc35DDgpGWKrs6k1YhJXfn3Fk2EqtjKgKUZ7giTPL5aXCJFHKiPauQwppCP9NueQEtusw9mTy2PRmWF7Rz",
+        "at": "2026-10-14T05:40:11Z"
+      }
     },
     {
       "postId": "2110117842792177687",
