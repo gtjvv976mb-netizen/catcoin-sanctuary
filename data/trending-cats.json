@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-13T23:23:01.865Z",
- "lens": null,
- "query": null,
+ "checkedAt": "2026-10-14T00:03:03.651Z",
+ "lens": "big",
+ "query": "(from:elonmusk OR from:cz_binance OR from:VitalikButerin OR from:saylor OR from:aeyakovenko OR from:rajgokal OR from:solana OR from:pumpdotfun OR from:a1lon9 OR from:blknoiz06 OR from:MustStopMurad OR from:frankdegods OR from:cb_doge OR from:DogeDesigner OR from:WatcherGuru) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
-  "day": "2026-10-13",
-  "dayUsed": 312,
+  "day": "2026-10-14",
+  "dayUsed": 1,
   "month": "2026-10",
-  "monthUsed": 4026,
+  "monthUsed": 4027,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -67,6 +67,47 @@
   "2103903040969245011"
  ],
  "posts": [
+  {
+   "id": "2110040244192186413",
+   "url": "https://x.com/cb_doge/status/2110040244192186413",
+   "text": "BREAKING: Vietnam’s Hai Phong government partners with Starlink to bring FREE internet to remote islands.\n\nThe pilot includes 10 Starlink terminals, with FPT handling deployment and technical support: 6 in Cat Hai and 4 in Bach Long Vi.\n\nThe connections will support government services, tourism, disaster response and search-and-rescue, providing a vital backup when storms disrupt ground networks.",
+   "author": {
+    "handle": "cb_doge",
+    "name": "DogeDesigner",
+    "followers": 1907639
+   },
+   "postedAt": "2026-10-13T16:09:31Z",
+   "likes": 408,
+   "views": 220017,
+   "reposts": 85,
+   "heat": 352,
+   "media": [
+    {
+     "type": "video",
+     "url": "https://pbs.twimg.com/amplify_video_thumb/2110040216354553856/img/JUThwa3XbDYAZBTb.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "cb_doge",
+   "lens": "big",
+   "readAt": "2026-10-14T00:03:03.651Z",
+   "reading": {
+    "aboutOneCat": false,
+    "catName": null,
+    "memeName": null,
+    "personFace": true,
+    "kind": "none",
+    "coinName": null,
+    "ticker": null,
+    "lore": null,
+    "sensitive": true,
+    "why": "Post is about a Starlink government telecom deployment, no cat involved.",
+    "readBy": "claude"
+   },
+   "known": false,
+   "taken": null,
+   "status": "passed"
+  },
   {
    "id": "2109917853763637482",
    "url": "https://x.com/CatWorkers/status/2109917853763637482",
@@ -3502,10 +3543,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 3,
+  "nextLens": 3,
+  "bigChunk": 4,
   "figureChunk": 0,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {}
