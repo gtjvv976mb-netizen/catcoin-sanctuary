@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/NORAKEYS.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106334396324143134.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-14T00:38:13Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "nora-the-piano-cat",
         "ticker": "NORAKEYS",
@@ -69,7 +69,18 @@
       },
       "feesTo": "MalthusianThan1",
       "mintNonce": 7992606,
-      "usePaidMint": "8yAkMGZDKQeBEG9gzX4Mi29uncPd6BCC1m2aCqY1cats"
+      "usePaidMint": "8yAkMGZDKQeBEG9gzX4Mi29uncPd6BCC1m2aCqY1cats",
+      "tx": "VotEbZTSRJ4HydnPzxw9vBhuN2GVCR1yGGFUsFGPGUpZrBvUum5xoSmggmGsuhmTGf34gW7T62PH9ANcgAiG5pD",
+      "sentAt": "2026-10-14T00:56:25Z",
+      "lastValidBlockHeight": 434683848,
+      "mintPublic": "8yAkMGZDKQeBEG9gzX4Mi29uncPd6BCC1m2aCqY1cats",
+      "spentLamports": 5734840,
+      "settledAt": "2026-10-14T00:56:35Z",
+      "launchedAt": "2026-10-14T00:56:25Z",
+      "feeRoute": {
+        "tx": "5unBE9Yrq2KKVQLohDYssh7HkPJ9xyfNdKqq7frsPRrCUJ7kKJ8SkSSEsFrcSxS9219TnL9L3UdmBsQnh8beFTXE",
+        "at": "2026-10-14T00:56:40Z"
+      }
     },
     {
       "postId": "2106393843428135086",
