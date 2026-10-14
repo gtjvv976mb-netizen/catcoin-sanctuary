@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/HODGECAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106272399054283184.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-14T19:42:40Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "hodge-dr-johnson",
         "ticker": "HODGECAT",
@@ -65,7 +65,18 @@
       },
       "feesTo": "drjohnsonshouse",
       "mintNonce": 29266237,
-      "usePaidMint": "8Up6cp3FGKyStQHKkzzeKgJbQ8V6dsfWmZiXt2Nncats"
+      "usePaidMint": "8Up6cp3FGKyStQHKkzzeKgJbQ8V6dsfWmZiXt2Nncats",
+      "tx": "59safwX86RT5HmqAfTQppE7YHhjVfLo9f24iKSXC7SVnCjDc78B2HfjME4RY5LoBy6q8KdJLFapAPyS4q6ErkqKE",
+      "sentAt": "2026-10-14T23:04:02Z",
+      "lastValidBlockHeight": 435050757,
+      "mintPublic": "8Up6cp3FGKyStQHKkzzeKgJbQ8V6dsfWmZiXt2Nncats",
+      "spentLamports": 5760240,
+      "settledAt": "2026-10-14T23:04:12Z",
+      "launchedAt": "2026-10-14T23:04:02Z",
+      "feeRoute": {
+        "tx": "4QesbP7mphVVibqPjCopE8Aaj8SSHCLFCpGE8kqfj4HGLwCRmfiHRbjcs7XXVuQXN6Lkhy57CRToJzMHAr1oEgkc",
+        "at": "2026-10-14T23:04:18Z"
+      }
     },
     {
       "postId": "2106302659099873732",
