@@ -1,14 +1,14 @@
 {
  "note": "Written by scripts/scan-trending-cats.mjs: cats on X, found early. Each run searches X once through one lens: \"trend\" (a cat trend on X's lists), \"emerging\" (a cat's name two or more accounts gave in the last 48 hours), else in turn \"big\" (big accounts' cat posts, data/cat-watch.json), \"viral\", \"big\", \"figures\" (famous cat characters and memes not in the sanctuary yet); the turn goes to the rotation at least every other run. stage: viral (5k likes or 250k views in 48 h), rising (in 12 h: 1k likes at 500 an hour, or 50k views an hour) or big-account (any cat post of a watched account). Posts are read by rules (X-only) or by Claude (readBy); reading.nameFrom says when the lens named the cat (figure, trend, emerging). candidates = about one cat, not sensitive, not already in the sanctuary (taken = Solana coins already using the ticker, for the record). signals = big accounts' cat posts with no cat's name and nothing sensitive, for a person to look at. state = the rotation, when each trend and name was searched, the names being tracked. The sanctuary's launcher (scripts/launch.mjs) launches only watch-list cats on its own (nameFrom figure, or a cartoon or fiction cat named by a trend or posted by a big account); any other candidate waits for the owner's approval in data/launch-approvals.json.",
- "checkedAt": "2026-10-14T04:44:14.180Z",
- "lens": "viral",
- "query": "(cat OR cats OR kitten OR kitty OR \"my cat\" OR 猫 OR ねこ OR gato) has:media -is:retweet -is:reply -\"$\" -pump -memecoin -solana -\"contract address\" -airdrop -giveaway",
+ "checkedAt": "2026-10-14T05:18:36.532Z",
+ "lens": "big",
+ "query": "(from:NintendoAmerica OR from:Pokemon OR from:PlayStation OR from:Xbox OR from:Spotify OR from:McDonalds OR from:Wendys OR from:tacobell OR from:Starbucks OR from:CocaCola OR from:Nike OR from:NBA OR from:NFL OR from:TheSimpsons OR from:CartoonNetwork OR from:adultswim OR from:Crunchyroll OR from:hellokitty OR from:binance OR from:coinbase OR from:CoinMarketCap) (cat OR cats OR kitten OR kitty OR meow OR catcoin OR 猫 OR 🐱 OR 🐈) -is:retweet",
  "trends": [],
  "reads": {
   "day": "2026-10-14",
-  "dayUsed": 103,
+  "dayUsed": 112,
   "month": "2026-10",
-  "monthUsed": 4129,
+  "monthUsed": 4138,
   "monthCap": 10000,
   "dayCap": 322
  },
@@ -353,6 +353,126 @@
    },
    "known": false,
    "taken": null,
+   "status": "passed"
+  },
+  {
+   "id": "2110037961500745975",
+   "url": "https://x.com/hellokitty/status/2110037961500745975",
+   "text": "Look who’s returning to the Big Apple 🍎 Hello Kitty is set to soar at the 100th @Macys Thanksgiving Day Parade! #MacysParade https://t.co/HmrH4yliGZ",
+   "author": {
+    "handle": "hellokitty",
+    "name": "Hello Kitty",
+    "followers": 384540
+   },
+   "postedAt": "2026-10-13T16:00:27Z",
+   "likes": 2739,
+   "views": 46638,
+   "reposts": 337,
+   "heat": 292,
+   "media": [
+    {
+     "type": "photo",
+     "url": "https://pbs.twimg.com/media/HUhcVz_WsAAHJkd.jpg"
+    }
+   ],
+   "stage": "big-account",
+   "bigAccount": "hellokitty",
+   "lens": "big",
+   "readAt": "2026-10-14T05:18:36.532Z",
+   "reading": {
+    "aboutOneCat": true,
+    "catName": "Hello Kitty",
+    "memeName": null,
+    "personFace": false,
+    "kind": "cartoon",
+    "coinName": "Hello Kitty",
+    "ticker": "KITTY",
+    "lore": "Hello Kitty returns to the Big Apple as a balloon 107 apples tall, soaring at the 100th Macy's Thanksgiving Day Parade.",
+    "sensitive": false,
+    "why": "Post centers on one named cartoon cat in a festive parade balloon reveal.",
+    "readBy": "claude"
+   },
+   "known": true,
+   "taken": [
+    {
+     "mint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
+     "name": "Hello Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/g4ckbrtsgp4b4rgmwjop3mz72y7z9n6csskdrkusayvc"
+    },
+    {
+     "mint": "EKEWAk7hfnwfR8DBb1cTayPPambqyC7pwNiYkaYQKQHp",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/stj9gp9kkvsbvtetbdsjwnl9jpgybcjyhawyyte4spw"
+    },
+    {
+     "mint": "8yJ15ee2AUQmwbWPxXLTTeBTzyMGn4MtSRKMqVHw1J1G",
+     "name": "KITTY AI",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/4yq6p6qhrqrkd5pk2prvkhysexhgdbc9uidnjtsnhpkk"
+    },
+    {
+     "mint": "DFfPq2hHbJeunp1F6eNyuyvBHcPpnTqaawn2tAFUpump",
+     "name": "Hello Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/hsrtbrwab29bpg6weshz61y6vybzvjjzoreguqtupfm9"
+    },
+    {
+     "mint": "6bSj6uK5wkdELQaFg8cqV1d5bbckVcWAka53hYPrp8e1",
+     "name": "Roaring Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/emqkdkrqr38r1subakq8kmuofxcsx4dwadvz8vct1bhd"
+    },
+    {
+     "mint": "6CGzrCLcwW3DMjk933jvrNMGLBhV7K6kGadvaKEcpump",
+     "name": "Kitty Explains",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/83m9v55rh6tche3vnh9gc5d2vszuyc7fkrx1kzpaudsd"
+    },
+    {
+     "mint": "31hJxfZBwfHjNBr113Cvax1YetZrD2dZ6zzCSxvopump",
+     "name": "Kitty Explains",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/gatj19pja5ad2g24s99gpyvhkavygmlbwmuypx9uxkda"
+    },
+    {
+     "mint": "Am8mNotwgVaSW2QVjTVBZCko2oB8jpovfRJqkEs5pump",
+     "name": "Kitty Explain",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/4zhoxbx6qchtnak4rnsjmg3mgcdbhscdt1czjlvbhfuf"
+    },
+    {
+     "mint": "6wrGbTGsnG5WL9RDRgPRpaSnWpy63FR8tJL8fjPvv6DR",
+     "name": "KITTY",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/ek4lygqmnypnarplhadsz4vsk7nclhmreafgaotfbggx"
+    },
+    {
+     "mint": "4wYRsoQhe839cXGY78ebTR4QuaUNkvUHMfg4GrgPpump",
+     "name": "Kitty Explain",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/eewfhinrtnvsphyedulswfdjtumcd7wrc44trqnyzni"
+    },
+    {
+     "mint": "8J739niomuTJdjoiwVpTgx8JdcKhYrjy5KB4tycjpump",
+     "name": "Kitty",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/4r9wuewaxzvg5azl9ps4fbqcysxsr22qjub1vyvsfdxh"
+    },
+    {
+     "mint": "6XWfkyg5mzGtKNftSDgYjyoPyUsLRf2rafj95XSFSFrr",
+     "name": "Kitty Coin",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/fhmtptqlmd9rexbvx5wyuhcdgqe4wwigkmbydeasmzgn"
+    },
+    {
+     "mint": "FGcy21LZayyuGwML8iBqL7UkWuNDVLr4pMQujTYMDVy7",
+     "name": "Hello Kitty ",
+     "symbol": "KITTY",
+     "url": "https://dexscreener.com/solana/5vybpsxwrp2jsekakfylu6isuefmuxfivbifixdc5mun"
+    }
+   ],
    "status": "passed"
   },
   {
@@ -3790,10 +3910,10 @@
   }
  ],
  "state": {
-  "nextLens": 2,
-  "bigChunk": 7,
+  "nextLens": 3,
+  "bigChunk": 8,
   "figureChunk": 0,
-  "lastLens": "viral",
+  "lastLens": "big",
   "trendSearchedAt": {},
   "followedUp": {},
   "names": {
