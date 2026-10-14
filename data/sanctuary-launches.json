@@ -2,6 +2,70 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106272399054283184",
+      "url": "https://x.com/catcosanctuary/status/2106272399054283184",
+      "name": "Hodge",
+      "coinName": "Hodge, Dr Johnson's Cat",
+      "ticker": "HODGECAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Hodge, one of the Catcoin Sanctuary's cats.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/HODGECAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/HODGECAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106272399054283184.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-14T19:42:40Z",
+      "attempts": 0,
+      "cat": {
+        "id": "hodge-dr-johnson",
+        "ticker": "HODGECAT",
+        "name": "Hodge",
+        "coinName": "Hodge, Dr Johnson's Cat",
+        "owner": "Samuel Johnson; remembered by Dr Johnson's House museum, 17 Gough Square, London (@drjohnsonshouse)",
+        "category": "company",
+        "story": "Hodge was the favourite cat of Samuel Johnson, known mainly from James Boswell's 1791 biography. Johnson went out himself to buy oysters for Hodge, 'lest the servants having that trouble should take a dislike to the poor creature', and told Boswell: 'he is a very fine cat, a very fine cat indeed.' A 1778 elegy mentions his 'sable fur'. Jon Bickley's bronze statue, unveiled by the Lord Mayor of London in 1997 outside Johnson's house in Gough Square, shows Hodge on Johnson's Dictionary beside empty oyster shells. The museum, where the Dictionary was written, still posts about 'the finest cat in Gough Square'.",
+        "look": "Known today from Jon Bickley's bronze statue: a slim, upright short-haired cat sitting on a large book (Johnson's Dictionary) beside two oyster shells, with large pointed ears, half-closed eyes and a long tail curled round the front paws. In life a black cat ('sable fur').",
+        "coat": {
+          "base": "black",
+          "second": "",
+          "pattern": "solid",
+          "eyes": ""
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/drjohnsonshouse/status/2062821917539647900",
+          "author": "drjohnsonshouse",
+          "handle": "drjohnsonshouse",
+          "date": "2026-06-05",
+          "dateType": "posted",
+          "text": "Say hello to Hodge, 'a very fine cat indeed'. 🐾 Visit Dr Johnson's House this weekend and see him for yourself — then step inside and explore the home where the Dictionary of the English Language was written. Tue - Sat 10am - 5pm Sun 12pm - 4pm",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Hodge (cat) - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Hodge_(cat)"
+          }
+        ],
+        "existingCoin": null,
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Samuel Johnson; remembered by Dr Johnson's House museum, 17 Gough Square, London (@drjohnsonshouse).",
+        "sensitivity": "",
+        "portrait": "assets/portraits/HODGECAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "drjohnsonshouse"
+    },
+    {
       "postId": "2106302659099873732",
       "url": "https://x.com/catcosanctuary/status/2106302659099873732",
       "name": "Browser",
