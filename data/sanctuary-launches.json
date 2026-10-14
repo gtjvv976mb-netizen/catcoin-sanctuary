@@ -14,9 +14,9 @@
       "image": "https://pbs.twimg.com/ext_tw_video_thumb/2110117818985320448/pu/img/l_le3KAdBXZHFuEi.jpg",
       "coinImage": "https://pbs.twimg.com/ext_tw_video_thumb/2110117818985320448/pu/img/l_le3KAdBXZHFuEi.jpg",
       "metadataPath": "coins/2110117842792177687.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-14T02:47:33Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "luthier-cat",
         "ticker": "LUTHIER",
@@ -60,7 +60,18 @@
       "feesTo": "CatWorkers",
       "photoCredit": false,
       "mintNonce": 7362191,
-      "usePaidMint": "DQovxjK8JJPBvtbBif414z9QgQiYWyyXE1vtjuvvcats"
+      "usePaidMint": "DQovxjK8JJPBvtbBif414z9QgQiYWyyXE1vtjuvvcats",
+      "tx": "LZVpEpPW5HNr5rEjrUXNnDp34J1FLySS2k2hw28BiNW44HdWEa2RMVEB5Wye9Zw8qYuV72T1anLWMkPuZ39P4wr",
+      "sentAt": "2026-10-14T03:04:00Z",
+      "lastValidBlockHeight": 434718922,
+      "mintPublic": "DQovxjK8JJPBvtbBif414z9QgQiYWyyXE1vtjuvvcats",
+      "spentLamports": 5694200,
+      "settledAt": "2026-10-14T03:04:09Z",
+      "launchedAt": "2026-10-14T03:04:00Z",
+      "feeRoute": {
+        "tx": "5TkFLTQDH4BhkemUAMq9NN96kRP93DLs79DDEVdSyYdWBh1r49iY7KPwGjD1Ya9YNN96QM6YHiLqMia7BpyaeUaq",
+        "at": "2026-10-14T03:04:15Z"
+      }
     },
     {
       "postId": "2106334396324143134",
