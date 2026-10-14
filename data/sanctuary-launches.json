@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/BROWSERCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106302659099873732.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-14T15:28:55Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "browser-library-cat",
         "ticker": "BROWSERCAT",
@@ -66,7 +66,15 @@
         "portraitStatus": "ready",
         "confidence": "high",
         "lore": null
-      }
+      },
+      "mintNonce": 15649697,
+      "tx": "4smBTj4rAEqYnUY5dfFGJmhEq16RdhbbNenTmKTRpSJF2RFLtv2a3Skd3EjcLXfVh7B7PpBtGg8SAevLABujKPJX",
+      "sentAt": "2026-10-14T15:43:32Z",
+      "lastValidBlockHeight": 434928763,
+      "mintPublic": "DBBk66z9nbwwq5sYZ9m7HGzXEDxqqPgjCGjAAkYecats",
+      "spentLamports": 5770400,
+      "settledAt": "2026-10-14T15:43:42Z",
+      "launchedAt": "2026-10-14T15:43:33Z"
     },
     {
       "postId": "2106317783617216604",
