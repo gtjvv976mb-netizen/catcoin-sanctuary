@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/CLIVECAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106240951765070038.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-15T00:53:23Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "clive-beckinsale",
         "ticker": "CLIVECAT",
@@ -69,7 +69,18 @@
       },
       "feesTo": "KateBeckinsale",
       "mintNonce": 5837140,
-      "usePaidMint": "RWFNrJcpgRW6DovgDRKoL4wDpvLzddRid23V2Cbcats"
+      "usePaidMint": "RWFNrJcpgRW6DovgDRKoL4wDpvLzddRid23V2Cbcats",
+      "tx": "LsuGZDuDcZAR27QuL73mhrTHmE7sUS99tBj1mpxPhCbWUFWewjLVz1tUFHjHH5zvNngzcAHQX76vjf7auRTAf66",
+      "sentAt": "2026-10-15T01:12:47Z",
+      "lastValidBlockHeight": 435086400,
+      "mintPublic": "RWFNrJcpgRW6DovgDRKoL4wDpvLzddRid23V2Cbcats",
+      "spentLamports": 5668800,
+      "settledAt": "2026-10-15T01:12:57Z",
+      "launchedAt": "2026-10-15T01:12:47Z",
+      "feeRoute": {
+        "tx": "Z82TGX8excrTtSt4uiRVtNhYzQEm6YNaoQ4wXKot8HYnuBKF9ShFCoKnvCCaZXP7V3ui7HLTSC81f3ea5ePctG6",
+        "at": "2026-10-15T01:13:02Z"
+      }
     },
     {
       "postId": "2106272399054283184",
