@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/SALADCAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106149353962303497.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-15T15:09:46Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "smudge-table-cat",
         "ticker": "SALADCAT",
@@ -69,7 +69,14 @@
       },
       "feesTo": "SmudgeLord",
       "mintNonce": 901458,
-      "usePaidMint": "6KoajQbS2Ao3r77nTspuY5mLKXGZoVdXA4eNmi8Pcats"
+      "usePaidMint": "6KoajQbS2Ao3r77nTspuY5mLKXGZoVdXA4eNmi8Pcats",
+      "tx": "3PsWwigoM4Z5AEbPVLpFfb7E1XRzmJoXW5m1yWGTSCYPi3ySQT5gZqyLHNrWo1y91PGCWvs7BmCQsCDK9RdXyhFQ",
+      "sentAt": "2026-10-15T15:28:25Z",
+      "lastValidBlockHeight": 435323612,
+      "mintPublic": "6KoajQbS2Ao3r77nTspuY5mLKXGZoVdXA4eNmi8Pcats",
+      "spentLamports": 5745000,
+      "settledAt": "2026-10-15T15:28:35Z",
+      "launchedAt": "2026-10-15T15:28:25Z"
     },
     {
       "postId": "2106210702398525702",
