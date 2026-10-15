@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106210702398525702",
+      "url": "https://x.com/catcosanctuary/status/2106210702398525702",
+      "name": "Yontama",
+      "coinName": "Yontama, Stationmaster",
+      "ticker": "YONTAMACAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Yontama (\"Fourth Tama\") is a cat stationmaster of Wakayama Electric Railway in Japan, in the line of the famous stationmaster Tama.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/YONTAMACAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/YONTAMACAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106210702398525702.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-15T10:19:27Z",
+      "attempts": 0,
+      "cat": {
+        "id": "yontama-kishi-station",
+        "ticker": "YONTAMACAT",
+        "name": "Yontama",
+        "coinName": "Yontama, Stationmaster",
+        "owner": "Wakayama Electric Railway (Kishigawa Line), official account @ekichoTAMA",
+        "category": "company",
+        "story": "Yontama (\"Fourth Tama\") is a cat stationmaster of Wakayama Electric Railway in Japan, in the line of the famous stationmaster Tama. She was introduced on January 6, 2017, as an eight-month-old calico, becoming stationmaster of Idakiso Station on Nitama's days off, and was promoted to Station Master on January 6, 2026. As of September 2026 she is on shift at Kishi Station most days. Every June 23 she and Nitama are carried to Tama's shrine, and the railway's @ekichoTAMA account posted her greeting there in June 2026 on taking office as its chief priest.",
+        "look": "White, slightly fluffy cat with a black patch over the top of her head and one ear, dark grey-black patches on her flank, hind leg and tail, a white face, muzzle, chest and belly, yellow-green eyes and a pink nose with a dark spot; Wikipedia calls her a calico, so check other photos for orange patches.",
+        "coat": {
+          "base": "white",
+          "second": "black",
+          "pattern": "calico",
+          "eyes": "green"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/ekichoTAMA/status/2066768127787258001",
+          "author": "ekichoTAMA",
+          "handle": "ekichoTAMA",
+          "date": "2026-06-16",
+          "dateType": "posted",
+          "text": "にゃんご！少しモフな、よんたま駅長にゃんご！",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Tama (cat) - Yontama - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Tama_(cat)"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "Yontama",
+          "contract": "CoiuZDaVmaCgdQnzSJ6GWBWYU5mhi3rMN2gQiG5fpump",
+          "mcapUsd": 2169
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Wakayama Electric Railway (Kishigawa Line), official account @ekichoTAMA.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/YONTAMACAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "ekichoTAMA"
+    },
+    {
       "postId": "2106225834134491409",
       "url": "https://x.com/catcosanctuary/status/2106225834134491409",
       "name": "Mikan",
