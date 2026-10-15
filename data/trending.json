@@ -1,8 +1,8 @@
 {
  "note": "Written by scripts/build-trending.mjs every 20 minutes; read by the Trending tab (assets/ui/trending.js). Names and tickers under fresh were typed by strangers.",
- "updatedAt": "2026-10-15T04:12:51Z",
+ "updatedAt": "2026-10-15T04:14:34Z",
  "activity": {
-  "updatedAt": "2026-10-15T04:12:51Z",
+  "updatedAt": "2026-10-15T04:14:34Z",
   "items": [
    {
     "id": "cate-meme",
@@ -12,9 +12,9 @@
     "chain": "solana",
     "mint": "Ai66LHZG9MCzg1WKdawwqduVAXpNDUuV8M3uyq5ppump",
     "pair": "HMzvsEEmtzHhvZNw9uwbaG85HCTmFnkbhzUx16cy7ca3",
-    "marketCapUsd": 58147768,
-    "volume24hUsd": 2336750,
-    "change24hPct": 9.9
+    "marketCapUsd": 57822125,
+    "volume24hUsd": 2336228,
+    "change24hPct": 8.9
    },
    {
     "id": "raydium-cat",
@@ -36,9 +36,9 @@
     "chain": "solana",
     "mint": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
     "pair": "BTccxxTFi7a9xJTE1exKn38Jgie35s6gNeRxd8DM61Rc",
-    "marketCapUsd": 42565774,
-    "volume24hUsd": 420019,
-    "change24hPct": -25.8
+    "marketCapUsd": 41147802,
+    "volume24hUsd": 419858,
+    "change24hPct": -25.5
    },
    {
     "id": "popcat",
@@ -72,9 +72,9 @@
     "chain": "solana",
     "mint": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
     "pair": "5E3dXLXGwmTDCokA51WYYaKttjFZBwqCoyUHBUi5gt2m",
-    "marketCapUsd": 1824407,
-    "volume24hUsd": 58335,
-    "change24hPct": 12.6
+    "marketCapUsd": 1854531,
+    "volume24hUsd": 58340,
+    "change24hPct": 14.4
    },
    {
     "id": "ket-3",
@@ -84,9 +84,9 @@
     "chain": "solana",
     "mint": "9Pfync3ejPC9eHqVzq3nYQJAhyhjqpnB9UsaSfLxpump",
     "pair": "Fex8CSkNXfaxAPRqQARKGchYAMVfwDg28sfmBXXGkNGX",
-    "marketCapUsd": 1745032,
-    "volume24hUsd": 45361,
-    "change24hPct": -8.2
+    "marketCapUsd": 1744995,
+    "volume24hUsd": 44455,
+    "change24hPct": -8.3
    },
    {
     "id": "hello-kitty-sol",
@@ -110,7 +110,7 @@
     "pair": "CsjcF4mEmJsXZDWzBtuviVEV7JiKTY4NAJ1rdcHhVxi3",
     "marketCapUsd": 406077,
     "volume24hUsd": 26267,
-    "change24hPct": -9.8
+    "change24hPct": -9
    },
    {
     "id": "stonk-cats",
@@ -307,8 +307,8 @@
   ]
  },
  "fresh": {
-  "updatedAt": "2026-10-15T04:12:51Z",
-  "coveredUntil": "2026-10-15T04:12:51Z",
+  "updatedAt": "2026-10-15T04:14:34Z",
+  "coveredUntil": "2026-10-15T04:14:34Z",
   "gaps": [
    {
     "from": "2026-10-14T16:06:13Z",
@@ -722,6 +722,15 @@
     "count": 1
    },
    {
+    "mint": "9GmrcDqmGyMbZKKuScMFmMNE53U5G5WwahrWPGnCpump",
+    "name": "Cat Anon",
+    "symbol": "CANON",
+    "createdAt": "2026-10-15T04:13:39Z",
+    "marketCapUsd": 2867,
+    "copycatOf": null,
+    "count": 1
+   },
+   {
     "mint": "HcziZPT5g4fTAd6jr7RWEX2iPQvi5ZotxCLQakm7pump",
     "name": "Cat Anon Pepe",
     "symbol": "CAP",
@@ -735,7 +744,7 @@
     "name": "trench cat",
     "symbol": "TRENCHCAT",
     "createdAt": "2026-10-15T04:11:33Z",
-    "marketCapUsd": 3879,
+    "marketCapUsd": 4609,
     "copycatOf": null,
     "count": 1
    },
@@ -744,7 +753,7 @@
     "name": "WIZARD CAT",
     "symbol": "WIZCAT",
     "createdAt": "2026-10-15T04:10:35Z",
-    "marketCapUsd": 2889,
+    "marketCapUsd": 2888,
     "copycatOf": null,
     "count": 1
    },
@@ -771,7 +780,7 @@
     "name": "Starcat",
     "symbol": "Starcat",
     "createdAt": "2026-10-15T04:02:01Z",
-    "marketCapUsd": 3287,
+    "marketCapUsd": 3154,
     "copycatOf": null,
     "count": 1
    },
@@ -780,7 +789,7 @@
     "name": "Sorry Cat",
     "symbol": "PLSFORGIVE",
     "createdAt": "2026-10-15T04:00:13Z",
-    "marketCapUsd": 3777,
+    "marketCapUsd": 3571,
     "copycatOf": null,
     "count": 2
    },
@@ -800,7 +809,7 @@
     "createdAt": "2026-10-15T03:54:50Z",
     "marketCapUsd": 56626,
     "copycatOf": null,
-    "count": 12
+    "count": 13
    },
    {
     "mint": "373YRnjjeDCgxHdw4sJfSjydWhsBcQufDsLALRFgpump",
@@ -880,15 +889,6 @@
     "symbol": "Radar",
     "createdAt": "2026-10-15T03:41:43Z",
     "marketCapUsd": 2860,
-    "copycatOf": null,
-    "count": 1
-   },
-   {
-    "mint": "95BN2hyNLfXBjgw4mrevmVL5BKzT4Vp9eHH8YDg1pump",
-    "name": "Diamond Cat",
-    "symbol": "DCAT",
-    "createdAt": "2026-10-15T03:38:48Z",
-    "marketCapUsd": 3,
     "copycatOf": null,
     "count": 1
    }
@@ -1663,6 +1663,22 @@
     "copycatOf": "KING"
    },
    {
+    "mint": "9GmrcDqmGyMbZKKuScMFmMNE53U5G5WwahrWPGnCpump",
+    "name": "Cat Anon",
+    "symbol": "CANON",
+    "createdAt": "2026-10-15T04:13:39Z",
+    "marketCapUsd": 2867,
+    "copycatOf": null
+   },
+   {
+    "mint": "CTZQC1bfxa61wXJFfm7oBxe4V3bHfZVADU8uJy9ypump",
+    "name": "green cat",
+    "symbol": "GrenCAT",
+    "createdAt": "2026-10-15T04:13:38Z",
+    "marketCapUsd": 1851,
+    "copycatOf": null
+   },
+   {
     "mint": "HcziZPT5g4fTAd6jr7RWEX2iPQvi5ZotxCLQakm7pump",
     "name": "Cat Anon Pepe",
     "symbol": "CAP",
@@ -1675,7 +1691,7 @@
     "name": "trench cat",
     "symbol": "TRENCHCAT",
     "createdAt": "2026-10-15T04:11:33Z",
-    "marketCapUsd": 3879,
+    "marketCapUsd": 4609,
     "copycatOf": null
    },
    {
@@ -1683,7 +1699,7 @@
     "name": "WIZARD CAT",
     "symbol": "WIZCAT",
     "createdAt": "2026-10-15T04:10:35Z",
-    "marketCapUsd": 2889,
+    "marketCapUsd": 2888,
     "copycatOf": null
    },
    {
@@ -1747,7 +1763,7 @@
     "name": "Starcat",
     "symbol": "Starcat",
     "createdAt": "2026-10-15T04:02:01Z",
-    "marketCapUsd": 3287,
+    "marketCapUsd": 3154,
     "copycatOf": null
    },
    {
@@ -1763,7 +1779,7 @@
     "name": "Sorry Cat",
     "symbol": "PLSFORGIVE",
     "createdAt": "2026-10-15T04:00:13Z",
-    "marketCapUsd": 3777,
+    "marketCapUsd": 3571,
     "copycatOf": null
    },
    {
@@ -4844,22 +4860,6 @@
     "symbol": "DengDeng",
     "createdAt": "2026-10-14T23:56:18Z",
     "marketCapUsd": 7637,
-    "copycatOf": null
-   },
-   {
-    "mint": "3DwM6scxFbHUGfArA28uWupG6Pg4EA5fPZ6pyLL5pump",
-    "name": "The Toad Cat",
-    "symbol": "TOAD",
-    "createdAt": "2026-10-14T23:55:51Z",
-    "marketCapUsd": 429,
-    "copycatOf": null
-   },
-   {
-    "mint": "DtKADeyW5VDWYiBAcwCs8J2dsqiQfHpdk8nQbvm3pump",
-    "name": "Popcat Wif",
-    "symbol": "WIFCAT",
-    "createdAt": "2026-10-14T23:55:40Z",
-    "marketCapUsd": 3083,
     "copycatOf": null
    }
   ]
