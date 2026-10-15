@@ -2,6 +2,74 @@
   "note": "The sanctuary's automatic launcher's ledger (scripts/launch.mjs, scripts/lib/launcher.mjs): one row per trending post it prepared, newest first. prepared → sending (tx written before it is sent) → launched or failed. The mint (mintPublic) is written only once its transaction is sent. Written by the Launch workflow; do not edit by hand while a row is prepared or sending.",
   "launches": [
     {
+      "postId": "2106149353962303497",
+      "url": "https://x.com/catcosanctuary/status/2106149353962303497",
+      "name": "Smudge",
+      "coinName": "Smudge the Table Cat",
+      "ticker": "SALADCAT",
+      "venue": "pump-sol",
+      "policy": "sanctuary",
+      "kind": "real",
+      "lore": "Smudge is a white cat from Ottawa, Ontario, owned by Miranda Stillabower since 2015.",
+      "image": "https://catcoinsanctuary.com/assets/portraits/SALADCAT.jpg",
+      "coinImage": "https://catcoinsanctuary.com/assets/portraits/SALADCAT.jpg",
+      "photoCredit": false,
+      "metadataPath": "coins/2106149353962303497.json",
+      "status": "prepared",
+      "preparedAt": "2026-10-15T15:09:46Z",
+      "attempts": 0,
+      "cat": {
+        "id": "smudge-table-cat",
+        "ticker": "SALADCAT",
+        "name": "Smudge",
+        "coinName": "Smudge the Table Cat",
+        "owner": "Miranda Stillabower (Ottawa), who runs @SmudgeLord",
+        "category": "viral",
+        "story": "Smudge is a white cat from Ottawa, Ontario, owned by Miranda Stillabower since 2015. A June 2018 Tumblr photo of him sitting at a dinner table behind a salad became the right half of the \"Woman yelling at a cat\" meme, first posted by Twitter user @MISSINGEGIRL on 1 May 2019. The meme made Smudge an internet personality with an official website, merchandise and 1.4 million Instagram followers, and \"Woman yells at a cat\" won Meme of the Year at the 12th Shorty Awards in May 2020.",
+        "look": "Pure white, fluffy medium-long coat, round face with a flat, unimpressed scowl, pale blue-grey eyes, pink nose and pink inner ears, sturdy build; wears a thin collar with a pink heart-shaped tag.",
+        "coat": {
+          "base": "white",
+          "second": "",
+          "pattern": "solid",
+          "eyes": "grey"
+        },
+        "pair": {
+          "symbol": "SOL",
+          "mint": "So11111111111111111111111111111111111111112"
+        },
+        "proof": {
+          "kind": "x",
+          "url": "https://x.com/SmudgeLord/status/1833895189372338546",
+          "author": "SmudgeLord",
+          "handle": "SmudgeLord",
+          "date": "2024-09-11",
+          "dateType": "posted",
+          "text": "When the restaurant doesn’t have chicken nuggets on the menu",
+          "note": "Verified on 2026-09-30",
+          "image": null
+        },
+        "sources": [
+          {
+            "label": "Woman yelling at a cat - Wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Woman_yelling_at_a_cat"
+          }
+        ],
+        "existingCoin": {
+          "symbol": "SMUDGE",
+          "contract": "7e8sgRNUtg9A28c7CNpfhesVv8NRY3AP7YFVcYyUsg33",
+          "mcapUsd": 6832
+        },
+        "memorial": false,
+        "tribute": "Fan tribute, not affiliated with or endorsed by Miranda Stillabower (Ottawa), who runs @SmudgeLord.",
+        "sensitivity": "",
+        "portrait": "assets/portraits/SALADCAT.jpg",
+        "portraitStatus": "ready",
+        "confidence": "high",
+        "lore": null
+      },
+      "feesTo": "SmudgeLord"
+    },
+    {
       "postId": "2106210702398525702",
       "url": "https://x.com/catcosanctuary/status/2106210702398525702",
       "name": "Yontama",
