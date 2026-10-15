@@ -15,9 +15,9 @@
       "coinImage": "https://catcoinsanctuary.com/assets/portraits/YONTAMACAT.jpg",
       "photoCredit": false,
       "metadataPath": "coins/2106210702398525702.json",
-      "status": "prepared",
+      "status": "launched",
       "preparedAt": "2026-10-15T10:19:27Z",
-      "attempts": 0,
+      "attempts": 1,
       "cat": {
         "id": "yontama-kishi-station",
         "ticker": "YONTAMACAT",
@@ -69,7 +69,18 @@
       },
       "feesTo": "ekichoTAMA",
       "mintNonce": 14179717,
-      "usePaidMint": "4JxvjrDxm1RjsXwXRv9bwggEk7JLAND2KEftDdy6cats"
+      "usePaidMint": "4JxvjrDxm1RjsXwXRv9bwggEk7JLAND2KEftDdy6cats",
+      "tx": "5HR3GdM9XqVdKwX2NjD7gAPfNKGpHdip3QP1qApWfNUW2JPsYugFE8CHvWjvLp4uuMMpfjhyYxrgQRetSDJCKSyu",
+      "sentAt": "2026-10-15T10:45:13Z",
+      "lastValidBlockHeight": 435244898,
+      "mintPublic": "4JxvjrDxm1RjsXwXRv9bwggEk7JLAND2KEftDdy6cats",
+      "spentLamports": 5765320,
+      "settledAt": "2026-10-15T10:45:22Z",
+      "launchedAt": "2026-10-15T10:45:13Z",
+      "feeRoute": {
+        "tx": "3YDvb9vxDn9RhQkPTTuz6J7n4UTWZvHLCRM9QSX5UuRnEuPbkuNCrSua2dS2zcdeLozUcKaZizkLSBnmNfWbtZ2L",
+        "at": "2026-10-15T10:45:28Z"
+      }
     },
     {
       "postId": "2106225834134491409",
