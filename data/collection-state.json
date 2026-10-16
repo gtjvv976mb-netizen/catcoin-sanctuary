@@ -1,13 +1,20 @@
 {
   "wallets": {
     "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3": {
-      "newest": "2nLEDAvQAw1JTeHoAr4v9h7kaZAGQJmRGKnGFSVv1s5VPQCNW45sZCdq1aotcf9irBuho6QzdxFkbGsu7uut9v8J"
+      "newest": "2SKGWdZVVUdz9s5Nf57UDj51m5ikrP3Dddznd7stGY5RzVfN5mqRrEmAVJL321F2nEfVLpsbnitgeowCHHfvSd5X"
     },
     "HxhisqFBeZRJcBWkjnumk6HwWxFLGVVD6jfX23tXHzQh": {
       "newest": "oPxKk2qUcNTRuuTx77C3qtz2LZbAchBVaig31jeKY4AWgKvb5BmgZKjXMkW7ENp8hmsFfyRmHGQTcRwxUk9optA"
     }
   },
   "refused": [
+    {
+      "tx": "3Qw3bgGrDeY9PDWHCdibgvQvZMrswcQLVGfGC36qC34xBNrF2SCnFMBvSP2FTxM72i36AHX7n3R8Js3yJNqp8obP",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "pump_quote_not_allowed",
+      "detail": "priced in a coin data/pump-quotes.json does not list",
+      "time": "2026-10-16T17:26:32Z"
+    },
     {
       "tx": "7vptTtWNzPP3Hk7fsd9sybHkhRBV4398ECFgNPhrSKBpQip2HdvzxRFjiDBhZE4FBzfTMTSt8f7rUrmAxkPvYDg",
       "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
