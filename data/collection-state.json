@@ -1,13 +1,20 @@
 {
   "wallets": {
     "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3": {
-      "newest": "4dpqQ56DjoTCcNfXeQRFemZjSgzjkihUkZjoHVk9AURvfGAgvAzTv5cw8QCRc5y8gpYs2jjGYHqTdJLKpx2VFmqc"
+      "newest": "5XCK3zDcj3uF4aGoSBHKkXMP2ypE1aq3GY626J18QdPmqpxzAwz2GaSB4c6rBTy1KRiX57VUfK2DKgokxusASf36"
     },
     "HxhisqFBeZRJcBWkjnumk6HwWxFLGVVD6jfX23tXHzQh": {
       "newest": "4aYWLPoB6TRkXLAg6iT7j57Qz3pVwhViVVDxpHG4RMFpXqTPqKguMsxJcHF6tiYJewEEJfjDpVbGcUAxgJt4auDA"
     }
   },
   "refused": [
+    {
+      "tx": "QjqKLqcC7xhKM9128e2jTYDcQEhs3q1aFDGdfDo4Ujjjj3yqDtJoyUU2CkogUUWDiYcEqDRs5yN1J57NYZ6kiTQ",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "pump_dev_buy",
+      "detail": "a buy beside the create; the sanctuary's launcher never buys its own coin",
+      "time": "2026-10-20T13:39:51Z"
+    },
     {
       "tx": "3pbf2Z2GaZU7RHCN8DCGiM75LCT7P991x1jMWqctGoVQRia4K1wPEbdJwku8UPaCGA5x8KVXYtMbCZrQFYEv9uZ4",
       "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
@@ -94,6 +101,13 @@
     }
   ],
   "unread": [
+    {
+      "tx": "5XCK3zDcj3uF4aGoSBHKkXMP2ypE1aq3GY626J18QdPmqpxzAwz2GaSB4c6rBTy1KRiX57VUfK2DKgokxusASf36",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "tx_version",
+      "detail": "a transaction newer than version 0, which this builder does not read",
+      "time": "2026-10-20T13:44:58Z"
+    },
     {
       "tx": "4yuHbLzbrg7gByZCLHFmX28ZnMhY6qVCursLqim7yWxL5a4ATFQEFvt7QUEdRYrv4mgPNsktqEwZuborQGq2wK8o",
       "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
@@ -436,13 +450,6 @@
       "clause": "tx_version",
       "detail": "a transaction newer than version 0, which this builder does not read",
       "time": "2026-10-19T14:28:39Z"
-    },
-    {
-      "tx": "65y3SFVLdYBkLNN8qHmgYcjv5MnjVTiiHefRxeszyvtE61oahQknJHakcPdFG4bxb34ws7hQ22QXYJxbQhefsaaV",
-      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
-      "clause": "tx_version",
-      "detail": "a transaction newer than version 0, which this builder does not read",
-      "time": "2026-10-19T14:26:46Z"
     }
   ]
 }
