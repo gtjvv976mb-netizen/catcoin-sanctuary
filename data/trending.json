@@ -1,8 +1,8 @@
 {
  "note": "Written by scripts/build-trending.mjs every 20 minutes; read by the Trending tab (assets/ui/trending.js). Names and tickers under fresh were typed by strangers.",
- "updatedAt": "2026-10-20T22:14:51Z",
+ "updatedAt": "2026-10-20T22:34:51Z",
  "activity": {
-  "updatedAt": "2026-10-20T22:14:51Z",
+  "updatedAt": "2026-10-20T22:34:51Z",
   "items": [
    {
     "id": "cate-meme",
@@ -12,9 +12,9 @@
     "chain": "solana",
     "mint": "Ai66LHZG9MCzg1WKdawwqduVAXpNDUuV8M3uyq5ppump",
     "pair": "HMzvsEEmtzHhvZNw9uwbaG85HCTmFnkbhzUx16cy7ca3",
-    "marketCapUsd": 58551482,
-    "volume24hUsd": 1066147,
-    "change24hPct": -1
+    "marketCapUsd": 61692490,
+    "volume24hUsd": 1139561,
+    "change24hPct": 1.6
    },
    {
     "id": "anonymous-cat",
@@ -24,9 +24,9 @@
     "chain": "solana",
     "mint": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
     "pair": "BTccxxTFi7a9xJTE1exKn38Jgie35s6gNeRxd8DM61Rc",
-    "marketCapUsd": 54856442,
-    "volume24hUsd": 639098,
-    "change24hPct": 22
+    "marketCapUsd": 53751918,
+    "volume24hUsd": 625720,
+    "change24hPct": 16.2
    },
    {
     "id": "cat-in-a-dogs-world",
@@ -36,9 +36,9 @@
     "chain": "solana",
     "mint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
     "pair": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
-    "marketCapUsd": 38751071,
-    "volume24hUsd": 236681,
-    "change24hPct": 5.5
+    "marketCapUsd": 38709549,
+    "volume24hUsd": 243687,
+    "change24hPct": 5.3
    },
    {
     "id": "popcat",
@@ -48,9 +48,9 @@
     "chain": "solana",
     "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
     "pair": "FRhB8L7Y9Qq41qZXYLtC2nw8An1RJfLLxRF2x9RwLLMo",
-    "marketCapUsd": 46503447,
-    "volume24hUsd": 148926,
-    "change24hPct": 8.1
+    "marketCapUsd": 46199675,
+    "volume24hUsd": 140218,
+    "change24hPct": 6.9
    },
    {
     "id": "raydium-cat",
@@ -60,9 +60,9 @@
     "chain": "solana",
     "mint": "CFNRDaxFcvRwRSNnA5cHrCCr6AHhk9dNkHWpRUjNupFL",
     "pair": "987VwvJZ5FRjWCY9ZwC2tRUGL8FbMT1aF4pUrT7XjPjD",
-    "marketCapUsd": 611346,
-    "volume24hUsd": 34617,
-    "change24hPct": 22.2
+    "marketCapUsd": 689188,
+    "volume24hUsd": 43089,
+    "change24hPct": 39.1
    },
    {
     "id": "ket-3",
@@ -73,8 +73,8 @@
     "mint": "9Pfync3ejPC9eHqVzq3nYQJAhyhjqpnB9UsaSfLxpump",
     "pair": "Fex8CSkNXfaxAPRqQARKGchYAMVfwDg28sfmBXXGkNGX",
     "marketCapUsd": 1460092,
-    "volume24hUsd": 33925,
-    "change24hPct": -10.7
+    "volume24hUsd": 33668,
+    "change24hPct": -10.1
    },
    {
     "id": "stonk-cats",
@@ -84,21 +84,9 @@
     "chain": "solana",
     "mint": "9h5AzEQzYu9CV5K6uLtFRMD1KcbxZSFNxZEgBTNfw5Na",
     "pair": "C1CNCihCBJ2Jztbv7vfrXKrw9fKrma5fa3hhSjqyw9GH",
-    "marketCapUsd": 293404,
-    "volume24hUsd": 32939,
-    "change24hPct": 46.1
-   },
-   {
-    "id": "gta6cat",
-    "kind": "famous",
-    "name": "GTA6CAT",
-    "symbol": "GATO",
-    "chain": "solana",
-    "mint": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
-    "pair": "5E3dXLXGwmTDCokA51WYYaKttjFZBwqCoyUHBUi5gt2m",
-    "marketCapUsd": 1685056,
-    "volume24hUsd": 23857,
-    "change24hPct": -8.5
+    "marketCapUsd": 298924,
+    "volume24hUsd": 32938,
+    "change24hPct": 49.6
    },
    {
     "id": "wen-4",
@@ -109,8 +97,20 @@
     "mint": "WENWENvqqNya429ubCdR81ZmD69brwQaaBYY6p3LCpk",
     "pair": "9dZ2bEQ9Ci4uV3FWiLdVPZwQs92kkK4TaMfpfQUJW73n",
     "marketCapUsd": 4828557,
-    "volume24hUsd": 23809,
-    "change24hPct": 15.3
+    "volume24hUsd": 23775,
+    "change24hPct": 15.8
+   },
+   {
+    "id": "gta6cat",
+    "kind": "famous",
+    "name": "GTA6CAT",
+    "symbol": "GATO",
+    "chain": "solana",
+    "mint": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
+    "pair": "5E3dXLXGwmTDCokA51WYYaKttjFZBwqCoyUHBUi5gt2m",
+    "marketCapUsd": 1655181,
+    "volume24hUsd": 21846,
+    "change24hPct": -12.8
    },
    {
     "id": "hello-kitty-sol",
@@ -120,9 +120,9 @@
     "chain": "solana",
     "mint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
     "pair": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
-    "marketCapUsd": 1993954,
-    "volume24hUsd": 16515,
-    "change24hPct": -6.6
+    "marketCapUsd": 2001276,
+    "volume24hUsd": 16549,
+    "change24hPct": -6.2
    },
    {
     "id": "tsuki",
@@ -132,9 +132,9 @@
     "chain": "solana",
     "mint": "463SK47VkB7uE7XenTHKiVcMtxRsfNE2X4Q9wByaURVA",
     "pair": "7yMhxapzceFUo24KNgP77mGj1crdAv8ayYfqGvB5skZf",
-    "marketCapUsd": 3904166,
-    "volume24hUsd": 16163,
-    "change24hPct": -4.6
+    "marketCapUsd": 3907831,
+    "volume24hUsd": 16161,
+    "change24hPct": -4.4
    },
    {
     "id": "michi",
@@ -146,7 +146,7 @@
     "pair": "22FSz9QP7dS1PvrJKuHr16ymghZP92xPu3Bj7uuzu2bG",
     "marketCapUsd": 2426233,
     "volume24hUsd": 12648,
-    "change24hPct": 6.7
+    "change24hPct": 5
    },
    {
     "id": "vibing-cat-coin",
@@ -156,9 +156,21 @@
     "chain": "solana",
     "mint": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
     "pair": "7uA6SabfDqA7mcv8A4yfv4gEe7RQ5NZCVemcbx2mJwdT",
-    "marketCapUsd": 1812703,
-    "volume24hUsd": 11925,
-    "change24hPct": -9.2
+    "marketCapUsd": 1824731,
+    "volume24hUsd": 12039,
+    "change24hPct": -8.6
+   },
+   {
+    "id": "leveraged-cat",
+    "kind": "famous",
+    "name": "Leveraged Cat",
+    "symbol": "LEVERCAT",
+    "chain": "solana",
+    "mint": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
+    "pair": "CsjcF4mEmJsXZDWzBtuviVEV7JiKTY4NAJ1rdcHhVxi3",
+    "marketCapUsd": 396950,
+    "volume24hUsd": 10822,
+    "change24hPct": 1.4
    },
    {
     "id": "red-kitten-crew",
@@ -169,20 +181,8 @@
     "mint": "7HgfXftRBBqsYtAEYcqjGLQrNJLL6Tww9ek4rE3Apump",
     "pair": "FzbYhPcoCuA2qSrV1s3j38RcQhP6c943p3KHYb6C5rCq",
     "marketCapUsd": 1110147,
-    "volume24hUsd": 10553,
-    "change24hPct": -5.8
-   },
-   {
-    "id": "leveraged-cat",
-    "kind": "famous",
-    "name": "Leveraged Cat",
-    "symbol": "LEVERCAT",
-    "chain": "solana",
-    "mint": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
-    "pair": "CsjcF4mEmJsXZDWzBtuviVEV7JiKTY4NAJ1rdcHhVxi3",
-    "marketCapUsd": 376177,
-    "volume24hUsd": 10008,
-    "change24hPct": -3.9
+    "volume24hUsd": 10390,
+    "change24hPct": -4.3
    },
    {
     "id": "sillynubcat",
@@ -259,13 +259,9 @@
   ]
  },
  "fresh": {
-  "updatedAt": "2026-10-20T22:14:51Z",
-  "coveredUntil": "2026-10-20T21:54:45Z",
+  "updatedAt": "2026-10-20T22:34:51Z",
+  "coveredUntil": "2026-10-20T22:34:51Z",
   "gaps": [
-   {
-    "from": "2026-10-19T12:56:04Z",
-    "to": "2026-10-19T13:07:49Z"
-   },
    {
     "from": "2026-10-19T13:56:10Z",
     "to": "2026-10-19T14:08:04Z"
@@ -301,6 +297,10 @@
    {
     "from": "2026-10-20T21:13:54Z",
     "to": "2026-10-20T21:29:00Z"
+   },
+   {
+    "from": "2026-10-20T21:53:45Z",
+    "to": "2026-10-20T22:11:21Z"
    }
   ],
   "items": [
@@ -638,12 +638,120 @@
     "count": 2
    },
    {
-    "mint": "8SFScgzzxtnaXiRGjJUxtarc34a7tfJEyaoMwF8upump",
-    "name": "KING NASIR",
-    "symbol": "KING",
-    "createdAt": "2026-10-13T22:24:01Z",
-    "marketCapUsd": 2986,
-    "copycatOf": "KING",
+    "mint": "2MGFAp6DWqTZEE6jwcjMwWod5qYzCY5TzuGV8rnxpump",
+    "name": "bndlcat",
+    "symbol": "bcat",
+    "createdAt": "2026-10-20T22:34:19Z",
+    "marketCapUsd": 15009,
+    "copycatOf": null,
+    "count": 2
+   },
+   {
+    "mint": "HkdjaoUWrW8Qq6ttmb5tsCTadgBDxJ9JE8xAi5Zbpump",
+    "name": "cat cow",
+    "symbol": "$CCOW",
+    "createdAt": "2026-10-20T22:33:46Z",
+    "marketCapUsd": 11444,
+    "copycatOf": null,
+    "count": 7
+   },
+   {
+    "mint": "GWuMmPn69VeWs9NKw2pGBn23d5yrdSKvGnriM2TSpump",
+    "name": "FudCat",
+    "symbol": "FCAT",
+    "createdAt": "2026-10-20T22:31:25Z",
+    "marketCapUsd": 3018,
+    "copycatOf": null,
+    "count": 1
+   },
+   {
+    "mint": "A78DW8xLqsQs1jyhe4aiKz28vrVBheb3LRLjkaNLauto",
+    "name": "AutoCat",
+    "symbol": "ACAT",
+    "createdAt": "2026-10-20T22:31:00Z",
+    "marketCapUsd": 3597,
+    "copycatOf": null,
+    "count": 1
+   },
+   {
+    "mint": "3dGGiEcWwf1VnejgrzCDn41MJ4C9qRwEKE8YddNbauto",
+    "name": "Automata Cat",
+    "symbol": "ACAT",
+    "createdAt": "2026-10-20T22:30:13Z",
+    "marketCapUsd": 3732,
+    "copycatOf": null,
+    "count": 2
+   },
+   {
+    "mint": "HqEDuEF2JpnfJbbHXbo4jpqMWLoJ7nePv6QDFDM3pump",
+    "name": "GLITCHCAT",
+    "symbol": "GLITCH",
+    "createdAt": "2026-10-20T22:29:00Z",
+    "marketCapUsd": 2989,
+    "copycatOf": null,
+    "count": 2
+   },
+   {
+    "mint": "BxJT4HoXWjDTVA7GWNJNWHmBFostJqciqAhkBxTEpump",
+    "name": "DACITY CAT",
+    "symbol": "CITYCAT",
+    "createdAt": "2026-10-20T22:27:46Z",
+    "marketCapUsd": 4046,
+    "copycatOf": null,
+    "count": 1
+   },
+   {
+    "mint": "5TKSu5ybk6s6aiSDcmkZD1tz63aevY56s5q3ZB1ppump",
+    "name": "CRO CAT",
+    "symbol": "CRO CAT",
+    "createdAt": "2026-10-20T22:27:00Z",
+    "marketCapUsd": 2994,
+    "copycatOf": null,
+    "count": 1
+   },
+   {
+    "mint": "EuYdJXGPL485uWbopyUS3JDrTi8tgzTUYpgoCnT8pump",
+    "name": "Larp Cat",
+    "symbol": "LARPCAT",
+    "createdAt": "2026-10-20T22:23:39Z",
+    "marketCapUsd": 3023,
+    "copycatOf": null,
+    "count": 1
+   },
+   {
+    "mint": "2DFhhxK1Cp5zoP8USrCmx3fpqKdur24pY58iTpk4pump",
+    "name": "Mooncat",
+    "symbol": "MCAT",
+    "createdAt": "2026-10-20T22:19:58Z",
+    "marketCapUsd": 2990,
+    "copycatOf": null,
+    "count": 1
+   },
+   {
+    "mint": "9Hz6f8xnARXfbDVFLP8wAs85KtdZuzhmjwP5Xnyppump",
+    "name": "4d CAT",
+    "symbol": "4d Cat",
+    "createdAt": "2026-10-20T22:19:18Z",
+    "marketCapUsd": 2990,
+    "copycatOf": null,
+    "count": 1
+   },
+   {
+    "mint": "2jeXnp8RsyKVLgMSnwuJjGs8UgtUUWZRvTHzYsiWUBV5",
+    "name": "Crouton Cat",
+    "symbol": "CROUTCAT",
+    "createdAt": "2026-10-20T22:18:48Z",
+    "marketCapUsd": 3002,
+    "copycatOf": null,
+    "count": 2
+   },
+   {
+    "mint": "GbPRMHB2R3W4yT7rBJu2vYgafYQWWBzQb8XFDRLJpump",
+    "name": "flying roadster cat",
+    "symbol": "FRC",
+    "createdAt": "2026-10-20T22:17:01Z",
+    "marketCapUsd": 3212,
+    "copycatOf": null,
     "count": 1
    },
    {
@@ -651,7 +759,7 @@
     "name": "REAL CAT.",
     "symbol": "real cat",
     "createdAt": "2026-10-20T22:13:44Z",
-    "marketCapUsd": 1097,
+    "marketCapUsd": 159,
     "copycatOf": null,
     "count": 1
    },
@@ -669,7 +777,7 @@
     "name": "Catcity Coin",
     "symbol": "Catcity",
     "createdAt": "2026-10-20T22:11:48Z",
-    "marketCapUsd": 2990,
+    "marketCapUsd": 2993,
     "copycatOf": null,
     "count": 1
    },
@@ -705,7 +813,7 @@
     "name": "Trumpcat",
     "symbol": "TRUMPCAT",
     "createdAt": "2026-10-20T22:05:11Z",
-    "marketCapUsd": 3176,
+    "marketCapUsd": 2990,
     "copycatOf": null,
     "count": 1
    },
@@ -714,7 +822,7 @@
     "name": "meowheheh",
     "symbol": "Bags",
     "createdAt": "2026-10-20T22:03:33Z",
-    "marketCapUsd": 199,
+    "marketCapUsd": 192,
     "copycatOf": null,
     "count": 2
    },
@@ -723,7 +831,7 @@
     "name": "area51kitty",
     "symbol": "Glorp",
     "createdAt": "2026-10-20T22:02:02Z",
-    "marketCapUsd": 3323,
+    "marketCapUsd": 3238,
     "copycatOf": null,
     "count": 2
    },
@@ -732,128 +840,12 @@
     "name": "Odd Cat",
     "symbol": "ODDCAT",
     "createdAt": "2026-10-20T22:01:50Z",
-    "marketCapUsd": 84,
+    "marketCapUsd": 29,
     "copycatOf": null,
     "count": 1
-   },
-   {
-    "mint": "8gdR8fH11mgLyrWEqhXezUfTLZ9Zm1Lm7QkGboTopump",
-    "name": "Void Eye Cat",
-    "symbol": "VOID",
-    "createdAt": "2026-10-20T22:01:21Z",
-    "marketCapUsd": 825,
-    "copycatOf": null,
-    "count": 1
-   },
-   {
-    "mint": "2W3DWvsR22iHsqpeACJvtMvc4eS4trnsVFrqdCLJpump",
-    "name": "SKELETON CAT",
-    "symbol": "SKEL",
-    "createdAt": "2026-10-20T22:01:15Z",
-    "marketCapUsd": 3063,
-    "copycatOf": null,
-    "count": 1
-   },
-   {
-    "mint": "6CUdLv3wpYV3bV4eiCZGePa4oZBzbuqbNS6ZXNzQpump",
-    "name": "WIPD CAT",
-    "symbol": "WIPDCAT",
-    "createdAt": "2026-10-20T21:59:54Z",
-    "marketCapUsd": 3044,
-    "copycatOf": null,
-    "count": 4
-   },
-   {
-    "mint": "51RZYJ2auyMnihzo7kubPhHZwubBzmn2P7froauapump",
-    "name": "DiscCat",
-    "symbol": "DiscCat",
-    "createdAt": "2026-10-20T21:56:40Z",
-    "marketCapUsd": 3315,
-    "copycatOf": null,
-    "count": 2
-   },
-   {
-    "mint": "8uJBhHSNbCbnJfXC96yR9GaQTnFAqpBSh4gRJ7cupump",
-    "name": "MOCHICAT",
-    "symbol": "MOCHICAT",
-    "createdAt": "2026-10-20T21:54:20Z",
-    "marketCapUsd": 3044,
-    "copycatOf": null,
-    "count": 4
-   },
-   {
-    "mint": "4wryEJm4aeAhDHY4jk4B1Rd5TmKRRM1ntjmB9sd8pump",
-    "name": "Sad Orange Cat",
-    "symbol": "$SADCAT",
-    "createdAt": "2026-10-20T21:54:14Z",
-    "marketCapUsd": 428,
-    "copycatOf": null,
-    "count": 1
-   },
-   {
-    "mint": "9e6ZAcpoNY2ihosA3xpv16o5RQ8gNvsuBBJCx872pump",
-    "name": "The Toad Cat",
-    "symbol": "TOAD",
-    "createdAt": "2026-10-20T21:53:09Z",
-    "marketCapUsd": 5974,
-    "copycatOf": null,
-    "count": 16
-   },
-   {
-    "mint": "GLAHKRNN7b7GYoXm93EJMFT4T5GtiwjXwX4s9eCzpump",
-    "name": "retinue cat",
-    "symbol": "RCAT",
-    "createdAt": "2026-10-20T21:52:57Z",
-    "marketCapUsd": 1200,
-    "copycatOf": null,
-    "count": 1
-   },
-   {
-    "mint": "AWH3rtxsmXVN6CV6iMkLWaa7hDtUaPS4tkMzPYDevnwZ",
-    "name": "Crouton Kitten",
-    "symbol": "CROUTCAT",
-    "createdAt": "2026-10-20T21:50:52Z",
-    "marketCapUsd": 2979,
-    "copycatOf": null,
-    "count": 1
-   },
-   {
-    "mint": "6pRJ2KJQM4DtHgyVZWgVQD5Kebom1rLdNnXu6v2xpump",
-    "name": "cat onboard",
-    "symbol": "onboard",
-    "createdAt": "2026-10-20T21:50:49Z",
-    "marketCapUsd": 3272,
-    "copycatOf": null,
-    "count": 1
-   },
-   {
-    "mint": "CW7QegtxF5icHfnAqypLAqSqPQxbJrPrFWP9ZkKPpump",
-    "name": "Superior Orange Cat",
-    "symbol": "ARROGANT",
-    "createdAt": "2026-10-20T21:48:57Z",
-    "marketCapUsd": 4082,
-    "copycatOf": null,
-    "count": 1
-   },
-   {
-    "mint": "F1YooszhCds8Q4VysusWphTPzNmxLG2VhW2Er8MmkScC",
-    "name": "Macrocat",
-    "symbol": "MACROCAT",
-    "createdAt": "2026-10-20T21:48:00Z",
-    "marketCapUsd": 3041,
-    "copycatOf": null,
-    "count": 2
    }
   ],
   "all": [
-   {
-    "mint": "8SFScgzzxtnaXiRGjJUxtarc34a7tfJEyaoMwF8upump",
-    "name": "KING NASIR",
-    "symbol": "KING",
-    "createdAt": "2026-10-13T22:24:01Z",
-    "marketCapUsd": 2986,
-    "copycatOf": "KING"
-   },
    {
     "mint": "Cu5TRmYvKhkH7uUCQkpfbUD6D2AqBMraY7JvSnmDpump",
     "name": "KINGCAT",
@@ -1399,11 +1391,283 @@
     "copycatOf": "KING"
    },
    {
+    "mint": "3w83H5kDGTkohKFHnufbd6erEKuAVzLN8xDgWWX35jti",
+    "name": "bndlcat",
+    "symbol": "bcat",
+    "createdAt": "2026-10-20T22:34:21Z",
+    "marketCapUsd": 3041,
+    "copycatOf": null
+   },
+   {
+    "mint": "2MGFAp6DWqTZEE6jwcjMwWod5qYzCY5TzuGV8rnxpump",
+    "name": "bndlcat",
+    "symbol": "bcat",
+    "createdAt": "2026-10-20T22:34:19Z",
+    "marketCapUsd": 15009,
+    "copycatOf": null
+   },
+   {
+    "mint": "HkdjaoUWrW8Qq6ttmb5tsCTadgBDxJ9JE8xAi5Zbpump",
+    "name": "cat cow",
+    "symbol": "$CCOW",
+    "createdAt": "2026-10-20T22:33:46Z",
+    "marketCapUsd": 11444,
+    "copycatOf": null
+   },
+   {
+    "mint": "C4YehmGtVEbnSJ4eMTejZ3BRE56DAdfmwfxqyABFpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:32:57Z",
+    "marketCapUsd": 198,
+    "copycatOf": null
+   },
+   {
+    "mint": "EUAXY9D64j2ar9zMuH2pJtL7nrMif4cepYXnTmyupump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:32:19Z",
+    "marketCapUsd": 7226,
+    "copycatOf": null
+   },
+   {
+    "mint": "Ae4Zi7x1sWSL3Z2VBujLF3ANXvrZ2Qsyhq4LZYbMpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:31:57Z",
+    "marketCapUsd": 3600,
+    "copycatOf": null
+   },
+   {
+    "mint": "GWuMmPn69VeWs9NKw2pGBn23d5yrdSKvGnriM2TSpump",
+    "name": "FudCat",
+    "symbol": "FCAT",
+    "createdAt": "2026-10-20T22:31:25Z",
+    "marketCapUsd": 3018,
+    "copycatOf": null
+   },
+   {
+    "mint": "A78DW8xLqsQs1jyhe4aiKz28vrVBheb3LRLjkaNLauto",
+    "name": "AutoCat",
+    "symbol": "ACAT",
+    "createdAt": "2026-10-20T22:31:00Z",
+    "marketCapUsd": 3597,
+    "copycatOf": null
+   },
+   {
+    "mint": "2ecEp8C8zuKCy3jJqxAz12cPKRBtP9RrdWvg8Q8BrFWe",
+    "name": "Automata Cat",
+    "symbol": "ACAT",
+    "createdAt": "2026-10-20T22:30:21Z",
+    "marketCapUsd": 3037,
+    "copycatOf": null
+   },
+   {
+    "mint": "Gr15uFrH3y2QS686WbeprNptqHYnkpCqgXreWGS4pump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:30:16Z",
+    "marketCapUsd": 2282,
+    "copycatOf": null
+   },
+   {
+    "mint": "3dGGiEcWwf1VnejgrzCDn41MJ4C9qRwEKE8YddNbauto",
+    "name": "Automata Cat",
+    "symbol": "ACAT",
+    "createdAt": "2026-10-20T22:30:13Z",
+    "marketCapUsd": 3732,
+    "copycatOf": null
+   },
+   {
+    "mint": "F9nLgwFDQCiPpuYtZoYZf4HyLbfUsVEDuXnNSsNtpump",
+    "name": "Weird Cat",
+    "symbol": "WEIRDCAT",
+    "createdAt": "2026-10-20T22:29:48Z",
+    "marketCapUsd": 4963,
+    "copycatOf": null
+   },
+   {
+    "mint": "C87dNP94yYDwsj3VEfBMvfq8ZYtGTR33d9E9QftNpump",
+    "name": "Weird Cat",
+    "symbol": "WEIRDCAT",
+    "createdAt": "2026-10-20T22:29:34Z",
+    "marketCapUsd": 2914,
+    "copycatOf": null
+   },
+   {
+    "mint": "AWzRtwm2ugRNmNkAKr61ZS7JnamALtp6axtv4DQfpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:29:12Z",
+    "marketCapUsd": 5968,
+    "copycatOf": null
+   },
+   {
+    "mint": "HqEDuEF2JpnfJbbHXbo4jpqMWLoJ7nePv6QDFDM3pump",
+    "name": "GLITCHCAT",
+    "symbol": "GLITCH",
+    "createdAt": "2026-10-20T22:29:00Z",
+    "marketCapUsd": 2989,
+    "copycatOf": null
+   },
+   {
+    "mint": "5SfrbQyPHHxx9h9JPSrYNiuYvFCVBKsjF2ir6pfwpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:28:00Z",
+    "marketCapUsd": 4104,
+    "copycatOf": null
+   },
+   {
+    "mint": "BxJT4HoXWjDTVA7GWNJNWHmBFostJqciqAhkBxTEpump",
+    "name": "DACITY CAT",
+    "symbol": "CITYCAT",
+    "createdAt": "2026-10-20T22:27:46Z",
+    "marketCapUsd": 4046,
+    "copycatOf": null
+   },
+   {
+    "mint": "5TKSu5ybk6s6aiSDcmkZD1tz63aevY56s5q3ZB1ppump",
+    "name": "CRO CAT",
+    "symbol": "CRO CAT",
+    "createdAt": "2026-10-20T22:27:00Z",
+    "marketCapUsd": 2994,
+    "copycatOf": null
+   },
+   {
+    "mint": "6MgLGqdsETFV4SJcagDg5W1f57GJcQmzhLL2HKFtpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:25:02Z",
+    "marketCapUsd": 483,
+    "copycatOf": null
+   },
+   {
+    "mint": "EuYdJXGPL485uWbopyUS3JDrTi8tgzTUYpgoCnT8pump",
+    "name": "Larp Cat",
+    "symbol": "LARPCAT",
+    "createdAt": "2026-10-20T22:23:39Z",
+    "marketCapUsd": 3023,
+    "copycatOf": null
+   },
+   {
+    "mint": "8YYPV18kkTfFyN6KoxvyxdBvwScJ2tCJ9cjXW9dxpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:23:37Z",
+    "marketCapUsd": 2237,
+    "copycatOf": null
+   },
+   {
+    "mint": "Ek6a3bvS4S11KboaTNBNgsvqxk34Nv4pMiPhNjVVpump",
+    "name": "Weird Cat",
+    "symbol": "WEIRDCAT",
+    "createdAt": "2026-10-20T22:23:30Z",
+    "marketCapUsd": 878,
+    "copycatOf": null
+   },
+   {
+    "mint": "HYnoNLgSMQGTexu7dVLwy6DE63Bad7ETBaWsXS1ppump",
+    "name": "cat cow",
+    "symbol": "$CCOW",
+    "createdAt": "2026-10-20T22:22:16Z",
+    "marketCapUsd": 3001,
+    "copycatOf": null
+   },
+   {
+    "mint": "9BCgw4YS25T1LHc7ypHUrfLBHongwiVZMEcEpSEDpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:21:04Z",
+    "marketCapUsd": 3846,
+    "copycatOf": null
+   },
+   {
+    "mint": "8uzM4nKVY1D8CaDax14jpjJ7foWBfqaUSkgBTstFpump",
+    "name": "Weird Cat",
+    "symbol": "WEIRDCAT",
+    "createdAt": "2026-10-20T22:20:43Z",
+    "marketCapUsd": 1902,
+    "copycatOf": null
+   },
+   {
+    "mint": "EJBHCe2urkGar2Sz7Q1vMeDrQTgSDT1yxcnSgVUtpump",
+    "name": "The Toad Cat",
+    "symbol": "TOAD",
+    "createdAt": "2026-10-20T22:20:18Z",
+    "marketCapUsd": 5002,
+    "copycatOf": null
+   },
+   {
+    "mint": "2DFhhxK1Cp5zoP8USrCmx3fpqKdur24pY58iTpk4pump",
+    "name": "Mooncat",
+    "symbol": "MCAT",
+    "createdAt": "2026-10-20T22:19:58Z",
+    "marketCapUsd": 2990,
+    "copycatOf": null
+   },
+   {
+    "mint": "41FnoLxpa1wbkr9aWvZzuoSCqD4Hmk5jKNbwYMWspump",
+    "name": "green cat",
+    "symbol": "GrenCAT",
+    "createdAt": "2026-10-20T22:19:22Z",
+    "marketCapUsd": 202,
+    "copycatOf": null
+   },
+   {
+    "mint": "9Hz6f8xnARXfbDVFLP8wAs85KtdZuzhmjwP5Xnyppump",
+    "name": "4d CAT",
+    "symbol": "4d Cat",
+    "createdAt": "2026-10-20T22:19:18Z",
+    "marketCapUsd": 2990,
+    "copycatOf": null
+   },
+   {
+    "mint": "2jeXnp8RsyKVLgMSnwuJjGs8UgtUUWZRvTHzYsiWUBV5",
+    "name": "Crouton Cat",
+    "symbol": "CROUTCAT",
+    "createdAt": "2026-10-20T22:18:48Z",
+    "marketCapUsd": 3002,
+    "copycatOf": null
+   },
+   {
+    "mint": "GoB5WJoGEgZPH5p93Zm2EphVfUnJYbgrjTw5GYtjpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:17:19Z",
+    "marketCapUsd": 96,
+    "copycatOf": null
+   },
+   {
+    "mint": "GbPRMHB2R3W4yT7rBJu2vYgafYQWWBzQb8XFDRLJpump",
+    "name": "flying roadster cat",
+    "symbol": "FRC",
+    "createdAt": "2026-10-20T22:17:01Z",
+    "marketCapUsd": 3212,
+    "copycatOf": null
+   },
+   {
+    "mint": "EEsxzDRRh35t1uAp6ywgq9sYGgvogQ3sCYABw5xcpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:16:25Z",
+    "marketCapUsd": 2810,
+    "copycatOf": null
+   },
+   {
+    "mint": "4jiuPMjJrXQSexNpQSk7mERtayPeaSZ9HBR79bGLpump",
+    "name": "NEKO AI",
+    "symbol": "NEKO AI",
+    "createdAt": "2026-10-20T22:15:22Z",
+    "marketCapUsd": 175,
+    "copycatOf": null
+   },
+   {
     "mint": "DoyhYmYg5b2Gf3esEa2PuujM2Et8Qf2kXNc2ycWxpump",
     "name": "The Toad Cat",
     "symbol": "TOAD",
     "createdAt": "2026-10-20T22:14:34Z",
-    "marketCapUsd": 1284,
+    "marketCapUsd": 303,
     "copycatOf": null
    },
    {
@@ -1411,7 +1675,7 @@
     "name": "NEKO AI",
     "symbol": "NEKO AI",
     "createdAt": "2026-10-20T22:14:31Z",
-    "marketCapUsd": 1246,
+    "marketCapUsd": 2932,
     "copycatOf": null
    },
    {
@@ -1419,7 +1683,7 @@
     "name": "REAL CAT.",
     "symbol": "real cat",
     "createdAt": "2026-10-20T22:13:44Z",
-    "marketCapUsd": 1097,
+    "marketCapUsd": 159,
     "copycatOf": null
    },
    {
@@ -1435,7 +1699,7 @@
     "name": "NEKO AI",
     "symbol": "NEKO AI",
     "createdAt": "2026-10-20T22:12:04Z",
-    "marketCapUsd": 2280,
+    "marketCapUsd": 2276,
     "copycatOf": null
    },
    {
@@ -1451,7 +1715,7 @@
     "name": "Catcity Coin",
     "symbol": "Catcity",
     "createdAt": "2026-10-20T22:11:48Z",
-    "marketCapUsd": 2990,
+    "marketCapUsd": 2993,
     "copycatOf": null
    },
    {
@@ -1523,7 +1787,7 @@
     "name": "Trumpcat",
     "symbol": "TRUMPCAT",
     "createdAt": "2026-10-20T22:05:11Z",
-    "marketCapUsd": 3176,
+    "marketCapUsd": 2990,
     "copycatOf": null
    },
    {
@@ -1555,7 +1819,7 @@
     "name": "meowheheh",
     "symbol": "Bags",
     "createdAt": "2026-10-20T22:03:33Z",
-    "marketCapUsd": 199,
+    "marketCapUsd": 192,
     "copycatOf": null
    },
    {
@@ -1587,7 +1851,7 @@
     "name": "area51kitty",
     "symbol": "Glorp",
     "createdAt": "2026-10-20T22:02:02Z",
-    "marketCapUsd": 3323,
+    "marketCapUsd": 3238,
     "copycatOf": null
    },
    {
@@ -1603,7 +1867,7 @@
     "name": "Odd Cat",
     "symbol": "ODDCAT",
     "createdAt": "2026-10-20T22:01:50Z",
-    "marketCapUsd": 84,
+    "marketCapUsd": 29,
     "copycatOf": null
    },
    {
@@ -4324,278 +4588,6 @@
     "symbol": "WEIRDCAT",
     "createdAt": "2026-10-20T19:15:02Z",
     "marketCapUsd": 3971,
-    "copycatOf": null
-   },
-   {
-    "mint": "F7LmJ56D8oGSfoESoPtW1zTpTNSg2WAwVDPdTW5ESVbY",
-    "name": "Anoynous Cat",
-    "symbol": "ZCAT",
-    "createdAt": "2026-10-20T19:14:19Z",
-    "marketCapUsd": 3037,
-    "copycatOf": null
-   },
-   {
-    "mint": "89Q2PKLC7RU71rjhDYKvbRwFuS9oEWbf8TNeMFdCpump",
-    "name": "🐈⬛ Fomo Cat 🐈⬛",
-    "symbol": "FOMOCAT",
-    "createdAt": "2026-10-20T19:14:12Z",
-    "marketCapUsd": 104,
-    "copycatOf": null
-   },
-   {
-    "mint": "42wRvdWgoa3oBVWmXL8RfNcUxD4H2ntPWza3VALMpump",
-    "name": "Cat Dog",
-    "symbol": "CATDOG",
-    "createdAt": "2026-10-20T19:14:11Z",
-    "marketCapUsd": 1567,
-    "copycatOf": null
-   },
-   {
-    "mint": "BcYz7bsupBroUQSmuz6Trf7HshHFjKZsgCxXiH6Epump",
-    "name": "Anoynous Cat",
-    "symbol": "ZCAT",
-    "createdAt": "2026-10-20T19:14:10Z",
-    "marketCapUsd": 2956,
-    "copycatOf": null
-   },
-   {
-    "mint": "B96rNk8v89ing3XKgaYyD5WAyb3itkTMtUfoeefApump",
-    "name": "Crime Cat",
-    "symbol": "CC",
-    "createdAt": "2026-10-20T19:13:30Z",
-    "marketCapUsd": 3419,
-    "copycatOf": null
-   },
-   {
-    "mint": "5v4M7vkVEPHUYFwr7LfhnpWph46wP1jgFWjVmwp1pump",
-    "name": "The Toad Cat",
-    "symbol": "TOAD",
-    "createdAt": "2026-10-20T19:12:28Z",
-    "marketCapUsd": 3701,
-    "copycatOf": null
-   },
-   {
-    "mint": "AW2yJMukHvarQHB7emqM8Y146Fr614rnDuTX1mz2pump",
-    "name": "The Toad Cat",
-    "symbol": "TOAD",
-    "createdAt": "2026-10-20T19:11:48Z",
-    "marketCapUsd": 2572,
-    "copycatOf": null
-   },
-   {
-    "mint": "8U6yS3iCrM1URi67x3Xr3XZ5892QZUZe56pMSeUKpump",
-    "name": "The Toad Cat",
-    "symbol": "TOAD",
-    "createdAt": "2026-10-20T19:11:23Z",
-    "marketCapUsd": 3568,
-    "copycatOf": null
-   },
-   {
-    "mint": "Bu3TYt6EoN4PRaobfh1QmpBVNZcPhCXdEP38133Fpump",
-    "name": "Pokemon Cat Gotta",
-    "symbol": "CATGOTTA",
-    "createdAt": "2026-10-20T19:11:16Z",
-    "marketCapUsd": 2956,
-    "copycatOf": null
-   },
-   {
-    "mint": "CWHgjTTFj3CDJpS8i1iftdEViHQzmZ561Yg5U1cCpump",
-    "name": "NEKO AI",
-    "symbol": "NEKO AI",
-    "createdAt": "2026-10-20T19:11:14Z",
-    "marketCapUsd": 21,
-    "copycatOf": null
-   },
-   {
-    "mint": "5Yk7ribfrxDqFzf1n8jR1Q2xLmVUbPzYCfeonRpjpump",
-    "name": "catdog",
-    "symbol": "LUNA",
-    "createdAt": "2026-10-20T19:11:02Z",
-    "marketCapUsd": 2953,
-    "copycatOf": null
-   },
-   {
-    "mint": "BCohs1hSSJ7rCqpravLJdcn8hw6ZnUMgeaYT2xvvpump",
-    "name": "catdog",
-    "symbol": "LUNA",
-    "createdAt": "2026-10-20T19:10:42Z",
-    "marketCapUsd": 2956,
-    "copycatOf": null
-   },
-   {
-    "mint": "9HL9DcphMkn7Sj7wW2S7KRPeQUyt7AEytBuQXHoSpump",
-    "name": "Little Witch Kitty",
-    "symbol": "LWK",
-    "createdAt": "2026-10-20T19:10:39Z",
-    "marketCapUsd": 2966,
-    "copycatOf": null
-   },
-   {
-    "mint": "26xzNQB3yPf1VFYoNW78hmpddcSak92bukoJks42pump",
-    "name": "catdog",
-    "symbol": "LUNA",
-    "createdAt": "2026-10-20T19:10:30Z",
-    "marketCapUsd": 2957,
-    "copycatOf": null
-   },
-   {
-    "mint": "HEc1Z26d3CTaCDmwJDRb1bffaNQFGKpvRCBh3sJBpump",
-    "name": "people.cat",
-    "symbol": "peoplecat",
-    "createdAt": "2026-10-20T19:10:08Z",
-    "marketCapUsd": 1849,
-    "copycatOf": null
-   },
-   {
-    "mint": "CgvxeBctBGXdvTy4Mf4VbsmCejGBQbc7DVTwvBjjpump",
-    "name": "Balloon CAT",
-    "symbol": "Tesla Cat",
-    "createdAt": "2026-10-20T19:09:57Z",
-    "marketCapUsd": 3073,
-    "copycatOf": null
-   },
-   {
-    "mint": "6zbnpnaWa6SnJFPb6gS6VrH9jff9nNL6r8rEzEhzpump",
-    "name": "DERPCAT",
-    "symbol": "DERP",
-    "createdAt": "2026-10-20T19:09:46Z",
-    "marketCapUsd": 462,
-    "copycatOf": null
-   },
-   {
-    "mint": "DjYkd3fXXErEcQ5fV6DEZtF5TUcM1Mix3Ng5xxidR5J",
-    "name": "Cat Collector",
-    "symbol": "COLLECTOR",
-    "createdAt": "2026-10-20T19:09:45Z",
-    "marketCapUsd": 3049,
-    "copycatOf": null
-   },
-   {
-    "mint": "GS2vyU1nencFvHYJXn5Xd7NYK3eeaXQG5akhLsNgpump",
-    "name": "Cat Collector",
-    "symbol": "COLLECTOR",
-    "createdAt": "2026-10-20T19:09:44Z",
-    "marketCapUsd": 2956,
-    "copycatOf": null
-   },
-   {
-    "mint": "3ufvNivamRrbnt1S4WZ3maHhLu4cAdpt7R9Ec2FQpump",
-    "name": "NEKO AI",
-    "symbol": "NEKO AI",
-    "createdAt": "2026-10-20T19:09:34Z",
-    "marketCapUsd": 5027,
-    "copycatOf": null
-   },
-   {
-    "mint": "G4X5ARHyAomyrii3c2oxyqXoaFiSjuWLbg3QZfMopump",
-    "name": "catdog",
-    "symbol": "LUNA",
-    "createdAt": "2026-10-20T19:09:28Z",
-    "marketCapUsd": 2956,
-    "copycatOf": null
-   },
-   {
-    "mint": "4aJDekE2jRevZyEZivo7NAMcHRiEzLH1wzzLjbmHpump",
-    "name": "NEKO AI",
-    "symbol": "NEKO AI",
-    "createdAt": "2026-10-20T19:08:55Z",
-    "marketCapUsd": 6590,
-    "copycatOf": null
-   },
-   {
-    "mint": "7ZLdRAubjV5VE4XznqBB1nHiPzNYc7xw4hJWdPBCpump",
-    "name": "CATTY COIN",
-    "symbol": "CATTY",
-    "createdAt": "2026-10-20T19:08:30Z",
-    "marketCapUsd": 2990,
-    "copycatOf": null
-   },
-   {
-    "mint": "H6q6HvDX2gqPQsGUdkHaLNANWrwFc6DKvMC6xmrcpump",
-    "name": "PvePad Cat",
-    "symbol": "PVECAT",
-    "createdAt": "2026-10-20T19:02:23Z",
-    "marketCapUsd": 3047,
-    "copycatOf": null
-   },
-   {
-    "mint": "BmAK4BnpVCMck7fEaMJeeFbD3Q3TZwzcw2Z1WYqUpump",
-    "name": "Wedcat",
-    "symbol": "WIdCoin",
-    "createdAt": "2026-10-20T19:02:08Z",
-    "marketCapUsd": 5492,
-    "copycatOf": null
-   },
-   {
-    "mint": "F4wJMfwrqm4ZeJKKeW93GQm8ekmdHgHV9RQsKvRcRSst",
-    "name": "Tesla Cat",
-    "symbol": "TCAT",
-    "createdAt": "2026-10-20T19:02:03Z",
-    "marketCapUsd": 3070,
-    "copycatOf": null
-   },
-   {
-    "mint": "C59NCM7D2vQ3fE9KZ4xbsWCeaVxJXVKrtYmawezULREW",
-    "name": "Tesla Cat",
-    "symbol": "TCAT",
-    "createdAt": "2026-10-20T19:02:02Z",
-    "marketCapUsd": 3070,
-    "copycatOf": null
-   },
-   {
-    "mint": "Dh86gApVA3wDgYCYy4C9TXEvv821MJ7JzHzPwz5ppump",
-    "name": "Tesla Cat",
-    "symbol": "TCAT",
-    "createdAt": "2026-10-20T19:02:01Z",
-    "marketCapUsd": 6318,
-    "copycatOf": null
-   },
-   {
-    "mint": "CLv8hjyxDRyz6FzkgT6y1hyj1hKCWZ9ayG8NBGpepump",
-    "name": "Freaky ah",
-    "symbol": "kittylick",
-    "createdAt": "2026-10-20T19:00:27Z",
-    "marketCapUsd": 3728,
-    "copycatOf": null
-   },
-   {
-    "mint": "FrwpvLDhQeBjVS5csuqSs3eXTgwjkmJPgNCmV79Gpump",
-    "name": "🐈⬛ Fomo Cat 🐈⬛",
-    "symbol": "FOMOCAT",
-    "createdAt": "2026-10-20T19:00:15Z",
-    "marketCapUsd": 27,
-    "copycatOf": null
-   },
-   {
-    "mint": "Cj5Mu9GLKa86q94K24sFEYot8M7WDjd6YokvVEHzpump",
-    "name": "Freaky ah",
-    "symbol": "kittylick",
-    "createdAt": "2026-10-20T19:00:07Z",
-    "marketCapUsd": 4018,
-    "copycatOf": null
-   },
-   {
-    "mint": "Hni1sAzgsgxvD4mCeZ8SrC2FdwEg3hgb1HLh6jNJpump",
-    "name": "Freaky ah",
-    "symbol": "kittylick",
-    "createdAt": "2026-10-20T18:59:39Z",
-    "marketCapUsd": 2961,
-    "copycatOf": null
-   },
-   {
-    "mint": "EdSfyEVnGqLR6CTdv476ZHQrjVYnDrvR67tT1RMypump",
-    "name": "Cat Mugshot",
-    "symbol": "MUG",
-    "createdAt": "2026-10-20T18:59:01Z",
-    "marketCapUsd": 2958,
-    "copycatOf": null
-   },
-   {
-    "mint": "2gnenWkaCrwtCJFPAwWv84WAgK7HGXNGqCg27n6Kpump",
-    "name": "SlapCAT",
-    "symbol": "SlapCAT",
-    "createdAt": "2026-10-20T18:58:43Z",
-    "marketCapUsd": 587,
     "copycatOf": null
    }
   ]
