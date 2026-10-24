@@ -1,8 +1,8 @@
 {
  "note": "Written by scripts/build-trending.mjs every 20 minutes; read by the Trending tab (assets/ui/trending.js). Names and tickers under fresh were typed by strangers.",
- "updatedAt": "2026-10-24T20:47:19Z",
+ "updatedAt": "2026-10-24T21:07:21Z",
  "activity": {
-  "updatedAt": "2026-10-24T20:47:19Z",
+  "updatedAt": "2026-10-24T21:07:21Z",
   "items": [
    {
     "id": "cate-meme",
@@ -12,9 +12,9 @@
     "chain": "solana",
     "mint": "Ai66LHZG9MCzg1WKdawwqduVAXpNDUuV8M3uyq5ppump",
     "pair": "HMzvsEEmtzHhvZNw9uwbaG85HCTmFnkbhzUx16cy7ca3",
-    "marketCapUsd": 44138137,
-    "volume24hUsd": 1129789,
-    "change24hPct": -3.7
+    "marketCapUsd": 44035957,
+    "volume24hUsd": 1122833,
+    "change24hPct": -6.6
    },
    {
     "id": "cat-in-a-dogs-world",
@@ -24,9 +24,9 @@
     "chain": "solana",
     "mint": "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5",
     "pair": "879F697iuDJGMevRkRcnW21fcXiAeLJK1ffsw2ATebce",
-    "marketCapUsd": 43853586,
-    "volume24hUsd": 917527,
-    "change24hPct": 1.6
+    "marketCapUsd": 43926283,
+    "volume24hUsd": 941531,
+    "change24hPct": 2.3
    },
    {
     "id": "gta6cat",
@@ -36,9 +36,9 @@
     "chain": "solana",
     "mint": "HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump",
     "pair": "5E3dXLXGwmTDCokA51WYYaKttjFZBwqCoyUHBUi5gt2m",
-    "marketCapUsd": 3273680,
-    "volume24hUsd": 905491,
-    "change24hPct": -17
+    "marketCapUsd": 3235591,
+    "volume24hUsd": 861025,
+    "change24hPct": -1.2
    },
    {
     "id": "anonymous-cat",
@@ -48,9 +48,9 @@
     "chain": "solana",
     "mint": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR",
     "pair": "BTccxxTFi7a9xJTE1exKn38Jgie35s6gNeRxd8DM61Rc",
-    "marketCapUsd": 42948095,
-    "volume24hUsd": 272309,
-    "change24hPct": -10.1
+    "marketCapUsd": 42949024,
+    "volume24hUsd": 264926,
+    "change24hPct": -9
    },
    {
     "id": "popcat",
@@ -60,9 +60,9 @@
     "chain": "solana",
     "mint": "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr",
     "pair": "FRhB8L7Y9Qq41qZXYLtC2nw8An1RJfLLxRF2x9RwLLMo",
-    "marketCapUsd": 42543697,
-    "volume24hUsd": 177932,
-    "change24hPct": -5.2
+    "marketCapUsd": 42346054,
+    "volume24hUsd": 179100,
+    "change24hPct": -5.5
    },
    {
     "id": "red-kitten-crew",
@@ -73,20 +73,8 @@
     "mint": "7HgfXftRBBqsYtAEYcqjGLQrNJLL6Tww9ek4rE3Apump",
     "pair": "FzbYhPcoCuA2qSrV1s3j38RcQhP6c943p3KHYb6C5rCq",
     "marketCapUsd": 941395,
-    "volume24hUsd": 21375,
-    "change24hPct": -8.9
-   },
-   {
-    "id": "tsuki",
-    "kind": "famous",
-    "name": "Tsuki",
-    "symbol": "TSUKI",
-    "chain": "solana",
-    "mint": "463SK47VkB7uE7XenTHKiVcMtxRsfNE2X4Q9wByaURVA",
-    "pair": "7yMhxapzceFUo24KNgP77mGj1crdAv8ayYfqGvB5skZf",
-    "marketCapUsd": 2738899,
-    "volume24hUsd": 17967,
-    "change24hPct": -5.8
+    "volume24hUsd": 21373,
+    "change24hPct": -8.8
    },
    {
     "id": "ket-3",
@@ -96,9 +84,33 @@
     "chain": "solana",
     "mint": "9Pfync3ejPC9eHqVzq3nYQJAhyhjqpnB9UsaSfLxpump",
     "pair": "Fex8CSkNXfaxAPRqQARKGchYAMVfwDg28sfmBXXGkNGX",
-    "marketCapUsd": 1379643,
-    "volume24hUsd": 17920,
-    "change24hPct": 1.6
+    "marketCapUsd": 1378173,
+    "volume24hUsd": 17967,
+    "change24hPct": 2.7
+   },
+   {
+    "id": "tsuki",
+    "kind": "famous",
+    "name": "Tsuki",
+    "symbol": "TSUKI",
+    "chain": "solana",
+    "mint": "463SK47VkB7uE7XenTHKiVcMtxRsfNE2X4Q9wByaURVA",
+    "pair": "7yMhxapzceFUo24KNgP77mGj1crdAv8ayYfqGvB5skZf",
+    "marketCapUsd": 2734681,
+    "volume24hUsd": 17931,
+    "change24hPct": -6.4
+   },
+   {
+    "id": "raydium-cat",
+    "kind": "famous",
+    "name": "Raydium Cat",
+    "symbol": "RAYCAT",
+    "chain": "solana",
+    "mint": "CFNRDaxFcvRwRSNnA5cHrCCr6AHhk9dNkHWpRUjNupFL",
+    "pair": "987VwvJZ5FRjWCY9ZwC2tRUGL8FbMT1aF4pUrT7XjPjD",
+    "marketCapUsd": 423246,
+    "volume24hUsd": 15104,
+    "change24hPct": -9.7
    },
    {
     "id": "sillynubcat",
@@ -109,20 +121,8 @@
     "mint": "4QsNTBKwHgyYUUHq9tDzk1CCVu7y5hK7z3GE9R36pump",
     "pair": "BMh3pFZw5M4PvQvENd9yRQFKePjjUM2zTtKrKTvXMYSt",
     "marketCapUsd": 2475324,
-    "volume24hUsd": 17145,
-    "change24hPct": -3
-   },
-   {
-    "id": "raydium-cat",
-    "kind": "famous",
-    "name": "Raydium Cat",
-    "symbol": "RAYCAT",
-    "chain": "solana",
-    "mint": "CFNRDaxFcvRwRSNnA5cHrCCr6AHhk9dNkHWpRUjNupFL",
-    "pair": "987VwvJZ5FRjWCY9ZwC2tRUGL8FbMT1aF4pUrT7XjPjD",
-    "marketCapUsd": 423728,
-    "volume24hUsd": 15820,
-    "change24hPct": -10.3
+    "volume24hUsd": 14535,
+    "change24hPct": -1.9
    },
    {
     "id": "leveraged-cat",
@@ -132,9 +132,9 @@
     "chain": "solana",
     "mint": "AGi2s9zPRPHs3zEDPhPTroumTEXK5ufymYSfEFndCSSW",
     "pair": "CsjcF4mEmJsXZDWzBtuviVEV7JiKTY4NAJ1rdcHhVxi3",
-    "marketCapUsd": 172268,
-    "volume24hUsd": 13484,
-    "change24hPct": -15.3
+    "marketCapUsd": 171723,
+    "volume24hUsd": 13217,
+    "change24hPct": -16.6
    },
    {
     "id": "hello-kitty-sol",
@@ -144,9 +144,9 @@
     "chain": "solana",
     "mint": "4N4DnNo3qpPks9aQCkcWkzoir8tnvT6diS4TnnZibonk",
     "pair": "7dNW2mhCtqoZcDuyRbj5LMoeFsS9TpaCdSkk4qMstGPm",
-    "marketCapUsd": 1806823,
-    "volume24hUsd": 12760,
-    "change24hPct": -3
+    "marketCapUsd": 1802872,
+    "volume24hUsd": 12955,
+    "change24hPct": -3.3
    },
    {
     "id": "stonk-cats",
@@ -157,8 +157,8 @@
     "mint": "9h5AzEQzYu9CV5K6uLtFRMD1KcbxZSFNxZEgBTNfw5Na",
     "pair": "C1CNCihCBJ2Jztbv7vfrXKrw9fKrma5fa3hhSjqyw9GH",
     "marketCapUsd": 249346,
-    "volume24hUsd": 8048,
-    "change24hPct": 1.2
+    "volume24hUsd": 8038,
+    "change24hPct": 2.3
    },
    {
     "id": "wen-4",
@@ -192,9 +192,21 @@
     "chain": "solana",
     "mint": "AywAYdNJnSLSXwKWYxDciPjqGRnwp4iZdQptuuQTpump",
     "pair": "22FSz9QP7dS1PvrJKuHr16ymghZP92xPu3Bj7uuzu2bG",
-    "marketCapUsd": 2384294,
+    "marketCapUsd": 2383082,
     "volume24hUsd": 4340,
-    "change24hPct": -2.2
+    "change24hPct": -2.4
+   },
+   {
+    "id": "vibing-cat-coin",
+    "kind": "famous",
+    "name": "Vibing Cat Coin",
+    "symbol": "VIBECOIN",
+    "chain": "solana",
+    "mint": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
+    "pair": "7uA6SabfDqA7mcv8A4yfv4gEe7RQ5NZCVemcbx2mJwdT",
+    "marketCapUsd": 1639552,
+    "volume24hUsd": 2171,
+    "change24hPct": -6.5
    },
    {
     "id": "hosico-cat",
@@ -207,18 +219,6 @@
     "marketCapUsd": 1008638,
     "volume24hUsd": 1622,
     "change24hPct": -4.8
-   },
-   {
-    "id": "vibing-cat-coin",
-    "kind": "famous",
-    "name": "Vibing Cat Coin",
-    "symbol": "VIBECOIN",
-    "chain": "solana",
-    "mint": "AZbem4s8iLJE5eniDZJ7c8q1ahbfMwWgCA8TxVW2tDUB",
-    "pair": "7uA6SabfDqA7mcv8A4yfv4gEe7RQ5NZCVemcbx2mJwdT",
-    "marketCapUsd": 1687223,
-    "volume24hUsd": 1346,
-    "change24hPct": -3.8
    },
    {
     "id": "maneki",
@@ -440,6 +440,15 @@
     "count": 1
    },
    {
+    "mint": "Bav2Riav5wLBNZkak2sEGiS5K3a9boCrepohmwNWcRcQ",
+    "name": "Maxwell The Cat",
+    "symbol": "MAXWELL",
+    "createdAt": "2026-10-21T08:49:44Z",
+    "marketCapUsd": 3063,
+    "copycatOf": "MAXWELLCAT",
+    "count": 2
+   },
+   {
     "mint": "6sX4vntmyvy11i2gQeKrMaojcw5M77eC8Ggz33Sp762C",
     "name": "KING",
     "symbol": "KING",
@@ -609,26 +618,9 @@
     "marketCapUsd": 98,
     "copycatOf": "KING",
     "count": 1
-   },
-   {
-    "mint": "EfwffCy688fTXrZDcPiQ56pPa6aWKe15obfbxdCspump",
-    "name": "Maxwell The Cat",
-    "symbol": "Maxwell",
-    "createdAt": "2026-10-17T20:50:45Z",
-    "marketCapUsd": 3633,
-    "copycatOf": "MAXWELLCAT",
-    "count": 3
    }
   ],
   "all": [
-   {
-    "mint": "EfwffCy688fTXrZDcPiQ56pPa6aWKe15obfbxdCspump",
-    "name": "Maxwell The Cat",
-    "symbol": "Maxwell",
-    "createdAt": "2026-10-17T20:50:45Z",
-    "marketCapUsd": 3633,
-    "copycatOf": "MAXWELLCAT"
-   },
    {
     "mint": "2qFPGaGuPMxAm67WrrEmksvvVSDrx1VqKDEetBU7pump",
     "name": "king kirk",
