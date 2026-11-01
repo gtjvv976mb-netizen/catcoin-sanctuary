@@ -1,7 +1,7 @@
 {
   "wallets": {
     "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3": {
-      "newest": "32jNj1hgbuXzW6jSA3MefQG3pqvx8GFUHJd2wCJBKjKoyHU2tXcfPfD5nE28e3PwD9w9fdwajz3CAh243RsxsHAw"
+      "newest": "z24SAZaneEAwW99oh6ZHCGVVhZKpArfuoBQaid3ogf97LL7Fx6LT8R4Stg94yaJn6BwGDBJdruidouinf2xbDJX"
     },
     "HxhisqFBeZRJcBWkjnumk6HwWxFLGVVD6jfX23tXHzQh": {
       "newest": "7MWbe2izftAmraaFAh8GroVQLVRXUdvamsQ8PJ65CHQzc23Emk2ry7j6pRpNqKTAhMNp1rnMXFNxAFxUuQJVXC3"
@@ -108,6 +108,27 @@
     }
   ],
   "unread": [
+    {
+      "tx": "4h1cuoyvRr7DYjMSURzXK1M75HNQQPv111URfU7G3B4gtmbSo3GWH2Ynp6SEshxogKET9W1Aa8twpk9M76mUDPah",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "tx_version",
+      "detail": "a transaction newer than version 0, which this builder does not read",
+      "time": "2026-11-01T00:19:55Z"
+    },
+    {
+      "tx": "3tPQv6XumwFboDRo8Zm3pRFLP1hWxpYxY6875MwbDnSJZzF7QA2K6dVc1NyocLgpvy4FccbHTdijaKdJUUZZUPZv",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "tx_version",
+      "detail": "a transaction newer than version 0, which this builder does not read",
+      "time": "2026-11-01T00:07:04Z"
+    },
+    {
+      "tx": "vtg3dPh9mhCNAhvTyMFDhh9QwkkKpc6UPaxu8NMBFPSgETMRyCAaRTt9VqjzXA8gyF5FqXZdZMwodgbqEwdJcYr",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "tx_version",
+      "detail": "a transaction newer than version 0, which this builder does not read",
+      "time": "2026-11-01T00:06:56Z"
+    },
     {
       "tx": "5jhVb7JSRGEstApMSHVRiL3Ax5b1MPm5F5pMwDXm79y3wGSZ8bG32pAfcZwgPWkNKomQ3LpGZfA457Q4DetZi7ji",
       "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
@@ -436,27 +457,6 @@
       "clause": "tx_version",
       "detail": "a transaction newer than version 0, which this builder does not read",
       "time": "2026-10-27T17:14:09Z"
-    },
-    {
-      "tx": "gkyr9bo9mgzsRv3hioaZe81hwStnMKmcSRXzRyQFeGhuU3qVKvgUaGiBTspffCZDF7CstXXvXdu18PFWM7z6fTs",
-      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
-      "clause": "tx_version",
-      "detail": "a transaction newer than version 0, which this builder does not read",
-      "time": "2026-10-27T17:13:06Z"
-    },
-    {
-      "tx": "24adh4JKGQCivNdyTAZaPKoXLY2KcuieDRU5eMBexgwrkUW8pLHY79vWjW2MojbCqtiLJDwL2D1pmqkeYoJVbTtX",
-      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
-      "clause": "tx_version",
-      "detail": "a transaction newer than version 0, which this builder does not read",
-      "time": "2026-10-27T17:13:01Z"
-    },
-    {
-      "tx": "24NwWqJU8Hkv1zFaG8yLk7rZwjMVW4EkZWi63PkNGSGGUq5kgH4gajaSSRVpsgVK1UKMbAkruPPooUsNRDFwv4Py",
-      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
-      "clause": "tx_version",
-      "detail": "a transaction newer than version 0, which this builder does not read",
-      "time": "2026-10-27T17:11:48Z"
     }
   ]
 }
