@@ -1,7 +1,7 @@
 {
   "wallets": {
     "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3": {
-      "newest": "5Jg5Ptaw1XRhqgNm7PhGMYQNey1g9vySmV8uGcvKBw7xLGaQzG4fFxRSbGo6eug4V51Hmb9EaPPuJcLnhvDZPpAn"
+      "newest": "524g9pdmCqtnrRPVjRpweQCBjX1qVKXTbLgpNskyXL1e129ab3Meyb6nRJ6yQFc1oH9R84zXsxJUe4Fu4SGPgDWq"
     },
     "HxhisqFBeZRJcBWkjnumk6HwWxFLGVVD6jfX23tXHzQh": {
       "newest": "7MWbe2izftAmraaFAh8GroVQLVRXUdvamsQ8PJ65CHQzc23Emk2ry7j6pRpNqKTAhMNp1rnMXFNxAFxUuQJVXC3"
@@ -108,6 +108,13 @@
     }
   ],
   "unread": [
+    {
+      "tx": "524g9pdmCqtnrRPVjRpweQCBjX1qVKXTbLgpNskyXL1e129ab3Meyb6nRJ6yQFc1oH9R84zXsxJUe4Fu4SGPgDWq",
+      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
+      "clause": "tx_version",
+      "detail": "a transaction newer than version 0, which this builder does not read",
+      "time": "2026-11-08T07:27:45Z"
+    },
     {
       "tx": "5Jg5Ptaw1XRhqgNm7PhGMYQNey1g9vySmV8uGcvKBw7xLGaQzG4fFxRSbGo6eug4V51Hmb9EaPPuJcLnhvDZPpAn",
       "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
@@ -450,13 +457,6 @@
       "clause": "tx_version",
       "detail": "a transaction newer than version 0, which this builder does not read",
       "time": "2026-11-01T01:18:11Z"
-    },
-    {
-      "tx": "4Xm1V6ijQeEdBbMraHixRh6TwsZD6c1DS39EgLpbwYBeG7Qv12PzQduhNGTB5XHM1GgrJPUuRVLT7KwXaQzjZ2ny",
-      "wallet": "3J57tqAJqRmSBn1ZYDu9JpMMyTfBHdcGGwECiPQeiji3",
-      "clause": "tx_version",
-      "detail": "a transaction newer than version 0, which this builder does not read",
-      "time": "2026-11-01T01:18:05Z"
     }
   ]
 }
